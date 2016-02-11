@@ -21,7 +21,9 @@
 #include <sdk_events.h>
 #include <settings.h> // SDK
 
+#if !CB_REDUCED_GUI
 #include "compilermessages.h"
+#endif // #if !CB_REDUCED_GUI
 #include "compilererrors.h"
 #include "compiler_defs.h"
 
@@ -280,7 +282,9 @@ class CompilerGCC : public cbCompilerPlugin
         wxToolBar*          m_pTbar;
         wxTimer             m_timerIdleWakeUp;
         BuildLogger*        m_pLog;
+#if !CB_REDUCED_GUI
         CompilerMessages*   m_pListLog;
+#endif // #if !CB_REDUCED_GUI
         wxChoice*           m_pToolTarget;
         bool                m_RunAfterCompile;
         wxString            m_CdRun;

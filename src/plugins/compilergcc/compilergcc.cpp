@@ -45,6 +45,7 @@
 #include <annoyingdialog.h>
 #include <filefilters.h>
 #include <infowindow.h>
+#include <loggers.h>
 
 #include "compilergcc.h"
 #include "compileroptionsdlg.h"
@@ -295,7 +296,9 @@ CompilerGCC::CompilerGCC() :
     m_pProject(0L),
     m_pTbar(0L),
     m_pLog(0L),
+#if !CB_REDUCED_GUI
     m_pListLog(0L),
+#endif // #if !CB_REDUCED_GUI
     m_pToolTarget(0L),
     m_RunAfterCompile(false),
     m_LastExitCode(0),
@@ -335,7 +338,9 @@ void CompilerGCC::OnAttach()
     m_pProject = 0L;
     m_pTbar = 0L;
     m_pLog = 0L;
+#if !CB_REDUCED_GUI
     m_pListLog = 0L;
+#endif // #if !CB_REDUCED_GUI
     m_pToolTarget = 0L;
     m_RunAfterCompile = false;
     m_LastExitCode = 0;
@@ -383,6 +388,7 @@ void CompilerGCC::OnAttach()
     widths.Add(48);
     widths.Add(640);
 
+#if !CB_REDUCED_GUI
     m_pListLog = new CompilerMessages(titles, widths);
     m_pListLog->SetCompilerErrors(&m_Errors);
     m_ListPageIndex = msgMan->SetLog(m_pListLog);
@@ -390,14 +396,18 @@ void CompilerGCC::OnAttach()
     // set log image
     bmp = new wxBitmap(cbLoadBitmap(prefix + _T("flag_16x16.png"), wxBITMAP_TYPE_PNG));
     msgMan->Slot(m_ListPageIndex).icon = bmp;
+#endif // #if !CB_REDUCED_GUI
 
     CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, m_pLog, msgMan->Slot(m_PageIndex).title, msgMan->Slot(m_PageIndex).icon);
     Manager::Get()->ProcessEvent(evtAdd1);
+
+#if !CB_REDUCED_GUI
     if (!Manager::IsBatchBuild())
     {
         CodeBlocksLogEvent evtAdd2(cbEVT_ADD_LOG_WINDOW, m_pListLog, msgMan->Slot(m_ListPageIndex).title, msgMan->Slot(m_ListPageIndex).icon);
         Manager::Get()->ProcessEvent(evtAdd2);
     }
+#endif // #if !CB_REDUCED_GUI
 
     m_LogBuildProgressPercentage = Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/percentage"), false);
     bool hasBuildProg = Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/bar"), false);
@@ -445,10 +455,12 @@ void CompilerGCC::OnRelease(bool appShutDown)
         }
         m_pLog = 0;
 
+#if !CB_REDUCED_GUI
         CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_pListLog);
         m_pListLog->DestroyControls();
         Manager::Get()->ProcessEvent(evt);
         m_pListLog = 0;
+#endif // #if !CB_REDUCED_GUI
     }
 
     // let wx handle this on shutdown ( if we return here Valgrind will be sad :'( )
@@ -1341,7 +1353,9 @@ int CompilerGCC::DoRunQueue()
                 LogMessage(msg, cltError, ltAll, true);
                 LogWarningOrError(cltNormal, 0, wxEmptyString, wxEmptyString,
                                   wxString::Format(_("=== Build failed: %s ==="), msg.wx_str()));
+#if !CB_REDUCED_GUI
                 m_pListLog->AutoFitColumns(2);
+#endif // #if !CB_REDUCED_GUI
                 SaveBuildLog();
             }
             if (!Manager::IsBatchBuild() && m_pLog->progress)
@@ -1675,25 +1689,33 @@ void CompilerGCC::PrintBanner(BuildAction action, cbProject* prj, ProjectBuildTa
                   Action.wx_str(), targetName.wx_str(), projectName.wx_str(), compilerName.wx_str());
     LogWarningOrError(cltNormal, 0, wxEmptyString, wxEmptyString, wxT("=== ") + banner + wxT(" ==="));
     LogMessage(wxT("-------------- ") + banner + wxT("---------------"), cltNormal, ltAll, false, true);
+#if !CB_REDUCED_GUI
     m_pListLog->AutoFitColumns(2);
+#endif // #if !CB_REDUCED_GUI
 }
 
 void CompilerGCC::DoGotoNextError()
 {
     m_Errors.Next();
+#if !CB_REDUCED_GUI
     m_pListLog->FocusError(m_Errors.GetFocusedError());
+#endif // #if !CB_REDUCED_GUI
 }
 
 void CompilerGCC::DoGotoPreviousError()
 {
     m_Errors.Previous();
+#if !CB_REDUCED_GUI
     m_pListLog->FocusError(m_Errors.GetFocusedError());
+#endif // #if !CB_REDUCED_GUI
 }
 
 void CompilerGCC::DoClearErrors()
 {
     m_Errors.Clear();
+#if !CB_REDUCED_GUI
     m_pListLog->Clear();
+#endif // #if !CB_REDUCED_GUI
     m_NotifiedMaxErrors = false;
 }
 
@@ -3489,6 +3511,7 @@ void CompilerGCC::LogWarningOrError(CompilerLineType lt, cbProject* prj, const w
     Logger::level lv = (lt == cltError)   ? Logger::error
                      : (lt == cltWarning) ? Logger::warning : Logger::info;
 
+#if !CB_REDUCED_GUI
     // when there are many lines (thousands) of output, auto fitting column width
     // is very expensive, so rate limit it to a maximum of 1 fit per 3 seconds
     static wxDateTime lastAutofitTime = wxDateTime((time_t)0);
@@ -3499,6 +3522,7 @@ void CompilerGCC::LogWarningOrError(CompilerLineType lt, cbProject* prj, const w
     }
     else
         m_pListLog->Append(errors, lv);
+#endif // #if !CB_REDUCED_GUI
 
     // add to error keeping struct
     m_Errors.AddError(lt, prj, filename, line.IsEmpty() ? 0 : atoi(wxSafeConvertWX2MB(line)), msg);
@@ -3778,7 +3802,9 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
                 LogWarningOrError(cltNormal, 0, wxEmptyString, wxEmptyString,
                                   wxString::Format(_("=== Build %s: %s ==="),
                                                    wxString(m_LastExitCode == 0 ? _("finished") : _("failed")).wx_str(), msg.wx_str()));
+#if !CB_REDUCED_GUI
                 m_pListLog->AutoFitColumns(2);
+#endif // #if !CB_REDUCED_GUI
                 SaveBuildLog();
             }
             if (!Manager::IsBatchBuild() && m_pLog->progress)
@@ -3802,10 +3828,12 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
                 CodeBlocksLogEvent evtShow(cbEVT_SHOW_LOG_MANAGER);
                 Manager::Get()->ProcessEvent(evtShow);
             }
+#if !CB_REDUCED_GUI
             CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, m_pListLog);
             Manager::Get()->ProcessEvent(evtSwitch);
 
             m_pListLog->FocusError(m_Errors.GetFirstError());
+#endif // #if !CB_REDUCED_GUI
         }
         else
         {
@@ -3829,8 +3857,10 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
                         CodeBlocksLogEvent evtShow(cbEVT_SHOW_LOG_MANAGER);
                         Manager::Get()->ProcessEvent(evtShow);
 
+#if !CB_REDUCED_GUI
                         CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, m_pListLog);
                         Manager::Get()->ProcessEvent(evtSwitch);
+#endif // #if !CB_REDUCED_GUI
                     }
                     else // if message manager is auto-hiding, unlock it (i.e. close it)
                     {
