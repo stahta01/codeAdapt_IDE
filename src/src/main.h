@@ -17,7 +17,9 @@
 #include "manager.h"
 #include "cbexception.h"
 #include "cbplugin.h"
+#if !CB_REDUCED_GUI
 #include "find_replace.h"
+#endif // #if !CB_REDUCED_GUI
 #include "sdk_events.h"
 #include "recentitemslist.h"
 #include "scripting/bindings/sc_base_types.h"
@@ -403,7 +405,9 @@ class MainFrame : public wxFrame
         DebuggerMenuHandler*    m_debuggerMenuHandler;
         DebuggerToolbarHandler* m_debuggerToolbarHandler;
 
+#if !CB_REDUCED_GUI
         FindReplace m_findReplace;
+#endif // #if !CB_REDUCED_GUI
 
         DECLARE_EVENT_TABLE()
 };

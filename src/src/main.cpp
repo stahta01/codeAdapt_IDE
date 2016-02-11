@@ -494,6 +494,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idEditShowCallTip,           MainFrame::OnEditShowCallTip)
     EVT_MENU(idEditCompleteCode,          MainFrame::OnEditCompleteCode)
 
+#if !CB_REDUCED_GUI
     EVT_MENU(idSearchFind,                  MainFrame::OnSearchFind)
     EVT_MENU(idSearchFindInFiles,           MainFrame::OnSearchFind)
     EVT_MENU(idSearchFindNext,              MainFrame::OnSearchFindNext)
@@ -505,6 +506,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchGotoLine,              MainFrame::OnSearchGotoLine)
     EVT_MENU(idSearchGotoNextChanged,       MainFrame::OnSearchGotoNextChanged)
     EVT_MENU(idSearchGotoPreviousChanged,   MainFrame::OnSearchGotoPrevChanged)
+#endif // #if !CB_REDUCED_GUI
 
     EVT_MENU(idViewLayoutSave,            MainFrame::OnViewLayoutSave)
     EVT_MENU(idViewLayoutDelete,          MainFrame::OnViewLayoutDelete)
@@ -802,7 +804,9 @@ void MainFrame::SetupGUILogging()
                 m_pInfoPane->AddLogger(mgr->Slot(i).GetLogger(), log, mgr->Slot(i).title, mgr->Slot(i).icon);
         }
 
+#if !CB_REDUCED_GUI
         m_findReplace.CreateSearchLog();
+#endif // #if !CB_REDUCED_GUI
     }
     else
     {
@@ -3902,6 +3906,7 @@ void MainFrame::OnViewHideEditorTabs(cb_unused wxCommandEvent& event)
 	}
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
     bool bDoMultipleFiles = (event.GetId() == idSearchFindInFiles);
@@ -3971,6 +3976,7 @@ void MainFrame::OnSearchGotoPrevChanged(cb_unused wxCommandEvent& event)
     if (ed)
         ed->GotoPreviousChanged();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
