@@ -860,9 +860,6 @@
 		<Unit filename="include/crc32.h">
 			<Option target="sdk" />
 		</Unit>
-		<Unit filename="include/debuggermanager.h">
-			<Option target="sdk" />
-		</Unit>
 		<Unit filename="include/editarrayfiledlg.h">
 			<Option target="sdk" />
 		</Unit>
@@ -1279,9 +1276,6 @@
 		<Unit filename="include/sdk_precomp.h">
 			<Option compile="1" />
 			<Option weight="0" />
-			<Option target="sdk" />
-		</Unit>
-		<Unit filename="include/searchresultslog.h">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/selecttargetdlg.h">
@@ -2597,9 +2591,6 @@
 		<Unit filename="sdk/crc32.cpp">
 			<Option target="sdk" />
 		</Unit>
-		<Unit filename="sdk/debuggermanager.cpp">
-			<Option target="sdk" />
-		</Unit>
 		<Unit filename="sdk/editarrayfiledlg.cpp">
 			<Option target="sdk" />
 		</Unit>
@@ -3279,9 +3270,6 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/sdk_events.cpp">
-			<Option target="sdk" />
-		</Unit>
-		<Unit filename="sdk/searchresultslog.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/selecttargetdlg.cpp">
