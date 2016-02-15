@@ -47,6 +47,7 @@ wxColour BlendTextColour(wxColour col)
     return col;
 }
 
+#if !CB_REDUCED_GUI
 TextCtrlLogger::TextCtrlLogger(bool fixedPitchFont) :
     control(nullptr), fixed(fixedPitchFont)
 {
@@ -427,6 +428,7 @@ void ListCtrlLogger::AutoFitColumns(int column)
     if (column != -1)
         control->SetColumnWidth(column, wxLIST_AUTOSIZE);
 }
+#endif // #if !CB_REDUCED_GUI
 
 CSS::CSS() :
     caption  (_T("font-size: 12pt;")),

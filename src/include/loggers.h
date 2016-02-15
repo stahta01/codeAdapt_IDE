@@ -86,6 +86,7 @@ public:
     virtual void Close();
 };
 
+#if !CB_REDUCED_GUI
 /** a logger which prints messages to a wxTextCtrl */
 class DLLIMPORT TextCtrlLogger : public Logger
 {
@@ -149,5 +150,6 @@ public:
     virtual bool      HasFeature(Feature::Enum feature) const;
     virtual void      AutoFitColumns(int column);
 };
+#endif // #if !CB_REDUCED_GUI
 
 #endif // LOGGERS_H

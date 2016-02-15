@@ -2196,12 +2196,14 @@ bool cbEditor::AddBreakpoint(int line, bool notifyDebugger)
         return false;
     }
 
+#if !CB_REDUCED_GUI
     DebuggerManager *dbgManager = Manager::Get()->GetDebuggerManager();
     if (dbgManager->GetBreakpointDialog()->AddBreakpoint(dbgManager->GetActiveDebugger(), m_Filename, line + 1))
     {
         BreakpointMarkerToggle(line);
         return true;
     }
+#endif // #if !CB_REDUCED_GUI
     return false;
 }
 
@@ -2219,12 +2221,14 @@ bool cbEditor::RemoveBreakpoint(int line, bool notifyDebugger)
         return false;
     }
 
+#if !CB_REDUCED_GUI
     DebuggerManager *dbgManager = Manager::Get()->GetDebuggerManager();
     if (dbgManager->GetBreakpointDialog()->RemoveBreakpoint(dbgManager->GetActiveDebugger(), m_Filename, line + 1))
     {
         BreakpointMarkerToggle(line);
         return true;
     }
+#endif // #if !CB_REDUCED_GUI
     return false;
 }
 
@@ -2238,6 +2242,9 @@ void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
         return;
     }
 
+#if CB_REDUCED_GUI
+    return;
+#else
     DebuggerManager *dbgManager = Manager::Get()->GetDebuggerManager();
     cbBreakpointsDlg *dialog = dbgManager->GetBreakpointDialog();
     cbDebuggerPlugin *plugin = dbgManager->GetActiveDebugger();
@@ -2261,6 +2268,7 @@ void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
         BreakpointMarkerToggle(line);
         dialog->Reload();
     }
+#endif // #if CB_REDUCED_GUI
 }
 
 bool cbEditor::HasBreakpoint(int line) const
@@ -2301,6 +2309,7 @@ void cbEditor::RefreshBreakpointMarkers()
     while ((line = c->MarkerNext(line, (1 << BREAKPOINT_OTHER_MARKER))) != -1)
         MarkerToggle(BREAKPOINT_OTHER_MARKER, line);
 
+#if !CB_REDUCED_GUI
     const DebuggerManager::RegisteredPlugins &plugins = Manager::Get()->GetDebuggerManager()->GetAllDebuggers();
     for (DebuggerManager::RegisteredPlugins::const_iterator it = plugins.begin(); it != plugins.end(); ++it)
     {
@@ -2330,6 +2339,7 @@ void cbEditor::RefreshBreakpointMarkers()
             }
         }
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 bool cbEditor::HasBookmark(int line) const
@@ -2876,6 +2886,7 @@ bool cbEditor::OnBeforeBuildContextMenu(const wxPoint& position, ModuleType type
             // create special menu
             wxMenu* popup = new wxMenu;
 
+#if !CB_REDUCED_GUI
             cbDebuggerPlugin *plugin = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
             if (plugin && plugin->SupportsFeature(cbDebuggerFeature::Breakpoints))
             {
@@ -2895,6 +2906,7 @@ bool cbEditor::OnBeforeBuildContextMenu(const wxPoint& position, ModuleType type
                     popup->Append(idBreakpointAdd, _("Add breakpoint"));
                 popup->AppendSeparator();
             }
+#endif // #if !CB_REDUCED_GUI
 
             if (LineHasMarker(BOOKMARK_MARKER, m_pData->m_LastMarginMenuLine))
             {
@@ -3110,13 +3122,16 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
     }
     else if (id == idBreakpointAdd)
         AddBreakpoint(m_pData->m_LastMarginMenuLine);
+#if !CB_REDUCED_GUI
     else if (id == idBreakpointEdit)
     {
         cbBreakpointsDlg *dialog = Manager::Get()->GetDebuggerManager()->GetBreakpointDialog();
         dialog->EditBreakpoint(m_Filename, m_pData->m_LastMarginMenuLine + 1);
     }
+#endif // #if !CB_REDUCED_GUI
     else if (id == idBreakpointRemove)
         RemoveBreakpoint(m_pData->m_LastMarginMenuLine);
+#if !CB_REDUCED_GUI
     else if (id == idBreakpointEnable)
     {
         cbBreakpointsDlg *dialog = Manager::Get()->GetDebuggerManager()->GetBreakpointDialog();
@@ -3127,6 +3142,7 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
         cbBreakpointsDlg *dialog = Manager::Get()->GetDebuggerManager()->GetBreakpointDialog();
         dialog->EnableBreakpoint(m_Filename, m_pData->m_LastMarginMenuLine + 1, false);
     }
+#endif // #if !CB_REDUCED_GUI
     else
         event.Skip();
     //Manager::Get()->GetLogManager()->DebugLog(_T("Leaving OnContextMenuEntry"));
@@ -3316,6 +3332,7 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
         // wheter to show line-numbers or not is handled in SetLineNumberColWidth() now
         m_pData->SetLineNumberColWidth();
 
+#if !CB_REDUCED_GUI
         // NB: I don't think polling for each debugger every time will slow things down enough
         // to worry about unless there are automated tasks that call this routine regularly
         //
@@ -3337,6 +3354,7 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
         if (dlg)
             dlg->Reload();
         RefreshBreakpointMarkers();
+#endif // #if !CB_REDUCED_GUI
     }
     // If we remove the folding-point (the brace or whatever) from a folded block,
     // we have to make the hidden lines visible, otherwise, they

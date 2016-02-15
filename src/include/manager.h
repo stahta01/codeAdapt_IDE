@@ -26,7 +26,9 @@ class wxFrame;
 class wxWindow;
 class ProjectManager;
 class EditorManager;
+#if !CB_REDUCED_GUI
 class DebuggerManager;
+#endif // #if !CB_REDUCED_GUI
 class LogManager;
 class PluginManager;
 class ToolsManager;
@@ -121,7 +123,9 @@ public:
     ScriptingManager*    GetScriptingManager()                        const;
     ConfigManager*       GetConfigManager(const wxString& name_space) const;
     FileManager*         GetFileManager()                             const;
+#if !CB_REDUCED_GUI
     DebuggerManager*     GetDebuggerManager()                         const;
+#endif // #if !CB_REDUCED_GUI
     ColourManager*       GetColourManager()                           const;
     CCManager*           GetCCManager()                               const;
 

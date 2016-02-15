@@ -85,7 +85,9 @@ LogManager::LogManager()
 
     Register(_T("null"),   new Instantiator<NullLogger>);
     Register(_T("stdout"), new Instantiator<StdoutLogger>);
+#if !CB_REDUCED_GUI
     Register(_T("text"),   new Instantiator<TextCtrlLogger>);
+#endif // #if !CB_REDUCED_GUI
     Register(_T("file"),   new Instantiator<FileLogger, true>);
 }
 

@@ -142,6 +142,7 @@ cbDebuggerPlugin::cbDebuggerPlugin(const wxString &guiName, const wxString &sett
 
 void cbDebuggerPlugin::OnAttach()
 {
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->RegisterDebugger(this);
 
     OnAttachReal();
@@ -161,6 +162,7 @@ void cbDebuggerPlugin::OnAttach()
 
     if (SupportsFeature(cbDebuggerFeature::ValueTooltips))
         RegisterValueTooltip();
+#endif // #if !CB_REDUCED_GUI
 }
 
 void cbDebuggerPlugin::OnRelease(bool appShutDown)
@@ -170,14 +172,18 @@ void cbDebuggerPlugin::OnRelease(bool appShutDown)
 
     OnReleaseReal(appShutDown);
 
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->UnregisterDebugger(this);
+#endif // #if !CB_REDUCED_GUI
 }
 
 void cbDebuggerPlugin::BuildMenu(cb_unused wxMenuBar* menuBar)
 {
     if (!IsAttached())
         return;
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->GetMenu();
+#endif // #if !CB_REDUCED_GUI
 }
 
 wxString cbDebuggerPlugin::GetEditorWordAtCaret(const wxPoint* mousePosition)
@@ -243,9 +249,13 @@ void cbDebuggerPlugin::BuildModuleMenu(const ModuleType type, wxMenu* menu, cb_u
     // we 'll add a "debug watches" entry only when the debugger is running...
     if (type != mtEditorManager || !menu)
         return;
+#if !CB_REDUCED_GUI
     cbDebuggerPlugin *active_plugin = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
     if (active_plugin != this)
         return;
+#else
+    return;
+#endif // #if !CB_REDUCED_GUI
 
     wxString word;
     if (IsRunning())
@@ -253,7 +263,9 @@ void cbDebuggerPlugin::BuildModuleMenu(const ModuleType type, wxMenu* menu, cb_u
         // has to have a word under the caret...
         word = GetEditorWordAtCaret();
     }
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->BuildContextMenu(*menu, word, IsRunning());
+#endif // #if !CB_REDUCED_GUI
 }
 
 bool cbDebuggerPlugin::BuildToolBar(cb_unused wxToolBar* toolBar)
@@ -269,6 +281,7 @@ bool cbDebuggerPlugin::ToolMenuEnabled() const
     return IsRunning() && en;
 }
 
+#if !CB_REDUCED_GUI
 cbDebuggerConfiguration& cbDebuggerPlugin::GetActiveConfig()
 {
     DebuggerManager::RegisteredPlugins &allPlugins = Manager::Get()->GetDebuggerManager()->GetAllDebuggers();
@@ -282,6 +295,7 @@ cbDebuggerConfiguration& cbDebuggerPlugin::GetActiveConfig()
     else
         return *config;
 }
+#endif // #if !CB_REDUCED_GUI
 
 void cbDebuggerPlugin::SetActiveConfig(int index)
 {
@@ -464,6 +478,7 @@ void cbDebuggerPlugin::OnProjectActivated(CodeBlocksEvent& event)
     // allow others to catch this
     event.Skip();
 
+#if !CB_REDUCED_GUI
     if(this != Manager::Get()->GetDebuggerManager()->GetActiveDebugger())
         return;
     // when a project is activated and it's not the actively debugged project,
@@ -486,6 +501,7 @@ void cbDebuggerPlugin::OnProjectActivated(CodeBlocksEvent& event)
             Manager::Get()->GetProjectManager()->SetProject(GetProject());
         }
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void cbDebuggerPlugin::OnProjectClosed(CodeBlocksEvent& event)
@@ -493,6 +509,7 @@ void cbDebuggerPlugin::OnProjectClosed(CodeBlocksEvent& event)
     // allow others to catch this
     event.Skip();
 
+#if !CB_REDUCED_GUI
     if(this != Manager::Get()->GetDebuggerManager()->GetActiveDebugger())
         return;
     CleanupWhenProjectClosed(event.GetProject());
@@ -513,6 +530,7 @@ void cbDebuggerPlugin::OnProjectClosed(CodeBlocksEvent& event)
         Stop();
         ResetProject();
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void cbDebuggerPlugin::OnEditorHook(cb_unused cbEditor* editor, wxScintillaEvent& event)
@@ -528,6 +546,7 @@ bool cbDebuggerPlugin::DragInProgress() const
     return m_DragInProgress;
 }
 
+#if !CB_REDUCED_GUI
 void cbDebuggerPlugin::ShowLog(bool clear)
 {
     TextCtrlLogger *log = Manager::Get()->GetDebuggerManager()->GetLogger();
@@ -543,6 +562,7 @@ void cbDebuggerPlugin::ShowLog(bool clear)
             log->Clear();
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void cbDebuggerPlugin::Log(const wxString& msg, Logger::level level)
 {
@@ -570,10 +590,12 @@ bool cbDebuggerPlugin::HasDebugLog() const
     return cbDebuggerCommonConfig::GetFlag(cbDebuggerCommonConfig::ShowDebuggersLog);
 }
 
+#if !CB_REDUCED_GUI
 void cbDebuggerPlugin::ClearLog()
 {
     Manager::Get()->GetDebuggerManager()->GetLogger()->Clear();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void cbDebuggerPlugin::SetupLog(int normalIndex)
 {
@@ -961,8 +983,10 @@ void cbDebuggerPlugin::ProcessValueTooltip(CodeBlocksEvent& event)
             return;
     }
 
+#if !CB_REDUCED_GUI
     if (Manager::Get()->GetDebuggerManager()->GetInterfaceFactory()->IsValueTooltipShown())
         return;
+#endif // #if !CB_REDUCED_GUI
 
     if (!ShowValueTooltip(event.GetInt()))
         return;
@@ -994,7 +1018,9 @@ void cbDebuggerPlugin::ProcessValueTooltip(CodeBlocksEvent& event)
 
 void cbDebuggerPlugin::CancelValueTooltip(cb_unused CodeBlocksEvent& event)
 {
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->GetInterfaceFactory()->HideValueTooltip();
+#endif // #if !CB_REDUCED_GUI
 }
 /////
 ///// cbToolPlugin
