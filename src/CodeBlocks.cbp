@@ -1718,9 +1718,6 @@
 		<Unit filename="plugins/compilergcc/compilergcc.h">
 			<Option target="Compiler" />
 		</Unit>
-		<Unit filename="plugins/compilergcc/compilermessages.cpp">
-			<Option target="Compiler" />
-		</Unit>
 		<Unit filename="plugins/compilergcc/compilermessages.h">
 			<Option target="Compiler" />
 		</Unit>
@@ -3941,16 +3938,10 @@
 		<Unit filename="src/associations.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src/backtracedlg.cpp">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src/backtracedlg.h">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/batchbuild.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/breakpointsdlg.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/breakpointsdlg.h">
@@ -3974,37 +3965,19 @@
 		<Unit filename="src/crashhandler.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src/debugger_interface_creator.cpp">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src/debugger_interface_creator.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/debuggermenu.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/debuggermenu.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src/debuggersettingscommonpanel.cpp">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src/debuggersettingscommonpanel.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/debuggersettingsdlg.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/debuggersettingsdlg.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src/debuggersettingspanel.cpp">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src/debuggersettingspanel.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/disassemblydlg.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/disassemblydlg.h">
@@ -4040,13 +4013,7 @@
 		<Unit filename="src/environmentsettingsdlg.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src/examinememorydlg.cpp">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src/examinememorydlg.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/find_replace.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/find_replace.h">
@@ -4218,9 +4185,6 @@
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/virtualbuildtargetsdlg.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src/watchesdlg.cpp">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src/watchesdlg.h">
