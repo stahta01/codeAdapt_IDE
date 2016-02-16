@@ -2316,7 +2316,6 @@ void cbEditor::RefreshBreakpointMarkers()
     while ((line = c->MarkerNext(line, (1 << BREAKPOINT_OTHER_MARKER))) != -1)
         MarkerToggle(BREAKPOINT_OTHER_MARKER, line);
 
-#if !CB_REDUCED_GUI
     const DebuggerManager::RegisteredPlugins &plugins = Manager::Get()->GetDebuggerManager()->GetAllDebuggers();
     for (DebuggerManager::RegisteredPlugins::const_iterator it = plugins.begin(); it != plugins.end(); ++it)
     {
@@ -2346,8 +2345,8 @@ void cbEditor::RefreshBreakpointMarkers()
             }
         }
     }
-#endif // #if !CB_REDUCED_GUI
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool cbEditor::HasBookmark(int line) const
 {
@@ -3127,18 +3126,16 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
         ui.SwitchToProjectsPage();
         ui.ShowFileInTree(*m_pProjectFile);
     }
+#if !CB_REDUCED_GUI
     else if (id == idBreakpointAdd)
         AddBreakpoint(m_pData->m_LastMarginMenuLine);
-#if !CB_REDUCED_GUI
     else if (id == idBreakpointEdit)
     {
         cbBreakpointsDlg *dialog = Manager::Get()->GetDebuggerManager()->GetBreakpointDialog();
         dialog->EditBreakpoint(m_Filename, m_pData->m_LastMarginMenuLine + 1);
     }
-#endif // #if !CB_REDUCED_GUI
     else if (id == idBreakpointRemove)
         RemoveBreakpoint(m_pData->m_LastMarginMenuLine);
-#if !CB_REDUCED_GUI
     else if (id == idBreakpointEnable)
     {
         cbBreakpointsDlg *dialog = Manager::Get()->GetDebuggerManager()->GetBreakpointDialog();
@@ -3348,7 +3345,6 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
         // well, scintilla events happen regularly
         // although we only reach this part of the code only if a line has been added/removed
         // so, yes, it might not be that bad after all
-#if !CB_REDUCED_GUI
         int startline = m_pControl->LineFromPosition(event.GetPosition());
         const DebuggerManager::RegisteredPlugins &plugins = Manager::Get()->GetDebuggerManager()->GetAllDebuggers();
         cbDebuggerPlugin *active = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();

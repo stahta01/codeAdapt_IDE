@@ -1022,10 +1022,9 @@ void cbDebuggerPlugin::ProcessValueTooltip(CodeBlocksEvent& event)
 
 void cbDebuggerPlugin::CancelValueTooltip(cb_unused CodeBlocksEvent& event)
 {
-#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->GetInterfaceFactory()->HideValueTooltip();
-#endif // #if !CB_REDUCED_GUI
 }
+#endif // #if !CB_REDUCED_GUI
 /////
 ///// cbToolPlugin
 /////
