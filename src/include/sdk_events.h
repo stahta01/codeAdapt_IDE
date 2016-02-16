@@ -435,6 +435,7 @@ extern EVTIMPORT const wxEventType cbEVT_DEBUGGER_PAUSED;
 extern EVTIMPORT const wxEventType cbEVT_DEBUGGER_FINISHED;
 #define EVT_DEBUGGER_FINISHED(fn) DECLARE_EVENT_TABLE_ENTRY( cbEVT_DEBUGGER_FINISHED, -1, -1, (wxObjectEventFunction)(wxEventFunction)(CodeBlocksEventFunction)&fn, (wxObject *) NULL ),
 
+#if !CB_REDUCED_GUI
 // logger-related events
 
 // add a log window
@@ -464,6 +465,7 @@ extern EVTIMPORT const wxEventType cbEVT_LOCK_LOG_MANAGER;
 // "unlock" it (used with auto-hiding functionality)
 extern EVTIMPORT const wxEventType cbEVT_UNLOCK_LOG_MANAGER;
 #define EVT_UNLOCK_LOG_MANAGER(fn) DECLARE_EVENT_TABLE_ENTRY( cbEVT_UNLOCK_LOG_MANAGER, -1, -1, (wxObjectEventFunction)(wxEventFunction)(CodeBlocksLogEventFunction)&fn, (wxObject *) NULL ),
+#endif // #if !CB_REDUCED_GUI
 
 //cbAUiNotebook related events
 // left doubleclick on a tab

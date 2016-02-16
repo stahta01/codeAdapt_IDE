@@ -158,6 +158,7 @@ const wxEventType cbEVT_DEBUGGER_STARTED = wxNewEventType();
 const wxEventType cbEVT_DEBUGGER_PAUSED = wxNewEventType();
 const wxEventType cbEVT_DEBUGGER_FINISHED = wxNewEventType();
 
+#if !CB_REDUCED_GUI
 // logger-related events
 const wxEventType cbEVT_ADD_LOG_WINDOW = wxNewEventType();
 const wxEventType cbEVT_REMOVE_LOG_WINDOW = wxNewEventType();
@@ -168,6 +169,7 @@ const wxEventType cbEVT_SHOW_LOG_MANAGER = wxNewEventType();
 const wxEventType cbEVT_HIDE_LOG_MANAGER = wxNewEventType();
 const wxEventType cbEVT_LOCK_LOG_MANAGER = wxNewEventType();
 const wxEventType cbEVT_UNLOCK_LOG_MANAGER = wxNewEventType();
+#endif // #if !CB_REDUCED_GUI
 
 //cbAUiNotebook related events
 const wxEventType cbEVT_CBAUIBOOK_LEFT_DCLICK = wxNewEventType();
