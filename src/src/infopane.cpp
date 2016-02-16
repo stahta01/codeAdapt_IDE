@@ -304,12 +304,14 @@ void InfoPane::OnCopy(wxCommandEvent& event)
 
 void InfoPane::OnWrapMode(cb_unused wxCommandEvent& event)
 {
+#if !CB_REDUCED_GUI
     int i = GetPageIndexByWindow( GetPage(GetSelection()) );
     if (m_Pages.Item(i)->islogger && m_Pages.Item(i)->logger->HasFeature(Logger::Feature::IsWrappable))
     {
         TextCtrlLogger* tcl = static_cast<TextCtrlLogger*>(m_Pages.Item(i)->logger);
         if (tcl) tcl->ToggleWrapMode();
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void InfoPane::OnClear(cb_unused wxCommandEvent& event)

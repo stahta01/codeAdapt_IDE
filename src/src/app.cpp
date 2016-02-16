@@ -1185,13 +1185,16 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLine
             // initial setting for batch flag (will be reset when ParseCmdLine() is called again).
             m_Batch = m_Build || m_ReBuild || m_Clean;
 
-
+#if !CB_REDUCED_GUI
             if (parser.Found(_T("no-log")) == false)
                 Manager::Get()->GetLogManager()->SetLog(new TextCtrlLogger, LogManager::app_log);
+#endif // #if !CB_REDUCED_GUI
             if (parser.Found(_T("log-to-file")))
                 Manager::Get()->GetLogManager()->SetLog(new FileLogger(_T("codeblocks.log")), LogManager::app_log);
+#if !CB_REDUCED_GUI
             if (m_HasDebugLog)
                 Manager::Get()->GetLogManager()->SetLog(new TextCtrlLogger, LogManager::debug_log);
+#endif // #if !CB_REDUCED_GUI
             if (parser.Found(_T("debug-log-to-file")))
                 Manager::Get()->GetLogManager()->SetLog(new FileLogger(_T("codeblocks-debug.log")), LogManager::debug_log);
         }
