@@ -167,8 +167,10 @@ bool ToolsManager::Execute(const cbTool* tool)
         }
         else
         {
+#if !CB_REDUCED_GUI
             CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, LogManager::app_log);
             Manager::Get()->ProcessEvent(evtSwitch);        // switch to default log
+#endif // #if !CB_REDUCED_GUI
          }
     }
     else
@@ -186,8 +188,10 @@ bool ToolsManager::Execute(const cbTool* tool)
         }
         else
         {
+#if !CB_REDUCED_GUI
             CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, LogManager::app_log);
             Manager::Get()->ProcessEvent(evtSwitch);        // switch to default log
+#endif // #if !CB_REDUCED_GUI
         }
     }
 

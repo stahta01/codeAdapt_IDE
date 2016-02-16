@@ -29,6 +29,7 @@ CodeBlocksLogEvent::CodeBlocksLogEvent(wxEventType commandType, Logger* logger_i
     : wxEvent(wxID_ANY, commandType),
     logger(logger_in), logIndex(-1), icon(icon_in), title(title_in), window(nullptr)
 {
+#if !CB_REDUCED_GUI
     // special case for add
     if (commandType == cbEVT_ADD_LOG_WINDOW && logger)
     {
@@ -41,6 +42,7 @@ CodeBlocksLogEvent::CodeBlocksLogEvent(wxEventType commandType, Logger* logger_i
             return;
         }
     }
+#endif // #if !CB_REDUCED_GUI
 
     logIndex = Manager::Get()->GetLogManager()->FindIndex(logger);
 }
