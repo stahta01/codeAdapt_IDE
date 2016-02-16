@@ -107,6 +107,8 @@ public:
     BuildLogger()
 #if !CB_REDUCED_GUI
         : TextCtrlLogger(true), panel(0), sizer(0), progress(0)
+#else
+        : FileLogger(_T("codeblocks-build.log"))
 #endif // #if !CB_REDUCED_GUI
     {}
 
