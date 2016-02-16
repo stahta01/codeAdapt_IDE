@@ -89,24 +89,39 @@ namespace ScriptBindings
 
 const int idBuildLog = wxNewId();
 
+#if !CB_REDUCED_GUI
 class BuildLogger : public TextCtrlLogger
+#else
+class BuildLogger : public FileLogger
+#endif // #if !CB_REDUCED_GUI
 {
+#if !CB_REDUCED_GUI
     wxPanel* panel;
     wxBoxSizer* sizer;
+#endif // #if !CB_REDUCED_GUI
 public:
+#if !CB_REDUCED_GUI
     wxGauge* progress;
+#endif // #if !CB_REDUCED_GUI
 
-    BuildLogger() : TextCtrlLogger(true), panel(0), sizer(0), progress(0) {}
+    BuildLogger()
+#if !CB_REDUCED_GUI
+        : TextCtrlLogger(true), panel(0), sizer(0), progress(0)
+#endif // #if !CB_REDUCED_GUI
+    {}
 
     void UpdateSettings()
     {
+#if !CB_REDUCED_GUI
         TextCtrlLogger::UpdateSettings();
 
         style[caption].SetAlignment(wxTEXT_ALIGNMENT_DEFAULT);
         style[caption].SetFont(style[error].GetFont());
         style[error].SetFont(style[info].GetFont());
+#endif // #if !CB_REDUCED_GUI
     }
 
+#if !CB_REDUCED_GUI
     virtual wxWindow* CreateControl(wxWindow* parent)
     {
         panel = new wxPanel(parent);
@@ -120,19 +135,23 @@ public:
 
         return panel;
     }
+#endif // #if !CB_REDUCED_GUI
 
     void AddBuildProgressBar()
     {
+#if !CB_REDUCED_GUI
         if (!progress)
         {
             progress = new wxGauge(panel, -1, 0, wxDefaultPosition, wxSize(-1, 12));
             sizer->Add(progress, 0, wxEXPAND);
             sizer->Layout();
         }
+#endif // #if !CB_REDUCED_GUI
     }
 
     void RemoveBuildProgressBar()
     {
+#if !CB_REDUCED_GUI
         if (progress)
         {
             sizer->Detach(progress);
@@ -140,10 +159,12 @@ public:
             progress = 0;
             sizer->Layout();
         }
+#endif // #if !CB_REDUCED_GUI
     }
 
     void OpenLink(long urlStart, long urlEnd)
     {
+#if !CB_REDUCED_GUI
         if (!control)
             return;
         wxString url = control->GetRange(urlStart, urlEnd);
@@ -154,6 +175,9 @@ public:
             p->OpenFile(url);
         else
             wxLaunchDefaultBrowser(url);
+#else
+        return;
+#endif // #if !CB_REDUCED_GUI
     }
 };
 
@@ -1140,11 +1164,13 @@ void CompilerGCC::AddToCommandQueue(const wxArrayString& commands)
         }
     }
 
+#if !CB_REDUCED_GUI
     if (m_pLog->progress)
     {
         m_pLog->progress->SetRange(m_MaxProgress);
         m_pLog->progress->SetValue(m_CurrentProgress);
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void CompilerGCC::AllocProcesses()
@@ -1362,8 +1388,10 @@ int CompilerGCC::DoRunQueue()
 #endif // #if !CB_REDUCED_GUI
                 SaveBuildLog();
             }
+#if !CB_REDUCED_GUI
             if (!Manager::IsBatchBuild() && m_pLog->progress)
                 m_pLog->progress->SetValue(0);
+#endif // #if !CB_REDUCED_GUI
         }
         Delete(m_CompilerProcessList.at(procIndex).pProcess);
         m_CommandQueue.Clear();
@@ -3614,11 +3642,13 @@ void CompilerGCC::LogMessage(const wxString& message, CompilerLineType lt, LogTa
                 float p = (float)(m_CurrentProgress * 100.0f) / (float)m_MaxProgress;
                 progressMsg.Printf(_T("[%5.1f%%] "), p);
             }
+#if !CB_REDUCED_GUI
             if (m_pLog->progress)
             {
                 m_pLog->progress->SetRange(m_MaxProgress);
                 m_pLog->progress->SetValue(m_CurrentProgress);
             }
+#endif // #if !CB_REDUCED_GUI
         }
 
         Manager::Get()->GetLogManager()->Log(progressMsg + msg, m_PageIndex, lv);
@@ -3811,8 +3841,10 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 #endif // #if !CB_REDUCED_GUI
                 SaveBuildLog();
             }
+#if !CB_REDUCED_GUI
             if (!Manager::IsBatchBuild() && m_pLog->progress)
                 m_pLog->progress->SetValue(0);
+#endif // #if !CB_REDUCED_GUI
         }
         else
         {

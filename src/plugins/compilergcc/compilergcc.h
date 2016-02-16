@@ -23,6 +23,8 @@
 
 #if !CB_REDUCED_GUI
 #include "compilermessages.h"
+#else
+#include <loggers.h>
 #endif // #if !CB_REDUCED_GUI
 #include "compilererrors.h"
 #include "compiler_defs.h"
@@ -86,6 +88,7 @@ class wxGauge;
 class wxStaticText;
 
 class BuildLogger;
+
 class PipedProcess;
 
 class CompilerGCC : public cbCompilerPlugin
