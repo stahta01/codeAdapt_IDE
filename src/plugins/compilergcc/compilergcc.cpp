@@ -139,21 +139,19 @@ public:
     }
 #endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
     void AddBuildProgressBar()
     {
-#if !CB_REDUCED_GUI
         if (!progress)
         {
             progress = new wxGauge(panel, -1, 0, wxDefaultPosition, wxSize(-1, 12));
             sizer->Add(progress, 0, wxEXPAND);
             sizer->Layout();
         }
-#endif // #if !CB_REDUCED_GUI
     }
 
     void RemoveBuildProgressBar()
     {
-#if !CB_REDUCED_GUI
         if (progress)
         {
             sizer->Detach(progress);
@@ -161,12 +159,10 @@ public:
             progress = 0;
             sizer->Layout();
         }
-#endif // #if !CB_REDUCED_GUI
     }
 
     void OpenLink(long urlStart, long urlEnd)
     {
-#if !CB_REDUCED_GUI
         if (!control)
             return;
         wxString url = control->GetRange(urlStart, urlEnd);
@@ -177,10 +173,8 @@ public:
             p->OpenFile(url);
         else
             wxLaunchDefaultBrowser(url);
-#else
-        return;
-#endif // #if !CB_REDUCED_GUI
     }
+#endif // #if !CB_REDUCED_GUI
 };
 
 namespace
@@ -302,7 +296,9 @@ BEGIN_EVENT_TABLE(CompilerGCC, cbCompilerPlugin)
     EVT_MENU(idMenuClearErrors,                     CompilerGCC::Dispatcher)
     EVT_MENU(idMenuSettings,                        CompilerGCC::Dispatcher)
 
+#if !CB_REDUCED_GUI
     EVT_TEXT_URL(idBuildLog,                        CompilerGCC::TextURL)
+#endif // #if !CB_REDUCED_GUI
 
     EVT_CHOICE(idToolTarget,                        CompilerGCC::OnSelectTarget)
 
@@ -424,12 +420,10 @@ void CompilerGCC::OnAttach()
     // set log image
     bmp = new wxBitmap(cbLoadBitmap(prefix + _T("flag_16x16.png"), wxBITMAP_TYPE_PNG));
     msgMan->Slot(m_ListPageIndex).icon = bmp;
-#endif // #if !CB_REDUCED_GUI
 
     CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, m_pLog, msgMan->Slot(m_PageIndex).title, msgMan->Slot(m_PageIndex).icon);
     Manager::Get()->ProcessEvent(evtAdd1);
 
-#if !CB_REDUCED_GUI
     if (!Manager::IsBatchBuild())
     {
         CodeBlocksLogEvent evtAdd2(cbEVT_ADD_LOG_WINDOW, m_pListLog, msgMan->Slot(m_ListPageIndex).title, msgMan->Slot(m_ListPageIndex).icon);
@@ -437,10 +431,12 @@ void CompilerGCC::OnAttach()
     }
 #endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
     m_LogBuildProgressPercentage = Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/percentage"), false);
     bool hasBuildProg = Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/bar"), false);
     if (hasBuildProg)
         m_pLog->AddBuildProgressBar();
+#endif // #if !CB_REDUCED_GUI
 
     // set default compiler for new projects
     CompilerFactory::SetDefaultCompiler(Manager::Get()->GetConfigManager(_T("compiler"))->Read(_T("/default_compiler"), _T("gcc")));
@@ -475,6 +471,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
     Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/default_compiler"), CompilerFactory::GetDefaultCompilerID());
     if (Manager::Get()->GetLogManager())
     {
+#if !CB_REDUCED_GUI
         // for batch builds, the log is deleted by the manager
         if (!Manager::IsBatchBuild())
         {
@@ -483,7 +480,6 @@ void CompilerGCC::OnRelease(bool appShutDown)
         }
         m_pLog = 0;
 
-#if !CB_REDUCED_GUI
         CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_pListLog);
         m_pListLog->DestroyControls();
         Manager::Get()->ProcessEvent(evt);
@@ -514,11 +510,13 @@ int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
         SaveOptions();
         Manager::Get()->GetMacrosManager()->Reset();
 
+#if !CB_REDUCED_GUI
         bool hasBuildProg = Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/bar"), false);
         if (hasBuildProg)
             m_pLog->AddBuildProgressBar();
         else
             m_pLog->RemoveBuildProgressBar();
+#endif // #if !CB_REDUCED_GUI
     }
 //    delete panel;
     return 0;
@@ -718,6 +716,7 @@ void CompilerGCC::Dispatcher(wxCommandEvent& event)
         ed->GetControl()->SetFocus();
 }
 
+#if !CB_REDUCED_GUI
 void CompilerGCC::TextURL(wxTextUrlEvent& event)
 {
     if (event.GetId() == idBuildLog && event.GetMouseEvent().ButtonDown(wxMOUSE_BTN_LEFT))
@@ -725,6 +724,7 @@ void CompilerGCC::TextURL(wxTextUrlEvent& event)
     else
         event.Skip();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void CompilerGCC::SetupEnvironment()
 {
@@ -1100,8 +1100,10 @@ void CompilerGCC::ClearLog()
     if (IsProcessRunning())
         return;
 
+#if !CB_REDUCED_GUI
     CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, m_pLog);
     Manager::Get()->ProcessEvent(evtSwitch);
+#endif // #if !CB_REDUCED_GUI
 
     if (m_pLog)
         m_pLog->Clear();
@@ -1686,8 +1688,10 @@ void CompilerGCC::PrintBanner(BuildAction action, cbProject* prj, ProjectBuildTa
     if (!CompilerValid(target))
         return;
 
+#if !CB_REDUCED_GUI
     CodeBlocksLogEvent evtShow(cbEVT_SHOW_LOG_MANAGER);
     Manager::Get()->ProcessEvent(evtShow);
+#endif // #if !CB_REDUCED_GUI
 
     if (!prj)
         prj = m_pProject;
@@ -3861,12 +3865,13 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 
         if (!Manager::IsBatchBuild() && m_Errors.GetCount(cltError))
         {
+#if !CB_REDUCED_GUI
             if (Manager::Get()->GetConfigManager(_T("message_manager"))->ReadBool(_T("/auto_show_build_errors"), true))
             {
                 CodeBlocksLogEvent evtShow(cbEVT_SHOW_LOG_MANAGER);
                 Manager::Get()->ProcessEvent(evtShow);
             }
-#if !CB_REDUCED_GUI
+
             CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, m_pListLog);
             Manager::Get()->ProcessEvent(evtSwitch);
 
@@ -3881,6 +3886,7 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
                 if (Run() == 0)
                     DoRunQueue();
             }
+#if !CB_REDUCED_GUI
             else if (!Manager::IsBatchBuild())
             {
                 // switch to the "Build messages" window only if the active log window is "Build log"
@@ -3907,6 +3913,7 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
                     }
                 }
             }
+#endif // #if !CB_REDUCED_GUI
         }
 
         m_RunAfterCompile = false;
@@ -3927,9 +3934,11 @@ void CompilerGCC::NotifyJobDone(bool showNothingToBeDone)
     if (showNothingToBeDone && m_Errors.GetCount(cltError) == 0)
     {
         LogMessage(m_Clean ? _("Done.\n") : _("Nothing to be done (all items are up-to-date).\n"));
+#if !CB_REDUCED_GUI
         // if message manager is auto-hiding, unlock it (i.e. close it)
         CodeBlocksLogEvent evtShow(cbEVT_HIDE_LOG_MANAGER);
         Manager::Get()->ProcessEvent(evtShow);
+#endif // #if !CB_REDUCED_GUI
     }
 
     if (!IsProcessRunning())
