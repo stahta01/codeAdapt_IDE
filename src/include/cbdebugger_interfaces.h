@@ -8,7 +8,9 @@
 
 #include <wx/string.h>
 #include "settings.h"
+#if !CB_REDUCED_GUI
 #include "debuggermanager.h"
+#endif // #if !CB_REDUCED_GUI
 
 class cbDebuggerPlugin;
 class wxMenu;

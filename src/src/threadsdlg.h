@@ -7,6 +7,7 @@
 #define THREADSDLG_H
 
 #include <wx/panel.h>
+
 #include <cbdebugger_interfaces.h>
 
 class wxCommandEvent;

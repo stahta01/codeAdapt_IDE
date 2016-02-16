@@ -33,7 +33,9 @@
 #include <pipedprocess.h>
 #include <configmanager.h>
 #include <compilercommandgenerator.h>
+#if !CB_REDUCED_GUI
 #include <debuggermanager.h>
+#endif // #if !CB_REDUCED_GUI
 #include <logmanager.h>
 #include <macrosmanager.h>
 #include <projectmanager.h>
@@ -822,6 +824,7 @@ void CompilerGCC::SetupEnvironment()
 
 bool CompilerGCC::StopRunningDebugger()
 {
+#if !CB_REDUCED_GUI
     cbDebuggerPlugin *dbg = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
     // is the debugger running?
     if (dbg && dbg->IsRunning())
@@ -845,6 +848,7 @@ bool CompilerGCC::StopRunningDebugger()
                 return false;
         }
     }
+#endif // #if !CB_REDUCED_GUI
 
     return true;
 }

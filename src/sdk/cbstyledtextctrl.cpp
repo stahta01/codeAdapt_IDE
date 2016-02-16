@@ -20,9 +20,10 @@
 #endif
 #include <wx/textfile.h> // for wxTextBuffer::Translate()
 
+#if !CB_REDUCED_GUI
 #include "cbdebugger_interfaces.h"
+#endif // #if !CB_REDUCED_GUI
 #include "ccmanager.h"
-#include "debuggermanager.h"
 
 static const wxString s_leftBrace(_T("([{'\""));
 static const wxString s_rightBrace(_T(")]}'\""));

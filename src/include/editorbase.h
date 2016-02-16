@@ -18,7 +18,9 @@
 class wxMenu;
 class EditorBase;
 struct EditorBaseInternalData;
+#if !CB_REDUCED_GUI
 class cbDebuggerPlugin;
+#endif // #if !CB_REDUCED_GUI
 
 WX_DECLARE_HASH_MAP(int, EditorBase*, wxIntegerHash, wxIntegerEqual, SwitchToMap);
 

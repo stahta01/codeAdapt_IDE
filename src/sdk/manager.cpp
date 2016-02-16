@@ -46,7 +46,9 @@
 
 #include "cbcolourmanager.h"
 #include "ccmanager.h"
+#if !CB_REDUCED_GUI
 #include "debuggermanager.h"
+#endif // #if !CB_REDUCED_GUI
 
 static Manager* s_ManagerInstance = nullptr;
 
@@ -484,10 +486,12 @@ FileManager* Manager::GetFileManager() const
     return FileManager::Get();
 }
 
+#if !CB_REDUCED_GUI
 DebuggerManager* Manager::GetDebuggerManager() const
 {
     return DebuggerManager::Get();
 }
+#endif // #if !CB_REDUCED_GUI
 
 ColourManager* Manager::GetColourManager() const
 {

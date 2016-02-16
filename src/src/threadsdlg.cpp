@@ -20,7 +20,9 @@
 
 #include "threadsdlg.h"
 #include "cbcolourmanager.h"
+#if !CB_REDUCED_GUI
 #include "debuggermanager.h"
+#endif // #if !CB_REDUCED_GUI
 
 namespace
 {
@@ -58,6 +60,7 @@ ThreadsDlg::ThreadsDlg(wxWindow* parent) : wxPanel(parent)
 
 void ThreadsDlg::Reload()
 {
+#if !CB_REDUCED_GUI
     cbDebuggerPlugin *plugin = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
     if (!plugin)
         return;
@@ -89,6 +92,10 @@ void ThreadsDlg::Reload()
     {
         m_list->SetColumnWidth(ii, wxLIST_AUTOSIZE);
     }
+#else
+    return;
+#endif // #if !CB_REDUCED_GUI
+
 }
 
 //void ThreadsDlg::AddThread(const wxString& active_mark, const wxString& thread_num, const wxString& thread_info)
@@ -139,9 +146,11 @@ void ThreadsDlg::OnSwitchThread(cb_unused wxCommandEvent& event)
     unsigned long thread_num;
     if (thread.ToULong(&thread_num, 10))
     {
+#if !CB_REDUCED_GUI
         cbDebuggerPlugin *plugin = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
         if(plugin)
             plugin->SwitchToThread(thread_num);
+#endif // #if !CB_REDUCED_GUI
     }
 }
 

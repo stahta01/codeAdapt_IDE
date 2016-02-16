@@ -33,8 +33,10 @@ extern int idStartHerePageLink;
 extern int idStartHerePageVarSubst;
 
 class cbAuiNotebook;
+#if !CB_REDUCED_GUI
 class DebuggerMenuHandler;
 class DebuggerToolbarHandler;
+#endif // #if !CB_REDUCED_GUI
 class InfoPane;
 class wxGauge;
 class ProjectManagerUI;

@@ -34,10 +34,11 @@
 #include <wx/toolbar.h>
 
 #include "annoyingdialog.h"
+#if !CB_REDUCED_GUI
 #include "cbdebugger_interfaces.h"
+#endif // #if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
 #include "ccmanager.h"
-#include "debuggermanager.h"
 #include "editor_hooks.h"
 #include "loggers.h"
 
@@ -124,6 +125,7 @@ cbCompilerPlugin::cbCompilerPlugin()
 ///// cbDebuggerPlugin
 /////
 
+#if !CB_REDUCED_GUI
 cbDebuggerPlugin::cbDebuggerPlugin(const wxString &guiName, const wxString &settingsName) :
     m_pCompiler(nullptr),
     m_WaitingCompilerToFinish(false),
@@ -777,6 +779,7 @@ void cbDebuggerPlugin::OnCompilerFinished(cb_unused CodeBlocksEvent& event)
         }
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 #ifndef __WXMSW__
 namespace
@@ -867,6 +870,7 @@ struct ConsoleProcess : wxProcess
 } // namespace
 #endif
 
+#if !CB_REDUCED_GUI
 int cbDebuggerPlugin::RunNixConsole(wxString &consoleTty)
 {
     consoleTty = wxEmptyString;

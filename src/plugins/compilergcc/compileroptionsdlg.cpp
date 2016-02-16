@@ -46,7 +46,9 @@
 #include "cbexception.h"
 #include "compilergcc.h"
 #include "compileroptionsdlg.h"
+#if !CB_REDUCED_GUI
 #include "debuggermanager.h"
+#endif // #if !CB_REDUCED_GUI
 #include "editpathdlg.h"
 #include "editpairdlg.h"
 #include "compilerflagdlg.h"
@@ -477,6 +479,7 @@ void CompilerOptionsDlg::DoFillCompilerPrograms()
     XRCCTRL(*this, "txtCPPcompiler", wxTextCtrl)->SetValue(progs.CPP);
     XRCCTRL(*this, "txtLinker", wxTextCtrl)->SetValue(progs.LD);
     XRCCTRL(*this, "txtLibLinker", wxTextCtrl)->SetValue(progs.LIB);
+#if !CB_REDUCED_GUI
     wxChoice *cmbDebugger = XRCCTRL(*this, "cmbDebugger", wxChoice);
     if (cmbDebugger)
     {
@@ -501,6 +504,7 @@ void CompilerOptionsDlg::DoFillCompilerPrograms()
             }
         }
     }
+#endif // #if !CB_REDUCED_GUI
 
     XRCCTRL(*this, "txtResComp", wxTextCtrl)->SetValue(progs.WINDRES);
     XRCCTRL(*this, "txtMake", wxTextCtrl)->SetValue(progs.MAKE);

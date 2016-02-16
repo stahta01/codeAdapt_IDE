@@ -211,11 +211,13 @@ class DLLIMPORT cbEditor : public EditorBase
           * @return Editor found, position set and token highlighted? */
         bool GotoTokenPosition(int line, const wxString& tokenName);
 
+#if !CB_REDUCED_GUI
         /** Add debugger breakpoint at specified line. If @c line is -1, use current line. */
         bool AddBreakpoint(int line = -1, bool notifyDebugger = true);
 
         /** Remove debugger breakpoint at specified line. If @c line is -1, use current line. */
         bool RemoveBreakpoint(int line = -1, bool notifyDebugger = true);
+#endif // #if !CB_REDUCED_GUI
 
         /** Toggle debugger breakpoint at specified line. If @c line is -1, use current line. */
         virtual void ToggleBreakpoint(int line = -1, bool notifyDebugger = true);
@@ -223,6 +225,7 @@ class DLLIMPORT cbEditor : public EditorBase
         /** Does @c line has debugger breakpoint? If @c line is -1, use current line. */
         virtual bool HasBreakpoint(int line) const;
 
+#if !CB_REDUCED_GUI
         /** Go to next debugger breakpoint. */
         virtual void GotoNextBreakpoint();
 
@@ -231,6 +234,7 @@ class DLLIMPORT cbEditor : public EditorBase
 
         /** Refresh all markers for the breakpoints (only the markers for the current debugger will be shown) */
         virtual void RefreshBreakpointMarkers();
+#endif // #if !CB_REDUCED_GUI
 
         /** Clear all bookmarks. */
         virtual void ClearAllBookmarks();

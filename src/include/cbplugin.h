@@ -393,6 +393,7 @@ struct cbDebuggerFeature
   * This plugin type must offer some pre-defined debug facilities, on top
   * of the generic plugin's.
   */
+#if !CB_REDUCED_GUI
 class PLUGIN_EXPORT cbDebuggerPlugin: public cbPlugin
 {
     public:
@@ -649,6 +650,7 @@ class PLUGIN_EXPORT cbDebuggerPlugin: public cbPlugin
         bool m_lastLineWasNormal;
         wxString m_guiName, m_settingsName;
 };
+#endif // #if !CB_REDUCED_GUI
 
 /** @brief Base class for tool plugins
   *

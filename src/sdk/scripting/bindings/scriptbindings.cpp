@@ -666,17 +666,21 @@ namespace ScriptBindings
                 func(&cbEditor::Reload, "Reload").
                 func(&cbEditor::Print, "Print").
                 func(&cbEditor::AutoComplete, "AutoComplete").
+#if !CB_REDUCED_GUI
                 func(&cbEditor::AddBreakpoint, "AddBreakpoint").
                 func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").
+#endif // #if !CB_REDUCED_GUI
                 func(&cbEditor::ToggleBookmark, "ToggleBookmark").
                 func(&cbEditor::HasBookmark, "HasBookmark").
                 func(&cbEditor::GotoNextBookmark, "GotoNextBookmark").
                 func(&cbEditor::GotoPreviousBookmark, "GotoPreviousBookmark").
                 func(&cbEditor::ClearAllBookmarks, "ClearAllBookmarks").
+#if !CB_REDUCED_GUI
                 func(&cbEditor::ToggleBreakpoint, "ToggleBreakpoint").
                 func(&cbEditor::HasBreakpoint, "HasBreakpoint").
                 func(&cbEditor::GotoNextBreakpoint, "GotoNextBreakpoint").
                 func(&cbEditor::GotoPreviousBreakpoint, "GotoPreviousBreakpoint").
+#endif // #if !CB_REDUCED_GUI
 
 
                 // these are not present in cbEditor; included to help scripts edit text

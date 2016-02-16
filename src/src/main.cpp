@@ -49,7 +49,6 @@
 #include <cbworkspace.h>
 #include <ccmanager.h>
 #include <configmanager.h>
-#include <debuggermanager.h>
 #include <editorcolourset.h>
 #include <editormanager.h>
 #include <filefilters.h>
@@ -64,8 +63,10 @@
 #include <toolsmanager.h>
 #include <uservarmanager.h>
 
+#if !CB_REDUCED_GUI
 #include "debugger_interface_creator.h"
 #include "debuggermenu.h"
+#endif // #if !CB_REDUCED_GUI
 
 #include "cbcolourmanager.h"
 #include "editorconfigurationdlg.h"
@@ -530,7 +531,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSettingsGlobalUserVars, MainFrame::OnGlobalUserVars)
     EVT_MENU(idSettingsEditor,         MainFrame::OnSettingsEditor)
     EVT_MENU(idSettingsCompiler,       MainFrame::OnSettingsCompiler)
+#if !CB_REDUCED_GUI
     EVT_MENU(idSettingsDebugger,       MainFrame::OnSettingsDebugger)
+#endif // #if !CB_REDUCED_GUI
     EVT_MENU(idPluginsManagePlugins,   MainFrame::OnSettingsPlugins)
     EVT_MENU(idSettingsScripting,      MainFrame::OnSettingsScripting)
 
@@ -671,8 +674,10 @@ MainFrame::~MainFrame()
 
     DeInitPrinting();
 
+#if !CB_REDUCED_GUI
     delete m_debuggerMenuHandler;
     delete m_debuggerToolbarHandler;
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::RegisterEvents()
@@ -751,7 +756,9 @@ void MainFrame::CreateIDE()
 
     // logs manager
     SetupGUILogging();
+#if !CB_REDUCED_GUI
     SetupDebuggerUI();
+#endif // #if !CB_REDUCED_GUI
 
     CreateMenubar();
 
@@ -825,6 +832,7 @@ void MainFrame::SetupGUILogging()
     m_pInfoPane->SetDropTarget(new cbFileDropTarget(this));
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::SetupDebuggerUI()
 {
     m_debuggerMenuHandler = new DebuggerMenuHandler;
@@ -843,6 +851,7 @@ void MainFrame::SetupDebuggerUI()
     Manager::Get()->GetDebuggerManager()->SetInterfaceFactory(new DebugInterfaceFactory);
     m_debuggerMenuHandler->RegisterDefaultWindowItems();
 }
+#endif // #if !CB_REDUCED_GUI
 
 DECLARE_INSTANCE_TYPE(MainFrame);
 
@@ -1031,7 +1040,9 @@ void MainFrame::CreateMenubar()
 
     // core modules: create menus
     m_pPrjManUI->CreateMenu(mbar);
+#if !CB_REDUCED_GUI
     Manager::Get()->GetDebuggerManager()->SetMenuHandler(m_debuggerMenuHandler);
+#endif // #if !CB_REDUCED_GUI
 
     // ask all plugins to rebuild their menus
     PluginElementsArray plugins = Manager::Get()->GetPluginManager()->GetPlugins();
@@ -1115,15 +1126,19 @@ void MainFrame::CreateToolbars()
 
     m_pToolbar->SetInitialSize();
 
+#if !CB_REDUCED_GUI
     // Right click on the debugger toolbar will popup a context menu
     m_debuggerToolbarHandler->GetToolbar()->Connect(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, wxCommandEventHandler(MainFrame::OnToolBarRightClick), NULL, this );
+#endif // #if !CB_REDUCED_GUI
 
     std::vector<ToolbarInfo> toolbars;
 
     toolbars.push_back(ToolbarInfo(m_pToolbar, wxAuiPaneInfo().Name(wxT("MainToolbar")).Caption(_("Main Toolbar")), 0));
+#if !CB_REDUCED_GUI
     toolbars.push_back(ToolbarInfo(m_debuggerToolbarHandler->GetToolbar(),
                                    wxAuiPaneInfo(). Name(wxT("DebuggerToolbar")).Caption(_("Debugger Toolbar")),
                                    2));
+#endif // #if !CB_REDUCED_GUI
 
     // ask all plugins to rebuild their toolbars
     PluginElementsArray plugins = Manager::Get()->GetPluginManager()->GetPlugins();
@@ -4415,11 +4430,13 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
         win = m_pToolbar;
         toolbar = true;
     }
+#if !CB_REDUCED_GUI
     else if (event.GetId() == idViewToolDebugger)
     {
         win = m_debuggerToolbarHandler->GetToolbar();
         toolbar = true;
     }
+#endif // #if !CB_REDUCED_GUI
     else
     {
         wxString pluginName = m_PluginIDsMap[event.GetId()];
@@ -4704,6 +4721,7 @@ void MainFrame::OnSettingsCompiler(cb_unused wxCommandEvent& event)
     }
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnSettingsDebugger(cb_unused wxCommandEvent& event)
 {
     DebuggerSettingsDlg dlg(this);
@@ -4715,6 +4733,7 @@ void MainFrame::OnSettingsDebugger(cb_unused wxCommandEvent& event)
         Manager::Get()->ProcessEvent(event2);
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnSettingsPlugins(cb_unused wxCommandEvent& event)
 {
@@ -5126,5 +5145,7 @@ void MainFrame::SetChecksForViewToolbarsMenu(wxMenu &menu)
     }
 
     menu.Check(idViewToolMain,     m_LayoutManager.GetPane(m_pToolbar).IsShown());
+#if !CB_REDUCED_GUI
     menu.Check(idViewToolDebugger, m_LayoutManager.GetPane(m_debuggerToolbarHandler->GetToolbar(false)).IsShown());
+#endif // #if !CB_REDUCED_GUI
 }

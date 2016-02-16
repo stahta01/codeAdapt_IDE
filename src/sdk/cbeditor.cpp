@@ -44,7 +44,9 @@
 #include <wx/splitter.h>
 
 #include "cbeditorprintout.h"
+#if !CB_REDUCED_GUI
 #include "cbdebugger_interfaces.h"
+#endif // #if !CB_REDUCED_GUI
 #include "editor_hooks.h"
 #include "encodingdetector.h"
 #include "filefilters.h"
@@ -2182,6 +2184,7 @@ void cbEditor::BreakpointMarkerToggle(int line)
         m_pControl->MarkerAdd(line, BREAKPOINT_MARKER);
 }
 
+#if !CB_REDUCED_GUI
 bool cbEditor::AddBreakpoint(int line, bool notifyDebugger)
 {
     if (HasBreakpoint(line))
@@ -2232,6 +2235,7 @@ bool cbEditor::RemoveBreakpoint(int line, bool notifyDebugger)
     return false;
 }
 
+#endif // #if !CB_REDUCED_GUI
 void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
 {
     if (line == -1)
@@ -2278,6 +2282,7 @@ bool cbEditor::HasBreakpoint(int line) const
     return LineHasMarker(BREAKPOINT_MARKER, line) || LineHasMarker(BREAKPOINT_DISABLED_MARKER, line);
 }
 
+#if !CB_REDUCED_GUI
 void cbEditor::GotoNextBreakpoint()
 {
     MarkerNext(BREAKPOINT_MARKER);
@@ -2287,12 +2292,14 @@ void cbEditor::GotoPreviousBreakpoint()
 {
     MarkerPrevious(BREAKPOINT_MARKER);
 }
+#endif // #if !CB_REDUCED_GUI
 
 void cbEditor::ToggleBookmark(int line)
 {
     MarkerToggle(BOOKMARK_MARKER, line);
 }
 
+#if !CB_REDUCED_GUI
 void cbEditor::RefreshBreakpointMarkers()
 {
     // First remove all breakpoint markers, then add the markers for the active debugger
@@ -3157,7 +3164,9 @@ void cbEditor::OnMarginClick(wxScintillaEvent& event)
             int lineYpix = event.GetPosition();
             int line = GetControl()->LineFromPosition(lineYpix);
 
+#if !CB_REDUCED_GUI
             ToggleBreakpoint(line);
+#endif // #if !CB_REDUCED_GUI
             break;
         }
         case C_FOLDING_MARGIN: // folding margin
@@ -3339,6 +3348,7 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
         // well, scintilla events happen regularly
         // although we only reach this part of the code only if a line has been added/removed
         // so, yes, it might not be that bad after all
+#if !CB_REDUCED_GUI
         int startline = m_pControl->LineFromPosition(event.GetPosition());
         const DebuggerManager::RegisteredPlugins &plugins = Manager::Get()->GetDebuggerManager()->GetAllDebuggers();
         cbDebuggerPlugin *active = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
