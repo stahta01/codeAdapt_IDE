@@ -710,6 +710,7 @@ void MainFrame::RegisterEvents()
     m->RegisterEventSink(cbEVT_QUERY_VIEW_LAYOUT,      new cbEventFunctor<MainFrame, CodeBlocksLayoutEvent>(this, &MainFrame::OnLayoutQuery));
     m->RegisterEventSink(cbEVT_SWITCH_VIEW_LAYOUT,     new cbEventFunctor<MainFrame, CodeBlocksLayoutEvent>(this, &MainFrame::OnLayoutSwitch));
 
+#if !CB_REDUCED_GUI
     m->RegisterEventSink(cbEVT_ADD_LOG_WINDOW,         new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnAddLogWindow));
     m->RegisterEventSink(cbEVT_REMOVE_LOG_WINDOW,      new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnRemoveLogWindow));
     m->RegisterEventSink(cbEVT_HIDE_LOG_WINDOW,        new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnHideLogWindow));
@@ -719,6 +720,7 @@ void MainFrame::RegisterEvents()
     m->RegisterEventSink(cbEVT_HIDE_LOG_MANAGER,       new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnHideLogManager));
     m->RegisterEventSink(cbEVT_LOCK_LOG_MANAGER,       new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnLockLogManager));
     m->RegisterEventSink(cbEVT_UNLOCK_LOG_MANAGER,     new cbEventFunctor<MainFrame, CodeBlocksLogEvent>(this, &MainFrame::OnUnlockLogManager));
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::ShowTips(bool forceShow)
