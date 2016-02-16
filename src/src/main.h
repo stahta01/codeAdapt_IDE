@@ -404,8 +404,10 @@ class MainFrame : public wxFrame
         wxScrollingDialog* m_pBatchBuildDialog;
         wxButton*          m_pHighlightButton;
 
+#if !CB_REDUCED_GUI
         DebuggerMenuHandler*    m_debuggerMenuHandler;
         DebuggerToolbarHandler* m_debuggerToolbarHandler;
+#endif // #if !CB_REDUCED_GUI
 
 #if !CB_REDUCED_GUI
         FindReplace m_findReplace;
