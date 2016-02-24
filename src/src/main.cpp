@@ -509,7 +509,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchGotoPreviousChanged,   MainFrame::OnSearchGotoPrevChanged)
 #endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
     EVT_MENU(idViewLayoutSave,            MainFrame::OnViewLayoutSave)
+#endif // #if !CB_REDUCED_GUI
     EVT_MENU(idViewLayoutDelete,          MainFrame::OnViewLayoutDelete)
     EVT_MENU(idViewToolFit,               MainFrame::OnViewToolbarsFit)
     EVT_MENU(idViewToolOptimize,          MainFrame::OnViewToolbarsOptimize)
@@ -522,7 +524,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idViewHideEditorTabs,        MainFrame::OnViewHideEditorTabs)
     EVT_MENU(idViewFocusEditor,           MainFrame::OnFocusEditor)
     EVT_MENU(idViewFocusManagement,       MainFrame::OnFocusManagement)
+#if !CB_REDUCED_GUI
     EVT_MENU(idViewFocusLogsAndOthers,    MainFrame::OnFocusLogsAndOthers)
+#endif // #if !CB_REDUCED_GUI
     EVT_MENU(idViewSwitchTabs,            MainFrame::OnSwitchTabs)
     EVT_MENU(idViewFullScreen,            MainFrame::OnToggleFullScreen)
     EVT_MENU(idViewStartPage,             MainFrame::OnToggleStartPage)
@@ -570,7 +574,9 @@ MainFrame::MainFrame(wxWindow* parent)
        m_pPrjMan(nullptr),
        m_pPrjManUI(nullptr),
        m_pLogMan(nullptr),
+#if !CB_REDUCED_GUI
        m_pInfoPane(nullptr),
+#endif // #if !CB_REDUCED_GUI
        m_pToolbar(nullptr),
        m_ToolsMenu(nullptr),
        m_HelpPluginsMenu(nullptr),
@@ -642,7 +648,9 @@ MainFrame::MainFrame(wxWindow* parent)
         cfg->Write(_T("/main_frame/layout/default"), gDefaultLayout);
     DoFixToolbarsLayout();
     gDefaultLayoutData = m_LayoutManager.SavePerspective(); // keep the "hardcoded" layout handy
+#if !CB_REDUCED_GUI
     gDefaultMessagePaneLayoutData = m_pInfoPane->SaveTabOrder();
+#endif // #if !CB_REDUCED_GUI
     SaveViewLayout(gDefaultLayout, gDefaultLayoutData, gDefaultMessagePaneLayoutData);
 
     // generate default minimal layout
@@ -654,8 +662,10 @@ MainFrame::MainFrame(wxWindow* parent)
             info.Hide();
     }
     gMinimalLayoutData = m_LayoutManager.SavePerspective(); // keep the "hardcoded" layout handy
+#if !CB_REDUCED_GUI
     gMinimalMessagePaneLayoutData = m_pInfoPane->SaveTabOrder();
     SaveViewLayout(gMinimalLayout, gMinimalLayoutData, gMinimalMessagePaneLayoutData);
+#endif // #if !CB_REDUCED_GUI
 
     LoadWindowState();
 
@@ -799,6 +809,7 @@ void MainFrame::SetupGUILogging()
 
     if (!Manager::IsBatchBuild())
     {
+#if !CB_REDUCED_GUI
         m_pInfoPane = new InfoPane(this);
         m_LayoutManager.AddPane(m_pInfoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
@@ -813,7 +824,6 @@ void MainFrame::SetupGUILogging()
                 m_pInfoPane->AddLogger(mgr->Slot(i).GetLogger(), log, mgr->Slot(i).title, mgr->Slot(i).icon);
         }
 
-#if !CB_REDUCED_GUI
         m_findReplace.CreateSearchLog();
 #endif // #if !CB_REDUCED_GUI
     }
@@ -821,8 +831,10 @@ void MainFrame::SetupGUILogging()
     {
         m_pBatchBuildDialog = new BatchLogWindow(this, _("Code::Blocks - Batch build"));
         wxSizer* s = new wxBoxSizer(wxVERTICAL);
+#if !CB_REDUCED_GUI
         m_pInfoPane = new InfoPane(m_pBatchBuildDialog);
         s->Add(m_pInfoPane, 1, wxEXPAND);
+#endif // #if !CB_REDUCED_GUI
         m_pBatchBuildDialog->SetSizer(s);
 
         // setting &g_null_log causes the app to crash on exit for some reason...
@@ -831,7 +843,9 @@ void MainFrame::SetupGUILogging()
     }
 
     mgr->NotifyUpdate();
+#if !CB_REDUCED_GUI
     m_pInfoPane->SetDropTarget(new cbFileDropTarget(this));
+#endif // #if !CB_REDUCED_GUI
 }
 
 #if !CB_REDUCED_GUI
@@ -1300,13 +1314,14 @@ void MainFrame::LoadWindowState()
 
     // load manager and messages selected page
     m_pPrjManUI->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_selection"), 0));
+#if !CB_REDUCED_GUI
     m_pInfoPane->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_selection"), 0));
 
     // Cryogen 23/3/10 wxAuiNotebook can't set it's own tab position once instantiated, for some reason. This code fails in InfoPane::InfoPane().
     // Moved here as this seems like a resonable place to do UI setup. Feel free to move it elsewhere.
     if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/infopane_tabs_bottom"), false))
         m_pInfoPane->SetWindowStyleFlag(m_pInfoPane->GetWindowStyleFlag() | wxAUI_NB_BOTTOM);
-
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::LoadWindowSize()
@@ -1363,6 +1378,7 @@ void MainFrame::LoadWindowSize()
 
 void MainFrame::SaveWindowState()
 {
+#if !CB_REDUCED_GUI
     DoCheckCurrentLayoutForChanges(false);
 
     // first delete all previous layouts, otherwise they might remain
@@ -1390,7 +1406,9 @@ void MainFrame::SaveWindowState()
     // save manager and messages selected page
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left_block_selection"),
                                                        m_pPrjManUI->GetNotebook()->GetSelection());
+#if !CB_REDUCED_GUI
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/bottom_block_selection"), m_pInfoPane->GetSelection());
+#endif // #if !CB_REDUCED_GUI
 
     // save display, window size and position
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/display"),   wxDisplay::GetFromWindow(this));
@@ -1402,12 +1420,15 @@ void MainFrame::SaveWindowState()
         Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/height"), GetSize().y);
     }
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/maximized"), IsMaximized());
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::LoadViewLayout(const wxString& name, bool isTemp)
 {
+#if !CB_REDUCED_GUI
     if (m_LastLayoutName != name && !DoCheckCurrentLayoutForChanges(true))
         return;
+#endif // #if !CB_REDUCED_GUI
 
     m_LastLayoutIsTemp = isTemp;
 
@@ -1424,8 +1445,10 @@ void MainFrame::LoadViewLayout(const wxString& name, bool isTemp)
     else
         DoSelectLayout(name);
 
+#if !CB_REDUCED_GUI
     // first load taborder of MessagePane, so LoadPerspective can restore the last selected tab
     m_pInfoPane->LoadTabOrder(layoutMP);
+#endif // #if !CB_REDUCED_GUI
     m_LayoutManager.LoadPerspective(layout, false);
 
     DoUpdateLayout();
@@ -1541,6 +1564,7 @@ bool MainFrame::LayoutMessagePaneDifferent(const wxString& layout1,const wxStrin
     return arLayout1 != arLayout2;
 }
 
+#if !CB_REDUCED_GUI
 bool MainFrame::DoCheckCurrentLayoutForChanges(bool canCancel)
 {
     DoFixToolbarsLayout();
@@ -1570,6 +1594,7 @@ bool MainFrame::DoCheckCurrentLayoutForChanges(bool canCancel)
     }
     return true;
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::DoFixToolbarsLayout()
 {
@@ -2055,8 +2080,10 @@ void MainFrame::DoUpdateEditorStyle()
     if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/hide_editor_tabs"),false))
         an->SetTabCtrlHeight(0);
 
+#if !CB_REDUCED_GUI
     an = m_pInfoPane;
     DoUpdateEditorStyle(an, _T("infopane"), style);
+#endif // #if !CB_REDUCED_GUI
 
     an = m_pPrjManUI->GetNotebook();
     DoUpdateEditorStyle(an, _T("project"), wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE);
@@ -2779,7 +2806,9 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
         SaveWindowState();
 
     m_LayoutManager.DetachPane(m_pPrjManUI->GetNotebook());
+#if !CB_REDUCED_GUI
     m_LayoutManager.DetachPane(m_pInfoPane);
+#endif // #if !CB_REDUCED_GUI
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
 
     m_LayoutManager.UnInit();
@@ -2793,11 +2822,13 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     // Hide the window
     Hide();
 
+#if !CB_REDUCED_GUI
     if (!Manager::IsBatchBuild())
     {
         m_pInfoPane->Destroy();
         m_pInfoPane = nullptr;
     }
+#endif // #if !CB_REDUCED_GUI
 
     // Disconnect the mouse right click event handler for toolbars, this should be done before the plugin is
     // unloaded in Manager::Shutdown().
@@ -3807,6 +3838,7 @@ void MainFrame::OnViewLayout(wxCommandEvent& event)
     LoadViewLayout(m_PluginIDsMap[event.GetId()]);
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnViewLayoutSave(cb_unused wxCommandEvent& event)
 {
     wxString def = m_LastLayoutName;
@@ -3822,6 +3854,7 @@ void MainFrame::OnViewLayoutSave(cb_unused wxCommandEvent& event)
                        true);
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnViewLayoutDelete(cb_unused wxCommandEvent& event)
 {
@@ -4193,7 +4226,9 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     bool       manVis = m_LayoutManager.GetPane(m_pPrjManUI->GetNotebook()).IsShown();
 
     mbar->Check(idViewManager,             manVis);
+#if !CB_REDUCED_GUI
     mbar->Check(idViewLogManager,          m_LayoutManager.GetPane(m_pInfoPane).IsShown());
+#endif // #if !CB_REDUCED_GUI
     mbar->Check(idViewStartPage,           Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle)!=NULL);
     mbar->Check(idViewStatusbar,           GetStatusBar() && GetStatusBar()->IsShown());
     mbar->Check(idViewScriptConsole,       m_LayoutManager.GetPane(m_pScriptConsole).IsShown());
@@ -4201,7 +4236,9 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Check(idViewFullScreen,          IsFullScreen());
     mbar->Enable(idViewFocusEditor,        ed);
     mbar->Enable(idViewFocusManagement,    manVis);
+#if !CB_REDUCED_GUI
     mbar->Enable(idViewFocusLogsAndOthers, m_pInfoPane->IsShown());
+#endif // #if !CB_REDUCED_GUI
 
     // toolbars
     wxMenu* viewToolbars = nullptr;
@@ -4425,8 +4462,10 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
     bool toolbar = false;
     if (event.GetId() == idViewManager)
         win = m_pPrjManUI->GetNotebook();
+#if !CB_REDUCED_GUI
     else if (event.GetId() == idViewLogManager)
         win = m_pInfoPane;
+#endif // #if !CB_REDUCED_GUI
     else if (event.GetId() == idViewToolMain)
     {
         win = m_pToolbar;
@@ -4496,11 +4535,13 @@ void MainFrame::OnFocusManagement(cb_unused wxCommandEvent& event)
         nb->FocusActiveTabCtrl();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnFocusLogsAndOthers(cb_unused wxCommandEvent& event)
 {
     if (m_pInfoPane)
         m_pInfoPane->FocusActiveTabCtrl();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
 {
@@ -4842,7 +4883,9 @@ void MainFrame::OnCtrlAltTab(cb_unused wxCommandEvent& event)
         break;
       case 2:  // Focus is on the Editor -> Cycle to Logs & others
         m_LastCtrlAltTabWindow = 3;
+#if !CB_REDUCED_GUI
         OnFocusLogsAndOthers(dummy);
+#endif // #if !CB_REDUCED_GUI
         break;
       case 3:  // Focus is on Logs & others -> fall through
       default: // Focus (cycle to) the Mgmt. panel
@@ -4945,6 +4988,7 @@ void MainFrame::OnLayoutSwitch(CodeBlocksLayoutEvent& event)
     LoadViewLayout(event.layout, true);
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnAddLogWindow(CodeBlocksLogEvent& event)
 {
     if (Manager::IsAppShuttingDown())
@@ -5019,6 +5063,7 @@ void MainFrame::OnHideLogManager(cb_unused CodeBlocksLogEvent& event)
     m_LayoutManager.GetPane(m_pInfoPane).Show(false);
     DoUpdateLayout();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnLockLogManager(cb_unused CodeBlocksLogEvent& event)
 {
@@ -5027,6 +5072,7 @@ void MainFrame::OnLockLogManager(cb_unused CodeBlocksLogEvent& event)
     ++m_AutoHideLockCounter;
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnUnlockLogManager(cb_unused CodeBlocksLogEvent& event)
 {
     if (!Manager::Get()->GetConfigManager(_T("message_manager"))->ReadBool(_T("/auto_hide"), false) &&
@@ -5038,6 +5084,7 @@ void MainFrame::OnUnlockLogManager(cb_unused CodeBlocksLogEvent& event)
         DoUpdateLayout();
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 // Highlight Button
 void MainFrame::OnHighlightMenu(cb_unused wxCommandEvent& event)

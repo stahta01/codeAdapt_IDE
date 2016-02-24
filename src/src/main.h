@@ -372,7 +372,9 @@ class MainFrame : public wxFrame
         ProjectManager*   m_pPrjMan;
         ProjectManagerUI* m_pPrjManUI;
         LogManager*       m_pLogMan;
+#if !CB_REDUCED_GUI
         InfoPane*         m_pInfoPane;
+#endif // #if !CB_REDUCED_GUI
 
         wxToolBar* m_pToolbar; // main toolbar
         PluginToolbarsMap m_PluginsTools; // plugin -> toolbar map
