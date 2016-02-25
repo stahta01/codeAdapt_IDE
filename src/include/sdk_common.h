@@ -143,8 +143,8 @@
     #include "scriptingmanager.h"
 #if !CB_REDUCED_GUI
     #include "toolsmanager.h"
-#endif // #if !CB_REDUCED_GUI
     #include "templatemanager.h"
+#endif // #if !CB_REDUCED_GUI
     #include "macrosmanager.h"
     #include "pluginmanager.h"
     #include "personalitymanager.h"

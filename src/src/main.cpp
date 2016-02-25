@@ -59,8 +59,8 @@
 #include <projectmanager.h>
 #include <scriptingmanager.h>
 #include <sdk_events.h>
-#include <templatemanager.h>
 #if !CB_REDUCED_GUI
+#include <templatemanager.h>
 #include <toolsmanager.h>
 #endif // #if !CB_REDUCED_GUI
 #include <uservarmanager.h>
@@ -390,12 +390,14 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_UPDATE_UI(idViewFocusLogsAndOthers, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewFullScreen,         MainFrame::OnViewMenuUpdateUI)
 
+#if !CB_REDUCED_GUI
     EVT_MENU(idFileNewEmpty,   MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewProject, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewTarget,  MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewFile,    MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewCustom,  MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewUser,    MainFrame::OnFileNewWhat)
+#endif // #if !CB_REDUCED_GUI
 
     EVT_MENU(idToolNew,                           MainFrame::OnFileNew)
     EVT_MENU(idFileOpen,                          MainFrame::OnFileOpen)
@@ -413,7 +415,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idFileSaveAllFiles,                  MainFrame::OnFileSaveAllFiles)
     EVT_MENU(idFileSaveProject,                   MainFrame::OnFileSaveProject)
     EVT_MENU(idFileSaveProjectAs,                 MainFrame::OnFileSaveProjectAs)
+#if !CB_REDUCED_GUI
     EVT_MENU(idFileSaveProjectTemplate,           MainFrame::OnFileSaveProjectTemplate)
+#endif // #if !CB_REDUCED_GUI
     EVT_MENU(idFileSaveProjectAllProjects,        MainFrame::OnFileSaveProjectAllProjects)
     EVT_MENU(idFileOpenDefWorkspace,              MainFrame::OnFileOpenDefWorkspace)
     EVT_MENU(idFileSaveWorkspace,                 MainFrame::OnFileSaveWorkspace)
@@ -2222,9 +2226,12 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
     wxCommandEvent evt;
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
+#if !CB_REDUCED_GUI
     if (link.IsSameAs(_T("CB_CMD_NEW_PROJECT")))
         OnFileNewWhat(evt);
-    else if (link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
+    else
+#endif // #if !CB_REDUCED_GUI
+    if (link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
         DoOnFileOpen(true);
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_ENVIRONMENT")))
 //        OnSettingsEnvironment(evt);
@@ -2327,6 +2334,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
         Manager::Get()->GetLogManager()->DebugLog(F(_T("No plugin found for ID %d"), event.GetId()));
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 {
     int id = event.GetId();
@@ -2344,6 +2352,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 
         wxString filename;
         cbProject* prj = TemplateManager::Get()->New(tot, &filename);
+
         // verify that the open files are still in sync
         // the new file might have overwritten an existing one)
         Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
@@ -2412,6 +2421,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     // the new file might have overwritten an existing one)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool MainFrame::OnDropFiles(wxCoord /*x*/, wxCoord /*y*/, const wxArrayString& files)
 {
@@ -2612,10 +2622,12 @@ void MainFrame::OnFileSaveAll(cb_unused wxCommandEvent& event)
     DoUpdateAppTitle();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnFileSaveProjectTemplate(cb_unused wxCommandEvent& event)
 {
     TemplateManager::Get()->SaveUserTemplate(Manager::Get()->GetProjectManager()->GetActiveProject());
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnFileCloseProject(cb_unused wxCommandEvent& event)
 {

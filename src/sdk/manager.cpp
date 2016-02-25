@@ -237,8 +237,8 @@ void Manager::Shutdown()
 
 #if !CB_REDUCED_GUI
     ToolsManager::Free();
-#endif // #if !CB_REDUCED_GUI
     TemplateManager::Free();
+#endif // #if !CB_REDUCED_GUI
     CCManager::Free();
     PluginManager::Free();
     ScriptingManager::Free();
