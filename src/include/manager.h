@@ -127,7 +127,9 @@ public:
     DebuggerManager*     GetDebuggerManager()                         const;
 #endif // #if !CB_REDUCED_GUI
     ColourManager*       GetColourManager()                           const;
+#if !CB_REDUCED_GUI
     CCManager*           GetCCManager()                               const;
+#endif // #if !CB_REDUCED_GUI
 
 
     /////// XML Resource functions ///////

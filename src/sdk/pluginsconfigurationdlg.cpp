@@ -26,7 +26,9 @@
 #endif
 
 #include "annoyingdialog.h"
+#if !CB_REDUCED_GUI
 #include "ccmanager.h"
+#endif // #if !CB_REDUCED_GUI
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include <wx/html/htmlwin.h>
@@ -483,7 +485,9 @@ void PluginsConfigurationDlg::EndModal(int retCode)
     cfg->Write(_T("/install_globally"), XRCCTRL(*this, "chkInstallGlobally", wxCheckBox)->GetValue());
     cfg->Write(_T("/install_confirmation"), XRCCTRL(*this, "chkInstallConfirmation", wxCheckBox)->GetValue());
 
+#if !CB_REDUCED_GUI
     Manager::Get()->GetCCManager()->NotifyPluginStatus();
+#endif // #if !CB_REDUCED_GUI
 
     wxScrollingDialog::EndModal(retCode);
 }

@@ -22,8 +22,8 @@
 
 #if !CB_REDUCED_GUI
 #include "cbdebugger_interfaces.h"
-#endif // #if !CB_REDUCED_GUI
 #include "ccmanager.h"
+#endif // #if !CB_REDUCED_GUI
 
 static const wxString s_leftBrace(_T("([{'\""));
 static const wxString s_rightBrace(_T(")]}'\""));
@@ -230,8 +230,10 @@ void cbStyledTextCtrl::OnKeyDown(wxKeyEvent& event)
         {
             if (event.GetModifiers() == wxMOD_NONE)
             {
+#if !CB_REDUCED_GUI
                 if (Manager::Get()->GetCCManager()->ProcessArrow(event.GetKeyCode()))
                     return;
+#endif // #if !CB_REDUCED_GUI
             }
         }
         break;

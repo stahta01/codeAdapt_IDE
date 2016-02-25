@@ -45,8 +45,8 @@
 #endif // PPRCESS_EVENT_PERFORMANCE_MEASURE
 
 #include "cbcolourmanager.h"
-#include "ccmanager.h"
 #if !CB_REDUCED_GUI
+#include "ccmanager.h"
 #include "debuggermanager.h"
 #endif // #if !CB_REDUCED_GUI
 
@@ -238,8 +238,8 @@ void Manager::Shutdown()
 #if !CB_REDUCED_GUI
     ToolsManager::Free();
     TemplateManager::Free();
-#endif // #if !CB_REDUCED_GUI
     CCManager::Free();
+#endif // #if !CB_REDUCED_GUI
     PluginManager::Free();
     ScriptingManager::Free();
     ProjectManager::Free();
@@ -502,10 +502,12 @@ ColourManager* Manager::GetColourManager() const
     return ColourManager::Get();
 }
 
+#if !CB_REDUCED_GUI
 CCManager* Manager::GetCCManager() const
 {
     return CCManager::Get();
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool Manager::LoadResource(const wxString& file)
 {

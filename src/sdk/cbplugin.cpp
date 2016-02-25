@@ -38,7 +38,9 @@
 #include "cbdebugger_interfaces.h"
 #endif // #if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#if !CB_REDUCED_GUI
 #include "ccmanager.h"
+#endif // #if !CB_REDUCED_GUI
 #include "editor_hooks.h"
 #include "loggers.h"
 
@@ -1064,7 +1066,11 @@ void cbCodeCompletionPlugin::DoAutocomplete(const wxString& token, cbEditor* ed)
 
 bool cbCodeCompletionPlugin::IsProviderFor(cbEditor* ed)
 {
+#if !CB_REDUCED_GUI
     return (Manager::Get()->GetCCManager()->GetProviderFor(ed) == this);
+#else
+    return false;
+#endif // #if !CB_REDUCED_GUI
 }
 
 /////
