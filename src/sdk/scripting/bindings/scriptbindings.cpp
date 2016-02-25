@@ -548,12 +548,16 @@ namespace ScriptBindings
                 func(&cbProject::SetMakefile, "SetMakefile").
                 func(&cbProject::IsMakefileCustom, "IsMakefileCustom").
                 func(&cbProject::SetMakefileCustom, "SetMakefileCustom").
+#if !CB_REDUCED_GUI
                 func(&cbProject::CloseAllFiles, "CloseAllFiles").
                 func(&cbProject::SaveAllFiles, "SaveAllFiles").
+#endif // #if !CB_REDUCED_GUI
                 func(&cbProject::Save, "Save").
 //                func(&cbProject::SaveAs, "SaveAs"). // *UNSAFE*
+#if !CB_REDUCED_GUI
                 func(&cbProject::SaveLayout, "SaveLayout").
                 func(&cbProject::LoadLayout, "LoadLayout").
+#endif // #if !CB_REDUCED_GUI
 //                func(&cbProject::ShowOptions, "ShowOptions").
                 func(&cbProject::GetCommonTopLevelPath, "GetCommonTopLevelPath").
                 func(&cbProject::GetFilesCount, "GetFilesCount").
@@ -715,8 +719,10 @@ namespace ScriptBindings
         SqPlus::SQClassDef<UserVariableManager>("UserVariableManager").
                 func(&UserVariableManager::Exists, "Exists");
 
+#if !CB_REDUCED_GUI
         SqPlus::SQClassDef<ScriptingManager>("ScriptingManager").
                 func(&ScriptingManager::RegisterScriptMenu, "RegisterScriptMenu");
+#endif // #if !CB_REDUCED_GUI
 
         typedef bool(*CF_INHERITSFROM)(const wxString&, const wxString&); // CompilerInheritsFrom
 
