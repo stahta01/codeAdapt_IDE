@@ -28,7 +28,9 @@
 
 #include <cbexception.h>
 #include <configmanager.h>
+#if !CB_REDUCED_GUI
 #include <editormanager.h>
+#endif // #if !CB_REDUCED_GUI
 #include <globals.h>
 #include <loggers.h>
 #include <logmanager.h>
@@ -43,7 +45,9 @@
 #include "appglobals.h"
 #include "associations.h"
 #include "cbauibook.h"
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 #include "crashhandler.h"
 #include "projectmanagerui.h"
 #include "splashscreen.h"
@@ -1258,9 +1262,11 @@ void CodeBlocksApp::LoadDelayedFiles(MainFrame *const frame)
         fn.Normalize(); // really important so that two same files with different names are not loaded twice
         if (frame->Open(fn.GetFullPath(), false))
         {
+#if !CB_REDUCED_GUI
             EditorBase* eb = Manager::Get()->GetEditorManager()->GetEditor(fn.GetFullPath());
             if (eb && (line != -1))
                 eb->GotoLine(line - 1, true);
+#endif // #if !CB_REDUCED_GUI
         }
         m_AutoFile.Clear();
     }
@@ -1309,6 +1315,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
     if (!event.GetActive())
         return;
 
+#if !CB_REDUCED_GUI
     // fix for bug #18007: In batch build mode the following is not needed
     if (  !m_Batch
         && Manager::Get()->GetEditorManager()
@@ -1335,6 +1342,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
         Manager::Get()->GetEditorManager()->GetNotebook()->SetFocus();
         ed->GetControl()->SetFocus();
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void CodeBlocksApp::AddFileToOpenDelayed(const wxString& filename)

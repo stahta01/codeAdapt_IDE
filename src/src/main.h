@@ -13,7 +13,9 @@
 #include <wx/docview.h> // for wxFileHistory
 #include <wx/notebook.h>
 #include <wx/dynarray.h>
+#if !CB_REDUCED_GUI
 #include <cbeditor.h>
+#endif // #if !CB_REDUCED_GUI
 #include "manager.h"
 #include "cbexception.h"
 #include "cbplugin.h"
@@ -368,7 +370,9 @@ class MainFrame : public wxFrame
         /// "Close FullScreen" button. Only shown when in FullScreen view
         wxButton* m_pCloseFullScreenBtn;
 
+#if !CB_REDUCED_GUI
         EditorManager*    m_pEdMan;
+#endif // #if !CB_REDUCED_GUI
         ProjectManager*   m_pPrjMan;
         ProjectManagerUI* m_pPrjManUI;
         LogManager*       m_pLogMan;

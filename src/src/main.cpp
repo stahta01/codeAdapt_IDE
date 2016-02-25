@@ -13,7 +13,9 @@
 #include "appglobals.h"
 #include "batchbuild.h"
 #include "cbauibook.h"
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 #include "compilersettingsdlg.h"
 #include "debuggersettingsdlg.h"
 #include "dlgabout.h"
@@ -51,8 +53,10 @@
 #include <ccmanager.h>
 #endif // #if !CB_REDUCED_GUI
 #include <configmanager.h>
+#if !CB_REDUCED_GUI
 #include <editorcolourset.h>
 #include <editormanager.h>
+#endif // #if !CB_REDUCED_GUI
 #include <filefilters.h>
 #include <globals.h>
 #include <logmanager.h>
@@ -73,7 +77,9 @@
 #endif // #if !CB_REDUCED_GUI
 
 #include "cbcolourmanager.h"
+#if !CB_REDUCED_GUI
 #include "editorconfigurationdlg.h"
+#endif // #if !CB_REDUCED_GUI
 #include "projectmanagerui.h"
 
 class cbFileDropTarget : public wxFileDropTarget
@@ -554,8 +560,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(idStartHerePageLink,     MainFrame::OnStartHereLink)
 
+#if !CB_REDUCED_GUI
     EVT_CBAUIBOOK_LEFT_DCLICK(ID_NBEditorManager, MainFrame::OnNotebookDoubleClick)
     EVT_NOTEBOOK_PAGE_CHANGED(ID_NBEditorManager, MainFrame::OnPageChanged)
+#endif // #if !CB_REDUCED_GUI
 
     // Highlightbutton
     EVT_BUTTON(idHighlightButton, MainFrame::OnHighlightMenu)
@@ -578,7 +586,9 @@ MainFrame::MainFrame(wxWindow* parent)
        m_filesHistory(_("&File"), wxT("/recent_files"), idFileOpenRecentFileClearHistory, wxID_CBFILE01),
        m_projectsHistory(_("&File"), wxT("/recent_projects"), idFileOpenRecentProjectClearHistory, wxID_CBFILE17),
        m_pCloseFullScreenBtn(nullptr),
+#if !CB_REDUCED_GUI
        m_pEdMan(nullptr),
+#endif // #if !CB_REDUCED_GUI
        m_pPrjMan(nullptr),
        m_pPrjManUI(nullptr),
        m_pLogMan(nullptr),
@@ -784,12 +794,16 @@ void MainFrame::CreateIDE()
 
     CreateMenubar();
 
+#if !CB_REDUCED_GUI
     m_pEdMan  = Manager::Get()->GetEditorManager();
+#endif // #if !CB_REDUCED_GUI
     m_pLogMan = Manager::Get()->GetLogManager();
 
+#if !CB_REDUCED_GUI
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
                             CentrePane());
+#endif // #if !CB_REDUCED_GUI
 
     // script console
     m_pScriptConsole = new ScriptConsole(this, -1);
@@ -800,7 +814,9 @@ void MainFrame::CreateIDE()
     DoUpdateLayoutColours();
     DoUpdateEditorStyle();
 
+#if !CB_REDUCED_GUI
     m_pEdMan->GetNotebook()->SetDropTarget(new cbFileDropTarget(this));
+#endif // #if !CB_REDUCED_GUI
     m_pPrjManUI->GetNotebook()->SetDropTarget(new cbFileDropTarget(this));
 
     Manager::Get()->GetColourManager()->Load();
@@ -1016,6 +1032,7 @@ void MainFrame::CreateMenubar()
     if (tmpidx!=wxNOT_FOUND)
     {
         mbar->FindItem(idEditHighlightModeText, &hl);
+#if !CB_REDUCED_GUI
         if (hl)
         {
             EditorColourSet* colour_set = Manager::Get()->GetEditorManager()->GetColourSet();
@@ -1035,6 +1052,7 @@ void MainFrame::CreateMenubar()
                 }
             }
         }
+#endif // #if !CB_REDUCED_GUI
         const wxLanguageInfo* info = wxLocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
         wxMenu* editMenu = mbar->GetMenu(tmpidx);
         if (   info
@@ -1901,6 +1919,7 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
     return false;
 }
 
+#if !CB_REDUCED_GUI
 bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 {
     cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
@@ -1914,6 +1933,7 @@ bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
     }
     return false;
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool MainFrame::DoCloseCurrentWorkspace()
 {
@@ -1959,6 +1979,7 @@ void MainFrame::DoUpdateStatusBar()
     if (!GetStatusBar())
         return;
 
+#if !CB_REDUCED_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     wxString personality(Manager::Get()->GetPersonalityManager()->GetPersonality());
     if (ed)
@@ -2021,6 +2042,7 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(personality, panel++);
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::DoUpdateEditorStyle(cbAuiNotebook* target, const wxString& prefix, long defaultStyle)
@@ -3219,6 +3241,7 @@ struct EditorSelection
     }
 };
 
+#if !CB_REDUCED_GUI
 void SelectNext(cbStyledTextCtrl *control, const wxString &selectedText, long selectionEnd, bool reversed)
 {
     // always match case and try to match whole words if they have no special characters
@@ -3256,6 +3279,7 @@ bool GetSelectionInEditor(EditorSelection &selection, cbStyledTextCtrl *control)
     else
         return false;
 }
+#endif // #if !CB_REDUCED_GUI
 
 } // anonymous namespace
 

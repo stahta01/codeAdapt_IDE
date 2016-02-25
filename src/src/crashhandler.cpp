@@ -18,7 +18,9 @@
     #include "editormanager.h"
     #include "globals.h"
 #endif //CB_PRECOMP
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 
 #include "crashhandler.h"
 #include <shlobj.h>
@@ -39,6 +41,7 @@ inline void CrashHandlerSaveEditorFiles(wxString& buf)
     wxDateTime now = wxDateTime::Now();
     path << now.Format(_T("\\%Y%m%d-%H%M%S"));
 
+#if !CB_REDUCED_GUI
     EditorManager* em = Manager::Get()->GetEditorManager();
     if (em)
     {
@@ -78,6 +81,7 @@ inline void CrashHandlerSaveEditorFiles(wxString& buf)
                 wxRmdir(path);
         }
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)
