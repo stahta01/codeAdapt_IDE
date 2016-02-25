@@ -140,7 +140,9 @@
     // managers
     #include "manager.h"
     #include "configmanager.h"
+#if !CB_REDUCED_GUI
     #include "editormanager.h"
+#endif // #if !CB_REDUCED_GUI
     #include "logmanager.h"
     #include "projectmanager.h"
     #include "menuitemsmanager.h"
