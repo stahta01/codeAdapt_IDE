@@ -47,7 +47,9 @@
 #include <cbplugin.h>
 #include <cbproject.h>
 #include <cbworkspace.h>
+#if !CB_REDUCED_GUI
 #include <ccmanager.h>
+#endif // #if !CB_REDUCED_GUI
 #include <configmanager.h>
 #include <editorcolourset.h>
 #include <editormanager.h>
@@ -646,7 +648,9 @@ MainFrame::MainFrame(wxWindow* parent)
     ScanForPlugins();
     CreateToolbars();
 
+#if !CB_REDUCED_GUI
     Manager::Get()->GetCCManager();
+#endif // #if !CB_REDUCED_GUI
 
     // save default view
     wxString deflayout = cfg->Read(_T("/main_frame/layout/default"));
@@ -3740,7 +3744,9 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
     if (m_pHighlightButton)
         m_pHighlightButton->SetLabel(colour_set->GetLanguageName(lang));
     ed->SetLanguage(lang);
+#if !CB_REDUCED_GUI
     Manager::Get()->GetCCManager()->NotifyPluginStatus();
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::OnEditFoldAll(cb_unused wxCommandEvent& event)
