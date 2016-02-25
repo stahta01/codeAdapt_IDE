@@ -235,7 +235,9 @@ void Manager::Shutdown()
 {
     m_AppShuttingDown = true;
 
+#if !CB_REDUCED_GUI
     ToolsManager::Free();
+#endif // #if !CB_REDUCED_GUI
     TemplateManager::Free();
     CCManager::Free();
     PluginManager::Free();
@@ -451,10 +453,12 @@ PluginManager* Manager::GetPluginManager() const
     return PluginManager::Get();
 }
 
+#if !CB_REDUCED_GUI
 ToolsManager* Manager::GetToolsManager() const
 {
     return ToolsManager::Get();
 }
+#endif // #if !CB_REDUCED_GUI
 
 MacrosManager* Manager::GetMacrosManager() const
 {

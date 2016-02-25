@@ -141,7 +141,9 @@
     #include "projectmanager.h"
     #include "menuitemsmanager.h"
     #include "scriptingmanager.h"
+#if !CB_REDUCED_GUI
     #include "toolsmanager.h"
+#endif // #if !CB_REDUCED_GUI
     #include "templatemanager.h"
     #include "macrosmanager.h"
     #include "pluginmanager.h"

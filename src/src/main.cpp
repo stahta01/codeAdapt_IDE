@@ -60,7 +60,9 @@
 #include <scriptingmanager.h>
 #include <sdk_events.h>
 #include <templatemanager.h>
+#if !CB_REDUCED_GUI
 #include <toolsmanager.h>
+#endif // #if !CB_REDUCED_GUI
 #include <uservarmanager.h>
 
 #if !CB_REDUCED_GUI
@@ -1084,7 +1086,9 @@ void MainFrame::CreateMenubar()
         }
     }
 
+#if !CB_REDUCED_GUI
     Manager::Get()->GetToolsManager()->BuildToolsMenu(m_ToolsMenu);
+#endif // #if !CB_REDUCED_GUI
 
     // Ctrl+Tab workaround for non windows platforms:
     if ((platform::carbon) || (platform::gtk))
