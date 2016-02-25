@@ -279,15 +279,18 @@ bool ScriptingManager::RegisterScriptPlugin(const wxString& /*name*/, const wxAr
         m_AttachedToMainWindow = true;
     }
 
+#if !CB_REDUCED_GUI
     for (size_t i = 0; i < ids.GetCount(); ++i)
     {
         Connect(ids[i], -1, wxEVT_COMMAND_MENU_SELECTED,
                 (wxObjectEventFunction) (wxEventFunction) (wxCommandEventFunction)
                 &ScriptingManager::OnScriptPluginMenu);
     }
+#endif // #if !CB_REDUCED_GUI
     return true;
 }
 
+#if !CB_REDUCED_GUI
 bool ScriptingManager::RegisterScriptMenu(const wxString& menuPath, const wxString& scriptOrFunc, bool isFunction)
 {
     // attach this event handler in the main window (one-time run)
@@ -338,6 +341,7 @@ bool ScriptingManager::UnRegisterAllScriptMenus()
     m_MenuItemsManager.Clear();
     return true;
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool ScriptingManager::IsScriptTrusted(const wxString& script)
 {

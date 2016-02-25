@@ -450,7 +450,9 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     event.SetProject(project);
     Manager::Get()->GetPluginManager()->NotifyPlugins(event);
 
+#if !CB_REDUCED_GUI
     project->CloseAllFiles(true);
+#endif // #if !CB_REDUCED_GUI
     if (refresh)
         m_ui->RemoveProject(project);
     if (wasActive && m_pProjects->GetCount())
@@ -1000,7 +1002,9 @@ void ProjectManager::EndLoadingProject(cbProject* project)
         if (newAddition)
         {
             m_pProjects->Add(project);
+#if !CB_REDUCED_GUI
             project->LoadLayout();
+#endif // #if !CB_REDUCED_GUI
         }
 
         if (!m_IsLoadingWorkspace)

@@ -143,12 +143,14 @@ const wxArrayString& ProjectFile::GetBuildTargets() const
     return buildTargets;
 }
 
+#if !CB_REDUCED_GUI
 bool ProjectFile::ShowOptions(wxWindow* parent)
 {
     ProjectFileOptionsDlg dlg(parent, this);
     PlaceWindow(&dlg);
     return dlg.ShowModal() == wxID_OK;
 }
+#endif // #if !CB_REDUCED_GUI
 
 wxString ProjectFile::GetBaseName() const
 {
