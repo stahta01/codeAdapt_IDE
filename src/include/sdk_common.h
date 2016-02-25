@@ -117,7 +117,9 @@
     // absolute base classes
     #include "logger.h"
     #include "editorbase.h"
+#if !CB_REDUCED_GUI
     #include "cbeditor.h"
+#endif // #if !CB_REDUCED_GUI
     #include "compileoptionsbase.h"
     #include "compiletargetbase.h"
     #include "projectbuildtarget.h"
