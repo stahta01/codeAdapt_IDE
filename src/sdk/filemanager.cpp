@@ -16,7 +16,9 @@
     #include "editormanager.h"
     #include "infowindow.h"
 #endif
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 
 #include <wx/url.h>
 #include <wx/encconv.h>
@@ -133,6 +135,7 @@ FileManager::~FileManager()
 
 LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
 {
+#if !CB_REDUCED_GUI
     if (reuseEditors)
     {
         // if a file is opened in the editor, and the file get modified, we use the content of the
@@ -154,6 +157,7 @@ LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
             }
         }
     }
+#endif // #if !CB_REDUCED_GUI
 
     if (file.StartsWith(_T("http://")))
     {

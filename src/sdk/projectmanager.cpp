@@ -433,8 +433,10 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     // the state of m_IsClosingProject.
     bool isClosingOtherProjects = m_IsClosingProject;
     m_IsClosingProject = true;
+#if !CB_REDUCED_GUI
     Manager::Get()->GetEditorManager()->UpdateProjectFiles(project);
     project->SaveLayout();
+#endif // #if !CB_REDUCED_GUI
 
     if (m_pWorkspace)
         m_pWorkspace->SetModified(true);
@@ -933,7 +935,9 @@ void ProjectManager::WorkspaceChanged()
     {
         CodeBlocksEvent event(cbEVT_WORKSPACE_CHANGED);
         Manager::Get()->GetPluginManager()->NotifyPlugins(event);
+#if !CB_REDUCED_GUI
         Manager::Get()->GetEditorManager()->GetNotebook()->MinimizeFreeSpace();
+#endif // #if !CB_REDUCED_GUI
     }
 }
 

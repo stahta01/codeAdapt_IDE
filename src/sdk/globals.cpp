@@ -20,7 +20,9 @@
     #include <wx/menu.h>
     #include <wx/textdlg.h>
 
+#if !CB_REDUCED_GUI
     #include "wx/wxscintilla.h"
+#endif // #if !CB_REDUCED_GUI
 
     #include "cbexception.h"
     #include "configmanager.h" // ReadBool
@@ -30,6 +32,12 @@
     #include "manager.h"
     #include "projectmanager.h"
 #endif
+
+#if CB_REDUCED_GUI
+#define wxSCI_EOL_CRLF 0
+#define wxSCI_EOL_CR 1
+#define wxSCI_EOL_LF 2
+#endif // #if CB_REDUCED_GUI
 
 #include "tinyxml/tinyxml.h"
 

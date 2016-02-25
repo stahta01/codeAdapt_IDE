@@ -42,7 +42,9 @@
 
 #include <map>
 #include "projectloader.h"
+#if !CB_REDUCED_GUI
 #include "projectlayoutloader.h"
+#endif // #if !CB_REDUCED_GUI
 #include "selecttargetdlg.h"
 #include "filegroupsandmasks.h"
 #include "filefilters.h"
@@ -491,6 +493,7 @@ bool cbProject::Save()
     return false;
 }
 
+#if !CB_REDUCED_GUI
 bool cbProject::SaveLayout()
 {
     if (m_Filename.IsEmpty())
@@ -584,6 +587,7 @@ bool cbProject::LoadLayout()
 
     return result;
 }
+#endif // #if !CB_REDUCED_GUI
 
 void cbProject::BeginAddFiles()
 {
@@ -855,6 +859,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 
 bool cbProject::RemoveFile(ProjectFile* pf)
 {
+#if !CB_REDUCED_GUI
     if (!pf)
         return false;
     m_ProjectFilesMap.erase(UnixFilename(pf->relativeFilename)); // remove from hashmap
@@ -899,6 +904,9 @@ bool cbProject::RemoveFile(ProjectFile* pf)
 
     SetModified(true);
     return true;
+#else
+    return false;
+#endif // #if !CB_REDUCED_GUI
 }
 
 const wxArrayString& cbProject::GetVirtualFolders() const
@@ -1071,6 +1079,7 @@ ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelat
     return m_ProjectFilesMap[UnixFilename(tmp)];
 }
 
+#if !CB_REDUCED_GUI
 bool cbProject::QueryCloseAllFiles()
 {
     FilesList::iterator it = m_Files.begin();
@@ -1086,7 +1095,9 @@ bool cbProject::QueryCloseAllFiles()
     }
     return true;
 }
+#endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
 bool cbProject::CloseAllFiles(bool dontsave)
 {
     // first try to close modified editors
@@ -1109,7 +1120,9 @@ bool cbProject::CloseAllFiles(bool dontsave)
 
     return true;
 }
+#endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
 bool cbProject::SaveAllFiles()
 {
     int count = m_Files.size();
@@ -1122,6 +1135,7 @@ bool cbProject::SaveAllFiles()
     }
     return count == 0;
 }
+#endif // #if !CB_REDUCED_GUI
 
 int cbProject::SelectTarget(int initial, bool evenIfOne)
 {

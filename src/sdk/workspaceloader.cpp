@@ -249,6 +249,7 @@ bool WorkspaceLoader::SaveLayout(const wxString& filename)
     }
     // else No workspace present to save.
 
+#if !CB_REDUCED_GUI
     if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/enable_editor_layout"), false))
     {
         TiXmlElement *el =
@@ -256,6 +257,7 @@ bool WorkspaceLoader::SaveLayout(const wxString& filename)
                 rootnode->InsertEndChild( TiXmlElement("EditorTabsLayout") ) );
         el->SetAttribute("layout", cbU2C( Manager::Get()->GetEditorManager()->GetNotebook()->SavePerspective() ));
     }
+#endif // #if !CB_REDUCED_GUI
     // else ?!
 
     return cbSaveTinyXMLDocument(&doc, filename);
@@ -371,6 +373,7 @@ bool WorkspaceLoader::LoadLayout(const wxString& filename)
     }
     // else XML element 'PreferredTarget' not found?!
 
+#if !CB_REDUCED_GUI
     if (   (major >= 1)
         && (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/enable_editor_layout"), false)) )
     {
@@ -380,6 +383,7 @@ bool WorkspaceLoader::LoadLayout(const wxString& filename)
                 Manager::Get()->GetEditorManager()->GetNotebook()->LoadPerspective(cbC2U(el->Attribute("layout")));
         }
     }
+#endif // #if !CB_REDUCED_GUI
 
     return true;
 }

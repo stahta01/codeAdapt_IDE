@@ -25,8 +25,8 @@
 class wxFrame;
 class wxWindow;
 class ProjectManager;
-class EditorManager;
 #if !CB_REDUCED_GUI
+class EditorManager;
 class DebuggerManager;
 #endif // #if !CB_REDUCED_GUI
 class LogManager;
@@ -113,7 +113,9 @@ public:
      */
 
     ProjectManager*      GetProjectManager()                          const;
+#if !CB_REDUCED_GUI
     EditorManager*       GetEditorManager()                           const;
+#endif // #if !CB_REDUCED_GUI
     LogManager*          GetLogManager()                              const;
     PluginManager*       GetPluginManager()                           const;
     ToolsManager*        GetToolsManager()                            const;

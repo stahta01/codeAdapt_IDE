@@ -438,10 +438,12 @@ ProjectManager* Manager::GetProjectManager() const
     return ProjectManager::Get();
 }
 
+#if !CB_REDUCED_GUI
 EditorManager* Manager::GetEditorManager() const
 {
     return EditorManager::Get();
 }
+#endif // #if !CB_REDUCED_GUI
 
 LogManager* Manager::GetLogManager() const
 {

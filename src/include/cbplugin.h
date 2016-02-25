@@ -1019,6 +1019,7 @@ class PLUGIN_EXPORT cbWizardPlugin : public cbPlugin
         void RemoveToolBar(cb_unused wxToolBar* toolBar){}
 };
 
+#if !CB_REDUCED_GUI
 /** @brief Base class for SmartIndent plugins
   *
   * SmartIndent plugins provide the smart indenting for different languages.
@@ -1086,6 +1087,7 @@ class cbSmartIndentPlugin : public cbPlugin
     private:
         int m_FunctorId;
 };
+#endif // #if !CB_REDUCED_GUI
 
 /** @brief Plugin registration object.
   *

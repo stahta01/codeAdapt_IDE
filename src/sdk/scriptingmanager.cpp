@@ -421,6 +421,7 @@ const ScriptingManager::TrustedScripts& ScriptingManager::GetTrustedScripts()
     return m_TrustedScripts;
 }
 
+#if !CB_REDUCED_GUI
 void ScriptingManager::OnScriptMenu(wxCommandEvent& event)
 {
     MenuIDToScript::iterator it = m_MenuIDToScript.find(event.GetId());
@@ -472,3 +473,5 @@ void ScriptingManager::OnScriptPluginMenu(wxCommandEvent& event)
 {
     ScriptBindings::ScriptPluginWrapper::OnScriptMenu(event.GetId());
 }
+#endif // #if !CB_REDUCED_GUI
+

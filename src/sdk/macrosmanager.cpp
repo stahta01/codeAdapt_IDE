@@ -34,7 +34,9 @@
 #include "scripting/sqplus/sqplus.h"
 #include "scripting/bindings/scriptbindings.h"
 
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 
 using namespace std;
 
@@ -177,6 +179,7 @@ void MacrosManager::ClearProjectKeys()
     m_Macros[_T("WORKSPACEDIRECTORY")]  = m_WorkspaceDir;
 }
 
+#if !CB_REDUCED_GUI
 wxString GetSelectedText()
 {
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
@@ -199,6 +202,7 @@ wxString GetSelectedText()
 
     return wxEmptyString;
 }
+#endif // #if !CB_REDUCED_GUI
 
 namespace
 {
@@ -220,6 +224,7 @@ void MacrosManager::RecalcVars(cbProject* project, EditorBase* editor, ProjectBu
     m_ActiveEditorLine     = -1;            // invalidate
     m_ActiveEditorColumn   = -1;            // invalidate
 
+#if !CB_REDUCED_GUI
     if (editor)
     {
       // don't use pointer to editor here, because this might be the same,
@@ -241,6 +246,7 @@ void MacrosManager::RecalcVars(cbProject* project, EditorBase* editor, ProjectBu
           }
       }
     }
+#endif // #if !CB_REDUCED_GUI
 
     if (!project)
     {
@@ -374,6 +380,7 @@ void MacrosManager::RecalcVars(cbProject* project, EditorBase* editor, ProjectBu
     m_Macros[_T("TARGET_OUTPUT_FILENAME")] = m_TargetOutputFilename;
     m_Macros[_T("TARGET_OUTPUT_FILE")]     = m_TargetFilename;
 
+#if !CB_REDUCED_GUI
     m_Macros[_T("ACTIVE_EDITOR_FILENAME")] = UnixFilename(m_ActiveEditorFilename);
     wxFileName fn(m_Macros[_T("ACTIVE_EDITOR_FILENAME")]);
     m_Macros[_T("ACTIVE_EDITOR_DIRNAME")]  = fn.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
@@ -390,6 +397,7 @@ void MacrosManager::RecalcVars(cbProject* project, EditorBase* editor, ProjectBu
     temp_str.Printf(_T("%d"), (m_ActiveEditorColumn>0) ? m_ActiveEditorColumn-1 : -1); // zero based, but keep value for "invalid"
     m_Macros[_T("ACTIVE_EDITOR_COLUMN_0")] = temp_str;
     m_Macros[_T("ACTIVE_EDITOR_SELECTION")] = GetSelectedText();
+#endif // #if !CB_REDUCED_GUI
 
     // Wrapper for WX standard path's methods:
 
@@ -441,7 +449,11 @@ void MacrosManager::ReplaceMacros(wxString& buffer, ProjectBuildTarget* target, 
     cbProject* project = target
                         ? target->GetParentProject()
                         : Manager::Get()->GetProjectManager()->GetActiveProject();
+#if !CB_REDUCED_GUI
     EditorBase* editor = Manager::Get()->GetEditorManager()->GetActiveEditor();
+#else
+    EditorBase* editor = nullptr;
+#endif // #if !CB_REDUCED_GUI
 
     if (!target)
     {

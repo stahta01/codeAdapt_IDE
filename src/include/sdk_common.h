@@ -103,7 +103,9 @@
     #include <wx/txtstrm.h>
     #include <wx/utils.h>
     #include <wx/wfstream.h>
+#if !CB_REDUCED_GUI
     #include <wx/wxscintilla.h>
+#endif // #if !CB_REDUCED_GUI
     #include <wx/xrc/xmlres.h>
 
     // basic headers
@@ -127,7 +129,9 @@
     #include "compilerfactory.h"
     #include "compiler.h"
     #include "workspaceloader.h"
+#if !CB_REDUCED_GUI
     #include "editorcolourset.h"
+#endif // #if !CB_REDUCED_GUI
     #include "pipedprocess.h"
     #include "scrollingdialog.h"
     #include "cbauibook.h"

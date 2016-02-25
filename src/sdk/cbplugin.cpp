@@ -36,9 +36,7 @@
 #include "annoyingdialog.h"
 #if !CB_REDUCED_GUI
 #include "cbdebugger_interfaces.h"
-#endif // #if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
-#if !CB_REDUCED_GUI
 #include "ccmanager.h"
 #endif // #if !CB_REDUCED_GUI
 #include "editor_hooks.h"
@@ -1082,6 +1080,7 @@ cbWizardPlugin::cbWizardPlugin()
     m_Type = ptWizard;
 }
 
+#if !CB_REDUCED_GUI
 /////
 ///// cbSmartIndentPlugin
 /////
@@ -1403,3 +1402,4 @@ void cbSmartIndentPlugin::OnCCDoneEvent(CodeBlocksEvent& event)
         OnCCDone(ed);
     }
 }
+#endif // #if !CB_REDUCED_GUI
