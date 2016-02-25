@@ -50,7 +50,9 @@ class wxWindow;
 class cbBreakpoint;
 class cbConfigurationPanel;
 class cbDebuggerConfiguration;
+#if !CB_REDUCED_GUI
 class cbEditor;
+#endif // #if !CB_REDUCED_GUI
 class cbProject;
 class cbStackFrame;
 class cbStatusBar;
@@ -727,6 +729,7 @@ class PLUGIN_EXPORT cbMimePlugin : public cbPlugin
 
 class wxHtmlLinkEvent;
 
+#if !CB_REDUCED_GUI
 /** @brief Base class for code-completion plugins
   *
   * The main operations of a code-completion plugin are executed by CCManager
@@ -957,6 +960,7 @@ class PLUGIN_EXPORT cbCodeCompletionPlugin : public cbPlugin
           */
         bool IsProviderFor(cbEditor* ed);
 };
+#endif // #if !CB_REDUCED_GUI
 
 /** @brief Base class for wizard plugins
   *

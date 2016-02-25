@@ -1043,6 +1043,7 @@ cbMimePlugin::cbMimePlugin()
     m_Type = ptMime;
 }
 
+#if !CB_REDUCED_GUI
 /////
 ///// cbCodeCompletionPlugin
 /////
@@ -1070,6 +1071,7 @@ bool cbCodeCompletionPlugin::IsProviderFor(cbEditor* ed)
     return false;
 #endif // #if !CB_REDUCED_GUI
 }
+#endif // #if !CB_REDUCED_GUI
 
 /////
 ///// cbWizardPlugin
