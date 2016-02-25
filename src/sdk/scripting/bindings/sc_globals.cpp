@@ -53,10 +53,12 @@ namespace ScriptBindings
     {
         return Manager::Get()->GetProjectManager();
     }
+#if !CB_REDUCED_GUI
     EditorManager* getEM()
     {
         return Manager::Get()->GetEditorManager();
     }
+#endif // #if !CB_REDUCED_GUI
     ConfigManager* getCM()
     {
         return Manager::Get()->GetConfigManager(_T("scripts"));
@@ -213,7 +215,9 @@ namespace ScriptBindings
         SqPlus::RegisterGlobal(gReplaceMacros, "ReplaceMacros");
 
         SqPlus::RegisterGlobal(getPM, "GetProjectManager");
+#if !CB_REDUCED_GUI
         SqPlus::RegisterGlobal(getEM, "GetEditorManager");
+#endif // #if !CB_REDUCED_GUI
         SqPlus::RegisterGlobal(getCM, "GetConfigManager");
         SqPlus::RegisterGlobal(getUVM, "GetUserVariableManager");
         SqPlus::RegisterGlobal(getSM, "GetScriptingManager");

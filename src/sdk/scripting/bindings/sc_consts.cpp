@@ -174,7 +174,9 @@ namespace ScriptBindings
 
         // ModuleType
         BIND_INT_CONSTANT(mtProjectManager);
+#if !CB_REDUCED_GUI
         BIND_INT_CONSTANT(mtEditorManager);
+#endif // #if !CB_REDUCED_GUI
         BIND_INT_CONSTANT(mtLogManager);
         BIND_INT_CONSTANT(mtOpenFilesList);
         BIND_INT_CONSTANT(mtUnknown);

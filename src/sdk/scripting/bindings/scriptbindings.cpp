@@ -21,7 +21,10 @@
     #include <cbeditor.h>
     #include <globals.h>
 #endif
+
+#if !CB_REDUCED_GUI
 #include "cbstyledtextctrl.h"
+#endif // #if !CB_REDUCED_GUI
 
 #include "scriptbindings.h"
 #include <cbexception.h>
@@ -100,6 +103,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"ConfigManager::Write\"");
     }
+#if !CB_REDUCED_GUI
     SQInteger EditorManager_GetBuiltinEditor(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -154,6 +158,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"EditorManager::Save\"");
     }
+#endif // #if !CB_REDUCED_GUI
     SQInteger cbProject_RemoveFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -334,6 +339,7 @@ namespace ScriptBindings
         return sa.ThrowError("Invalid arguments to \"ProjectManager::RebuildTree\"");
     }
 
+#if !CB_REDUCED_GUI
     SQInteger cbEditor_SetText(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -366,6 +372,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbEditor::GetText\"");
     }
+#endif // #if !CB_REDUCED_GUI
     SQInteger CompilerFactory_GetCompilerIndex(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -624,6 +631,7 @@ namespace ScriptBindings
 //                func(&ProjectManager::ConfigureProjectDependencies, "ConfigureProjectDependencies");
                 staticFuncVarArgs(&ProjectManager_RebuildTree, "RebuildTree", "*");
 
+#if !CB_REDUCED_GUI
         SqPlus::SQClassDef<EditorBase>("EditorBase").
                 func(&EditorBase::GetFilename, "GetFilename").
                 func(&EditorBase::SetFilename, "SetFilename").
@@ -666,21 +674,17 @@ namespace ScriptBindings
                 func(&cbEditor::Reload, "Reload").
                 func(&cbEditor::Print, "Print").
                 func(&cbEditor::AutoComplete, "AutoComplete").
-#if !CB_REDUCED_GUI
                 func(&cbEditor::AddBreakpoint, "AddBreakpoint").
                 func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").
-#endif // #if !CB_REDUCED_GUI
                 func(&cbEditor::ToggleBookmark, "ToggleBookmark").
                 func(&cbEditor::HasBookmark, "HasBookmark").
                 func(&cbEditor::GotoNextBookmark, "GotoNextBookmark").
                 func(&cbEditor::GotoPreviousBookmark, "GotoPreviousBookmark").
                 func(&cbEditor::ClearAllBookmarks, "ClearAllBookmarks").
-#if !CB_REDUCED_GUI
                 func(&cbEditor::ToggleBreakpoint, "ToggleBreakpoint").
                 func(&cbEditor::HasBreakpoint, "HasBreakpoint").
                 func(&cbEditor::GotoNextBreakpoint, "GotoNextBreakpoint").
                 func(&cbEditor::GotoPreviousBreakpoint, "GotoPreviousBreakpoint").
-#endif // #if !CB_REDUCED_GUI
 
 
                 // these are not present in cbEditor; included to help scripts edit text
@@ -706,6 +710,7 @@ namespace ScriptBindings
                 func(&EditorManager::SaveActiveAs, "SaveActiveAs").
                 func(&EditorManager::SaveAll, "SaveAll");
         //        func(&EditorManager::ShowFindDialog, "ShowFindDialog");
+#endif // #if !CB_REDUCED_GUI
 
         SqPlus::SQClassDef<UserVariableManager>("UserVariableManager").
                 func(&UserVariableManager::Exists, "Exists");
