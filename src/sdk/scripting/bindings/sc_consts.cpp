@@ -128,6 +128,7 @@ namespace ScriptBindings
         BIND_INT_CONSTANT(pchObjectDir);
         BIND_INT_CONSTANT(pchSourceFile);
 
+#if !CB_REDUCED_GUI
         // printing scope for print dialog
         BIND_INT_CONSTANT(psSelection);
         BIND_INT_CONSTANT(psActiveEditor);
@@ -138,6 +139,7 @@ namespace ScriptBindings
         BIND_INT_CONSTANT(pcmColourOnWhite);
         BIND_INT_CONSTANT(pcmInvertColours);
         BIND_INT_CONSTANT(pcmAsIs);
+#endif // #if !CB_REDUCED_GUI
 
         // TemplateOutputType
         BIND_INT_CONSTANT_NAMED(totProject, "wizProject");

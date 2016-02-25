@@ -25,7 +25,11 @@
 #include <compilerfactory.h>
 #include <compiletargetbase.h>
 #include <cbproject.h>
+#if !CB_REDUCED_GUI
 #include <cbeditor.h>
+#else
+#include <editorbase.h>
+#endif // #if !CB_REDUCED_GUI
 #include <sqplus.h>
 
 // wx primitives and types
@@ -44,7 +48,9 @@ DECLARE_INSTANCE_TYPE(EditorManager);
 DECLARE_INSTANCE_TYPE(UserVariableManager);
 DECLARE_INSTANCE_TYPE(ScriptingManager);
 DECLARE_INSTANCE_TYPE(EditorBase);
+#if !CB_REDUCED_GUI
 DECLARE_INSTANCE_TYPE(cbEditor);
+#endif // #if !CB_REDUCED_GUI
 DECLARE_INSTANCE_TYPE(CompileOptionsBase);
 DECLARE_INSTANCE_TYPE(CompileTargetBase);
 DECLARE_INSTANCE_TYPE(ProjectBuildTarget);
@@ -67,7 +73,9 @@ namespace SqPlus \
 
 DECLARE_ENUM_TYPE(wxPathFormat);
 DECLARE_ENUM_TYPE(wxPathNormalize);
+#if !CB_REDUCED_GUI
 DECLARE_ENUM_TYPE(PrintColourMode);
+#endif // #if !CB_REDUCED_GUI
 DECLARE_ENUM_TYPE(OptionsRelation);
 DECLARE_ENUM_TYPE(OptionsRelationType);
 DECLARE_ENUM_TYPE(TargetType);
