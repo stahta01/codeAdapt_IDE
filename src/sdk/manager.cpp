@@ -243,7 +243,9 @@ void Manager::Shutdown()
     PluginManager::Free();
     ScriptingManager::Free();
     ProjectManager::Free();
+#if !CB_REDUCED_GUI
     EditorManager::Free();
+#endif // #if !CB_REDUCED_GUI
     PersonalityManager::Free();
     MacrosManager::Free();
     UserVariableManager::Free();
