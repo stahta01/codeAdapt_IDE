@@ -617,10 +617,15 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             // selected project file
             ProjectFile* pf = ftd->GetProjectFile();
 
+#if !CB_REDUCED_GUI
             // is it already open in the editor?
             EditorBase* eb = Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath());
+#else
+            EditorBase* eb = nullptr;
+#endif // #if !CB_REDUCED_GUI
             if (eb)
             {
+#if !CB_REDUCED_GUI
                 // is it already active?
                 bool active = Manager::Get()->GetEditorManager()->GetActiveEditor() == eb;
 
@@ -633,6 +638,7 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
                 menu.Append(idMenuSaveFile, caption);
                 caption.Printf(_("Close %s"), m_pTree->GetItemText(id).c_str());
                 menu.Append(idMenuCloseFile, caption);
+#endif // #if !CB_REDUCED_GUI
             }
             else
             {

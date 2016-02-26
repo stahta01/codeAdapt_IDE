@@ -4133,9 +4133,13 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#if !CB_REDUCED_GUI
     EditorBase*  ed   = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : nullptr;
+#endif // #if !CB_REDUCED_GUI
     cbProject*   prj  = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : nullptr;
+#if !CB_REDUCED_GUI
     EditorBase*  sh   = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
+#endif // #if !CB_REDUCED_GUI
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
     wxMenuBar*   mbar = GetMenuBar();
 
@@ -4145,29 +4149,36 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
 #endif // #if !CB_REDUCED_GUI
                             )
                             && prj && !prj->GetCurrentlyCompilingTarget();
+#if !CB_REDUCED_GUI
     bool canClose        = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
     bool canSaveFiles    = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
     bool canSaveAll      =     (prj && prj->GetModified())
                             || (wksp && !wksp->IsDefault() && wksp->GetModified())
                             || canSaveFiles;
+#endif // #if !CB_REDUCED_GUI
 
     mbar->Enable(idFileCloseProject,                  canCloseProject);
     mbar->Enable(idFileOpenRecentFileClearHistory,    !m_filesHistory.Empty());
     mbar->Enable(idFileOpenRecentProjectClearHistory, !m_projectsHistory.Empty());
+#if !CB_REDUCED_GUI
     mbar->Enable(idFileClose,                         canClose);
     mbar->Enable(idFileCloseAll,                      canClose);
     mbar->Enable(idFileSave,                          ed && ed->GetModified());
     mbar->Enable(idFileSaveAs,                        canSaveFiles);
     mbar->Enable(idFileSaveAllFiles,                  canSaveFiles);
+#endif // #if !CB_REDUCED_GUI
     mbar->Enable(idFileSaveProject,                   prj && prj->GetModified() && canCloseProject);
     mbar->Enable(idFileSaveProjectAs,                 prj && canCloseProject);
     mbar->Enable(idFileOpenDefWorkspace,              canCloseProject);
     mbar->Enable(idFileSaveWorkspace,                 Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileSaveWorkspaceAs,               Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileCloseWorkspace,                Manager::Get()->GetProjectManager() && canCloseProject);
+#if !CB_REDUCED_GUI
     mbar->Enable(idFileSaveAll,                       canSaveAll);
     mbar->Enable(idFilePrint,                         Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
+#endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
     if (m_pToolbar)
     {
         m_pToolbar->EnableTool(idFileSave,         ed && ed->GetModified());
@@ -4175,6 +4186,7 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         m_pToolbar->EnableTool(idFileSaveAll,      canSaveAll);
         m_pToolbar->EnableTool(idFilePrint,        Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
     }
+#endif // #if !CB_REDUCED_GUI
 
     event.Skip();
 }
@@ -4326,11 +4338,13 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Check(idViewManager,             manVis);
 #if !CB_REDUCED_GUI
     mbar->Check(idViewLogManager,          m_LayoutManager.GetPane(m_pInfoPane).IsShown());
-#endif // #if !CB_REDUCED_GUI
     mbar->Check(idViewStartPage,           Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle)!=NULL);
+#endif // #if !CB_REDUCED_GUI
     mbar->Check(idViewStatusbar,           GetStatusBar() && GetStatusBar()->IsShown());
     mbar->Check(idViewScriptConsole,       m_LayoutManager.GetPane(m_pScriptConsole).IsShown());
+#if !CB_REDUCED_GUI
     mbar->Check(idViewHideEditorTabs,      Manager::Get()->GetEditorManager()->GetNotebook()->GetTabCtrlHeight() == 0);
+#endif // #if !CB_REDUCED_GUI
     mbar->Check(idViewFullScreen,          IsFullScreen());
 #if !CB_REDUCED_GUI
     mbar->Enable(idViewFocusEditor,        ed);
@@ -4428,8 +4442,10 @@ void MainFrame::OnEditorUpdateUI(CodeBlocksEvent& event)
         return;
     }
 
+#if !CB_REDUCED_GUI
     if (Manager::Get()->GetEditorManager() && event.GetEditor() == Manager::Get()->GetEditorManager()->GetActiveEditor())
         DoUpdateStatusBar();
+#endif // #if !CB_REDUCED_GUI
 
     event.Skip();
 }
@@ -4726,7 +4742,6 @@ void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
         }
     }
 }
-#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnToggleStartPage(cb_unused wxCommandEvent& event)
 {
@@ -4738,6 +4753,7 @@ void MainFrame::OnToggleStartPage(cb_unused wxCommandEvent& event)
     }
     ShowHideStartPage(false,toggle);
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnToggleFullScreen(cb_unused wxCommandEvent& event)
 {
