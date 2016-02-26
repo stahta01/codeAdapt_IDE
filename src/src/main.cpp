@@ -2108,19 +2108,19 @@ void MainFrame::DoUpdateEditorStyle()
             break;
     }
 
+#if !CB_REDUCED_GUI
     cbAuiNotebook* an = Manager::Get()->GetEditorManager()->GetNotebook();
 
     DoUpdateEditorStyle(an, _T("editor"), style | wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN);
     if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/hide_editor_tabs"),false))
         an->SetTabCtrlHeight(0);
 
-#if !CB_REDUCED_GUI
     an = m_pInfoPane;
     DoUpdateEditorStyle(an, _T("infopane"), style);
-#endif // #if !CB_REDUCED_GUI
 
     an = m_pPrjManUI->GetNotebook();
     DoUpdateEditorStyle(an, _T("project"), wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE);
+#endif // #if !CB_REDUCED_GUI
 }
 
 void MainFrame::DoUpdateLayoutColours()
@@ -2159,8 +2159,13 @@ void MainFrame::DoUpdateLayout()
 
 void MainFrame::DoUpdateAppTitle()
 {
+#if !CB_REDUCED_GUI
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : nullptr;
+#else
+    EditorBase* ed = nullptr;
+#endif // #if !CB_REDUCED_GUI
     cbProject* prj = nullptr;
+#if !CB_REDUCED_GUI
     if (ed && ed->IsBuiltinEditor())
     {
         ProjectFile* prjf = ((cbEditor*)ed)->GetProjectFile();
@@ -2169,6 +2174,7 @@ void MainFrame::DoUpdateAppTitle()
     }
     else
         prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : nullptr;
+#endif // #if !CB_REDUCED_GUI
     wxString projname;
     wxString edname;
     wxString fulltitle;
@@ -2205,9 +2211,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
 
     if (m_InitiatedShutdown)
     {
+#if !CB_REDUCED_GUI
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             sh->Destroy();
+#endif // #if !CB_REDUCED_GUI
         return;
     }
 
@@ -2220,6 +2228,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
     if (forceState>0)
         show = true;
 
+#if !CB_REDUCED_GUI
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show)
     {
@@ -2233,6 +2242,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
     }
     else if (!show && sh)
         sh->Destroy();
+#endif // #if !CB_REDUCED_GUI
 
     DoUpdateAppTitle();
 }
@@ -2307,6 +2317,7 @@ void MainFrame::TerminateRecentFilesHistory()
 wxString MainFrame::GetEditorDescription(EditorBase* eb)
 {
     wxString descr = wxEmptyString;
+#if !CB_REDUCED_GUI
     cbProject* prj = NULL;
     if (eb && eb->IsBuiltinEditor())
     {
@@ -2325,6 +2336,7 @@ wxString MainFrame::GetEditorDescription(EditorBase* eb)
     }
     if (eb)
         descr += eb->GetFilename();
+#endif // #if !CB_REDUCED_GUI
     return descr;
 }
 
@@ -2584,24 +2596,30 @@ void MainFrame::OnFileOpenRecentClearHistory(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFileSave(cb_unused wxCommandEvent& event)
 {
+#if !CB_REDUCED_GUI
     if (!Manager::Get()->GetEditorManager()->SaveActive())
     {
         wxString msg;
         msg.Printf(_("File %s could not be saved..."), Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename().wx_str());
         cbMessageBox(msg, _("Error saving file"), wxICON_ERROR);
     }
+#endif // #if !CB_REDUCED_GUI
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileSaveAs(cb_unused wxCommandEvent& event)
 {
+#if !CB_REDUCED_GUI
     Manager::Get()->GetEditorManager()->SaveActiveAs();
+#endif // #if !CB_REDUCED_GUI
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileSaveAllFiles(cb_unused wxCommandEvent& event)
 {
+#if !CB_REDUCED_GUI
     Manager::Get()->GetEditorManager()->SaveAll();
+#endif // #if !CB_REDUCED_GUI
     DoUpdateStatusBar();
 }
 
@@ -2634,7 +2652,9 @@ void MainFrame::OnFileSaveProjectAllProjects(cb_unused wxCommandEvent& event)
 void MainFrame::OnFileSaveAll(cb_unused wxCommandEvent& event)
 {
     Manager::Get()->GetConfigManager(_T("app"))->Flush();
+#if !CB_REDUCED_GUI
     Manager::Get()->GetEditorManager()->SaveAll();
+#endif // #if !CB_REDUCED_GUI
     ProjectManager *prjManager = Manager::Get()->GetProjectManager();
     prjManager->SaveAllProjects();
 
@@ -2659,7 +2679,11 @@ void MainFrame::OnFileCloseProject(cb_unused wxCommandEvent& event)
 {
     // we 're not actually shutting down here, but we want to check if the
     // active project is still opening files (still busy)
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if !CB_REDUCED_GUI
+       || !EditorManager::CanShutdown()
+#endif // #if !CB_REDUCED_GUI
+    )
     {
         wxBell();
         return;
@@ -2670,7 +2694,11 @@ void MainFrame::OnFileCloseProject(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFileCloseAllProjects(cb_unused wxCommandEvent& event)
 {
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if !CB_REDUCED_GUI
+        || !EditorManager::CanShutdown()
+#endif // #if !CB_REDUCED_GUI
+    )
     {
         wxBell();
         return;
@@ -2734,6 +2762,7 @@ void MainFrame::OnFileCloseWorkspace(cb_unused wxCommandEvent& event)
     DoCloseCurrentWorkspace();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnFileClose(cb_unused wxCommandEvent& event)
 {
     Manager::Get()->GetEditorManager()->CloseActive();
@@ -2766,6 +2795,7 @@ void MainFrame::OnFilePrint(cb_unused wxCommandEvent& event)
     if (dlg.ShowModal() == wxID_OK)
         Manager::Get()->GetEditorManager()->Print(dlg.GetPrintScope(), dlg.GetPrintColourMode(), dlg.GetPrintLineNumbers());
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnFileQuit(cb_unused wxCommandEvent& event)
 {
@@ -2820,7 +2850,11 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
             return;
         }
     }
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if !CB_REDUCED_GUI
+        || !EditorManager::CanShutdown()
+#endif // #if !CB_REDUCED_GUI
+    )
     {
         event.Veto();
         wxBell();
@@ -2850,8 +2884,8 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     m_LayoutManager.DetachPane(m_pPrjManUI->GetNotebook());
 #if !CB_REDUCED_GUI
     m_LayoutManager.DetachPane(m_pInfoPane);
-#endif // #if !CB_REDUCED_GUI
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
+#endif // #if !CB_REDUCED_GUI
 
     m_LayoutManager.UnInit();
     TerminateRecentFilesHistory();
@@ -2890,6 +2924,7 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     Destroy();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnEditSwapHeaderSource(cb_unused wxCommandEvent& event)
 {
     Manager::Get()->GetEditorManager()->SwapActiveHeaderSource();
@@ -3221,6 +3256,7 @@ void MainFrame::OnEditSelectAll(cb_unused wxCommandEvent& event)
     if (eb)
         eb->SelectAll();
 }
+#endif // #if !CB_REDUCED_GUI
 
 namespace
 {
@@ -3283,6 +3319,7 @@ bool GetSelectionInEditor(EditorSelection &selection, cbStyledTextCtrl *control)
 
 } // anonymous namespace
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnEditSelectNext(cb_unused wxCommandEvent& event)
 {
     EditorBase* eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
@@ -3878,6 +3915,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
 
     ed->SetEncoding(encoding);
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
 {
@@ -3986,6 +4024,7 @@ void MainFrame::OnViewScriptConsole(cb_unused wxCommandEvent& event)
     ShowHideScriptConsole();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnViewHideEditorTabs(cb_unused wxCommandEvent& event)
 {
 	cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
@@ -4001,7 +4040,7 @@ void MainFrame::OnViewHideEditorTabs(cb_unused wxCommandEvent& event)
 		Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/environment/hide_editor_tabs"), hide_editor_tabs);
 	}
 }
-
+#endif // #if !CB_REDUCED_GUI
 #if !CB_REDUCED_GUI
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
@@ -4100,7 +4139,11 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
     wxMenuBar*   mbar = GetMenuBar();
 
-    bool canCloseProject = (ProjectManager::CanShutdown() && EditorManager::CanShutdown())
+    bool canCloseProject =  (ProjectManager::CanShutdown()
+#if !CB_REDUCED_GUI
+                                && EditorManager::CanShutdown()
+#endif // #if !CB_REDUCED_GUI
+                            )
                             && prj && !prj->GetCurrentlyCompilingTarget();
     bool canClose        = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
     bool canSaveFiles    = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
@@ -4144,7 +4187,9 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#if !CB_REDUCED_GUI
     cbEditor*   ed = NULL;
+#endif // #if !CB_REDUCED_GUI
     EditorBase* eb = NULL;
     bool hasSel    = false;
     bool canUndo   = false;
@@ -4153,11 +4198,13 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     bool canCut    = false;
     bool canSelAll = false;
 
+#if !CB_REDUCED_GUI
     if (Manager::Get()->GetEditorManager() && !Manager::IsAppShuttingDown())
     {
         ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     }
+#endif // #if !CB_REDUCED_GUI
 
     wxMenuBar* mbar = GetMenuBar();
 
@@ -4177,11 +4224,14 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idEditCut,                   canCut);
     mbar->Enable(idEditCopy,                  hasSel);
     mbar->Enable(idEditPaste,                 canPaste);
+#if !CB_REDUCED_GUI
     mbar->Enable(idEditSwapHeaderSource,      ed);
     mbar->Enable(idEditGotoMatchingBrace,     ed);
     mbar->Enable(idEditHighlightMode,         ed);
+#endif // #if !CB_REDUCED_GUI
     mbar->Enable(idEditSelectAll,             canSelAll);
     mbar->Enable(idEditSelectNext,            hasSel);
+#if !CB_REDUCED_GUI
     mbar->Enable(idEditBookmarks,             ed);
     mbar->Enable(idEditFolding,               ed &&
                                               Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/folding/show_folds"), false));
@@ -4246,7 +4296,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
                 mbar->Check(hl->FindItem(colour_set->GetLanguageName(ed->GetLanguage())), true);
         }
     }
-
+#endif // #if !CB_REDUCED_GUI
     if (m_pToolbar)
     {
         m_pToolbar->EnableTool(idEditUndo,  canUndo);
@@ -4268,7 +4318,9 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     }
 
     wxMenuBar* mbar   = GetMenuBar();
+#if !CB_REDUCED_GUI
     cbEditor*  ed     = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : nullptr;
+#endif // #if !CB_REDUCED_GUI
     bool       manVis = m_LayoutManager.GetPane(m_pPrjManUI->GetNotebook()).IsShown();
 
     mbar->Check(idViewManager,             manVis);
@@ -4280,7 +4332,9 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Check(idViewScriptConsole,       m_LayoutManager.GetPane(m_pScriptConsole).IsShown());
     mbar->Check(idViewHideEditorTabs,      Manager::Get()->GetEditorManager()->GetNotebook()->GetTabCtrlHeight() == 0);
     mbar->Check(idViewFullScreen,          IsFullScreen());
+#if !CB_REDUCED_GUI
     mbar->Enable(idViewFocusEditor,        ed);
+#endif // #if !CB_REDUCED_GUI
     mbar->Enable(idViewFocusManagement,    manVis);
 #if !CB_REDUCED_GUI
     mbar->Enable(idViewFocusLogsAndOthers, m_pInfoPane->IsShown());
@@ -4305,20 +4359,25 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#if !CB_REDUCED_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager()
                  ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(
                      Manager::Get()->GetEditorManager()->GetActiveEditor() ) : nullptr;
+#endif // #if !CB_REDUCED_GUI
 
     bool enableGoto = false;
+#if !CB_REDUCED_GUI
     if (ed)
         enableGoto = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true)
                    && (ed->CanUndo() || ed->CanRedo());
+#endif // #if !CB_REDUCED_GUI
 
     wxMenuBar* mbar = GetMenuBar();
 
     // 'Find' and 'Replace' are always enabled for (find|replace)-in-files
     // (idSearchFindInFiles and idSearchReplaceInFiles)
 
+#if !CB_REDUCED_GUI
     mbar->Enable(idSearchFind,                  ed);
     mbar->Enable(idSearchFindNext,              ed);
     mbar->Enable(idSearchFindPrevious,          ed);
@@ -4326,6 +4385,7 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idSearchFindSelectedPrevious,  ed);
     mbar->Enable(idSearchReplace,               ed);
     mbar->Enable(idSearchGotoLine,              ed);
+#endif // #if !CB_REDUCED_GUI
     mbar->Enable(idSearchGotoNextChanged,       enableGoto);
     mbar->Enable(idSearchGotoPreviousChanged,   enableGoto);
 
@@ -4343,7 +4403,12 @@ void MainFrame::OnProjectMenuUpdateUI(wxUpdateUIEvent& event)
     cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : nullptr;
     wxMenuBar* mbar = GetMenuBar();
 
-    bool canCloseProject = (ProjectManager::CanShutdown() && EditorManager::CanShutdown());
+    bool canCloseProject =  (
+                                ProjectManager::CanShutdown()
+#if !CB_REDUCED_GUI
+                                && EditorManager::CanShutdown()
+#endif // #if !CB_REDUCED_GUI
+                            );
 
     mbar->Enable(idFileCloseProject,           prj && canCloseProject);
     mbar->Enable(idFileCloseAllProjects,       prj && canCloseProject);
@@ -4566,6 +4631,7 @@ void MainFrame::OnToggleStatusBar(cb_unused wxCommandEvent& event)
     DoUpdateLayout();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnFocusEditor(cb_unused wxCommandEvent& event)
 {
     EditorManager* edman = Manager::Get()->GetEditorManager();
@@ -4573,6 +4639,7 @@ void MainFrame::OnFocusEditor(cb_unused wxCommandEvent& event)
     if (nb)
         nb->FocusActiveTabCtrl();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnFocusManagement(cb_unused wxCommandEvent& event)
 {
@@ -4589,6 +4656,7 @@ void MainFrame::OnFocusLogsAndOthers(cb_unused wxCommandEvent& event)
 }
 #endif // #if !CB_REDUCED_GUI
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
 {
     // Get the notebook from the editormanager:
@@ -4658,6 +4726,7 @@ void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
         }
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnToggleStartPage(cb_unused wxCommandEvent& event)
 {
@@ -4760,7 +4829,9 @@ void MainFrame::OnSettingsEnvironment(cb_unused wxCommandEvent& event)
         m_SmallToolBar = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/toolbar_size"), true);
         needRestart = m_SmallToolBar != tbarsmall;
         Manager::Get()->GetLogManager()->NotifyUpdate();
+#if !CB_REDUCED_GUI
         Manager::Get()->GetEditorManager()->RecreateOpenEditorStyles();
+#endif // #if !CB_REDUCED_GUI
         m_pPrjManUI->RebuildTree();
         ShowHideStartPage();
 
@@ -4777,6 +4848,7 @@ void MainFrame::OnGlobalUserVars(cb_unused wxCommandEvent& event)
     Manager::Get()->GetUserVariableManager()->Configure();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnSettingsEditor(cb_unused wxCommandEvent& event)
 {
     // editor lexers loading takes some time; better reflect this with a hourglass
@@ -4797,6 +4869,7 @@ void MainFrame::OnSettingsEditor(cb_unused wxCommandEvent& event)
         Manager::Get()->ProcessEvent(event2);
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnSettingsCompiler(cb_unused wxCommandEvent& event)
 {
@@ -4859,6 +4932,7 @@ void MainFrame::OnEditorOpened(CodeBlocksEvent& event)
     event.Skip();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnEditorActivated(CodeBlocksEvent& event)
 {
     DoUpdateAppTitle();
@@ -4878,6 +4952,7 @@ void MainFrame::OnEditorActivated(CodeBlocksEvent& event)
 
     event.Skip();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnEditorClosed(CodeBlocksEvent& event)
 {
@@ -4910,6 +4985,7 @@ void MainFrame::OnPageChanged(wxNotebookEvent& event)
     event.Skip();
 }
 
+#if !CB_REDUCED_GUI
 void MainFrame::OnShiftTab(cb_unused wxCommandEvent& event)
 {
     // Must make sure it's cbEditor and not EditorBase
@@ -4917,6 +4993,7 @@ void MainFrame::OnShiftTab(cb_unused wxCommandEvent& event)
     if (ed)
         ed->DoUnIndent();
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::OnCtrlAltTab(cb_unused wxCommandEvent& event)
 {
@@ -5130,7 +5207,6 @@ void MainFrame::OnUnlockLogManager(cb_unused CodeBlocksLogEvent& event)
         DoUpdateLayout();
     }
 }
-#endif // #if !CB_REDUCED_GUI
 
 // Highlight Button
 void MainFrame::OnHighlightMenu(cb_unused wxCommandEvent& event)
@@ -5170,6 +5246,7 @@ void MainFrame::OnHighlightMenu(cb_unused wxCommandEvent& event)
     GetStatusBar()->GetFieldRect(1, rect);
     PopupMenu(&mm, GetStatusBar()->GetPosition() + rect.GetPosition());
 }
+#endif // #if !CB_REDUCED_GUI
 
 void MainFrame::StartupDone()
 {
