@@ -662,12 +662,14 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             openWith->Append(idOpenWithInternal, _("Internal editor"));
             menu.Append(wxID_ANY, _("Open with"), openWith);
 
+#if !CB_REDUCED_GUI
             if (pf->GetFileState() == fvsNormal &&  !Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath()))
             {
                 menu.AppendSeparator();
                 menu.Append(idMenuRenameFile,  _("Rename file..."));
                 menu.Enable(idMenuRenameFile, PopUpMenuOption);
             }
+#endif // #if !CB_REDUCED_GUI
             menu.AppendSeparator();
             menu.Append(idMenuRemoveFilePopup, _("Remove file from project"));
             menu.Enable(idMenuRemoveFilePopup, PopUpMenuOption);
@@ -771,6 +773,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
     FileType ft = FileTypeOf(filename);
     if (ft == ftHeader || ft == ftSource)
     {
+#if !CB_REDUCED_GUI
         // C/C++ header/source files, always get opened inside Code::Blocks
         if ( cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename) )
         {
@@ -778,6 +781,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
             ed->Activate();
         }
         else
+#endif // #if !CB_REDUCED_GUI
         {
             wxString msg;
             msg.Printf(_("Failed to open '%s'."), filename.c_str());
@@ -786,6 +790,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
     }
     else
     {
+#if !CB_REDUCED_GUI
         // first look for custom editors
         // if that fails, try MIME handlers
         EditorBase* eb = Manager::Get()->GetEditorManager()->IsOpen(filename);
@@ -795,6 +800,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
             eb->Activate();
             return;
         }
+#endif // #if !CB_REDUCED_GUI
 
         // not a recognized file type
         cbMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
@@ -1540,11 +1546,13 @@ void ProjectManagerUI::OnSaveFile(wxCommandEvent& WXUNUSED(event))
     if (!sel.IsOk())
         return;
 
+#if !CB_REDUCED_GUI
     if (FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel))
     {
         if ( ProjectFile* pf = ftd->GetProjectFile() )
             Manager::Get()->GetEditorManager()->Save(pf->file.GetFullPath());
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void ProjectManagerUI::OnCloseFile(wxCommandEvent& WXUNUSED(event))
@@ -1553,11 +1561,13 @@ void ProjectManagerUI::OnCloseFile(wxCommandEvent& WXUNUSED(event))
     if (!sel.IsOk())
         return;
 
+#if !CB_REDUCED_GUI
     if (FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel))
     {
         if ( ProjectFile* pf = ftd->GetProjectFile() )
             Manager::Get()->GetEditorManager()->Close(pf->file.GetFullPath());
     }
+#endif // #if !CB_REDUCED_GUI
 }
 
 void ProjectManagerUI::OnOpenFile(wxCommandEvent& WXUNUSED(event))
@@ -1589,6 +1599,7 @@ void ProjectManagerUI::OnOpenFolderFiles(wxCommandEvent& event)
     event.Skip();
 }
 
+#if !CB_REDUCED_GUI
 void ProjectManagerUI::OnOpenWith(wxCommandEvent& event)
 {
     wxTreeItemId sel = GetTreeSelection();
@@ -1623,6 +1634,7 @@ void ProjectManagerUI::OnOpenWith(wxCommandEvent& event)
         Manager::Get()->GetLogManager()->LogError(msg);
     }
 }
+#endif // #if !CB_REDUCED_GUI
 
 void ProjectManagerUI::OnNotes(wxCommandEvent& WXUNUSED(event))
 {
@@ -1666,6 +1678,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
         wxString newTitle = prj->GetTitle();
         if (backupTitle != newTitle)
         {
+#if !CB_REDUCED_GUI
             cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
             if (nb)
             {
@@ -1680,6 +1693,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
                     }
                 }
             }
+#endif // #if !CB_REDUCED_GUI
         }
     }
     else if (event.GetId() == idMenuTreeFileProperties)
@@ -1702,6 +1716,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
     }
     else // active editor properties
     {
+#if !CB_REDUCED_GUI
         if ( cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() )
         {
             if ( ProjectFile* pf = ed->GetProjectFile() )
@@ -1714,6 +1729,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
                 dlg.ShowModal();
             }
         }
+#endif // #if !CB_REDUCED_GUI
     }
 }
 
@@ -2308,7 +2324,7 @@ void ProjectManagerUI::MoveProjectDown(cbProject* project, bool warpAround)
     m_pTree->SelectItem(itemId);
 }
 
-
+#if !CB_REDUCED_GUI
 bool ProjectManagerUI::QueryCloseAllProjects()
 {
     if (!Manager::Get()->GetEditorManager()->QueryCloseAll())
@@ -2324,6 +2340,7 @@ bool ProjectManagerUI::QueryCloseAllProjects()
     }
     return true;
 }
+#endif // #if !CB_REDUCED_GUI
 
 bool ProjectManagerUI::QueryCloseProject(cbProject* proj, bool dontsavefiles)
 {

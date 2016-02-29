@@ -4659,9 +4659,11 @@ void MainFrame::OnFocusEditor(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFocusManagement(cb_unused wxCommandEvent& event)
 {
+#if !CB_REDUCED_GUI
     cbAuiNotebook* nb = m_pPrjManUI ? m_pPrjManUI->GetNotebook() : nullptr;
     if (nb)
         nb->FocusActiveTabCtrl();
+#endif // #if !CB_REDUCED_GUI
 }
 
 #if !CB_REDUCED_GUI
