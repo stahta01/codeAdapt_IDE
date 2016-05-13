@@ -14,6 +14,7 @@
 			</Target>
 			<Environment>
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -42,7 +43,8 @@
 		</ResourceCompiler>
 		<Linker>
 			<Add library="txml" />
-			<Add library="wxmsw28$(WX_SUFFIX)" />
+			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
 			<Add directory="$(#CB)\base\tinyxml" />
 		</Linker>

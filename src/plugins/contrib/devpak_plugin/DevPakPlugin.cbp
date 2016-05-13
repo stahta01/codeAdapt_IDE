@@ -50,6 +50,7 @@
 			</Target>
 			<Environment>
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -67,7 +68,10 @@
 		</ResourceCompiler>
 		<Linker>
 			<Add library="codeblocks" />
-			<Add library="wxmsw28$(WX_SUFFIX)" />
+			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)_net" />
+			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 			<Add directory="bzip2" />
 			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
 		</Linker>
