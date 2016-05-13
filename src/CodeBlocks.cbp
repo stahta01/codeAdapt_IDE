@@ -303,7 +303,9 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -323,7 +325,10 @@
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeblocks" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -342,6 +347,7 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
 					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -362,6 +368,9 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
 					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -379,6 +388,8 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
 					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -396,6 +407,8 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
 					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -414,6 +427,7 @@
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="libcodeblocks.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
@@ -433,7 +447,8 @@
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeblocks" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
