@@ -639,7 +639,7 @@ void cbEditor::SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor 
     m_pControl->MarkerDefine(marker, markerType);
 	m_pControl->MarkerSetForeground(marker, fore);
 	m_pControl->MarkerSetBackground(marker, back);
-	
+
 	if (m_pControl2)
 	{
 		m_pControl2->MarkerDefine(marker, markerType);
@@ -797,7 +797,7 @@ void cbEditor::Split(cbEditor::SplitType split)
     // update controls' look'n'feel
     SetEditorStyleBeforeFileOpen();
     SetEditorStyleAfterFileOpen();
-    
+
     // apply syntax highlighting too
     if (m_pTheme)
         m_pTheme->Apply(m_lang, m_pControl2);
@@ -1333,7 +1333,7 @@ bool cbEditor::SaveAs()
                                          Path,
                                          fname.GetFullName(),
                                          Filters,
-                                         wxSAVE | wxOVERWRITE_PROMPT);
+                                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     dlg->SetFilterIndex(StoredIndex);
     PlaceWindow(dlg);
     if (dlg->ShowModal() != wxID_OK)
@@ -1481,7 +1481,7 @@ void cbEditor::AutoComplete()
                 code.Replace(_T("$(") + macroName + _T(")"), macro);
                 macroPos = code.Find(_T("$("));
             }
-            
+
             if (canceled)
 				break;
 

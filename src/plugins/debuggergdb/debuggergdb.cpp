@@ -665,7 +665,7 @@ void DebuggerGDB::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem, b
     if (loading)
     {
     	rdprj.clear();
-    	
+
         // Hook called when loading project file.
         TiXmlElement* conf = elem->FirstChildElement("debugger");
         if (conf)
@@ -751,7 +751,7 @@ void DebuggerGDB::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem, b
                 // valid targets only
                 if (!it->first)
                     continue;
-				
+
                 RemoteDebugging& rd = it->second;
 
 				// if no different than defaults, skip it
@@ -2133,7 +2133,7 @@ void DebuggerGDB::OnAddSymbolFile(wxCommandEvent& event)
                                     _T(""),
                                     _T(""),
                                     _("Executables and libraries|*.exe;*.dll"),
-                                    wxOPEN | wxFILE_MUST_EXIST | compatibility::wxHideReadonly);
+                                    wxFD_OPEN | wxFD_FILE_MUST_EXIST | compatibility::wxHideReadonly);
     if (file.IsEmpty())
         return;
 //    Manager::Get()->GetLogManager()->Log(m_PageIndex, _("Adding symbol file: %s"), file.c_str());
@@ -2505,7 +2505,7 @@ void DebuggerGDB::OnProjectClosed(CodeBlocksEvent& event)
     // remove all search dirs stored for this project so we don't have conflicts
     // if a newly opened project happens to use the same memory address
     GetSearchDirs(event.GetProject()).clear();
-    
+
     // the same for remote debugging
     GetRemoteDebuggingMap(event.GetProject()).clear();
 

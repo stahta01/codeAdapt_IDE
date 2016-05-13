@@ -134,7 +134,7 @@ void BacktraceDlg::OnSave(wxCommandEvent& event)
                         wxEmptyString,
                         wxEmptyString,
                         FileFilters::GetFilterAll(),
-                        wxSAVE | wxOVERWRITE_PROMPT);
+                        wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() != wxID_OK)
         return;

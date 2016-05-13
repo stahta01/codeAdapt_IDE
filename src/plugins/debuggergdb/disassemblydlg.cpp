@@ -146,11 +146,11 @@ void DisassemblyDlg::OnSave(wxCommandEvent& event)
                      _T("assembly_dump.txt"),
                      wxEmptyString,
                      FileFilters::GetFilterAll(),
-                     wxSAVE | wxOVERWRITE_PROMPT);
+                     wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() != wxID_OK)
         return;
-        
+
     wxString output;
     cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (prj)
@@ -158,7 +158,7 @@ void DisassemblyDlg::OnSave(wxCommandEvent& event)
         output << _("Project title : ") << prj->GetTitle() << _T('\n');
         output << _("Project path  : ") << prj->GetBasePath() << _T('\n') << _T('\n');
     }
-    
+
     output << _("Frame function: ") << m_FrameFunction << _T('\n');
     output << _("Frame address : ") << m_FrameAddress << _T('\n');
     output << wxString(_T('-'), 80) << _T('\n');

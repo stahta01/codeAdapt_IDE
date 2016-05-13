@@ -1190,7 +1190,7 @@ void MainFrame::LoadViewLayout(const wxString& name, bool isTemp)
         return;
 
 	m_LastLayoutIsTemp = isTemp;
-	
+
     wxString layout = m_LayoutViews[name];
     if (layout.IsEmpty())
     {
@@ -1321,7 +1321,7 @@ void MainFrame::DoSelectLayout(const wxString& name)
                 continue;
             items[i]->Check(items[i]->GetText().IsSameAs(name));
         }
-        
+
         if (!m_LastLayoutIsTemp)
 			Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), name);
     }
@@ -1443,7 +1443,7 @@ wxString MainFrame::ShowOpenFileDialog(const wxString& caption, const wxString& 
                             wxEmptyString,
                             wxEmptyString,
                             filter,
-                            wxOPEN | compatibility::wxHideReadonly);
+                            wxFD_OPEN | compatibility::wxHideReadonly);
     wxString sel;
     PlaceWindow(dlg);
     if (dlg->ShowModal() == wxID_OK)
@@ -2316,7 +2316,7 @@ void MainFrame::DoOnFileOpen(bool bProject)
                             Path,
                             wxEmptyString,
                             Filters,
-                            wxOPEN | wxMULTIPLE | compatibility::wxHideReadonly);
+                            wxFD_OPEN | wxFD_MULTIPLE | compatibility::wxHideReadonly);
     dlg->SetFilterIndex(StoredIndex);
 
     PlaceWindow(dlg);
