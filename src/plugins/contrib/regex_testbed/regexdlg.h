@@ -1,11 +1,6 @@
 #ifndef REGEXDLG_H
 #define REGEXDLG_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
 
 //(*Headers(regex_dialog)
 #include <wx/checkbox.h>

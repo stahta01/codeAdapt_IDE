@@ -1,11 +1,6 @@
 #ifndef CODEBLOCKS_APP_H
 #define CODEBLOCKS_APP_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
 
 /**
 @remarks VC++ 6 requires the following headers to compile correctly, so I added a check for it
