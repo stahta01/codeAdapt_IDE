@@ -1,17 +1,17 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef BUILDTARGETPANEL_H
 #define BUILDTARGETPANEL_H
 
-#include <wx/wxprec.h>
 
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
-//(*Headers(BuildTargetPanel)
-#include <wx/checkbox.h>
+//(*HeadersPCH(BuildTargetPanel)
 #include <wx/combobox.h>
-#include <wx/panel.h>
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -66,14 +66,14 @@ class BuildTargetPanel: public wxPanel
         //*)
 
         //(*Declarations(BuildTargetPanel)
-        wxBoxSizer* BoxSizer1;
-        wxStaticText* StaticText3;
+        wxComboBox* cmbCompiler;
         wxTextCtrl* txtName;
         wxStaticText* lblCompiler;
-        wxComboBox* cmbCompiler;
         wxTextCtrl* txtOut;
-        wxTextCtrl* txtObjOut;
+        wxStaticText* StaticText3;
         wxCheckBox* chkEnableDebug;
+        wxBoxSizer* BoxSizer1;
+        wxTextCtrl* txtObjOut;
         //*)
 
         DECLARE_EVENT_TABLE()

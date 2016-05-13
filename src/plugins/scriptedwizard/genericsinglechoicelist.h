@@ -1,15 +1,17 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef GENERICSINGLECHOICELIST_H
 #define GENERICSINGLECHOICELIST_H
 
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
 
-//(*Headers(GenericSingleChoiceList)
-#include <wx/listbox.h>
-#include <wx/panel.h>
+//(*HeadersPCH(GenericSingleChoiceList)
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/stattext.h>
+#include <wx/listbox.h>
 //*)
 
 class wxArrayString;
@@ -44,8 +46,8 @@ class GenericSingleChoiceList: public wxPanel
 		//*)
 
 		//(*Declarations(GenericSingleChoiceList)
-		wxStaticText* lblDescr;
 		wxListBox* GenericChoiceList;
+		wxStaticText* lblDescr;
 		//*)
 
 	private:

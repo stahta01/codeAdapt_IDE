@@ -1,14 +1,16 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef GENERICSELECTPATH_H
 #define GENERICSELECTPATH_H
 
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
 
-//(*Headers(GenericSelectPath)
+//(*HeadersPCH(GenericSelectPath)
+#include <wx/sizer.h>
 #include <wx/button.h>
 #include <wx/panel.h>
-#include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -42,12 +44,12 @@ class GenericSelectPath: public wxPanel
 		//*)
 
 		//(*Declarations(GenericSelectPath)
+		wxBoxSizer* BoxSizer2;
+		wxButton* btnBrowse;
+		wxTextCtrl* txtFolder;
+		wxStaticText* lblLabel;
 		wxBoxSizer* BoxSizer1;
 		wxStaticText* lblDescr;
-		wxStaticText* lblLabel;
-		wxBoxSizer* BoxSizer2;
-		wxTextCtrl* txtFolder;
-		wxButton* btnBrowse;
 		//*)
 
 	private:

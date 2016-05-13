@@ -223,8 +223,10 @@ function SetupTarget(target,is_debug)
         target.AddCompilerOption(_T("-fexceptions"));
         target.AddCompilerOption(_T("-Winvalid-pch"));
 
+        target.AddLinkerOption(_T("-mthreads"));
+
         target.AddIncludeDir(_T("$(#cb)\\include"));
-        target.AddIncludeDir(_T("$(#cb)\\include\\wxscintilla\\include"));
+        target.AddIncludeDir(_T("$(#cb)\\sdk\\wxscintilla\\include"));
         target.AddIncludeDir(_T("$(#wx.include)"));
         target.AddIncludeDir(_T("$(#wx.lib)\\gcc_dll\\mswu"));
 
@@ -243,6 +245,8 @@ function SetupTarget(target,is_debug)
     {
         target.AddCompilerOption(_T("`pkg-config --cflags codeblocks`"));
         target.AddCompilerOption(_T("`wx-config --cflags`"));
+        target.AddCompilerOption(_T("-ansi"));
+        target.AddCompilerOption(_T("-fPIC"));
 
         target.AddLinkerOption(_T("`pkg-config --libs codeblocks`"));
         target.AddLinkerOption(_T("`wx-config --libs`"));

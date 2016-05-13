@@ -1,16 +1,16 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef INFOPANEL_H
 #define INFOPANEL_H
 
-#include <wx/wxprec.h>
 
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
-//(*Headers(InfoPanel)
+//(*HeadersPCH(InfoPanel)
 #include <wx/checkbox.h>
-#include <wx/panel.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/stattext.h>
 //*)
 
@@ -41,9 +41,9 @@ class InfoPanel: public wxPanel
 		//*)
 
 		//(*Declarations(InfoPanel)
-		wxBoxSizer* BoxSizer1;
-		wxStaticText* lblIntro;
 		wxCheckBox* chkSkip;
+		wxStaticText* lblIntro;
+		wxBoxSizer* BoxSizer1;
 		//*)
 
 	private:

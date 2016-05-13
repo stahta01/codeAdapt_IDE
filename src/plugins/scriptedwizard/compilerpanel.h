@@ -1,13 +1,18 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef COMPILERPANEL_H
 #define COMPILERPANEL_H
 
 #include <wx/string.h>
 
-//(*Headers(CompilerPanel)
-#include <wx/checkbox.h>
+//(*HeadersPCH(CompilerPanel)
 #include <wx/combobox.h>
-#include <wx/panel.h>
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -16,7 +21,7 @@ class CompilerPanel: public wxPanel
 {
 	public:
 
-		CompilerPanel(wxWindow* parent,wxWindowID id = -1);
+		CompilerPanel(wxWindow* parent, wxWindow* parentDialog);
 		virtual ~CompilerPanel();
 
         wxComboBox* GetCompilerCombo(){ return cmbCompiler; }
@@ -66,21 +71,23 @@ class CompilerPanel: public wxPanel
 		//*)
 
 		//(*Declarations(CompilerPanel)
-		wxStaticText* StaticText1;
-		wxComboBox* cmbCompiler;
-		wxBoxSizer* BoxSizer4;
-		wxCheckBox* chkConfDebug;
-		wxTextCtrl* txtDbgName;
-		wxStaticBoxSizer* StaticBoxSizer1;
-		wxTextCtrl* txtDbgOut;
-		wxTextCtrl* txtDbgObjOut;
-		wxBoxSizer* BoxSizer5;
-		wxCheckBox* chkConfRelease;
-		wxTextCtrl* txtRelName;
 		wxStaticBoxSizer* StaticBoxSizer2;
-		wxTextCtrl* txtRelOut;
+		wxTextCtrl* txtDbgObjOut;
+		wxComboBox* cmbCompiler;
+		wxTextCtrl* txtRelName;
+		wxStaticText* StaticText1;
+		wxBoxSizer* BoxSizer4;
+		wxCheckBox* chkConfRelease;
+		wxTextCtrl* txtDbgName;
 		wxTextCtrl* txtRelObjOut;
+		wxTextCtrl* txtRelOut;
+		wxTextCtrl* txtDbgOut;
+		wxBoxSizer* BoxSizer5;
+		wxStaticBoxSizer* StaticBoxSizer1;
+		wxCheckBox* chkConfDebug;
 		//*)
+
+        wxWindow* m_parentDialog;
 
 		DECLARE_EVENT_TABLE()
 };

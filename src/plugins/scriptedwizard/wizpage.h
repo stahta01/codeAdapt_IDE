@@ -1,3 +1,8 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ */
+
 #ifndef WIZPAGE_H
 #define WIZPAGE_H
 
@@ -8,6 +13,7 @@
 #include <wx/panel.h>
 #include <wx/xrc/xmlres.h>
 
+class wxItemContainer;
 class ProjectPathPanel;
 class CompilerPanel;
 class BuildTargetPanel;
@@ -18,6 +24,11 @@ class WizPageBase;
 class InfoPanel;
 
 typedef std::map<wxString, WizPageBase*> PagesByName;
+
+namespace Wizard {
+
+void FillCompilerControl(wxItemContainer *control, const wxString& compilerID, const wxString& validCompilerIDs);
+} // namespace Wizard
 
 class WizPageBase : public wxWizardPageSimple
 {
@@ -34,7 +45,7 @@ class WizPageBase : public wxWizardPageSimple
         virtual wxWizardPage* GetNext() const;
         wxString GetPageName() const {return m_PageName;}
         bool GetSkipPage() const {return m_SkipPage;}
-        void SetSkipPage(bool SkipPage) {m_SkipPage = SkipPage;}
+        void SetSkipPage(bool skip) {m_SkipPage = skip;}
 
     private:
         static PagesByName s_PagesByName;
@@ -83,7 +94,6 @@ class WizFilePathPanel : public WizPageBase
         wxString m_Filename;
         wxString m_HeaderGuard;
         bool m_AddToProject;
-        int m_TargetIndex;
 };
 
 class WizProjectPathPanel : public WizPageBase

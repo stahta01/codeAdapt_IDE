@@ -1,5 +1,15 @@
+/*
+ * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
+ * http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * $Revision$
+ * $Id$
+ * $HeadURL$
+ */
+
 #include <sdk.h>
 #ifndef CB_PRECOMP
+    #include <wx/ctrlsub.h>
     #include <manager.h>
     #include <logmanager.h>
     #include <configmanager.h>
@@ -22,6 +32,41 @@
 #include "filepathpanel.h"
 #include "genericselectpath.h"
 #include "genericsinglechoicelist.h"
+
+namespace Wizard {
+
+void FillCompilerControl(wxItemContainer *control, const wxString& compilerID, const wxString& validCompilerIDs)
+{
+    const wxArrayString &valids = GetArrayFromString(validCompilerIDs, _T(";"), true);
+    wxString def = compilerID;
+    if (def.IsEmpty())
+        def = CompilerFactory::GetDefaultCompilerID();
+    int id = 0;
+    control->Clear();
+    for (size_t i = 0; i < CompilerFactory::GetCompilersCount(); ++i)
+    {
+        Compiler* compiler = CompilerFactory::GetCompiler(i);
+        if (compiler)
+        {
+            for (size_t n = 0; n < valids.GetCount(); ++n)
+            {
+                // match not only if IDs match, but if ID inherits from it too
+                if (CompilerFactory::CompilerInheritsFrom(compiler, valids[n]))
+                {
+                    control->Append(compiler->GetName());
+                    if (compiler->GetID().IsSameAs(def))
+                        id = control->GetCount() < 1 ? 0 : (control->GetCount() - 1);
+                    break;
+                }
+            }
+        }
+    }
+    control->SetSelection(id);
+}
+
+} // namespace Wizard
+
+using namespace Wizard;
 
 // utility function to append a path separator to the
 // string parameter, if needed.
@@ -264,7 +309,7 @@ void WizFilePathPanel::OnPageChanging(wxWizardEvent& event)
 
         if (m_Filename.IsEmpty() || !wxDirExists(wxPathOnly(m_Filename)))
         {
-            cbMessageBox(_("Please select a filename with full path for your new file..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("Please select a filename with full path for your new file..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
@@ -319,7 +364,7 @@ wxString WizProjectPathPanel::GetTitle() const
 }
 
 //------------------------------------------------------------------------------
-void WizProjectPathPanel::OnButton(wxCommandEvent& event)
+void WizProjectPathPanel::OnButton(/*cb_unused*/ wxCommandEvent& event)
 {
     wxString dir = m_pProjectPathPanel->GetPath();
     dir = ChooseDirectory(0, _("Please select the folder to create your project in"), dir, wxEmptyString, false, true);
@@ -338,19 +383,19 @@ void WizProjectPathPanel::OnPageChanging(wxWizardEvent& event)
         wxString title = m_pProjectPathPanel->GetTitle();
 //        if (!wxDirExists(dir))
 //        {
-//            cbMessageBox(_("Please select a valid path to create your project..."), _("Error"), wxICON_ERROR);
+//            cbMessageBox(_("Please select a valid path to create your project..."), _("Error"), wxICON_ERROR, GetParent());
 //            event.Veto();
 //            return;
 //        }
         if (title.IsEmpty())
         {
-            cbMessageBox(_("Please select a title for your project..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("Please select a title for your project..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
         if (name.IsEmpty())
         {
-            cbMessageBox(_("Please select a name for your project..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("Please select a name for your project..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
@@ -359,10 +404,10 @@ void WizProjectPathPanel::OnPageChanging(wxWizardEvent& event)
             if (cbMessageBox(_("A project with the same name already exists in the project folder.\n"
                         "Are you sure you want to use this directory (files may be OVERWRITTEN)?"),
                         _("Confirmation"),
-                        wxICON_QUESTION | wxYES_NO) != wxID_YES)
+                        wxICON_QUESTION | wxYES_NO, GetParent()) != wxID_YES)
             {
 //                cbMessageBox(_("A project with the same name already exists in the project folder.\n"
-//                            "Please select a different project name..."), _("Warning"), wxICON_WARNING);
+//                            "Please select a different project name..."), _("Warning"), wxICON_WARNING, GetParent());
                 event.Veto();
                 return;
             }
@@ -411,7 +456,7 @@ WizGenericSelectPathPanel::~WizGenericSelectPathPanel()
 }
 
 //------------------------------------------------------------------------------
-void WizGenericSelectPathPanel::OnButton(wxCommandEvent& event)
+void WizGenericSelectPathPanel::OnButton(/*cb_unused*/ wxCommandEvent& event)
 {
     wxString dir = Manager::Get()->GetMacrosManager()->ReplaceMacros(m_pGenericSelectPath->txtFolder->GetValue());
     dir = ChooseDirectory(this, _("Please select location"), dir, wxEmptyString, false, true);
@@ -427,7 +472,7 @@ void WizGenericSelectPathPanel::OnPageChanging(wxWizardEvent& event)
         wxString dir = Manager::Get()->GetMacrosManager()->ReplaceMacros(m_pGenericSelectPath->txtFolder->GetValue());
         if (!wxDirExists(dir))
         {
-            cbMessageBox(_("Please select a valid location..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("Please select a valid location..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
@@ -449,32 +494,12 @@ WizCompilerPanel::WizCompilerPanel(const wxString& compilerID, const wxString& v
     : WizPageBase(_T("CompilerPage"), parent, bitmap),
     m_AllowConfigChange(allowConfigChange)
 {
-    m_pCompilerPanel = new CompilerPanel(this);
+    m_pCompilerPanel = new CompilerPanel(this, GetParent());
 
-    wxArrayString valids = GetArrayFromString(validCompilerIDs, _T(";"), true);
-    wxString def = compilerID;
-    if (def.IsEmpty())
-        def = CompilerFactory::GetDefaultCompilerID();
-    int id = 0;
     wxComboBox* cmb = m_pCompilerPanel->GetCompilerCombo();
-    cmb->Clear();
-    for (size_t i = 0; i < CompilerFactory::GetCompilersCount(); ++i)
-    {
-        Compiler* compiler = CompilerFactory::GetCompiler(i);
-        for (size_t n = 0; n < valids.GetCount(); ++n)
-        {
-            // match not only if IDs match, but if ID inherits from it too
-            if (CompilerFactory::CompilerInheritsFrom(compiler, valids[n]))
-            {
-                cmb->Append(compiler->GetName());
-                if (compiler->GetID().IsSameAs(def))
-                    id = (cmb->GetCount() - 1) < 0 ? 0 : (cmb->GetCount() - 1);
-                break;
-            }
-        }
-    }
-    cmb->SetSelection(id);
+    FillCompilerControl(cmb, compilerID, validCompilerIDs);
     cmb->Enable(allowCompilerChange);
+
     m_pCompilerPanel->EnableConfigurationTargets(m_AllowConfigChange);
 
     ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("scripts"));
@@ -559,13 +584,13 @@ void WizCompilerPanel::OnPageChanging(wxWizardEvent& event)
     {
         if (GetCompilerID().IsEmpty())
         {
-            wxMessageBox(_("You must select a compiler for your project..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("You must select a compiler for your project..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
         if (m_AllowConfigChange && !GetWantDebug() && !GetWantRelease())
         {
-            wxMessageBox(_("You must select at least one configuration..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("You must select at least one configuration..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
@@ -606,27 +631,8 @@ WizBuildTargetPanel::WizBuildTargetPanel(const wxString& targetName, bool isDebu
 
     if (showCompiler)
     {
-        wxArrayString valids = GetArrayFromString(validCompilerIDs, _T(";"), true);
-        wxString def = compilerID;
-        if (def.IsEmpty())
-            def = CompilerFactory::GetDefaultCompiler()->GetName();
-        int id = 0;
         wxComboBox* cmb = m_pBuildTargetPanel->GetCompilerCombo();
-        cmb->Clear();
-        for (size_t i = 0; i < CompilerFactory::GetCompilersCount(); ++i)
-        {
-            for (size_t n = 0; n < valids.GetCount(); ++n)
-            {
-                if (CompilerFactory::GetCompiler(i)->GetID().Matches(valids[n]))
-                {
-                    cmb->Append(CompilerFactory::GetCompiler(i)->GetName());
-                    if (CompilerFactory::GetCompiler(i)->GetID().IsSameAs(def))
-                        id = cmb->GetCount();
-                    break;
-                }
-            }
-        }
-        cmb->SetSelection(id);
+        FillCompilerControl(cmb, compilerID, validCompilerIDs);
         cmb->Enable(allowCompilerChange);
     }
 }
@@ -679,7 +685,7 @@ void WizBuildTargetPanel::OnPageChanging(wxWizardEvent& event)
     {
         if (m_pBuildTargetPanel->GetCompilerCombo()->IsShown() && GetCompilerID().IsEmpty())
         {
-            wxMessageBox(_("You must select a compiler for your build target..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("You must select a compiler for your build target..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
@@ -687,7 +693,7 @@ void WizBuildTargetPanel::OnPageChanging(wxWizardEvent& event)
         cbProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
         if (theproject->GetBuildTarget(m_pBuildTargetPanel->GetTargetName()))
         {
-            wxMessageBox(_("A build target with that name already exists in the active project..."), _("Error"), wxICON_ERROR);
+            cbMessageBox(_("A build target with that name already exists in the active project..."), _("Error"), wxICON_ERROR, GetParent());
             event.Veto();
             return;
         }
