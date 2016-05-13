@@ -275,51 +275,6 @@
 					<Add directory="plugins\compilergcc\depslib" />
 				</Linker>
 			</Target>
-			<Target title="Debugger">
-				<Option output="devel\share\CodeBlocks\plugins\debugger.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
-				<Option type="3" />
-				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="1" />
-				<Option projectIncludeDirsRelation="2" />
-				<Option projectLibDirsRelation="2" />
-				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
-					<Add directory="include" />
-					<Add directory="include\scripting\include" />
-					<Add directory="include\scripting\sqplus" />
-				</Compiler>
-				<Linker>
-					<Add option="-Wl,--enable-auto-image-base" />
-					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
-					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
-					<Add directory="devel" />
-				</Linker>
-			</Target>
-			<Target title="Code-completion">
-				<Option output="devel\share\CodeBlocks\plugins\codecompletion.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
-				<Option type="3" />
-				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="1" />
-				<Option projectIncludeDirsRelation="2" />
-				<Option projectLibDirsRelation="2" />
-				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
-					<Add directory="include" />
-					<Add directory="include\wxFlatNotebook\include" />
-				</Compiler>
-				<Linker>
-					<Add option="-Wl,--enable-auto-image-base" />
-					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
-					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
-					<Add directory="devel" />
-				</Linker>
-			</Target>
 			<Target title="Class wizard">
 				<Option output="devel\share\CodeBlocks\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel\share\CodeBlocks\plugins" />
@@ -472,13 +427,14 @@
 				</Linker>
 			</Target>
 			<Environment>
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="tinyXML;AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;sdk;wxAUI;src;AStyle;Compiler depslib;Compiler;Debugger;Code-completion;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
-			<Add alias="Core app &amp; plugins" targets="sdk;src;AStyle;Compiler;Debugger;Code-completion;Class wizard;Default MIME handler;Scripted wizard;To-do;Autosave;XP look &amp; feel;" />
+			<Add alias="All" targets="tinyXML;AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;sdk;wxAUI;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="Core app &amp; plugins" targets="src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
 			<Add alias="Third-party libs" targets="tinyXML;AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;wxAUI;Compiler depslib;" />
 		</VirtualTargets>
 		<Compiler>
@@ -1065,108 +1021,6 @@
 		<Unit filename="plugins\classwizard\resources\new_class.xrc">
 			<Option target="Class wizard" />
 		</Unit>
-		<Unit filename="plugins\codecompletion\ccdebuginfo.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\ccdebuginfo.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\ccoptionsdlg.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\ccoptionsdlg.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\ccoptionsprjdlg.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\ccoptionsprjdlg.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\classbrowser.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\classbrowser.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\classbrowserbuilderthread.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\classbrowserbuilderthread.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\codecompletion.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\codecompletion.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\insertclassmethoddlg.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\insertclassmethoddlg.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\nativeparser.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\nativeparser.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\parser.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\parser.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\parserthread.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\parserthread.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\searchtree.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\searchtree.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\token.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\token.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\tokenizer.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\parser\tokenizer.h">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\classbrowser.xrc">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\insert_class_method.xrc">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\manifest.xml">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\project_settings.xrc">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\selectincludefile.xrc">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\resources\settings.xrc">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\selectincludefile.cpp">
-			<Option target="Code-completion" />
-		</Unit>
-		<Unit filename="plugins\codecompletion\selectincludefile.h">
-			<Option target="Code-completion" />
-		</Unit>
 		<Unit filename="plugins\compilergcc\advancedcompileroptionsdlg.cpp">
 			<Option target="Compiler" />
 		</Unit>
@@ -1449,171 +1303,6 @@
 		<Unit filename="plugins\compilergcc\resources\manifest.xml">
 			<Option target="Compiler" />
 		</Unit>
-		<Unit filename="plugins\debuggergdb\backtracedlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\backtracedlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\breakpointsdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\breakpointsdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\cdb_commands.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\cdb_driver.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\cdb_driver.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\cpuregistersdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\cpuregistersdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\databreakpointdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\databreakpointdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debugger_defs.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debugger_defs.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggerdriver.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggerdriver.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggergdb.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggergdb.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggeroptionsdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggeroptionsdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggeroptionsprjdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggeroptionsprjdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggerstate.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggerstate.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggertree.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\debuggertree.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\disassemblydlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\disassemblydlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editbreakpointdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editbreakpointdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editwatchdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editwatchdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editwatchesdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\editwatchesdlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\examinememorydlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\examinememorydlg.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\gdb_commands.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\gdb_driver.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\gdb_driver.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\gdb_tipwindow.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\gdb_tipwindow.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\remotedebugging.h">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\backtrace.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\breakpoints.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\debugger_menu.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\debugger_options_dlg.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\debugger_project_options_dlg.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\debugger_toolbar.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\debugger_toolbar_16x16.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\disassembly.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\edit_watches_dlg.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\manifest.xml">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\memdump.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\resources\threads.xrc">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\threadsdlg.cpp">
-			<Option target="Debugger" />
-		</Unit>
-		<Unit filename="plugins\debuggergdb\threadsdlg.h">
-			<Option target="Debugger" />
-		</Unit>
 		<Unit filename="plugins\defaultmimehandler\EmbeddedHtmlPanel.cpp">
 			<Option target="Default MIME handler" />
 		</Unit>
@@ -1875,9 +1564,6 @@
 		<Unit filename="plugins\xpmanifest\windowsxplooknfeel.h">
 			<Option target="XP look &amp; feel" />
 		</Unit>
-		<Unit filename="scripts\gdb_types.script">
-			<Option target="Debugger" />
-		</Unit>
 		<Unit filename="scripts\startup.script">
 			<Option target="tinyXML" />
 			<Option target="AutoRevision" />
@@ -1893,8 +1579,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2140,8 +1824,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2164,8 +1846,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2188,8 +1868,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2215,8 +1893,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2239,8 +1915,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2263,8 +1937,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2287,8 +1959,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2311,8 +1981,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2335,8 +2003,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2359,8 +2025,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2383,8 +2047,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2407,8 +2069,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2431,8 +2091,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2458,8 +2116,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2488,8 +2144,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2512,8 +2166,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2536,8 +2188,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2560,8 +2210,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2584,8 +2232,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2608,8 +2254,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2632,8 +2276,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2656,8 +2298,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2680,8 +2320,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2704,8 +2342,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2728,8 +2364,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2752,8 +2386,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2776,8 +2408,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2800,8 +2430,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2824,8 +2452,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2848,8 +2474,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2872,8 +2496,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2896,8 +2518,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2920,8 +2540,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2944,8 +2562,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2968,8 +2584,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -2992,8 +2606,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3016,8 +2628,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3040,8 +2650,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3064,8 +2672,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3088,8 +2694,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3112,8 +2716,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3136,8 +2738,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3160,8 +2760,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3184,8 +2782,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3208,8 +2804,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3232,8 +2826,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3256,8 +2848,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3280,8 +2870,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3304,8 +2892,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3328,8 +2914,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3352,8 +2936,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3376,8 +2958,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3400,8 +2980,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3424,8 +3002,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -3451,8 +3027,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4033,8 +3607,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4057,8 +3629,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4081,8 +3651,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4105,8 +3673,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4129,8 +3695,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4153,8 +3717,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4177,8 +3739,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4201,8 +3761,6 @@
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
 			<Option target="Compiler" />
-			<Option target="Debugger" />
-			<Option target="Code-completion" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
 			<Option target="Scripted wizard" />
@@ -4251,7 +3809,7 @@
 			<Option target="ConsoleRunner" />
 		</Unit>
 		<Unit filename="wxsmith\CCDebugInfo.wxs">
-			<Option target="Code-completion" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="wxsmith\ScriptConsole.wxs">
 			<Option target="src" />
