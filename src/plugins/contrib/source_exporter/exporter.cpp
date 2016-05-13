@@ -63,7 +63,7 @@ void Exporter::OnAttach()
   // (see: does not need) this plugin...
 }
 
-void Exporter::OnRelease(bool appShutDown)
+void Exporter::OnRelease(bool /*appShutDown*/)
 {
   // do de-initialization for your plugin
   // if appShutDown is false, the plugin is unloaded because Code::Blocks is being shut down,
@@ -75,7 +75,7 @@ void Exporter::OnRelease(bool appShutDown)
 void Exporter::BuildMenu(wxMenuBar *menuBar)
 {
   // find "File" menu position
-  int fileMenuPos = menuBar->FindMenu(_("File"));
+  int fileMenuPos = menuBar->FindMenu(_("&File"));
 
   if (fileMenuPos == -1)
   {
@@ -94,7 +94,7 @@ void Exporter::BuildMenu(wxMenuBar *menuBar)
 
   // decide where to insert in "File" menu
   size_t printPos = file->GetMenuItemCount() - 4; // the default location
-  int printID = file->FindItem(_("Print"));
+  int printID = file->FindItem(_("Print..."));
 
   if (printID != wxNOT_FOUND)
   {
@@ -128,7 +128,7 @@ void Exporter::RemoveMenu(wxMenuBar *menuBar)
 
 void Exporter::OnUpdateUI(wxUpdateUIEvent &event)
 {
-  if (Manager::isappShuttingDown())
+  if (Manager::IsAppShuttingDown())
   {
     event.Skip();
     return;
@@ -151,26 +151,26 @@ void Exporter::OnUpdateUI(wxUpdateUIEvent &event)
   event.Skip();
 }
 
-void Exporter::OnExportHTML(wxCommandEvent &event)
+void Exporter::OnExportHTML(wxCommandEvent & /*event*/)
 {
   HTMLExporter exp;
   ExportFile(&exp, _T("html"), _("HTML files|*.html;*.htm"));
 }
 
-void Exporter::OnExportRTF(wxCommandEvent &event)
+void Exporter::OnExportRTF(wxCommandEvent & /*event*/)
 {
   RTFExporter exp;
   ExportFile(&exp, _T("rtf"), _("RTF files|*.rtf"));
 }
 
 
-void Exporter::OnExportODT(wxCommandEvent &event)
+void Exporter::OnExportODT(wxCommandEvent & /*event*/)
 {
   ODTExporter exp;
   ExportFile(&exp, _T("odt"), _("ODT files|*.odt"));
 }
 
-void Exporter::OnExportPDF(wxCommandEvent &event)
+void Exporter::OnExportPDF(wxCommandEvent & /*event*/)
 {
   PDFExporter exp;
   ExportFile(&exp, _T("pdf"), _("PDF files|*.pdf"));
@@ -183,18 +183,24 @@ void Exporter::ExportFile(BaseExporter *exp, const wxString &default_extension, 
     return;
   }
 
-  EditorManager *em = Manager::Get()->GetEditorManager();
-  cbEditor *cb = em->GetBuiltinActiveEditor();
-  wxString filename = wxFileSelector(_("Choose the filename"), _T(""), wxFileName(cb->GetFilename()).GetName() + _T(".") + default_extension, default_extension, wildcard, wxSAVE | wxOVERWRITE_PROMPT);
+  EditorManager* em = Manager::Get()->GetEditorManager();
+  cbEditor*      cb = em->GetBuiltinActiveEditor();
 
+  wxString filename = wxFileSelector(_("Choose the filename"), _T(""), wxFileName(cb->GetFilename()).GetName() + _T(".") + default_extension, default_extension, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
   if (filename.IsEmpty())
   {
     return;
   }
 
-  cbStyledTextCtrl* ed = cb->GetControl();
-  wxMemoryBuffer mb = ed->GetStyledText(0, ed->GetLength() - 1);
-  EditorColourSet *ecs = cb->GetColourSet();
+  cbStyledTextCtrl* stc = cb->GetControl();
+  if (!stc)
+      return;
 
-  exp->Export(filename, cb->GetFilename(), mb, ecs);
+  int lineCount = -1;
+  if (wxMessageBox(_("Would you like to have the line numbers printed in the exported file?"), _("Export line numbers"), wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION) == wxYES)
+  {
+    lineCount = stc->GetLineCount();
+  }
+
+  exp->Export(filename, cb->GetFilename(), stc->GetStyledText(0, stc->GetLength() - 1), cb->GetColourSet(), lineCount, stc->GetTabWidth());
 }

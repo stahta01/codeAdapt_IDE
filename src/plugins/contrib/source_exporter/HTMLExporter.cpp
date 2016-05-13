@@ -13,16 +13,40 @@
 using std::ostringstream;
 using std::hex;
 using std::setw;
+using std::right;
 using std::setfill;
 using std::uppercase;
 using std::size_t;
 
 namespace
 {
+  // Helper function to calculate the width of a number (ugly way)
+  inline int calcWidth(int num)
+  {
+    if (num < 0)
+    {
+      return 0;
+    }
+
+    int width = 1;
+
+    while ((num /= 10) != 0)
+    {
+      ++width;
+    }
+
+    return width;
+  }
+
   // Helper function to convert i to a string
-  inline string to_string(int i)
+  inline string to_string(int i, int width = 0)
   {
     ostringstream ostr;
+
+    if (width > 0)
+    {
+      ostr << setw(width) << right;
+    }
 
     ostr << i;
 
@@ -137,11 +161,13 @@ const char *HTMLExporter::HTMLBodyBEG =
   "<body>\n"
   "<pre>\n";
 
-string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text)
+string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text, int lineCount, int tabWidth)
 {
   string html_body("<code><span style=\"font: 8pt Courier New;\">");
   const char *buffer = reinterpret_cast<char *>(styled_text.GetData());
   const size_t buffer_size = styled_text.GetDataLen();
+  int lineno = 1;
+  int width = calcWidth(lineCount);
 
   wxString fontstring = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/font"), wxEmptyString);
 
@@ -166,6 +192,15 @@ string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text)
     return html_body;
   }
 
+  if (lineCount != -1)
+  {
+    html_body += string("<span class=\"body\">");
+    html_body += to_string(lineno, width);
+    html_body += " ";
+    ++lineno;
+    html_body += "</span>";
+  }
+
   // Get the current style from the first character
   char current_style = buffer[1];
 
@@ -179,7 +214,9 @@ string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text)
     html_body += string("<span class=\"style") + to_string(current_style) + "\">";
   }
 
-  for (size_t i = 0; i < buffer_size; i += 2)
+  int charLinePos = 0;
+
+  for (size_t i = 0; i < buffer_size; i += 2, ++charLinePos)
   {
     if (buffer[i + 1] != current_style)
     {
@@ -206,6 +243,33 @@ string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text)
         break;
 
       case '\r':
+        --charLinePos; // account for auto-increment
+        break;
+
+      case '\t':
+        {
+            const int extraSpaces = tabWidth - charLinePos % tabWidth;
+            html_body += std::string(extraSpaces, ' ');
+            charLinePos += extraSpaces - 1; // account for auto-increment
+        }
+        break;
+
+      case '\n':
+        if (lineCount != -1)
+        {
+          html_body += "</span>\n";
+          current_style = 0;
+          html_body += string("<span class=\"body\">");
+          html_body += to_string(lineno, width);
+          html_body += "  ";
+          ++lineno;
+        }
+        else
+        {
+          html_body += "\n";
+        }
+
+        charLinePos = -1; // account for auto-increment
         break;
 
       default:
@@ -225,7 +289,7 @@ const char *HTMLExporter::HTMLBodyEND =
   "</body>\n"
   "</html>\n";
 
-void HTMLExporter::Export(const wxString &filename, const wxString &title, const wxMemoryBuffer &styled_text, const EditorColourSet *color_set)
+void HTMLExporter::Export(const wxString &filename, const wxString &title, const wxMemoryBuffer &styled_text, const EditorColourSet *color_set, int lineCount, int tabWidth)
 {
   string html_code;
   HighlightLanguage lang = const_cast<EditorColourSet *>(color_set)->GetLanguageForFilename(title);
@@ -238,7 +302,7 @@ void HTMLExporter::Export(const wxString &filename, const wxString &title, const
   html_code += HTMLStyleEND;
   html_code += HTMLHeaderEND;
   html_code += HTMLBodyBEG;
-  html_code += HTMLBody(styled_text);
+  html_code += HTMLBody(styled_text, lineCount, tabWidth);
   html_code += HTMLBodyEND;
 
   wxFile file(filename, wxFile::write);
