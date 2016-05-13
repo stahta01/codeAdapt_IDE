@@ -5,7 +5,8 @@
 		<Project filename="tools\cb_share_config\cb_share_config.cbp" />
 		<Project filename="plugins\contrib\devpak_plugin\DevPakPlugin.cbp" />
 		<Project filename="plugins\contrib\envvars\envvars.cbp" />
-		<Project filename="plugins\contrib\source_exporter\Exporter.cbp" active="1" />
-		<Project filename="plugins\contrib\ToolsPlus\ToolsPlus.cbp" />
+		<Project filename="plugins\contrib\byogames\byogames.cbp" />
+		<Project filename="plugins\contrib\source_exporter\Exporter.cbp" />
+		<Project filename="plugins\contrib\ToolsPlus\ToolsPlus.cbp" active="1" />
 	</Workspace>
 </CodeBlocks_workspace_file>
