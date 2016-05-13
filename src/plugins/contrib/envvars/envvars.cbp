@@ -30,6 +30,7 @@
 				</Compiler>
 			</Target>
 			<Environment>
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
