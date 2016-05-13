@@ -1,0 +1,8 @@
+/src/.objs*
+/src/devel*
+/src/output*
+*.gch
+*.layout
+*.depend
+*.bmarks
+*build_log.html
