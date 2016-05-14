@@ -16,7 +16,7 @@
 					<Add option="$(#CB_RELEASE_TYPE)" />
 				</Compiler>
 				<Linker>
-					<Add library="codeblocks" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_aui" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -27,8 +27,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>

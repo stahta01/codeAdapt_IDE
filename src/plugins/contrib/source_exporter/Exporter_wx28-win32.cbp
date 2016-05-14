@@ -72,7 +72,7 @@
 					<Add directory="$(#CB.INCLUDE)\wxscintilla\include" />
 				</Compiler>
 				<Linker>
-					<Add library="codeblocks" />
+					<Add library="codeadapt" />
 					<Add library="wxPdfDocument" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -88,8 +88,8 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>

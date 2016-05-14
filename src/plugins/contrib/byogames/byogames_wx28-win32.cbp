@@ -13,8 +13,8 @@
 				<Option host_application="..\..\..\devel\codeblocks.exe" />
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -49,7 +49,7 @@
 			<Add directory="$(#WX.include)" />
 		</ResourceCompiler>
 		<Linker>
-			<Add library="codeblocks" />
+			<Add library="codeadapt" />
 			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
