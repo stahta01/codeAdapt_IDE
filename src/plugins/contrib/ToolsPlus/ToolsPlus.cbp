@@ -17,7 +17,10 @@
 				</Compiler>
 				<Linker>
 					<Add library="codeblocks" />
-					<Add library="wxmsw28$(WX_SUFFIX)" />
+					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_aui" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add library="gdi32" />
 					<Add directory="$(#CB)\devel" />
 					<Add directory="$(#wx.lib)\gcc_dll$(WX_CFG)" />
@@ -25,6 +28,7 @@
 			</Target>
 			<Environment>
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -48,6 +52,7 @@
 			<Add option="-DwxUSE_UNICODE" />
 			<Add option="-DBUILDING_PLUGIN" />
 			<Add directory="$(#CB.INCLUDE)" />
+			<Add directory="$(#CB.INCLUDE)\tinyxml" />
 			<Add directory="$(#CB.INCLUDE)\wxscintilla\include" />
 			<Add directory="$(#wx.include)" />
 			<Add directory="$(#wx.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
