@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
     {
-        printf("Usage: cb_console_runner <filename> <args ...>\n");
+        printf("Usage: ca_console_runner <filename> <args ...>\n");
         return 1;
     }
 

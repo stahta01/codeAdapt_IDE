@@ -408,9 +408,9 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
         wxString term = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/console_terminal"), DEFAULT_CONSOLE_TERM);
         term.Replace(_T("$TITLE"), _T("'") + consolename + _T("'"));
         cmdline<< term << _T(" ");
-        #define CONSOLE_RUNNER "cb_console_runner"
+        #define CONSOLE_RUNNER "ca_console_runner"
 #else
-        #define CONSOLE_RUNNER "cb_console_runner.exe"
+        #define CONSOLE_RUNNER "ca_console_runner.exe"
 #endif
         wxString baseDir = ConfigManager::GetExecutableFolder();
         if (wxFileExists(baseDir + wxT("/" CONSOLE_RUNNER)))

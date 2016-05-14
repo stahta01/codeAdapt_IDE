@@ -181,7 +181,7 @@ namespace
 {
     PluginRegistrant<CompilerGCC> reg(_T("Compiler"));
 
-    static const wxString strCONSOLE_RUNNER(platform::windows ? _T("cb_console_runner.exe") : _T("cb_console_runner"));
+    static const wxString strCONSOLE_RUNNER(platform::windows ? _T("ca_console_runner.exe") : _T("ca_console_runner"));
     static const wxString strSLASH(_T("/"));
     static const wxString strSPACE(_T(" "));
     static const wxString strQUOTE(platform::windows ? _T("\"") : _T("'"));
