@@ -258,7 +258,7 @@ void MainFrame::OnBtnExportClick(wxCommandEvent& event)
     {
       wxMessageBox(wxT("You are about to export the selected node(s) to a backup C::B configuration file.\n"
                        "Please note that this is *not* complete because it includes the selected node(s) only.\n"
-                       "It's purpose is to backup misc. nodes for transferring them using cb_share_config."),
+                       "It's purpose is to backup misc. nodes for transferring them using ca_share_config."),
                    wxT("Information"), wxICON_INFORMATION);
 
       TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "UTF-8", "yes");
