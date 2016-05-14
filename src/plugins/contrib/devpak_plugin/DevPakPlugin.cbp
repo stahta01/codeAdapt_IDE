@@ -29,6 +29,7 @@
 					<Add option="-mthreads" />
 					<Add option="-fexceptions" />
 					<Add option='-include &quot;sdk.h&quot;' />
+					<Add option="-std=gnu++11" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add option="-DWX_PRECOMP" />
@@ -38,6 +39,7 @@
 					<Add option="-DcbDEBUG" />
 					<Add option="-DwxUSE_UNICODE" />
 					<Add directory="$(#CB.include)" />
+					<Add directory="$(#CB.INCLUDE)\wxscintilla\include" />
 				</Compiler>
 				<Linker>
 					<Add library="bz2" />
