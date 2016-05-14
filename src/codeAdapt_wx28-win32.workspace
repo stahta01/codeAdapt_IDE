@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="codeAdapt wx2.8.x win32">
-		<Project filename="CodeBlocks.cbp" active="1" />
+		<Project filename="codeAdapt.cbp" active="1" />
 		<Project filename="tools\cb_share_config\cb_share_config.cbp" />
 		<Project filename="plugins\contrib\byogames\byogames.cbp" />
 		<Project filename="plugins\contrib\source_exporter\Exporter.cbp" />

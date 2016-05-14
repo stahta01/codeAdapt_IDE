@@ -269,12 +269,12 @@ bool CodeBlocksApp::LoadConfig()
     {
 
         wxString env;
-        wxGetEnv(_T("CODEBLOCKS_DATA_DIR"), &env);
+        wxGetEnv(_T("CODEADAPT_DATA_DIR"), &env);
         if (!env.IsEmpty())
             data = env;
     }
 
-    data.append(_T("/share/codeblocks"));
+    data.append(_T("/share/codeadapt"));
 
     cfg->Write(_T("data_path"), data);
 
@@ -428,7 +428,7 @@ bool CodeBlocksApp::OnInit()
 {
     wxLog::EnableLogging(false);
 
-    SetAppName(_T("codeblocks"));
+    SetAppName(_T("codeadapt"));
     s_Loading = true;
 
     m_pBatchBuildDialog = 0;
@@ -809,7 +809,7 @@ void CodeBlocksApp::ComplainBadInstall()
     msg.Printf(_T("Cannot find resources...\n"
         "%s was configured to be installed in '%s'.\n"
         "Please use the command-line switch '--prefix' or "
-        "set the CODEBLOCKS_DATA_DIR environment variable "
+        "set the CODEADAPT_DATA_DIR environment variable "
         "to point where %s is installed,\n"
         "or try re-installing the application..."),
         appglobals::AppName.c_str(),

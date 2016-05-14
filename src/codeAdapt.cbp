@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Code::Blocks" />
+		<Option title="codeAdapt" />
 		<Option pch_mode="2" />
 		<Option default_target="src" />
 		<Option compiler="gcc" />
@@ -127,7 +127,7 @@
 				</Linker>
 			</Target>
 			<Target title="sdk">
-				<Option output="devel\codeblocks.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="devel\codeadapt.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel" />
 				<Option external_deps="base\tinyxml\libtxml.a;sdk\propgrid\libpropgrid.a;sdk\wxFlatNotebook\libwxflatnotebook.a;sdk\scripting\lib\libsquirrel.a;sdk\scripting\lib\libsqstdlib.a;sdk\scripting\lib\libsqplus.a;" />
 				<Option type="3" />
@@ -181,7 +181,7 @@
 				</Linker>
 			</Target>
 			<Target title="src">
-				<Option output="devel\codeblocks.exe" prefix_auto="0" extension_auto="0" />
+				<Option output="devel\codeadapt.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel" />
 				<Option external_deps="src\wxAUI\libwxaui.a;" />
 				<Option type="0" />
@@ -199,7 +199,7 @@
 					<Add directory="include\scripting\sqplus" />
 				</Compiler>
 				<Linker>
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="wxaui" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
@@ -227,8 +227,8 @@
 				</Linker>
 			</Target>
 			<Target title="AStyle">
-				<Option output="devel\share\CodeBlocks\plugins\astyle.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\astyle.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -240,7 +240,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -258,8 +258,8 @@
 				</Compiler>
 			</Target>
 			<Target title="Compiler">
-				<Option output="devel\share\CodeBlocks\plugins\compiler.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\compiler.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option external_deps="plugins\compilergcc\depslib\libdepslib.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -276,7 +276,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="depslib" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
@@ -287,8 +287,8 @@
 				</Linker>
 			</Target>
 			<Target title="Class wizard">
-				<Option output="devel\share\CodeBlocks\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -301,7 +301,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -310,8 +310,8 @@
 				</Linker>
 			</Target>
 			<Target title="Default MIME handler">
-				<Option output="devel\share\CodeBlocks\plugins\defaultmimehandler.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\defaultmimehandler.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -324,7 +324,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="codeblocks" />
+					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -333,8 +333,8 @@
 				</Linker>
 			</Target>
 			<Target title="Open files list">
-				<Option output="devel\share\CodeBlocks\plugins\openfileslist.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeblocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\openfileslist.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -345,15 +345,15 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
 			<Target title="Scripted wizard">
-				<Option output="devel\share\CodeBlocks\plugins\scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -366,7 +366,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
@@ -375,8 +375,8 @@
 				</Linker>
 			</Target>
 			<Target title="To-do">
-				<Option output="devel\share\CodeBlocks\plugins\todo.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\todo.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -386,7 +386,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
@@ -394,8 +394,8 @@
 				</Linker>
 			</Target>
 			<Target title="Autosave">
-				<Option output="devel\share\CodeBlocks\plugins\autosave.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\autosave.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -405,7 +405,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
@@ -413,8 +413,8 @@
 				</Linker>
 			</Target>
 			<Target title="XP look &amp; feel">
-				<Option output="devel\share\CodeBlocks\plugins\xpmanifest.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\xpmanifest.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -426,14 +426,14 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="libcodeblocks.a" />
+					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel" />
 				</Linker>
 			</Target>
 			<Target title="Projects-workspaces importer">
-				<Option output="devel\share\CodeBlocks\plugins\projectsimporter.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\CodeBlocks\plugins" />
+				<Option output="devel\share\codeadapt\plugins\projectsimporter.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel\share\codeadapt\plugins" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -446,7 +446,7 @@
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="codeblocks" />
+					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel" />
