@@ -1,6 +1,7 @@
 /src/.objs*
 /src/devel*
 /src/output*
+/src/lib*
 *.gch
 *.layout
 *.depend
