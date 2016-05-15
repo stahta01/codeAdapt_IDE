@@ -3,10 +3,11 @@
 	<Workspace title="codeAdapt wx2.8.x win32">
 		<Project filename="codeAdapt_wx28-win32.cbp" active="1" />
 		<Project filename="tools\ca_share_config\ca_share_config_wx28-win32.cbp" />
-		<Project filename="plugins\contrib\byogames\byogames_wx28-win32.cbp" />
-		<Project filename="plugins\contrib\source_exporter\Exporter_wx28-win32.cbp" />
-		<Project filename="plugins\contrib\ToolsPlus\ToolsPlus_wx28-win32.cbp" />
 		<Project filename="plugins\contrib\devpak_plugin\DevPakPlugin_wx28-win32.cbp" />
 		<Project filename="plugins\contrib\envvars\envvars_wx28-win32.cbp" />
+		<Project filename="plugins\contrib\byogames\byogames_wx28-win32.cbp" />
+		<Project filename="plugins\contrib\headerfixup\headerfixup_wx28-win32.cbp" />
+		<Project filename="plugins\contrib\source_exporter\Exporter_wx28-win32.cbp" />
+		<Project filename="plugins\contrib\ToolsPlus\ToolsPlus_wx28-win32.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
