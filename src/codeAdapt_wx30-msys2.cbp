@@ -150,6 +150,7 @@
 				<Compiler>
 					<Add option="-DEXPORT_LIB" />
 					<Add option="-DEXPORT_EVENTS" />
+					<Add option="-DNOPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\bindings" />
 					<Add directory="include\scripting\include" />
@@ -204,6 +205,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 					<Add directory="include\wxAUI" />
 					<Add directory="include\wxFlatNotebook\include" />
@@ -247,6 +249,7 @@
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 					<Add directory="plugins\astyle\astyle" />
 				</Compiler>
@@ -281,6 +284,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 					<Add directory="plugins\compilergcc\depslib\src" />
 					<Add directory="include\scripting\include" />
@@ -309,6 +313,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -332,6 +337,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -353,6 +359,7 @@
 				<Compiler>
 					<Add option="-include sdk.h" />
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -372,6 +379,7 @@
 				<Compiler>
 					<Add option="-include sdk.h" />
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
@@ -394,6 +402,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -413,6 +422,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -434,6 +444,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -454,6 +465,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -489,8 +501,6 @@
 			<Add option="-D__WXMSW__" />
 			<Add option="-DWXUSINGDLL" />
 			<Add option="-DcbDEBUG" />
-			<Add option="-DCB_PRECOMP" />
-			<Add option="-DWX_PRECOMP" />
 			<Add option="-DwxUSE_UNICODE" />
 			<Add directory="$(#WX.include)" />
 			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
@@ -909,7 +919,6 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include\sdk_precomp.h">
-			<Option compile="1" />
 			<Option weight="0" />
 			<Option target="sdk" />
 		</Unit>
