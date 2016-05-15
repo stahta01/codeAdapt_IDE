@@ -169,6 +169,7 @@
 					<Add library="sqstdlib" />
 					<Add library="squirrel" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="lib28" />
 					<Add directory="lib" />
@@ -462,8 +463,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -889,6 +890,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include\scriptsecuritywarningdlg.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include\scrollingdialog.h">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include\sdk.h">
@@ -3116,6 +3120,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk\scriptsecuritywarningdlg.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk\scrollingdialog.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk\sdk_events.cpp">
