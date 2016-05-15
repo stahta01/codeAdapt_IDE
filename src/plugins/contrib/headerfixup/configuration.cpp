@@ -246,7 +246,7 @@ void Configuration::OnApply()
 
 void Configuration::OnBtnAddGroupClick(wxCommandEvent& /*event*/)
 {
-  wxString GroupName = ::cbGetTextFromUser(_("Enter name for new group"));
+  wxString GroupName = ::caGetTextFromUser(_("Enter name for new group"));
   if ( GroupName.IsEmpty() )
     return;
 
@@ -298,7 +298,7 @@ void Configuration::OnRenameGroup(wxCommandEvent& /*event*/)
   if ( GroupName.IsEmpty() )
     return;
 
-  GroupName = ::cbGetTextFromUser(_("Enter new group name"),_("Change group name"),GroupName);
+  GroupName = ::caGetTextFromUser(_("Enter new group name"),_("Change group name"),GroupName);
   if ( GroupName.IsEmpty() )
     return;
 
@@ -354,7 +354,7 @@ void Configuration::OnGroupsSelect(wxCommandEvent& /*event*/)
 
 void Configuration::OnBtnAddIdentifierClick(wxCommandEvent& /*event*/)
 {
-  wxString Identifier = ::cbGetTextFromUser(_("Enter new identifier"));
+  wxString Identifier = ::caGetTextFromUser(_("Enter new identifier"));
   if ( Identifier.IsEmpty() )
     return;
 
@@ -403,7 +403,7 @@ void Configuration::OnChangeIdentifier(wxCommandEvent& /*event*/)
   if ( Identifier.IsEmpty() )
     return;
 
-  Identifier = ::cbGetTextFromUser(_("Enter new identifier"),_("Change identifier"),Identifier);
+  Identifier = ::caGetTextFromUser(_("Enter new identifier"),_("Change identifier"),Identifier);
   if ( Identifier.IsEmpty() )
     return;
 
