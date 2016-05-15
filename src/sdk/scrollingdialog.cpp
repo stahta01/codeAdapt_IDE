@@ -291,7 +291,7 @@ void wxStandardDialogLayoutAdapter::ReparentControls(wxWindow* parent, wxWindow*
         if (win != reparentTo && (!buttonSizer || !buttonSizer->GetItem(win)))
         {
             win->Reparent(reparentTo);
-#ifdef __WXMSW__
+#if 0 // def __WXMSW__
             // Restore correct tab order
             ::SetWindowPos((HWND) win->GetHWND(), HWND_BOTTOM, -1, -1, -1, -1, SWP_NOMOVE|SWP_NOSIZE);
 #endif
