@@ -3,7 +3,7 @@
 // Purpose:     XRC resource for wxFlatNotebook
 // Author:      Armel Asselin
 // Created:     2006/10/30
-// RCS-ID:      $Id: $
+// RCS-ID:      $Id$
 // Copyright:   (c) 2006 Armel Asselin (copied from Vaclav Slavik xh_notbk)
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
@@ -89,12 +89,12 @@ wxObject *wxFlatNotebookXmlHandler::DoCreateResource()
                 }
             }
             else
-                wxLogError(wxT("Error in resource."));
+                wxLogError(_("Error in resource."));
             return wnd;
         }
         else
         {
-            wxLogError(wxT("Error in resource: no control within notebook's <page> tag."));
+            wxLogError(_("Error in resource: no control within notebook's <page> tag."));
             return NULL;
         }
     }

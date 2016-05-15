@@ -1,8 +1,18 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        fnb_resources.h
+// Purpose:     resources used by wxFlatNotebook
+// Author:      Armel Asselin
+// Created:     2008/02/12
+// RCS-ID:      $Id$
+// Copyright:   (c) 2008 Eran Ifrah
+// Licence:     wxWindows licence
+/////////////////////////////////////////////////////////////////////////////
+
 #ifndef FNB_RESOURCES_H
 #define FNB_RESOURCES_H
 
 extern size_t tab_selection_png_size;
-extern const unsigned char tab_selection_png[];
+extern unsigned char tab_selection_png[];
 
 // Control left arrow images
 extern const char *left_arrow_disabled_xpm[];
@@ -34,8 +44,8 @@ extern const char *signpost_xpm[];
 // Drag hint arrows
 extern const char *arrow_down_blue_xpm[];
 extern const char *arrow_up_blue_xpm[];
-extern const unsigned char arrow_down_blue_alpha[];
-extern const unsigned char arrow_up_blue_alpha[];
+extern unsigned char arrow_down_blue_alpha[];
+extern unsigned char arrow_up_blue_alpha[];
 
 #endif // FNB_RESOURCES_H
 

@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
+// Name:		popup_dlg.cpp
+// Purpose:     Impl of the navigation dialog used by wxFlatNotebook
+// Author:      Eran Ifrah <eran.ifrah@gmail.com>
+// Created:     30/12/2005
+// Modified:    01/01/2006
+// Copyright:   Eran Ifrah (c)
+// Licence:     wxWindows license <http://www.wxwidgets.org/licence3.txt>
+///////////////////////////////////////////////////////////////////////////////
 #include <wx/wxFlatNotebook/popup_dlg.h>
 #include <wx/listctrl.h>
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
@@ -55,7 +64,7 @@ void wxTabNavigatorWindow::Create(wxWindow* parent)
 		mem_dc.SelectObject(bmp);
 
 		wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
-		font.SetWeight( wxBOLD );
+		font.SetWeight( wxFONTWEIGHT_BOLD );
 		mem_dc.SetFont(font);
 		int w;
 		mem_dc.GetTextExtent(wxT("Tp"), &w, &panelHeight);
@@ -91,7 +100,7 @@ void wxTabNavigatorWindow::Create(wxWindow* parent)
 	if( !m_bmp.Ok() )
 	{
 		wxImage img(signpost_xpm);
-		img.SetAlpha((unsigned char*)signpost_alpha, true);
+		img.SetAlpha(signpost_alpha, true);
 		m_bmp =  wxBitmap(img);
 	}
 	m_listBox->SetFocus();
@@ -99,7 +108,7 @@ void wxTabNavigatorWindow::Create(wxWindow* parent)
 
 void wxTabNavigatorWindow::OnKeyUp(wxKeyEvent &event)
 {
-	if( event.GetKeyCode() == WXK_CONTROL )
+	if(event.GetKeyCode() == WXK_CONTROL)
 	{
 		CloseDialog();
 	}
@@ -109,7 +118,9 @@ void wxTabNavigatorWindow::OnNavigationKey(wxNavigationKeyEvent &event)
 {
 	long selected = m_listBox->GetSelection();
 	wxFlatNotebook* bk = static_cast<wxFlatNotebook*>(GetParent());
-	long maxItems = bk->GetPageCount();
+	/// Bug Fix (History) ---- Ti-R ----
+//	long maxItems = bk->GetPageCount();
+	long maxItems = bk->GetBrowseHistory().GetCount();
 	long itemToSelect;
 
 	if( event.GetDirection() )
@@ -205,14 +216,14 @@ void wxTabNavigatorWindow::OnPanelPaint(wxPaintEvent &event)
 		// get the text position, and draw it
 		int fontHeight(0), w(0);
 		wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
-		font.SetWeight( wxBOLD );
+		font.SetWeight( wxFONTWEIGHT_BOLD );
 		mem_dc.SetFont( font );
 		mem_dc.GetTextExtent( wxT("Tp"), &w, &fontHeight );
 
 		txtPt.x = bmpPt.x + m_bmp.GetWidth() + 4;
 		txtPt.y = (rect.height - fontHeight)/2;
 		mem_dc.SetTextForeground( *wxWHITE );
-		mem_dc.DrawText( wxT("Opened tabs:"), txtPt );
+		mem_dc.DrawText( _("Opened tabs:"), txtPt );
 		mem_dc.SelectObject( wxNullBitmap );
 	}
 

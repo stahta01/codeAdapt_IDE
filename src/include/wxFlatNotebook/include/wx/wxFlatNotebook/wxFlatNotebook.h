@@ -12,6 +12,7 @@
 #ifndef WXFLATNOTEBOOK_H
 #define WXFLATNOTEBOOK_H
 
+#include <wx/wxFlatNotebook/wxFlatNotebookSDK.h>
 #include <wx/wx.h>
 #include <wx/frame.h>
 #include <wx/dynarray.h>
@@ -25,13 +26,6 @@
 #endif
 #endif // __WXMSW__
 
-#ifdef WXMAKINGDLL_FNB
-#    define WXDLLIMPEXP_FNB WXEXPORT
-#elif defined(WXUSINGDLL_FNB)
-#    define WXDLLIMPEXP_FNB WXIMPORT
-#else /* not making nor using FNB as DLL */
-#    define WXDLLIMPEXP_FNB
-#endif // WXMAKINGDLL_FNB
 
 #include <wx/dcbuffer.h>
 #include <wx/dataobj.h>
@@ -83,6 +77,10 @@ WX_DECLARE_USER_EXPORTED_OBJARRAY(wxWindow*, wxWindowPtrArray, WXDLLIMPEXP_FNB);
 #define wxFNB_ALLOW_FOREIGN_DND			0x00008000
 #define wxFNB_FF2						0x00010000		// Firefox 2 tabs style
 #define wxFNB_CUSTOM_DLG				0x00020000		// Popup customize dialog using right click
+/// Patch ---- Ti-R ---- Enable to have the same line color as the selected tab
+#define wxFNB_BOTTOM_LINE_COLOR_CHANGE	0x00100000
+#define wxFNB_INVERSE_COLOR_LINE_VC8	0x00200000
+#define wxFNB_PREVIEW_SELECT_TAB		0x00400000
 
 /// General macros
 #define VERTICAL_BORDER_PADDING			4
@@ -304,6 +302,21 @@ public:
 	\param border - new value of the colour of page border
 	*/
 	void SetGradientColorBorder(const wxColour& border);
+	
+/// Patch ---- Ti-R ---- Enable to show next tab selected if user click
+	/// Sets the colour of selected page
+	/**
+	\param select - new select value colour
+	*/
+	void SetPreviewSelectColor(const wxColour& select);
+	
+/// Patch ---- Ti-R ---- Set the disable color of the text
+	/// Sets the colour of disable tab text
+	/**
+	\param disable - new disable colour
+	*/
+	void SetDisableTextColour(const wxColour& disable);
+
 	/// Sets an image list associated with notebook pages
 	/**
 	\param imglist - image list object.
@@ -336,6 +349,15 @@ public:
 	\param page - page index
 	*/
 	bool GetEnabled(size_t page);
+
+/// Patch (Font) ---- Ti-R ---- Enable to show next tab selected if user click
+
+	/// Set the tab text font
+	bool SetFont(const wxFont& font);
+
+	/// Get the tab text font
+	wxFont& GetFont();
+
 
 	/// Set the active tab text
 	/**
@@ -595,6 +617,7 @@ protected:
 	friend class wxFNBRendererDefault;
 	friend class wxFNBRendererVC71;
 	friend class wxFNBRendererVC8;
+	friend class wxFNBRendererFirefox2;
 
 	wxFlatNotebookImageList * m_ImageList;
 
@@ -847,7 +870,7 @@ protected:
 	\param page - page index
 	*/
 	virtual bool CanFitToScreen(size_t page);
-
+	
 	void PushPageHistory(int page);
 
 	//remove page from the history by its value
@@ -872,7 +895,11 @@ private:
 	wxMenu* m_pRightClickMenu;
 
 	/// Gradient colors
-	wxColour m_colorFrom, m_colorTo, m_colorBorder, m_activeTextColor, m_nonActiveTextColor, m_tabAreaColor, m_activeTabColor;
+	wxColour m_colorFrom, m_disableTextColor, m_colorTo, m_colorPreview, m_colorBorder, m_activeTextColor, m_nonActiveTextColor, m_tabAreaColor, m_activeTabColor;
+
+	/// Patch (m_font) ---- Ti-R ---- Add custom font
+	/// Custom font
+	wxFont m_font;
 
 	/// X,>,< buttons status, can be one of
 	/// - Pressed
@@ -890,6 +917,11 @@ private:
 	/// Customize menu
 	wxMenu *m_customMenu;
 	long m_customizeOptions;
+
+	/// Patch (m_nTabStatus) ---- Ti-R ---- Enable to show next tab selected if user click
+	int m_nTabStatus;
+	int m_nTabPreviewId;
+
 };
 
 /**
