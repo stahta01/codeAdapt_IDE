@@ -43,6 +43,7 @@
 			</Target>
 			<Environment>
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -55,8 +56,9 @@
 		<Linker>
 			<Add option="-Wl,--enable-auto-import" />
 			<Add option="-mthreads" />
-			<Add library="wxmsw28$(WX_SUFFIX)" />
-			<Add library="codeblocks" />
+			<Add library="codeadapt" />
+			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 		</Linker>
 		<Unit filename="bindings.cpp" />
 		<Unit filename="bindings.h" />
