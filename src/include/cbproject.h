@@ -661,6 +661,8 @@ class DLLIMPORT cbProject : public CompileTargetBase
           */
         virtual void ProjectFileRenamed(ProjectFile* pf);
 
+        virtual FilesList& GetFilesList(){ return m_Files; }
+
     private:
         void Open();
         void ExpandVirtualBuildTargetGroup(const wxString& alias, wxArrayString& result) const;
