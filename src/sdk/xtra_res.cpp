@@ -1,6 +1,10 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
+    #include <wx/frame.h>
+    #include <wx/log.h>
+    #include <wx/image.h>
+
     #include "xtra_res.h"
 #endif
 
