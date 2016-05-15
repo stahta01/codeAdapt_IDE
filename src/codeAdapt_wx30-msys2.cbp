@@ -223,16 +223,23 @@
 					<Add directory="include\wxFlatNotebook\include" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
+				</ResourceCompiler>
 				<Linker>
 					<Add library="codeadapt" />
-					<Add library="wxaui" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_aui" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wx_msw$(WX_SUFFIX)_html-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_aui-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_adv-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add library="libshfolder.a" />
 					<Add library="libkernel32.a" />
 					<Add library="libuser32.a" />
@@ -496,9 +503,9 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;sdk;wxAUI;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="All" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;sdk;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
 			<Add alias="Core app &amp; plugins" targets="src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
-			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;wxAUI;Compiler depslib;" />
+			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wxFlatNotebook;Compiler depslib;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
