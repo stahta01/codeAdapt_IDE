@@ -6,7 +6,7 @@
 		<Project filename="plugins\contrib\byogames\byogames_wx28-win32.cbp" />
 		<Project filename="plugins\contrib\source_exporter\Exporter_wx28-win32.cbp" />
 		<Project filename="plugins\contrib\ToolsPlus\ToolsPlus_wx28-win32.cbp" />
-		<Project filename="plugins\contrib\envvars\envvars_wx28-win32.cbp" />
 		<Project filename="plugins\contrib\devpak_plugin\DevPakPlugin_wx28-win32.cbp" />
+		<Project filename="plugins\contrib\envvars\envvars_wx28-win32.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
