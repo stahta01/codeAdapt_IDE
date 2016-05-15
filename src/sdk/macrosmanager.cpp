@@ -288,6 +288,11 @@ void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,ProjectBuil
             macros[_T("TARGET_CPP")]   = c->GetPrograms().CPP;
             macros[_T("TARGET_LD")]   = c->GetPrograms().LD;
             macros[_T("TARGET_LIB")]   = c->GetPrograms().LIB;
+            wxFileName aFilePath;
+            aFilePath.SetPath(c->GetMasterPath(), wxPATH_NATIVE);
+            wxString aPathStr = aFilePath.GetPathWithSep(wxPATH_NATIVE);
+            aPathStr.Replace(wxT_2("\\"), wxT_2("/"));
+            macros[_T("TARGET_COMPILER_DIR")] = aPathStr;
         }
         macros[_T("TARGET_OBJECT_DIR")]   = target->GetObjectOutput();
     }
