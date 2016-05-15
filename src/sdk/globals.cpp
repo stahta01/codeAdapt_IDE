@@ -991,3 +991,23 @@ namespace platform
         return theOS;
     }
 }
+
+wxString caGetTextFromUser(
+    const wxString &message,
+    const wxString &caption = wxGetTextFromUserPromptStr,
+    const wxString &default_value = wxEmptyString, 
+    wxWindow *parent = NULL,
+    int x = wxDefaultCoord, 
+    int y = wxDefaultCoord, 
+    bool centre = true
+) {
+    /*  wxTextEntryDialogStyle equals (wxOK | wxCANCEL | wxCENTRE | wxWS_EX_VALIDATE_RECURSIVELY) */
+    long style=wxOK|wxCANCEL;
+    if (centre) style |= wxCENTRE;
+    wxTextEntryDialog dlg(parent, message, caption, default_value, style, wxPoint (x, y));
+    if (dlg.ShowModal() == wxID_OK){
+        return dlg.GetValue();
+    } else {
+        return wxEmptyString;
+    }
+} // caGetTextFromUser

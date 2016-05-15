@@ -9,6 +9,7 @@
 #include <wx/intl.h>
 #include <wx/msgdlg.h>
 #include <wx/bitmap.h>
+#include <wx/textdlg.h>
 
 class TiXmlDocument;
 
@@ -312,5 +313,15 @@ namespace platform
 
     extern DLLIMPORT windows_version_t WindowsVersion();
 };
+
+extern DLLIMPORT wxString caGetTextFromUser(
+    const wxString &message,
+    const wxString &caption = wxGetTextFromUserPromptStr,
+    const wxString &default_value = wxEmptyString, 
+    wxWindow *parent = NULL,
+    int x = wxDefaultCoord, 
+    int y = wxDefaultCoord, 
+    bool centre = true
+);
 
 #endif // SDK_GLOBALS_H
