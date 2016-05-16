@@ -1,19 +1,11 @@
 #ifndef PPCTRL_H
 #define PPCTRL_H
 
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-	#include <wx/wx.h>
-#endif
-
 #include <wx/process.h>
 #include <wx/aui/aui.h>
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
-    #include <wx/wxscintilla.h>
-#endif
+#include <wx/wxscintilla.h>
+
 #include "ShellCtrlBase.h"
 
 class PipedProcessCtrl;
