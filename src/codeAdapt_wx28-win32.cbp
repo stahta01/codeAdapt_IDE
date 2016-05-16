@@ -3,7 +3,6 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="codeAdapt" />
-		<Option pch_mode="2" />
 		<Option default_target="src" />
 		<Option compiler="gcc" />
 		<Build>
@@ -463,8 +462,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
