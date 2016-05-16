@@ -18,6 +18,7 @@
 #include <compiletargetbase.h>
 #include <cbproject.h>
 #include <cbeditor.h>
+
 #include <sqplus.h>
 
 DECLARE_INSTANCE_TYPE(wxString);
@@ -39,6 +40,8 @@ DECLARE_INSTANCE_TYPE(ProjectManager);
 DECLARE_INSTANCE_TYPE(CompilerFactory);
 DECLARE_INSTANCE_TYPE(PluginInfo);
 DECLARE_INSTANCE_TYPE(FileTreeData);
+
+using SqPlus::GetTypeName;
 
 // make SqPlus aware of enum-type arguments
 #define DECLARE_ENUM_TYPE(T) \
@@ -62,6 +65,8 @@ DECLARE_ENUM_TYPE(SearchDirs);
 DECLARE_ENUM_TYPE(ModuleType);
 DECLARE_ENUM_TYPE(FileTreeData::FileTreeDataKind);
 DECLARE_ENUM_TYPE(TargetFilenameGenerationPolicy);
+
+using SqPlus::Push;
 
 namespace SqPlus
 {
