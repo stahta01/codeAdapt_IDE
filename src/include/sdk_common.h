@@ -17,10 +17,13 @@
     #endif
 #endif // __GNUC__ && !__APPLE__
 
+#if ( defined(CA_USEPCH) && !defined(CB_PRECOMP) )
+    #define CB_PRECOMP
+#endif // CA_USEPCH
 
-#if ( defined(CB_PRECOMP) && !defined(WX_PRECOMP) )
+#if ( defined(CA_USEPCH) && !defined(WX_PRECOMP) )
     #define WX_PRECOMP
-#endif // CB_PRECOMP
+#endif // CA_USEPCH
 
 // basic wxWidgets headers : this one itself will check for precompiled headers
 // and if so will include a list of wx headers, at the bottom we add some more headers
