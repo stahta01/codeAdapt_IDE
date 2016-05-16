@@ -7,9 +7,8 @@
  * $HeadURL$
  */
 
+#include "sdk.h"
 #include <wx/window.h>
-
-#include <sdk.h>
 #include <cbproject.h>
 #include <globals.h>
 #include <manager.h>
