@@ -20,12 +20,13 @@
 					<Add option="-fmessage-length=0" />
 					<Add option="-fexceptions" />
 					<Add option="-Winvalid-pch" />
+					<Add option="-iquote../../../.objs/include" />
 					<Add option="-DHAVE_W32API_H" />
 					<Add option="-D__WXMSW__" />
 					<Add option="-DWXUSINGDLL" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DcbDEBUG" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add option="-DwxUSE_UNICODE" />
 					<Add directory="$(#WX.include)" />
 					<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
