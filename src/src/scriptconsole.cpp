@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "sdk.h"
 #include <sqplus.h>
 
 #include "scriptconsole.h"

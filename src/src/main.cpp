@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #include "app.h"
 #include "main.h"
 #include "appglobals.h"

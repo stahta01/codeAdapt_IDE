@@ -10,7 +10,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #ifndef CB_PRECOMP
     #include <wx/radiobox.h>
     #include <wx/xrc/xmlres.h>

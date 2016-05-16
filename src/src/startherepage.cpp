@@ -10,7 +10,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #include <wx/wxhtml.h>
 #include <wx/intl.h>
 #include <wx/utils.h>
