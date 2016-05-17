@@ -19,6 +19,7 @@
     #include <projectmanager.h>
     #include <manager.h>
 #endif
+#include <wx/filedlg.h>
 #include <wx/filefn.h>
 #include "filepathpanel.h"
 
