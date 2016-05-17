@@ -1,14 +1,12 @@
 #ifndef EMBEDDEDHTMLPANEL_H
 #define EMBEDDEDHTMLPANEL_H
 
-#ifndef CB_PRECOMP
 	//(*HeadersPCH(EmbeddedHtmlPanel)
 	#include <wx/panel.h>
 	class wxStaticText;
 	class wxBitmapButton;
 	class wxBoxSizer;
 	//*)
-#endif
 //(*Headers(EmbeddedHtmlPanel)
 class wxHtmlWindow;
 //*)
