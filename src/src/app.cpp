@@ -95,7 +95,7 @@ namespace
 wxArrayString s_DelayedFilesToOpen;
 bool s_Loading = false;
 
-#ifdef __WXMSW__
+#if 0 // __WXMSW__
 
 class DDEServer : public wxServer
 {
@@ -158,10 +158,6 @@ const wxCmdLineEntryDesc cmdLineDesc[] =
 {
     { wxCMD_LINE_SWITCH, wxT_2("h"), wxT_2("help"), wxT_2("show this help message"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
     { wxCMD_LINE_SWITCH, wxT_2(""), wxT_2("safe-mode"), wxT_2("load in safe mode (all plugins will be disabled)"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
-#ifdef __WXMSW__
-    { wxCMD_LINE_SWITCH, wxT_2("na"), wxT_2("no-check-associations"), wxT_2("don't perform any association checks"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
-    { wxCMD_LINE_SWITCH, wxT_2("nd"), wxT_2("no-dde"), wxT_2("don't start a DDE server"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
-#endif
     { wxCMD_LINE_SWITCH, wxT_2("ns"), wxT_2("no-splash-screen"), wxT_2("don't display a splash screen while loading"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, wxT_2("d"), wxT_2("debug-log"), wxT_2("display application's debug log"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, wxT_2("nc"), wxT_2("no-crash-handler"), wxT_2("don't use the crash handler (useful for debugging C::B)"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
@@ -286,7 +282,7 @@ bool CodeBlocksApp::LoadConfig()
 
 void CodeBlocksApp::InitAssociations()
 {
-#ifdef __WXMSW__
+#if 0
     ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
     if (!m_NoAssocs && cfg->ReadBool(_T("/environment/check_associations"), true))
     {
@@ -355,7 +351,7 @@ MainFrame* CodeBlocksApp::InitFrame()
     wxUpdateUIEvent::SetUpdateInterval(100);
     SetTopWindow(0);
     //frame->Hide(); // shouldn't need this explicitely
-#ifdef __WXMSW__
+#if 0 // __WXMSW__
     if (!m_NoDDE)
     {
         g_DDEServer = new DDEServer(frame);
@@ -599,7 +595,7 @@ int CodeBlocksApp::OnExit()
 {
     wxTheClipboard->Flush();
 
-#ifdef __WXMSW__
+#if 0 // __WXMSW__
     delete g_DDEServer;
     if (m_ExceptionHandlerLib)
         FreeLibrary(m_ExceptionHandlerLib);
@@ -913,7 +909,7 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame)
                 {
                     wxString val;
                     parser.Found(_T("prefix"), &m_Prefix);
-#ifdef __WXMSW__
+#if 0 // def __WXMSW__
                     m_NoDDE = parser.Found(_T("no-dde"));
                     m_NoAssocs = parser.Found(_T("no-check-associations"));
 #endif

@@ -87,9 +87,11 @@ class CodeBlocksApp : public wxApp
 
         void InitAssociations();
 
-#ifdef __WXMSW__
+#if 0 // __WXMSW__
         bool m_NoDDE; // no DDE
         bool m_NoAssocs; // no associations check
+#endif
+#ifdef __WXMSW__
         HINSTANCE m_ExceptionHandlerLib;
 #endif
         int m_BatchExitCode;

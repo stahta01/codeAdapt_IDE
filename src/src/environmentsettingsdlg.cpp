@@ -58,8 +58,10 @@ const int IMAGES_COUNT = sizeof(base_imgs) / sizeof(wxString);
 
 BEGIN_EVENT_TABLE(EnvironmentSettingsDlg, wxDialog)
     EVT_UPDATE_UI(-1, EnvironmentSettingsDlg::OnUpdateUI)
+#if 0
     EVT_BUTTON(XRCID("btnSetAssocs"), EnvironmentSettingsDlg::OnSetAssocs)
     EVT_BUTTON(XRCID("btnManageAssocs"), EnvironmentSettingsDlg::OnManageAssocs)
+#endif
     EVT_BUTTON(XRCID("btnFNBorder"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnFNFrom"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnFNTo"), EnvironmentSettingsDlg::OnChooseColour)
@@ -196,7 +198,7 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
     XRCCTRL(*this, "txtProxy", wxTextCtrl)->SetValue(cfg->Read(_T("/network_proxy")));
 
     // disable some windows-only settings, in other platforms
-#ifndef __WXMSW__
+#if 1 // !defined(__WXMSW__)
     XRCCTRL(*this, "chkAssociations", wxCheckBox)->Enable(false);
     XRCCTRL(*this, "btnSetAssocs", wxButton)->Enable(false);
     XRCCTRL(*this, "btnManageAssocs", wxButton)->Enable(false);
@@ -296,6 +298,7 @@ void EnvironmentSettingsDlg::OnPageChanged(wxListbookEvent& event)
     UpdateListbookImages();
 }
 
+#if 0
 void EnvironmentSettingsDlg::OnSetAssocs(wxCommandEvent& event)
 {
 #ifdef __WXMSW__
@@ -312,6 +315,7 @@ void EnvironmentSettingsDlg::OnManageAssocs(wxCommandEvent& event)
     dlg.ShowModal();
 #endif
 }
+#endif
 
 void EnvironmentSettingsDlg::OnNbDefaults(wxCommandEvent& event)
 {

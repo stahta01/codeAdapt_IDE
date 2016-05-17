@@ -233,7 +233,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
         if (bbargs != cfg->Read(_T("/batch_build_args"), appglobals::DefaultBatchBuildArgs))
         {
             cfg->Write(_T("/batch_build_args"), bbargs);
-            Associations::SetBatchBuildOnly();
+//            Associations::SetBatchBuildOnly();
         }
 
         // batch build plugins
