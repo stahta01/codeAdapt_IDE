@@ -3,13 +3,13 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="codeAdapt wx3.0 MSys2" />
-		<Option pch_mode="2" />
 		<Option default_target="src" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="tinyXML">
 				<Option output="lib\libtxml.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -22,6 +22,7 @@
 			</Target>
 			<Target title="AutoRevision">
 				<Option output="build_tools\autorevision\autorevision.exe" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs30" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -37,6 +38,7 @@
 			<Target title="ConsoleRunner">
 				<Option output="devel30\ca_console_runner.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="tools\ConsoleRunner" />
+				<Option object_output=".objs30" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="0" />
@@ -49,6 +51,7 @@
 			<Target title="Squirrel">
 				<Option output="lib\libsquirrel.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -67,6 +70,7 @@
 			<Target title="Squirrel std lib">
 				<Option output="lib\libsqstdlib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option external_deps="sdk\scripting\lib\libsquirrel.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -86,6 +90,7 @@
 			<Target title="SqPlus">
 				<Option output="lib\libsqplus.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option external_deps="sdk\scripting\lib\libsquirrel.a;sdk\scripting\lib\libsqstdlib.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -105,6 +110,7 @@
 			<Target title="scintilla">
 				<Option output="devel30\wxscintilla.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -131,6 +137,7 @@
 			<Target title="wxFlatNotebook">
 				<Option output="lib30\libwxflatnotebook.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -148,6 +155,7 @@
 			<Target title="sdk">
 				<Option output="devel30\codeadapt.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option external_deps="base\tinyxml\libtxml.a;sdk\propgrid\libpropgrid.a;sdk\wxFlatNotebook\libwxflatnotebook.a;sdk\scripting\lib\libsquirrel.a;sdk\scripting\lib\libsqstdlib.a;sdk\scripting\lib\libsqplus.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -193,6 +201,7 @@
 			<Target title="wxAUI">
 				<Option output="lib30\libwxaui.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -208,6 +217,7 @@
 			<Target title="src">
 				<Option output="devel30\codeadapt.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option external_deps="src\wxAUI\libwxaui.a;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -217,7 +227,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\wxAUI" />
 					<Add directory="include\wxFlatNotebook\include" />
@@ -263,6 +273,7 @@
 			<Target title="AStyle">
 				<Option output="devel30\share\codeadapt\plugins\astyle.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -271,21 +282,31 @@
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
 					<Add directory="plugins\astyle\astyle" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Compiler depslib">
 				<Option output="lib\libdepslib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -295,6 +316,7 @@
 			<Target title="Compiler">
 				<Option output="devel30\share\codeadapt\plugins\compiler.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option external_deps="plugins\compilergcc\depslib\libdepslib.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -308,6 +330,14 @@
 					<Add directory="plugins\compilergcc\depslib\src" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
+					<Add directory="plugins\astyle\astyle" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
@@ -315,9 +345,9 @@
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="depslib" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
 					<Add directory="lib" />
 					<Add directory="devel30" />
 				</Linker>
@@ -325,6 +355,7 @@
 			<Target title="Class wizard">
 				<Option output="devel30\share\codeadapt\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -334,21 +365,33 @@
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="plugins\compilergcc\depslib\src" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="plugins\astyle\astyle" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Default MIME handler">
 				<Option output="devel30\share\codeadapt\plugins\defaultmimehandler.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -358,21 +401,31 @@
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add library="wx_msw$(WX_SUFFIX)_html-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Open files list">
 				<Option output="devel30\share\codeadapt\plugins\openfileslist.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -380,19 +433,29 @@
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\wxAUI" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Scripted wizard">
 				<Option output="devel30\share\codeadapt\plugins\scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -402,61 +465,89 @@
 					<Add directory="include" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_adv-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="To-do">
 				<Option output="devel30\share\codeadapt\plugins\todo.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Autosave">
 				<Option output="devel30\share\codeadapt\plugins\autosave.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="XP look &amp; feel">
 				<Option output="devel30\share\codeadapt\plugins\xpmanifest.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -465,18 +556,28 @@
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Projects-workspaces importer">
 				<Option output="devel30\share\codeadapt\plugins\projectsimporter.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -486,6 +587,15 @@
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add directory="include" />
+					<Add directory="include\scripting\bindings" />
+					<Add directory="include\scripting\include" />
+					<Add directory="include\scripting\sqplus" />
+					<Add directory="include\wxFlatNotebook\include" />
+					<Add directory="include\wxscintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\include" />
+					<Add directory="sdk\wxscintilla\src\scintilla\src" />
+					<Add directory="$(TARGET_COMPILER_DIR)lib\wx\include\msw-unicode-$(WX_VERSION)" />
+					<Add directory="$(TARGET_COMPILER_DIR)include\wx-$(WX_VERSION)" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-auto-image-base" />
@@ -3898,7 +4008,6 @@
 				</resources>
 			</wxsmith>
 			<debugger />
-			<lib_finder />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
