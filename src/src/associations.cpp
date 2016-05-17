@@ -209,7 +209,7 @@ void Associations::DoClearAssociation(const wxString& ext)
     if(key.Exists())
     {
         wxString s;
-        if(key.QueryValue(NULL, s) && s.StartsWith(_T("CodeBlocks")))
+        if(key.QueryValue(wxEmptyString, s) && s.StartsWith(_T("CodeBlocks")))
             key.DeleteSelf();
     }
 

@@ -1608,8 +1608,8 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(ed->GetFilename(), panel++);                    //tiwag 050917
         SetStatusText(ed->GetEncodingName(), panel++);
         SetStatusText(msg, panel++);
-        SetStatusText(ed->GetControl()->GetOvertype() ? _("Overwrite") : _("Insert"), panel++);
-        SetStatusText(ed->GetModified() ? _("Modified") : wxEmptyString, panel++);
+        SetStatusText(ed->GetControl()->GetOvertype() ? _("Overwrite") : _("Insert")), panel++;
+        SetStatusText(ed->GetModified() ? _("Modified") : wxT_2("")), panel++;
         SetStatusText(ed->GetControl()->GetReadOnly() ? _("Read only") : _("Read/Write"), panel++);
         SetStatusText(personality, panel++);
     }
