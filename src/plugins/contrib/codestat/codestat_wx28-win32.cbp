@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
-				<Option output="..\..\..\devel\share\CodeBlocks\plugins\codestat.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\devel\share\codeadapt\plugins\codestat.dll" prefix_auto="0" extension_auto="0" />
 				<Option object_output="..\..\..\.objs\plugins\contrib\codestat" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -15,8 +15,8 @@
 				<Option projectCompilerOptionsRelation="0" />
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -57,7 +57,7 @@
 			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
 		</Linker>
 		<ExtraCommands>
-			<Add after="zip -j9 ..\..\..\devel\share\codeblocks\codestat.zip resources\manifest.xml resources\*.xrc" />
+			<Add after="zip -j9 ..\..\..\devel\share\codeadapt\codestat.zip resources\manifest.xml resources\*.xrc" />
 			<Mode after="always" />
 		</ExtraCommands>
 		<Unit filename="codestat.cpp" />

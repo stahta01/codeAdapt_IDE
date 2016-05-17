@@ -15,7 +15,7 @@
 				<Option compiler="gcc" />
 			</Target>
 			<Target title="default">
-				<Option output="..\..\..\devel\share\CodeBlocks\plugins\devpakupdater.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\devel\share\codeadapt\plugins\devpakupdater.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="..\devpak_plugin" />
 				<Option object_output="..\..\..\.objs\plugins\contrib\devpak_plugin" />
 				<Option type="3" />
@@ -45,13 +45,13 @@
 					<Add directory="$(#CB)\devel" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip ..\..\..\devel\share\CodeBlocks\devpakupdater.zip manifest.xml *.xrc" />
+					<Add after="zip ..\..\..\devel\share\codeadapt\devpakupdater.zip manifest.xml *.xrc" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>

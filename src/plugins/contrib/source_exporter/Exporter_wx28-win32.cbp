@@ -56,7 +56,7 @@
 				</Linker>
 			</Target>
 			<Target title="default">
-				<Option output="..\..\..\devel\share\CodeBlocks\plugins\Exporter" prefix_auto="0" extension_auto="1" />
+				<Option output="..\..\..\devel\share\codeadapt\plugins\Exporter" prefix_auto="0" extension_auto="1" />
 				<Option object_output="..\..\..\.objs\plugins\contrib\source_exporter" />
 				<Option external_deps="wxPdfDocument\lib\libwxPdfDocument.a;" />
 				<Option type="3" />
@@ -83,7 +83,7 @@
 					<Add directory="wxPdfDocument\lib" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 ..\..\..\devel\share\CodeBlocks\Exporter.zip manifest.xml" />
+					<Add after="zip -j9 ..\..\..\devel\share\codeadapt\Exporter.zip manifest.xml" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
