@@ -3507,12 +3507,6 @@
 		<Unit filename="src\appglobals.h">
 			<Option target="src" />
 		</Unit>
-		<Unit filename="src\associations.cpp">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src\associations.h">
-			<Option target="src" />
-		</Unit>
 		<Unit filename="src\aui_compat.h">
 			<Option target="src" />
 		</Unit>
