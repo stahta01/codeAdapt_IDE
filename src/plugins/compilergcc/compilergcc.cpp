@@ -62,6 +62,13 @@
 #include "cbstyledtextctrl.h"
 
 
+#if wxCHECK_VERSION(3, 0 ,0)
+    #define wxString2_cstr(x) x
+#else
+    #define wxString2_cstr(x) wxString(x).c_str()
+#endif
+
+
 #include "compilerMINGW.h"
 #ifdef __WXGTK__
 // TODO (mandrav#1#): Find out which compilers exist for linux and adapt this
@@ -1614,11 +1621,11 @@ void CompilerGCC::PrintBanner(cbProject* prj, ProjectBuildTarget* target)
     wxString banner;
     banner.Printf(_("-------------- Build: %s in %s ---------------"),
                     target
-                        ? target->GetTitle().c_str()
-                        : _("\"no target\""),
+                        ? wxString2_cstr(target->GetTitle())
+                        : wxString2_cstr(_("\"no target\"")),
                     prj
-                        ? prj->GetTitle().c_str()
-                        : _("\"no project\"")
+                        ? wxString2_cstr(prj->GetTitle())
+                        : wxString2_cstr(_("\"no project\""))
                 );
     LogMessage(banner, cltNormal, ltAll, false, true);
 }
@@ -1964,7 +1971,7 @@ int CompilerGCC::Clean(const wxString& target)
             DirectCommands dc(this, CompilerFactory::GetCompiler(bt->GetCompilerID()), bjt.project, m_PageIndex);
             clean = dc.GetCleanCommands(bt, true);
             DoClean(clean);
-            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().c_str(), bt ? bt->GetTitle().c_str() : _("<all targets>")), m_PageIndex);
+            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().c_str(), bt ? wxString2_cstr(bt->GetTitle()) : wxString2_cstr(_("<all targets>"))), m_PageIndex);
         }
     }
 
