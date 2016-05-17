@@ -10,7 +10,7 @@
 				<Option object_output="..\..\..\.objs\plugins\contrib\byogames" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="..\..\..\devel\codeblocks.exe" />
+				<Option host_application="..\..\..\devel\codeadapt.exe" />
 			</Target>
 			<Environment>
 				<Variable name="WX_VERSION" value="28" />

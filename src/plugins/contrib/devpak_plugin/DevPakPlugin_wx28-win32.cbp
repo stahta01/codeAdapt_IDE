@@ -20,7 +20,7 @@
 				<Option object_output="..\..\..\.objs\plugins\contrib\devpak_plugin" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="..\..\..\devel\codeblocks.exe" />
+				<Option host_application="..\..\..\devel\codeadapt.exe" />
 				<Option projectResourceIncludeDirsRelation="0" />
 				<Compiler>
 					<Add option="-Wall" />

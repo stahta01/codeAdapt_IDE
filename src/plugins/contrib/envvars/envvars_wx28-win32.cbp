@@ -13,7 +13,7 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="--profile=foo" />
-				<Option host_application="$(#cb)\devel\codeblocks" />
+				<Option host_application="$(#cb)\devel\codeadapt" />
 				<Compiler>
 					<Add option="-iquote../../../.objs/include" />
 					<Add option="-DCA_USEPCH" />
@@ -24,7 +24,7 @@
 				<Option object_output="$(#cb)\.objs\plugins\contrib\envvars" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="..\..\..\devel\codeblocks.exe" />
+				<Option host_application="..\..\..\devel\codeadapt.exe" />
 				<Compiler>
 					<Add option="-DNOPCH" />
 				</Compiler>
