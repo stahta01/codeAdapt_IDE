@@ -1041,7 +1041,7 @@ void ConfigManager::WriteBinary(const wxString& name,  const wxString& source)
 
     TiXmlElement *s = GetUniqElement(str, _T("bin"));
     s->SetAttribute("crc", wxCrc32::FromString(source));
-    SetNodeText(s, TiXmlText(wxBase64::Encode(source).mb_str(wxConvUTF8)));
+    SetNodeText(s, TiXmlText(caBase64::Encode(source).mb_str(wxConvUTF8)));
 }
 
 void ConfigManager::WriteBinary(const wxString& name,  void* ptr, size_t len)
@@ -1069,7 +1069,7 @@ wxString ConfigManager::ReadBinary(const wxString& name)
     if (const TiXmlText* t = bin->FirstChild()->ToText())
     {
         str.assign(cbC2U(t->Value()));
-        str = wxBase64::Decode(str);
+        str = caBase64::Decode(str);
         if(crc ==  wxCrc32::FromString(str))
             return str;
     }
@@ -1194,7 +1194,7 @@ void ConfigManager::Write(const wxString& name, const ISerializable& object)
     TiXmlElement *obj = GetUniqElement(e, key);
 
     TiXmlElement *s = GetUniqElement(obj, _T("obj"));
-    SetNodeText(s, TiXmlText(cbU2C(wxBase64::Encode(object.SerializeOut()))));
+    SetNodeText(s, TiXmlText(cbU2C(caBase64::Encode(object.SerializeOut()))));
 }
 
 bool ConfigManager::Read(const wxString& name, ISerializable* object)
@@ -1209,7 +1209,7 @@ bool ConfigManager::Read(const wxString& name, ISerializable* object)
     if(t)
     {
         str.assign(cbC2U(t->Value()));
-        object->SerializeIn(wxBase64::Decode(str));
+        object->SerializeIn(caBase64::Decode(str));
     }
     return wxEmptyString;
 }
@@ -1383,7 +1383,7 @@ void ConfigManager::Write(const wxString& name, const ConfigManagerContainer::Se
     for(ConfigManagerContainer::SerializableObjectMap::const_iterator it = map->begin(); it != map->end(); ++it)
     {
         TiXmlElement s(cbU2C(it->first));
-        s.InsertEndChild(TiXmlText(cbU2C(wxBase64::Encode(it->second->SerializeOut()))));
+        s.InsertEndChild(TiXmlText(cbU2C(caBase64::Encode(it->second->SerializeOut()))));
         mNode->InsertEndChild(s);
     }
 }
