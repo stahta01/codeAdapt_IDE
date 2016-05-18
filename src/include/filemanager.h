@@ -133,12 +133,14 @@ public:
 };
 
 
+#if 0
 class NullLoader : public LoaderBase
 {
 public:
     NullLoader(const wxString& name, char* buffer, size_t size) { fileName = name; data = buffer; len = size; Ready(); };
     void operator()(){};
 };
+#endif
 
 
 class FileManager : public Mgr<FileManager>
