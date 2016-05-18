@@ -25,7 +25,7 @@
 					<Add option="-D__GNUWIN32__"/>
 					<Add option="-D__WXMSW__"/>
 					<Add option="-D__WX__"/>
-					<Add option="-DWINVER=0x400"/>
+					<Add option="-DWINVER=0x0500"/>
 					<Add option="-DWXUSINGDLL"/>
 					<Add directory="$(WXSTABLE)\include"/>
 					<Add directory="..\..\include"/>
