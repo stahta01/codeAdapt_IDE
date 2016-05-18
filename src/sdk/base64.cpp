@@ -11,6 +11,13 @@
 // converted to wxWindows by Frank Bu?
 //
 
+#include <wx/defs.h>
+#include <wx/version.h>
+
+#if wxCHECK_VERSION(3, 0, 0)
+    #include <wx/base64.h> 
+#endif
+
 #include "base64.h"
 
 const wxChar fillchar = '=';
@@ -27,13 +34,16 @@ static wxString     cvt = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         // 234567890123
                           "0123456789+/");
 
-wxString wxBase64::Encode(const wxString& data)
+wxString caBase64::Encode(const wxString& data)
 {
-    return wxBase64::Encode((const wxUint8*)data.c_str(), data.Length());
+    return caBase64::Encode((const wxUint8*)data.c_str(), data.Length());
 }
 
-wxString wxBase64::Encode(const wxUint8* pData, size_t len)
+wxString caBase64::Encode(const wxUint8* pData, size_t len)
 {
+#if wxCHECK_VERSION(3, 0, 0)
+    return wxBase64Encode( pData, len); 
+#else
     size_t c;
     wxString ret;
     ret.Alloc(len * 4 / 3 + len * 2);
@@ -73,10 +83,28 @@ wxString wxBase64::Encode(const wxUint8* pData, size_t len)
     }
 
     return ret;
+#endif
 }
 
-wxString wxBase64::Decode(const wxString& data)
+wxString caBase64::Decode(const wxString& data)
 {
+#if wxCHECK_VERSION(3, 0, 0)
+    size_t posErr;
+    size_t number_of_chars;
+    size_t srcLen = data.Length();
+    char * pSrc = (char *) data.fn_str();
+
+    number_of_chars = wxBase64Decode(nullptr, 0, pSrc, srcLen, wxBase64DecodeMode_Relaxed, &posErr);
+    wxString strValue;
+    wxStringBufferLength strBuf(strValue, number_of_chars);
+    strBuf.SetLength(number_of_chars);
+
+    wxBase64Decode((wxChar*)strBuf, number_of_chars, pSrc, srcLen, wxBase64DecodeMode_Relaxed, &posErr);
+
+    return wxString(strValue);
+
+#else
+
     int c;
     int c1;
     size_t len = data.Length();
@@ -119,4 +147,5 @@ wxString wxBase64::Decode(const wxString& data)
     }
 
     return ret;
+#endif
 }

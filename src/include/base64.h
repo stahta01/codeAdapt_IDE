@@ -5,7 +5,7 @@
 #include <wx/string.h>
 #include "settings.h"
 
-namespace wxBase64
+namespace caBase64
 {
     DLLIMPORT wxString Encode(const wxUint8* pData, size_t len);
     DLLIMPORT wxString Encode(const wxString& data);

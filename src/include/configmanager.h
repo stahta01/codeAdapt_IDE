@@ -283,7 +283,7 @@ public:
             while(n->IterateChildren(e) && (e = n->IterateChildren(e)->ToElement()))
             {
                 T *obj = new T;
-                obj->SerializeIn(wxBase64::Decode(cbC2U(e->FirstChild()->ToText()->Value())));
+                obj->SerializeIn(caBase64::Decode(cbC2U(e->FirstChild()->ToText()->Value())));
                 (*map)[cbC2U(e->Value())] = obj;
             }
     };
