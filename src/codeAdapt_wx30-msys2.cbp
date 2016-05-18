@@ -661,9 +661,6 @@
 		<Unit filename="include\annoyingdialog.h">
 			<Option target="sdk" />
 		</Unit>
-		<Unit filename="include\autodetectcompilers.h">
-			<Option target="sdk" />
-		</Unit>
 		<Unit filename="include\backgroundthread.h">
 			<Option target="sdk" />
 		</Unit>
@@ -1761,9 +1758,6 @@
 			<Option target="XP look &amp; feel" />
 		</Unit>
 		<Unit filename="sdk\annoyingdialog.cpp">
-			<Option target="sdk" />
-		</Unit>
-		<Unit filename="sdk\autodetectcompilers.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk\base64.cpp">
