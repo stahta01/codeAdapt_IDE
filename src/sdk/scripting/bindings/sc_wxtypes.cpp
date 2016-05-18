@@ -205,7 +205,8 @@ namespace ScriptBindings
         typedef void(wxFileName::*WXFN_ASSIGN_FN)(const wxFileName&);
         typedef void(wxFileName::*WXFN_ASSIGN_STR)(const wxString&, wxPathFormat);
         typedef wxString(wxFileName::*WXFN_GETPATH)(int, wxPathFormat)const;
-        typedef bool(wxFileName::*WXFN_SETCWD)();
+        typedef bool(wxFileName::*WXFN_SETCWD)() const;
+        typedef const wxString& (wxArrayString::*WXARRAY_STRING_ITEM)(size_t nIndex) const;
 
         SqPlus::SQClassDef<wxFileName>("wxFileName").
                 emptyCtor().
@@ -257,9 +258,11 @@ namespace ScriptBindings
 //                func(&wxArrayString::Index, "Index").
                 staticFuncVarArgs(&wxArrayString_Index, "Index", "*").
                 func(&wxArrayString::GetCount, "GetCount").
-                func(&wxArrayString::Item, "Item");
+                func<WXARRAY_STRING_ITEM>(&wxArrayString::Item, "Item")
+        ;
 
         typedef void(wxColour::*WXC_SET)(const unsigned char, const unsigned char, const unsigned char, const unsigned char);
+        typedef bool (wxColour::*WXC_OK)() const;
 
         SqPlus::SQClassDef<wxColour>("wxColour").
                 emptyCtor().
@@ -267,7 +270,7 @@ namespace ScriptBindings
                 func(&wxColour::Blue, "Blue").
                 func(&wxColour::Green, "Green").
                 func(&wxColour::Red, "Red").
-                func(&wxColour::Ok, "Ok").
+                func<WXC_OK>(&wxColour::Ok, "Ok").
                 func<WXC_SET>(&wxColour::Set, "Set");
     }
 };
