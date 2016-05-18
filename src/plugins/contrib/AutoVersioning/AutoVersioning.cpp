@@ -1,6 +1,7 @@
+#include "sdk.h"
+
 #include <ctime>
 #include <cstdlib> //For random numbers
-#include <sdk.h>
 
 #ifndef CB_PRECOMP
 #include <wx/file.h>
