@@ -65,6 +65,8 @@
 				<Option host_application="..\..\..\devel\codeadapt.exe" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
+					<Add option="-iquote../../../.objs/include" />
+					<Add option='-include &quot;sdk.h&quot;' />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add option="-DcbDEBUG" />
@@ -88,8 +90,8 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>

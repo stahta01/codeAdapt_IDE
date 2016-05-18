@@ -30,6 +30,7 @@
 					<Add option="-fexceptions" />
 					<Add option='-include &quot;sdk.h&quot;' />
 					<Add option="-std=gnu++11" />
+					<Add option="-iquote../../../.objs/include" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCB_PRECOMP" />
 					<Add option="-DHAVE_W32API_H" />
