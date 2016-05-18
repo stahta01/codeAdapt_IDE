@@ -49,7 +49,7 @@
 			<Add option="-DHAVE_W32API_H" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DcbDEBUG" />
-			<Add option="-DCB_PRECOMP" />
+			<Add option="-DCA_USEPCH" />
 			<Add option="-DwxUSE_UNICODE" />
 			<Add option="-DBUILDING_PLUGIN" />
 			<Add directory="$(#CB.INCLUDE)" />

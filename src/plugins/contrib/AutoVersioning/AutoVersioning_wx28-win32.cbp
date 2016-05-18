@@ -26,7 +26,7 @@
 					<Add option="-D__WXMSW__" />
 					<Add option="-DWXUSINGDLL" />
 					<Add option="-DcbDEBUG" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add option="-DwxUSE_UNICODE" />
 					<Add directory="$(#CB.include)" />
 					<Add directory="$(#CB.include)\wxscintilla\include" />
@@ -47,8 +47,8 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
