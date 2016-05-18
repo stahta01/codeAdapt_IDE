@@ -8,8 +8,8 @@ echo Creating output directory tree
 set CA_DEVEL_RESDIR=devel30\share\codeadapt
 set CA_OUTPUT_RESDIR=output30\share\codeadapt
 
-if not exist output md output\
-if not exist output\share md output\share\
+if not exist output30 md output30\
+if not exist output30\share md output30\share\
 if not exist %CA_OUTPUT_RESDIR% md %CA_OUTPUT_RESDIR%\
 if not exist %CA_OUTPUT_RESDIR%\lexers md %CA_OUTPUT_RESDIR%\lexers\
 if not exist %CA_OUTPUT_RESDIR%\images md %CA_OUTPUT_RESDIR%\images\
@@ -19,8 +19,8 @@ if not exist %CA_OUTPUT_RESDIR%\plugins md %CA_OUTPUT_RESDIR%\plugins\
 if not exist %CA_OUTPUT_RESDIR%\templates md %CA_OUTPUT_RESDIR%\templates\
 if not exist %CA_OUTPUT_RESDIR%\templates\wizard md %CA_OUTPUT_RESDIR%\templates\wizard\
 if not exist %CA_OUTPUT_RESDIR%\scripts md %CA_OUTPUT_RESDIR%\scripts\
-if not exist devel md devel\
-if not exist devel\share md devel\share\
+if not exist devel30 md devel30\
+if not exist devel30\share md devel30\share\
 if not exist %CA_DEVEL_RESDIR% md %CA_DEVEL_RESDIR%\
 if not exist %CA_DEVEL_RESDIR%\lexers md %CA_DEVEL_RESDIR%\lexers\
 if not exist %CA_DEVEL_RESDIR%\images md %CA_DEVEL_RESDIR%\images\
@@ -77,6 +77,6 @@ xcopy /y scripts\* %CA_OUTPUT_RESDIR%\scripts /EXCLUDE:excludes.txt > nul
 del excludes.txt
 copy /y tips.txt %CA_DEVEL_RESDIR% > nul
 copy /y tips.txt %CA_OUTPUT_RESDIR% > nul
-copy /y devel\*.exe output > nul
-copy /y devel\*.dll output > nul
+copy /y devel30\*.exe output30 > nul
+copy /y devel30\*.dll output30 > nul
 copy /y %CA_DEVEL_RESDIR%\plugins\*.dll %CA_OUTPUT_RESDIR%\plugins > nul
