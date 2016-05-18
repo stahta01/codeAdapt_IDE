@@ -602,8 +602,8 @@
 					<Add option="-Wl,--enable-auto-image-base" />
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
+					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
 					<Add directory="devel30" />
 				</Linker>
 			</Target>
