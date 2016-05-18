@@ -188,6 +188,7 @@
 					<Add library="sqplus" />
 					<Add library="sqstdlib" />
 					<Add library="squirrel" />
+					<Add library="wx_msw$(WX_SUFFIX)_html-$(WX_VERSION).dll" />
 					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
 					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="lib30" />
@@ -3734,12 +3735,6 @@
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src\infopane.h">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src\ipc.cpp">
-			<Option target="src" />
-		</Unit>
-		<Unit filename="src\ipc.h">
 			<Option target="src" />
 		</Unit>
 		<Unit filename="src\main.cpp">
