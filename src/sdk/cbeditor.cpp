@@ -1198,7 +1198,7 @@ bool cbEditor::Open(bool detectEncoding)
 
     if (!m_pData->m_pFileLoader)
     {
-        m_pData->m_pFileLoader = Manager::Get()->GetFileManager()->Load(m_Filename, false);
+        m_pData->m_pFileLoader = Manager::Get()->GetFileManager()->Load(m_Filename);
     }
 
     EncodingDetector enc((wxByte*)m_pData->m_pFileLoader->GetData(), m_pData->m_pFileLoader->GetLength());
