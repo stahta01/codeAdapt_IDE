@@ -286,9 +286,15 @@ void CfgMgrBldr::SwitchToR(const wxString& absFileName)
         {
             size_t size = is->GetSize();
             wxString str;
+#if wxCHECK_VERSION(3, 0, 0)
+            wxChar* c = wxStringBuffer(str, size);
+#else
             wxChar* c = str.GetWriteBuf(size);
+#endif
             is->Read(c, size);
+#if !wxCHECK_VERSION(3, 0, 0)
             str.UngetWriteBuf(size);
+#endif
 
             doc = new TiXmlDocument();
 
@@ -408,6 +414,10 @@ ConfigManager* CfgMgrBldr::Build(const wxString& name_space)
 */
 inline void to_upper(wxString& s)
 {
+#if wxCHECK_VERSION(3, 0, 0)
+    s.MakeUpper(); 	
+    // No idea of the best way to fix this code for wxWidgets 3.0.
+#else
     wxChar *p = (wxChar*) s.c_str();
     size_t len = s.length()+1;
     for(;--len;++p)
@@ -416,10 +426,15 @@ inline void to_upper(wxString& s)
         if(q >= 'a' && q <= 'z')
             *p = q - 32;
     }
+#endif
 };
 
 inline void to_lower(wxString& s)
 {
+#if wxCHECK_VERSION(3, 0, 0)
+    s.MakeLower(); 	
+    // No idea of the best way to fix this code for wxWidgets 3.0.
+#else
     wxChar *p = (wxChar*) s.c_str();
     size_t len = s.length()+1;
     for(;--len;++p)
@@ -428,6 +443,7 @@ inline void to_lower(wxString& s)
         if(q >= 'A' && q <= 'Z')
             *p = q + 32;
     }
+#endif
 };
 
 
@@ -1072,7 +1088,11 @@ wxArrayString ConfigManager::EnumerateSubPaths(const wxString& path)
     {
         while(e->IterateChildren(curr) && (curr = e->IterateChildren(curr)->ToElement()))
         {
+#if wxCHECK_VERSION(3, 0, 0)
+            wxUniChar c = cbC2U(curr->Value())[0];
+#else
             wxChar c = *(cbC2U(curr->Value()));
+#endif
             if(c < _T('A') || c > _T('Z')) // first char must be a letter, uppercase letters are key names
                 ret.Add(cbC2U(curr->Value()));
         }
@@ -1154,7 +1174,11 @@ wxArrayString ConfigManager::EnumerateKeys(const wxString& path)
     {
         while(e->IterateChildren(curr) && (curr = e->IterateChildren(curr)->ToElement()))
         {
+#if wxCHECK_VERSION(3, 0, 0)
+            wxUniChar c = cbC2U(curr->Value())[0];
+#else
             wxChar c = *(cbC2U(curr->Value()));
+#endif
             if(c >= _T('A') && c <= _T('Z')) // opposite of the above
                 ret.Add(cbC2U(curr->Value()));
         }
