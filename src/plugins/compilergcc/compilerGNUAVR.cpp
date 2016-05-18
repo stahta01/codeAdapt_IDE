@@ -247,28 +247,3 @@ void CompilerGNUAVR::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Auto-import info"), cltInfo, _T("([Ii]nfo:[ \t].*)\\(auto-import\\)"), 1));
 } // end of LoadDefaultRegExArray
 
-AutoDetectResult CompilerGNUAVR::AutoDetectInstallationDir()
-{
-    wxString sep = wxFileName::GetPathSeparator();
-    if (platform::windows)
-        m_MasterPath = _T("C:\\WinAVR");
-    else
-        m_MasterPath = _T("/usr");
-
-    AutoDetectResult ret = wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;
-    if (ret == adrDetected)
-    {
-        if (platform::windows)
-        {
-            AddIncludeDir(m_MasterPath + sep + _T("avr\\include"));
-            AddLibDir(m_MasterPath + sep + _T("avr\\lib"));
-            m_ExtraPaths.Add(m_MasterPath + sep + _T("utils") + sep + _T("bin")); // for make
-        }
-        else
-        {
-            AddIncludeDir(m_MasterPath + sep + _T("include"));
-            AddLibDir(m_MasterPath + sep + _T("lib"));
-        }
-    }
-    return ret;
-} // end of AutoDetectInstallationDir

@@ -151,7 +151,9 @@ BEGIN_EVENT_TABLE(CompilerOptionsDlg, wxPanel)
     EVT_BUTTON(                XRCID("btnDeleteVar"),         CompilerOptionsDlg::OnRemoveVarClick)
     EVT_BUTTON(                XRCID("btnClearVar"),          CompilerOptionsDlg::OnClearVarClick)
     EVT_BUTTON(                XRCID("btnMasterPath"),        CompilerOptionsDlg::OnMasterPathClick)
+#if 0
     EVT_BUTTON(                XRCID("btnAutoDetect"),        CompilerOptionsDlg::OnAutoDetectClick)
+#endif
     EVT_BUTTON(                XRCID("btnCcompiler"),         CompilerOptionsDlg::OnSelectProgramClick)
     EVT_BUTTON(                XRCID("btnCPPcompiler"),       CompilerOptionsDlg::OnSelectProgramClick)
     EVT_BUTTON(                XRCID("btnLinker"),            CompilerOptionsDlg::OnSelectProgramClick)
@@ -1231,6 +1233,7 @@ void CompilerOptionsDlg::UpdateCompilerForTargets(int compilerIdx)
     }
 } // UpdateCompilerForTargets
 
+#if 0
 void CompilerOptionsDlg::AutoDetectCompiler()
 {
     Compiler* compiler = CompilerFactory::GetCompiler(m_CurrentCompilerIdx);
@@ -1270,6 +1273,7 @@ void CompilerOptionsDlg::AutoDetectCompiler()
        ArrayString2ListBox(extraPaths, XRCCTRL(*this, "lstExtraPaths", wxListBox));
     m_bDirty = true;
 } // AutoDetectCompiler
+#endif
 
 wxListBox* CompilerOptionsDlg::GetDirsListBox()
 {
@@ -1644,8 +1648,10 @@ void CompilerOptionsDlg::OnResetCompilerClick(wxCommandEvent& /*event*/)
                     wxOK | wxCANCEL | wxICON_QUESTION | wxNO_DEFAULT) == wxID_OK)
     {
         CompilerFactory::GetCompiler(m_CurrentCompilerIdx)->Reset();
+#if 0
         // run auto-detection
         AutoDetectCompiler();
+#endif
         CompilerFactory::SaveSettings();
         // refresh settings in dialog
         DoFillCompilerDependentSettings();
@@ -1907,10 +1913,12 @@ void CompilerOptionsDlg::OnMasterPathClick(wxCommandEvent& /*event*/)
     }
 } // OnMasterPathClick
 
+#if 0
 void CompilerOptionsDlg::OnAutoDetectClick(wxCommandEvent& /*event*/)
 {
     AutoDetectCompiler();
 } // OnAutoDetectClick
+#endif
 
 void CompilerOptionsDlg::OnSelectProgramClick(wxCommandEvent& event)
 {

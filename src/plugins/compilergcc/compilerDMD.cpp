@@ -137,41 +137,4 @@ void CompilerDMD::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Linker warning"), cltError, _T("Error ([0-9]+):[\\s]*(.*)"), 2));
 }
 
-AutoDetectResult CompilerDMD::AutoDetectInstallationDir()
-{
-    wxString sep = wxFileName::GetPathSeparator();
-
-    // NOTE (hd#1#): dmc uses sc.ini for compiler's master directories
-    // NOTE (mandrav#1#): which doesn't seem to exist if you don't have the CD version ;)
-
-    // just a guess; the default installation dir
-    wxString incPath;
-    wxString libPath;
-    wxString libName;
-    if (platform::windows)
-    {
-        m_MasterPath = _T("C:\\dmd");
-        incPath = m_MasterPath + sep + _T("src") + sep + _T("phobos");
-        libPath = m_MasterPath + sep + _T("lib");
-        libName = _T("phobos.lib");
-        m_ExtraPaths.Add(_T("C:\\dm\\bin"));
-    }
-    else
-    {
-      m_MasterPath = wxFileExists(_T("/usr/local/bin/dmd")) ? _T("/usr/local") : _T("/usr");
-      incPath = m_MasterPath + sep + _T("lib") + sep + _T("phobos");
-      libPath = m_MasterPath + sep + _T("lib");
-      libName = _T("phobos");
-    }
-
-    if (!m_MasterPath.IsEmpty())
-    {
-        AddIncludeDir(incPath);
-        AddLibDir(libPath);
-    }
-    AddLinkLib(libName);
-
-    return wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;
-}
-
 #endif // _WIN32 || linux

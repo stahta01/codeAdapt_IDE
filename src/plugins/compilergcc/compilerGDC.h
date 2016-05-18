@@ -10,7 +10,6 @@ class CompilerGDC : public Compiler
         virtual ~CompilerGDC();
         virtual void Reset();
         virtual void LoadDefaultRegExArray();
-        virtual AutoDetectResult AutoDetectInstallationDir();
     protected:
         virtual Compiler* CreateCopy();
     private:
