@@ -134,11 +134,13 @@ enum CompilerLoggingType
     clogNone
 };
 
+#if 0
 enum AutoDetectResult
 {
     adrDetected,
     adrGuessed
 };
+#endif
 
 /// Struct to keep programs
 struct CompilerPrograms
@@ -306,8 +308,6 @@ class DLLIMPORT Compiler : public CompileOptionsBase
           * Put initialization code here and call this from the default constructor.
           */
         virtual void Reset() = 0;
-        /** @brief Try to auto-detect the compiler's installation directory */
-        virtual AutoDetectResult AutoDetectInstallationDir() = 0;
 
         /** @brief Get this compiler's unique ID */
         const wxString& GetID() const { return m_ID; }

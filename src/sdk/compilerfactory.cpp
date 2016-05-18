@@ -21,7 +21,7 @@
     #include "compiler.h"
 #endif
 
-#include "autodetectcompilers.h"
+// #include "autodetectcompilers.h"
 
 // statics
 CompilersArray CompilerFactory::Compilers;
@@ -250,21 +250,10 @@ void CompilerFactory::SaveSettings()
 
 void CompilerFactory::LoadSettings()
 {
-    bool needAutoDetection = false;
     for (size_t i = 0; i < Compilers.GetCount(); ++i)
     {
         wxString baseKey = Compilers[i]->GetParentID().IsEmpty() ? _T("/sets") : _T("/user_sets");
         Compilers[i]->LoadSettings(baseKey);
-        if (Compilers[i]->GetMasterPath().IsEmpty())
-            needAutoDetection = true;
-    }
-
-    // auto-detect missing compilers
-    if (needAutoDetection)
-    {
-        AutoDetectCompilers adc(Manager::Get()->GetAppWindow());
-        PlaceWindow(&adc);
-        adc.ShowModal();
     }
 }
 
