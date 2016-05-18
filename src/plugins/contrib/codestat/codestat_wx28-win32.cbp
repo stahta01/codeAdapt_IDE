@@ -15,8 +15,8 @@
 				<Option projectCompilerOptionsRelation="0" />
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -30,6 +30,7 @@
 			<Add option="-mthreads" />
 			<Add option="-fexceptions" />
 			<Add option='-include &quot;sdk.h&quot;' />
+			<Add option="-std=gnu++11" />
 			<Add option="-DBUILDING_PLUGIN" />
 			<Add option="-DCB_PRECOMP" />
 			<Add option="-DHAVE_W32API_H" />
