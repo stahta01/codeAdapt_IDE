@@ -111,8 +111,9 @@ FileManager::~FileManager()
 //  urlLoaderThread.Die();
 }
 
-LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
+LoaderBase* FileManager::Load(const wxString& file /*, bool reuseEditors */ )
 {
+#if 0
     if(reuseEditors)
     {
         EditorManager* em = Manager::Get()->GetEditorManager();
@@ -131,6 +132,7 @@ LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
             }
         }
     }
+#endif
 
     if(file.StartsWith(_T("http://")))
     {
