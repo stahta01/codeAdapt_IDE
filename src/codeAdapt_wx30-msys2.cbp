@@ -444,7 +444,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-include sdk.h" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
@@ -592,8 +591,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="3.0" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="3.0" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
