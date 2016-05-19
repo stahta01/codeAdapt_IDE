@@ -463,9 +463,9 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_CFG" value="" />
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
@@ -504,9 +504,6 @@
 		</Linker>
 		<Unit filename="base/tinyxml/tinystr.cpp">
 			<Option target="tinyXML" />
-		</Unit>
-		<Unit filename="base/tinyxml/tinywxuni.cpp">
-			<Option target="sdk" />
 		</Unit>
 		<Unit filename="base/tinyxml/tinyxml.cpp">
 			<Option target="tinyXML" />
@@ -919,11 +916,11 @@
 		<Unit filename="include/templatemanager.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/tinywxuni.h">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="include/tinyxml/tinystr.h">
 			<Option target="tinyXML" />
-		</Unit>
-		<Unit filename="include/tinyxml/tinywxuni.h">
-			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/tinyxml/tinyxml.h">
 			<Option target="tinyXML" />
@@ -3129,6 +3126,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/templatemanager.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/tinywxuni.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/toolsmanager.cpp">
