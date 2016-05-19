@@ -264,7 +264,7 @@
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="plugins\astyle\astyle" />
 					<Add directory="include\scripting\bindings" />
@@ -310,7 +310,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="plugins\compilergcc\depslib\src" />
 					<Add directory="include\scripting\include" />
@@ -348,7 +348,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="plugins\compilergcc\depslib\src" />
 					<Add directory="include\scripting\include" />
@@ -384,7 +384,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
@@ -416,7 +416,7 @@
 				<Compiler>
 					<Add option="-include sdk.h" />
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\wxAUI" />
 					<Add directory="include\wxFlatNotebook\include" />
@@ -446,7 +446,7 @@
 				<Compiler>
 					<Add option="-include sdk.h" />
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\include" />
 					<Add directory="include\scripting\sqplus" />
@@ -477,7 +477,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\bindings" />
 					<Add directory="include\scripting\include" />
@@ -507,7 +507,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\bindings" />
 					<Add directory="include\scripting\include" />
@@ -539,7 +539,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\bindings" />
 					<Add directory="include\scripting\include" />
@@ -570,7 +570,7 @@
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
 					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCB_PRECOMP" />
+					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include\scripting\bindings" />
 					<Add directory="include\scripting\include" />
@@ -592,8 +592,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="3.0" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
