@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "sdk.h"
 #include <wx/intl.h>
 #include <wx/filename.h>
 #include <wx/msgdlg.h>

@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "sdk.h"
 #include "compiler_defs.h"
 #include <cbproject.h>
 #include <projectbuildtarget.h>

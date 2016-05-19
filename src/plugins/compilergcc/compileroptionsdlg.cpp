@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #include <prep.h>
 #ifndef CB_PRECOMP
     #include <wx/arrstr.h>

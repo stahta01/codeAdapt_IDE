@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #include "makefilegenerator.h" // class's header file
 #include <manager.h>
 #include <macrosmanager.h>
