@@ -317,7 +317,7 @@ pfDetails::pfDetails(ProjectBuildTarget* target, ProjectFile* pf)
 
 void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
 {
-    wxString sep = wxFILE_SEP_PATH;
+    wxString sep = wxT_2('/');
     wxFileName tmp;
 
     wxFileName prjbase(target->GetParentProject()->GetBasePath());
