@@ -1,4 +1,4 @@
-#include <sdk.h> // PCH support
+#include "sdk.h" // PCH support
 #ifndef CB_PRECOMP
 #include <wx/sizer.h>
 #endif
