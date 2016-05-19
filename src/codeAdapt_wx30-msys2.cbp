@@ -199,22 +199,6 @@
 					<Add before="CMD /C REM build_tools/autorevision/autorevision +wx +int +t . include/autorevision.h" />
 				</ExtraCommands>
 			</Target>
-			<Target title="wxAUI">
-				<Option output="lib30\libwxaui.a" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="" />
-				<Option object_output=".objs30" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-D__GNUWIN32__" />
-					<Add option="-DWIN32" />
-					<Add option="-DWXUSINGDLL" />
-					<Add directory="src\wxAUI" />
-				</Compiler>
-				<Linker>
-					<Add option="-r" />
-				</Linker>
-			</Target>
 			<Target title="src">
 				<Option output="devel30\codeadapt.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30" />
@@ -1746,7 +1730,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -1985,7 +1968,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2007,7 +1989,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2029,7 +2010,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2054,7 +2034,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2076,7 +2055,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2098,7 +2076,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2120,7 +2097,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2142,7 +2118,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2164,7 +2139,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2186,7 +2160,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2208,7 +2181,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2230,7 +2202,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2252,7 +2223,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2277,7 +2247,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2305,7 +2274,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2327,7 +2295,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2349,7 +2316,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2371,7 +2337,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2393,7 +2358,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2415,7 +2379,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2437,7 +2400,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2459,7 +2421,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2481,7 +2442,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2503,7 +2463,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2525,7 +2484,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2547,7 +2505,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2569,7 +2526,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2591,7 +2547,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2613,7 +2568,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2635,7 +2589,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2657,7 +2610,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2679,7 +2631,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2701,7 +2652,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2723,7 +2673,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2745,7 +2694,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2767,7 +2715,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2789,7 +2736,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2811,7 +2757,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2833,7 +2778,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2855,7 +2799,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2877,7 +2820,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2899,7 +2841,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2921,7 +2862,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2943,7 +2883,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2965,7 +2904,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -2987,7 +2925,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3009,7 +2946,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3031,7 +2967,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3053,7 +2988,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3075,7 +3009,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3097,7 +3030,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3119,7 +3051,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3141,7 +3072,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3163,7 +3093,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3188,7 +3117,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3762,7 +3690,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3784,7 +3711,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3806,7 +3732,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3828,7 +3753,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3850,7 +3774,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3872,7 +3795,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3894,7 +3816,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3916,7 +3837,6 @@
 			<Option target="scintilla" />
 			<Option target="wxFlatNotebook" />
 			<Option target="sdk" />
-			<Option target="wxAUI" />
 			<Option target="src" />
 			<Option target="AStyle" />
 			<Option target="Compiler depslib" />
@@ -3958,12 +3878,6 @@
 		</Unit>
 		<Unit filename="src\startherepage.h">
 			<Option target="src" />
-		</Unit>
-		<Unit filename="src\wxAUI\manager.cpp">
-			<Option target="wxAUI" />
-		</Unit>
-		<Unit filename="src\wxAUI\manager.h">
-			<Option target="wxAUI" />
 		</Unit>
 		<Unit filename="tools\ConsoleRunner\main.cpp">
 			<Option target="ConsoleRunner" />
