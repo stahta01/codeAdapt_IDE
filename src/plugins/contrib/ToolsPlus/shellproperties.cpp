@@ -1,3 +1,5 @@
+#include "sdk.h"
+
 #include "shellproperties.h"
 
 #include <configmanager.h>

@@ -1,3 +1,5 @@
+#include "sdk.h"
+
 #include "ToolsPlus.h"
 #include "se_globals.h"
 
