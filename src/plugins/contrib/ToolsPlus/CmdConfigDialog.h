@@ -1,23 +1,6 @@
-///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb  2 2007)
-// http://www.wxformbuilder.org/
-//
-// PLEASE DO "NOT" EDIT THIS FILE!
-///////////////////////////////////////////////////////////////////////////
+#ifndef CMDCONFIGDIALOG_H
+#define CMDCONFIGDIALOG_H
 
-#ifndef __CMDCONFIGDIALOG__
-#define __CMDCONFIGDIALOG__
-
-// Define WX_GCH in order to support precompiled headers with GCC compiler.
-// You have to create the header "wx_pch.h" and include all files needed
-// for compile your gui inside it.
-// Then, compile it and place the file "wx_pch.h.gch" into the same
-// directory that "wx_pch.h".
-#ifdef WX_GCH
-#include <wx_pch.h>
-#else
-#include <wx/wx.h>
-#endif
 
 #include <wx/button.h>
 #include <wx/spinctrl.h>
@@ -49,7 +32,7 @@
 /// Class CmdConfigDialog
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <sdk.h>
+
 #include <configurationpanel.h>
 
 class ToolsPlus;
@@ -59,7 +42,7 @@ class CmdConfigDialog : public wxDialog
 {
     public:
         CmdConfigDialog(CmdConfigDialog &/*dlg*/) : wxDialog() {}
-		CmdConfigDialog( wxWindow* parent, ToolsPlus* plugin);
+        CmdConfigDialog( wxWindow* parent, ToolsPlus* plugin);
         virtual ~CmdConfigDialog() {}
 
         wxString GetTitle() const { return _("User-defined Tools"); }
@@ -68,7 +51,7 @@ class CmdConfigDialog : public wxDialog
         void OnCancel(){}
         bool ReUseToolsPage() const;
 
-	private:
+    private:
         CommandCollection m_ic;
         CommandCollection *m_icperm;
         ToolsPlus *m_plugin;
@@ -77,7 +60,7 @@ class CmdConfigDialog : public wxDialog
 //        void UpdateEntry(int index);
 //        void ChooseFile();
 
-	protected:
+    protected:
         void New(wxCommandEvent &event);
         void Copy(wxCommandEvent &event);
         void Delete(wxCommandEvent &event);
@@ -89,38 +72,38 @@ class CmdConfigDialog : public wxDialog
         void OnExport(wxCommandEvent &event);
         void SetDialogItems();
         void GetDialogItems();
-		wxStaticText* m_staticText27;
-		wxListBox* m_commandlist;
-		wxButton* m_butnew;
-		wxButton* m_butcopy;
-		wxButton* m_butdelete;
-		wxButton* m_butup;
-		wxButton* m_butdown;
-		wxStaticText* m_staticText11;
-		wxTextCtrl* m_commandname;
-		wxStaticText* m_staticText12;
-		wxTextCtrl* m_command;
-		wxStaticText* m_staticText28;
-		wxTextCtrl* m_wildcards;
-		wxStaticText* m_staticText112;
-		wxTextCtrl* m_workdir;
-		wxStaticText* m_staticText13;
-		wxTextCtrl* m_menuloc;
-		wxStaticText* m_staticText16;
-		wxSpinCtrl* m_menulocpriority;
-		wxStaticText* m_staticText131;
-		wxTextCtrl* m_cmenuloc;
-		wxStaticText* m_staticText161;
-		wxSpinCtrl* m_cmenulocpriority;
-		wxStaticText* m_staticText111;
-		wxChoice* m_mode;
-		wxStaticText* m_staticText1111;
-		wxChoice* m_envvars;
-		wxWindow *m_prop_panel;
-		wxCheckBox *m_replace_tools;
-		wxCheckBox *m_ReuseToolsPage;
+        wxStaticText* m_staticText27;
+        wxListBox* m_commandlist;
+        wxButton* m_butnew;
+        wxButton* m_butcopy;
+        wxButton* m_butdelete;
+        wxButton* m_butup;
+        wxButton* m_butdown;
+        wxStaticText* m_staticText11;
+        wxTextCtrl* m_commandname;
+        wxStaticText* m_staticText12;
+        wxTextCtrl* m_command;
+        wxStaticText* m_staticText28;
+        wxTextCtrl* m_wildcards;
+        wxStaticText* m_staticText112;
+        wxTextCtrl* m_workdir;
+        wxStaticText* m_staticText13;
+        wxTextCtrl* m_menuloc;
+        wxStaticText* m_staticText16;
+        wxSpinCtrl* m_menulocpriority;
+        wxStaticText* m_staticText131;
+        wxTextCtrl* m_cmenuloc;
+        wxStaticText* m_staticText161;
+        wxSpinCtrl* m_cmenulocpriority;
+        wxStaticText* m_staticText111;
+        wxChoice* m_mode;
+        wxStaticText* m_staticText1111;
+        wxChoice* m_envvars;
+        wxWindow *m_prop_panel;
+        wxCheckBox *m_replace_tools;
+        wxCheckBox *m_ReuseToolsPage;
     DECLARE_EVENT_TABLE()
 
 };
 
-#endif //__CMDCONFIGDIALOG__
+#endif // CMDCONFIGDIALOG_H

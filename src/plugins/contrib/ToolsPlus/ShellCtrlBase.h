@@ -4,16 +4,9 @@
 #include <map>
 
 
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
-
 #include <wx/process.h>
 #include <wx/aui/aui.h>
-#include <sdk.h>
+
 #include "se_globals.h"
 
 // CLASSES DEFINED IN THIS LIBRARY
