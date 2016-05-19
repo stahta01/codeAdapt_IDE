@@ -9,6 +9,7 @@
 			<Target title="tinyXML">
 				<Option output="lib\libtxml.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -21,6 +22,7 @@
 			</Target>
 			<Target title="AutoRevision">
 				<Option output="build_tools\autorevision\autorevision.exe" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs30" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -34,8 +36,9 @@
 				</Linker>
 			</Target>
 			<Target title="ConsoleRunner">
-				<Option output="devel\ca_console_runner.exe" prefix_auto="0" extension_auto="0" />
+				<Option output="devel30\ca_console_runner.exe" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="tools\ConsoleRunner" />
+				<Option object_output=".objs30" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="0" />
@@ -48,6 +51,7 @@
 			<Target title="Squirrel">
 				<Option output="lib\libsquirrel.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -66,6 +70,7 @@
 			<Target title="Squirrel std lib">
 				<Option output="lib\libsqstdlib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option external_deps="sdk\scripting\lib\libsquirrel.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -85,6 +90,7 @@
 			<Target title="SqPlus">
 				<Option output="lib\libsqplus.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option external_deps="sdk\scripting\lib\libsquirrel.a;sdk\scripting\lib\libsqstdlib.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
@@ -102,8 +108,9 @@
 				</Linker>
 			</Target>
 			<Target title="scintilla">
-				<Option output="devel\wxscintilla.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel" />
+				<Option output="devel30\wxscintilla.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -128,6 +135,7 @@
 			<Target title="wxFlatNotebook">
 				<Option output="lib30\libwxflatnotebook.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -138,8 +146,9 @@
 				</Linker>
 			</Target>
 			<Target title="sdk">
-				<Option output="devel\codeadapt.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel" />
+				<Option output="devel30\codeadapt.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option external_deps="base\tinyxml\libtxml.a;sdk\propgrid\libpropgrid.a;sdk\wxFlatNotebook\libwxflatnotebook.a;sdk\scripting\lib\libsquirrel.a;sdk\scripting\lib\libsqstdlib.a;sdk\scripting\lib\libsqplus.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -172,15 +181,16 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="lib30" />
 					<Add directory="lib" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="CMD /C REM build_tools/autorevision/autorevision +wx +int +t . include/autorevision.h" />
 				</ExtraCommands>
 			</Target>
 			<Target title="src">
-				<Option output="devel\codeadapt.exe" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel" />
+				<Option output="devel30\codeadapt.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30" />
+				<Option object_output=".objs30" />
 				<Option external_deps="src\wxAUI\libwxaui.a;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -222,12 +232,13 @@
 					<Add library="libwsock32.a" />
 					<Add directory="lib30" />
 					<Add directory="lib" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="AStyle">
-				<Option output="devel\share\codeadapt\plugins\astyle.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\astyle.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -245,12 +256,13 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Compiler depslib">
 				<Option output="lib\libdepslib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
+				<Option object_output=".objs30" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -258,8 +270,9 @@
 				</Compiler>
 			</Target>
 			<Target title="Compiler">
-				<Option output="devel\share\codeadapt\plugins\compiler.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\compiler.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option external_deps="plugins\compilergcc\depslib\libdepslib.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -284,12 +297,13 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="lib" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Class wizard">
-				<Option output="devel\share\codeadapt\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\classwizard.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -308,12 +322,13 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Default MIME handler">
-				<Option output="devel\share\codeadapt\plugins\defaultmimehandler.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\defaultmimehandler.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -332,12 +347,13 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Open files list">
-				<Option output="devel\share\codeadapt\plugins\openfileslist.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\openfileslist.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -352,12 +368,13 @@
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Scripted wizard">
-				<Option output="devel\share\codeadapt\plugins\scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -375,12 +392,13 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="To-do">
-				<Option output="devel\share\codeadapt\plugins\todo.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\todo.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -395,12 +413,13 @@
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Autosave">
-				<Option output="devel\share\codeadapt\plugins\autosave.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\autosave.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -415,12 +434,13 @@
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="XP look &amp; feel">
-				<Option output="devel\share\codeadapt\plugins\xpmanifest.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\xpmanifest.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -435,12 +455,13 @@
 					<Add option="-Wl,--add-stdcall-alias" />
 					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Target title="Projects-workspaces importer">
-				<Option output="devel\share\codeadapt\plugins\projectsimporter.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel\share\codeadapt\plugins" />
+				<Option output="devel30\share\codeadapt\plugins\projectsimporter.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel30\share\codeadapt\plugins" />
+				<Option object_output=".objs30" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -457,12 +478,12 @@
 					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-					<Add directory="devel" />
+					<Add directory="devel30" />
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="30" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
