@@ -949,9 +949,9 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         /* Else put the file under virtual folder */
         else if (!f->virtual_path.IsEmpty())
         {
-            nodetext = f->virtual_path + wxFILE_SEP_PATH + f->file.GetFullName();
+            nodetext = f->virtual_path + wxT_2('/') + f->file.GetFullName();
             folders_kind = FileTreeData::ftdkVirtualFolder;
-            wxString slash = f->virtual_path.Last() == wxFILE_SEP_PATH ? _T("") : wxString(wxFILE_SEP_PATH);
+            wxString slash = f->virtual_path.Last() == wxT_2('/') ? _T("") : wxString(wxT_2('/'));
             ftd->SetFolder(f->virtual_path);
 
             if (m_VirtualFolders.Index(f->virtual_path + slash) == wxNOT_FOUND)
@@ -989,7 +989,7 @@ static wxString GetRelativeFolderPath(wxTreeCtrl* tree, wxTreeItemId parent)
         FileTreeData* ftd = (FileTreeData*)tree->GetItemData(parent);
         if (!ftd || (ftd->GetKind() != FileTreeData::ftdkFolder && ftd->GetKind() != FileTreeData::ftdkVirtualFolder))
             break;
-        fld.Prepend(tree->GetItemText(parent) + wxFILE_SEP_PATH);
+        fld.Prepend(tree->GetItemText(parent) + wxT_2('/'));
         parent = tree->GetItemParent(parent);
     }
     return fld;
@@ -1054,9 +1054,9 @@ wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
             FileTreeData* ftd = new FileTreeData(*data);
             ftd->SetKind(folders_kind);
             if (folders_kind != FileTreeData::ftdkVirtualFolder)
-                ftd->SetFolder(m_CommonTopLevelPath + GetRelativeFolderPath(tree, parent) + folder + wxFILE_SEP_PATH);
+                ftd->SetFolder(m_CommonTopLevelPath + GetRelativeFolderPath(tree, parent) + folder + wxT_2('/'));
             else
-                ftd->SetFolder(GetRelativeFolderPath(tree, parent) + folder + wxFILE_SEP_PATH);
+                ftd->SetFolder(GetRelativeFolderPath(tree, parent) + folder + wxT_2('/'));
             ftd->SetProjectFile(0);
             int idx = folders_kind != FileTreeData::ftdkVirtualFolder ? fldIdx : vfldIdx;
             newparent = tree->InsertItem(parent, newparent, folder, idx, idx, ftd);
@@ -1246,10 +1246,10 @@ bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, c
 {
     wxString foldername = GetRelativeFolderPath(tree, parent_node);
     foldername << virtual_folder;
-    foldername.Replace(_T("/"), wxString(wxFILE_SEP_PATH), true);
-    foldername.Replace(_T("\\"), wxString(wxFILE_SEP_PATH), true);
-    if (foldername.Last() != wxFILE_SEP_PATH)
-        foldername << wxFILE_SEP_PATH;
+    foldername.Replace(_T("/"), wxString(wxT_2('/')), true);
+    foldername.Replace(_T("\\"), wxString(wxT_2('/')), true);
+    if (foldername.Last() != wxT_2('/'))
+        foldername << wxT_2('/');
 
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
     {
@@ -1351,7 +1351,7 @@ bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const 
         return false;
 
     wxString old_foldername = GetRelativeFolderPath(tree, node);
-    wxString new_foldername = GetRelativeFolderPath(tree, tree->GetItemParent(node)) + new_name + wxFILE_SEP_PATH;
+    wxString new_foldername = GetRelativeFolderPath(tree, tree->GetItemParent(node)) + new_name + wxT_2('/');
 
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
     {
