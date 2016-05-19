@@ -177,13 +177,21 @@ wxString UnixFilename(const wxString& filename)
     {
         bool unc_name = result.StartsWith(_T("\\\\"));
 
-        while (result.Replace(_T("/"), _T("\\")))
-            ;
-        while (result.Replace(_T("\\\\"), _T("\\")))
-            ;
-
-        if (unc_name)
+        if (unc_name) // do UNC the old way
+        {
+            while (result.Replace(_T("/"), _T("\\")))
+                ;
+            while (result.Replace(_T("\\\\"), _T("\\")))
+                ;
             result = _T("\\") + result;
+        }
+        else // the new way change "\" to "/" even under windows.
+        {
+            while (result.Replace(_T("\\"), _T("/")))
+                ;
+            while (result.Replace(_T("//"), _T("/")))
+                ;
+        }
     }
     else
     {
