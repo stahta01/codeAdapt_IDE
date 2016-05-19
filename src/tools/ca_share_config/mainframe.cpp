@@ -15,7 +15,6 @@
   #include <shlobj.h>
 #endif
 
-#include "tinyxml/tinywxuni.h"
 
 //***********************************************************************
 
