@@ -12,9 +12,6 @@
 				<Option compiler="gcc" />
 				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
 				<Option host_application="..\..\..\devel\codeadapt.exe" />
-				<Compiler>
-					<Add option="$(#CB_RELEASE_TYPE)" />
-				</Compiler>
 				<Linker>
 					<Add library="codeadapt" />
 					<Add library="libwxscintilla.a" />
@@ -27,8 +24,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -37,6 +34,7 @@
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-g" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
 			<Add option="-fmessage-length=0" />

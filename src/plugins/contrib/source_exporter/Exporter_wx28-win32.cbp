@@ -90,8 +90,8 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -100,7 +100,7 @@
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="$(#CB_RELEASE_TYPE)" />
+			<Add option="-g" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-mthreads" />
 			<Add option="-fexceptions" />
