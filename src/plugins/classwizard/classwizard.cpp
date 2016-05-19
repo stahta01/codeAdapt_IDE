@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "sdk.h"
 #ifndef CB_PRECOMP
 #include <wx/fs_zip.h>
 #include <wx/intl.h>
