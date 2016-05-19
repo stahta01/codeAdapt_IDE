@@ -7,15 +7,15 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
-				<Option output="..\..\devel\ca_share_config.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output="..\..\.objs\tools\ca_share_config" />
+				<Option output="../../devel/ca_share_config.exe" prefix_auto="0" extension_auto="0" />
+				<Option object_output="../../.objs/tools/ca_share_config" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 			</Target>
 			<Environment>
+				<Variable name="WX_CFG" value="" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
-				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
@@ -35,9 +35,9 @@
 			<Add option="-DwxUSE_UNICODE" />
 			<Add option="-DWXUSINGDLL" />
 			<Add directory="$(#WX.include)" />
-			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
+			<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
 			<Add directory="$(#CB.include)" />
-			<Add directory="$(#CB.include)\tinyxml" />
+			<Add directory="$(#CB.include)/tinyxml" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#WX.include)" />
@@ -46,14 +46,14 @@
 			<Add library="txml" />
 			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
-			<Add directory="$(#CB)\lib" />
+			<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)" />
+			<Add directory="$(#CB)/lib" />
 		</Linker>
 		<Unit filename="app.cpp" />
 		<Unit filename="app.h" />
 		<Unit filename="mainframe.cpp" />
 		<Unit filename="mainframe.h" />
-		<Unit filename="wxsmith\MainFrame.wxs" />
+		<Unit filename="wxsmith/MainFrame.wxs" />
 		<Extensions>
 			<code_completion />
 			<wxsmith version="1">
@@ -62,6 +62,7 @@
 					<wxFrame wxs="wxsmith/MainFrame.wxs" src="mainframe.cpp" hdr="mainframe.h" name="MainFrame" language="CPP" />
 				</resources>
 			</wxsmith>
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

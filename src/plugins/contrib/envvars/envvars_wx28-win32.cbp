@@ -8,31 +8,33 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
-				<Option output="$(#cb)\devel\share\codeadapt\plugins\envvars.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(#cb)\.objs\plugins\contrib\envvars" />
+				<Option output="$(#cb)/devel/share/codeadapt/plugins/envvars.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(#cb)/.objs/plugins/contrib/envvars" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="--profile=foo" />
-				<Option host_application="$(#cb)\devel\codeadapt" />
+				<Option host_application="$(#cb)/devel/codeadapt" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-iquote../../../.objs/include" />
 					<Add option="-DCA_USEPCH" />
 				</Compiler>
 			</Target>
 			<Target title="no_pch">
-				<Option output="$(#cb)\devel\share\codeadapt\plugins\envvars.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(#cb)\.objs\plugins\contrib\envvars" />
+				<Option output="$(#cb)/devel/share/codeadapt/plugins/envvars.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(#cb)/.objs/plugins/contrib/envvars" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="..\..\..\devel\codeadapt.exe" />
+				<Option host_application="../../../devel/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-DNOPCH" />
 				</Compiler>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
+				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
@@ -52,10 +54,10 @@
 			<Add option="-DcbDEBUG" />
 			<Add option="-DwxUSE_UNICODE" />
 			<Add directory="$(#CB.INCLUDE)" />
-			<Add directory="$(#CB.INCLUDE)\wxscintilla\include" />
+			<Add directory="$(#CB.INCLUDE)/wxscintilla/include" />
 			<Add directory="$(#WX.INCLUDE)" />
-			<Add directory="$(#WX)\contrib\include" />
-			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
+			<Add directory="$(#WX)/contrib/include" />
+			<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#WX.include)" />
@@ -65,9 +67,9 @@
 			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-			<Add directory="$(#CB)\devel" />
+			<Add directory="$(#CB)/devel" />
 			<Add directory="$(#CB.LIB)" />
-			<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
+			<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)" />
 		</Linker>
 		<ExtraCommands>
 			<Add after="zip -j9 $(#cb)\devel\share\codeadapt\envvars.zip manifest.xml *.xrc" />

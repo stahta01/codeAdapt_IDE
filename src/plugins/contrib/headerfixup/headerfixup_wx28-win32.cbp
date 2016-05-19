@@ -7,12 +7,13 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
-				<Option output="..\..\..\devel\share\codeadapt\plugins\headerfixup" prefix_auto="1" extension_auto="1" />
-				<Option object_output="..\..\..\.objs\plugins\contrib\headerfixup" />
+				<Option output="../../../devel/share/codeadapt/plugins/headerfixup" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../.objs/plugins/contrib/headerfixup" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
-				<Option host_application="..\..\..\devel\codeadapt.exe" />
+				<Option host_application="../../../devel/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-pipe" />
@@ -30,13 +31,13 @@
 					<Add option="-DCA_USEPCH" />
 					<Add option="-DwxUSE_UNICODE" />
 					<Add directory="$(#WX.include)" />
-					<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)\msw$(WX_SUFFIX)" />
-					<Add directory="..\..\..\include" />
-					<Add directory="$(#CB.INCLUDE)\wxscintilla\include" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
+					<Add directory="../../../include" />
+					<Add directory="$(#CB.INCLUDE)/wxscintilla/include" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#WX.lib)\gcc_dll$(WX_CFG)" />
-					<Add directory="..\..\..\devel" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)" />
+					<Add directory="../../../devel" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="zip -j9 ..\..\..\devel\share\codeadapt\headerfixup.zip manifest.xml" />
@@ -44,9 +45,9 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
-				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_CFG" value="" />
+				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
@@ -77,9 +78,9 @@
 		<Unit filename="protocol.cpp" />
 		<Unit filename="protocol.h" />
 		<Unit filename="todo.txt" />
-		<Unit filename="wxsmith\configuration.wxs" />
-		<Unit filename="wxsmith\execution.wxs" />
-		<Unit filename="wxsmith\protocol.wxs" />
+		<Unit filename="wxsmith/configuration.wxs" />
+		<Unit filename="wxsmith/execution.wxs" />
+		<Unit filename="wxsmith/protocol.wxs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
