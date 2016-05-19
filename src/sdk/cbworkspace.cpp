@@ -47,10 +47,10 @@ cbWorkspace::cbWorkspace(const wxString& filename) : m_Title(_("Default workspac
     {
         wxString tmp;
         // if no filename given, use the default workspace
-        tmp = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH;
+        tmp = ConfigManager::GetConfigFolder() + wxT_2('/');
         if (!wxDirExists(tmp))
             wxMkdir(tmp, 0755);
-        tmp << wxFILE_SEP_PATH << DEFAULT_WORKSPACE;
+        tmp << wxT_2('/') << DEFAULT_WORKSPACE;
         m_Filename = tmp;
         m_IsDefault = true;
     }

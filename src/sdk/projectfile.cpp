@@ -59,7 +59,7 @@ void ProjectFile::Rename(const wxString& new_name)
 
 	file.Assign(path + new_name);
 	relativeFilename = relativeFilename.BeforeLast(wxFILE_SEP_PATH);
-	if (relativeFilename.IsEmpty()) relativeFilename.Append(wxFILE_SEP_PATH);
+	if (relativeFilename.IsEmpty()) relativeFilename.Append(wxT_2('/'));
 	relativeFilename.Append(new_name);
 
 	UpdateFileDetails();
@@ -363,7 +363,7 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
                 wxFileName fn(source_file_native);
                 object_file_native = fn.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) +
                                     fn.GetName() + _T('.') + compiler->GetSwitches().PCHExtension +
-                                    wxFILE_SEP_PATH +
+                                    wxT_2('/') +
                                     new_gch;
                 break;
             }

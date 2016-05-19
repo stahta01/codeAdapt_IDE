@@ -716,7 +716,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
             fname.MakeRelativeTo(GetBasePath());
             local_filename = fname.GetFullPath();
         }
-        fname.Assign(GetBasePath() + wxFILE_SEP_PATH + local_filename);
+        fname.Assign(GetBasePath() + wxT_2('/') + local_filename);
     }
     fname.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_TILDE, GetBasePath());
 
@@ -1163,8 +1163,8 @@ void cbProject::SetVirtualFolders(const wxArrayString& folders)
     m_VirtualFolders = folders;
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
     {
-        m_VirtualFolders[i].Replace(_T("/"), wxString(wxFILE_SEP_PATH));
-        m_VirtualFolders[i].Replace(_T("\\"), wxString(wxFILE_SEP_PATH));
+        m_VirtualFolders[i].Replace(_T("/"), wxT_2('/'));
+        m_VirtualFolders[i].Replace(_T("\\"), wxT_2('/'));
     }
 }
 

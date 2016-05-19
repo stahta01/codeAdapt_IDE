@@ -410,7 +410,7 @@ bool CreateDirRecursively(const wxString& full_path, int perms)
 
     {
         wxFileName tmp(full_path);
-        currdir = tmp.GetVolume() + tmp.GetVolumeSeparator() + wxFILE_SEP_PATH;
+        currdir = tmp.GetVolume() + tmp.GetVolumeSeparator() + wxT_2('/');
         dirs = tmp.GetDirs();
     }
     for (size_t i = 0; i < dirs.GetCount(); ++i)
@@ -418,7 +418,7 @@ bool CreateDirRecursively(const wxString& full_path, int perms)
         currdir << dirs[i];
         if (!wxDirExists(currdir) && !wxMkdir(currdir, perms))
             return false;
-        currdir << wxFILE_SEP_PATH;
+        currdir << wxT_2('/');
     }
     return true;
 }
@@ -931,7 +931,7 @@ DirAccessCheck cbDirAccessCheck(const wxString& dir)
     wxString actualDir = dir;
     // append ending path separator if needed
     if (actualDir.Last() != _T('/') && actualDir.Last() != _T('\\'))
-        actualDir << wxFILE_SEP_PATH;
+        actualDir << wxT_2('/');
 
     if (!wxDirExists(actualDir))
         return dacInvalidDir;

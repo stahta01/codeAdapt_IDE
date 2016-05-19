@@ -447,7 +447,7 @@ wxString ProjectManager::GetDefaultPath()
 {
     wxString path = Manager::Get()->GetConfigManager(_T("project_manager"))->Read(_T("default_path"), wxEmptyString);
     if (!path.IsEmpty() && path.Last() != _T('/') && path.Last() != _T('\\'))
-        path.Append(wxFILE_SEP_PATH);
+        path.Append(wxT_2('/'));
     return path;
 }
 

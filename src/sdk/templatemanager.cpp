@@ -82,7 +82,7 @@ void TemplateManager::BuildToolsMenu(wxMenu* menu)
 void TemplateManager::LoadUserTemplates()
 {
     m_UserTemplates.Clear();
-    wxString baseDir = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString baseDir = ConfigManager::GetConfigFolder() + wxT_2('/') + _T("UserTemplates");
 
     wxDir dir(baseDir);
 
@@ -152,7 +152,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
     {
         return NULL;
     }
-    else if(path.Mid(path.Length() - 1) == wxFILE_SEP_PATH)
+    else if(path.Mid(path.Length() - 1) == wxT_2('/') || path.Mid(path.Length() - 1) == wxT_2('\\'))
     {
         path.RemoveLast();
     }
@@ -172,7 +172,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
 
     wxBusyCursor busy;
 
-    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString templ = ConfigManager::GetConfigFolder() + wxT_2('/') + _T("UserTemplates");
     templ << sep << dlg.GetSelectedUserTemplate();
     if (!wxDirExists(templ))
     {
@@ -267,7 +267,7 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     }
 
     // create destination dir
-    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString templ = ConfigManager::GetConfigFolder() + wxT_2('/') + _T("UserTemplates");
     if (!CreateDirRecursively(templ, 0755))
     {
         cbMessageBox(_("Couldn't create directory for user templates:\n") + templ, _("Error"), wxICON_ERROR);
@@ -285,9 +285,9 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
             return;
 
         title = dlg.GetValue();
-        if (!wxDirExists(templ + wxFILE_SEP_PATH + title))
+        if (!wxDirExists(templ + wxT_2('/') + title))
         {
-            templ << wxFILE_SEP_PATH << title;
+            templ << wxT_2('/') << title;
             wxMkdir(templ, 0755);
             break;
         }
@@ -300,7 +300,7 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     // copy project and all files to destination dir
     int count = 0;
     int total_count = prj->GetFilesCount();
-    templ << wxFILE_SEP_PATH;
+    templ << wxT_2('/');
     wxFileName fname;
     for (int i = 0; i < total_count; ++i)
     {

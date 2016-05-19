@@ -174,7 +174,7 @@ CfgMgrBldr::CfgMgrBldr() : doc(0), volatile_doc(0), r(false)
 
     if(cfg.IsEmpty())
     {
-        cfg = wxStandardPathsBase::Get().GetUserDataDir() + wxFILE_SEP_PATH + personality + _T(".conf");
+        cfg = wxStandardPathsBase::Get().GetUserDataDir() + wxT_2('/') + personality + _T(".conf");
         doc = new TiXmlDocument();
         doc->InsertEndChild(TiXmlDeclaration("1.0", "UTF-8", "yes"));
         doc->InsertEndChild(TiXmlElement("CodeBlocksConfig"));
@@ -189,8 +189,8 @@ wxString CfgMgrBldr::FindConfigFile(const wxString& filename)
 {
     wxPathList searchPaths;
 
-    wxString u(wxStandardPathsBase::Get().GetUserDataDir() + wxFILE_SEP_PATH + filename);
-    wxString e(::DetermineExecutablePath() + wxFILE_SEP_PATH +filename);
+    wxString u(wxStandardPathsBase::Get().GetUserDataDir() + wxT_2('/') + filename);
+    wxString e(::DetermineExecutablePath() + wxT_2('/') +filename);
 
     if(::wxFileExists(u))
     {

@@ -371,7 +371,7 @@ void CompilerCommandGenerator::DoBuildScripts(cbProject* project, CompileTargetB
     {
     	wxString script_nomacro = scripts[i];
     	Manager::Get()->GetMacrosManager()->ReplaceMacros(script_nomacro, bt);
-    	script_nomacro = wxFileName(script_nomacro).IsAbsolute() ? script_nomacro : project->GetBasePath() + wxFILE_SEP_PATH + script_nomacro;
+    	script_nomacro = wxFileName(script_nomacro).IsAbsolute() ? script_nomacro : project->GetBasePath() + wxT_2('/') + script_nomacro;
 
         // if the script has failed before, skip it
         if (m_NotLoadedScripts.Index(script_nomacro) != wxNOT_FOUND ||

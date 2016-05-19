@@ -91,7 +91,7 @@ void EditorBase::InitFilename(const wxString& filename)
 wxString EditorBase::CreateUniqueFilename()
 {
     const wxString prefix = _("Untitled");
-    const wxString path = wxGetCwd() + wxFILE_SEP_PATH;
+    const wxString path = wxGetCwd() + wxT_2('/');
     wxString tmp;
     int iter = 0;
     while (true)
