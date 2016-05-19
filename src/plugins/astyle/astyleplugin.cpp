@@ -7,7 +7,7 @@
  * License:   GPL
  **************************************************************/
 
-#include <sdk.h>
+#include "sdk.h"
 
 #include "astyleplugin.h"
 #include <cbexception.h>

@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "sdk.h"
 #include "astyleconfigdlg.h"
 #include <configmanager.h>
 #include <wx/xrc/xmlres.h>
