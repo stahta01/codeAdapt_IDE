@@ -47,7 +47,7 @@
 #include <wx/fontmap.h>
 #include <algorithm>
 #include "filefilters.h"
-#include "tinyxml/tinywxuni.h"
+#include "tinywxuni.h"
 
 
 namespace compatibility { typedef TernaryCondTypedef<wxMinimumVersion<2,5>::eval, wxTreeItemIdValue, long int>::eval tree_cookie_t; };

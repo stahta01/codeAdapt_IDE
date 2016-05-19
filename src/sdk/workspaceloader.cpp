@@ -29,7 +29,7 @@
 
 
 #include "tinyxml/tinyxml.h"
-#include "tinyxml/tinywxuni.h"
+#include "tinywxuni.h"
 
 WorkspaceLoader::WorkspaceLoader()
 {

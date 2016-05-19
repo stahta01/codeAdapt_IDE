@@ -26,7 +26,7 @@
 
 #include "projectlayoutloader.h"
 #include "tinyxml/tinyxml.h"
-#include "tinyxml/tinywxuni.h"
+#include "tinywxuni.h"
 
 ProjectLayoutLoader::ProjectLayoutLoader(cbProject* project)
     : m_pProject(project),
