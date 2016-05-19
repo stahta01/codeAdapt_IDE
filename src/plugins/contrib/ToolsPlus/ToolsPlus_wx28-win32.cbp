@@ -24,8 +24,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="28" />
 				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
@@ -42,7 +42,6 @@
 			<Add option="-Winvalid-pch" />
 			<Add option="-std=gnu++11" />
 			<Add option="-iquote../../../.objs/include" />
-			<Add option='-include &quot;sdk.h&quot;' />
 			<Add option="-DWXUSINGDLL" />
 			<Add option="-DHAVE_W32API_H" />
 			<Add option="-D__WXMSW__" />
