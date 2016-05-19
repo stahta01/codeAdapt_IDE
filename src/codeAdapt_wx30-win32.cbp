@@ -131,6 +131,7 @@
 				<Linker>
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="gdi32" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="wxFlatNotebook">
@@ -178,12 +179,14 @@
 					<Add library="sqplus" />
 					<Add library="sqstdlib" />
 					<Add library="squirrel" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="lib30" />
 					<Add directory="lib" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="CMD /C REM build_tools/autorevision/autorevision +wx +int +t . include/autorevision.h" />
@@ -235,6 +238,7 @@
 					<Add directory="lib30" />
 					<Add directory="lib" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="AStyle">
@@ -259,6 +263,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Compiler depslib">
@@ -300,6 +305,7 @@
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="lib" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Class wizard">
@@ -325,6 +331,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Default MIME handler">
@@ -350,6 +357,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Open files list">
@@ -371,6 +379,7 @@
 					<Add library="libwxscintilla.a" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Scripted wizard">
@@ -395,6 +404,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="To-do">
@@ -416,6 +426,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Autosave">
@@ -437,6 +448,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="XP look &amp; feel">
@@ -458,6 +470,7 @@
 					<Add library="codeadapt" />
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Target title="Projects-workspaces importer">
@@ -481,6 +494,7 @@
 					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
 					<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
 					<Add directory="devel30" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
 			<Environment>
@@ -520,8 +534,6 @@
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)_xml" />
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)_net" />
 			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
-			<Add directory="base/tinyxml" />
-			<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
 		</Linker>
 		<Unit filename="base/tinyxml/tinystr.cpp">
 			<Option target="tinyXML" />
