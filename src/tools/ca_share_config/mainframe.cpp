@@ -503,7 +503,7 @@ void MainFrame::OfferConfig(TiXmlDocument* config, wxListBox* listbox,
   TiXmlNode* child = NULL;
   for (child = cfgroot->FirstChild(); child; child = child->NextSibling())
   {
-    if (child->Type()==TiXmlNode::ELEMENT)
+    if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
     {
       OfferNode(&child, listbox, nodes);
     }
@@ -542,7 +542,7 @@ void MainFrame::OfferNode(TiXmlNode** node,               wxListBox* listbox,
     TiXmlNode* child = NULL;
     for (child = (*node)->FirstChild(); child; child = child->NextSibling())
     {
-      if (child->Type()==TiXmlNode::ELEMENT)
+      if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
         OfferNode(&child, listbox, nodes, wxT("<compiler>")); // recursive call
     }
   }
@@ -551,7 +551,7 @@ void MainFrame::OfferNode(TiXmlNode** node,               wxListBox* listbox,
     TiXmlNode* child = NULL;
     for (child = (*node)->FirstChild(); child; child = child->NextSibling())
     {
-      if (child->Type()==TiXmlNode::ELEMENT)
+      if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
         OfferNode(&child, listbox, nodes, wxT("<editor>")); // recursive call
     }
   }
@@ -560,7 +560,7 @@ void MainFrame::OfferNode(TiXmlNode** node,               wxListBox* listbox,
     TiXmlNode* child = NULL;
     for (child = (*node)->FirstChild(); child; child = child->NextSibling())
     {
-      if (child->Type()==TiXmlNode::ELEMENT)
+      if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
         OfferNode(&child, listbox, nodes, wxT("<project_manager>")); // recursive call
     }
   }
@@ -574,7 +574,7 @@ void MainFrame::OfferNode(TiXmlNode** node,               wxListBox* listbox,
     TiXmlNode* child = NULL;
     for (child = (*node)->FirstChild(); child; child = child->NextSibling())
     {
-      if (child->Type()==TiXmlNode::ELEMENT)
+      if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
         OfferNode(&child, listbox, nodes, wxT("<compiler><sets>")); // recursive call
     }
   }
@@ -584,7 +584,7 @@ void MainFrame::OfferNode(TiXmlNode** node,               wxListBox* listbox,
     TiXmlNode* child = NULL;
     for (child = (*node)->FirstChild(); child; child = child->NextSibling())
     {
-      if (child->Type()==TiXmlNode::ELEMENT)
+      if (child->Type()==TiXmlNode::TINYXML_ELEMENT)
         OfferNode(&child, listbox, nodes, wxT("<compiler><user_sets>")); // recursive call
     }
   }
