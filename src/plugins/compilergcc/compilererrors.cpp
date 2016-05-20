@@ -26,12 +26,12 @@
 #include "sdk.h"
 #ifndef CB_PRECOMP
     #include "cbeditor.h"
-    #include "cbproject.h"
     #include "editormanager.h"
     #include "manager.h"
     #include "projectfile.h"
     #include "projectmanager.h"
 #endif
+#include "cbproject.h"
 #include "compilererrors.h"
 #include <wx/arrimpl.cpp>
 

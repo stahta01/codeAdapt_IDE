@@ -31,13 +31,14 @@
 #include <wx/intl.h>
 #include <wx/msgdlg.h>
 #include <wx/string.h>
-#include "cbproject.h"
 #include "globals.h"
 #include "manager.h"
 #include "logmanager.h"
 #include "projectbuildtarget.h"
 #include "projectmanager.h"
 #endif
+#include "cbproject.h"
+
 #include "windowsxplooknfeel.h"
 
 namespace

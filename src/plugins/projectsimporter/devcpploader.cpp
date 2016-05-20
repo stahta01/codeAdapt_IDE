@@ -21,9 +21,9 @@
     #include "manager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
-    #include "cbproject.h"
     #include "globals.h"
 #endif
+#include "cbproject.h"
 
 #include "devcpploader.h"
 

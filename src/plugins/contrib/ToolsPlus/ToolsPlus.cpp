@@ -1,5 +1,7 @@
 #include "sdk.h"
 
+#include "cbproject.h" // FileTreeData
+
 #include "ToolsPlus.h"
 #include "se_globals.h"
 

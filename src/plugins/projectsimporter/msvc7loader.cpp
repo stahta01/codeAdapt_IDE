@@ -18,11 +18,11 @@
 
     #include "manager.h"
     #include "logmanager.h"
-    #include "cbproject.h"
     #include "globals.h"
     #include "compilerfactory.h"
     #include "compiler.h"
 #endif
+#include "cbproject.h"
 
 #include <wx/choicdlg.h>
 

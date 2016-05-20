@@ -36,7 +36,6 @@
 #include <wx/textctrl.h>
 #include <wx/xrc/xmlres.h>
 #include "cbeditor.h"
-#include "cbproject.h"
 #include "configmanager.h"
 #include "editormanager.h"
 #include "globals.h"
@@ -44,6 +43,7 @@
 #include "macrosmanager.h"
 #include "projectmanager.h"
 #endif
+#include "cbproject.h"
 #include "cbstyledtextctrl.h"
 
 #include "classwizarddlg.h"

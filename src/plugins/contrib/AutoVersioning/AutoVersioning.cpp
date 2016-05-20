@@ -12,13 +12,13 @@
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
 #include <wx/timer.h>
-#include <cbproject.h>
 #include "globals.h"
 #include <manager.h>
 #include <projectbuildtarget.h>
 #include <projectmanager.h>
 #include <tinyxml/tinyxml.h>
 #endif
+#include <cbproject.h>
 
 #include "projectloader_hooks.h"
 

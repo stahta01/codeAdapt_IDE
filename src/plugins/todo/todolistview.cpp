@@ -12,7 +12,6 @@
   #include <wx/utils.h>
 
   #include "cbeditor.h"
-  #include "cbproject.h"
   #include "editormanager.h"
   #include "globals.h"
   #include "manager.h"
@@ -20,6 +19,7 @@
   #include "projectmanager.h"
   //#include "logmanager.h"
 #endif
+#include "cbproject.h"
 #include "cbstyledtextctrl.h"
 
 #include "todolistview.h"

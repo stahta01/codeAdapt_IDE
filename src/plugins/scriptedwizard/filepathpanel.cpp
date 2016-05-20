@@ -14,11 +14,11 @@
     #include <wx/string.h>
     #include <wx/intl.h>
     //*)
-    #include <cbproject.h>
     #include <projectbuildtarget.h>
     #include <projectmanager.h>
     #include <manager.h>
 #endif
+#include <cbproject.h>
 #include <wx/filedlg.h>
 #include <wx/filefn.h>
 #include "filepathpanel.h"

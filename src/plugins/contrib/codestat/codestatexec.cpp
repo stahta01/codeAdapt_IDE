@@ -12,7 +12,6 @@
 #include <wx/stattext.h>
 #include <wx/string.h>
 #include <wx/xrc/xmlres.h>
-#include "cbproject.h"
 #include "configmanager.h"
 #include "editormanager.h"
 #include "globals.h"
@@ -21,6 +20,8 @@
 #include "projectfile.h"
 #include "projectmanager.h"
 #endif
+#include "cbproject.h"
+
 #include <wx/gauge.h>
 #include <wx/progdlg.h>
 #include <wx/textfile.h>

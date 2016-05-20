@@ -20,7 +20,6 @@
     #include <wx/timer.h>
     #include <wx/xrc/xmlres.h>
     #include "cbeditor.h"
-    #include "cbproject.h"
     #include "configmanager.h"
     #include "editormanager.h"
     #include "globals.h"
@@ -29,6 +28,7 @@
     #include "manager.h"
     #include "sdk_events.h"
 #endif
+#include "cbproject.h"
 #include "cbstyledtextctrl.h"
 
 #include "projectloader.h"

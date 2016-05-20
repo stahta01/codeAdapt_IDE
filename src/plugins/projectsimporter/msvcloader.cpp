@@ -25,11 +25,11 @@
     #include "manager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
-    #include "cbproject.h"
     #include "globals.h"
     #include "compilerfactory.h"
     #include "compiler.h"
 #endif
+#include "cbproject.h"
 
 #include <wx/stream.h>
 
