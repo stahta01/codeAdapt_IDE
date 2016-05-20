@@ -23,25 +23,25 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-#include "file_logger.h"
+#include "ca_file_logger.h"
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <sys/time.h>
 #include <wx/log.h>
 #include <wx/crt.h>
-#include "cl_standard_paths.h"
+#include "cl/cl_standard_paths.h"
 
-static FileLogger theLogger;
+static caFileLogger theLogger;
 static bool initialized = false;
 
-FileLogger::FileLogger()
-    : m_verbosity(FileLogger::Error)
-    , _requestedLogLevel(FileLogger::Developer)
+caFileLogger::caFileLogger()
+    : m_verbosity(caFileLogger::Error)
+    , _requestedLogLevel(caFileLogger::Developer)
     , m_fp(NULL)
 {
 }
 
-FileLogger::~FileLogger()
+caFileLogger::~caFileLogger()
 {
     if(m_fp) {
         fclose(m_fp);
@@ -49,7 +49,7 @@ FileLogger::~FileLogger()
     }
 }
 
-void FileLogger::AddLogLine(const wxString& msg, int verbosity)
+void caFileLogger::AddLogLine(const wxString& msg, int verbosity)
 {
     if(msg.IsEmpty()) return;
     if((m_verbosity >= verbosity) && m_fp) {
@@ -62,51 +62,51 @@ void FileLogger::AddLogLine(const wxString& msg, int verbosity)
     }
 }
 
-FileLogger& FileLogger::Get() { return theLogger; }
+caFileLogger& caFileLogger::Get() { return theLogger; }
 
-void FileLogger::SetVerbosity(int level)
+void caFileLogger::SetVerbosity(int level)
 {
-    if(level > FileLogger::Warning) {
-        clSYSTEM() << "Log verbosity is now set to:" << FileLogger::GetVerbosityAsString(level) << clEndl;
+    if(level > caFileLogger::Warning) {
+        clSYSTEM() << "Log verbosity is now set to:" << caFileLogger::GetVerbosityAsString(level) << clEndl;
     }
     m_verbosity = level;
 }
 
-int FileLogger::GetVerbosityAsNumber(const wxString& verbosity)
+int caFileLogger::GetVerbosityAsNumber(const wxString& verbosity)
 {
     if(verbosity == wxT("Debug")) {
-        return FileLogger::Dbg;
+        return caFileLogger::Dbg;
 
     } else if(verbosity == wxT("Error")) {
-        return FileLogger::Error;
+        return caFileLogger::Error;
 
     } else if(verbosity == wxT("Warning")) {
-        return FileLogger::Warning;
+        return caFileLogger::Warning;
 
     } else if(verbosity == wxT("System")) {
-        return FileLogger::System;
+        return caFileLogger::System;
 
     } else if(verbosity == wxT("Developer")) {
-        return FileLogger::Developer;
+        return caFileLogger::Developer;
 
     } else {
-        return FileLogger::Error;
+        return caFileLogger::Error;
     }
 }
 
-wxString FileLogger::GetVerbosityAsString(int verbosity)
+wxString caFileLogger::GetVerbosityAsString(int verbosity)
 {
     switch(verbosity) {
-    case FileLogger::Dbg:
+    case caFileLogger::Dbg:
         return wxT("Debug");
 
-    case FileLogger::Error:
+    case caFileLogger::Error:
         return wxT("Error");
 
-    case FileLogger::Warning:
+    case caFileLogger::Warning:
         return wxT("Warning");
 
-    case FileLogger::Developer:
+    case caFileLogger::Developer:
         return wxT("Developer");
 
     default:
@@ -114,9 +114,9 @@ wxString FileLogger::GetVerbosityAsString(int verbosity)
     }
 }
 
-void FileLogger::SetVerbosity(const wxString& verbosity) { SetVerbosity(FileLogger::GetVerbosityAsNumber(verbosity)); }
+void caFileLogger::SetVerbosity(const wxString& verbosity) { SetVerbosity(caFileLogger::GetVerbosityAsNumber(verbosity)); }
 
-void FileLogger::OpenLog(const wxString& fullName, int verbosity)
+void caFileLogger::OpenLog(const wxString& fullName, int verbosity)
 {
     if(!initialized) {
         wxString filename;
@@ -127,14 +127,14 @@ void FileLogger::OpenLog(const wxString& fullName, int verbosity)
     }
 }
 
-void FileLogger::AddLogLine(const wxArrayString& arr, int verbosity)
+void caFileLogger::AddLogLine(const wxArrayString& arr, int verbosity)
 {
     for(size_t i = 0; i < arr.GetCount(); ++i) {
         AddLogLine(arr.Item(i), verbosity);
     }
 }
 
-void FileLogger::Flush()
+void caFileLogger::Flush()
 {
     if(m_buffer.IsEmpty()) {
         return;
@@ -144,7 +144,7 @@ void FileLogger::Flush()
     m_buffer.Clear();
 }
 
-wxString FileLogger::Prefix(int verbosity) const
+wxString caFileLogger::Prefix(int verbosity) const
 {
     wxString prefix;
 

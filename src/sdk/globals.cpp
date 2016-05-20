@@ -49,6 +49,7 @@
 #include "filefilters.h"
 #include "tinywxuni.h"
 
+#include <wx/version.h> 
 #if wxCHECK_VERSION(3, 0, 0)
     #include "cl/procutils.h"
     #include "ca_file_logger.h"

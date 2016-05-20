@@ -28,14 +28,14 @@
 #define FILELOGGER_H
 
 #include <wx/ffile.h>
-#include "codelite_exports.h"
+#include "cl/codelite_exports.h"
 #include <wx/stopwatch.h>
 
 // manipulator function
-class FileLogger;
-typedef FileLogger& (*FileLoggerFunction)(FileLogger&);
+class caFileLogger;
+typedef caFileLogger& (*FileLoggerFunction)(caFileLogger&);
 
-class WXDLLIMPEXP_CL FileLogger
+class WXDLLIMPEXP_CL caFileLogger
 {
 public:
     enum { System = -1, Error = 0, Warning = 1, Dbg = 2, Developer = 3 };
@@ -47,10 +47,10 @@ protected:
     wxString m_buffer;
 
 public:
-    FileLogger();
-    ~FileLogger();
+    caFileLogger();
+    ~caFileLogger();
 
-    FileLogger& SetRequestedLogLevel(int level)
+    caFileLogger& SetRequestedLogLevel(int level)
     {
         _requestedLogLevel = level;
         return *this;
@@ -68,7 +68,7 @@ public:
      */
     static void OpenLog(const wxString& fullName, int verbosity);
 
-    static FileLogger& Get();
+    static caFileLogger& Get();
 
     void AddLogLine(const wxString& msg, int verbosity);
     /**
@@ -86,7 +86,7 @@ public:
     static wxString GetVerbosityAsString(int verbosity);
     static int GetVerbosityAsNumber(const wxString& verbosity);
 
-    inline FileLogger& operator<<(FileLoggerFunction f)
+    inline caFileLogger& operator<<(FileLoggerFunction f)
     {
         Flush();
         return *this;
@@ -95,7 +95,7 @@ public:
     /**
      * @brief special wxArrayString printing
      */
-    inline FileLogger& operator<<(const wxArrayString& arr)
+    inline caFileLogger& operator<<(const wxArrayString& arr)
     {
         if(GetRequestedLogLevel() > m_verbosity) {
             return *this;
@@ -117,7 +117,7 @@ public:
     /**
      * @brief append any type to the buffer, take log level into consideration
      */
-    template <typename T> FileLogger& Append(const T& elem, int level)
+    template <typename T> caFileLogger& Append(const T& elem, int level)
     {
         if(level > m_verbosity) {
             return *this;
@@ -135,46 +135,46 @@ public:
     void Flush();
 };
 
-inline FileLogger& clEndl(FileLogger& d)
+inline caFileLogger& clEndl(caFileLogger& d)
 {
     d.Flush();
     return d;
 }
 
-template <typename T> FileLogger& operator<<(FileLogger& logger, const T& obj)
+template <typename T> caFileLogger& operator<<(caFileLogger& logger, const T& obj)
 {
     logger.Append(obj, logger.GetRequestedLogLevel());
     return logger;
 }
 
-#define CL_SYSTEM(...) FileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), FileLogger::System);
-#define CL_ERROR(...) FileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), FileLogger::Error);
-#define CL_WARNING(...) FileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), FileLogger::Warning);
-#define CL_DEBUG(...) FileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), FileLogger::Dbg);
-#define CL_DEBUGS(s) FileLogger::Get().AddLogLine(s, FileLogger::Dbg);
-#define CL_DEBUG1(...) FileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), FileLogger::Developer);
-#define CL_DEBUG_ARR(arr) FileLogger::Get().AddLogLine(arr, FileLogger::Dbg);
-#define CL_DEBUG1_ARR(arr) FileLogger::Get().AddLogLine(arr, FileLogger::Developer);
+#define CL_SYSTEM(...) caFileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), caFileLogger::System);
+#define CL_ERROR(...) caFileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), caFileLogger::Error);
+#define CL_WARNING(...) caFileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), caFileLogger::Warning);
+#define CL_DEBUG(...) caFileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), caFileLogger::Dbg);
+#define CL_DEBUGS(s) caFileLogger::Get().AddLogLine(s, caFileLogger::Dbg);
+#define CL_DEBUG1(...) caFileLogger::Get().AddLogLine(wxString::Format(__VA_ARGS__), caFileLogger::Developer);
+#define CL_DEBUG_ARR(arr) caFileLogger::Get().AddLogLine(arr, caFileLogger::Dbg);
+#define CL_DEBUG1_ARR(arr) caFileLogger::Get().AddLogLine(arr, caFileLogger::Developer);
 
 // New API
 #define clDEBUG()                                           \
-    FileLogger::Get().SetRequestedLogLevel(FileLogger::Dbg) \
-        << FileLogger::Get().Prefix(FileLogger::Get().GetRequestedLogLevel())
+    caFileLogger::Get().SetRequestedLogLevel(caFileLogger::Dbg) \
+        << caFileLogger::Get().Prefix(caFileLogger::Get().GetRequestedLogLevel())
 
 #define clDEBUG1()                                                \
-    FileLogger::Get().SetRequestedLogLevel(FileLogger::Developer) \
-        << FileLogger::Get().Prefix(FileLogger::Get().GetRequestedLogLevel())
+    caFileLogger::Get().SetRequestedLogLevel(caFileLogger::Developer) \
+        << caFileLogger::Get().Prefix(caFileLogger::Get().GetRequestedLogLevel())
 
 #define clERROR()                                             \
-    FileLogger::Get().SetRequestedLogLevel(FileLogger::Error) \
-        << FileLogger::Get().Prefix(FileLogger::Get().GetRequestedLogLevel())
+    caFileLogger::Get().SetRequestedLogLevel(caFileLogger::Error) \
+        << caFileLogger::Get().Prefix(caFileLogger::Get().GetRequestedLogLevel())
 
 #define clWARNING()                                             \
-    FileLogger::Get().SetRequestedLogLevel(FileLogger::Warning) \
-        << FileLogger::Get().Prefix(FileLogger::Get().GetRequestedLogLevel())
+    caFileLogger::Get().SetRequestedLogLevel(caFileLogger::Warning) \
+        << caFileLogger::Get().Prefix(caFileLogger::Get().GetRequestedLogLevel())
 
 #define clSYSTEM()                                             \
-    FileLogger::Get().SetRequestedLogLevel(FileLogger::System) \
-        << FileLogger::Get().Prefix(FileLogger::Get().GetRequestedLogLevel())
+    caFileLogger::Get().SetRequestedLogLevel(caFileLogger::System) \
+        << caFileLogger::Get().Prefix(caFileLogger::Get().GetRequestedLogLevel())
 
 #endif // FILELOGGER_H
