@@ -12,7 +12,7 @@
 #include <wx/wx.h>
 #endif
 
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <cbproject.h>
 #include <configurationpanel.h>
 

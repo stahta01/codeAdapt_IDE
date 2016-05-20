@@ -36,7 +36,7 @@
     #include "pluginmanager.h"
     #include "editormanager.h"
     #include "cbeditor.h"
-    #include "cbplugin.h" // cgEditor
+    #include "api/plugin.h" // cgEditor
     #include "globals.h"
     #include <wx/listbook.h>
     #include <wx/listbox.h>

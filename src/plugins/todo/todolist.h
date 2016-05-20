@@ -3,7 +3,7 @@
 
 
 #include <wx/arrstr.h>
-#include "cbplugin.h" // the base class we 're inheriting
+#include "api/plugin.h" // the base class we 're inheriting
 #include "globals.h"
 
 class wxMenuBar;

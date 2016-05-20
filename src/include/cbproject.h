@@ -9,7 +9,7 @@
 #include "settings.h"
 #include "misctreeitemdata.h"
 #include "compiletargetbase.h"
-#include "cbplugin.h"
+#include "api/plugin.h"
 #include "projectbuildtarget.h"
 
 #include <map>

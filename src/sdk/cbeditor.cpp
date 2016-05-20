@@ -45,7 +45,7 @@
     #include "editormanager.h"
     #include "logmanager.h"
     #include "macrosmanager.h" // ReplaceMacros
-    #include "cbplugin.h"
+    #include "api/plugin.h"
 #endif
 #include "cbstyledtextctrl.h"
 

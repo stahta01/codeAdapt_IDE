@@ -32,7 +32,7 @@
 #include <wx/xrc/xmlres.h>
 #endif
 
-#include "cbplugin.h"
+#include "api/plugin.h"
 #include "dlgaboutplugin.h" // class's header file
 
 // class constructor

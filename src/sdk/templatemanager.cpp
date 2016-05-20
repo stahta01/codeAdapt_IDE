@@ -41,7 +41,7 @@
     #include "cbproject.h"
     #include "globals.h"
     #include "compilerfactory.h"
-    #include "cbplugin.h"
+    #include "api/plugin.h"
     #include "cbproject.h"
 #endif
 

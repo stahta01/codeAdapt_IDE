@@ -10,7 +10,7 @@
 #include <cbeditor.h>
 #include "manager.h"
 #include "cbexception.h"
-#include "cbplugin.h"
+#include "api/plugin.h"
 #include "sdk_events.h"
 #include "scripting/bindings/sc_base_types.h"
 

@@ -35,7 +35,7 @@
 
     #include "pluginmanager.h"
     #include "cbexception.h"
-    #include "cbplugin.h"
+    #include "api/plugin.h"
     #include "infowindow.h"
     #include "logmanager.h"
     #include "macrosmanager.h"

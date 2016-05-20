@@ -10,7 +10,7 @@
 #ifndef CODESTAT_H
 #define CODESTAT_H
 
-#include "cbplugin.h" // the base class we 're inheriting
+#include "api/plugin.h" // the base class we 're inheriting
 
 class cbConfigurationPanel;
 class CodeStatExecDlg;

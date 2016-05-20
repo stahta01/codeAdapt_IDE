@@ -10,7 +10,7 @@
 #ifndef DEFAULTMIMEHANDLER_H
 #define DEFAULTMIMEHANDLER_H
 
-#include "cbplugin.h" // the base class we 're inheriting
+#include "api/plugin.h" // the base class we 're inheriting
 #include "mimetypesarray.h"
 
 class EmbeddedHtmlPanel;

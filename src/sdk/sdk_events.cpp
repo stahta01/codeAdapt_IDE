@@ -30,7 +30,7 @@
     #include "sdk_events.h"
     #include "cbproject.h"
     #include "editorbase.h"
-    #include "cbplugin.h"
+    #include "api/plugin.h"
     #include "logmanager.h"
 #endif
 

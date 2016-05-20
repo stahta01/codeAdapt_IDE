@@ -49,7 +49,7 @@
 #include <wx/gauge.h>
 #include <configmanager.h>
 #include <cbproject.h>
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <sdk_events.h>
 #include <projectmanager.h>
 #include <editormanager.h>

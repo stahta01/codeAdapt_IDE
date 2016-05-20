@@ -7,7 +7,7 @@
 #define WIZ_H
 
 
-#include <cbplugin.h> // the base class we 're inheriting
+#include <api/plugin.h> // the base class we 're inheriting
 #include <settings.h> // needed to use the Code::Blocks SDK
 #include <cbexception.h>
 #include <wx/bitmap.h>

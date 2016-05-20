@@ -24,7 +24,7 @@
 #ifndef LIB_AUTO_CONF_H
 #define LIB_AUTO_CONF_H
 
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <settings.h>
 #include <sdk_events.h>
 #include <tinyxml/tinyxml.h>

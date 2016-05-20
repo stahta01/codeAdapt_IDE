@@ -6,7 +6,7 @@
 #include <settings.h> // SDK
 #include <sdk_events.h>
 #include <compileoptionsbase.h>
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <cbproject.h>
 #include <logger.h>
 #include "compilermessages.h"

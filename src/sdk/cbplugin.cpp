@@ -29,7 +29,7 @@
 #ifndef CB_PRECOMP
     #include <wx/frame.h> // wxFrame
     #include <wx/menu.h>
-    #include "cbplugin.h"
+    #include "api/plugin.h"
     #include "compiler.h" // GetSwitches
     #include "sdk_events.h"
     #include "manager.h"

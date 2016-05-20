@@ -4,7 +4,7 @@
 #include <wx/dialog.h>
 #include "globals.h"
 #include "pluginmanager.h"
-#include "cbplugin.h"
+#include "api/plugin.h"
 
 class wxChoice;
 class wxListCtrl;

@@ -11,7 +11,7 @@
 #define TOOLSPLUS_H_INCLUDED
 
 
-#include <cbplugin.h> // for "class cbPlugin"
+#include <api/plugin.h> // for "class cbPlugin"
 #include "shellproperties.h"
 #include "CmdConfigDialog.h"
 #include "ShellCtrlBase.h"

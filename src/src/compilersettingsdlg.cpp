@@ -15,7 +15,7 @@
 #include <manager.h>
 #include <configmanager.h>
 #include <pluginmanager.h>
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <wx/intl.h>
 #include <wx/listbook.h>
 #include <wx/listctrl.h>

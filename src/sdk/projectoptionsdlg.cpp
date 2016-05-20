@@ -36,7 +36,7 @@
     #include "compilerfactory.h"
     #include "globals.h"
     #include "cbproject.h"
-    #include "cbplugin.h"
+    #include "api/plugin.h"
     #include "sdk_events.h"
 
     #include <wx/xrc/xmlres.h>

@@ -2,7 +2,7 @@
 #include <manager.h>
 #include <configmanager.h>
 #include <pluginmanager.h>
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include <globals.h>
 
 // Custom window to shutdown the app when closed.

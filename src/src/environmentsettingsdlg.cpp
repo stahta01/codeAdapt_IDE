@@ -41,8 +41,8 @@
 
 #ifndef CB_PRECOMP
     #include <wx/dir.h>
-    #include "cbplugin.h" // cgCompiler, cgDebugger...
 #endif
+#include "api/plugin.h" // cgCompiler, cgDebugger...
 
 // images by order of pages
 const wxString base_imgs[] =

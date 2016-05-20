@@ -1,7 +1,7 @@
 #ifndef CLASSWIZARD_H
 #define CLASSWIZARD_H
 
-#include "cbplugin.h"
+#include "api/plugin.h"
 
 class ClassWizard : public cbToolPlugin
 {

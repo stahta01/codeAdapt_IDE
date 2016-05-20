@@ -12,7 +12,7 @@
 #define AUTOVERSIONING_H
 
 #include <map>
-#include <cbplugin.h>
+#include <api/plugin.h>
 #include "avConfig.h"
 
 class wxTimer;
