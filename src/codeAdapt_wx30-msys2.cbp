@@ -60,6 +60,7 @@
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add option="-fno-inline" />
+					<Add option="-fpermissive" />
 					<Add directory="include/scripting/include" />
 					<Add directory="include/scripting/squirrel" />
 				</Compiler>
@@ -163,6 +164,7 @@
 				<Option createStaticLib="1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
+					<Add option="-fpermissive" />
 					<Add option="-DEXPORT_LIB" />
 					<Add option="-DEXPORT_EVENTS" />
 					<Add option="-DNOPCH" />
@@ -591,9 +593,9 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_CFG" value="" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="3.0" />
+				<Variable name="WX_CFG" value="" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
