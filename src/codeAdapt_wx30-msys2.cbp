@@ -692,6 +692,21 @@
 		<Unit filename="include/cbworkspace.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/cl/cl_defs.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/cl/cl_standard_paths.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/cl/codelite_exports.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/cl/procutils.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/cl/winprocess.h">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="include/compileoptionsbase.h">
 			<Option target="sdk" />
 		</Unit>
@@ -1748,6 +1763,9 @@
 		<Unit filename="sdk/blockallocated.cpp">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="sdk/ca_file_logger.cpp">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="sdk/cbeditor.cpp">
 			<Option target="sdk" />
 		</Unit>
@@ -1770,6 +1788,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/cbworkspace.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/cl_standard_paths.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/compileoptionsbase.cpp">
@@ -1918,6 +1939,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/printing_types.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/procutils.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/projectbuildtarget.cpp">
@@ -3256,6 +3280,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/virtualbuildtargetsdlg.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/winprocess.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/workspaceloader.cpp">
