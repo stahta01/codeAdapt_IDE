@@ -49,6 +49,11 @@
 #include "filefilters.h"
 #include "tinywxuni.h"
 
+#if wxCHECK_VERSION(3, 0, 0)
+    #include "cl/procutils.h"
+    #include "ca_file_logger.h"
+#endif
+
 
 namespace compatibility { typedef TernaryCondTypedef<wxMinimumVersion<2,5>::eval, wxTreeItemIdValue, long int>::eval tree_cookie_t; };
 
@@ -1019,3 +1024,52 @@ wxString caGetTextFromUser(
         return wxEmptyString;
     }
 } // caGetTextFromUser
+
+#if wxCHECK_VERSION(3, 0, 0)
+bool caIsMSYSEnvironment()
+{
+#ifdef __WXMSW__
+    static bool isMSYS = false;
+    static bool firstTime = true;
+
+    if(firstTime) {
+        firstTime = false;
+        CL_DEBUG("Testing for MSYS environment...uname -a");
+        wxString out = ProcUtils::SafeExecuteCommand("uname -a");
+        CL_DEBUG("[%s]", out);
+        if(out.IsEmpty()) {
+            isMSYS = false;
+        } else {
+            out.MakeLower();
+            isMSYS = out.Contains("mingw") && out.Contains("msys");
+        }
+    }
+    return isMSYS;
+#else
+    return false;
+#endif
+} // caIsMSYSEnvironment
+
+bool caIsCygwinEnvironment()
+{
+#ifdef __WXMSW__
+    static bool isCygwin = false;
+    static bool firstTime = true;
+
+    if(firstTime) {
+        firstTime = false;
+        CL_DEBUG("Testing for CYGWIN environment...uname -s");
+        wxString out = ProcUtils::SafeExecuteCommand("uname -s");
+        CL_DEBUG("[%s]", out);
+        if(out.IsEmpty()) {
+            isCygwin = false;
+        } else {
+            isCygwin = out.StartsWith("CYGWIN_NT");
+        }
+    }
+    return isCygwin;
+#else
+    return false;
+#endif
+} // caIsCygwinEnvironment
+#endif

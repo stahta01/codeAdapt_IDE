@@ -324,4 +324,19 @@ extern DLLIMPORT wxString caGetTextFromUser(
     bool centre = true
 );
 
+/**
+ * @brief return true if running under Cygwin environment
+ * This function returns false under Linux/OSX and under Windows it checks the
+ * output of the command 'uname -s'
+ */
+DLLIMPORT bool caIsCygwinEnvironment();
+
+/**
+ * @brief return true if running under MSYS environment
+ * This function returns false under Linux/OSX and under Windows it checks the
+ * output of the command 'uname -s'
+ */
+DLLIMPORT bool caIsMSYSEnvironment();
+
+
 #endif // SDK_GLOBALS_H
