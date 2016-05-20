@@ -8,8 +8,8 @@ class wxWindow;
 
 namespace
 {
-    static wxString temp_string(_T('\0'), 250);
-    static wxString newline_string(_T("\n"));
+    static wxString temp_string(wxT_2('\0'), 250);
+    static wxString newline_string(wxT_2("\n"));
 }
 
 class DLLIMPORT Logger

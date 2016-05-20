@@ -33,7 +33,7 @@ void TextCtrlLogger::UpdateSettings()
 
     control->SetBackgroundColour(*wxWHITE);
 
-    int size = Manager::Get()->GetConfigManager(_T("message_manager"))->ReadInt(_T("/log_font_size"), platform::macosx ? 10 : 8);
+    int size = Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadInt(wxT_2("/log_font_size"), platform::macosx ? 10 : 8);
 
     wxFont default_font(size, fixed ? wxFONTFAMILY_MODERN : wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
     wxFont bold_font(default_font);
@@ -86,7 +86,7 @@ void TextCtrlLogger::Append(const wxString& msg, Logger::level lv)
         return;
 
     ::temp_string.assign(msg);
-    ::temp_string.append(_T("\n"));
+    ::temp_string.append(wxT_2("\n"));
 
     if(lv == caption)
     {
@@ -127,7 +127,7 @@ void TimestampTextCtrlLogger::Append(const wxString& msg, Logger::level lv)
         return;
 
     wxDateTime timestamp(wxDateTime::UNow());
-    ::temp_string.Printf(_T("[%2.2d:%2.2d:%2.2d.%3.3d] %s\n"), timestamp.GetHour(), timestamp.GetMinute(), timestamp.GetSecond(), timestamp.GetMillisecond(), msg.c_str());
+    ::temp_string.Printf(wxT_2("[%2.2d:%2.2d:%2.2d.%3.3d] %s\n"), timestamp.GetHour(), timestamp.GetMinute(), timestamp.GetSecond(), timestamp.GetMillisecond(), msg.c_str());
 
     control->SetDefaultStyle(style[lv]);
     control->AppendText(::temp_string);
@@ -158,9 +158,9 @@ void ListCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
                 text << GetItemAsText(i);
                 if (platform::windows)
                 {
-                    text << _T('\r'); // Add CR for Windows clipboard
+                    text << wxT_2('\r'); // Add CR for Windows clipboard
                 }
-                text << _T('\n');
+                text << wxT_2('\n');
             }
         }
         wxTheClipboard->SetData(new wxTextDataObject(text));
@@ -180,7 +180,7 @@ wxString ListCtrlLogger::GetItemAsText(long item) const
     {
         info.m_col = i;
         control->GetItem(info);
-        text << info.m_text << _T('|');
+        text << info.m_text << wxT_2('|');
     }
     return text;
 } // end of GetItemAsText
@@ -190,7 +190,7 @@ void ListCtrlLogger::UpdateSettings()
     if (!control)
         return;
 
-    int size = Manager::Get()->GetConfigManager(_T("message_manager"))->ReadInt(_T("/log_font_size"), platform::macosx ? 10 : 8);
+    int size = Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadInt(wxT_2("/log_font_size"), platform::macosx ? 10 : 8);
     wxFont default_font(size, fixed ? wxFONTFAMILY_MODERN : wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
     wxFont bold_font(default_font);
     wxFont italic_font(default_font);
@@ -287,22 +287,22 @@ wxWindow* ListCtrlLogger::CreateControl(wxWindow* parent)
 
 
 CSS::CSS() :
-    caption     (_T("font-size: 12pt;")),
+    caption     (wxT_2("font-size: 12pt;")),
     info        (wxEmptyString),
-    warning     (_T("margin-left: 2em;")),
+    warning     (wxT_2("margin-left: 2em;")),
     success     (wxEmptyString),
-    error       (_T("margin-left: 2em; border-left: 1px solid red;")),
-    critical    (_T("color: red; font-weight: bold;")),
-    failure     (_T("color: maroon;")),
-    pagetitle   (_T("font-size: 16pt;")),
+    error       (wxT_2("margin-left: 2em; border-left: 1px solid red;")),
+    critical    (wxT_2("color: red; font-weight: bold;")),
+    failure     (wxT_2("color: maroon;")),
+    pagetitle   (wxT_2("font-size: 16pt;")),
     spacer      (wxEmptyString),
-    asterisk    (_T("font-family: Arial, Helvetica, \"Bitstream Vera Sans\", sans;"))
+    asterisk    (wxT_2("font-family: Arial, Helvetica, \"Bitstream Vera Sans\", sans;"))
 {
 }
 
 CSS::operator wxString()
 {
-    wxString tmp(_T('\0'), 300);
+    wxString tmp(wxT_2('\0'), 300);
     return tmp;
 }
 
