@@ -1,5 +1,5 @@
-#ifndef CBPLUGIN_H
-#define CBPLUGIN_H
+#ifndef CA_PLUGIN_H
+#define CA_PLUGIN_H
 
 #include <wx/arrstr.h>
 #include <wx/event.h>
@@ -609,4 +609,4 @@ template<class T> class PluginRegistrant
         }
 };
 
-#endif // CBPLUGIN_H
+#endif // CA_PLUGIN_H
