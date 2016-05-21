@@ -67,7 +67,7 @@
 			<Target title="Squirrel std lib">
 				<Option output="lib/libsqstdlib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option external_deps="sdk/scripting/lib/libsquirrel.a;" />
+				<Option external_deps="lib/libsquirrel.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -86,7 +86,7 @@
 			<Target title="SqPlus">
 				<Option output="lib/libsqplus.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option external_deps="sdk/scripting/lib/libsquirrel.a;sdk/scripting/lib/libsqstdlib.a;" />
+				<Option external_deps="lib/libsquirrel.a;lib/libsqstdlib.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
@@ -141,7 +141,7 @@
 			<Target title="sdk">
 				<Option output="devel/codeadapt.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel" />
-				<Option external_deps="base/tinyxml/libtxml.a;sdk/propgrid/libpropgrid.a;sdk/wxFlatNotebook/libwxflatnotebook.a;sdk/scripting/lib/libsquirrel.a;sdk/scripting/lib/libsqstdlib.a;sdk/scripting/lib/libsqplus.a;" />
+				<Option external_deps="lib/libtxml.a;lib28/libwxflatnotebook.a;lib/libsquirrel.a;lib/libsqstdlib.a;lib/libsqplus.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="--debug-log --no-check-associations" />
@@ -261,7 +261,7 @@
 			<Target title="Compiler">
 				<Option output="devel/share/codeadapt/plugins/compiler.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel/share/codeadapt/plugins" />
-				<Option external_deps="plugins/compilergcc/depslib/libdepslib.a;" />
+				<Option external_deps="lib/libdepslib.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
