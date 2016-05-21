@@ -141,10 +141,10 @@ cbMimePlugin::cbMimePlugin()
 }
 
 /////
-///// cbCodeCompletionPlugin
+///// caCodeCompletionPlugin
 /////
 
-cbCodeCompletionPlugin::cbCodeCompletionPlugin()
+caCodeCompletionPlugin::caCodeCompletionPlugin()
 {
     m_Type = ptCodeCompletion;
 }

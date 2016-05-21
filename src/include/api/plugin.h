@@ -496,10 +496,10 @@ class PLUGIN_EXPORT cbMimePlugin : public cbPlugin
   *
   * This interface is subject to change, so not much info here...
   */
-class PLUGIN_EXPORT cbCodeCompletionPlugin : public cbPlugin
+class PLUGIN_EXPORT caCodeCompletionPlugin : public cbPlugin
 {
     public:
-        cbCodeCompletionPlugin();
+        caCodeCompletionPlugin();
         virtual wxArrayString GetCallTips() = 0;
         virtual int CodeComplete() = 0;
         virtual void ShowCallTip() = 0;
