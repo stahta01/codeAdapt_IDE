@@ -902,7 +902,7 @@ bool CompilerGCC::StopRunningDebugger()
     PluginsArray plugins = Manager::Get()->GetPluginManager()->GetDebuggerOffers();
     if (plugins.GetCount())
     {
-        cbDebuggerPlugin* dbg = (cbDebuggerPlugin*)plugins[0];
+        caDebuggerPlugin* dbg = (caDebuggerPlugin*)plugins[0];
         if (dbg)
         {
             // is the debugger running?

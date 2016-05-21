@@ -347,10 +347,10 @@ class PLUGIN_EXPORT cbCompilerPlugin: public cbPlugin
   * This plugin type must offer some pre-defined debug facilities, on top
   * of the generic plugin's.
   */
-class PLUGIN_EXPORT cbDebuggerPlugin: public cbPlugin
+class PLUGIN_EXPORT caDebuggerPlugin: public cbPlugin
 {
     public:
-        cbDebuggerPlugin();
+        caDebuggerPlugin();
 
         /** @brief Request to add a breakpoint.
           * @param file The file to add the breakpoint based on a file/line pair.

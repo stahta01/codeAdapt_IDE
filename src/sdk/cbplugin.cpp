@@ -114,10 +114,10 @@ cbCompilerPlugin::cbCompilerPlugin()
 }
 
 /////
-///// cbDebuggerPlugin
+///// caDebuggerPlugin
 /////
 
-cbDebuggerPlugin::cbDebuggerPlugin()
+caDebuggerPlugin::caDebuggerPlugin()
 {
     m_Type = ptDebugger;
 }

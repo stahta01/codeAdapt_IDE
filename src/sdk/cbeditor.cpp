@@ -1718,7 +1718,7 @@ bool cbEditor::AddBreakpoint(int line, bool notifyDebugger)
     bool accepted=false;
     for(size_t i=0;i<arr.GetCount();i++)
     {
-        cbDebuggerPlugin* debugger = (cbDebuggerPlugin*)arr[i];
+        caDebuggerPlugin* debugger = (caDebuggerPlugin*)arr[i];
         if (!debugger)
             continue; //kinda scary if this isn't a debugger? perhaps this should be a logged error??
         if (debugger->AddBreakpoint(m_Filename, line))
@@ -1757,7 +1757,7 @@ bool cbEditor::RemoveBreakpoint(int line, bool notifyDebugger)
     bool accepted=false;
     for(size_t i=0;i<arr.GetCount();i++)
     {
-        cbDebuggerPlugin* debugger = (cbDebuggerPlugin*)arr[i];
+        caDebuggerPlugin* debugger = (caDebuggerPlugin*)arr[i];
         if (!debugger)
             continue; //kinda scary if this isn't a debugger? perhaps this should be a logged error??
         if (debugger->RemoveBreakpoint(m_Filename, line))
@@ -1789,7 +1789,7 @@ void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
     bool toggle=false;
     for(size_t i=0;i<arr.GetCount();i++)
     {
-        cbDebuggerPlugin* debugger = (cbDebuggerPlugin*)arr[i];
+        caDebuggerPlugin* debugger = (caDebuggerPlugin*)arr[i];
         if (HasBreakpoint(line))
         {
             if (debugger->RemoveBreakpoint(m_Filename, line))
@@ -2588,7 +2588,7 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
         int startline = m_pControl->LineFromPosition(event.GetPosition());
         for(size_t i=0;i<arr.GetCount();i++)
         {
-            cbDebuggerPlugin* debugger = (cbDebuggerPlugin*)arr[i];
+            caDebuggerPlugin* debugger = (caDebuggerPlugin*)arr[i];
             debugger->EditorLinesAddedOrRemoved(this, startline, linesAdded);
         }
 
