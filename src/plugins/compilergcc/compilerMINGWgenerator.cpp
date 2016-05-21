@@ -22,7 +22,7 @@ CompilerMINGWGenerator::~CompilerMINGWGenerator()
     //dtor
 }
 
-wxString CompilerMINGWGenerator::SetupIncludeDirs(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerMINGWGenerator::SetupIncludeDirs(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result = CompilerCommandGenerator::SetupIncludeDirs(compiler, target);
     m_VerStr = compiler->GetVersionString();

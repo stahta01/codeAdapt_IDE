@@ -38,7 +38,7 @@
 
 
 // class constructor
-ProjectBuildTarget::ProjectBuildTarget(cbProject* parentProject) : m_Project(parentProject)
+caProjectBuildTarget::caProjectBuildTarget(cbProject* parentProject) : m_Project(parentProject)
 {
     m_BuildWithAll = false;
     m_CreateStaticLib = true;
@@ -47,26 +47,26 @@ ProjectBuildTarget::ProjectBuildTarget(cbProject* parentProject) : m_Project(par
 }
 
 // class destructor
-ProjectBuildTarget::~ProjectBuildTarget()
+caProjectBuildTarget::~caProjectBuildTarget()
 {
 }
 
-cbProject* ProjectBuildTarget::GetParentProject()
+cbProject* caProjectBuildTarget::GetParentProject()
 {
     return m_Project;
 }
 
-wxString ProjectBuildTarget::GetFullTitle() const
+wxString caProjectBuildTarget::GetFullTitle() const
 {
     return m_Project->GetTitle() + _T(" - ") + GetTitle();
 }
 
-const wxString & ProjectBuildTarget::GetExternalDeps() const
+const wxString & caProjectBuildTarget::GetExternalDeps() const
 {
     return m_ExternalDeps;
 }
 
-void ProjectBuildTarget::SetExternalDeps(const wxString& deps)
+void caProjectBuildTarget::SetExternalDeps(const wxString& deps)
 {
     if (m_ExternalDeps != deps)
     {
@@ -75,12 +75,12 @@ void ProjectBuildTarget::SetExternalDeps(const wxString& deps)
     }
 }
 
-const wxString & ProjectBuildTarget::GetAdditionalOutputFiles() const
+const wxString & caProjectBuildTarget::GetAdditionalOutputFiles() const
 {
     return m_AdditionalOutputFiles;
 }
 
-void ProjectBuildTarget::SetAdditionalOutputFiles(const wxString& files)
+void caProjectBuildTarget::SetAdditionalOutputFiles(const wxString& files)
 {
     if (m_AdditionalOutputFiles != files)
     {
@@ -89,12 +89,12 @@ void ProjectBuildTarget::SetAdditionalOutputFiles(const wxString& files)
     }
 }
 
-bool ProjectBuildTarget::GetIncludeInTargetAll() const
+bool caProjectBuildTarget::GetIncludeInTargetAll() const
 {
 	return m_BuildWithAll;
 }
 
-void ProjectBuildTarget::SetIncludeInTargetAll(bool buildIt)
+void caProjectBuildTarget::SetIncludeInTargetAll(bool buildIt)
 {
 	if (m_BuildWithAll != buildIt)
 	{
@@ -103,12 +103,12 @@ void ProjectBuildTarget::SetIncludeInTargetAll(bool buildIt)
 	}
 }
 
-bool ProjectBuildTarget::GetCreateDefFile() const
+bool caProjectBuildTarget::GetCreateDefFile() const
 {
     return m_CreateDefFile;
 }
 
-void ProjectBuildTarget::SetCreateDefFile(bool createIt)
+void caProjectBuildTarget::SetCreateDefFile(bool createIt)
 {
     if (m_CreateDefFile != createIt)
     {
@@ -117,12 +117,12 @@ void ProjectBuildTarget::SetCreateDefFile(bool createIt)
     }
 }
 
-bool ProjectBuildTarget::GetCreateStaticLib()
+bool caProjectBuildTarget::GetCreateStaticLib()
 {
     return m_CreateStaticLib;
 }
 
-void ProjectBuildTarget::SetCreateStaticLib(bool createIt)
+void caProjectBuildTarget::SetCreateStaticLib(bool createIt)
 {
     if (m_CreateStaticLib != createIt)
     {
@@ -131,12 +131,12 @@ void ProjectBuildTarget::SetCreateStaticLib(bool createIt)
     }
 }
 
-bool ProjectBuildTarget::GetUseConsoleRunner() const
+bool caProjectBuildTarget::GetUseConsoleRunner() const
 {
     return GetTargetType() == ttConsoleOnly ? m_UseConsoleRunner : false;
 }
 
-void ProjectBuildTarget::SetUseConsoleRunner(bool useIt)
+void caProjectBuildTarget::SetUseConsoleRunner(bool useIt)
 {
     if (GetTargetType() == ttConsoleOnly && useIt != m_UseConsoleRunner)
     {
@@ -145,21 +145,21 @@ void ProjectBuildTarget::SetUseConsoleRunner(bool useIt)
     }
 }
 
-void ProjectBuildTarget::SetTargetType(const TargetType& pt)
+void caProjectBuildTarget::SetTargetType(const TargetType& pt)
 {
 	TargetType ttold = GetTargetType();
-	CompileTargetBase::SetTargetType(pt);
+	caCompileTargetBase::SetTargetType(pt);
 	if (ttold != GetTargetType() && GetTargetType() == ttConsoleOnly)
         SetUseConsoleRunner(true); // by default, use console runner
 }
 
 // target dependencies: targets to be compiled (if necessary) before this one
-void ProjectBuildTarget::AddTargetDep(ProjectBuildTarget* target) {
+void caProjectBuildTarget::AddTargetDep(caProjectBuildTarget* target) {
 	m_TargetDeps.Add(target);
 }
 
 // get the list of dependency targets of this target
-BuildTargets& ProjectBuildTarget::GetTargetDeps() {
+BuildTargets& caProjectBuildTarget::GetTargetDeps() {
 	return m_TargetDeps;
 }
 

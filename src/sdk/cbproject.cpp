@@ -143,13 +143,13 @@ void cbProject::SetCompilerID(const wxString& id)
 {
 // TODO (mandrav##): Is this needed? The project's compiler has nothing to do with the targets' compilers...
 
-    CompileTargetBase::SetCompilerID(id);
+    caCompileTargetBase::SetCompilerID(id);
     if (id != GetCompilerID())
     {
         // update object filenames
         for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
         {
-            ProjectBuildTarget* target = m_Targets[i];
+            caProjectBuildTarget* target = m_Targets[i];
             if (target)
             {
                 Compiler* compiler = CompilerFactory::GetCompiler(target->GetCompilerID());
@@ -182,7 +182,7 @@ bool cbProject::GetModified() const
     // check targets
     for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
     {
-        ProjectBuildTarget* target = m_Targets[i];
+        caProjectBuildTarget* target = m_Targets[i];
         if (target->GetModified())
             return true;
     }
@@ -197,7 +197,7 @@ void cbProject::SetModified(bool modified)
     // modify targets
     for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
     {
-        ProjectBuildTarget* target = m_Targets[i];
+        caProjectBuildTarget* target = m_Targets[i];
         target->SetModified(modified);
     }
 
@@ -261,7 +261,7 @@ void cbProject::ClearAllProperties()
 
     while (m_Targets.GetCount())
     {
-        ProjectBuildTarget* target = m_Targets[0];
+        caProjectBuildTarget* target = m_Targets[0];
         delete target;
         m_Targets.RemoveAt(0);
     }
@@ -810,7 +810,7 @@ bool cbProject::RemoveFile(ProjectFile* pf)
     // remove this file from all targets too
     for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
     {
-        ProjectBuildTarget* target = m_Targets[i];
+        caProjectBuildTarget* target = m_Targets[i];
         if (target)
         {
             target->GetFilesList().DeleteObject(pf);
@@ -1544,16 +1544,16 @@ int cbProject::SelectTarget(int initial, bool evenIfOne)
 
 // Build targets
 
-ProjectBuildTarget* cbProject::AddDefaultBuildTarget()
+caProjectBuildTarget* cbProject::AddDefaultBuildTarget()
 {
     return AddBuildTarget(_T("default"));
 }
 
-ProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
+caProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
 {
     if (GetBuildTarget(targetName)) // Don't add the target if it exists
         return 0L;
-    ProjectBuildTarget* target = new ProjectBuildTarget(this);
+    caProjectBuildTarget* target = new caProjectBuildTarget(this);
     target->m_Filename = m_Filename; // really important
     target->SetTitle(targetName);
     target->SetCompilerID(GetCompilerID()); // same compiler as project's
@@ -1579,7 +1579,7 @@ ProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
 
 bool cbProject::RenameBuildTarget(int index, const wxString& targetName)
 {
-    ProjectBuildTarget* target = GetBuildTarget(index);
+    caProjectBuildTarget* target = GetBuildTarget(index);
     if (target)
     {
         wxString oldTargetName = target->GetTitle();
@@ -1618,13 +1618,13 @@ bool cbProject::RenameBuildTarget(const wxString& oldTargetName, const wxString&
     return RenameBuildTarget(IndexOfBuildTargetName(oldTargetName), newTargetName);
 }
 
-ProjectBuildTarget* cbProject::DuplicateBuildTarget(int index, const wxString& newName)
+caProjectBuildTarget* cbProject::DuplicateBuildTarget(int index, const wxString& newName)
 {
-    ProjectBuildTarget* newTarget = 0;
-    ProjectBuildTarget* target = GetBuildTarget(index);
+    caProjectBuildTarget* newTarget = 0;
+    caProjectBuildTarget* target = GetBuildTarget(index);
     if (target)
     {
-        newTarget = new ProjectBuildTarget(*target);
+        newTarget = new caProjectBuildTarget(*target);
         wxString newTargetName = !newName.IsEmpty() ? newName : (_("Copy of ") + target->GetTitle());
         newTarget->SetTitle(newTargetName);
         // just notify the files of this target that they belong to the new target too
@@ -1641,14 +1641,14 @@ ProjectBuildTarget* cbProject::DuplicateBuildTarget(int index, const wxString& n
     return newTarget;
 }
 
-ProjectBuildTarget* cbProject::DuplicateBuildTarget(const wxString& targetName, const wxString& newName)
+caProjectBuildTarget* cbProject::DuplicateBuildTarget(const wxString& targetName, const wxString& newName)
 {
     return DuplicateBuildTarget(IndexOfBuildTargetName(targetName), newName);
 }
 
 bool cbProject::ExportTargetAsProject(int index)
 {
-    ProjectBuildTarget* target = GetBuildTarget(index);
+    caProjectBuildTarget* target = GetBuildTarget(index);
     if (!target)
         return false;
     return ExportTargetAsProject(target->GetTitle());
@@ -1656,7 +1656,7 @@ bool cbProject::ExportTargetAsProject(int index)
 
 bool cbProject::ExportTargetAsProject(const wxString& targetName)
 {
-    ProjectBuildTarget* target = GetBuildTarget(targetName);
+    caProjectBuildTarget* target = GetBuildTarget(targetName);
     if (!target)
         return false;
 
@@ -1686,7 +1686,7 @@ bool cbProject::ExportTargetAsProject(const wxString& targetName)
 
 bool cbProject::RemoveBuildTarget(int index)
 {
-    ProjectBuildTarget* target = GetBuildTarget(index);
+    caProjectBuildTarget* target = GetBuildTarget(index);
     if (target)
     {
         wxString oldTargetName = target->GetTitle();
@@ -1730,7 +1730,7 @@ int cbProject::IndexOfBuildTargetName(const wxString& targetName) const
 {
     for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
     {
-        ProjectBuildTarget* target = m_Targets[i];
+        caProjectBuildTarget* target = m_Targets[i];
         if (target->GetTitle().Matches(targetName))
             return i;
     }
@@ -1795,14 +1795,14 @@ const wxString& cbProject::GetDefaultExecuteTarget() const
     return m_DefaultExecuteTarget;
 }
 
-ProjectBuildTarget* cbProject::GetBuildTarget(int index)
+caProjectBuildTarget* cbProject::GetBuildTarget(int index)
 {
     if (index >= 0 && index < (int)m_Targets.GetCount())
         return m_Targets[index];
     return 0L;
 }
 
-ProjectBuildTarget* cbProject::GetBuildTarget(const wxString& targetName)
+caProjectBuildTarget* cbProject::GetBuildTarget(const wxString& targetName)
 {
     int idx = IndexOfBuildTargetName(targetName);
     return GetBuildTarget(idx);
@@ -1819,7 +1819,7 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
 
     for (unsigned int i = 0; i < nameOrder.GetCount(); ++i)
     {
-        ProjectBuildTarget* target = GetBuildTarget(nameOrder[i]);
+        caProjectBuildTarget* target = GetBuildTarget(nameOrder[i]);
         if (!target)
         {
             msgMan->DebugLog(F(_T("cbProject::ReOrderTargets() : Target \"%s\" not found..."), nameOrder[i].c_str()));
@@ -1845,7 +1845,7 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
     SetModified(true);
 }
 
-void cbProject::SetCurrentlyCompilingTarget(ProjectBuildTarget* bt)
+void cbProject::SetCurrentlyCompilingTarget(caProjectBuildTarget* bt)
 {
     m_CurrentlyCompilingTarget = bt;
 }
@@ -1858,7 +1858,7 @@ bool cbProject::DefineVirtualBuildTarget(const wxString& alias, const wxArrayStr
         return false;
     }
 
-    ProjectBuildTarget* existing = GetBuildTarget(alias);
+    caProjectBuildTarget* existing = GetBuildTarget(alias);
     if (existing)
     {
         Manager::Get()->GetLogManager()->LogWarning(F(_T("Can't define virtual build target '%s': Real build target exists with that name!"), alias.c_str()));
@@ -2067,7 +2067,7 @@ void cbProject::SetTitle(const wxString& title)
 {
     if ( title != GetTitle() )
     {
-        CompileTargetBase::SetTitle(title);
+        caCompileTargetBase::SetTitle(title);
         NotifyPlugins(cbEVT_PROJECT_RENAMED);
     }
 }

@@ -41,11 +41,11 @@ class wxPanel;
 class wxWindow;
 class cbEditor;
 class cbProject;
-class ProjectBuildTarget;
-class CompileTargetBase;
+class caProjectBuildTarget;
+class caCompileTargetBase;
 class FileTreeData;
 class cbConfigurationPanel;
-struct PluginInfo;
+struct caPluginInfo;
 
 // Define basic groups for plugins' configuration.
 static const int cgCompiler         = 0x01; ///< Compiler related.
@@ -67,7 +67,7 @@ static const int cgUnknown          = 0x20; ///< Unknown. This will be probably 
 class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
 {
     public:
-        /** In default cbPlugin's constructor the associated PluginInfo structure
+        /** In default cbPlugin's constructor the associated caPluginInfo structure
           * is filled with default values. If you inherit from cbPlugin, you
           * should fill the m_PluginInfo members with the appropriate values.
           */
@@ -247,9 +247,9 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * should ask the user which target to "run" (except maybe if there is
           * only one build target in the project).
           */
-        virtual int Run(ProjectBuildTarget* target = 0L) = 0;
+        virtual int Run(caProjectBuildTarget* target = 0L) = 0;
 
-        /** Same as Run(ProjectBuildTarget*) but with a wxString argument. */
+        /** Same as Run(caProjectBuildTarget*) but with a wxString argument. */
         virtual int Run(const wxString& target) = 0;
 
         /** @brief Clean the project/target.
@@ -260,9 +260,9 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param target The specific build target to "clean". If NULL, it
           * cleans all the build targets of the current project.
           */
-        virtual int Clean(ProjectBuildTarget* target = 0L) = 0;
+        virtual int Clean(caProjectBuildTarget* target = 0L) = 0;
 
-        /** Same as Clean(ProjectBuildTarget*) but with a wxString argument. */
+        /** Same as Clean(caProjectBuildTarget*) but with a wxString argument. */
         virtual int Clean(const wxString& target) = 0;
 
         /** @brief DistClean the project/target.
@@ -274,9 +274,9 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param target The specific build target to "distclean". If NULL, it
           * cleans all the build targets of the current project.
           */
-        virtual int DistClean(ProjectBuildTarget* target = 0L) = 0;
+        virtual int DistClean(caProjectBuildTarget* target = 0L) = 0;
 
-        /** Same as DistClean(ProjectBuildTarget*) but with a wxString argument. */
+        /** Same as DistClean(caProjectBuildTarget*) but with a wxString argument. */
         virtual int DistClean(const wxString& target) = 0;
 
         /** @brief Build the project/target.
@@ -284,9 +284,9 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param target The specific build target to build. If NULL, it
           * builds all the targets of the current project.
           */
-        virtual int Build(ProjectBuildTarget* target = 0L) = 0;
+        virtual int Build(caProjectBuildTarget* target = 0L) = 0;
 
-        /** Same as Build(ProjectBuildTarget*) but with a wxString argument. */
+        /** Same as Build(caProjectBuildTarget*) but with a wxString argument. */
         virtual int Build(const wxString& target) = 0;
 
         /** @brief Rebuild the project/target.
@@ -298,9 +298,9 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param target The specific build target to rebuild. If NULL, it
           * rebuilds all the build targets of the current project.
           */
-        virtual int Rebuild(ProjectBuildTarget* target = 0L) = 0;
+        virtual int Rebuild(caProjectBuildTarget* target = 0L) = 0;
 
-        /** Same as Rebuild(ProjectBuildTarget*) but with a wxString argument. */
+        /** Same as Rebuild(caProjectBuildTarget*) but with a wxString argument. */
         virtual int Rebuild(const wxString& target) = 0;
 
         /** @brief Build all open projects.
@@ -338,7 +338,7 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param project The selected project (can be NULL).
           * @param target The selected target (can be NULL).
           */
-        virtual int Configure(cbProject* project, ProjectBuildTarget* target = 0L) = 0;
+        virtual int Configure(cbProject* project, caProjectBuildTarget* target = 0L) = 0;
     private:
 };
 
@@ -452,10 +452,10 @@ class PLUGIN_EXPORT cbToolPlugin : public cbPlugin
   * Mime plugins are called by Code::Blocks to operate on files that Code::Blocks
   * wouldn't know how to handle on itself.
   */
-class PLUGIN_EXPORT cbMimePlugin : public cbPlugin
+class PLUGIN_EXPORT caMimePlugin : public cbPlugin
 {
     public:
-        cbMimePlugin();
+        caMimePlugin();
 
         /** @brief Can a file be handled by this plugin?
           *
@@ -484,7 +484,7 @@ class PLUGIN_EXPORT cbMimePlugin : public cbPlugin
           */
         virtual bool HandlesEverything() const = 0;
     private:
-        // "Hide" some virtual members, that are not needed in cbMimePlugin
+        // "Hide" some virtual members, that are not needed in caMimePlugin
         void BuildMenu(wxMenuBar* menuBar){}
         void RemoveMenu(wxMenuBar* menuBar){}
         void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0){}
@@ -515,10 +515,10 @@ class PLUGIN_EXPORT caCodeCompletionPlugin : public cbPlugin
   * The @c index used as a parameter to most of the functions, denotes 0-based index
   * of the project wizard to run.
   */
-class PLUGIN_EXPORT cbWizardPlugin : public cbPlugin
+class PLUGIN_EXPORT caWizardPlugin : public cbPlugin
 {
     public:
-        cbWizardPlugin();
+        caWizardPlugin();
 
         /** @return the number of template wizards this plugin contains */
         virtual int GetCount() const = 0;
@@ -554,9 +554,9 @@ class PLUGIN_EXPORT cbWizardPlugin : public cbPlugin
           *                         would be the project's filename.
           *                         If the wizard created a build target, that would be an empty string.
           *                         If the wizard created a file, that would be the file's name.
-          * @return a pointer to the generated cbProject or ProjectBuildTarget. NULL for everything else (failure too).
+          * @return a pointer to the generated cbProject or caProjectBuildTarget. NULL for everything else (failure too).
           * You should dynamic-cast this to the correct type based on GetOutputType() 's value. */
-        virtual CompileTargetBase* Launch(int index, wxString* createdFilename = 0) = 0; // do your work ;)
+        virtual caCompileTargetBase* Launch(int index, wxString* createdFilename = 0) = 0; // do your work ;)
     private:
         // "Hide" some virtual members, that are not needed in cbCreateWizardPlugin
         void BuildMenu(wxMenuBar* menuBar){}

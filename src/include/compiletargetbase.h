@@ -48,7 +48,7 @@ enum MakeCommand
 
 /** A target's filename can either be auto-generated based on the running platform,
   * or completely specified by the user. For more info, see
-  * CompileTargetBase::SetTargetFilenameGenerationPolicy.
+  * caCompileTargetBase::SetTargetFilenameGenerationPolicy.
   */
 enum TargetFilenameGenerationPolicy
 {
@@ -67,11 +67,11 @@ enum TargetFilenameGenerationPolicy
   * \n\n
   * This class holds the settings of one build target.
  */
-class DLLIMPORT CompileTargetBase : public CompileOptionsBase
+class DLLIMPORT caCompileTargetBase : public CompileOptionsBase
 {
     public:
-        CompileTargetBase();
-        virtual ~CompileTargetBase();
+        caCompileTargetBase();
+        virtual ~caCompileTargetBase();
 
         /** A target's filename can either be auto-generated based on the running platform,
           * or completely specified by the user. Calling this function sets the

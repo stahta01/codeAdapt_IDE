@@ -686,7 +686,7 @@ int CodeBlocksApp::BatchJob()
             // TODO: make this easier in the SDK
             for (int i = 0; i < prj->GetBuildTargetsCount(); ++i)
             {
-                ProjectBuildTarget* target = prj->GetBuildTarget(i);
+                caProjectBuildTarget* target = prj->GetBuildTarget(i);
                 if (target->GetTitle().Matches(defTarget))
                 {
                     idx = i;

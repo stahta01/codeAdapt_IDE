@@ -51,7 +51,7 @@ MakefileGenerator::~MakefileGenerator()
 {
 }
 
-void MakefileGenerator::UpdateCompiler(ProjectBuildTarget* target)
+void MakefileGenerator::UpdateCompiler(caProjectBuildTarget* target)
 {
     wxString idx = target
                 ? target->GetCompilerID()
@@ -64,7 +64,7 @@ void MakefileGenerator::UpdateCompiler(ProjectBuildTarget* target)
 
 wxString MakefileGenerator::ReplaceCompilerMacros(CommandType et,
                                                 const wxString& compilerVar,
-                                                ProjectBuildTarget* target,
+                                                caProjectBuildTarget* target,
                                                 const wxString& file,
                                                 const wxString& object,
                                                 const wxString& deps)
@@ -115,7 +115,7 @@ wxString MakefileGenerator::ReplaceCompilerMacros(CommandType et,
 }
 
 wxString MakefileGenerator::CreateSingleFileCompileCmd(CommandType et,
-                                                        ProjectBuildTarget* target,
+                                                        caProjectBuildTarget* target,
                                                         ProjectFile* pf,
                                                         const wxString& file,
                                                         const wxString& object,
@@ -126,7 +126,7 @@ wxString MakefileGenerator::CreateSingleFileCompileCmd(CommandType et,
 }
 
 wxString MakefileGenerator::CreateSingleFileCompileCmd(const wxString& command,
-                                                        ProjectBuildTarget* target,
+                                                        caProjectBuildTarget* target,
                                                         ProjectFile* pf,
                                                         const wxString& file,
                                                         const wxString& object,
@@ -343,7 +343,7 @@ wxString MakefileGenerator::CreateSingleFileCompileCmd(const wxString& command,
     return compilerCmd;
 }
 
-void MakefileGenerator::DoAppendCompilerOptions(wxString& cmd, ProjectBuildTarget* target, bool useGlobalOptions)
+void MakefileGenerator::DoAppendCompilerOptions(wxString& cmd, caProjectBuildTarget* target, bool useGlobalOptions)
 {
     wxArrayString opts;
     if (!m_CompilerSet)
@@ -366,7 +366,7 @@ void MakefileGenerator::DoAppendCompilerOptions(wxString& cmd, ProjectBuildTarge
     }
 }
 
-void MakefileGenerator::DoAppendLinkerOptions(wxString& cmd, ProjectBuildTarget* target, bool useGlobalOptions)
+void MakefileGenerator::DoAppendLinkerOptions(wxString& cmd, caProjectBuildTarget* target, bool useGlobalOptions)
 {
     CompileOptionsBase* obj;
     if (!m_CompilerSet)
@@ -385,7 +385,7 @@ void MakefileGenerator::DoAppendLinkerOptions(wxString& cmd, ProjectBuildTarget*
     }
 }
 
-void MakefileGenerator::DoAppendLinkerLibs(wxString& cmd, ProjectBuildTarget* target, bool useGlobalOptions)
+void MakefileGenerator::DoAppendLinkerLibs(wxString& cmd, caProjectBuildTarget* target, bool useGlobalOptions)
 {
     if (!m_CompilerSet)
         return;
@@ -448,7 +448,7 @@ void MakefileGenerator::DoAppendLinkerLibs(wxString& cmd, ProjectBuildTarget* ta
     }
 }
 
-void MakefileGenerator::DoAppendIncludeDirs(wxString& cmd, ProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
+void MakefileGenerator::DoAppendIncludeDirs(wxString& cmd, caProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
 {
     wxArrayString opts;
     if (!m_CompilerSet)
@@ -476,7 +476,7 @@ void MakefileGenerator::DoAppendIncludeDirs(wxString& cmd, ProjectBuildTarget* t
     }
 }
 
-void MakefileGenerator::DoAppendResourceIncludeDirs(wxString& cmd, ProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
+void MakefileGenerator::DoAppendResourceIncludeDirs(wxString& cmd, caProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
 {
     wxArrayString opts;
     if (!m_CompilerSet)
@@ -504,7 +504,7 @@ void MakefileGenerator::DoAppendResourceIncludeDirs(wxString& cmd, ProjectBuildT
     }
 }
 
-void MakefileGenerator::DoAppendLibDirs(wxString& cmd, ProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
+void MakefileGenerator::DoAppendLibDirs(wxString& cmd, caProjectBuildTarget* target, const wxString& prefix, bool useGlobalOptions)
 {
     wxArrayString opts;
     if (!m_CompilerSet)
@@ -532,7 +532,7 @@ void MakefileGenerator::DoAppendLibDirs(wxString& cmd, ProjectBuildTarget* targe
     }
 }
 
-void MakefileGenerator::DoGetMakefileIncludes(wxString& buffer, ProjectBuildTarget* target)
+void MakefileGenerator::DoGetMakefileIncludes(wxString& buffer, caProjectBuildTarget* target)
 {
     UpdateCompiler(target);
     if (!m_CompilerSet || !target)
@@ -559,7 +559,7 @@ void MakefileGenerator::DoGetMakefileIncludes(wxString& buffer, ProjectBuildTarg
     buffer << _T(" $(") + target->GetTitle() + _T("_GLOBAL_INCS)");
 }
 
-void MakefileGenerator::DoGetMakefileLibs(wxString& buffer, ProjectBuildTarget* target)
+void MakefileGenerator::DoGetMakefileLibs(wxString& buffer, caProjectBuildTarget* target)
 {
     UpdateCompiler(target);
     if (!m_CompilerSet || !target)
@@ -585,7 +585,7 @@ void MakefileGenerator::DoGetMakefileLibs(wxString& buffer, ProjectBuildTarget* 
     buffer << _T(" $(") + target->GetTitle() + _T("_GLOBAL_LIBS)");
 }
 
-void MakefileGenerator::DoGetMakefileLibDirs(wxString& buffer, ProjectBuildTarget* target)
+void MakefileGenerator::DoGetMakefileLibDirs(wxString& buffer, caProjectBuildTarget* target)
 {
     UpdateCompiler(target);
     if (!m_CompilerSet || !target)
@@ -612,7 +612,7 @@ void MakefileGenerator::DoGetMakefileLibDirs(wxString& buffer, ProjectBuildTarge
     buffer << _T(" $(") + target->GetTitle() + _T("_GLOBAL_LIBDIRS)");
 }
 
-void MakefileGenerator::DoGetMakefileCFlags(wxString& buffer, ProjectBuildTarget* target)
+void MakefileGenerator::DoGetMakefileCFlags(wxString& buffer, caProjectBuildTarget* target)
 {
     UpdateCompiler();
     if (!m_CompilerSet || !target)
@@ -638,7 +638,7 @@ void MakefileGenerator::DoGetMakefileCFlags(wxString& buffer, ProjectBuildTarget
     buffer << _T(" $(") + target->GetTitle() + _T("_GLOBAL_CFLAGS)");
 }
 
-void MakefileGenerator::DoGetMakefileLDFlags(wxString& buffer, ProjectBuildTarget* target)
+void MakefileGenerator::DoGetMakefileLDFlags(wxString& buffer, caProjectBuildTarget* target)
 {
     UpdateCompiler(target);
     if (!m_CompilerSet || !target)
@@ -688,7 +688,7 @@ void MakefileGenerator::DoAddMakefileVars(wxString& buffer)
 //    int targetsCount = m_Project->GetBuildTargetsCount();
 //    for (int x = 0; x < targetsCount; ++x)
 //    {
-//        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+//        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
 //        if (!IsTargetValid(target))
 //            continue;
 //        Compiler* compilerSet = CompilerFactory::GetCompiler(target->GetCompilerID());
@@ -718,7 +718,7 @@ void MakefileGenerator::DoAddMakefileResources(wxString& buffer)
         int targetsCount = m_Project->GetBuildTargetsCount();
         for (int x = 0; x < targetsCount; ++x)
         {
-            ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+            caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
             if (!target)
                 break;
 
@@ -780,7 +780,7 @@ void MakefileGenerator::DoAddMakefileResources(wxString& buffer)
     }
 }
 
-void MakefileGenerator::DoAddMakefileCreateDirs(wxString& buffer, ProjectBuildTarget* target, bool obj, bool dep, bool bin)
+void MakefileGenerator::DoAddMakefileCreateDirs(wxString& buffer, caProjectBuildTarget* target, bool obj, bool dep, bool bin)
 {
     if (!target)
         return;
@@ -903,7 +903,7 @@ void MakefileGenerator::DoAddMakefileObjs(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -980,7 +980,7 @@ void MakefileGenerator::DoAddMakefileOptions(wxString& buffer)
     buffer << _T("### Compiler/linker options") << _T('\n');
     for (int i = 0; i < m_Project->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(i);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(i);
         UpdateCompiler(target);
         if (!m_CompilerSet)
             continue;
@@ -1036,7 +1036,7 @@ void MakefileGenerator::DoAddMakefileIncludes(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1059,7 +1059,7 @@ void MakefileGenerator::DoAddMakefileLibs(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1082,7 +1082,7 @@ void MakefileGenerator::DoAddMakefileLibDirs(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1104,7 +1104,7 @@ void MakefileGenerator::DoAddMakefileCFlags(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1127,7 +1127,7 @@ void MakefileGenerator::DoAddMakefileLDFlags(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1151,7 +1151,7 @@ void MakefileGenerator::DoAddMakefileTargets(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1196,7 +1196,7 @@ void MakefileGenerator::DoAddPhonyTargets(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!IsTargetValid(target))
             continue;
 
@@ -1215,7 +1215,7 @@ void MakefileGenerator::DoAddMakefileTarget_All(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             continue;
         UpdateCompiler(target);
@@ -1271,7 +1271,7 @@ void MakefileGenerator::DoAddMakefileTargets_BeforeAfter(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target || !IsTargetValid(target))
             continue;
 
@@ -1292,7 +1292,7 @@ void MakefileGenerator::DoAddMakefileTarget_Clean(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
 
@@ -1358,7 +1358,7 @@ void MakefileGenerator::DoAddMakefileTarget_Depend(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             continue;
 
@@ -1387,7 +1387,7 @@ void MakefileGenerator::DoAddMakefileTarget_Link(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         UpdateCompiler(target);
         if (!IsTargetValid(target))
             continue;
@@ -1492,7 +1492,7 @@ void MakefileGenerator::QuoteStringIfNeeded(wxString& str, bool force)
     }
 }
 
-wxString MakefileGenerator::GetObjectFile(ProjectFile* pf, ProjectBuildTarget* target)
+wxString MakefileGenerator::GetObjectFile(ProjectFile* pf, caProjectBuildTarget* target)
 {
     wxFileName o_filename_tmp = UnixFilename(pf->GetObjName());
     wxFileName o_filename = target->GetObjectOutput() + wxFILE_SEP_PATH + o_filename_tmp.GetFullPath();
@@ -1503,7 +1503,7 @@ wxString MakefileGenerator::GetObjectFile(ProjectFile* pf, ProjectBuildTarget* t
     return o_file;
 }
 
-wxString MakefileGenerator::GetDependencyFile(ProjectFile* pf, ProjectBuildTarget* target)
+wxString MakefileGenerator::GetDependencyFile(ProjectFile* pf, caProjectBuildTarget* target)
 {
     wxFileName d_filename_tmp = UnixFilename(pf->GetObjName());
     wxFileName d_filename = target->GetDepsOutput() + wxFILE_SEP_PATH + d_filename_tmp.GetFullPath();
@@ -1529,7 +1529,7 @@ void MakefileGenerator::DoAddMakefileTarget_Objs(wxString& buffer)
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             break;
         UpdateCompiler(target);
@@ -1571,7 +1571,7 @@ void MakefileGenerator::DoAddMakefileTarget_Objs(wxString& buffer)
 //                            wxString tmpdep;
 //                            for (unsigned int i = 0; i < pf->buildTargets.GetCount(); ++i)
 //                            {
-//                                ProjectBuildTarget* tmptarget = m_Project->GetBuildTarget(pf->buildTargets[i]);
+//                                caProjectBuildTarget* tmptarget = m_Project->GetBuildTarget(pf->buildTargets[i]);
 //                                if (tmptarget)
 //                                    tmpdep << GetObjectFile(pf, tmptarget) << _T(',');
 //                            }
@@ -1687,7 +1687,7 @@ void MakefileGenerator::DoPrepareValidTargets()
     int targetsCount = m_Project->GetBuildTargetsCount();
     for (int x = 0; x < targetsCount; ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         if (!target)
             continue;
 
@@ -1707,7 +1707,7 @@ void MakefileGenerator::DoPrepareValidTargets()
     }
 }
 
-bool MakefileGenerator::IsTargetValid(ProjectBuildTarget* target)
+bool MakefileGenerator::IsTargetValid(caProjectBuildTarget* target)
 {
     UpdateCompiler(target);
     if (!m_CompilerSet || !target)
@@ -1718,7 +1718,7 @@ bool MakefileGenerator::IsTargetValid(ProjectBuildTarget* target)
     return hasBin && (hasCmds || m_LinkableTargets.Index(target) != -1);
 }
 
-void MakefileGenerator::ReplaceMacros(ProjectBuildTarget* bt, ProjectFile* pf, wxString& text)
+void MakefileGenerator::ReplaceMacros(caProjectBuildTarget* bt, ProjectFile* pf, wxString& text)
 {
     wxString o_dir = bt ? bt->GetObjectOutput() + wxFILE_SEP_PATH : _T("");
     wxString d_dir = bt ? bt->GetDepsOutput() + wxFILE_SEP_PATH : _T("");

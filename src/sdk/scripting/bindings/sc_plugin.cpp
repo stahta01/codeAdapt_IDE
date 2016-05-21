@@ -203,8 +203,8 @@ SQInteger RegisterPlugin(HSQUIRRELVM v)
         return sq_throwerror(v, "Not a script plugin!");
 
     // ask for its registration name
-    SqPlus::SquirrelFunction<PluginInfo&> f(o, "GetPluginInfo");
-    PluginInfo& info = f();
+    SqPlus::SquirrelFunction<caPluginInfo&> f(o, "GetPluginInfo");
+    caPluginInfo& info = f();
     wxString s = info.name;
 
     // look if a script plugin with the same name already exists
@@ -281,7 +281,7 @@ int ExecutePlugin(const wxString& name)
 const char* s_cbScriptPlugin =
     "class cbScriptPlugin\n"
     "{\n"
-    "    info = PluginInfo();\n"
+    "    info = caPluginInfo();\n"
     "    constructor()\n"
     "    {\n"
     "        info.name = _T(\"cbScriptPlugin\");\n"

@@ -51,10 +51,10 @@
 
 struct ListItemData
 {
-	ListItemData(ProjectTemplateLoader* t = 0, cbWizardPlugin* p = 0, int i = 0) : pt(t), plugin(p), wizPluginIndex(i) {}
+	ListItemData(ProjectTemplateLoader* t = 0, caWizardPlugin* p = 0, int i = 0) : pt(t), plugin(p), wizPluginIndex(i) {}
 	ListItemData(const ListItemData& rhs) : pt(rhs.pt), plugin(rhs.plugin) {}
 	ProjectTemplateLoader* pt;
-	cbWizardPlugin* plugin;
+	caWizardPlugin* plugin;
 	int wizPluginIndex;
 };
 
@@ -192,7 +192,7 @@ void NewFromTemplateDlg::BuildCategoriesFor(TemplateOutputType otype, wxChoice* 
     // wizards
     for (unsigned int i = 0; i < m_Wizards.GetCount(); ++i)
     {
-        cbWizardPlugin* plugin = (cbWizardPlugin*)m_Wizards[i];
+        caWizardPlugin* plugin = (caWizardPlugin*)m_Wizards[i];
         for (int w = 0; w < plugin->GetCount(); ++w)
         {
             if (plugin->GetOutputType(w) != otype)
@@ -246,7 +246,7 @@ void NewFromTemplateDlg::BuildListFor(TemplateOutputType otype, wxListCtrl* list
     // wizards
     for (unsigned int i = 0; i < m_Wizards.GetCount(); ++i)
     {
-        cbWizardPlugin* plugin = (cbWizardPlugin*)m_Wizards[i];
+        caWizardPlugin* plugin = (caWizardPlugin*)m_Wizards[i];
         for (int w = 0; w < plugin->GetCount(); ++w)
         {
             if (plugin->GetOutputType(w) != otype)
@@ -320,7 +320,7 @@ TemplateOutputType NewFromTemplateDlg::GetVisibleOutputType() const
     }
 }
 
-cbWizardPlugin* NewFromTemplateDlg::GetSelectedTemplate()
+caWizardPlugin* NewFromTemplateDlg::GetSelectedTemplate()
 {
     m_pWizard = 0;
     m_WizardIndex = -1;
@@ -447,7 +447,7 @@ void NewFromTemplateDlg::OnEditScript(wxCommandEvent& event)
     if (index == -1)
         return;
 	ListItemData* data = (ListItemData*)list->GetItemData(index);
-    cbWizardPlugin* wiz = data->plugin;
+    caWizardPlugin* wiz = data->plugin;
     EditScript(wiz->GetScriptFilename(data->wizPluginIndex));
 }
 

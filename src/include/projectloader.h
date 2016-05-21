@@ -8,7 +8,7 @@
 #define PROJECT_FILE_VERSION_MINOR 6
 
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class ProjectFile;
 
 WX_DECLARE_STRING_HASH_MAP(wxString, CompilerSubstitutes);
@@ -65,18 +65,18 @@ class DLLIMPORT ProjectLoader : public IBaseLoader
         bool FileModified(){ return m_OpenDirty; }
     protected:
         void DoProjectOptions(TiXmlElement* parentNode);
-        void DoCompilerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoResourceCompilerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoLinkerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoIncludesOptions(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoLibsOptions(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoExtraCommands(TiXmlElement* parentNode, ProjectBuildTarget* target = 0L);
-        void DoMakeCommands(TiXmlElement* parentNode, CompileTargetBase* target);
+        void DoCompilerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoResourceCompilerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoLinkerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoIncludesOptions(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoLibsOptions(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoExtraCommands(TiXmlElement* parentNode, caProjectBuildTarget* target = 0L);
+        void DoMakeCommands(TiXmlElement* parentNode, caCompileTargetBase* target);
         void DoVirtualTargets(TiXmlElement* parentNode);
 
         void DoBuild(TiXmlElement* parentNode);
         void DoBuildTarget(TiXmlElement* parentNode);
-        void DoBuildTargetOptions(TiXmlElement* parentNode, ProjectBuildTarget* target);
+        void DoBuildTargetOptions(TiXmlElement* parentNode, caProjectBuildTarget* target);
 
         void DoEnvironment(TiXmlElement* parentNode, CompileOptionsBase* base);
 
@@ -84,7 +84,7 @@ class DLLIMPORT ProjectLoader : public IBaseLoader
         void DoUnitOptions(TiXmlElement* parentNode, ProjectFile* file);
     private:
         void ConvertVersion_Pre_1_1();
-        void ConvertLibraries(CompileTargetBase* object);
+        void ConvertLibraries(caCompileTargetBase* object);
 
         // convenience functions, used in Save()
         TiXmlElement* AddElement(TiXmlElement* parent, const char* name, const char* attr = 0, const wxString& attribute = wxEmptyString);

@@ -15,7 +15,7 @@
 
 class EmbeddedHtmlPanel;
 
-class DefaultMimeHandler : public cbMimePlugin
+class DefaultMimeHandler : public caMimePlugin
 {
     public:
         DefaultMimeHandler();

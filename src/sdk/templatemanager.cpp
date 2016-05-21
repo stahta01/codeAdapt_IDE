@@ -120,11 +120,11 @@ cbProject* TemplateManager::New(TemplateOutputType initial, wxString* pFilename)
 cbProject* TemplateManager::NewFromTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
 {
     cbProject* prj = NULL;
-    cbWizardPlugin* wiz = dlg.GetWizard();
+    caWizardPlugin* wiz = dlg.GetWizard();
     if (wiz)
     {
         // wizard, too easy ;)
-        CompileTargetBase* ret = wiz->Launch(dlg.GetWizardIndex(), pFilename);
+        caCompileTargetBase* ret = wiz->Launch(dlg.GetWizardIndex(), pFilename);
         switch (wiz->GetOutputType(dlg.GetWizardIndex()))
         {
             case totProject: prj = dynamic_cast<cbProject*>(ret); break;
@@ -228,7 +228,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
                 prj->SetTitle(newname);
                 for (int i = 0; i < prj->GetBuildTargetsCount(); ++i)
                 {
-                    ProjectBuildTarget* bt = prj->GetBuildTarget(i);
+                    caProjectBuildTarget* bt = prj->GetBuildTarget(i);
                     TargetFilenameGenerationPolicy tgfpPrefix, tgfpExtension;
                     bt->GetTargetFilenameGenerationPolicy(tgfpPrefix, tgfpExtension);
                     wxString outputFileName = bt->GetOutputFilename();

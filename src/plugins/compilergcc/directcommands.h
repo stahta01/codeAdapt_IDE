@@ -13,7 +13,7 @@
 class CompilerGCC;
 class Compiler;
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class ProjectFile;
 class pfDetails;
 
@@ -28,31 +28,31 @@ class DirectCommands
                         int logPageIndex = 0);
         ~DirectCommands();
 
-        wxArrayString GetPreBuildCommands(ProjectBuildTarget* target);
-        wxArrayString GetPostBuildCommands(ProjectBuildTarget* target);
-        wxArrayString CompileFile(ProjectBuildTarget* target, ProjectFile* pf, bool force = false);
-        wxArrayString GetCompileFileCommand(ProjectBuildTarget* target, ProjectFile* pf);
+        wxArrayString GetPreBuildCommands(caProjectBuildTarget* target);
+        wxArrayString GetPostBuildCommands(caProjectBuildTarget* target);
+        wxArrayString CompileFile(caProjectBuildTarget* target, ProjectFile* pf, bool force = false);
+        wxArrayString GetCompileFileCommand(caProjectBuildTarget* target, ProjectFile* pf);
         wxArrayString GetCompileSingleFileCommand(const wxString& filename);
-        wxArrayString GetCompileCommands(ProjectBuildTarget* target, bool force = false);
-        wxArrayString GetTargetCompileCommands(ProjectBuildTarget* target, bool force = false);
-        wxArrayString GetLinkCommands(ProjectBuildTarget* target, bool force = false);
-        wxArrayString GetTargetLinkCommands(ProjectBuildTarget* target, bool force = false);
-        wxArrayString GetCleanCommands(ProjectBuildTarget* target, bool distclean = false);
+        wxArrayString GetCompileCommands(caProjectBuildTarget* target, bool force = false);
+        wxArrayString GetTargetCompileCommands(caProjectBuildTarget* target, bool force = false);
+        wxArrayString GetLinkCommands(caProjectBuildTarget* target, bool force = false);
+        wxArrayString GetTargetLinkCommands(caProjectBuildTarget* target, bool force = false);
+        wxArrayString GetCleanCommands(caProjectBuildTarget* target, bool distclean = false);
         wxArrayString GetCleanSingleFileCommand(const wxString& filename);
-        wxArrayString GetTargetCleanCommands(ProjectBuildTarget* target, bool distclean = false);
+        wxArrayString GetTargetCleanCommands(caProjectBuildTarget* target, bool distclean = false);
         bool m_doYield;
     protected:
         bool AreExternalDepsOutdated(const wxString& buildOutput, const wxString& additionalFiles, const wxString& externalDeps);
-        bool IsObjectOutdated(ProjectBuildTarget* target, const pfDetails& pfd, wxString* errorStr = 0);
-        void DepsSearchStart(ProjectBuildTarget* target);
-        MyFilesArray GetProjectFilesSortedByWeight(ProjectBuildTarget* target, bool compile, bool link);
+        bool IsObjectOutdated(caProjectBuildTarget* target, const pfDetails& pfd, wxString* errorStr = 0);
+        void DepsSearchStart(caProjectBuildTarget* target);
+        MyFilesArray GetProjectFilesSortedByWeight(caProjectBuildTarget* target, bool compile, bool link);
         void AddCommandsToArray(const wxString& cmds, wxArrayString& array, bool isWaitCmd = false, bool isLinkCmd = false);
 
         int m_PageIndex;
         CompilerGCC* m_pCompilerPlugin;
         Compiler* m_pCompiler;
         cbProject* m_pProject;
-        ProjectBuildTarget* m_pCurrTarget; // temp
+        caProjectBuildTarget* m_pCurrTarget; // temp
     private:
 };
 

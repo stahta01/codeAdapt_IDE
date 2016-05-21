@@ -88,10 +88,10 @@ int WindowsXPLookNFeel::Execute()
 	}
 
 	wxArrayString targetNames;
-	ProjectBuildTarget* target = 0L;
+	caProjectBuildTarget* target = 0L;
 	for (int i = 0; i < project->GetBuildTargetsCount(); ++i)
 	{
-		ProjectBuildTarget* tgt = project->GetBuildTarget(i);
+		caProjectBuildTarget* tgt = project->GetBuildTarget(i);
 		if (tgt)
 		{
 			if (tgt->GetTargetType() != ttExecutable)

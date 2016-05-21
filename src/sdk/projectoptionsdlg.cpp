@@ -174,7 +174,7 @@ void ProjectOptionsDlg::BuildScriptsTree()
     wxTreeItemId root = tc->AddRoot(m_Project->GetTitle());
     for (int x = 0; x < m_Project->GetBuildTargetsCount(); ++x)
     {
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(x);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(x);
         tc->AppendItem(root, target->GetTitle());
     }
     tc->Expand(root);
@@ -229,7 +229,7 @@ void ProjectOptionsDlg::DoTargetChange(bool saveOld)
 
     if (lstTargets->GetSelection() == -1)
         lstTargets->SetSelection(0);
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
     if (!target)
         return;
 
@@ -338,7 +338,7 @@ void ProjectOptionsDlg::DoBeforeTargetChange(bool force)
         // selected another build target
         // save changes to the previously selected target
         wxArrayString array;
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(m_Current_Sel);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(m_Current_Sel);
         if (!target)
             return;
 
@@ -391,7 +391,7 @@ void ProjectOptionsDlg::DoBeforeTargetChange(bool force)
 
 void ProjectOptionsDlg::OnProjectTypeChanged(wxCommandEvent& event)
 {
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(m_Current_Sel);
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(m_Current_Sel);
     if (!target)
         return;
     wxComboBox* cmb = XRCCTRL(*this, "cmbProjectType", wxComboBox);
@@ -533,7 +533,7 @@ void ProjectOptionsDlg::OnTargetBuildOptionsClick(wxCommandEvent& event)
         wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
         int targetIdx = lstTargets->GetSelection();
 
-        ProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
+        caProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
         if (target)
             m_pCompiler->Configure(m_Project, target);
     }
@@ -546,7 +546,7 @@ void ProjectOptionsDlg::OnAddBuildTargetClick(wxCommandEvent& event)
     if (!ValidateTargetName(targetName))
         return;
 
-    ProjectBuildTarget* target = m_Project->AddBuildTarget(targetName);
+    caProjectBuildTarget* target = m_Project->AddBuildTarget(targetName);
     if (!target)
     {
         wxMessageDialog(this, _("The new target could not be added..."),
@@ -571,7 +571,7 @@ void ProjectOptionsDlg::OnEditBuildTargetClick(wxCommandEvent& event)
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
     int targetIdx = lstTargets->GetSelection();
 
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
     if (!target)
     {
         wxMessageDialog(this, _("Could not locate target..."),
@@ -601,7 +601,7 @@ void ProjectOptionsDlg::OnCopyBuildTargetClick(wxCommandEvent& event)
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
     int targetIdx = lstTargets->GetSelection();
 
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
     if (!target)
     {
         wxMessageDialog(this, _("Could not locate target..."),
@@ -667,7 +667,7 @@ void ProjectOptionsDlg::OnVirtualTargets(wxCommandEvent& event)
 void ProjectOptionsDlg::OnEditDepsClick(wxCommandEvent& event)
 {
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
     if (!target)
         return;
 
@@ -679,7 +679,7 @@ void ProjectOptionsDlg::OnEditDepsClick(wxCommandEvent& event)
 void ProjectOptionsDlg::OnExportTargetClick(wxCommandEvent& event)
 {
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(lstTargets->GetSelection());
     if (!target)
         return;
 
@@ -759,7 +759,7 @@ void ProjectOptionsDlg::OnFileToggleMarkClick(wxCommandEvent& event)
 {
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
     int targetIdx = lstTargets->GetSelection();
-    ProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
+    caProjectBuildTarget* target = m_Project->GetBuildTarget(targetIdx);
 
     wxCheckListBox* list = XRCCTRL(*this, "lstFiles", wxCheckListBox);
     for (int i = 0; i < (int)list->GetCount(); ++i)
@@ -778,7 +778,7 @@ void ProjectOptionsDlg::OnScriptsOverviewSelChanged(wxTreeEvent& event)
     FillScripts();
 }
 
-bool ProjectOptionsDlg::IsScriptValid(ProjectBuildTarget* target, const wxString& script)
+bool ProjectOptionsDlg::IsScriptValid(caProjectBuildTarget* target, const wxString& script)
 {
     static const wxString clearout_buildscripts = _T("SetBuildOptions <- null;");
     try
@@ -834,12 +834,12 @@ bool ProjectOptionsDlg::ValidateTargetName(const wxString& name)
     return true;
 }
 
-bool ProjectOptionsDlg::DoCheckScripts(CompileTargetBase* base)
+bool ProjectOptionsDlg::DoCheckScripts(caCompileTargetBase* base)
 {
     const wxArrayString& scripts = base->GetBuildScripts();
     for (size_t i = 0; i < scripts.GetCount(); ++i)
     {
-        ProjectBuildTarget* bt = dynamic_cast<ProjectBuildTarget*>(base);
+        caProjectBuildTarget* bt = dynamic_cast<caProjectBuildTarget*>(base);
         if (!IsScriptValid(bt, scripts[i]))
         {
             wxString msg;

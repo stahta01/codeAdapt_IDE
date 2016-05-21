@@ -176,7 +176,7 @@ public:
         wxString url = control->GetRange(urlStart, urlEnd);
         if (platform::windows && url.StartsWith(_T("file://")))
             url.Remove(0, 7);
-        cbMimePlugin* p = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(url);
+        caMimePlugin* p = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(url);
         if (p)
             p->OpenFile(url);
         else
@@ -535,7 +535,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
     CompilerFactory::UnregisterCompilers();
 }
 
-int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
+int CompilerGCC::Configure(cbProject* project, caProjectBuildTarget* target)
 {
     cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Project build options"));
     cbConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
@@ -1023,8 +1023,8 @@ void CompilerGCC::AddToCommandQueue(const wxArrayString& commands)
     wxString myWait = wxString(COMPILER_WAIT);
     wxString myWaitLink = wxString(COMPILER_WAIT_LINK);
 //    wxString myWaitEnd = wxString(COMPILER_WAIT_END);
-//    ProjectBuildTarget* lastTarget = 0;
-    ProjectBuildTarget* bt = m_pBuildingProject ? m_pBuildingProject->GetBuildTarget(GetTargetIndexFromName(m_pBuildingProject, m_BuildingTargetName)) : 0;
+//    caProjectBuildTarget* lastTarget = 0;
+    caProjectBuildTarget* bt = m_pBuildingProject ? m_pBuildingProject->GetBuildTarget(GetTargetIndexFromName(m_pBuildingProject, m_BuildingTargetName)) : 0;
     m_CurrentProgress = 0;
     m_MaxProgress = 0;
     bool isLink = false;
@@ -1483,7 +1483,7 @@ void CompilerGCC::DoPrepareQueue()
     Manager::Yield();
 }
 
-ProjectBuildTarget* CompilerGCC::DoAskForTarget()
+caProjectBuildTarget* CompilerGCC::DoAskForTarget()
 {
     if (!CheckProject())
         return 0L;
@@ -1507,7 +1507,7 @@ void CompilerGCC::DoDeleteTempMakefile()
     m_LastTempMakefile = _T("");
 }
 
-bool CompilerGCC::UseMake(ProjectBuildTarget* target)
+bool CompilerGCC::UseMake(caProjectBuildTarget* target)
 {
     if (!m_Project)
         return false;
@@ -1520,7 +1520,7 @@ bool CompilerGCC::UseMake(ProjectBuildTarget* target)
     return false;
 }
 
-wxString CompilerGCC::GetCurrentCompilerID(ProjectBuildTarget* target)
+wxString CompilerGCC::GetCurrentCompilerID(caProjectBuildTarget* target)
 {
     if (target)
         return target->GetCompilerID();
@@ -1531,7 +1531,7 @@ wxString CompilerGCC::GetCurrentCompilerID(ProjectBuildTarget* target)
     return wxEmptyString;
 }
 
-bool CompilerGCC::CompilerValid(ProjectBuildTarget* target)
+bool CompilerGCC::CompilerValid(caProjectBuildTarget* target)
 {
     Compiler* compiler = 0;
     if (!target)
@@ -1604,7 +1604,7 @@ bool CompilerGCC::DoCreateMakefile(bool temporary, const wxString& makefile)
     return true;
 }
 
-void CompilerGCC::PrintBanner(cbProject* prj, ProjectBuildTarget* target)
+void CompilerGCC::PrintBanner(cbProject* prj, caProjectBuildTarget* target)
 {
     if (!CompilerValid(target))
         return;
@@ -1712,7 +1712,7 @@ int CompilerGCC::Run(const wxString& target)
     return Run(m_Project->GetBuildTarget(target.IsEmpty() ? m_LastTargetName : target));
 }
 
-int CompilerGCC::Run(ProjectBuildTarget* target)
+int CompilerGCC::Run(caProjectBuildTarget* target)
 {
     if (!CheckProject())
     {
@@ -1888,7 +1888,7 @@ int CompilerGCC::Run(ProjectBuildTarget* target)
     return 0;
 }
 
-wxString CompilerGCC::GetMakeCommandFor(MakeCommand cmd, cbProject* project, ProjectBuildTarget* target)
+wxString CompilerGCC::GetMakeCommandFor(MakeCommand cmd, cbProject* project, caProjectBuildTarget* target)
 {
     if (!project)
         return wxEmptyString;
@@ -1914,7 +1914,7 @@ void CompilerGCC::DoClean(const wxArrayString& commands)
     }
 }
 
-int CompilerGCC::Clean(ProjectBuildTarget* target)
+int CompilerGCC::Clean(caProjectBuildTarget* target)
 {
     return Clean(target ? target->GetTitle() : _T(""));
 }
@@ -1954,7 +1954,7 @@ int CompilerGCC::Clean(const wxString& target)
     {
         BuildJobTarget bjt = GetNextJob();
         wxSetWorkingDirectory(bjt.project->GetBasePath());
-        ProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
+        caProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
         CompilerFactory::GetCompiler(bt->GetCompilerID())->Init(bjt.project);
 
         if (UseMake())
@@ -1987,7 +1987,7 @@ int CompilerGCC::DistClean(const wxString& target)
     return DistClean(m_Project->GetBuildTarget(target.IsEmpty() ? m_LastTargetName : target));
 }
 
-int CompilerGCC::DistClean(ProjectBuildTarget* target)
+int CompilerGCC::DistClean(caProjectBuildTarget* target)
 {
     // make sure all project files are saved
     if (m_Project && !m_Project->SaveAllFiles())
@@ -2167,7 +2167,7 @@ void CompilerGCC::BuildStateManagement()
         return;
     }
 
-    ProjectBuildTarget* bt = m_pBuildingProject->GetBuildTarget(GetTargetIndexFromName(m_pBuildingProject, m_BuildingTargetName));
+    caProjectBuildTarget* bt = m_pBuildingProject->GetBuildTarget(GetTargetIndexFromName(m_pBuildingProject, m_BuildingTargetName));
     if (!bt)
     {
         ResetBuildState();
@@ -2290,7 +2290,7 @@ int CompilerGCC::GetTargetIndexFromName(cbProject* prj, const wxString& name)
         return -1;
     for (int i = 0; i < prj->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* bt_search =  prj->GetBuildTarget(i);
+        caProjectBuildTarget* bt_search =  prj->GetBuildTarget(i);
         if (bt_search->GetTitle() == name)
         {
             return i;
@@ -2304,7 +2304,7 @@ void CompilerGCC::ExpandTargets(cbProject* project, const wxString& targetName, 
     result.Clear();
     if (project)
     {
-        ProjectBuildTarget* bt =  project->GetBuildTarget(targetName);
+        caProjectBuildTarget* bt =  project->GetBuildTarget(targetName);
         if (bt) // real target
             result.Add(targetName);
         else // virtual target
@@ -2355,7 +2355,7 @@ void CompilerGCC::PreprocessJob(cbProject* project, const wxString& targetName)
         // add all matching targets in the job list
         for (size_t x = 0; x < tlist.GetCount(); ++x)
         {
-            ProjectBuildTarget* tgt = prj->GetBuildTarget(tlist[x]);
+            caProjectBuildTarget* tgt = prj->GetBuildTarget(tlist[x]);
             if (!CompilerValid(tgt))
             {
                 wxString msg;
@@ -2429,7 +2429,7 @@ int CompilerGCC::DoBuild()
 
     m_pBuildingProject = bj.project;
     m_BuildingTargetName = bj.targetName;
-    ProjectBuildTarget* bt = bj.project->GetBuildTarget(bj.targetName);
+    caProjectBuildTarget* bt = bj.project->GetBuildTarget(bj.targetName);
     if (!bt || !CompilerValid(bt))
         return -2;
 
@@ -2547,7 +2547,7 @@ int CompilerGCC::Build(const wxString& target)
         while (!m_BuildJobTargetsList.empty())
         {
             BuildJobTarget bjt = GetNextJob();
-            ProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
+            caProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
             if (bt)
             {
                 wxString cmd = GetMakeCommandFor(mcBuild, bjt.project, bt);
@@ -2567,12 +2567,12 @@ int CompilerGCC::Build(const wxString& target)
     return DoRunQueue();
 }
 
-int CompilerGCC::Build(ProjectBuildTarget* target)
+int CompilerGCC::Build(caProjectBuildTarget* target)
 {
     return Build(target ? target->GetTitle() : _T(""));
 }
 
-int CompilerGCC::Rebuild(ProjectBuildTarget* target)
+int CompilerGCC::Rebuild(caProjectBuildTarget* target)
 {
     return Rebuild(target ? target->GetTitle() : _T(""));
 }
@@ -2615,7 +2615,7 @@ int CompilerGCC::Rebuild(const wxString& target)
         while (!m_BuildJobTargetsList.empty())
         {
             BuildJobTarget bjt = GetNextJob();
-            ProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
+            caProjectBuildTarget* bt = bjt.project->GetBuildTarget(bjt.targetName);
             if (bt)
             {
                 cmd = GetMakeCommandFor(mcClean, bjt.project, bt);
@@ -2764,7 +2764,7 @@ bool CompilerGCC::IsRunning() const
     return m_BuildJob != bjIdle || IsProcessRunning() || m_CommandQueue.GetCount();
 }
 
-ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(ProjectFile* pf)
+caProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(ProjectFile* pf)
 {
     if (!pf)
         return 0;
@@ -2778,7 +2778,7 @@ ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(ProjectFile* pf)
     else if (pf->buildTargets.GetCount() == 1)
         return m_Project->GetBuildTarget(pf->buildTargets[0]);
     // belongs to two or more build targets
-    ProjectBuildTarget* bt = 0;
+    caProjectBuildTarget* bt = 0;
     // if a virtual target is selected, ask for build target
     if (m_RealTargetIndex == -1)
     {
@@ -2793,7 +2793,7 @@ ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(ProjectFile* pf)
     return bt;
 }
 
-ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(const wxString& file)
+caProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(const wxString& file)
 {
     ProjectFile* pf = m_Project ? m_Project->GetFileByFilename(file, true, false) : 0;
     return GetBuildTargetForFile(pf);
@@ -2806,7 +2806,7 @@ int CompilerGCC::CompileFile(const wxString& file)
         return -1;
 
     ProjectFile* pf = m_Project ? m_Project->GetFileByFilename(file, true, false) : 0;
-    ProjectBuildTarget* bt = GetBuildTargetForFile(pf);
+    caProjectBuildTarget* bt = GetBuildTargetForFile(pf);
     bool useMake = UseMake(bt);
 
     if (!pf)
@@ -2890,7 +2890,7 @@ void CompilerGCC::OnRun(wxCommandEvent& event)
 
 void CompilerGCC::OnCompileAndRun(wxCommandEvent& event)
 {
-    ProjectBuildTarget* target = 0;//DoAskForTarget();
+    caProjectBuildTarget* target = 0;//DoAskForTarget();
     m_RunAfterCompile = true;
     Build(target);
 //    if (m_CommandQueue.GetCount()) // if we have build commands, use the flag to run
@@ -2907,7 +2907,7 @@ void CompilerGCC::OnCompile(wxCommandEvent& event)
         // let's check the selected project...
         DoSwitchProjectTemporarily();
     }
-    ProjectBuildTarget* target = 0;//DoAskForTarget();
+    caProjectBuildTarget* target = 0;//DoAskForTarget();
     Build(target);
     m_RealTargetIndex = bak;
 }
@@ -2993,7 +2993,7 @@ void CompilerGCC::OnRebuild(wxCommandEvent& event)
         // let's check the selected project...
         DoSwitchProjectTemporarily();
     }
-    ProjectBuildTarget* target = 0;//DoAskForTarget();
+    caProjectBuildTarget* target = 0;//DoAskForTarget();
     Rebuild(target);
     m_RealTargetIndex = bak;
 }
@@ -3070,7 +3070,7 @@ void CompilerGCC::OnClean(wxCommandEvent& event)
         // let's check the selected project...
         DoSwitchProjectTemporarily();
     }
-    ProjectBuildTarget* target = 0;//DoAskForTarget();
+    caProjectBuildTarget* target = 0;//DoAskForTarget();
     Clean(target);
     m_RealTargetIndex = bak;
 }
@@ -3083,7 +3083,7 @@ void CompilerGCC::OnProjectCompilerOptions(wxCommandEvent& event)
     if (ftd)
     {
         // 'configure' selected target, if other than 'All'
-        ProjectBuildTarget* target = 0;
+        caProjectBuildTarget* target = 0;
         if (ftd->GetProject() == m_Project)
         {
             if (m_RealTargetIndex != -1)
@@ -3112,7 +3112,7 @@ void CompilerGCC::OnTargetCompilerOptions(wxCommandEvent& event)
        // let's check the selected project...
        DoSwitchProjectTemporarily();
 
-    ProjectBuildTarget* target = 0;//DoAskForTarget();
+    caProjectBuildTarget* target = 0;//DoAskForTarget();
     m_RealTargetIndex = bak;
     Configure(m_Project, target);
 }
@@ -3278,7 +3278,7 @@ void CompilerGCC::AddOutputLine(const wxString& output, bool forceErrorColour)
     if (clt != cltNormal)
     {
         // display current project/target "header" in build messages, if different since last warning/error
-        static ProjectBuildTarget* last_bt = 0;
+        static caProjectBuildTarget* last_bt = 0;
         if (last_bt != m_pLastBuildingTarget)
         {
             last_bt = m_pLastBuildingTarget;

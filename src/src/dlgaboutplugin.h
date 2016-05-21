@@ -3,7 +3,7 @@
 
 #include <wx/dialog.h> // inheriting class's header file
 
-struct PluginInfo;
+struct caPluginInfo;
 class wxWindow;
 /*
  * No description
@@ -12,7 +12,7 @@ class dlgAboutPlugin : public wxDialog
 {
 	public:
 		// class constructor
-		dlgAboutPlugin(wxWindow* parent, const PluginInfo* pi);
+		dlgAboutPlugin(wxWindow* parent, const caPluginInfo* pi);
 		// class destructor
 		~dlgAboutPlugin();
 };

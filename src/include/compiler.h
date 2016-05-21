@@ -12,7 +12,7 @@
 
 class CompilerCommandGenerator;
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class ProjectFile;
 
 /*
@@ -120,7 +120,7 @@ enum CommandType
     ctLinkDynamicCmd,       ///< Link dynamic (dll) lib command, e.g. "$linker -shared -Wl,--output-def=$def_output -Wl,--out-implib=$static_output -Wl,--dll $libdirs $link_objects $libs -o $dynamic_output"
     ctLinkStaticCmd,        ///< Link static lib command, e.g. "ar -r $output $link_objects\n\tranlib $static_output"
     ctLinkNativeCmd,        ///< Link native binary command
-    
+
     ctCount,				///< Do NOT use
 };
 
@@ -194,7 +194,7 @@ struct CompilerTool
 	{}
 	bool operator==(const CompilerTool& rhs) const { return command == rhs.command && extensions == rhs.extensions && generatedFiles == rhs.generatedFiles; }
 	bool operator!=(const CompilerTool& rhs) const { return !(*this == rhs); }
-	
+
 	wxString command; ///< command to execute
 	wxArrayString extensions; ///< file extensions for which the command will be invoked (no leading dot)
 	wxArrayString generatedFiles; ///< the native language files this command generates that should be further compiled
@@ -273,7 +273,7 @@ class DLLIMPORT Compiler : public CompileOptionsBase
         /** Get the command line to compile/link the specific file.
           * Transfers the call to the generator returned by GetCommandGenerator()*/
         virtual void GenerateCommandLine(wxString& macro,
-                                        ProjectBuildTarget* target,
+                                        caProjectBuildTarget* target,
                                         ProjectFile* pf,
                                         const wxString& file,
                                         const wxString& object,
@@ -288,7 +288,7 @@ class DLLIMPORT Compiler : public CompileOptionsBase
           * build-script include dirs.
           * @note This is only valid after Init() has been called.
           */
-        virtual const wxArrayString& GetCompilerSearchDirs(ProjectBuildTarget* target);
+        virtual const wxArrayString& GetCompilerSearchDirs(caProjectBuildTarget* target);
 
         /** @brief Get the full linker dirs used in the actual command line.
           *
@@ -298,7 +298,7 @@ class DLLIMPORT Compiler : public CompileOptionsBase
           * build-script linker dirs.
           * @note This is only valid after Init() has been called.
           */
-        virtual const wxArrayString& GetLinkerSearchDirs(ProjectBuildTarget* target);
+        virtual const wxArrayString& GetLinkerSearchDirs(caProjectBuildTarget* target);
 
         /** @brief Save settings */
         virtual void SaveSettings(const wxString& baseKey);

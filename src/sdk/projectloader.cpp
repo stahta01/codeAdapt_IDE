@@ -211,7 +211,7 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
         wxArrayString all;
         for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
         {
-            ProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
+            caProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
             if (bt && bt->GetIncludeInTargetAll())
                 all.Add(bt->GetTitle());
         }
@@ -225,7 +225,7 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
     // convert old deftarget int to string
     if (m_1_4_to_1_5_deftarget != -1)
     {
-        ProjectBuildTarget* bt = m_pProject->GetBuildTarget(m_1_4_to_1_5_deftarget);
+        caProjectBuildTarget* bt = m_pProject->GetBuildTarget(m_1_4_to_1_5_deftarget);
         if (bt)
             m_pProject->SetDefaultExecuteTarget(bt->GetTitle());
     }
@@ -286,7 +286,7 @@ void ProjectLoader::ConvertVersion_Pre_1_1()
     }
 }
 
-void ProjectLoader::ConvertLibraries(CompileTargetBase* object)
+void ProjectLoader::ConvertLibraries(caCompileTargetBase* object)
 {
     wxArrayString linkerOpts = object->GetLinkerOptions();
     wxArrayString linkLibs = object->GetLinkLibs();
@@ -323,7 +323,7 @@ void ProjectLoader::ConvertLibraries(CompileTargetBase* object)
     object->SetLinkLibs(linkLibs);
 }
 
-void ProjectLoader::DoMakeCommands(TiXmlElement* parentNode, CompileTargetBase* target)
+void ProjectLoader::DoMakeCommands(TiXmlElement* parentNode, caCompileTargetBase* target)
 {
     if (!parentNode)
         return; // no options
@@ -485,7 +485,7 @@ void ProjectLoader::DoBuildTarget(TiXmlElement* parentNode)
 
     while (node)
     {
-        ProjectBuildTarget* target = 0L;
+        caProjectBuildTarget* target = 0L;
         wxString title = cbC2U(node->Attribute("title"));
         if (!title.IsEmpty())
             target = m_pProject->AddBuildTarget(title);
@@ -507,7 +507,7 @@ void ProjectLoader::DoBuildTarget(TiXmlElement* parentNode)
     }
 }
 
-void ProjectLoader::DoBuildTargetOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoBuildTargetOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("Option");
     if (!node)
@@ -654,7 +654,7 @@ void ProjectLoader::DoBuildTargetOptions(TiXmlElement* parentNode, ProjectBuildT
     }
 }
 
-void ProjectLoader::DoCompilerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoCompilerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("Compiler");
     if (!node)
@@ -684,7 +684,7 @@ void ProjectLoader::DoCompilerOptions(TiXmlElement* parentNode, ProjectBuildTarg
     }
 }
 
-void ProjectLoader::DoResourceCompilerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoResourceCompilerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("ResourceCompiler");
     if (!node)
@@ -706,7 +706,7 @@ void ProjectLoader::DoResourceCompilerOptions(TiXmlElement* parentNode, ProjectB
     }
 }
 
-void ProjectLoader::DoLinkerOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoLinkerOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("Linker");
     if (!node)
@@ -744,7 +744,7 @@ void ProjectLoader::DoLinkerOptions(TiXmlElement* parentNode, ProjectBuildTarget
     }
 }
 
-void ProjectLoader::DoIncludesOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoIncludesOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("IncludeDirs");
     if (!node)
@@ -766,7 +766,7 @@ void ProjectLoader::DoIncludesOptions(TiXmlElement* parentNode, ProjectBuildTarg
     }
 }
 
-void ProjectLoader::DoLibsOptions(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoLibsOptions(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("LibDirs");
     if (!node)
@@ -788,7 +788,7 @@ void ProjectLoader::DoLibsOptions(TiXmlElement* parentNode, ProjectBuildTarget* 
     }
 }
 
-void ProjectLoader::DoExtraCommands(TiXmlElement* parentNode, ProjectBuildTarget* target)
+void ProjectLoader::DoExtraCommands(TiXmlElement* parentNode, caProjectBuildTarget* target)
 {
     TiXmlElement* node = parentNode->FirstChildElement("ExtraCommands");
     while (node)
@@ -1113,11 +1113,11 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
 
     // now decide which target we 're exporting.
     // remember that if onlyTarget is empty, we export all targets (i.e. normal save).
-    ProjectBuildTarget* onlytgt = m_pProject->GetBuildTarget(onlyTarget);
+    caProjectBuildTarget* onlytgt = m_pProject->GetBuildTarget(onlyTarget);
 
     for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
+        caProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
         if (!target)
             break;
 

@@ -522,7 +522,7 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             cbProject* CurProject = Projects->Item(i);
             if (ProjInTree->GetTitle().IsSameAs(CurProject->GetTitle()))
             {
-                ProjectBuildTarget* CompTarget = CurProject->GetCurrentlyCompilingTarget();
+                caProjectBuildTarget* CompTarget = CurProject->GetCurrentlyCompilingTarget();
                 if (CompTarget)
                     PopUpMenuOption = false;
             }
@@ -587,10 +587,10 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             PluginsArray mimes = Manager::Get()->GetPluginManager()->GetMimeOffers();
             for (unsigned int i = 0; i < mimes.GetCount() && i < MAX_OPEN_WITH_ITEMS; ++i)
             {
-                cbMimePlugin* plugin = (cbMimePlugin*)mimes[i];
+                caMimePlugin* plugin = (caMimePlugin*)mimes[i];
                 if (plugin && plugin->CanHandleFile(m_pTree->GetItemText(id)))
                 {
-                    const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
+                    const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
                     openWith->Append(idOpenWith[i], info ? info->title : wxString(_("<Unknown plugin>")));
                 }
             }
@@ -784,7 +784,7 @@ cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt
             // the plugin handler should call begin/end on its own...
             EndLoadingProject(0);
 
-            cbMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
+            caMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
             if (plugin)
             {
                 plugin->OpenFile(filename);
@@ -1304,7 +1304,7 @@ int ProjectManager::DoAddFileToProject(const wxString& filename, cbProject* proj
         // add to this file the rest of the selected targets...
         for (size_t i = 0; i < targets.GetCount(); ++i)
         {
-            ProjectBuildTarget* target = project->GetBuildTarget(targets[i]);
+            caProjectBuildTarget* target = project->GetBuildTarget(targets[i]);
             if (target)
                 pf->AddBuildTarget(target->GetTitle());
         }
@@ -1469,7 +1469,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
         }
 
         // not a recognized file type
-        cbMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
+        caMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
         if (!plugin)
         {
             wxString msg;
@@ -1478,7 +1478,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
         }
         else if (plugin->OpenFile(filename) != 0)
         {
-            const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
+            const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
             wxString msg;
             msg.Printf(_("Could not open file '%s'.\nThe registered handler (%s) could not open it."), filename.c_str(), info ? info->title.c_str() : wxString(_("<Unknown plugin>")).c_str());
             Manager::Get()->GetLogManager()->LogError(msg);
@@ -2187,7 +2187,7 @@ void ProjectManager::OnOpenWith(wxCommandEvent& event)
             else
             {
                 PluginsArray mimes = Manager::Get()->GetPluginManager()->GetMimeOffers();
-                cbMimePlugin* plugin = (cbMimePlugin*)mimes[event.GetId() - idOpenWith[0]];
+                caMimePlugin* plugin = (caMimePlugin*)mimes[event.GetId() - idOpenWith[0]];
                 if (plugin && plugin->OpenFile(filename) == 0)
                     return;
             }

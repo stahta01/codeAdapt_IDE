@@ -6,7 +6,7 @@
 #include "compilergcc.h"
 #include <compiler.h>
 
-WX_DEFINE_ARRAY(ProjectBuildTarget*, TargetsArray);
+WX_DEFINE_ARRAY(caProjectBuildTarget*, TargetsArray);
 WX_DEFINE_ARRAY(ProjectFile*, FilesArray); // keep our own copy, to sort it by file weight (priority)
 WX_DEFINE_ARRAY(ProjectFile*, ObjectFilesArray); // holds object files already included in the Makefile
 
@@ -23,35 +23,35 @@ class MakefileGenerator
         // class destructor
         ~MakefileGenerator();
         bool CreateMakefile();
-        void ReplaceMacros(ProjectBuildTarget* bt, ProjectFile* pf, wxString& text);
+        void ReplaceMacros(caProjectBuildTarget* bt, ProjectFile* pf, wxString& text);
         void QuoteStringIfNeeded(wxString& str, bool force = false);
         wxString CreateSingleFileCompileCmd(const wxString& command,
-                                            ProjectBuildTarget* target,
+                                            caProjectBuildTarget* target,
                                             ProjectFile* pf,
                                             const wxString& file,
                                             const wxString& object,
                                             const wxString& deps);
         wxString CreateSingleFileCompileCmd(CommandType et,
-                                            ProjectBuildTarget* target,
+                                            caProjectBuildTarget* target,
                                             ProjectFile* pf,
                                             const wxString& file,
                                             const wxString& object,
                                             const wxString& deps);
         void ConvertToMakefileFriendly(wxString& str, bool force = false);
     private:
-        void DoAppendCompilerOptions(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
-        void DoAppendLinkerOptions(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
-        void DoAppendLinkerLibs(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
-        void DoAppendIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
-        void DoAppendResourceIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
-        void DoAppendLibDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-L"), bool useGlobalOptions = false);
+        void DoAppendCompilerOptions(wxString& cmd, caProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
+        void DoAppendLinkerOptions(wxString& cmd, caProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
+        void DoAppendLinkerLibs(wxString& cmd, caProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
+        void DoAppendIncludeDirs(wxString& cmd, caProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
+        void DoAppendResourceIncludeDirs(wxString& cmd, caProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
+        void DoAppendLibDirs(wxString& cmd, caProjectBuildTarget* target = 0L, const wxString& prefix = _T("-L"), bool useGlobalOptions = false);
 
         void DoAddVarsSet(wxString& buffer, CustomVars& vars);
         void DoAddMakefileVars(wxString& buffer);
 
         void DoAddMakefileResources(wxString& buffer);
 
-        void DoAddMakefileCreateDirs(wxString& buffer, ProjectBuildTarget* target, bool obj, bool dep, bool bin);
+        void DoAddMakefileCreateDirs(wxString& buffer, caProjectBuildTarget* target, bool obj, bool dep, bool bin);
         void DoAddMakefileObjs(wxString& buffer);
         void DoAddMakefileIncludes(wxString& buffer);
         void DoAddMakefileLibs(wxString& buffer);
@@ -69,22 +69,22 @@ class MakefileGenerator
         void DoAddMakefileTarget_Depend(wxString& buffer);
         void DoAddMakefileTarget_Link(wxString& buffer);
         void DoAddMakefileTarget_Objs(wxString& buffer);
-        void DoGetMakefileIncludes(wxString& buffer, ProjectBuildTarget* target);
-        void DoGetMakefileLibDirs(wxString& buffer, ProjectBuildTarget* target);
-        void DoGetMakefileLibs(wxString& buffer, ProjectBuildTarget* target);
-        void DoGetMakefileCFlags(wxString& buffer, ProjectBuildTarget* target);
-        void DoGetMakefileLDFlags(wxString& buffer, ProjectBuildTarget* target);
+        void DoGetMakefileIncludes(wxString& buffer, caProjectBuildTarget* target);
+        void DoGetMakefileLibDirs(wxString& buffer, caProjectBuildTarget* target);
+        void DoGetMakefileLibs(wxString& buffer, caProjectBuildTarget* target);
+        void DoGetMakefileCFlags(wxString& buffer, caProjectBuildTarget* target);
+        void DoGetMakefileLDFlags(wxString& buffer, caProjectBuildTarget* target);
 
-        wxString GetObjectFile(ProjectFile* pf, ProjectBuildTarget* target);
-        wxString GetDependencyFile(ProjectFile* pf, ProjectBuildTarget* target);
-        void UpdateCompiler(ProjectBuildTarget* target = 0);
+        wxString GetObjectFile(ProjectFile* pf, caProjectBuildTarget* target);
+        wxString GetDependencyFile(ProjectFile* pf, caProjectBuildTarget* target);
+        void UpdateCompiler(caProjectBuildTarget* target = 0);
         void DoPrepareFiles();
         void DoPrepareValidTargets();
-        bool IsTargetValid(ProjectBuildTarget* target);
+        bool IsTargetValid(caProjectBuildTarget* target);
         void RecursiveCreateDir(wxString& buffer, const wxArrayString& subdirs, wxArrayString& guardList);
         wxString ReplaceCompilerMacros(CommandType et,
                                     const wxString& compilerVar,
-                                    ProjectBuildTarget* target,
+                                    caProjectBuildTarget* target,
                                     const wxString& file,
                                     const wxString& object,
                                     const wxString& deps);

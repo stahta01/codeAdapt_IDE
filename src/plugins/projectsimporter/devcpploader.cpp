@@ -151,7 +151,7 @@ bool DevCppLoader::Open(const wxString& filename)
     dev->SetPath(_T("/Project"));
 
     // set the target type
-    ProjectBuildTarget* target = m_pProject->GetBuildTarget(0);
+    caProjectBuildTarget* target = m_pProject->GetBuildTarget(0);
     dev->Read(_T("Type"), &typ, 0);
     target->SetTargetType(TargetType(typ));
 

@@ -10,7 +10,7 @@ class CompilerMINGWGenerator : public CompilerCommandGenerator
         CompilerMINGWGenerator();
         virtual ~CompilerMINGWGenerator();
     protected:
-        virtual wxString SetupIncludeDirs(Compiler* compiler, ProjectBuildTarget* target);
+        virtual wxString SetupIncludeDirs(Compiler* compiler, caProjectBuildTarget* target);
     private:
         wxString m_VerStr;
 };

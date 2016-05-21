@@ -42,7 +42,7 @@ function BeginWizard()
     Wizard.AddInfoPage(_T("PluginIntro"), intro_msg);
     Wizard.AddProjectPathPage();
     Wizard.AddPage(_T("PluginOptions"));
-    Wizard.AddPage(_T("PluginInfo"));
+    Wizard.AddPage(_T("caPluginInfo"));
     Wizard.AddGenericSingleChoiceListPage(_T("wxVersionPage"), _T("Please select the wxWidgets version you want to use."), _T("wxWidgets 2.6.x;wxWidgets 2.8.x"), WxVersion); // select wxwidgets version
     Wizard.AddCompilerPage(_T(""), _T("gcc*"), true, false);
 }

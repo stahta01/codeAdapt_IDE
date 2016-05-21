@@ -75,7 +75,7 @@ void MacrosManager::ReleaseMenu(wxMenuBar* menuBar)
 {
 }
 
-wxString MacrosManager::ReplaceMacros(const wxString& buffer, ProjectBuildTarget* target)
+wxString MacrosManager::ReplaceMacros(const wxString& buffer, caProjectBuildTarget* target)
 {
     wxString tmp = buffer;
     ReplaceMacros(tmp, target);
@@ -141,7 +141,7 @@ void MacrosManager::ClearProjectKeys()
     }
 }
 
-void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,ProjectBuildTarget* target)
+void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,caProjectBuildTarget* target)
 {
     if(!editor)
     {
@@ -221,7 +221,7 @@ void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,ProjectBuil
 
         for (int i = 0; i < project->GetBuildTargetsCount(); ++i)
         {
-            ProjectBuildTarget* target = project->GetBuildTarget(i);
+            caProjectBuildTarget* target = project->GetBuildTarget(i);
             if (!target)
                 continue;
             wxString title = target->GetTitle().Upper();
@@ -322,7 +322,7 @@ void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,ProjectBuil
 }
 
 
-void MacrosManager::ReplaceMacros(wxString& buffer, ProjectBuildTarget* target, bool subrequest)
+void MacrosManager::ReplaceMacros(wxString& buffer, caProjectBuildTarget* target, bool subrequest)
 {
     if (buffer.IsEmpty())
         return;
@@ -444,7 +444,7 @@ void MacrosManager::ReplaceMacros(wxString& buffer, ProjectBuildTarget* target, 
     }
 }
 
-wxString MacrosManager::EvalCondition(const wxString& in_cond, const wxString& true_clause, const wxString& false_clause, ProjectBuildTarget* target)
+wxString MacrosManager::EvalCondition(const wxString& in_cond, const wxString& true_clause, const wxString& false_clause, caProjectBuildTarget* target)
 {
     enum condition_codes {EQ = 1, LT = 2, GT = 4, NE = 8};
 

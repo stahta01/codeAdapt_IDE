@@ -9,7 +9,7 @@
 // forward decls;
 class wxMenuBar;
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class EditorBase;
 class UserVariableManager;
 
@@ -22,13 +22,13 @@ public:
     friend class Mgr<MacrosManager>;
     void CreateMenu(wxMenuBar* menuBar);
     void ReleaseMenu(wxMenuBar* menuBar);
-    void ReplaceMacros(wxString& buffer, ProjectBuildTarget* target = 0, bool subrequest = false);
-    wxString ReplaceMacros(const wxString& buffer, ProjectBuildTarget* target = 0);
+    void ReplaceMacros(wxString& buffer, caProjectBuildTarget* target = 0, bool subrequest = false);
+    wxString ReplaceMacros(const wxString& buffer, caProjectBuildTarget* target = 0);
     void ReplaceEnvVars(wxString& buffer){ ReplaceMacros(buffer); }  /* misnomer, should be ReplaceVariables */;
-    void RecalcVars(cbProject* project,EditorBase* editor,ProjectBuildTarget* target);
+    void RecalcVars(cbProject* project,EditorBase* editor,caProjectBuildTarget* target);
     void ClearProjectKeys();
 protected:
-    ProjectBuildTarget* m_lastTarget;
+    caProjectBuildTarget* m_lastTarget;
     cbProject* m_lastProject;
     EditorBase* m_lastEditor;
     wxFileName m_prjname;
@@ -48,7 +48,7 @@ public:
 private:
     MacrosManager();
     ~MacrosManager();
-    wxString EvalCondition(const wxString& cond, const wxString& true_clause, const wxString& false_clause, ProjectBuildTarget* target);
+    wxString EvalCondition(const wxString& cond, const wxString& true_clause, const wxString& false_clause, caProjectBuildTarget* target);
 };
 
 #endif // MACROSMANAGER_H

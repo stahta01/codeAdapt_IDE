@@ -211,7 +211,7 @@ void Wiz::Clear()
     m_pWizFilePathPanel = nullptr;
 }
 
-CompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
+caCompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
 {
     cbAssert(index >= 0 && index < GetCount());
 
@@ -320,7 +320,7 @@ CompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
     Finalize();
 
     // run wizard
-    CompileTargetBase* base = nullptr; // ret value
+    caCompileTargetBase* base = nullptr; // ret value
     if (m_pWizard->RunWizard(m_Pages[0]))
     {
         // ok, wizard done
@@ -337,7 +337,7 @@ CompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
     return base;
 }
 
-CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
+caCompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
 {
     cbProject* theproject = nullptr;
 
@@ -376,7 +376,7 @@ CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
     // create the targets
     if (GetWantDebug())
     {
-        ProjectBuildTarget* target = theproject->AddBuildTarget(GetDebugName());
+        caProjectBuildTarget* target = theproject->AddBuildTarget(GetDebugName());
         if (target)
         {
             target->SetCompilerID(GetCompilerID());
@@ -388,7 +388,7 @@ CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
 
     if (GetWantRelease())
     {
-        ProjectBuildTarget* target = theproject->AddBuildTarget(GetReleaseName());
+        caProjectBuildTarget* target = theproject->AddBuildTarget(GetReleaseName());
         if (target)
         {
             target->SetCompilerID(GetCompilerID());
@@ -402,7 +402,7 @@ CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
     // create a "default" target
     if (theproject->GetBuildTargetsCount() == 0)
     {
-        ProjectBuildTarget* target = theproject->AddBuildTarget(_T("default"));
+        caProjectBuildTarget* target = theproject->AddBuildTarget(_T("default"));
         if (target)
         {
             target->SetCompilerID(GetCompilerID());
@@ -538,7 +538,7 @@ CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
     return theproject;
 }
 
-CompileTargetBase* Wiz::RunTargetWizard(/*cb_unused*/ wxString* pFilename)
+caCompileTargetBase* Wiz::RunTargetWizard(/*cb_unused*/ wxString* pFilename)
 {
     cbProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
 
@@ -574,7 +574,7 @@ CompileTargetBase* Wiz::RunTargetWizard(/*cb_unused*/ wxString* pFilename)
         isDebug = false;
     }
 
-    ProjectBuildTarget* target = theproject->AddBuildTarget(targetName);
+    caProjectBuildTarget* target = theproject->AddBuildTarget(targetName);
     if (!target)
     {
         cbMessageBox(_("Failed to create build target!"), _("Error"), wxICON_ERROR);
@@ -668,7 +668,7 @@ CompileTargetBase* Wiz::RunTargetWizard(/*cb_unused*/ wxString* pFilename)
     return target;
 }
 
-CompileTargetBase* Wiz::RunFilesWizard(wxString* pFilename)
+caCompileTargetBase* Wiz::RunFilesWizard(wxString* pFilename)
 {
     try
     {
@@ -690,7 +690,7 @@ CompileTargetBase* Wiz::RunFilesWizard(wxString* pFilename)
     return nullptr;
 }
 
-CompileTargetBase* Wiz::RunCustomWizard(/*cb_unused*/ wxString* pFilename)
+caCompileTargetBase* Wiz::RunCustomWizard(/*cb_unused*/ wxString* pFilename)
 {
     try
     {

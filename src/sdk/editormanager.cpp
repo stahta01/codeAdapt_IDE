@@ -1001,7 +1001,7 @@ bool EditorManager::SwapActiveHeaderSource()
         // get targets include dirs
         for (int i = 0; i < project->GetBuildTargetsCount(); ++i)
         {
-            ProjectBuildTarget* target = project->GetBuildTarget(i);
+            caProjectBuildTarget* target = project->GetBuildTarget(i);
             if (target)
             {
                 for (unsigned int ti = 0; ti < target->GetIncludeDirs().GetCount(); ++ti)

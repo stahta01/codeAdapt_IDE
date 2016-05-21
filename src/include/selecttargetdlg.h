@@ -4,7 +4,7 @@
 #include <wx/dialog.h>
 
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 
 class SelectTargetDlg : public wxDialog
 {
@@ -14,7 +14,7 @@ class SelectTargetDlg : public wxDialog
 
 		void EndModal(int retCode);
 		int GetSelection() const { return m_Selected; }
-		ProjectBuildTarget* GetSelectionTarget();
+		caProjectBuildTarget* GetSelectionTarget();
 	private:
 		void OnListboxSelection(wxCommandEvent& event);
 		void OnListboxDClick(wxCommandEvent& event);

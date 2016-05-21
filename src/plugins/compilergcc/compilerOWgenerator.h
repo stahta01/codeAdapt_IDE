@@ -12,9 +12,9 @@ class CompilerOWGenerator : public CompilerCommandGenerator
     public:
         CompilerOWGenerator();
         virtual ~CompilerOWGenerator();
-        virtual wxString SetupLibrariesDirs(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupLinkerOptions(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupLinkLibraries(Compiler* compiler, ProjectBuildTarget* target);
+        virtual wxString SetupLibrariesDirs(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupLinkerOptions(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupLinkLibraries(Compiler* compiler, caProjectBuildTarget* target);
     protected:
     private:
         // This maps target type to wlink.exe options

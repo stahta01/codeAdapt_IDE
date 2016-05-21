@@ -80,16 +80,16 @@ class CompilerGCC : public caCompilerPlugin
         virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0); // offer for menu space by a module
         virtual bool BuildToolBar(wxToolBar* toolBar);
 
-        virtual int Run(ProjectBuildTarget* target = 0L);
+        virtual int Run(caProjectBuildTarget* target = 0L);
         virtual int Run(const wxString& target);
         virtual int RunSingleFile(const wxString& filename);
         virtual int Clean(const wxString& target);
-        virtual int Clean(ProjectBuildTarget* target = 0L);
-        virtual int DistClean(ProjectBuildTarget* target = 0L);
+        virtual int Clean(caProjectBuildTarget* target = 0L);
+        virtual int DistClean(caProjectBuildTarget* target = 0L);
         virtual int DistClean(const wxString& target);
-        virtual int Build(ProjectBuildTarget* target = 0L);
+        virtual int Build(caProjectBuildTarget* target = 0L);
         virtual int Build(const wxString& target);
-        virtual int Rebuild(ProjectBuildTarget* target = 0L);
+        virtual int Rebuild(caProjectBuildTarget* target = 0L);
         virtual int Rebuild(const wxString& target);
         virtual int CleanWorkspace(const wxString& target = wxEmptyString);
         virtual int BuildWorkspace(const wxString& target = wxEmptyString);
@@ -98,7 +98,7 @@ class CompilerGCC : public caCompilerPlugin
         virtual int KillProcess();
         virtual bool IsRunning() const;
         virtual int GetExitCode() const { return m_LastExitCode; }
-        virtual int Configure(cbProject* project, ProjectBuildTarget* target = 0L);
+        virtual int Configure(cbProject* project, caProjectBuildTarget* target = 0L);
 
         int GetConfigurationPriority() const { return 0; }
         int GetConfigurationGroup() const { return cgCompiler; }
@@ -168,7 +168,7 @@ class CompilerGCC : public caCompilerPlugin
         void DoRecreateTargetMenu();
         void DoUpdateTargetMenu(int targetIndex);
         FileTreeData* DoSwitchProjectTemporarily();
-        ProjectBuildTarget* DoAskForTarget();
+        caProjectBuildTarget* DoAskForTarget();
         int DoGUIAskForTarget();
         void ClearLog();
         bool CheckProject();
@@ -182,12 +182,12 @@ class CompilerGCC : public caCompilerPlugin
         void LogMessage(const wxString& message, CompilerLineType lt = cltNormal, LogTarget log = ltAll, bool forceErrorColour = false, bool isTitle = false, bool updateProgress = false);
         void SaveBuildLog();
         void InitBuildLog(bool workspaceBuild);
-        void PrintBanner(cbProject* prj = 0, ProjectBuildTarget* target = 0);
-        bool UseMake(ProjectBuildTarget* target = 0);
-        bool CompilerValid(ProjectBuildTarget* target = 0);
-        ProjectBuildTarget* GetBuildTargetForFile(ProjectFile* pf);
-        ProjectBuildTarget* GetBuildTargetForFile(const wxString& file);
-        wxString GetMakeCommandFor(MakeCommand cmd, cbProject* project, ProjectBuildTarget* target);
+        void PrintBanner(cbProject* prj = 0, caProjectBuildTarget* target = 0);
+        bool UseMake(caProjectBuildTarget* target = 0);
+        bool CompilerValid(caProjectBuildTarget* target = 0);
+        caProjectBuildTarget* GetBuildTargetForFile(ProjectFile* pf);
+        caProjectBuildTarget* GetBuildTargetForFile(const wxString& file);
+        wxString GetMakeCommandFor(MakeCommand cmd, cbProject* project, caProjectBuildTarget* target);
         int DoBuild();
         void CalculateWorkspaceDependencies(wxArrayInt& deps);
         void CalculateProjectDependencies(cbProject* prj, wxArrayInt& deps);
@@ -206,7 +206,7 @@ class CompilerGCC : public caCompilerPlugin
         void DoClean(const wxArrayString& commands);
 
         // active target, currently building project or active project
-        wxString GetCurrentCompilerID(ProjectBuildTarget* target);
+        wxString GetCurrentCompilerID(caProjectBuildTarget* target);
 
         // when a build is about to start, a preprocessing step runs
         // in PreprocessJob(), that fills m_BuildJobTargetsList with
@@ -267,7 +267,7 @@ class CompilerGCC : public caCompilerPlugin
         BuildState m_BuildState;
         BuildState m_NextBuildState;
         cbProject* m_pLastBuildingProject;
-        ProjectBuildTarget* m_pLastBuildingTarget;
+        caProjectBuildTarget* m_pLastBuildingTarget;
         // to decide if post-build steps should run
         bool m_RunTargetPostBuild;
         bool m_RunProjectPostBuild;

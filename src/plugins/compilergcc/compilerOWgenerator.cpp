@@ -22,7 +22,7 @@ CompilerOWGenerator::~CompilerOWGenerator()
     //dtor
 }
 
-wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxArrayString LibDirs = compiler->GetLibDirs();
     if (LibDirs.IsEmpty())
@@ -68,7 +68,7 @@ wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuil
     return Result;
 }
 
-wxString CompilerOWGenerator::SetupLinkerOptions(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerOWGenerator::SetupLinkerOptions(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString Temp, LinkerOptions, Result;
     wxArrayString ComLinkerOptions, OtherLinkerOptions, LinkerOptionsArr;
@@ -165,7 +165,7 @@ wxString CompilerOWGenerator::SetupLinkerOptions(Compiler* compiler, ProjectBuil
     return Result;
 }
 
-wxString CompilerOWGenerator::SetupLinkLibraries(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerOWGenerator::SetupLinkLibraries(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString Result;
     wxString targetStr, projectStr, compilerStr;

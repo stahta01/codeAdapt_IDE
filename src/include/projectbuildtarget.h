@@ -13,18 +13,18 @@
 #include "blockallocated.h"
 
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 
-WX_DEFINE_ARRAY(ProjectBuildTarget*, BuildTargets);
+WX_DEFINE_ARRAY(caProjectBuildTarget*, BuildTargets);
 
 /** Represents a Code::Blocks project build target. */
-class DLLIMPORT ProjectBuildTarget : public BlockAllocated<ProjectBuildTarget, 1000>, public CompileTargetBase
+class DLLIMPORT caProjectBuildTarget : public BlockAllocated<caProjectBuildTarget, 1000>, public caCompileTargetBase
 {
 	public:
 		/// Constructor
-		ProjectBuildTarget(cbProject* parentProject);
+		caProjectBuildTarget(cbProject* parentProject);
 		/// Destructor
-		~ProjectBuildTarget();
+		~caProjectBuildTarget();
 
         /** @return The target's parent project. */
         virtual cbProject* GetParentProject();
@@ -104,7 +104,7 @@ class DLLIMPORT ProjectBuildTarget : public BlockAllocated<ProjectBuildTarget, 1
           * not to add a target more than once.
           * @param target The build target to add as a dependency.
           */
-        virtual void AddTargetDep(ProjectBuildTarget* target);
+        virtual void AddTargetDep(caProjectBuildTarget* target);
 
         /** @return A list of dependency targets of this target. */
         virtual BuildTargets& GetTargetDeps();

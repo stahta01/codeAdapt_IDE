@@ -253,7 +253,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
             wxString msg = _("A plugin with the same name is already installed.\n");
             if (!version.IsEmpty())
             {
-                const PluginInfo* existingInfo = GetPluginInfo(existingPlugin);
+                const caPluginInfo* existingInfo = GetPluginInfo(existingPlugin);
                 if (CompareVersions(version, existingInfo->version) < 0)
                 {
                     msg = _("The plugin you are trying to install, is older "
@@ -355,7 +355,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
     ScanForPlugins(pluginDir);
     LoadAllPlugins();
     cbPlugin* plugin = FindPluginByFileName(pluginFilename);
-    const PluginInfo* info = GetPluginInfo(plugin);
+    const caPluginInfo* info = GetPluginInfo(plugin);
     if (!plugin || !info)
     {
         Manager::Get()->GetLogManager()->DebugLog(_T("Failed"));
@@ -691,7 +691,7 @@ void PluginManager::RegisterPlugin(const wxString& name,
         return; // yes, already loaded
 
     // read manifest file for plugin
-    PluginInfo info;
+    caPluginInfo info;
     if (!ReadManifestFile(m_CurrentlyLoadingFilename, name, &info) ||
         info.name.IsEmpty())
     {
@@ -736,7 +736,7 @@ void PluginManager::RegisterPlugin(const wxString& name,
 
 bool PluginManager::ReadManifestFile(const wxString& pluginFilename,
                                     const wxString& pluginName,
-                                    PluginInfo* infoOut)
+                                    caPluginInfo* infoOut)
 {
     if (!m_pCurrentlyLoadingManifestDoc)
     {
@@ -1213,7 +1213,7 @@ cbPlugin* PluginManager::FindPluginByFileName(const wxString& pluginFileName)
     return 0;
 }
 
-const PluginInfo* PluginManager::GetPluginInfo(const wxString& pluginName)
+const caPluginInfo* PluginManager::GetPluginInfo(const wxString& pluginName)
 {
     PluginElement* plugElem = FindElementByName(pluginName);
     if (plugElem && plugElem->info.name == pluginName)
@@ -1222,7 +1222,7 @@ const PluginInfo* PluginManager::GetPluginInfo(const wxString& pluginName)
     return 0;
 }
 
-const PluginInfo* PluginManager::GetPluginInfo(cbPlugin* plugin)
+const caPluginInfo* PluginManager::GetPluginInfo(cbPlugin* plugin)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
@@ -1362,7 +1362,7 @@ PluginsArray PluginManager::GetOffersFor(PluginType type)
             if (type == ptMime)
             {
                 // default MIME handler?
-                if (((cbMimePlugin*)plug)->HandlesEverything())
+                if (((caMimePlugin*)plug)->HandlesEverything())
                     dflt = plug;
                 else
                     arr.Add(plug);
@@ -1417,12 +1417,12 @@ void PluginManager::OnScriptModuleMenu(wxCommandEvent& event)
     ScriptBindings::ScriptPluginWrapper::OnScriptModuleMenu(event.GetId());
 }
 
-cbMimePlugin* PluginManager::GetMIMEHandlerForFile(const wxString& filename)
+caMimePlugin* PluginManager::GetMIMEHandlerForFile(const wxString& filename)
 {
     PluginsArray mimes = GetMimeOffers();
     for (unsigned int i = 0; i < mimes.GetCount(); ++i)
     {
-        cbMimePlugin* plugin = (cbMimePlugin*)mimes[i];
+        caMimePlugin* plugin = (caMimePlugin*)mimes[i];
         if (plugin && plugin->CanHandleFile(filename))
             return plugin;
     }

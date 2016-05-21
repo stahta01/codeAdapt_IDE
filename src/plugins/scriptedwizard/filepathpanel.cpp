@@ -114,7 +114,7 @@ FilePathPanel::FilePathPanel(wxWindow* parent,wxWindowID id) :
         clbTargets->Clear();
         for (int i = 0; i < prj->GetBuildTargetsCount(); ++i)
         {
-            ProjectBuildTarget* bt = prj->GetBuildTarget(i);
+            caProjectBuildTarget* bt = prj->GetBuildTarget(i);
             if (bt)
                 clbTargets->Append(bt->GetTitle());
         }

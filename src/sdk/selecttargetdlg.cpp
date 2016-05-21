@@ -58,7 +58,7 @@ SelectTargetDlg::SelectTargetDlg(wxWindow* parent, cbProject* project, int selec
 	list->Clear();
 	for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
 	{
-		ProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
+		caProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
 		list->Append(target->GetTitle());
 	}
 	if (selected != -1)
@@ -78,7 +78,7 @@ SelectTargetDlg::~SelectTargetDlg()
 void SelectTargetDlg::UpdateSelected()
 {
     wxString name = XRCCTRL(*this, "lstItems", wxListBox)->GetStringSelection();
-	ProjectBuildTarget* target = m_pProject->GetBuildTarget(name);
+	caProjectBuildTarget* target = m_pProject->GetBuildTarget(name);
 	if (target)
 	{
         XRCCTRL(*this, "chkSetAsDefaultExec", wxCheckBox)->SetValue(name == m_pProject->GetDefaultExecuteTarget());
@@ -88,7 +88,7 @@ void SelectTargetDlg::UpdateSelected()
 	XRCCTRL(*this, "wxID_OK", wxButton)->Enable(target);
 } // end of UpdateSelected
 
-ProjectBuildTarget* SelectTargetDlg::GetSelectionTarget()
+caProjectBuildTarget* SelectTargetDlg::GetSelectionTarget()
 {
     return m_pProject->GetBuildTarget(m_Selected);
 }
@@ -143,7 +143,7 @@ void SelectTargetDlg::EndModal(int retCode)
     if (retCode == wxID_OK)
     {
         m_Selected = XRCCTRL(*this, "lstItems", wxListBox)->GetSelection();
-        ProjectBuildTarget* target = m_pProject->GetBuildTarget(m_Selected);
+        caProjectBuildTarget* target = m_pProject->GetBuildTarget(m_Selected);
         if (target)
         {
             // Search all '\n' in the program-parameters and replace them by

@@ -10,9 +10,9 @@
 #include "manager.h"
 
 //forward decls
-struct PluginInfo;
+struct caPluginInfo;
 class cbPlugin;
-class cbMimePlugin;
+class caMimePlugin;
 class cbConfigurationPanel;
 class cbProject;
 class wxDynamicLibrary;
@@ -28,7 +28,7 @@ typedef cbPlugin*(*CreatePluginProc)();
 typedef void(*FreePluginProc)(cbPlugin*);
 
 /** Information about the plugin */
-struct PluginInfo
+struct caPluginInfo
 {
     wxString name;
     wxString title;
@@ -44,7 +44,7 @@ struct PluginInfo
 // struct with info about each pluing
 struct PluginElement
 {
-    PluginInfo info; // plugin's info struct
+    caPluginInfo info; // plugin's info struct
     wxString fileName; // plugin's filename
     wxDynamicLibrary* library; // plugin's library
     FreePluginProc freeProc; // plugin's release function pointer
@@ -94,8 +94,8 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         bool UninstallPlugin(cbPlugin* plugin, bool removeFiles = true);
         bool ExportPlugin(cbPlugin* plugin, const wxString& filename);
 
-        const PluginInfo* GetPluginInfo(const wxString& pluginName);
-        const PluginInfo* GetPluginInfo(cbPlugin* plugin);
+        const caPluginInfo* GetPluginInfo(const wxString& pluginName);
+        const caPluginInfo* GetPluginInfo(cbPlugin* plugin);
 
         PluginElementsArray& GetPlugins(){ return m_Plugins; }
 
@@ -110,7 +110,7 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         PluginsArray GetCodeCompletionOffers();
         PluginsArray GetOffersFor(PluginType type);
         void AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0);
-        cbMimePlugin* GetMIMEHandlerForFile(const wxString& filename);
+        caMimePlugin* GetMIMEHandlerForFile(const wxString& filename);
         void GetConfigurationPanels(int group, wxWindow* parent, ConfigurationPanelsArray& arrayToFill);
         void GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill);
         int Configure();
@@ -119,7 +119,7 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         void NotifyPlugins(CodeBlocksEvent& event);
         void NotifyPlugins(CodeBlocksDockEvent& event);
         void NotifyPlugins(CodeBlocksLayoutEvent& event);
-        
+
         static void SetSafeMode(bool on){ s_SafeMode = on; }
         static bool GetSafeMode(){ return s_SafeMode; }
     private:
@@ -132,7 +132,7 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         /// @return True if the plugin should be loaded, false if not.
         bool ReadManifestFile(const wxString& pluginFilename,
                                 const wxString& pluginName = wxEmptyString,
-                                PluginInfo* infoOut = 0);
+                                caPluginInfo* infoOut = 0);
 		void ReadExtraFilesFromManifestFile(const wxString& pluginFilename,
 											wxArrayString& extraFiles);
         bool ExtractFile(const wxString& bundlename,
@@ -167,12 +167,12 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
             CreatePluginProc createProc;
             FreePluginProc freeProc;
             PluginSDKVersionProc versionProc;
-            PluginInfo info;
+            caPluginInfo info;
         };
         std::vector<PluginRegistration> m_RegisteredPlugins;
-        
+
         static bool s_SafeMode;
-        
+
 		DECLARE_EVENT_TABLE()
 };
 

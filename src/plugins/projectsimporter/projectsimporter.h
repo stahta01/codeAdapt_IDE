@@ -12,7 +12,7 @@
 
 #include "api/plugin.h" // the base class we 're inheriting
 
-class ProjectsImporter : public cbMimePlugin
+class ProjectsImporter : public caMimePlugin
 {
     public:
         ProjectsImporter();

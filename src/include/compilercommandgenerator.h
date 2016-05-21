@@ -9,12 +9,12 @@
 #include "compiletargetbase.h"
 
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class ProjectFile;
 class Compiler;
 
-typedef std::map<ProjectBuildTarget*, wxString> OptionsMap;
-typedef std::map<ProjectBuildTarget*, wxArrayString> SearchDirsMap;
+typedef std::map<caProjectBuildTarget*, wxString> OptionsMap;
+typedef std::map<caProjectBuildTarget*, wxArrayString> SearchDirsMap;
 typedef std::map<wxString, wxString> BackticksMap;
 
 /** Generate command-lines needed to produce a build.
@@ -34,7 +34,7 @@ class DLLIMPORT CompilerCommandGenerator
 
         /** Get the command line to compile/link the specific file. */
         virtual void GenerateCommandLine(wxString& macro,
-                                        ProjectBuildTarget* target,
+                                        caProjectBuildTarget* target,
                                         ProjectFile* pf,
                                         const wxString& file,
                                         const wxString& object,
@@ -49,8 +49,8 @@ class DLLIMPORT CompilerCommandGenerator
 		  * build-script include dirs.
 		  * @note This is only valid after Init() has been called.
 		  */
-		virtual const wxArrayString& GetCompilerSearchDirs(ProjectBuildTarget* target);
-		
+		virtual const wxArrayString& GetCompilerSearchDirs(caProjectBuildTarget* target);
+
 		/** @brief Get the full linker dirs used in the actual command line.
 		  *
 		  * These are the actual linker dirs that will be used for building
@@ -59,19 +59,19 @@ class DLLIMPORT CompilerCommandGenerator
 		  * build-script linker dirs.
 		  * @note This is only valid after Init() has been called.
 		  */
-		virtual const wxArrayString& GetLinkerSearchDirs(ProjectBuildTarget* target);
+		virtual const wxArrayString& GetLinkerSearchDirs(caProjectBuildTarget* target);
     protected:
-        virtual void DoBuildScripts(cbProject* project, CompileTargetBase* target, const wxString& funcName);
-        virtual wxString GetOrderedOptions(const ProjectBuildTarget* target, OptionsRelationType rel, const wxString& project_options, const wxString& target_options);
-        virtual wxArrayString GetOrderedOptions(const ProjectBuildTarget* target, OptionsRelationType rel, const wxArrayString& project_options, const wxArrayString& target_options);
-        virtual wxString SetupOutputFilenames(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupIncludeDirs(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupLibrariesDirs(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupResourceIncludeDirs(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupCompilerOptions(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupLinkerOptions(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupLinkLibraries(Compiler* compiler, ProjectBuildTarget* target);
-        virtual wxString SetupResourceCompilerOptions(Compiler* compiler, ProjectBuildTarget* target);
+        virtual void DoBuildScripts(cbProject* project, caCompileTargetBase* target, const wxString& funcName);
+        virtual wxString GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxString& project_options, const wxString& target_options);
+        virtual wxArrayString GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxArrayString& project_options, const wxArrayString& target_options);
+        virtual wxString SetupOutputFilenames(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupIncludeDirs(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupLibrariesDirs(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupResourceIncludeDirs(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupCompilerOptions(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupLinkerOptions(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupLinkLibraries(Compiler* compiler, caProjectBuildTarget* target);
+        virtual wxString SetupResourceCompilerOptions(Compiler* compiler, caProjectBuildTarget* target);
         virtual wxString FixupLinkLibraries(Compiler* compiler, const wxString& lib);
         virtual void FixPathSeparators(Compiler* compiler, wxString& inAndOut);
 
@@ -92,7 +92,7 @@ class DLLIMPORT CompilerCommandGenerator
 		SearchDirsMap m_LinkerSearchDirs; ///< array of final linker search dirs, per-target
     private:
         wxString ExpandBackticks(wxString& str);
-		void SearchDirsFromBackticks(Compiler* compiler, ProjectBuildTarget* target, const wxString& btOutput);
+		void SearchDirsFromBackticks(Compiler* compiler, caProjectBuildTarget* target, const wxString& btOutput);
         BackticksMap m_Backticks;
         wxArrayString m_NotLoadedScripts;
         wxArrayString m_ScriptsWithErrors;

@@ -64,8 +64,8 @@ void MSVCWorkspaceBase::addConfigurationMatching(const wxString& projectID, cons
 void MSVCWorkspaceBase::updateProjects() {
     HashProjects::iterator projIt;
     HashProjects::iterator depIt;
-    ProjectBuildTarget* targetProj = 0;
-    ProjectBuildTarget* targetDep = 0;
+    caProjectBuildTarget* targetProj = 0;
+    caProjectBuildTarget* targetDep = 0;
     ProjectRecord proj;
     ProjectRecord dep;
     unsigned int i;

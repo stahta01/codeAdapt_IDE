@@ -227,7 +227,7 @@ bool MSVCLoader::ParseConfiguration(int index)
         return false; // error opening file???
 
     // create new target
-    ProjectBuildTarget* bt = m_pProject->AddBuildTarget(m_Configurations[index]);
+    caProjectBuildTarget* bt = m_pProject->AddBuildTarget(m_Configurations[index]);
     if (!bt)
         return false;
     bt->SetCompilerID(m_pProject->GetCompilerID());
@@ -440,7 +440,7 @@ bool MSVCLoader::ParseSourceFiles()
     return true;
 }
 
-void MSVCLoader::ProcessCompilerOptions(ProjectBuildTarget* target, const wxString& opts)
+void MSVCLoader::ProcessCompilerOptions(caProjectBuildTarget* target, const wxString& opts)
 {
     wxArrayString array;
     array = OptStringTokeniser(opts);
@@ -541,7 +541,7 @@ void MSVCLoader::ProcessCompilerOptions(ProjectBuildTarget* target, const wxStri
     }
 }
 
-void MSVCLoader::ProcessLinkerOptions(ProjectBuildTarget* target, const wxString& opts)
+void MSVCLoader::ProcessLinkerOptions(caProjectBuildTarget* target, const wxString& opts)
 {
     wxArrayString array;
     array = OptStringTokeniser(opts);
@@ -650,7 +650,7 @@ void MSVCLoader::ProcessLinkerOptions(ProjectBuildTarget* target, const wxString
     }
 }
 
-void MSVCLoader::ProcessResourceCompilerOptions(ProjectBuildTarget* target, const wxString& opts)
+void MSVCLoader::ProcessResourceCompilerOptions(caProjectBuildTarget* target, const wxString& opts)
 {
     wxArrayString array;
     array = OptStringTokeniser(opts);

@@ -92,7 +92,7 @@ void CompilerCommandGenerator::Init(cbProject* project)
 
     // backup project settings
     bool projectWasModified = project->GetModified();
-    CompileTargetBase backup = *(CompileTargetBase*)project;
+    caCompileTargetBase backup = *(caCompileTargetBase*)project;
 
     // Invoke plugins
     CodeBlocksEvent evt(cbEVT_COMPILER_SET_BUILD_OPTIONS, 0, project);
@@ -104,7 +104,7 @@ void CompilerCommandGenerator::Init(cbProject* project)
     // for each target
     for (int i = 0; i < project->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* target = project->GetBuildTarget(i);
+        caProjectBuildTarget* target = project->GetBuildTarget(i);
 
         // access the compiler used for this target
         compiler = CompilerFactory::GetCompiler(target->GetCompilerID());
@@ -128,7 +128,7 @@ void CompilerCommandGenerator::Init(cbProject* project)
         }
 
         // backup target settings
-        CompileTargetBase backuptarget = *(CompileTargetBase*)target;
+        caCompileTargetBase backuptarget = *(caCompileTargetBase*)target;
 
         // invoke plugins
         CodeBlocksEvent evt(cbEVT_COMPILER_SET_BUILD_OPTIONS, 0, project);
@@ -148,11 +148,11 @@ void CompilerCommandGenerator::Init(cbProject* project)
         m_RCFlags[target] = SetupResourceCompilerOptions(compiler, target);
 
         // restore target settings
-        *(CompileTargetBase*)target = backuptarget;
+        *(caCompileTargetBase*)target = backuptarget;
     }
 
     // restore project settings
-    *(CompileTargetBase*)project = backup;
+    *(caCompileTargetBase*)project = backup;
     project->SetModified(projectWasModified);
 
     // let's display all script errors now in a batch
@@ -189,7 +189,7 @@ void CompilerCommandGenerator::Init(cbProject* project)
 }
 
 void CompilerCommandGenerator::GenerateCommandLine(wxString& macro,
-                                                    ProjectBuildTarget* target,
+                                                    caProjectBuildTarget* target,
                                                     ProjectFile* pf,
                                                     const wxString& file,
                                                     const wxString& object,
@@ -327,7 +327,7 @@ void CompilerCommandGenerator::GenerateCommandLine(wxString& macro,
     macro.Replace(_T("$exe_name"), tmpOutFname.GetName());
     macro.Replace(_T("$exe_dir"), tmpOutFname.GetPath());
     macro.Replace(_T("$exe_ext"), tmpOutFname.GetExt());
-    
+
     macro.Replace(_T("$link_resobjects"), tmpDeps);
     macro.Replace(_T("$link_objects"), tmpObject);
     macro.Replace(_T("$link_flat_objects"), tmpFlatObject);
@@ -362,9 +362,9 @@ void CompilerCommandGenerator::GenerateCommandLine(wxString& macro,
 }
 
 /// Apply pre-build scripts for @c base.
-void CompilerCommandGenerator::DoBuildScripts(cbProject* project, CompileTargetBase* target, const wxString& funcName)
+void CompilerCommandGenerator::DoBuildScripts(cbProject* project, caCompileTargetBase* target, const wxString& funcName)
 {
-	ProjectBuildTarget* bt = dynamic_cast<ProjectBuildTarget*>(target);
+	caProjectBuildTarget* bt = dynamic_cast<caProjectBuildTarget*>(target);
     static const wxString clearout_buildscripts = _T("SetBuildOptions <- null;");
     const wxArrayString& scripts = target->GetBuildScripts();
     for (size_t i = 0; i < scripts.GetCount(); ++i)
@@ -422,7 +422,7 @@ void CompilerCommandGenerator::FixPathSeparators(Compiler* compiler, wxString& i
 }
 
 /// Setup output filename for build target.
-wxString CompilerCommandGenerator::SetupOutputFilenames(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupOutputFilenames(Compiler* compiler, caProjectBuildTarget* target)
 {
     if (!target)
         return wxEmptyString;
@@ -470,7 +470,7 @@ wxString CompilerCommandGenerator::SetupOutputFilenames(Compiler* compiler, Proj
 }
 
 /// Setup compiler include dirs for build target.
-wxString CompilerCommandGenerator::SetupIncludeDirs(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupIncludeDirs(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -540,7 +540,7 @@ wxString CompilerCommandGenerator::SetupIncludeDirs(Compiler* compiler, ProjectB
 }
 
 /// Setup linker include dirs for build target.
-wxString CompilerCommandGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupLibrariesDirs(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -611,7 +611,7 @@ wxString CompilerCommandGenerator::SetupLibrariesDirs(Compiler* compiler, Projec
 }
 
 /// Setup resource compiler include dirs for build target.
-wxString CompilerCommandGenerator::SetupResourceIncludeDirs(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupResourceIncludeDirs(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -661,7 +661,7 @@ wxString CompilerCommandGenerator::SetupResourceIncludeDirs(Compiler* compiler, 
 }
 
 /// Setup compiler flags for build target.
-wxString CompilerCommandGenerator::SetupCompilerOptions(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupCompilerOptions(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -688,7 +688,7 @@ wxString CompilerCommandGenerator::SetupCompilerOptions(Compiler* compiler, Proj
 }
 
 /// Setup linker flags for build target.
-wxString CompilerCommandGenerator::SetupLinkerOptions(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupLinkerOptions(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -763,7 +763,7 @@ wxString CompilerCommandGenerator::FixupLinkLibraries(Compiler* compiler, const 
 }
 
 /// Setup link libraries for build target.
-wxString CompilerCommandGenerator::SetupLinkLibraries(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupLinkLibraries(Compiler* compiler, caProjectBuildTarget* target)
 {
     wxString result;
 
@@ -799,13 +799,13 @@ wxString CompilerCommandGenerator::SetupLinkLibraries(Compiler* compiler, Projec
 } // end of SetupLinkLibraries
 
 /// Setup resource compiler flags for build target.
-wxString CompilerCommandGenerator::SetupResourceCompilerOptions(Compiler* compiler, ProjectBuildTarget* target)
+wxString CompilerCommandGenerator::SetupResourceCompilerOptions(Compiler* compiler, caProjectBuildTarget* target)
 {
     // resource compiler options are not implemented in C::B yet
     return wxEmptyString;
 }
 
-const wxArrayString& CompilerCommandGenerator::GetCompilerSearchDirs(ProjectBuildTarget* target)
+const wxArrayString& CompilerCommandGenerator::GetCompilerSearchDirs(caProjectBuildTarget* target)
 {
 	static wxArrayString retIfError;
 	retIfError.Clear();
@@ -817,7 +817,7 @@ const wxArrayString& CompilerCommandGenerator::GetCompilerSearchDirs(ProjectBuil
 	return it->second;
 }
 
-const wxArrayString& CompilerCommandGenerator::GetLinkerSearchDirs(ProjectBuildTarget* target)
+const wxArrayString& CompilerCommandGenerator::GetLinkerSearchDirs(caProjectBuildTarget* target)
 {
 	static wxArrayString retIfError;
 	retIfError.Clear();
@@ -833,7 +833,7 @@ const wxArrayString& CompilerCommandGenerator::GetLinkerSearchDirs(ProjectBuildT
   * Depending on the order defined for the build target, it concatenates
   * @c project_options with @c target_options and returns the result.
   */
-wxString CompilerCommandGenerator::GetOrderedOptions(const ProjectBuildTarget* target, OptionsRelationType rel, const wxString& project_options, const wxString& target_options)
+wxString CompilerCommandGenerator::GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxString& project_options, const wxString& target_options)
 {
     wxString result;
     OptionsRelation relation = target->GetOptionRelation(rel);
@@ -859,7 +859,7 @@ wxString CompilerCommandGenerator::GetOrderedOptions(const ProjectBuildTarget* t
   * Depending on the order defined for the build target, it concatenates
   * @c project_options with @c target_options and returns the result.
   */
-wxArrayString CompilerCommandGenerator::GetOrderedOptions(const ProjectBuildTarget* target, OptionsRelationType rel, const wxArrayString& project_options, const wxArrayString& target_options)
+wxArrayString CompilerCommandGenerator::GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxArrayString& project_options, const wxArrayString& target_options)
 {
     wxArrayString result;
     OptionsRelation relation = target->GetOptionRelation(rel);
@@ -944,7 +944,7 @@ wxString CompilerCommandGenerator::ExpandBackticks(wxString& str)
 }
 
 // parse the result of a backticked expression for compiler/linker search dirs
-void CompilerCommandGenerator::SearchDirsFromBackticks(Compiler* compiler, ProjectBuildTarget* target, const wxString& btOutput)
+void CompilerCommandGenerator::SearchDirsFromBackticks(Compiler* compiler, caProjectBuildTarget* target, const wxString& btOutput)
 {
 	if (btOutput.IsEmpty())
 		return;

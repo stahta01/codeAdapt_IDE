@@ -244,7 +244,7 @@ void Compiler::Init(cbProject* project)
 }
 
 void Compiler::GenerateCommandLine(wxString& macro,
-                                    ProjectBuildTarget* target,
+                                    caProjectBuildTarget* target,
                                     ProjectFile* pf,
                                     const wxString& file,
                                     const wxString& object,
@@ -256,7 +256,7 @@ void Compiler::GenerateCommandLine(wxString& macro,
     m_pGenerator->GenerateCommandLine(macro, target, pf, file, object, FlatObject, deps);
 }
 
-const wxArrayString& Compiler::GetCompilerSearchDirs(ProjectBuildTarget* target)
+const wxArrayString& Compiler::GetCompilerSearchDirs(caProjectBuildTarget* target)
 {
     static wxArrayString retIfError;
     retIfError.Clear();
@@ -266,7 +266,7 @@ const wxArrayString& Compiler::GetCompilerSearchDirs(ProjectBuildTarget* target)
     return m_pGenerator->GetCompilerSearchDirs(target);
 }
 
-const wxArrayString& Compiler::GetLinkerSearchDirs(ProjectBuildTarget* target)
+const wxArrayString& Compiler::GetLinkerSearchDirs(caProjectBuildTarget* target)
 {
     static wxArrayString retIfError;
     retIfError.Clear();
@@ -280,7 +280,7 @@ const wxString& Compiler::GetCommand(CommandType ct, const wxString& fileExtensi
 {
 	size_t catchAll = 0;
 	const CompilerToolsVector& vec = m_Commands[ct];
-	
+
 	if (!fileExtension.IsEmpty())
 	{
 		for (size_t i = 0; i < vec.size(); ++i)
@@ -306,7 +306,7 @@ const CompilerTool& Compiler::GetCompilerTool(CommandType ct, const wxString& fi
 {
 	size_t catchAll = 0;
 	const CompilerToolsVector& vec = m_Commands[ct];
-	
+
 	if (!fileExtension.IsEmpty())
 	{
 		for (size_t i = 0; i < vec.size(); ++i)
@@ -599,7 +599,7 @@ void Compiler::LoadSettings(const wxString& baseKey)
     			while (index >= m_Commands[i].size())
 					m_Commands[i].push_back(CompilerTool());
 				CompilerTool& tool = m_Commands[i][index];
-				
+
 				wxString key = wxString::Format(_T("%s/macros/%s/tool%d/"), tmp.c_str(), CommandTypeDescriptions[i].c_str(), index);
 				tool.command = cfg->Read(key + _T("command"));
 				tool.extensions = cfg->ReadArrayString(key + _T("extensions"));

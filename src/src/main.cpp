@@ -782,7 +782,7 @@ void MainFrame::PluginsUpdated(cbPlugin* plugin, int status)
     for (unsigned int i = 0; i < plugins.GetCount(); ++i)
     {
         cbPlugin* plug = plugins[i]->plugin;
-        const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plug);
+        const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plug);
         if (!info)
             continue;
 
@@ -1014,7 +1014,7 @@ wxMenuItem* MainFrame::AddPluginInMenus(wxMenu* menu, cbPlugin* plugin, wxObject
     if (!plugin || !menu)
         return item;
 
-    const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
+    const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
     if (!info)
         return 0;
 
@@ -1384,7 +1384,7 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
             }
         }
 
-        const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
+        const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
         if (!info)
             cbThrow(_T("No plugin info?!?"));
 
@@ -1512,7 +1512,7 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
         //
         default:
         {
-            cbMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
+            caMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
             // warn user that "Files extension handler" is disabled
             if (!plugin)
             {
@@ -2143,7 +2143,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
     wxString pluginName = m_PluginIDsMap[event.GetId()];
     if (!pluginName.IsEmpty())
     {
-        const PluginInfo* pi = Manager::Get()->GetPluginManager()->GetPluginInfo(pluginName);
+        const caPluginInfo* pi = Manager::Get()->GetPluginManager()->GetPluginInfo(pluginName);
         if (!pi)
         {
             Manager::Get()->GetLogManager()->DebugLog(_T("No plugin info for ") + pluginName);
@@ -4006,7 +4006,7 @@ void MainFrame::OnPluginLoaded(CodeBlocksEvent& event)
     if (plug)
     {
         DoAddPlugin(plug);
-        const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plug);
+        const caPluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plug);
         wxString msg = info ? info->title : wxString(_("<Unknown plugin>"));
         Manager::Get()->GetLogManager()->DebugLog(F(_T("%s plugin activated"), msg.c_str()));
     }

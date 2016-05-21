@@ -37,7 +37,7 @@ BEGIN_EVENT_TABLE(ExternalDepsDlg, wxDialog)
     EVT_BUTTON(XRCID("btnDelExternal"), ExternalDepsDlg::OnDelExternal)
 END_EVENT_TABLE()
 
-ExternalDepsDlg::ExternalDepsDlg(wxWindow* parent, cbProject* project, ProjectBuildTarget* target)
+ExternalDepsDlg::ExternalDepsDlg(wxWindow* parent, cbProject* project, caProjectBuildTarget* target)
     : m_pProject(project),
     m_pTarget(target)
 {

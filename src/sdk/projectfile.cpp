@@ -79,11 +79,11 @@ void ProjectFile::AddBuildTarget(const wxString& targetName)
     // add this file to the target's list of files
     if (project)
     {
-        ProjectBuildTarget* target = project->GetBuildTarget(targetName);
+        caProjectBuildTarget* target = project->GetBuildTarget(targetName);
         if (target && !target->m_Files.Find(this))
             target->m_Files.Append(this);
     }
-    
+
     // also do this for auto-generated files
     for (size_t i = 0; i < generatedFiles.size(); ++i)
 		generatedFiles[i]->AddBuildTarget(targetName);
@@ -107,7 +107,7 @@ void ProjectFile::RemoveBuildTarget(const wxString& targetName)
     // remove this file from the target's list of files
     if (project)
     {
-        ProjectBuildTarget* target = project->GetBuildTarget(targetName);
+        caProjectBuildTarget* target = project->GetBuildTarget(targetName);
         if (target)
         {
             wxFilesListNode* node = target->m_Files.Find(this);
@@ -215,7 +215,7 @@ void ProjectFile::SetObjName(const wxString& name)
 }
 
 // map target to pfDetails
-void ProjectFile::UpdateFileDetails(ProjectBuildTarget* target)
+void ProjectFile::UpdateFileDetails(caProjectBuildTarget* target)
 {
     if (!project)
         return;
@@ -232,7 +232,7 @@ void ProjectFile::UpdateFileDetails(ProjectBuildTarget* target)
         int tcount = project->GetBuildTargetsCount();
         for (int x = 0; x < tcount; ++x)
         {
-            ProjectBuildTarget* bt = project->GetBuildTarget(x);
+            caProjectBuildTarget* bt = project->GetBuildTarget(x);
             DoUpdateFileDetails(bt);
         }
     }
@@ -240,7 +240,7 @@ void ProjectFile::UpdateFileDetails(ProjectBuildTarget* target)
         DoUpdateFileDetails(target);
 }
 
-void ProjectFile::DoUpdateFileDetails(ProjectBuildTarget* target)
+void ProjectFile::DoUpdateFileDetails(caProjectBuildTarget* target)
 {
     // if we don't belong in this target, abort
     if (!target || buildTargets.Index(target->GetTitle()) == wxNOT_FOUND)
@@ -256,7 +256,7 @@ void ProjectFile::DoUpdateFileDetails(ProjectBuildTarget* target)
     }
 }
 
-const pfDetails& ProjectFile::GetFileDetails(ProjectBuildTarget* target)
+const pfDetails& ProjectFile::GetFileDetails(caProjectBuildTarget* target)
 {
     pfDetails* pfd = m_PFDMap[target];
     if (!pfd)
@@ -310,12 +310,12 @@ wxString ProjectFile::GetCustomBuildCommand(const wxString& compilerId)
 // pfDetails
 ////////////////////////////////////////////////////////////////////////////////
 
-pfDetails::pfDetails(ProjectBuildTarget* target, ProjectFile* pf)
+pfDetails::pfDetails(caProjectBuildTarget* target, ProjectFile* pf)
 {
     Update(target, pf);
 }
 
-void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
+void pfDetails::Update(caProjectBuildTarget* target, ProjectFile* pf)
 {
     wxString sep = wxT_2('/');
     wxFileName tmp;

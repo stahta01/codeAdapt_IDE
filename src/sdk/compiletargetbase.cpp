@@ -37,7 +37,7 @@
 
 #include "filefilters.h"
 
-CompileTargetBase::CompileTargetBase()
+caCompileTargetBase::caCompileTargetBase()
     : m_TargetType(ttExecutable),
     m_PrefixGenerationPolicy(tgfpPlatformDefault),
     m_ExtensionGenerationPolicy(tgfpPlatformDefault)
@@ -56,12 +56,12 @@ CompileTargetBase::CompileTargetBase()
     m_MakeCommandsModified = false;
 }
 
-CompileTargetBase::~CompileTargetBase()
+caCompileTargetBase::~caCompileTargetBase()
 {
     //dtor
 }
 
-void CompileTargetBase::SetTargetFilenameGenerationPolicy(TargetFilenameGenerationPolicy prefix,
+void caCompileTargetBase::SetTargetFilenameGenerationPolicy(TargetFilenameGenerationPolicy prefix,
                                                         TargetFilenameGenerationPolicy extension)
 {
     m_PrefixGenerationPolicy = prefix;
@@ -69,24 +69,24 @@ void CompileTargetBase::SetTargetFilenameGenerationPolicy(TargetFilenameGenerati
     SetModified(true);
 }
 
-void CompileTargetBase::GetTargetFilenameGenerationPolicy(TargetFilenameGenerationPolicy& prefixOut,
+void caCompileTargetBase::GetTargetFilenameGenerationPolicy(TargetFilenameGenerationPolicy& prefixOut,
                                                         TargetFilenameGenerationPolicy& extensionOut) const
 {
     prefixOut = m_PrefixGenerationPolicy;
     extensionOut = m_ExtensionGenerationPolicy;
 } // end of GetTargetFilenameGenerationPolicy
 
-const wxString& CompileTargetBase::GetFilename() const
+const wxString& caCompileTargetBase::GetFilename() const
 {
     return m_Filename;
 }
 
-const wxString& CompileTargetBase::GetTitle() const
+const wxString& caCompileTargetBase::GetTitle() const
 {
     return m_Title;
 }
 
-void CompileTargetBase::SetTitle(const wxString& title)
+void caCompileTargetBase::SetTitle(const wxString& title)
 {
     if (m_Title == title)
         return;
@@ -94,7 +94,7 @@ void CompileTargetBase::SetTitle(const wxString& title)
     SetModified(true);
 }
 
-void CompileTargetBase::SetOutputFilename(const wxString& filename)
+void caCompileTargetBase::SetOutputFilename(const wxString& filename)
 {
     if (filename.IsEmpty())
     {
@@ -109,7 +109,7 @@ void CompileTargetBase::SetOutputFilename(const wxString& filename)
     SetModified(true);
 }
 
-void CompileTargetBase::SetWorkingDir(const wxString& dirname)
+void caCompileTargetBase::SetWorkingDir(const wxString& dirname)
 {
     if (m_WorkingDir == dirname)
         return;
@@ -117,7 +117,7 @@ void CompileTargetBase::SetWorkingDir(const wxString& dirname)
     SetModified(true);
 }
 
-void CompileTargetBase::SetObjectOutput(const wxString& dirname)
+void caCompileTargetBase::SetObjectOutput(const wxString& dirname)
 {
     if (m_ObjectOutput == dirname)
         return;
@@ -125,7 +125,7 @@ void CompileTargetBase::SetObjectOutput(const wxString& dirname)
     SetModified(true);
 }
 
-void CompileTargetBase::SetDepsOutput(const wxString& dirname)
+void caCompileTargetBase::SetDepsOutput(const wxString& dirname)
 {
     if (m_DepsOutput == dirname)
         return;
@@ -133,12 +133,12 @@ void CompileTargetBase::SetDepsOutput(const wxString& dirname)
     SetModified(true);
 }
 
-OptionsRelation CompileTargetBase::GetOptionRelation(OptionsRelationType type) const
+OptionsRelation caCompileTargetBase::GetOptionRelation(OptionsRelationType type) const
 {
     return m_OptionsRelation[type];
 }
 
-void CompileTargetBase::SetOptionRelation(OptionsRelationType type, OptionsRelation rel)
+void caCompileTargetBase::SetOptionRelation(OptionsRelationType type, OptionsRelation rel)
 {
     if (m_OptionsRelation[type] == rel)
         return;
@@ -146,7 +146,7 @@ void CompileTargetBase::SetOptionRelation(OptionsRelationType type, OptionsRelat
     SetModified(true);
 }
 
-wxString CompileTargetBase::GetOutputFilename()
+wxString caCompileTargetBase::GetOutputFilename()
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -155,7 +155,7 @@ wxString CompileTargetBase::GetOutputFilename()
     return m_OutputFilename;
 }
 
-wxString CompileTargetBase::SuggestOutputFilename()
+wxString caCompileTargetBase::SuggestOutputFilename()
 {
     wxString suggestion;
     switch (m_TargetType)
@@ -173,7 +173,7 @@ wxString CompileTargetBase::SuggestOutputFilename()
     return UnixFilename(fname.GetFullName());
 }
 
-wxString CompileTargetBase::GetWorkingDir()
+wxString caCompileTargetBase::GetWorkingDir()
 {
     if (m_TargetType != ttConsoleOnly && m_TargetType != ttExecutable && m_TargetType != ttDynamicLib)
         return wxEmptyString;
@@ -186,7 +186,7 @@ wxString CompileTargetBase::GetWorkingDir()
     return m_WorkingDir;
 }
 
-wxString CompileTargetBase::GetObjectOutput() const
+wxString caCompileTargetBase::GetObjectOutput() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -202,7 +202,7 @@ wxString CompileTargetBase::GetObjectOutput() const
     return m_ObjectOutput;
 }
 
-wxString CompileTargetBase::GetDepsOutput() const
+wxString caCompileTargetBase::GetDepsOutput() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -218,7 +218,7 @@ wxString CompileTargetBase::GetDepsOutput() const
     return m_DepsOutput;
 }
 
-void CompileTargetBase::GenerateTargetFilename(wxString& filename) const
+void caCompileTargetBase::GenerateTargetFilename(wxString& filename) const
 {
     // nothing to do if no auto-generation
     if (m_PrefixGenerationPolicy == tgfpNone && m_ExtensionGenerationPolicy == tgfpNone)
@@ -290,7 +290,7 @@ void CompileTargetBase::GenerateTargetFilename(wxString& filename) const
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("GenerateTargetFilename: input '%s', output '%s'"), fname.GetFullPath().c_str(), filename.c_str()));
 }
 
-wxString CompileTargetBase::GetExecutableFilename() const
+wxString caCompileTargetBase::GetExecutableFilename() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -311,7 +311,7 @@ wxString CompileTargetBase::GetExecutableFilename() const
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetNativeFilename()
+wxString caCompileTargetBase::GetNativeFilename()
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -331,7 +331,7 @@ wxString CompileTargetBase::GetNativeFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetDynamicLibFilename()
+wxString caCompileTargetBase::GetDynamicLibFilename()
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -351,7 +351,7 @@ wxString CompileTargetBase::GetDynamicLibFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetDynamicLibDefFilename()
+wxString caCompileTargetBase::GetDynamicLibDefFilename()
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -378,7 +378,7 @@ wxString CompileTargetBase::GetDynamicLibDefFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetStaticLibFilename()
+wxString caCompileTargetBase::GetStaticLibFilename()
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -411,7 +411,7 @@ wxString CompileTargetBase::GetStaticLibFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetBasePath() const
+wxString caCompileTargetBase::GetBasePath() const
 {
     if (m_Filename.IsEmpty())
         return _T(".");
@@ -421,7 +421,7 @@ wxString CompileTargetBase::GetBasePath() const
     return !base.IsEmpty() ? base : _T(".");
 }
 
-void CompileTargetBase::SetTargetType(TargetType pt)
+void caCompileTargetBase::SetTargetType(TargetType pt)
 {
     if (m_TargetType == pt)
         return;
@@ -430,17 +430,17 @@ void CompileTargetBase::SetTargetType(TargetType pt)
     SetModified(true);
 }
 
-TargetType CompileTargetBase::GetTargetType() const
+TargetType caCompileTargetBase::GetTargetType() const
 {
     return m_TargetType;
 }
 
-const wxString& CompileTargetBase::GetExecutionParameters() const
+const wxString& caCompileTargetBase::GetExecutionParameters() const
 {
     return m_ExecutionParameters;
 }
 
-void CompileTargetBase::SetExecutionParameters(const wxString& params)
+void caCompileTargetBase::SetExecutionParameters(const wxString& params)
 {
     if (m_ExecutionParameters == params)
         return;
@@ -448,12 +448,12 @@ void CompileTargetBase::SetExecutionParameters(const wxString& params)
     SetModified(true);
 }
 
-const wxString& CompileTargetBase::GetHostApplication() const
+const wxString& caCompileTargetBase::GetHostApplication() const
 {
     return m_HostApplication;
 }
 
-void CompileTargetBase::SetHostApplication(const wxString& app)
+void caCompileTargetBase::SetHostApplication(const wxString& app)
 {
     if (m_HostApplication == app)
         return;
@@ -461,7 +461,7 @@ void CompileTargetBase::SetHostApplication(const wxString& app)
     SetModified(true);
 }
 
-void CompileTargetBase::SetCompilerID(const wxString& id)
+void caCompileTargetBase::SetCompilerID(const wxString& id)
 {
     if (id == m_CompilerId)
         return;
@@ -469,7 +469,7 @@ void CompileTargetBase::SetCompilerID(const wxString& id)
     SetModified(true);
 }
 
-void CompileTargetBase::SetMakeCommandFor(MakeCommand cmd, const wxString& make)
+void caCompileTargetBase::SetMakeCommandFor(MakeCommand cmd, const wxString& make)
 {
     if (m_MakeCommands[cmd] == make)
         return;

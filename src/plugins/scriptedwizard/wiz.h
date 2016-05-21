@@ -35,7 +35,7 @@ struct WizardInfo
 WX_DECLARE_OBJARRAY(WizardInfo, Wizards);
 WX_DEFINE_ARRAY(wxWizardPageSimple*, WizPages);
 
-class Wiz : public cbWizardPlugin
+class Wiz : public caWizardPlugin
 {
 	public:
 		Wiz();
@@ -54,12 +54,12 @@ class Wiz : public cbWizardPlugin
 		wxString GetCategory(int index) const;
 		const wxBitmap& GetBitmap(int index) const;
         wxString GetScriptFilename(int index) const;
-		CompileTargetBase* Launch(int index, wxString* pFilename = 0);
+		caCompileTargetBase* Launch(int index, wxString* pFilename = 0);
 
-		CompileTargetBase* RunProjectWizard(wxString* pFilename); // called by Launch() for otProject wizards
-		CompileTargetBase* RunTargetWizard(wxString* pFilename); // called by Launch() for otTarget wizards (always returns NULL)
-		CompileTargetBase* RunFilesWizard(wxString* pFilename); // called by Launch() for otFiles wizards (always returns NULL)
-		CompileTargetBase* RunCustomWizard(wxString* pFilename); // called by Launch() for otCustom wizards (always returns NULL)
+		caCompileTargetBase* RunProjectWizard(wxString* pFilename); // called by Launch() for otProject wizards
+		caCompileTargetBase* RunTargetWizard(wxString* pFilename); // called by Launch() for otTarget wizards (always returns NULL)
+		caCompileTargetBase* RunFilesWizard(wxString* pFilename); // called by Launch() for otFiles wizards (always returns NULL)
+		caCompileTargetBase* RunCustomWizard(wxString* pFilename); // called by Launch() for otCustom wizards (always returns NULL)
 
         // Scripting support
         void AddWizard(TemplateOutputType otype,

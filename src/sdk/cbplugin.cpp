@@ -132,10 +132,10 @@ cbToolPlugin::cbToolPlugin()
 }
 
 /////
-///// cbMimePlugin
+///// caMimePlugin
 /////
 
-cbMimePlugin::cbMimePlugin()
+caMimePlugin::caMimePlugin()
 {
     m_Type = ptMime;
 }
@@ -150,10 +150,10 @@ caCodeCompletionPlugin::caCodeCompletionPlugin()
 }
 
 /////
-///// cbWizardPlugin
+///// caWizardPlugin
 /////
 
-cbWizardPlugin::cbWizardPlugin()
+caWizardPlugin::caWizardPlugin()
 {
     m_Type = ptWizard;
 }

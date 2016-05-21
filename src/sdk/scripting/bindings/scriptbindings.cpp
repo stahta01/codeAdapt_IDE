@@ -187,7 +187,7 @@ namespace ScriptBindings
         if (paramCount == 2)
         {
             cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
-            ProjectBuildTarget* bt = 0;
+            caProjectBuildTarget* bt = 0;
             if (sa.GetType(2) == OT_INTEGER)
                 bt = prj->GetBuildTarget(sa.GetInt(2));
             else
@@ -218,7 +218,7 @@ namespace ScriptBindings
         if (paramCount == 3)
         {
             cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
-            ProjectBuildTarget* bt = 0;
+            caProjectBuildTarget* bt = 0;
             if (sa.GetType(2) == OT_INTEGER)
                 bt = prj->DuplicateBuildTarget(sa.GetInt(2), *SqPlus::GetInstance<wxString,false>(v, 3));
             else
@@ -401,57 +401,57 @@ namespace ScriptBindings
                 func(&CompileOptionsBase::UnsetVar, "UnsetVar").
                 func(&CompileOptionsBase::UnsetAllVars, "UnsetAllVars");
 
-        SqPlus::SQClassDef<CompileTargetBase>("CompileTargetBase", "CompileOptionsBase").
-                func(&CompileTargetBase::SetTargetFilenameGenerationPolicy, "SetTargetFilenameGenerationPolicy").
-//                func(&CompileTargetBase::GetTargetFilenameGenerationPolicy, "GetTargetFilenameGenerationPolicy"). // not exposed because its args are non-const references
-                func(&CompileTargetBase::GetFilename, "GetFilename").
-                func(&CompileTargetBase::GetTitle, "GetTitle").
-                func(&CompileTargetBase::SetTitle, "SetTitle").
-                func(&CompileTargetBase::SetOutputFilename, "SetOutputFilename").
-                func(&CompileTargetBase::SetWorkingDir, "SetWorkingDir").
-                func(&CompileTargetBase::SetObjectOutput, "SetObjectOutput").
-                func(&CompileTargetBase::SetDepsOutput, "SetDepsOutput").
-                func(&CompileTargetBase::GetOptionRelation, "GetOptionRelation").
-                func(&CompileTargetBase::SetOptionRelation, "SetOptionRelation").
-                func(&CompileTargetBase::GetWorkingDir, "GetWorkingDir").
-                func(&CompileTargetBase::GetObjectOutput, "GetObjectOutput").
-                func(&CompileTargetBase::GetDepsOutput, "GetDepsOutput").
-                func(&CompileTargetBase::GetOutputFilename, "GetOutputFilename").
-                func(&CompileTargetBase::SuggestOutputFilename, "SuggestOutputFilename").
-                func(&CompileTargetBase::GetExecutableFilename, "GetExecutableFilename").
-                func(&CompileTargetBase::GetDynamicLibFilename, "GetDynamicLibFilename").
-                func(&CompileTargetBase::GetDynamicLibDefFilename, "GetDynamicLibDefFilename").
-                func(&CompileTargetBase::GetStaticLibFilename, "GetStaticLibFilename").
-                func(&CompileTargetBase::GetBasePath, "GetBasePath").
-                func(&CompileTargetBase::SetTargetType, "SetTargetType").
-                func(&CompileTargetBase::GetTargetType, "GetTargetType").
-                func(&CompileTargetBase::GetExecutionParameters, "GetExecutionParameters").
-                func(&CompileTargetBase::SetExecutionParameters, "SetExecutionParameters").
-                func(&CompileTargetBase::GetHostApplication, "GetHostApplication").
-                func(&CompileTargetBase::SetHostApplication, "SetHostApplication").
-                func(&CompileTargetBase::SetCompilerID, "SetCompilerID").
-                func(&CompileTargetBase::GetCompilerID, "GetCompilerID").
-                func(&CompileTargetBase::GetMakeCommandFor, "GetMakeCommandFor").
-                func(&CompileTargetBase::SetMakeCommandFor, "SetMakeCommandFor").
-                func(&CompileTargetBase::MakeCommandsModified, "MakeCommandsModified");
+        SqPlus::SQClassDef<caCompileTargetBase>("caCompileTargetBase", "CompileOptionsBase").
+                func(&caCompileTargetBase::SetTargetFilenameGenerationPolicy, "SetTargetFilenameGenerationPolicy").
+//                func(&caCompileTargetBase::GetTargetFilenameGenerationPolicy, "GetTargetFilenameGenerationPolicy"). // not exposed because its args are non-const references
+                func(&caCompileTargetBase::GetFilename, "GetFilename").
+                func(&caCompileTargetBase::GetTitle, "GetTitle").
+                func(&caCompileTargetBase::SetTitle, "SetTitle").
+                func(&caCompileTargetBase::SetOutputFilename, "SetOutputFilename").
+                func(&caCompileTargetBase::SetWorkingDir, "SetWorkingDir").
+                func(&caCompileTargetBase::SetObjectOutput, "SetObjectOutput").
+                func(&caCompileTargetBase::SetDepsOutput, "SetDepsOutput").
+                func(&caCompileTargetBase::GetOptionRelation, "GetOptionRelation").
+                func(&caCompileTargetBase::SetOptionRelation, "SetOptionRelation").
+                func(&caCompileTargetBase::GetWorkingDir, "GetWorkingDir").
+                func(&caCompileTargetBase::GetObjectOutput, "GetObjectOutput").
+                func(&caCompileTargetBase::GetDepsOutput, "GetDepsOutput").
+                func(&caCompileTargetBase::GetOutputFilename, "GetOutputFilename").
+                func(&caCompileTargetBase::SuggestOutputFilename, "SuggestOutputFilename").
+                func(&caCompileTargetBase::GetExecutableFilename, "GetExecutableFilename").
+                func(&caCompileTargetBase::GetDynamicLibFilename, "GetDynamicLibFilename").
+                func(&caCompileTargetBase::GetDynamicLibDefFilename, "GetDynamicLibDefFilename").
+                func(&caCompileTargetBase::GetStaticLibFilename, "GetStaticLibFilename").
+                func(&caCompileTargetBase::GetBasePath, "GetBasePath").
+                func(&caCompileTargetBase::SetTargetType, "SetTargetType").
+                func(&caCompileTargetBase::GetTargetType, "GetTargetType").
+                func(&caCompileTargetBase::GetExecutionParameters, "GetExecutionParameters").
+                func(&caCompileTargetBase::SetExecutionParameters, "SetExecutionParameters").
+                func(&caCompileTargetBase::GetHostApplication, "GetHostApplication").
+                func(&caCompileTargetBase::SetHostApplication, "SetHostApplication").
+                func(&caCompileTargetBase::SetCompilerID, "SetCompilerID").
+                func(&caCompileTargetBase::GetCompilerID, "GetCompilerID").
+                func(&caCompileTargetBase::GetMakeCommandFor, "GetMakeCommandFor").
+                func(&caCompileTargetBase::SetMakeCommandFor, "SetMakeCommandFor").
+                func(&caCompileTargetBase::MakeCommandsModified, "MakeCommandsModified");
 
-        SqPlus::SQClassDef<ProjectBuildTarget>("ProjectBuildTarget", "CompileTargetBase").
-                func(&ProjectBuildTarget::GetParentProject, "GetParentProject").
-                func(&ProjectBuildTarget::GetFullTitle, "GetFullTitle").
-                func(&ProjectBuildTarget::GetExternalDeps, "GetExternalDeps").
-                func(&ProjectBuildTarget::SetExternalDeps, "SetExternalDeps").
-                func(&ProjectBuildTarget::SetAdditionalOutputFiles, "SetAdditionalOutputFiles").
-                func(&ProjectBuildTarget::GetAdditionalOutputFiles, "GetAdditionalOutputFiles").
-                func(&ProjectBuildTarget::GetIncludeInTargetAll, "GetIncludeInTargetAll").
-                func(&ProjectBuildTarget::SetIncludeInTargetAll, "SetIncludeInTargetAll").
-                func(&ProjectBuildTarget::GetCreateDefFile, "GetCreateDefFile").
-                func(&ProjectBuildTarget::SetCreateDefFile, "SetCreateDefFile").
-                func(&ProjectBuildTarget::GetCreateStaticLib, "GetCreateStaticLib").
-                func(&ProjectBuildTarget::SetCreateStaticLib, "SetCreateStaticLib").
-                func(&ProjectBuildTarget::GetUseConsoleRunner, "GetUseConsoleRunner").
-                func(&ProjectBuildTarget::SetUseConsoleRunner, "SetUseConsoleRunner");
+        SqPlus::SQClassDef<caProjectBuildTarget>("caProjectBuildTarget", "caCompileTargetBase").
+                func(&caProjectBuildTarget::GetParentProject, "GetParentProject").
+                func(&caProjectBuildTarget::GetFullTitle, "GetFullTitle").
+                func(&caProjectBuildTarget::GetExternalDeps, "GetExternalDeps").
+                func(&caProjectBuildTarget::SetExternalDeps, "SetExternalDeps").
+                func(&caProjectBuildTarget::SetAdditionalOutputFiles, "SetAdditionalOutputFiles").
+                func(&caProjectBuildTarget::GetAdditionalOutputFiles, "GetAdditionalOutputFiles").
+                func(&caProjectBuildTarget::GetIncludeInTargetAll, "GetIncludeInTargetAll").
+                func(&caProjectBuildTarget::SetIncludeInTargetAll, "SetIncludeInTargetAll").
+                func(&caProjectBuildTarget::GetCreateDefFile, "GetCreateDefFile").
+                func(&caProjectBuildTarget::SetCreateDefFile, "SetCreateDefFile").
+                func(&caProjectBuildTarget::GetCreateStaticLib, "GetCreateStaticLib").
+                func(&caProjectBuildTarget::SetCreateStaticLib, "SetCreateStaticLib").
+                func(&caProjectBuildTarget::GetUseConsoleRunner, "GetUseConsoleRunner").
+                func(&caProjectBuildTarget::SetUseConsoleRunner, "SetUseConsoleRunner");
 
-        SqPlus::SQClassDef<cbProject>("cbProject", "CompileTargetBase").
+        SqPlus::SQClassDef<cbProject>("cbProject", "caCompileTargetBase").
                 func(&cbProject::GetModified, "GetModified").
                 func(&cbProject::SetModified, "SetModified").
                 func(&cbProject::GetMakefile, "GetMakefile").
@@ -629,17 +629,17 @@ namespace ScriptBindings
                 staticFunc(&CompilerFactory::GetCompilerVersionString, "GetCompilerVersionString").
                 staticFunc<CF_INHERITSFROM>(&CompilerFactory::CompilerInheritsFrom, "CompilerInheritsFrom");
 
-        SqPlus::SQClassDef<PluginInfo>("PluginInfo").
+        SqPlus::SQClassDef<caPluginInfo>("caPluginInfo").
             emptyCtor().
-            var(&PluginInfo::name, "name").
-            var(&PluginInfo::title, "title").
-            var(&PluginInfo::version, "version").
-            var(&PluginInfo::description, "description").
-            var(&PluginInfo::author, "author").
-            var(&PluginInfo::authorEmail, "authorEmail").
-            var(&PluginInfo::authorWebsite, "authorWebsite").
-            var(&PluginInfo::thanksTo, "thanksTo").
-            var(&PluginInfo::license, "license");
+            var(&caPluginInfo::name, "name").
+            var(&caPluginInfo::title, "title").
+            var(&caPluginInfo::version, "version").
+            var(&caPluginInfo::description, "description").
+            var(&caPluginInfo::author, "author").
+            var(&caPluginInfo::authorEmail, "authorEmail").
+            var(&caPluginInfo::authorWebsite, "authorWebsite").
+            var(&caPluginInfo::thanksTo, "thanksTo").
+            var(&caPluginInfo::license, "license");
 
         SqPlus::SQClassDef<FileTreeData>("FileTreeData").
             func(&FileTreeData::GetKind, "GetKind").

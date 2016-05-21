@@ -192,12 +192,12 @@ END_EVENT_TABLE()
 class ScopeTreeData : public wxTreeItemData
 {
     public:
-        ScopeTreeData(cbProject* project, ProjectBuildTarget* target){ m_Project = project; m_Target = target; }
+        ScopeTreeData(cbProject* project, caProjectBuildTarget* target){ m_Project = project; m_Target = target; }
         cbProject* GetProject(){ return m_Project; }
-        ProjectBuildTarget* GetTarget(){ return m_Target; }
+        caProjectBuildTarget* GetTarget(){ return m_Target; }
     private:
         cbProject* m_Project;
-        ProjectBuildTarget* m_Target;
+        caProjectBuildTarget* m_Target;
 };
 
 /*
@@ -210,7 +210,7 @@ class ScopeTreeData : public wxTreeItemData
         - the options exist on the level of the target
 */
 
-CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, cbProject* project, ProjectBuildTarget* target)
+CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, cbProject* project, caProjectBuildTarget* target)
     : m_Compiler(compiler),
     m_CurrentCompilerIdx(0),
     m_pProject(project),
@@ -228,7 +228,7 @@ CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, 
             // look in targets
             for (int x = 0; x < m_pProject->GetBuildTargetsCount(); ++x)
             {
-                ProjectBuildTarget* target = m_pProject->GetBuildTarget(x);
+                caProjectBuildTarget* target = m_pProject->GetBuildTarget(x);
                 hasBuildScripts = target->GetBuildScripts().GetCount() != 0;
                 if (hasBuildScripts)
                     break;
@@ -535,7 +535,7 @@ void CompilerOptionsDlg::DoFillTree()
         selected = data;
         for (int x = 0; x < m_pProject->GetBuildTargetsCount(); ++x)
         {
-            ProjectBuildTarget* target = m_pProject->GetBuildTarget(x);
+            caProjectBuildTarget* target = m_pProject->GetBuildTarget(x);
             data = new ScopeTreeData(m_pProject, target);
             wxTreeItemId targetItem = tc->AppendItem(root, target->GetTitle(), -1, -1, data);
             if (target == m_pTarget)
@@ -1227,7 +1227,7 @@ void CompilerOptionsDlg::UpdateCompilerForTargets(int compilerIdx)
     {
         for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
         {
-            ProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
+            caProjectBuildTarget* target = m_pProject->GetBuildTarget(i);
             target->SetCompilerID(CompilerFactory::GetCompiler(compilerIdx)->GetID());
         }
     }
@@ -1397,7 +1397,7 @@ void CompilerOptionsDlg::OnCopyDirsClick(wxCommandEvent& /*event*/)
     choices.Add(m_pProject->GetTitle());
     for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
+        caProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
         choices.Add(bt->GetTitle());
     }
 
@@ -1741,7 +1741,7 @@ void CompilerOptionsDlg::OnCopyLibsClick(wxCommandEvent& /*event*/)
     choices.Add(m_pProject->GetTitle());
     for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
     {
-        ProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
+        caProjectBuildTarget* bt = m_pProject->GetBuildTarget(i);
         choices.Add(bt->GetTitle());
     }
 

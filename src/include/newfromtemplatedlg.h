@@ -18,9 +18,9 @@ class NewFromTemplateDlg : public wxDialog
 		virtual ~NewFromTemplateDlg();
 
 		ProjectTemplateLoader* GetTemplate(){ return m_Template; }
-		cbWizardPlugin* GetWizard(){ return m_pWizard; }
+		caWizardPlugin* GetWizard(){ return m_pWizard; }
 		int GetWizardIndex() const { return m_WizardIndex; }
-		cbWizardPlugin* GetSelectedTemplate();
+		caWizardPlugin* GetSelectedTemplate();
 		bool SelectedUserTemplate() const;
 		wxString GetSelectedUserTemplate() const;
 
@@ -50,7 +50,7 @@ class NewFromTemplateDlg : public wxDialog
 		TemplateOutputType GetVisibleOutputType() const;
 	private:
 		ProjectTemplateLoader* m_Template;
-		cbWizardPlugin* m_pWizard;
+		caWizardPlugin* m_pWizard;
 		int m_WizardIndex;
 		PluginsArray m_Wizards;
 		DECLARE_EVENT_TABLE()

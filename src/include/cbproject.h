@@ -16,7 +16,7 @@
 
 // forward decl
 class cbProject;
-class ProjectBuildTarget;
+class caProjectBuildTarget;
 class ProjectFile;
 class FilesGroupsAndMasks;
 class TiXmlNode;
@@ -84,9 +84,9 @@ enum PCHMode
   *
   * A project is a collection of build targets and files.
   * Each project can contain any number of build targets and files.
-  * @see ProjectBuildTarget, ProjectFile.
+  * @see caProjectBuildTarget, ProjectFile.
   */
-class DLLIMPORT cbProject : public CompileTargetBase
+class DLLIMPORT cbProject : public caCompileTargetBase
 {
      public:
         /// Constructor
@@ -187,19 +187,19 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @param index The build target index. Must be greater or equal to zero and less than GetBuildTargetsCount().
           * @return The build target or NULL if not found.
           */
-        ProjectBuildTarget* GetBuildTarget(int index);
+        caProjectBuildTarget* GetBuildTarget(int index);
 
         /** Access a build target.
           * @param targetName The build target name.
           * @return The build target or NULL if not found.
           */
-        ProjectBuildTarget* GetBuildTarget(const wxString& targetName);
+        caProjectBuildTarget* GetBuildTarget(const wxString& targetName);
 
         /** Add a new build target.
           * @param targetName The build target name.
           * @return The build target that was just created.
           */
-        ProjectBuildTarget* AddBuildTarget(const wxString& targetName);
+        caProjectBuildTarget* AddBuildTarget(const wxString& targetName);
 
         /** Rename a build target.
           * @param index The build target's index to rename.
@@ -220,14 +220,14 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @param newName The name for the new build target. If empty, it will be named like "Copy of <base_target_name>".
           * @return The new build target if @c index was valid, NULL if not (or something went wrong).
           */
-        ProjectBuildTarget* DuplicateBuildTarget(int index, const wxString& newName = wxEmptyString);
+        caProjectBuildTarget* DuplicateBuildTarget(int index, const wxString& newName = wxEmptyString);
 
         /** Duplicate a build target.
           * @param targetName The name of the build target to duplicate.
           * @param newName The name for the new build target. If empty, it will be named like "Copy of <base_target_name>".
           * @return The new build target if @c index was valid, NULL if not (or something went wrong).
           */
-        ProjectBuildTarget* DuplicateBuildTarget(const wxString& targetName, const wxString& newName = wxEmptyString);
+        caProjectBuildTarget* DuplicateBuildTarget(const wxString& targetName, const wxString& newName = wxEmptyString);
 
         /** Export a target as a new project.
           * In other words, save a copy of the project containing only the specified target.
@@ -335,7 +335,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @return True if succesfull, false otherwise.
           */
         bool LoadLayout();
-        
+
         /** Notify that file(s) will be added shortly.
           * This function should be called before calling AddFile().
           * When done calling AddFile() as many times as needed, call
@@ -455,14 +455,14 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @return While the project is being built, this function returns the currently building
           * target. For all other times, NULL is returned.
           */
-        ProjectBuildTarget* GetCurrentlyCompilingTarget(){ return m_CurrentlyCompilingTarget; }
+        caProjectBuildTarget* GetCurrentlyCompilingTarget(){ return m_CurrentlyCompilingTarget; }
 
         /** Set the currently compiling target.
           * @note This function is for internal use by compilers only.
           * Using this function in any other place results in undefined behaviour!
           * @param bt The build target that is currently building.
           */
-        void SetCurrentlyCompilingTarget(ProjectBuildTarget* bt);
+        void SetCurrentlyCompilingTarget(caProjectBuildTarget* bt);
 
         /** Define a new virtual build target.
           *
@@ -620,12 +620,12 @@ class DLLIMPORT cbProject : public CompileTargetBase
 
         /** Changes project title
           *
-          * This function overrides CompileTargetBase::SetTitle.
+          * This function overrides caCompileTargetBase::SetTitle.
           * It sends additional notification event to plugins
           * and than calls base function.
           */
         virtual void SetTitle(const wxString& title);
-        
+
         /** Access the \<Extensions\> XML node of this project
           *
           * This function is for advanced users only. Use at your own risk
@@ -635,7 +635,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @note This function will never return NULL.
           */
         virtual TiXmlNode* GetExtensionsNode();
-        
+
         /** Convenience function (mainly for scripts) to add nodes/attributes
           * under the \<Extensions\> node.
           *
@@ -655,7 +655,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * instead of re-using the existing one (if any).
           */
         virtual void AddToExtensions(const wxString& stringDesc);
-        
+
         /** Internal use only.
           * Updates the internal hashmap of project files.
           */
@@ -668,7 +668,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
         void ExpandVirtualBuildTargetGroup(const wxString& alias, wxArrayString& result) const;
         wxTreeItemId AddTreeNode(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool useFolders, FileTreeData::FileTreeDataKind folders_kind, bool compiles, int image, FileTreeData* data = 0L);
         wxTreeItemId FindNodeToInsertAfter(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool in_folders); // alphabetical sorting
-        ProjectBuildTarget* AddDefaultBuildTarget();
+        caProjectBuildTarget* AddDefaultBuildTarget();
         int IndexOfBuildTargetName(const wxString& targetName) const;
         wxString CreateUniqueFilename();
         void NotifyPlugins(wxEventType type, const wxString& targetName = wxEmptyString, const wxString& oldTargetName = wxEmptyString);
@@ -698,14 +698,14 @@ class DLLIMPORT cbProject : public CompileTargetBase
 
         // hashmap for fast searches in cbProject::GetFileByFilename()
         ProjectFiles m_ProjectFilesMap; // keeps UnixFilename(ProjectFile::relativeFilename)
-        ProjectBuildTarget* m_CurrentlyCompilingTarget;
+        caProjectBuildTarget* m_CurrentlyCompilingTarget;
 
         wxDateTime m_LastModified;
 
         bool m_ExtendedObjectNamesGeneration;
         wxString m_Notes;
         bool m_AutoShowNotesOnLoad;
-        
+
         // copy of <Extensions> element, in case certain plugins are disabled
         // so that the contents are not lost
         TiXmlElement* m_pExtensionsElement;

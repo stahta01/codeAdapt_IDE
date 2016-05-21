@@ -217,7 +217,7 @@ bool MSVC7Loader::DoSelectConfiguration(TiXmlElement* root)
 
 bool MSVC7Loader::DoImport(TiXmlElement* conf)
 {
-    ProjectBuildTarget* bt = m_pProject->GetBuildTarget(m_ConfigurationName);
+    caProjectBuildTarget* bt = m_pProject->GetBuildTarget(m_ConfigurationName);
     if (!bt)
         bt = m_pProject->AddBuildTarget(m_ConfigurationName);
     bt->SetCompilerID(m_pProject->GetCompilerID());
