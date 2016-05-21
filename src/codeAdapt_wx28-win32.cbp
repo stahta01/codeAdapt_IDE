@@ -519,6 +519,9 @@
 		<Unit filename="include/annoyingdialog.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/api/plugin.h">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="include/backgroundthread.h">
 			<Option target="sdk" />
 		</Unit>
