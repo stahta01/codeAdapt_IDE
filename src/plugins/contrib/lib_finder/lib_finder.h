@@ -64,8 +64,8 @@ class lib_finder: public cbToolPlugin
         void OnCompilerStarted(CodeBlocksEvent& event);
         void OnCompilerFinished(CodeBlocksEvent& event);
         void OnCompilerSetBuildOptions(CodeBlocksEvent& event);
-        void SetupTarget(CompileTargetBase* Target,const wxArrayString& Libs);
-        bool TryAddLibrary(CompileTargetBase* Target,LibraryResult* Result);
+        void SetupTarget(caCompileTargetBase* Target,const wxArrayString& Libs);
+        bool TryAddLibrary(caCompileTargetBase* Target,LibraryResult* Result);
         bool LoadSearchFilters(LibraryConfigManager* CfgManager);
         void RegisterScripting();
         void UnregisterScripting();
@@ -77,12 +77,12 @@ class lib_finder: public cbToolPlugin
 		static bool AddLibraryToProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
 		static bool RemoveLibraryFromProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
 		static bool IsLibraryInProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
-		static bool SetupTargetManually(CompileTargetBase* Target);
+		static bool SetupTargetManually(caCompileTargetBase* Target);
 
         ProjectConfiguration* GetProject(cbProject* Project);
 
         WX_DECLARE_HASH_MAP(cbProject*,ProjectConfiguration*,wxPointerHash,wxPointerEqual,ProjectMapT);
-        WX_DECLARE_HASH_MAP(CompileTargetBase*,wxArrayString,wxPointerHash,wxPointerEqual,TargetLibsMapT);
+        WX_DECLARE_HASH_MAP(caCompileTargetBase*,wxArrayString,wxPointerHash,wxPointerEqual,TargetLibsMapT);
 
         ResultMap m_KnownLibraries[rtCount];
 

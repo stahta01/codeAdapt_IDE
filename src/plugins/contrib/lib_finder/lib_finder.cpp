@@ -603,7 +603,7 @@ cbConfigurationPanel* lib_finder::GetProjectConfigurationPanel(wxWindow* parent,
     return new ProjectConfigurationPanel(parent,GetProject(project),project,m_KnownLibraries);
 }
 
-void lib_finder::SetupTarget(CompileTargetBase* Target,const wxArrayString& Libs)
+void lib_finder::SetupTarget(caCompileTargetBase* Target,const wxArrayString& Libs)
 {
     if ( !Target ) return;
     wxArrayString NotFound;
@@ -698,7 +698,7 @@ void lib_finder::SetupTarget(CompileTargetBase* Target,const wxArrayString& Libs
     }
 }
 
-bool lib_finder::TryAddLibrary(CompileTargetBase* Target,LibraryResult* Result)
+bool lib_finder::TryAddLibrary(caCompileTargetBase* Target,LibraryResult* Result)
 {
     if ( !Result->Compilers.IsEmpty() )
     {
@@ -866,7 +866,7 @@ bool lib_finder::RemoveLibraryFromProject(const wxString& LibName,cbProject* Pro
     return true;
 }
 
-bool lib_finder::SetupTargetManually(CompileTargetBase* Target)
+bool lib_finder::SetupTargetManually(caCompileTargetBase* Target)
 {
     if ( !m_Singleton ) return false;
 
@@ -889,12 +889,12 @@ void lib_finder::OnCompilerStarted(CodeBlocksEvent& event)
     ProjectConfiguration* Conf = GetProject(cbp);
 
     // Copy libraries used in whole project
-    m_Targets[(CompileTargetBase*)cbp] = Conf->m_GlobalUsedLibs;
+    m_Targets[(caCompileTargetBase*)cbp] = Conf->m_GlobalUsedLibs;
 
     // Copy libraries used in build targets
     for ( int i=0; i<cbp->GetBuildTargetsCount(); i++ )
     {
-        m_Targets[(CompileTargetBase*)(cbp->GetBuildTarget(i))] = Conf->m_TargetsUsedLibs[cbp->GetBuildTarget(i)->GetTitle()];
+        m_Targets[(caCompileTargetBase*)(cbp->GetBuildTarget(i))] = Conf->m_TargetsUsedLibs[cbp->GetBuildTarget(i)->GetTitle()];
     }
 }
 

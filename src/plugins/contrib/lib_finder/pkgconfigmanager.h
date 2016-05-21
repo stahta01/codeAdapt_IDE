@@ -57,7 +57,7 @@ class PkgConfigManager
         void Clear();
 
         /** \brief Update given target to use library from pkg-config */
-        bool UpdateTarget(const wxString& LibName,CompileTargetBase* Target,bool Force=true);
+        bool UpdateTarget(const wxString& LibName,caCompileTargetBase* Target,bool Force=true);
 
         /** \brief Refreshing pkg-config data */
         void RefreshData();
