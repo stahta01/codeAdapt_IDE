@@ -1,7 +1,7 @@
 #ifndef OPENFILESLISTPLUGIN_H
 #define OPENFILESLISTPLUGIN_H
 
-#include <cbplugin.h>
+#include <api/plugin.h>
 
 #include <wx/dynarray.h>
 
