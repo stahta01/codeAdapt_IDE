@@ -25,7 +25,7 @@ class BatchLogWindow : public wxDialog
             PluginsArray arr = Manager::Get()->GetPluginManager()->GetCompilerOffers();
             if (arr.GetCount() != 0)
             {
-                cbCompilerPlugin* compiler = static_cast<cbCompilerPlugin*>(arr[0]);
+                caCompilerPlugin* compiler = static_cast<caCompilerPlugin*>(arr[0]);
                 if (compiler && compiler->IsRunning())
                 {
                     if (cbMessageBox(_("The build is in progress. Are you sure you want to abort it?"),
