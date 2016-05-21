@@ -7,7 +7,7 @@
 class wxTreeEvent;
 class wxSpinEvent;
 class cbProject;
-class cbCompilerPlugin;
+class caCompilerPlugin;
 
 /*
  * No description
@@ -61,7 +61,7 @@ class ProjectOptionsDlg : public wxDialog
         void UpdateTargetControls();
         cbProject* m_Project;
         int m_Current_Sel; // current target selection (when selection changes it is the old selection - handy, eh?)
-        cbCompilerPlugin* m_pCompiler;
+        caCompilerPlugin* m_pCompiler;
         ConfigurationPanelsArray m_PluginPanels;
         DECLARE_EVENT_TABLE()
 };

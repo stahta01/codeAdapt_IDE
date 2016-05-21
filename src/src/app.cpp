@@ -670,7 +670,7 @@ int CodeBlocksApp::BatchJob()
     if (arr.GetCount() == 0)
         return -2;
 
-    cbCompilerPlugin* compiler = static_cast<cbCompilerPlugin*>(arr[0]);
+    caCompilerPlugin* compiler = static_cast<caCompilerPlugin*>(arr[0]);
     if (!compiler)
         return -3;
 
@@ -775,7 +775,7 @@ void CodeBlocksApp::OnBatchBuildDone(CodeBlocksEvent& event)
         return;
     one_time_only = true;
 
-    cbCompilerPlugin* compiler = static_cast<cbCompilerPlugin*>(event.GetPlugin());
+    caCompilerPlugin* compiler = static_cast<caCompilerPlugin*>(event.GetPlugin());
     m_BatchExitCode = compiler->GetExitCode();
 
     if (m_BatchNotify)

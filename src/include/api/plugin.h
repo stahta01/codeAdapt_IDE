@@ -233,10 +233,10 @@ class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
   * This plugin type must offer some pre-defined build facilities, on top
   * of the generic plugin's.
   */
-class PLUGIN_EXPORT cbCompilerPlugin: public cbPlugin
+class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
 {
     public:
-        cbCompilerPlugin();
+        caCompilerPlugin();
 
         /** @brief Run the project/target.
           *

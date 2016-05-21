@@ -105,10 +105,10 @@ void cbPlugin::NotImplemented(const wxString& log) const
 }
 
 /////
-///// cbCompilerPlugin
+///// caCompilerPlugin
 /////
 
-cbCompilerPlugin::cbCompilerPlugin()
+caCompilerPlugin::caCompilerPlugin()
 {
     m_Type = ptCompiler;
 }

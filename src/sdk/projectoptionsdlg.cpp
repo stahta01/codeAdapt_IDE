@@ -142,7 +142,7 @@ ProjectOptionsDlg::ProjectOptionsDlg(wxWindow* parent, cbProject* project)
 
     PluginsArray plugins = Manager::Get()->GetPluginManager()->GetCompilerOffers();
     if (plugins.GetCount())
-        m_pCompiler = (cbCompilerPlugin*)plugins[0];
+        m_pCompiler = (caCompilerPlugin*)plugins[0];
 
     // scripts
     BuildScriptsTree();

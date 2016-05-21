@@ -249,7 +249,7 @@ int idGCCProcess14 = wxNewId();
 int idGCCProcess15 = wxNewId();
 int idGCCProcess16 = wxNewId();
 
-BEGIN_EVENT_TABLE(CompilerGCC, cbCompilerPlugin)
+BEGIN_EVENT_TABLE(CompilerGCC, caCompilerPlugin)
     EVT_UPDATE_UI(idMenuCompile, CompilerGCC::OnUpdateUI)
     EVT_UPDATE_UI(idMenuCompileTarget, CompilerGCC::OnUpdateUI)
     EVT_UPDATE_UI(idMenuCompileFromProjectManager, CompilerGCC::OnUpdateUI)

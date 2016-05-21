@@ -68,7 +68,7 @@ class wxStaticText;
 class wxGauge;
 class BuildLogger;
 
-class CompilerGCC : public cbCompilerPlugin
+class CompilerGCC : public caCompilerPlugin
 {
     public:
         CompilerGCC();
