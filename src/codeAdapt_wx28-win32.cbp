@@ -3505,6 +3505,9 @@
 		<Unit filename="src/aui_compat.h">
 			<Option target="src" />
 		</Unit>
+		<Unit filename="src/batchbuild.h">
+			<Option target="src" />
+		</Unit>
 		<Unit filename="src/compilersettingsdlg.cpp">
 			<Option target="src" />
 		</Unit>
