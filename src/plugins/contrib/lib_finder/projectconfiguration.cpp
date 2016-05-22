@@ -38,7 +38,7 @@ ProjectConfiguration::~ProjectConfiguration()
 {
 }
 
-void ProjectConfiguration::XmlLoad(TiXmlElement* Node,cbProject* Project)
+void ProjectConfiguration::XmlLoad(TiXmlElement* Node,caProject* Project)
 {
     m_GlobalUsedLibs.Clear();
     m_TargetsUsedLibs.clear();
@@ -87,7 +87,7 @@ void ProjectConfiguration::XmlLoad(TiXmlElement* Node,cbProject* Project)
     // TODO: Invoke library settings check
 }
 
-void ProjectConfiguration::XmlWrite(TiXmlElement* Node,cbProject* Project)
+void ProjectConfiguration::XmlWrite(TiXmlElement* Node,caProject* Project)
 {
     TiXmlElement* LibFinder = Node->FirstChildElement("lib_finder");
     if ( !LibFinder ) LibFinder = Node->InsertEndChild(TiXmlElement("lib_finder"))->ToElement();

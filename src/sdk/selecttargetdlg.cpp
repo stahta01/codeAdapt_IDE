@@ -47,7 +47,7 @@ BEGIN_EVENT_TABLE(SelectTargetDlg, wxDialog)
 	EVT_BUTTON(XRCID("btnHostApplication"),	SelectTargetDlg::OnHostApplicationButtonClick)
 END_EVENT_TABLE()
 
-SelectTargetDlg::SelectTargetDlg(wxWindow* parent, cbProject* project, int selected)
+SelectTargetDlg::SelectTargetDlg(wxWindow* parent, caProject* project, int selected)
 	: m_pProject(project),
 	m_Selected(selected)
 {

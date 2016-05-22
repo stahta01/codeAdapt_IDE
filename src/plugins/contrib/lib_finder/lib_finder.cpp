@@ -552,7 +552,7 @@ void lib_finder::WriteDetectedResults()
     }
 }
 
-void lib_finder::OnProjectHook(cbProject* project,TiXmlElement* elem,bool loading)
+void lib_finder::OnProjectHook(caProject* project,TiXmlElement* elem,bool loading)
 {
     ProjectConfiguration* Proj = GetProject(project);
     if ( loading ) Proj->XmlLoad(elem,project);
@@ -562,7 +562,7 @@ void lib_finder::OnProjectHook(cbProject* project,TiXmlElement* elem,bool loadin
 void lib_finder::OnProjectClose(CodeBlocksEvent& event)
 {
     event.Skip();
-    cbProject* Proj = event.GetProject();
+    caProject* Proj = event.GetProject();
     ProjectMapT::iterator i = m_Projects.find(Proj);
     if ( i == m_Projects.end() ) return;
     delete i->second;
@@ -572,7 +572,7 @@ void lib_finder::OnProjectClose(CodeBlocksEvent& event)
 void lib_finder::OnCompilerSetBuildOptions(CodeBlocksEvent& event)
 {
     event.Skip();
-    cbProject* Proj = event.GetProject();
+    caProject* Proj = event.GetProject();
     ProjectConfiguration* Conf = GetProject(Proj);
     if ( Conf->m_DisableAuto ) return;
     wxString Target = event.GetBuildTargetName();
@@ -588,7 +588,7 @@ void lib_finder::OnCompilerSetBuildOptions(CodeBlocksEvent& event)
     }
 }
 
-ProjectConfiguration* lib_finder::GetProject(cbProject* Project)
+ProjectConfiguration* lib_finder::GetProject(caProject* Project)
 {
     ProjectConfiguration* Conf = m_Projects[Project];
     if ( !Conf )
@@ -598,7 +598,7 @@ ProjectConfiguration* lib_finder::GetProject(cbProject* Project)
     return Conf;
 }
 
-cbConfigurationPanel* lib_finder::GetProjectConfigurationPanel(wxWindow* parent, cbProject* project)
+cbConfigurationPanel* lib_finder::GetProjectConfigurationPanel(wxWindow* parent, caProject* project)
 {
     return new ProjectConfigurationPanel(parent,GetProject(project),project,m_KnownLibraries);
 }
@@ -796,7 +796,7 @@ void lib_finder::UnregisterScripting()
     }
 }
 
-bool lib_finder::AddLibraryToProject(const wxString& LibName,cbProject* Project,const wxString& TargetName)
+bool lib_finder::AddLibraryToProject(const wxString& LibName,caProject* Project,const wxString& TargetName)
 {
     if ( !m_Singleton ) return false;
 
@@ -820,7 +820,7 @@ bool lib_finder::AddLibraryToProject(const wxString& LibName,cbProject* Project,
     return true;
 }
 
-bool lib_finder::IsLibraryInProject(const wxString& LibName,cbProject* Project,const wxString& TargetName)
+bool lib_finder::IsLibraryInProject(const wxString& LibName,caProject* Project,const wxString& TargetName)
 {
     if ( !m_Singleton ) return false;
 
@@ -839,7 +839,7 @@ bool lib_finder::IsLibraryInProject(const wxString& LibName,cbProject* Project,c
     return Libs->Index(LibName) != wxNOT_FOUND;
 }
 
-bool lib_finder::RemoveLibraryFromProject(const wxString& LibName,cbProject* Project,const wxString& TargetName)
+bool lib_finder::RemoveLibraryFromProject(const wxString& LibName,caProject* Project,const wxString& TargetName)
 {
     if ( !m_Singleton ) return false;
 
@@ -883,7 +883,7 @@ void lib_finder::OnCompilerStarted(CodeBlocksEvent& event)
     event.Skip();
     m_Targets.clear();
 
-    cbProject* cbp = ProjectManager::Get()->GetActiveProject();
+    caProject* cbp = ProjectManager::Get()->GetActiveProject();
     if ( !cbp ) return;
 
     ProjectConfiguration* Conf = GetProject(cbp);

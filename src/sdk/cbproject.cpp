@@ -71,7 +71,7 @@ namespace compatibility { typedef TernaryCondTypedef<wxMinimumVersion<2,5>::eval
 
 
 // class constructor
-cbProject::cbProject(const wxString& filename)
+caProject::caProject(const wxString& filename)
     : m_CustomMakefile(false),
     m_Loaded(false),
     m_CurrentlyLoading(false),
@@ -121,7 +121,7 @@ cbProject::cbProject(const wxString& filename)
 }
 
 // class destructor
-cbProject::~cbProject()
+caProject::~caProject()
 {
     // moved to ProjectManager::CloseProject()
     // see explanation there...
@@ -130,7 +130,7 @@ cbProject::~cbProject()
     ClearAllProperties();
 }
 
-void cbProject::NotifyPlugins(wxEventType type, const wxString& targetName, const wxString& oldTargetName)
+void caProject::NotifyPlugins(wxEventType type, const wxString& targetName, const wxString& oldTargetName)
 {
     CodeBlocksEvent event(type);
     event.SetProject(this);
@@ -139,7 +139,7 @@ void cbProject::NotifyPlugins(wxEventType type, const wxString& targetName, cons
     Manager::Get()->ProcessEvent(event);
 }
 
-void cbProject::SetCompilerID(const wxString& id)
+void caProject::SetCompilerID(const wxString& id)
 {
 // TODO (mandrav##): Is this needed? The project's compiler has nothing to do with the targets' compilers...
 
@@ -173,7 +173,7 @@ void cbProject::SetCompilerID(const wxString& id)
     }
 }
 
-bool cbProject::GetModified() const
+bool caProject::GetModified() const
 {
     // check base options
     if (CompileOptionsBase::GetModified())
@@ -190,7 +190,7 @@ bool cbProject::GetModified() const
     return false;
 }
 
-void cbProject::SetModified(bool modified)
+void caProject::SetModified(bool modified)
 {
     CompileOptionsBase::SetModified(modified);
 
@@ -205,7 +205,7 @@ void cbProject::SetModified(bool modified)
         m_LastSavedActiveTarget = m_ActiveTarget;
 }
 
-void cbProject::SetMakefileCustom(bool custom)
+void caProject::SetMakefileCustom(bool custom)
 {
     if (m_CustomMakefile != custom)
     {
@@ -214,7 +214,7 @@ void cbProject::SetMakefileCustom(bool custom)
     }
 }
 
-wxString cbProject::CreateUniqueFilename()
+wxString caProject::CreateUniqueFilename()
 {
     const wxString prefix = _("Untitled");
     wxString tmp;
@@ -231,7 +231,7 @@ wxString cbProject::CreateUniqueFilename()
         ok = true;
         for (int i = 0; i < projCount; ++i)
         {
-            cbProject* prj = arr->Item(i);
+            caProject* prj = arr->Item(i);
             wxFileName fname(prj->GetFilename());
 
             if (fname.GetName().Matches(tmp))
@@ -247,7 +247,7 @@ wxString cbProject::CreateUniqueFilename()
     return tmp << _T(".") << FileFilters::CODEBLOCKS_EXT;
 }
 
-void cbProject::ClearAllProperties()
+void caProject::ClearAllProperties()
 {
     Delete(m_pExtensionsElement);
 
@@ -270,7 +270,7 @@ void cbProject::ClearAllProperties()
     NotifyPlugins(cbEVT_BUILDTARGET_SELECTED);
 }
 
-void cbProject::Open()
+void caProject::Open()
 {
     m_Loaded = false;
     m_ProjectFilesMap.clear();
@@ -325,7 +325,7 @@ void cbProject::Open()
     }
 } // end of Open
 
-void cbProject::CalculateCommonTopLevelPath()
+void caProject::CalculateCommonTopLevelPath()
 {
     // find the common toplevel path
     // for simple projects, this might be the path to the project file
@@ -369,17 +369,17 @@ void cbProject::CalculateCommonTopLevelPath()
     Manager::Get()->GetLogManager()->DebugLog(_T("Project's common toplevel path: ") + m_CommonTopLevelPath);
 }
 
-wxString cbProject::GetCommonTopLevelPath() const
+wxString caProject::GetCommonTopLevelPath() const
 {
     return m_CommonTopLevelPath;
 }
 
-void cbProject::Touch()
+void caProject::Touch()
 {
     m_LastModified = wxDateTime::Now();
 }
 
-bool cbProject::SaveAs()
+bool caProject::SaveAs()
 {
     wxFileName fname;
     fname.Assign(m_Filename);
@@ -420,7 +420,7 @@ bool cbProject::SaveAs()
     return false;
 }
 
-bool cbProject::Save()
+bool caProject::Save()
 {
     if (m_Filename.IsEmpty())
         return SaveAs();
@@ -437,7 +437,7 @@ bool cbProject::Save()
     return false;
 }
 
-bool cbProject::SaveLayout()
+bool caProject::SaveLayout()
 {
     if (m_Filename.IsEmpty())
         return false;
@@ -448,7 +448,7 @@ bool cbProject::SaveLayout()
     return loader.Save(fname.GetFullPath());
 }
 
-bool cbProject::LoadLayout()
+bool caProject::LoadLayout()
 {
    if (m_Filename.IsEmpty())
         return false;
@@ -529,41 +529,41 @@ bool cbProject::LoadLayout()
     return result;
 }
 
-void cbProject::BeginAddFiles()
+void caProject::BeginAddFiles()
 {
 	CodeBlocksEvent event(cbEVT_PROJECT_BEGIN_ADD_FILES);
 	event.SetProject(this);
 	Manager::Get()->ProcessEvent(event);
 }
 
-void cbProject::EndAddFiles()
+void caProject::EndAddFiles()
 {
 	CodeBlocksEvent event(cbEVT_PROJECT_END_ADD_FILES);
 	event.SetProject(this);
 	Manager::Get()->ProcessEvent(event);
 }
 
-void cbProject::BeginRemoveFiles()
+void caProject::BeginRemoveFiles()
 {
 	CodeBlocksEvent event(cbEVT_PROJECT_BEGIN_REMOVE_FILES);
 	event.SetProject(this);
 	Manager::Get()->ProcessEvent(event);
 }
 
-void cbProject::EndRemoveFiles()
+void caProject::EndRemoveFiles()
 {
 	CodeBlocksEvent event(cbEVT_PROJECT_END_REMOVE_FILES);
 	event.SetProject(this);
 	Manager::Get()->ProcessEvent(event);
 }
 
-ProjectFile* cbProject::AddFile(const wxString& targetName, const wxString& filename, bool compile, bool link, unsigned short int weight)
+ProjectFile* caProject::AddFile(const wxString& targetName, const wxString& filename, bool compile, bool link, unsigned short int weight)
 {
     int idx = IndexOfBuildTargetName(targetName);
     return AddFile(idx, filename, compile, link, weight);
 }
 
-ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool compile, bool link, unsigned short int weight)
+ProjectFile* caProject::AddFile(int targetIndex, const wxString& filename, bool compile, bool link, unsigned short int weight)
 {
 //  NOTE (Rick#1#): When loading the project, do not search for existing files
 //  (Assumming that there are no duplicate entries in the .cbp file)
@@ -790,7 +790,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
     return f;
 }
 
-bool cbProject::RemoveFile(ProjectFile* pf)
+bool caProject::RemoveFile(ProjectFile* pf)
 {
     if (!pf)
         return false;
@@ -837,7 +837,7 @@ bool cbProject::RemoveFile(ProjectFile* pf)
     return true;
 }
 
-bool cbProject::RemoveFile(int index)
+bool caProject::RemoveFile(int index)
 {
     if (index < 0 || index >= (int)m_Files.GetCount())
         return false; // invalid index
@@ -850,7 +850,7 @@ int filesSort(const ProjectFile** arg1, const ProjectFile** arg2)
     return (*arg1)->file.GetFullPath().CompareTo((*arg2)->file.GetFullPath());
 }
 
-void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categorize, bool useFolders, FilesGroupsAndMasks* fgam)
+void caProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categorize, bool useFolders, FilesGroupsAndMasks* fgam)
 {
     if (!tree)
         return;
@@ -995,7 +995,7 @@ static wxString GetRelativeFolderPath(wxTreeCtrl* tree, wxTreeItemId parent)
     return fld;
 }
 
-wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
+wxTreeItemId caProject::AddTreeNode(wxTreeCtrl* tree,
                                     const wxString& text,
                                     const wxTreeItemId& parent,
                                     bool useFolders,
@@ -1073,7 +1073,7 @@ wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
     return ret;
 }
 
-wxTreeItemId cbProject::FindNodeToInsertAfter(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool in_folders)
+wxTreeItemId caProject::FindNodeToInsertAfter(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool in_folders)
 {
     wxTreeItemId result;
 
@@ -1118,7 +1118,7 @@ wxTreeItemId cbProject::FindNodeToInsertAfter(wxTreeCtrl* tree, const wxString& 
     return result;
 }
 
-void cbProject::CopyTreeNodeRecursively(wxTreeCtrl* tree, const wxTreeItemId& item, const wxTreeItemId& new_parent)
+void caProject::CopyTreeNodeRecursively(wxTreeCtrl* tree, const wxTreeItemId& item, const wxTreeItemId& new_parent)
 {
     // first, some sanity checks
     if (!tree || !item.IsOk() || !new_parent.IsOk())
@@ -1153,12 +1153,12 @@ void cbProject::CopyTreeNodeRecursively(wxTreeCtrl* tree, const wxTreeItemId& it
         ftd_moved->GetProjectFile()->virtual_path = GetRelativeFolderPath(tree, new_parent);
 }
 
-const wxArrayString& cbProject::GetVirtualFolders() const
+const wxArrayString& caProject::GetVirtualFolders() const
 {
     return m_VirtualFolders;
 }
 
-void cbProject::SetVirtualFolders(const wxArrayString& folders)
+void caProject::SetVirtualFolders(const wxArrayString& folders)
 {
     m_VirtualFolders = folders;
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
@@ -1168,7 +1168,7 @@ void cbProject::SetVirtualFolders(const wxArrayString& folders)
     }
 }
 
-bool cbProject::CanDragNode(wxTreeCtrl* tree, wxTreeItemId node)
+bool caProject::CanDragNode(wxTreeCtrl* tree, wxTreeItemId node)
 {
     // what item do we start dragging?
     if (!node.IsOk())
@@ -1187,7 +1187,7 @@ bool cbProject::CanDragNode(wxTreeCtrl* tree, wxTreeItemId node)
     return ftd->GetKind() == caFileTreeData::ftdkFile || ftd->GetKind() == caFileTreeData::ftdkVirtualFolder;
 }
 
-bool cbProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to)
+bool caProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to)
 {
     // what items did we drag?
     if (!from.IsOk() || !to.IsOk())
@@ -1242,7 +1242,7 @@ bool cbProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to
     return true;
 }
 
-bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, const wxString& virtual_folder)
+bool caProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, const wxString& virtual_folder)
 {
     wxString foldername = GetRelativeFolderPath(tree, parent_node);
     foldername << virtual_folder;
@@ -1278,7 +1278,7 @@ bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, c
     return true;
 }
 
-void cbProject::VirtualFolderDeleted(wxTreeCtrl* tree, wxTreeItemId node)
+void caProject::VirtualFolderDeleted(wxTreeCtrl* tree, wxTreeItemId node)
 {
     // what item do we start dragging?
     if (!node.IsOk())
@@ -1319,7 +1319,7 @@ void cbProject::VirtualFolderDeleted(wxTreeCtrl* tree, wxTreeItemId node)
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("VirtualFolderDeleted: %s: %s"), foldername.c_str(), GetStringFromArray(m_VirtualFolders, _T(";")).c_str()));
 }
 
-bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const wxString& new_name)
+bool caProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const wxString& new_name)
 {
     if (new_name.IsEmpty())
         return false;
@@ -1385,7 +1385,7 @@ bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const 
     return true;
 }
 
-void cbProject::RenameInTree(const wxString &newname)
+void caProject::RenameInTree(const wxString &newname)
 {
     wxTreeCtrl* tree = Manager::Get()->GetProjectManager()->GetTree();
     if(!tree || !m_ProjectNode)
@@ -1393,17 +1393,17 @@ void cbProject::RenameInTree(const wxString &newname)
     tree->SetItemText(m_ProjectNode, newname);
 }
 
-void cbProject::SaveTreeState(wxTreeCtrl* tree)
+void caProject::SaveTreeState(wxTreeCtrl* tree)
 {
     ::SaveTreeState(tree, m_ProjectNode, m_ExpandedNodes);
 }
 
-void cbProject::RestoreTreeState(wxTreeCtrl* tree)
+void caProject::RestoreTreeState(wxTreeCtrl* tree)
 {
     ::RestoreTreeState(tree, m_ProjectNode, m_ExpandedNodes);
 }
 
-const wxString& cbProject::GetMakefile()
+const wxString& caProject::GetMakefile()
 {
     if (!m_Makefile.IsEmpty())
         return m_Makefile;
@@ -1419,7 +1419,7 @@ const wxString& cbProject::GetMakefile()
     return m_Makefile;
 }
 
-ProjectFile* cbProject::GetFile(int index)
+ProjectFile* caProject::GetFile(int index)
 {
     FilesList::Node* node = m_Files.Item(index);
     if (node)
@@ -1428,7 +1428,7 @@ ProjectFile* cbProject::GetFile(int index)
     return NULL;
 }
 
-ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelative, bool isUnixFilename)
+ProjectFile* caProject::GetFileByFilename(const wxString& filename, bool isRelative, bool isUnixFilename)
 {
     // m_ProjectFilesMap keeps UnixFilename(ProjectFile::relativeFilename)
     wxString tmp = filename;
@@ -1456,7 +1456,7 @@ ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelat
     return m_ProjectFilesMap[UnixFilename(tmp)];
 }
 
-bool cbProject::QueryCloseAllFiles()
+bool caProject::QueryCloseAllFiles()
 {
     FilesList::Node* node;
     node = m_Files.GetFirst();
@@ -1474,7 +1474,7 @@ bool cbProject::QueryCloseAllFiles()
     return true;
 }
 
-bool cbProject::CloseAllFiles(bool dontsave)
+bool caProject::CloseAllFiles(bool dontsave)
 {
     // first try to close modified editors
 
@@ -1497,7 +1497,7 @@ bool cbProject::CloseAllFiles(bool dontsave)
     return true;
 }
 
-bool cbProject::SaveAllFiles()
+bool caProject::SaveAllFiles()
 {
     int count = m_Files.GetCount();
     FilesList::Node* node = m_Files.GetFirst();
@@ -1511,7 +1511,7 @@ bool cbProject::SaveAllFiles()
     return count == 0;
 }
 
-bool cbProject::ShowOptions()
+bool caProject::ShowOptions()
 {
     ProjectOptionsDlg dlg(Manager::Get()->GetAppWindow(), this);
     PlaceWindow(&dlg);
@@ -1530,7 +1530,7 @@ bool cbProject::ShowOptions()
     return false;
 }
 
-int cbProject::SelectTarget(int initial, bool evenIfOne)
+int caProject::SelectTarget(int initial, bool evenIfOne)
 {
     if (!evenIfOne && GetBuildTargetsCount() == 1)
         return 0;
@@ -1544,12 +1544,12 @@ int cbProject::SelectTarget(int initial, bool evenIfOne)
 
 // Build targets
 
-caProjectBuildTarget* cbProject::AddDefaultBuildTarget()
+caProjectBuildTarget* caProject::AddDefaultBuildTarget()
 {
     return AddBuildTarget(_T("default"));
 }
 
-caProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
+caProjectBuildTarget* caProject::AddBuildTarget(const wxString& targetName)
 {
     if (GetBuildTarget(targetName)) // Don't add the target if it exists
         return 0L;
@@ -1577,7 +1577,7 @@ caProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
     return target;
 }
 
-bool cbProject::RenameBuildTarget(int index, const wxString& targetName)
+bool caProject::RenameBuildTarget(int index, const wxString& targetName)
 {
     caProjectBuildTarget* target = GetBuildTarget(index);
     if (target)
@@ -1613,12 +1613,12 @@ bool cbProject::RenameBuildTarget(int index, const wxString& targetName)
     return false;
 }
 
-bool cbProject::RenameBuildTarget(const wxString& oldTargetName, const wxString& newTargetName)
+bool caProject::RenameBuildTarget(const wxString& oldTargetName, const wxString& newTargetName)
 {
     return RenameBuildTarget(IndexOfBuildTargetName(oldTargetName), newTargetName);
 }
 
-caProjectBuildTarget* cbProject::DuplicateBuildTarget(int index, const wxString& newName)
+caProjectBuildTarget* caProject::DuplicateBuildTarget(int index, const wxString& newName)
 {
     caProjectBuildTarget* newTarget = 0;
     caProjectBuildTarget* target = GetBuildTarget(index);
@@ -1641,12 +1641,12 @@ caProjectBuildTarget* cbProject::DuplicateBuildTarget(int index, const wxString&
     return newTarget;
 }
 
-caProjectBuildTarget* cbProject::DuplicateBuildTarget(const wxString& targetName, const wxString& newName)
+caProjectBuildTarget* caProject::DuplicateBuildTarget(const wxString& targetName, const wxString& newName)
 {
     return DuplicateBuildTarget(IndexOfBuildTargetName(targetName), newName);
 }
 
-bool cbProject::ExportTargetAsProject(int index)
+bool caProject::ExportTargetAsProject(int index)
 {
     caProjectBuildTarget* target = GetBuildTarget(index);
     if (!target)
@@ -1654,7 +1654,7 @@ bool cbProject::ExportTargetAsProject(int index)
     return ExportTargetAsProject(target->GetTitle());
 }
 
-bool cbProject::ExportTargetAsProject(const wxString& targetName)
+bool caProject::ExportTargetAsProject(const wxString& targetName)
 {
     caProjectBuildTarget* target = GetBuildTarget(targetName);
     if (!target)
@@ -1684,7 +1684,7 @@ bool cbProject::ExportTargetAsProject(const wxString& targetName)
     return ret;
 }
 
-bool cbProject::RemoveBuildTarget(int index)
+bool caProject::RemoveBuildTarget(int index)
 {
     caProjectBuildTarget* target = GetBuildTarget(index);
     if (target)
@@ -1721,12 +1721,12 @@ bool cbProject::RemoveBuildTarget(int index)
     return false;
 }
 
-bool cbProject::RemoveBuildTarget(const wxString& targetName)
+bool caProject::RemoveBuildTarget(const wxString& targetName)
 {
     return RemoveBuildTarget(IndexOfBuildTargetName(targetName));
 }
 
-int cbProject::IndexOfBuildTargetName(const wxString& targetName) const
+int caProject::IndexOfBuildTargetName(const wxString& targetName) const
 {
     for (unsigned int i = 0; i < m_Targets.GetCount(); ++i)
     {
@@ -1737,7 +1737,7 @@ int cbProject::IndexOfBuildTargetName(const wxString& targetName) const
     return -1;
 }
 
-bool cbProject::BuildTargetValid(const wxString& name, bool virtuals_too) const
+bool caProject::BuildTargetValid(const wxString& name, bool virtuals_too) const
 {
     if (virtuals_too && HasVirtualBuildTarget(name))
         return true;
@@ -1746,7 +1746,7 @@ bool cbProject::BuildTargetValid(const wxString& name, bool virtuals_too) const
     return false;
 }
 
-wxString cbProject::GetFirstValidBuildTargetName(bool virtuals_too) const
+wxString caProject::GetFirstValidBuildTargetName(bool virtuals_too) const
 {
     if (virtuals_too && !m_VirtualTargets.empty())
         return m_VirtualTargets.begin()->first;
@@ -1756,7 +1756,7 @@ wxString cbProject::GetFirstValidBuildTargetName(bool virtuals_too) const
     return wxEmptyString;
 }
 
-bool cbProject::SetActiveBuildTarget(const wxString& name)
+bool caProject::SetActiveBuildTarget(const wxString& name)
 {
     if (name == m_ActiveTarget)
         return true;
@@ -1776,12 +1776,12 @@ bool cbProject::SetActiveBuildTarget(const wxString& name)
     return valid;
 }
 
-const wxString& cbProject::GetActiveBuildTarget() const
+const wxString& caProject::GetActiveBuildTarget() const
 {
     return m_ActiveTarget;
 }
 
-void cbProject::SetDefaultExecuteTarget(const wxString& name)
+void caProject::SetDefaultExecuteTarget(const wxString& name)
 {
     if (name == m_DefaultExecuteTarget)
         return;
@@ -1790,30 +1790,30 @@ void cbProject::SetDefaultExecuteTarget(const wxString& name)
     SetModified(true);
 }
 
-const wxString& cbProject::GetDefaultExecuteTarget() const
+const wxString& caProject::GetDefaultExecuteTarget() const
 {
     return m_DefaultExecuteTarget;
 }
 
-caProjectBuildTarget* cbProject::GetBuildTarget(int index)
+caProjectBuildTarget* caProject::GetBuildTarget(int index)
 {
     if (index >= 0 && index < (int)m_Targets.GetCount())
         return m_Targets[index];
     return 0L;
 }
 
-caProjectBuildTarget* cbProject::GetBuildTarget(const wxString& targetName)
+caProjectBuildTarget* caProject::GetBuildTarget(const wxString& targetName)
 {
     int idx = IndexOfBuildTargetName(targetName);
     return GetBuildTarget(idx);
 }
 
-void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
+void caProject::ReOrderTargets(const wxArrayString& nameOrder)
 {
     LogManager* msgMan = Manager::Get()->GetLogManager();
     if (nameOrder.GetCount() != m_Targets.GetCount())
     {
-        msgMan->DebugLog(F(_T("cbProject::ReOrderTargets() : Count does not match (%d sent, %d had)..."), nameOrder.GetCount(), m_Targets.GetCount()));
+        msgMan->DebugLog(F(_T("caProject::ReOrderTargets() : Count does not match (%d sent, %d had)..."), nameOrder.GetCount(), m_Targets.GetCount()));
         return;
     }
 
@@ -1822,7 +1822,7 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
         caProjectBuildTarget* target = GetBuildTarget(nameOrder[i]);
         if (!target)
         {
-            msgMan->DebugLog(F(_T("cbProject::ReOrderTargets() : Target \"%s\" not found..."), nameOrder[i].c_str()));
+            msgMan->DebugLog(F(_T("caProject::ReOrderTargets() : Target \"%s\" not found..."), nameOrder[i].c_str()));
             break;
         }
 
@@ -1845,12 +1845,12 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
     SetModified(true);
 }
 
-void cbProject::SetCurrentlyCompilingTarget(caProjectBuildTarget* bt)
+void caProject::SetCurrentlyCompilingTarget(caProjectBuildTarget* bt)
 {
     m_CurrentlyCompilingTarget = bt;
 }
 
-bool cbProject::DefineVirtualBuildTarget(const wxString& alias, const wxArrayString& targets)
+bool caProject::DefineVirtualBuildTarget(const wxString& alias, const wxArrayString& targets)
 {
     if (targets.GetCount() == 0)
     {
@@ -1871,12 +1871,12 @@ bool cbProject::DefineVirtualBuildTarget(const wxString& alias, const wxArrayStr
     return true;
 }
 
-bool cbProject::HasVirtualBuildTarget(const wxString& alias) const
+bool caProject::HasVirtualBuildTarget(const wxString& alias) const
 {
     return m_VirtualTargets.find(alias) != m_VirtualTargets.end();
 }
 
-bool cbProject::RemoveVirtualBuildTarget(const wxString& alias)
+bool caProject::RemoveVirtualBuildTarget(const wxString& alias)
 {
     VirtualBuildTargetsMap::iterator it = m_VirtualTargets.find(alias);
     if (it == m_VirtualTargets.end())
@@ -1888,7 +1888,7 @@ bool cbProject::RemoveVirtualBuildTarget(const wxString& alias)
     return true;
 }
 
-wxArrayString cbProject::GetVirtualBuildTargets() const
+wxArrayString caProject::GetVirtualBuildTargets() const
 {
     wxArrayString result;
     for (VirtualBuildTargetsMap::const_iterator it = m_VirtualTargets.begin(); it != m_VirtualTargets.end(); ++it)
@@ -1896,7 +1896,7 @@ wxArrayString cbProject::GetVirtualBuildTargets() const
     return result;
 }
 
-const wxArrayString& cbProject::GetVirtualBuildTargetGroup(const wxString& alias) const
+const wxArrayString& caProject::GetVirtualBuildTargetGroup(const wxString& alias) const
 {
     static wxArrayString resultIfError;
 
@@ -1906,7 +1906,7 @@ const wxArrayString& cbProject::GetVirtualBuildTargetGroup(const wxString& alias
     return it->second;
 }
 
-wxArrayString cbProject::GetExpandedVirtualBuildTargetGroup(const wxString& alias) const
+wxArrayString caProject::GetExpandedVirtualBuildTargetGroup(const wxString& alias) const
 {
     wxArrayString result;
 
@@ -1918,7 +1918,7 @@ wxArrayString cbProject::GetExpandedVirtualBuildTargetGroup(const wxString& alia
     return result;
 }
 
-bool cbProject::CanAddToVirtualBuildTarget(const wxString& alias, const wxString& target)
+bool caProject::CanAddToVirtualBuildTarget(const wxString& alias, const wxString& target)
 {
     // virtual not there?
     if (!HasVirtualBuildTarget(alias))
@@ -1947,7 +1947,7 @@ bool cbProject::CanAddToVirtualBuildTarget(const wxString& alias, const wxString
     return true;
 }
 
-void cbProject::ExpandVirtualBuildTargetGroup(const wxString& alias, wxArrayString& result) const
+void caProject::ExpandVirtualBuildTargetGroup(const wxString& alias, wxArrayString& result) const
 {
     const wxArrayString& group = GetVirtualBuildTargetGroup(alias);
     for (size_t i = 0; i < group.GetCount(); ++i)
@@ -1992,7 +1992,7 @@ bool MiscTreeItemData::OwnerCheck(wxTreeEvent& event,wxTreeCtrl *tree,wxEvtHandl
 }
 #endif
 
-void cbProject::SetExtendedObjectNamesGeneration(bool ext)
+void caProject::SetExtendedObjectNamesGeneration(bool ext)
 {
     bool changed = m_ExtendedObjectNamesGeneration != ext;
 
@@ -2013,12 +2013,12 @@ void cbProject::SetExtendedObjectNamesGeneration(bool ext)
     }
 }
 
-bool cbProject::GetExtendedObjectNamesGeneration() const
+bool caProject::GetExtendedObjectNamesGeneration() const
 {
     return m_ExtendedObjectNamesGeneration;
 }
 
-void cbProject::SetNotes(const wxString& notes)
+void caProject::SetNotes(const wxString& notes)
 {
     if (m_Notes != notes)
     {
@@ -2027,12 +2027,12 @@ void cbProject::SetNotes(const wxString& notes)
     }
 }
 
-const wxString& cbProject::GetNotes() const
+const wxString& caProject::GetNotes() const
 {
     return m_Notes;
 }
 
-void cbProject::SetShowNotesOnLoad(bool show)
+void caProject::SetShowNotesOnLoad(bool show)
 {
     if (m_AutoShowNotesOnLoad != show)
     {
@@ -2041,12 +2041,12 @@ void cbProject::SetShowNotesOnLoad(bool show)
     }
 }
 
-bool cbProject::GetShowNotesOnLoad() const
+bool caProject::GetShowNotesOnLoad() const
 {
     return m_AutoShowNotesOnLoad;
 }
 
-void cbProject::ShowNotes(bool nonEmptyOnly, bool editable)
+void caProject::ShowNotes(bool nonEmptyOnly, bool editable)
 {
     if (!editable && nonEmptyOnly && m_Notes.IsEmpty())
         return;
@@ -2063,7 +2063,7 @@ void cbProject::ShowNotes(bool nonEmptyOnly, bool editable)
     }
 }
 
-void cbProject::SetTitle(const wxString& title)
+void caProject::SetTitle(const wxString& title)
 {
     if ( title != GetTitle() )
     {
@@ -2072,14 +2072,14 @@ void cbProject::SetTitle(const wxString& title)
     }
 }
 
-TiXmlNode* cbProject::GetExtensionsNode()
+TiXmlNode* caProject::GetExtensionsNode()
 {
     if (!m_pExtensionsElement)
         m_pExtensionsElement = new TiXmlElement(cbU2C(_T("Extensions")));
     return m_pExtensionsElement;
 }
 
-void cbProject::AddToExtensions(const wxString& stringDesc)
+void caProject::AddToExtensions(const wxString& stringDesc)
 {
     // sample stringDesc:
     // node/+subnode/subsubnode:attr=val
@@ -2143,7 +2143,7 @@ void cbProject::AddToExtensions(const wxString& stringDesc)
     }
 }
 
-void cbProject::ProjectFileRenamed(ProjectFile* pf)
+void caProject::ProjectFileRenamed(ProjectFile* pf)
 {
 	for (ProjectFiles::iterator it = m_ProjectFilesMap.begin(); it != m_ProjectFilesMap.end(); ++it)
 	{

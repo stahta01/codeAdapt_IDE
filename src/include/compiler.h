@@ -11,7 +11,7 @@
 #include "compileroptions.h"
 
 class CompilerCommandGenerator;
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class ProjectFile;
 
@@ -268,7 +268,7 @@ class DLLIMPORT Compiler : public CompileOptionsBase
 
         /** Initialize for use with the specified @c project.
           * Transfers the call to the generator returned by GetCommandGenerator()*/
-        virtual void Init(cbProject* project);
+        virtual void Init(caProject* project);
 
         /** Get the command line to compile/link the specific file.
           * Transfers the call to the generator returned by GetCommandGenerator()*/

@@ -14,7 +14,7 @@ struct caPluginInfo;
 class cbPlugin;
 class caMimePlugin;
 class cbConfigurationPanel;
-class cbProject;
+class caProject;
 class wxDynamicLibrary;
 class wxMenuBar;
 class wxMenu;
@@ -112,7 +112,7 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         void AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0);
         caMimePlugin* GetMIMEHandlerForFile(const wxString& filename);
         void GetConfigurationPanels(int group, wxWindow* parent, ConfigurationPanelsArray& arrayToFill);
-        void GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill);
+        void GetProjectConfigurationPanels(wxWindow* parent, caProject* project, ConfigurationPanelsArray& arrayToFill);
         int Configure();
         void SetupLocaleDomain(const wxString& DomainName);
 

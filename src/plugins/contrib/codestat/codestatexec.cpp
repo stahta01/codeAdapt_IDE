@@ -33,7 +33,7 @@
  */
 int CodeStatExecDlg::Execute(LanguageDef languages[NB_FILETYPES_MAX], int nb_languages)
 {
-   cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
+   caProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
    long nb_files = project->GetFilesCount();
    //wxMessageBox(wxString::Format(_T("Nb files: %ld"), nb_files), _("Error"), wxOK);
 

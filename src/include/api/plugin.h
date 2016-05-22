@@ -40,7 +40,7 @@ class wxToolBar;
 class wxPanel;
 class wxWindow;
 class cbEditor;
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class caCompileTargetBase;
 class caFileTreeData;
@@ -110,7 +110,7 @@ class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
           * @param project The project that is being edited.
           * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, cbProject* project){ return 0; }
+        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
 
         /** This method is called by Code::Blocks and is used by the plugin
           * to add any menu items it needs on Code::Blocks's menu bar.\n
@@ -338,7 +338,7 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
           * @param project The selected project (can be NULL).
           * @param target The selected target (can be NULL).
           */
-        virtual int Configure(cbProject* project, caProjectBuildTarget* target = 0L) = 0;
+        virtual int Configure(caProject* project, caProjectBuildTarget* target = 0L) = 0;
     private:
 };
 
@@ -554,7 +554,7 @@ class PLUGIN_EXPORT caWizardPlugin : public cbPlugin
           *                         would be the project's filename.
           *                         If the wizard created a build target, that would be an empty string.
           *                         If the wizard created a file, that would be the file's name.
-          * @return a pointer to the generated cbProject or caProjectBuildTarget. NULL for everything else (failure too).
+          * @return a pointer to the generated caProject or caProjectBuildTarget. NULL for everything else (failure too).
           * You should dynamic-cast this to the correct type based on GetOutputType() 's value. */
         virtual caCompileTargetBase* Launch(int index, wxString* createdFilename = 0) = 0; // do your work ;)
     private:

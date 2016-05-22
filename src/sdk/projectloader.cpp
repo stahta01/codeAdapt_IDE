@@ -36,7 +36,7 @@
 #include "configmanager.h"
 #include "tinywxuni.h"
 
-ProjectLoader::ProjectLoader(cbProject* project)
+ProjectLoader::ProjectLoader(caProject* project)
     : m_pProject(project),
     m_Upgraded(false),
     m_OpenDirty(false),

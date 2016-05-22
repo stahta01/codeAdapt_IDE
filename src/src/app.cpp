@@ -677,7 +677,7 @@ int CodeBlocksApp::BatchJob()
     if (!m_Clean && m_BatchTarget.Lower() == _T("ask"))
     {
         m_BatchTarget.Clear();
-        cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+        caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
         if (prj)
         {
             int idx = -1;

@@ -98,7 +98,7 @@ class CompilerGCC : public caCompilerPlugin
         virtual int KillProcess();
         virtual bool IsRunning() const;
         virtual int GetExitCode() const { return m_LastExitCode; }
-        virtual int Configure(cbProject* project, caProjectBuildTarget* target = 0L);
+        virtual int Configure(caProject* project, caProjectBuildTarget* target = 0L);
 
         int GetConfigurationPriority() const { return 0; }
         int GetConfigurationGroup() const { return cgCompiler; }
@@ -178,19 +178,19 @@ class CompilerGCC : public caCompilerPlugin
         void DoClearErrors();
         wxString ProjectMakefile();
         void AddOutputLine(const wxString& output, bool forceErrorColour = false);
-        void LogWarningOrError(CompilerLineType lt, cbProject* prj, const wxString& filename, const wxString& line, const wxString& msg);
+        void LogWarningOrError(CompilerLineType lt, caProject* prj, const wxString& filename, const wxString& line, const wxString& msg);
         void LogMessage(const wxString& message, CompilerLineType lt = cltNormal, LogTarget log = ltAll, bool forceErrorColour = false, bool isTitle = false, bool updateProgress = false);
         void SaveBuildLog();
         void InitBuildLog(bool workspaceBuild);
-        void PrintBanner(cbProject* prj = 0, caProjectBuildTarget* target = 0);
+        void PrintBanner(caProject* prj = 0, caProjectBuildTarget* target = 0);
         bool UseMake(caProjectBuildTarget* target = 0);
         bool CompilerValid(caProjectBuildTarget* target = 0);
         caProjectBuildTarget* GetBuildTargetForFile(ProjectFile* pf);
         caProjectBuildTarget* GetBuildTargetForFile(const wxString& file);
-        wxString GetMakeCommandFor(MakeCommand cmd, cbProject* project, caProjectBuildTarget* target);
+        wxString GetMakeCommandFor(MakeCommand cmd, caProject* project, caProjectBuildTarget* target);
         int DoBuild();
         void CalculateWorkspaceDependencies(wxArrayInt& deps);
-        void CalculateProjectDependencies(cbProject* prj, wxArrayInt& deps);
+        void CalculateProjectDependencies(caProject* prj, wxArrayInt& deps);
         void InitBuildState(BuildJob job, const wxString& target);
         void ResetBuildState();
         void BuildStateManagement(); ///< This uses m_BuildJob.
@@ -200,8 +200,8 @@ class CompilerGCC : public caCompilerPlugin
         // wxArrayString from DirectCommands
         void AddToCommandQueue(const wxArrayString& commands);
 
-        int GetTargetIndexFromName(cbProject* prj, const wxString& name);
-        void UpdateProjectTargets(cbProject* project);
+        int GetTargetIndexFromName(caProject* prj, const wxString& name);
+        void UpdateProjectTargets(caProject* project);
         wxString GetTargetString(int index = -1);
         void DoClean(const wxArrayString& commands);
 
@@ -214,15 +214,15 @@ class CompilerGCC : public caCompilerPlugin
         // are to be built in order
         struct BuildJobTarget
         {
-            BuildJobTarget(cbProject* p = 0, const wxString& n = wxEmptyString) : project(p), targetName(n) {}
-            cbProject* project;
+            BuildJobTarget(caProject* p = 0, const wxString& n = wxEmptyString) : project(p), targetName(n) {}
+            caProject* project;
             wxString targetName;
         };
         typedef std::queue<BuildJobTarget> BuildJobTargetsList;
         BuildJobTargetsList m_BuildJobTargetsList;
 
-        void ExpandTargets(cbProject* project, const wxString& targetName, wxArrayString& result);
-        void PreprocessJob(cbProject* project, const wxString& targetName);
+        void ExpandTargets(caProject* project, const wxString& targetName, wxArrayString& result);
+        void PreprocessJob(caProject* project, const wxString& targetName);
         BuildJobTarget GetNextJob();
         BuildJobTarget& PeekNextJob();
 
@@ -241,7 +241,7 @@ class CompilerGCC : public caCompilerPlugin
         wxMenu* m_TargetMenu;
         int m_TargetIndex;
         wxMenu* m_ErrorsMenu;
-        cbProject* m_Project;
+        caProject* m_Project;
         wxProcess** m_Processes;
         size_t m_ParallelProcessCount;
         wxToolBar* m_pTbar;
@@ -261,12 +261,12 @@ class CompilerGCC : public caCompilerPlugin
         wxLongLong m_StartTimer;
 
         // build state management
-        cbProject* m_pBuildingProject; // +
+        caProject* m_pBuildingProject; // +
         wxString m_BuildingTargetName; // +
         BuildJob m_BuildJob;
         BuildState m_BuildState;
         BuildState m_NextBuildState;
-        cbProject* m_pLastBuildingProject;
+        caProject* m_pLastBuildingProject;
         caProjectBuildTarget* m_pLastBuildingTarget;
         // to decide if post-build steps should run
         bool m_RunTargetPostBuild;

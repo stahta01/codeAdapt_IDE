@@ -65,7 +65,7 @@ EnvVars::~EnvVars()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-void EnvVars::SetProjectEnvvarSet(cbProject* project, const wxString& envvar_set)
+void EnvVars::SetProjectEnvvarSet(caProject* project, const wxString& envvar_set)
 {
 #if TRACE_ENVVARS
   Manager::Get()->GetLogManager()->DebugLog(F(_T("SetProjectEnvvarSet")));
@@ -83,7 +83,7 @@ void EnvVars::SetProjectEnvvarSet(cbProject* project, const wxString& envvar_set
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-void EnvVars::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem,
+void EnvVars::OnProjectLoadingHook(caProject* project, TiXmlElement* elem,
                                    bool loading)
 {
 #if TRACE_ENVVARS
@@ -244,7 +244,7 @@ cbConfigurationPanel* EnvVars::GetConfigurationPanel(wxWindow* parent)
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 cbConfigurationPanel* EnvVars::GetProjectConfigurationPanel(wxWindow* parent,
-                                                            cbProject* project)
+                                                            caProject* project)
 {
   EnvVarsProjectOptionsDlg* dlg = new EnvVarsProjectOptionsDlg(parent, this, project);
   // deleted by the caller

@@ -8,7 +8,7 @@
 #include "settings.h"
 #include "compiletargetbase.h"
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class ProjectFile;
 class Compiler;
@@ -30,7 +30,7 @@ class DLLIMPORT CompilerCommandGenerator
         virtual ~CompilerCommandGenerator();
 
         /** Initialize for use with the specified @c project. */
-        virtual void Init(cbProject* project);
+        virtual void Init(caProject* project);
 
         /** Get the command line to compile/link the specific file. */
         virtual void GenerateCommandLine(wxString& macro,
@@ -61,7 +61,7 @@ class DLLIMPORT CompilerCommandGenerator
 		  */
 		virtual const wxArrayString& GetLinkerSearchDirs(caProjectBuildTarget* target);
     protected:
-        virtual void DoBuildScripts(cbProject* project, caCompileTargetBase* target, const wxString& funcName);
+        virtual void DoBuildScripts(caProject* project, caCompileTargetBase* target, const wxString& funcName);
         virtual wxString GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxString& project_options, const wxString& target_options);
         virtual wxArrayString GetOrderedOptions(const caProjectBuildTarget* target, OptionsRelationType rel, const wxArrayString& project_options, const wxArrayString& target_options);
         virtual wxString SetupOutputFilenames(Compiler* compiler, caProjectBuildTarget* target);

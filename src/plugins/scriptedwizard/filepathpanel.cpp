@@ -108,7 +108,7 @@ FilePathPanel::FilePathPanel(wxWindow* parent,wxWindowID id) :
     txtGuard->SetValue(wxEmptyString);
 
     // fill targets list
-    cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (prj)
     {
         clbTargets->Clear();
@@ -135,7 +135,7 @@ FilePathPanel::~FilePathPanel()
 
 void FilePathPanel::SetAddToProject(bool add)
 {
-    cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     add = add && prj;
     chkAddToProject->SetValue(add);
 
@@ -183,7 +183,7 @@ void FilePathPanel::OntxtFilenameText(/* cb_unused */ wxCommandEvent& event)
 
 void FilePathPanel::OnbtnBrowseClick(/*cb_unused*/ wxCommandEvent& event)
 {
-    cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     wxFileDialog dlg(this,
                      _("Select filename"),
                      prj ? prj->GetBasePath() : _T(""),

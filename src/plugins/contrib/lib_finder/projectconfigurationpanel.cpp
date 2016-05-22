@@ -85,7 +85,7 @@ namespace
     };
 }
 
-ProjectConfigurationPanel::ProjectConfigurationPanel(wxWindow* parent,ProjectConfiguration* Configuration,cbProject* Project,TypedResults& KnownLibs):
+ProjectConfigurationPanel::ProjectConfigurationPanel(wxWindow* parent,ProjectConfiguration* Configuration,caProject* Project,TypedResults& KnownLibs):
     m_Configuration(Configuration),
     m_Project(Project),
     m_KnownLibs(KnownLibs)

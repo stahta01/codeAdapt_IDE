@@ -103,7 +103,7 @@ BEGIN_EVENT_TABLE(ProjectOptionsDlg, wxDialog)
 END_EVENT_TABLE()
 
 // class constructor
-ProjectOptionsDlg::ProjectOptionsDlg(wxWindow* parent, cbProject* project)
+ProjectOptionsDlg::ProjectOptionsDlg(wxWindow* parent, caProject* project)
     : m_Project(project),
     m_Current_Sel(-1),
     m_pCompiler(0L)

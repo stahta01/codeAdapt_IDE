@@ -140,7 +140,7 @@ int ProjectsImporter::LoadProject(const wxString& filename)
         return -1;
     the_file.SetExt(FileFilters::CODEBLOCKS_EXT);
 
-    cbProject* prj = Manager::Get()->GetProjectManager()->NewProject(the_file.GetFullPath());
+    caProject* prj = Manager::Get()->GetProjectManager()->NewProject(the_file.GetFullPath());
     if (!prj)
         return -1;
 

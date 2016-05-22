@@ -28,7 +28,7 @@
 #include "tinyxml/tinyxml.h"
 #include "tinywxuni.h"
 
-ProjectLayoutLoader::ProjectLayoutLoader(cbProject* project)
+ProjectLayoutLoader::ProjectLayoutLoader(caProject* project)
     : m_pProject(project),
     m_TopProjectFile(0L)
 {

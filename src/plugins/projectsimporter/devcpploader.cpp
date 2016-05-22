@@ -30,7 +30,7 @@
 #include <wx/fileconf.h>
 
 
-DevCppLoader::DevCppLoader(cbProject* project)
+DevCppLoader::DevCppLoader(caProject* project)
     : m_pProject(project)
 {
 	//ctor

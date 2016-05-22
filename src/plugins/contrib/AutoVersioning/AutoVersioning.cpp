@@ -122,7 +122,7 @@ void AutoVersioning::BuildMenu(wxMenuBar* menuBar)
 //}
 
 //{Envent Functions
-void AutoVersioning::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem, bool loading)
+void AutoVersioning::OnProjectLoadingHook(caProject* project, TiXmlElement* elem, bool loading)
 {
 	if(loading)
 	{
@@ -436,7 +436,7 @@ void AutoVersioning::OnUpdateUI(wxUpdateUIEvent& event)
 //}
 
 //{Functions
-void AutoVersioning::SetVersionAndSettings(cbProject& Project, bool update)
+void AutoVersioning::SetVersionAndSettings(caProject& Project, bool update)
 {
 	// KILLERBOT : in case our struct would have a constructor, then no need to have an if/else here
 	// --> init in correct place then !!!!!!! TODO

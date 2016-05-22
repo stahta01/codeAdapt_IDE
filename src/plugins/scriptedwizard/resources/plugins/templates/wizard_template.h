@@ -53,7 +53,7 @@ class [PLUGIN_NAME] : public cbWizardPlugin
           * @param project The project that is being edited.
           * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, cbProject* project){ return 0; }
+        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
 [ENDIF HAS_CONFIGURE]
         /** @return the number of template wizards this plugin contains */
         virtual int GetCount() const;
@@ -89,7 +89,7 @@ class [PLUGIN_NAME] : public cbWizardPlugin
           *                         would be the project's filename.
           *                         If the wizard created a build target, that would be an empty string.
           *                         If the wizard created a file, that would be the file's name.
-          * @return a pointer to the generated cbProject or ProjectBuildTarget. NULL for everything else (failure too).
+          * @return a pointer to the generated caProject or ProjectBuildTarget. NULL for everything else (failure too).
           * You should dynamic-cast this to the correct type based on GetOutputType() 's value. */
         virtual CompileTargetBase* Launch(int index, wxString* createdFilename = 0);
     protected:

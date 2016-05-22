@@ -12,7 +12,7 @@
 //forward decls
 class wxMenuBar;
 class wxMenu;
-class cbProject;
+class caProject;
 class NewFromTemplateDlg;
 
 class DLLIMPORT TemplateManager : public Mgr<TemplateManager>, public wxEvtHandler
@@ -23,14 +23,14 @@ class DLLIMPORT TemplateManager : public Mgr<TemplateManager>, public wxEvtHandl
 		void ReleaseMenu(wxMenuBar* menuBar);
 		void BuildToolsMenu(wxMenu* menu);
 
-		cbProject* New(TemplateOutputType initial = totProject, wxString* pFilename = 0);
+		caProject* New(TemplateOutputType initial = totProject, wxString* pFilename = 0);
 		wxString GetLastCreatedFilename() const;
-		void SaveUserTemplate(cbProject* prj);
+		void SaveUserTemplate(caProject* prj);
 	protected:
 		void LoadTemplates();
 		void LoadUserTemplates();
-		cbProject* NewFromTemplate(NewFromTemplateDlg& dlg, wxString* pFilename = 0);
-		cbProject* NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, wxString* pFilename = 0);
+		caProject* NewFromTemplate(NewFromTemplateDlg& dlg, wxString* pFilename = 0);
+		caProject* NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, wxString* pFilename = 0);
 		wxArrayString m_UserTemplates;
 	private:
 		TemplateManager();

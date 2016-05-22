@@ -100,9 +100,9 @@ void TemplateManager::LoadUserTemplates()
     Manager::Get()->GetLogManager()->DebugLog(F(_T("%d user templates loaded"), m_UserTemplates.GetCount()));
 }
 
-cbProject* TemplateManager::New(TemplateOutputType initial, wxString* pFilename)
+caProject* TemplateManager::New(TemplateOutputType initial, wxString* pFilename)
 {
-    cbProject* prj = NULL;
+    caProject* prj = NULL;
 
     LoadUserTemplates();
     NewFromTemplateDlg dlg(initial, m_UserTemplates);
@@ -117,9 +117,9 @@ cbProject* TemplateManager::New(TemplateOutputType initial, wxString* pFilename)
     return prj;
 }
 
-cbProject* TemplateManager::NewFromTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
+caProject* TemplateManager::NewFromTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
 {
-    cbProject* prj = NULL;
+    caProject* prj = NULL;
     caWizardPlugin* wiz = dlg.GetWizard();
     if (wiz)
     {
@@ -127,16 +127,16 @@ cbProject* TemplateManager::NewFromTemplate(NewFromTemplateDlg& dlg, wxString* p
         caCompileTargetBase* ret = wiz->Launch(dlg.GetWizardIndex(), pFilename);
         switch (wiz->GetOutputType(dlg.GetWizardIndex()))
         {
-            case totProject: prj = dynamic_cast<cbProject*>(ret); break;
+            case totProject: prj = dynamic_cast<caProject*>(ret); break;
             default: break;
         }
     }
     return prj;
 }
 
-cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
+caProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
 {
-    cbProject* prj = NULL;
+    caProject* prj = NULL;
     if (!dlg.SelectedUserTemplate())
     {
         Manager::Get()->GetLogManager()->DebugLog(_T("TemplateManager::NewProjectFromUserTemplate() called when no user template was selected ?!?"));
@@ -253,7 +253,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
     return prj;
 }
 
-void TemplateManager::SaveUserTemplate(cbProject* prj)
+void TemplateManager::SaveUserTemplate(caProject* prj)
 {
     if (!prj)
         return;
@@ -315,7 +315,7 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
             Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.c_str(), dst.c_str()));
     }
 
-    // cbProject doesn't have a GetRelativeToCommonTopLevelPath() function, so we simulate it here
+    // caProject doesn't have a GetRelativeToCommonTopLevelPath() function, so we simulate it here
     // to find out the real destination file to create...
     wxString topLevelPath = prj->GetCommonTopLevelPath();
     fname.Assign(prj->GetFilename());

@@ -4,13 +4,13 @@
 #include "settings.h"
 #include <wx/dialog.h>
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 
 class DLLIMPORT ExternalDepsDlg : public wxDialog
 {
 	public:
-		ExternalDepsDlg(wxWindow* parent, cbProject* project, caProjectBuildTarget* target);
+		ExternalDepsDlg(wxWindow* parent, caProject* project, caProjectBuildTarget* target);
 		virtual ~ExternalDepsDlg();
 
 		void EndModal(int retCode);
@@ -35,7 +35,7 @@ class DLLIMPORT ExternalDepsDlg : public wxDialog
 
         void OnUpdateUI(wxUpdateUIEvent& event);
 
-        cbProject* m_pProject;
+        caProject* m_pProject;
         caProjectBuildTarget* m_pTarget;
 	private:
         DECLARE_EVENT_TABLE()

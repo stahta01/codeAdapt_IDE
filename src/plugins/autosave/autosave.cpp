@@ -97,7 +97,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
         ProjectManager *pm = Manager::Get()->GetProjectManager();
         if(pm && pm->GetActiveProject())
         {
-            if(cbProject * p = pm->GetActiveProject())
+            if(caProject * p = pm->GetActiveProject())
             {
                 switch(method)
                 {

@@ -4,12 +4,12 @@
 #include <wx/string.h>
 #include <wx/list.h>    // WX_DECLARE_LIST
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 
 struct CompilerCommand
 {
-    CompilerCommand(const wxString& cmd, const wxString& msg, cbProject* prj, caProjectBuildTarget* tgt, bool is_run = false)
+    CompilerCommand(const wxString& cmd, const wxString& msg, caProject* prj, caProjectBuildTarget* tgt, bool is_run = false)
         : command(cmd), message(msg), project(prj), target(tgt), isRun(is_run), mustWait(false), isLink(false)
     {}
     CompilerCommand(const CompilerCommand& rhs)
@@ -18,7 +18,7 @@ struct CompilerCommand
     wxString command;
     wxString message;
     wxString dir;
-    cbProject* project;
+    caProject* project;
     caProjectBuildTarget* target;
     bool isRun; ///< if it's a command to run the target.
     bool mustWait; ///< wait for all previous commands to finish (for parallel builds).

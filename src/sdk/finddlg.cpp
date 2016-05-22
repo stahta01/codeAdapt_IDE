@@ -47,7 +47,7 @@
 #define CONF_GROUP _T("/find_options")
 
 // flag to know when to update the search-in-files custom path
-cbProject* g_LastUsedProject = 0;
+caProject* g_LastUsedProject = 0;
 
 BEGIN_EVENT_TABLE(FindDlg, wxDialog)
     EVT_NOTEBOOK_PAGE_CHANGED(XRCID("nbFind"), FindDlg::OnFindChange)
@@ -102,7 +102,7 @@ FindDlg::FindDlg(wxWindow* parent, const wxString& initial, bool hasSelection, b
     UpdateUI();
 
 	// find in files search path options
-    cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (prj && g_LastUsedProject != prj)
     {
         XRCCTRL(*this, "txtSearchPath", wxTextCtrl)->SetValue(prj->GetBasePath());

@@ -28,7 +28,7 @@ BEGIN_EVENT_TABLE(VirtualBuildTargetsDlg,wxDialog)
 	EVT_UPDATE_UI(-1, VirtualBuildTargetsDlg::OnUpdateUI)
 END_EVENT_TABLE()
 
-VirtualBuildTargetsDlg::VirtualBuildTargetsDlg(wxWindow* parent,wxWindowID id, cbProject* project)
+VirtualBuildTargetsDlg::VirtualBuildTargetsDlg(wxWindow* parent,wxWindowID id, caProject* project)
     : lstAliases(0),
     btnAdd(0),
     btnEdit(0),

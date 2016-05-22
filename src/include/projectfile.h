@@ -12,7 +12,7 @@
 
 #include "blockallocated.h"
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class pfDetails;
 
@@ -34,7 +34,7 @@ class ProjectFile  : public BlockAllocated<ProjectFile, 1000>
 {
     public:
         /// Constructor
-        ProjectFile(cbProject* prj);
+        ProjectFile(caProject* prj);
         /// Destructor
         ~ProjectFile();
 
@@ -54,7 +54,7 @@ class ProjectFile  : public BlockAllocated<ProjectFile, 1000>
           * @param oldTargetName The build target's old name.
           * @param newTargetName The build target's new name.
           * @note This does *not* change the build target's name, just the reference in the project file.
-          * This is actually used by cbProject::RenameBuildTarget(). */
+          * This is actually used by caProject::RenameBuildTarget(). */
         void RenameBuildTarget(const wxString& oldTargetName, const wxString& newTargetName);
 
         /** Remove this file from the specified build target.
@@ -67,19 +67,19 @@ class ProjectFile  : public BlockAllocated<ProjectFile, 1000>
           */
         bool ShowOptions(wxWindow* parent);
 
-        // take as example the relative file sdk/cbProject.cpp
+        // take as example the relative file sdk/caProject.cpp
         /** @return The relative (to the project) filename without extension. */
-        wxString GetBaseName() const; // returns sdk/cbProject
+        wxString GetBaseName() const; // returns sdk/caProject
 
         /** @return The generated object filename. */
-        const wxString& GetObjName(); // returns sdk/cbProject.o
+        const wxString& GetObjName(); // returns sdk/caProject.o
 
         /** Set the generated object filename.
           * @param name The filename for the generated object. */
         void SetObjName(const wxString& name);
 
         /** @return The parent project. */
-        cbProject* GetParentProject(){ return project; }
+        caProject* GetParentProject(){ return project; }
 
         /** This is called automatically when adding/removing build targets.
           * @param target A pointer to the build target whose file details should be updated. */
@@ -165,10 +165,10 @@ class ProjectFile  : public BlockAllocated<ProjectFile, 1000>
         /** Auto-generated files when compiling this file */
         ProjectFilesVector generatedFiles;
     protected:
-        friend class cbProject;
+        friend class caProject;
 
         void DoUpdateFileDetails(caProjectBuildTarget* target);
-        cbProject* project;
+        caProject* project;
         FileVisualState m_VisualState;
         wxTreeItemId m_TreeItemId; // set by the project when building the tree
         wxString m_ObjName;

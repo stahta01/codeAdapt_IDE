@@ -232,7 +232,7 @@ void Execution::OnBtnRunClick(wxCommandEvent& /*event*/)
 
   if ( m_Scope->GetSelection()==0 ) // project scope
   {
-    cbProject* Project = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* Project = Manager::Get()->GetProjectManager()->GetActiveProject();
     AddFilesFromProject(FilesToProcess,Project);
   }
   else                              // workspace scope
@@ -466,7 +466,7 @@ int Execution::RunScan(const wxArrayString& FilesToProcess,
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-void Execution::AddFilesFromProject(wxArrayString& Files,cbProject* Project)
+void Execution::AddFilesFromProject(wxArrayString& Files,caProject* Project)
 {
   if (!Project)
     return;

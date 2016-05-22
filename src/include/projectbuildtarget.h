@@ -12,7 +12,7 @@
 
 #include "blockallocated.h"
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 
 WX_DEFINE_ARRAY(caProjectBuildTarget*, BuildTargets);
@@ -22,12 +22,12 @@ class DLLIMPORT caProjectBuildTarget : public BlockAllocated<caProjectBuildTarge
 {
 	public:
 		/// Constructor
-		caProjectBuildTarget(cbProject* parentProject);
+		caProjectBuildTarget(caProject* parentProject);
 		/// Destructor
 		~caProjectBuildTarget();
 
         /** @return The target's parent project. */
-        virtual cbProject* GetParentProject();
+        virtual caProject* GetParentProject();
         /** @return The full title, i.e. "projectname - targetname". */
         virtual wxString GetFullTitle() const;
 
@@ -114,7 +114,7 @@ class DLLIMPORT caProjectBuildTarget : public BlockAllocated<caProjectBuildTarge
         virtual FilesList& GetFilesList(){ return m_Files; }
     private:
         friend class ProjectFile; // to allow it to add/remove files in FilesList
-        cbProject* m_Project;
+        caProject* m_Project;
         wxString m_ExternalDeps;
         wxString m_AdditionalOutputFiles;
         BuildTargets m_TargetDeps;

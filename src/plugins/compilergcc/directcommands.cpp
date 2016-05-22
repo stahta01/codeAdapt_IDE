@@ -22,7 +22,7 @@
 
 DirectCommands::DirectCommands(CompilerGCC* compilerPlugin,
                                 Compiler* compiler,
-                                cbProject* project,
+                                caProject* project,
                                 int logPageIndex)
     : m_doYield(false),
     m_PageIndex(logPageIndex),

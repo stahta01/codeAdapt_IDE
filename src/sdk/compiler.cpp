@@ -236,7 +236,7 @@ CompilerCommandGenerator* Compiler::GetCommandGenerator()
     return new CompilerCommandGenerator;
 }
 
-void Compiler::Init(cbProject* project)
+void Compiler::Init(caProject* project)
 {
     if (!m_pGenerator)
         m_pGenerator = GetCommandGenerator();

@@ -9,7 +9,7 @@
 
 class wxListBox;
 class ScopeTreeData;
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class CompilerGCC;
 class wxSpinEvent;
@@ -21,7 +21,7 @@ class wxUpdateUIEvent;
 class CompilerOptionsDlg : public cbConfigurationPanel
 {
 	public:
-		CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, cbProject* project = 0L, caProjectBuildTarget* target = 0L);
+		CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, caProject* project = 0L, caProjectBuildTarget* target = 0L);
 		~CompilerOptionsDlg();
 
         virtual wxString GetTitle() const { return _("Global compiler settings"); }
@@ -111,7 +111,7 @@ class CompilerOptionsDlg : public cbConfigurationPanel
         wxArrayString m_LinkLibs;
         wxArrayString m_CompilerOptions;
 		int m_CurrentCompilerIdx;
-		cbProject* m_pProject;
+		caProject* m_pProject;
 		caProjectBuildTarget* m_pTarget;
 		bool m_bDirty;					//!< true if a setting has changed since last save
 		std::vector<CustomVarAction>    m_CustomVarActions; //!< the actions carried out on the custom vars that need to be saved/applied

@@ -33,7 +33,7 @@ END_EVENT_TABLE()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-EnvVarsProjectOptionsDlg::EnvVarsProjectOptionsDlg(wxWindow* parent, EnvVars* plugin, cbProject* project) :
+EnvVarsProjectOptionsDlg::EnvVarsProjectOptionsDlg(wxWindow* parent, EnvVars* plugin, caProject* project) :
   m_pPlugin(plugin),
   m_pProject(project)
 {

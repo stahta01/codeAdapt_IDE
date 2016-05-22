@@ -29,7 +29,7 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(FilesList);
 
-ProjectFile::ProjectFile(cbProject* prj) :
+ProjectFile::ProjectFile(caProject* prj) :
     compile(false),
     link(false),
     weight(50),

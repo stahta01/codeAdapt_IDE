@@ -274,7 +274,7 @@ ProjectManager::~ProjectManager()
     int count = m_pProjects->GetCount();
     for (int i = 0; i < count; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         if (project)
             delete project;
     }
@@ -456,7 +456,7 @@ void ProjectManager::SetDefaultPath(const wxString& path)
     Manager::Get()->GetConfigManager(_T("project_manager"))->Write(_T("default_path"), path);
 }
 
-bool ProjectManager::IsProjectStillOpen(cbProject* project)
+bool ProjectManager::IsProjectStillOpen(caProject* project)
 {
     int count = m_pProjects->GetCount();
     for (int i = 0; i < count; ++i)
@@ -467,7 +467,7 @@ bool ProjectManager::IsProjectStillOpen(cbProject* project)
     return false;
 }
 
-void ProjectManager::SetProject(cbProject* project, bool refresh)
+void ProjectManager::SetProject(caProject* project, bool refresh)
 {
     if (project != m_pActiveProject)
     {
@@ -516,10 +516,10 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
         || ftd->GetKind() == caFileTreeData::ftdkFolder))
     {
         int Count = Projects->GetCount();
-        cbProject* ProjInTree = ftd->GetProject();
+        caProject* ProjInTree = ftd->GetProject();
         for (int i = 0; i < Count; ++i)
         {
-            cbProject* CurProject = Projects->Item(i);
+            caProject* CurProject = Projects->Item(i);
             if (ProjInTree->GetTitle().IsSameAs(CurProject->GetTitle()))
             {
                 caProjectBuildTarget* CompTarget = CurProject->GetCurrentlyCompilingTarget();
@@ -698,14 +698,14 @@ it differs from the block currently in CreateMenu() by the following two IDs */
         m_pTree->PopupMenu(&menu, pt);
 }
 
-cbProject* ProjectManager::IsOpen(const wxString& filename)
+caProject* ProjectManager::IsOpen(const wxString& filename)
 {
     if (filename.IsEmpty())
         return 0L;
     int count = m_pProjects->GetCount();
     for (int i = 0; i < count; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         if(project)
         {
 #ifdef __WXMSW__
@@ -740,9 +740,9 @@ wxMenu* ProjectManager::GetProjectMenu()
     return result;
 }
 
-cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt)
+caProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt)
 {
-    cbProject* result = 0;
+    caProject* result = 0;
     if (!wxFileExists(filename) || !BeginLoadingProject())
     {
         return 0;
@@ -755,7 +755,7 @@ cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt
     // you just break out of the loop (which only gets executed once) to exit.
     do
     {
-        cbProject* project = IsOpen(filename);
+        caProject* project = IsOpen(filename);
         if (project)
         {
             // already open
@@ -765,9 +765,9 @@ cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt
 
         if (FileTypeOf(filename) == ftCodeBlocksProject)
         {
-            project = new cbProject(filename);
+            project = new caProject(filename);
 
-            // We need to do this because creating cbProject allows the app to be
+            // We need to do this because creating caProject allows the app to be
             // closed in the middle of the operation. So the class destructor gets
             // called in the middle of a method call.
 
@@ -801,7 +801,7 @@ cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt
     return result;
 }
 
-cbProject* ProjectManager::NewProject(const wxString& filename)
+caProject* ProjectManager::NewProject(const wxString& filename)
 {
     if (!filename.IsEmpty() && wxFileExists(filename))
     {
@@ -819,10 +819,10 @@ cbProject* ProjectManager::NewProject(const wxString& filename)
             return 0;
     }
 
-    cbProject* prj = IsOpen(filename);
+    caProject* prj = IsOpen(filename);
     if (!prj && BeginLoadingProject())
     {
-        prj = new cbProject(filename);
+        prj = new caProject(filename);
         EndLoadingProject(prj);
         SetProject(prj, !m_IsLoadingWorkspace);
     }
@@ -847,7 +847,7 @@ bool ProjectManager::QueryCloseAllProjects()
     return true;
 }
 
-bool ProjectManager::QueryCloseProject(cbProject *proj,bool dontsavefiles)
+bool ProjectManager::QueryCloseProject(caProject *proj,bool dontsavefiles)
 {
     if(!proj)
         return true;
@@ -898,7 +898,7 @@ bool ProjectManager::CloseAllProjects(bool dontsave)
     return true;
 }
 
-bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refresh)
+bool ProjectManager::CloseProject(caProject* project, bool dontsave, bool refresh)
 {
     if (!project)
         return true;
@@ -930,7 +930,7 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     RemoveProjectFromAllDependencies(project);
     m_pProjects->Remove(project);
 
-    // moved here from cbProject's destructor, because by then
+    // moved here from caProject's destructor, because by then
     // the list of project files was already emptied...
     CodeBlocksEvent event(cbEVT_PROJECT_CLOSE);
     event.SetProject(project);
@@ -960,7 +960,7 @@ bool ProjectManager::CloseActiveProject(bool dontsave)
     return true;
 }
 
-bool ProjectManager::SaveProject(cbProject* project)
+bool ProjectManager::SaveProject(caProject* project)
 {
     if (!project)
         return false;
@@ -972,7 +972,7 @@ bool ProjectManager::SaveProject(cbProject* project)
     return false;
 }
 
-bool ProjectManager::SaveProjectAs(cbProject* project)
+bool ProjectManager::SaveProjectAs(caProject* project)
 {
     if (!project)
         return false;
@@ -1002,7 +1002,7 @@ bool ProjectManager::SaveAllProjects()
     int count = 0;
     for (int i = 0; i < prjCount; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         bool isModified = project->GetModified();
         if (isModified && SaveProject(project))
             ++count;
@@ -1011,7 +1011,7 @@ bool ProjectManager::SaveAllProjects()
     return count == prjCount;
 }
 
-void ProjectManager::MoveProjectUp(cbProject* project, bool warpAround)
+void ProjectManager::MoveProjectUp(caProject* project, bool warpAround)
 {
     if (!project)
         return;
@@ -1039,7 +1039,7 @@ void ProjectManager::MoveProjectUp(cbProject* project, bool warpAround)
     m_pTree->SelectItem(node, true);
 }
 
-void ProjectManager::MoveProjectDown(cbProject* project, bool warpAround)
+void ProjectManager::MoveProjectDown(caProject* project, bool warpAround)
 {
     if (!project)
         return;
@@ -1234,7 +1234,7 @@ void ProjectManager::RebuildTree()
     int count = m_pProjects->GetCount();
     for (int i = 0; i < count; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         if (project)
             project->SaveTreeState(m_pTree);
     }
@@ -1253,7 +1253,7 @@ void ProjectManager::RebuildTree()
     m_TreeRoot = m_pTree->AddRoot(title, WorkspaceIconIndex(read_only), WorkspaceIconIndex(read_only));
     for (int i = 0; i < count; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         if (project)
         {
             project->BuildTree(m_pTree, m_TreeRoot, m_TreeCategorize, m_TreeUseFolders, m_pFileGroups);
@@ -1264,14 +1264,14 @@ void ProjectManager::RebuildTree()
 
     for (int i = 0; i < count; ++i)
     {
-        cbProject* project = m_pProjects->Item(i);
+        caProject* project = m_pProjects->Item(i);
         if (project)
             project->RestoreTreeState(m_pTree);
     }
     UnfreezeTree();
 }
 
-int ProjectManager::DoAddFileToProject(const wxString& filename, cbProject* project, wxArrayInt& targets)
+int ProjectManager::DoAddFileToProject(const wxString& filename, caProject* project, wxArrayInt& targets)
 {
     if (!project)
         return 0;
@@ -1312,7 +1312,7 @@ int ProjectManager::DoAddFileToProject(const wxString& filename, cbProject* proj
     return targets.GetCount();
 }
 
-int ProjectManager::AddFileToProject(const wxString& filename, cbProject* project, int target)
+int ProjectManager::AddFileToProject(const wxString& filename, caProject* project, int target)
 {
     if (!project)
         project = GetActiveProject();
@@ -1324,7 +1324,7 @@ int ProjectManager::AddFileToProject(const wxString& filename, cbProject* projec
     return -1;
 }
 
-int ProjectManager::AddFileToProject(const wxString& filename, cbProject* project, wxArrayInt& targets)
+int ProjectManager::AddFileToProject(const wxString& filename, caProject* project, wxArrayInt& targets)
 {
     if (!project)
         project = GetActiveProject();
@@ -1340,7 +1340,7 @@ int ProjectManager::AddFileToProject(const wxString& filename, cbProject* projec
     return ret;
 }
 
-int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, cbProject* project, int target)
+int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, caProject* project, int target)
 {
     if (!project)
         project = GetActiveProject();
@@ -1352,7 +1352,7 @@ int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, cbP
     return -1;
 }
 
-int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, cbProject* project, wxArrayInt& targets)
+int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, caProject* project, wxArrayInt& targets)
 {
     wxProgressDialog progress(_("Project Manager"), _("Please wait while adding files to project..."), filelist.GetCount());
 
@@ -1385,9 +1385,9 @@ int ProjectManager::AddMultipleFilesToProject(const wxArrayString& filelist, cbP
     return targets.GetCount();
 }
 
-int ProjectManager::AskForBuildTargetIndex(cbProject* project)
+int ProjectManager::AskForBuildTargetIndex(caProject* project)
 {
-    cbProject* prj = project;
+    caProject* prj = project;
     if (!prj)
         prj = GetActiveProject();
     if (!prj)
@@ -1403,10 +1403,10 @@ int ProjectManager::AskForBuildTargetIndex(cbProject* project)
     return target;
 }
 
-wxArrayInt ProjectManager::AskForMultiBuildTargetIndex(cbProject* project)
+wxArrayInt ProjectManager::AskForMultiBuildTargetIndex(caProject* project)
 {
     wxArrayInt indices;
-    cbProject* prj = project;
+    caProject* prj = project;
     if (!prj)
         prj = GetActiveProject();
     if (!prj)
@@ -1501,7 +1501,7 @@ void ProjectManager::DoOpenSelectedFile()
     }
 }
 
-bool ProjectManager::CausesCircularDependency(cbProject* base, cbProject* dependsOn)
+bool ProjectManager::CausesCircularDependency(caProject* base, caProject* dependsOn)
 {
     if (!base || !dependsOn)
         return false;
@@ -1525,7 +1525,7 @@ bool ProjectManager::CausesCircularDependency(cbProject* base, cbProject* depend
     return false;
 }
 
-bool ProjectManager::AddProjectDependency(cbProject* base, cbProject* dependsOn)
+bool ProjectManager::AddProjectDependency(caProject* base, caProject* dependsOn)
 {
     if (!base || !dependsOn)
         return false;
@@ -1556,7 +1556,7 @@ bool ProjectManager::AddProjectDependency(cbProject* base, cbProject* dependsOn)
     return true;
 }
 
-void ProjectManager::RemoveProjectDependency(cbProject* base, cbProject* doesNotDependOn)
+void ProjectManager::RemoveProjectDependency(caProject* base, caProject* doesNotDependOn)
 {
     if (!base || !doesNotDependOn)
         return;
@@ -1579,7 +1579,7 @@ void ProjectManager::RemoveProjectDependency(cbProject* base, cbProject* doesNot
         m_pWorkspace->SetModified(true);
 }
 
-void ProjectManager::ClearProjectDependencies(cbProject* base)
+void ProjectManager::ClearProjectDependencies(caProject* base)
 {
     if (!base)
         return;
@@ -1595,7 +1595,7 @@ void ProjectManager::ClearProjectDependencies(cbProject* base)
     Manager::Get()->GetLogManager()->DebugLog(_T("Removed all deps from ") + base->GetTitle());
 }
 
-void ProjectManager::RemoveProjectFromAllDependencies(cbProject* base)
+void ProjectManager::RemoveProjectFromAllDependencies(caProject* base)
 {
     if (!base)
         return;
@@ -1633,7 +1633,7 @@ void ProjectManager::RemoveProjectFromAllDependencies(cbProject* base)
     Manager::Get()->GetLogManager()->DebugLog(F(_T("Removed %s from all deps"), base->GetTitle().c_str()));
 }
 
-const ProjectsArray* ProjectManager::GetDependenciesForProject(cbProject* base)
+const ProjectsArray* ProjectManager::GetDependenciesForProject(caProject* base)
 {
     DepsMap::iterator it = m_ProjectDeps.find(base);
     if (it != m_ProjectDeps.end())
@@ -1641,7 +1641,7 @@ const ProjectsArray* ProjectManager::GetDependenciesForProject(cbProject* base)
     return 0;
 }
 
-void ProjectManager::ConfigureProjectDependencies(cbProject* base)
+void ProjectManager::ConfigureProjectDependencies(caProject* base)
 {
     ProjectDepsDlg dlg(Manager::Get()->GetAppWindow(), base);
     PlaceWindow(&dlg);
@@ -1678,7 +1678,7 @@ void ProjectManager::OnTreeBeginDrag(wxTreeEvent& event)
         return;
 
     // if no project, disallow
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
         return;
 
@@ -1712,8 +1712,8 @@ void ProjectManager::OnTreeEndDrag(wxTreeEvent& event)
         return;
 
     // if no project or different projects, disallow
-    cbProject* prj1 = ftd1->GetProject();
-    cbProject* prj2 = ftd2->GetProject();
+    caProject* prj1 = ftd1->GetProject();
+    caProject* prj2 = ftd2->GetProject();
     if (!prj1 || prj1 != prj2)
         return;
 
@@ -1884,7 +1884,7 @@ void ProjectManager::OnSetActiveProject(wxCommandEvent& event)
 
 void ProjectManager::OnAddFilesToProjectRecursively(wxCommandEvent& event)
 {
-    cbProject* prj = 0;
+    caProject* prj = 0;
     wxString basePath;
 
     if (event.GetId() == idMenuAddFilesRecursively)
@@ -1966,7 +1966,7 @@ void ProjectManager::OnAddFilesToProjectRecursively(wxCommandEvent& event)
 
 void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
 {
-    cbProject* prj = 0;
+    caProject* prj = 0;
     wxString basePath;
 
     if (event.GetId() == idMenuAddFile)
@@ -2022,7 +2022,7 @@ void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
     caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
         return;
     wxString oldpath = prj->GetCommonTopLevelPath();
@@ -2126,7 +2126,7 @@ void ProjectManager::OnCloseProject(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
     caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
-    cbProject *proj=NULL;
+    caProject *proj=NULL;
     if (ftd)
         proj = ftd->GetProject();
     if(proj)
@@ -2150,7 +2150,7 @@ void ProjectManager::OnCloseFile(wxCommandEvent& event)
 
     if (ftd)
     {
-        cbProject* project = ftd->GetProject();
+        caProject* project = ftd->GetProject();
         ProjectFile* f = project->GetFile(ftd->GetFileIndex());
         if (f)
             Manager::Get()->GetEditorManager()->Close(f->file.GetFullPath());
@@ -2169,7 +2169,7 @@ void ProjectManager::OnOpenWith(wxCommandEvent& event)
 
     if (ftd)
     {
-        cbProject* project = ftd->GetProject();
+        caProject* project = ftd->GetProject();
         ProjectFile* f = project->GetFile(ftd->GetFileIndex());
         if (f)
         {
@@ -2200,7 +2200,7 @@ void ProjectManager::OnOpenWith(wxCommandEvent& event)
 
 void ProjectManager::OnNotes(wxCommandEvent& event)
 {
-    cbProject* project = GetActiveProject();
+    caProject* project = GetActiveProject();
     if (project)
         project->ShowNotes(false, true);
 }
@@ -2223,7 +2223,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
         wxTreeItemId sel = m_pTree->GetSelection();
         caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
-        cbProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
+        caProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
         wxString backupTitle = project ? project->GetTitle() : _T("");
         if (project && project->ShowOptions() && project == m_pActiveProject)
         {
@@ -2238,7 +2238,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
         wxTreeItemId sel = m_pTree->GetSelection();
         caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
-        cbProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
+        caProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
         if (project)
         {
             if (ftd && ftd->GetFileIndex() != -1)
@@ -2375,7 +2375,7 @@ void ProjectManager::OnAddVirtualFolder(wxCommandEvent& event)
     caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
         return;
 
@@ -2389,7 +2389,7 @@ void ProjectManager::OnDeleteVirtualFolder(wxCommandEvent& event)
     caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
         return;
 
@@ -2428,7 +2428,7 @@ void ProjectManager::OnEndEditNode(wxTreeEvent& event)
         event.Veto();
         return;
     }
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
     {
         event.Veto();
@@ -2465,7 +2465,7 @@ void ProjectManager::OnRenameFile(wxCommandEvent& event)
     caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
-    cbProject* prj = ftd->GetProject();
+    caProject* prj = ftd->GetProject();
     if (!prj)
         return;
 
@@ -2526,14 +2526,14 @@ void ProjectManager::CheckForExternallyModifiedProjects()
         bool reloadAll = false;
         // make a copy of all the pointers before we start messing with closing and opening projects
         // the hash (Projects) could change the order
-        std::vector<cbProject*> ProjectPointers;
+        std::vector<caProject*> ProjectPointers;
         for(unsigned int idxProject = 0; idxProject < Projects->Count(); ++idxProject)
         {
             ProjectPointers.push_back(Projects->Item(idxProject));
         }
         for(unsigned int idxProject = 0; idxProject < ProjectPointers.size(); ++idxProject)
         {
-            cbProject* pProject = ProjectPointers[idxProject];
+            caProject* pProject = ProjectPointers[idxProject];
             wxFileName fname(pProject->GetFilename());
             wxDateTime last = fname.GetModificationTime();
             if(last.IsLaterThan(pProject->GetLastModificationTime()))
@@ -2589,7 +2589,7 @@ void ProjectManager::RemoveFilesRecursively(wxTreeItemId& sel_id)
             caFileTreeData* data = (caFileTreeData*)m_pTree->GetItemData(child);
             if (data)
             {
-                cbProject* prj = data->GetProject();
+                caProject* prj = data->GetProject();
                 if (prj && data->GetKind() == caFileTreeData::ftdkFile)
                 {
                     ProjectFile* pf = data->GetProjectFile();
@@ -2638,7 +2638,7 @@ bool ProjectManager::BeginLoadingProject()
     return true;
 }
 
-void ProjectManager::EndLoadingProject(cbProject* project)
+void ProjectManager::EndLoadingProject(caProject* project)
 {
     s_CanShutdown = true;
     if (!m_IsLoadingProject)
@@ -2673,7 +2673,7 @@ void ProjectManager::EndLoadingProject(cbProject* project)
         if (!m_IsLoadingWorkspace)
         {
             // notify plugins that the project is loaded
-            // moved here from cbProject::Open() because code-completion
+            // moved here from caProject::Open() because code-completion
             // kicks in too early and the perceived loading time is long...
             CodeBlocksEvent event(cbEVT_PROJECT_OPEN);
             event.SetProject(project);
@@ -2749,10 +2749,10 @@ void ProjectManager::EndLoadingWorkspace()
         // since we were loading a workspace, these events were not sent before
         for (size_t i = 0; i < m_pProjects->GetCount(); ++i)
         {
-            cbProject* project = m_pProjects->Item(i);
+            caProject* project = m_pProjects->Item(i);
 
             // notify plugins that the project is loaded
-            // moved here from cbProject::Open() because code-completion
+            // moved here from caProject::Open() because code-completion
             // kicks in too early and the perceived loading time is long...
             CodeBlocksEvent event(cbEVT_PROJECT_OPEN);
             event.SetProject(project);
@@ -2775,7 +2775,7 @@ void ProjectManager::EndLoadingWorkspace()
             {
                 for (size_t i = 0; i < m_pProjects->GetCount(); ++i)
                 {
-                    cbProject* project = m_pProjects->Item(i);
+                    caProject* project = m_pProjects->Item(i);
                     if (project->GetShowNotesOnLoad())
                         project->ShowNotes(true);
                 }

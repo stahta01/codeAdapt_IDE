@@ -151,13 +151,13 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             if (sa.GetType(2) == OT_INTEGER)
                 return sa.Return(prj->RemoveFile(sa.GetInt(2)));
             else
                 return sa.Return(prj->RemoveFile(SqPlus::GetInstance<ProjectFile,false>(v, 2)));
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::RemoveFile\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::RemoveFile\"");
     }
     SQInteger cbProject_AddFile(HSQUIRRELVM v)
     {
@@ -165,7 +165,7 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount >= 3)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             wxString str = *SqPlus::GetInstance<wxString,false>(v, 3);
             bool b1 = paramCount >= 4 ? sa.GetBool(4) : true;
             bool b2 = paramCount >= 5 ? sa.GetBool(5) : true;
@@ -178,7 +178,7 @@ namespace ScriptBindings
             SqPlus::Push(v, pf);
             return 1;
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::AddFile\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::AddFile\"");
     }
     SQInteger cbProject_GetBuildTarget(HSQUIRRELVM v)
     {
@@ -186,7 +186,7 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             caProjectBuildTarget* bt = 0;
             if (sa.GetType(2) == OT_INTEGER)
                 bt = prj->GetBuildTarget(sa.GetInt(2));
@@ -195,7 +195,7 @@ namespace ScriptBindings
             SqPlus::Push(v, bt);
             return 1;
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::GetBuildTarget\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::GetBuildTarget\"");
     }
     SQInteger cbProject_RenameBuildTarget(HSQUIRRELVM v)
     {
@@ -203,13 +203,13 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 3)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             if (sa.GetType(2) == OT_INTEGER)
                 return sa.Return(prj->RenameBuildTarget(sa.GetInt(2), *SqPlus::GetInstance<wxString,false>(v, 3)));
             else
                 return sa.Return(prj->RenameBuildTarget(*SqPlus::GetInstance<wxString,false>(v, 2), *SqPlus::GetInstance<wxString,false>(v, 3)));
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::RenameBuildTarget\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::RenameBuildTarget\"");
     }
     SQInteger cbProject_DuplicateBuildTarget(HSQUIRRELVM v)
     {
@@ -217,7 +217,7 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 3)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             caProjectBuildTarget* bt = 0;
             if (sa.GetType(2) == OT_INTEGER)
                 bt = prj->DuplicateBuildTarget(sa.GetInt(2), *SqPlus::GetInstance<wxString,false>(v, 3));
@@ -226,7 +226,7 @@ namespace ScriptBindings
             SqPlus::Push(v, bt);
             return 1;
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::DuplicateBuildTarget\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::DuplicateBuildTarget\"");
     }
     SQInteger cbProject_RemoveBuildTarget(HSQUIRRELVM v)
     {
@@ -234,13 +234,13 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             if (sa.GetType(2) == OT_INTEGER)
                 return sa.Return(prj->RemoveBuildTarget(sa.GetInt(2)));
             else
                 return sa.Return(prj->RemoveBuildTarget(*SqPlus::GetInstance<wxString,false>(v, 2)));
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::RemoveBuildTarget\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::RemoveBuildTarget\"");
     }
     SQInteger cbProject_ExportTargetAsProject(HSQUIRRELVM v)
     {
@@ -248,13 +248,13 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 1);
+            caProject* prj = SqPlus::GetInstance<caProject,false>(v, 1);
             if (sa.GetType(2) == OT_INTEGER)
                 return sa.Return(prj->ExportTargetAsProject(sa.GetInt(2)));
             else
                 return sa.Return(prj->ExportTargetAsProject(*SqPlus::GetInstance<wxString,false>(v, 2)));
         }
-        return sa.ThrowError("Invalid arguments to \"cbProject::ExportTargetAsProject\"");
+        return sa.ThrowError("Invalid arguments to \"caProject::ExportTargetAsProject\"");
     }
     SQInteger ProjectManager_AddFileToProject(HSQUIRRELVM v)
     {
@@ -265,7 +265,7 @@ namespace ScriptBindings
             if (sa.GetType(4) == OT_INTEGER)
             {
                 wxString fname = *SqPlus::GetInstance<wxString,false>(v, 2);
-                cbProject* prj = SqPlus::GetInstance<cbProject,false>(v, 3);
+                caProject* prj = SqPlus::GetInstance<caProject,false>(v, 3);
                 int idx = sa.GetInt(4);
                 return sa.Return((SQInteger)Manager::Get()->GetProjectManager()->AddFileToProject(fname, prj, idx));
             }
@@ -451,60 +451,60 @@ namespace ScriptBindings
                 func(&caProjectBuildTarget::GetUseConsoleRunner, "GetUseConsoleRunner").
                 func(&caProjectBuildTarget::SetUseConsoleRunner, "SetUseConsoleRunner");
 
-        SqPlus::SQClassDef<cbProject>("cbProject", "caCompileTargetBase").
-                func(&cbProject::GetModified, "GetModified").
-                func(&cbProject::SetModified, "SetModified").
-                func(&cbProject::GetMakefile, "GetMakefile").
-                func(&cbProject::SetMakefile, "SetMakefile").
-                func(&cbProject::IsMakefileCustom, "IsMakefileCustom").
-                func(&cbProject::SetMakefileCustom, "SetMakefileCustom").
-                func(&cbProject::CloseAllFiles, "CloseAllFiles").
-                func(&cbProject::SaveAllFiles, "SaveAllFiles").
-                func(&cbProject::Save, "Save").
-//                func(&cbProject::SaveAs, "SaveAs"). // *UNSAFE*
-                func(&cbProject::SaveLayout, "SaveLayout").
-                func(&cbProject::LoadLayout, "LoadLayout").
-                func(&cbProject::ShowOptions, "ShowOptions").
-                func(&cbProject::GetCommonTopLevelPath, "GetCommonTopLevelPath").
-                func(&cbProject::GetFilesCount, "GetFilesCount").
-                func(&cbProject::GetFile, "GetFile").
-                func(&cbProject::GetFileByFilename, "GetFileByFilename").
+        SqPlus::SQClassDef<caProject>("caProject", "caCompileTargetBase").
+                func(&caProject::GetModified, "GetModified").
+                func(&caProject::SetModified, "SetModified").
+                func(&caProject::GetMakefile, "GetMakefile").
+                func(&caProject::SetMakefile, "SetMakefile").
+                func(&caProject::IsMakefileCustom, "IsMakefileCustom").
+                func(&caProject::SetMakefileCustom, "SetMakefileCustom").
+                func(&caProject::CloseAllFiles, "CloseAllFiles").
+                func(&caProject::SaveAllFiles, "SaveAllFiles").
+                func(&caProject::Save, "Save").
+//                func(&caProject::SaveAs, "SaveAs"). // *UNSAFE*
+                func(&caProject::SaveLayout, "SaveLayout").
+                func(&caProject::LoadLayout, "LoadLayout").
+                func(&caProject::ShowOptions, "ShowOptions").
+                func(&caProject::GetCommonTopLevelPath, "GetCommonTopLevelPath").
+                func(&caProject::GetFilesCount, "GetFilesCount").
+                func(&caProject::GetFile, "GetFile").
+                func(&caProject::GetFileByFilename, "GetFileByFilename").
                 staticFuncVarArgs(&cbProject_RemoveFile, "RemoveFile", "*").
                 staticFuncVarArgs(&cbProject_AddFile, "AddFile", "*").
-                func(&cbProject::GetBuildTargetsCount, "GetBuildTargetsCount").
+                func(&caProject::GetBuildTargetsCount, "GetBuildTargetsCount").
                 staticFuncVarArgs(&cbProject_GetBuildTarget, "GetBuildTarget", "*").
-                func(&cbProject::AddBuildTarget, "AddBuildTarget").
+                func(&caProject::AddBuildTarget, "AddBuildTarget").
                 staticFuncVarArgs(&cbProject_RenameBuildTarget, "RenameBuildTarget", "*").
                 staticFuncVarArgs(&cbProject_DuplicateBuildTarget, "DuplicateBuildTarget", "*").
                 staticFuncVarArgs(&cbProject_RemoveBuildTarget, "RemoveBuildTarget", "*").
                 staticFuncVarArgs(&cbProject_ExportTargetAsProject, "ExportTargetAsProject", "*").
-                func(&cbProject::BuildTargetValid, "BuildTargetValid").
-                func(&cbProject::GetFirstValidBuildTargetName, "GetFirstValidBuildTargetName").
-                func(&cbProject::SetDefaultExecuteTarget, "SetDefaultExecuteTarget").
-                func(&cbProject::GetDefaultExecuteTarget, "GetDefaultExecuteTarget").
-                func(&cbProject::SetActiveBuildTarget, "SetActiveBuildTarget").
-                func(&cbProject::GetActiveBuildTarget, "GetActiveBuildTarget").
-                func(&cbProject::SelectTarget, "SelectTarget").
-                func(&cbProject::GetCurrentlyCompilingTarget, "GetCurrentlyCompilingTarget").
-                func(&cbProject::SetCurrentlyCompilingTarget, "SetCurrentlyCompilingTarget").
-                func(&cbProject::GetModeForPCH, "GetModeForPCH").
-                func(&cbProject::SetModeForPCH, "SetModeForPCH").
-                func(&cbProject::SetExtendedObjectNamesGeneration, "SetExtendedObjectNamesGeneration").
-                func(&cbProject::GetExtendedObjectNamesGeneration, "GetExtendedObjectNamesGeneration").
-                func(&cbProject::SetNotes, "SetNotes").
-                func(&cbProject::GetNotes, "GetNotes").
-                func(&cbProject::SetShowNotesOnLoad, "SetShowNotesOnLoad").
-                func(&cbProject::GetShowNotesOnLoad, "GetShowNotesOnLoad").
-                func(&cbProject::ShowNotes, "ShowNotes").
-                func(&cbProject::AddToExtensions, "AddToExtensions").
-                func(&cbProject::DefineVirtualBuildTarget, "DefineVirtualBuildTarget").
-                func(&cbProject::HasVirtualBuildTarget, "HasVirtualBuildTarget").
-                func(&cbProject::RemoveVirtualBuildTarget, "RemoveVirtualBuildTarget").
-                func(&cbProject::GetVirtualBuildTargets, "GetVirtualBuildTargets").
-                func(&cbProject::GetVirtualBuildTargetGroup, "GetVirtualBuildTargetGroup").
-                func(&cbProject::GetExpandedVirtualBuildTargetGroup, "GetExpandedVirtualBuildTargetGroup").
-                func(&cbProject::CanAddToVirtualBuildTarget, "CanAddToVirtualBuildTarget").
-                func(&cbProject::SetTitle, "SetTitle");
+                func(&caProject::BuildTargetValid, "BuildTargetValid").
+                func(&caProject::GetFirstValidBuildTargetName, "GetFirstValidBuildTargetName").
+                func(&caProject::SetDefaultExecuteTarget, "SetDefaultExecuteTarget").
+                func(&caProject::GetDefaultExecuteTarget, "GetDefaultExecuteTarget").
+                func(&caProject::SetActiveBuildTarget, "SetActiveBuildTarget").
+                func(&caProject::GetActiveBuildTarget, "GetActiveBuildTarget").
+                func(&caProject::SelectTarget, "SelectTarget").
+                func(&caProject::GetCurrentlyCompilingTarget, "GetCurrentlyCompilingTarget").
+                func(&caProject::SetCurrentlyCompilingTarget, "SetCurrentlyCompilingTarget").
+                func(&caProject::GetModeForPCH, "GetModeForPCH").
+                func(&caProject::SetModeForPCH, "SetModeForPCH").
+                func(&caProject::SetExtendedObjectNamesGeneration, "SetExtendedObjectNamesGeneration").
+                func(&caProject::GetExtendedObjectNamesGeneration, "GetExtendedObjectNamesGeneration").
+                func(&caProject::SetNotes, "SetNotes").
+                func(&caProject::GetNotes, "GetNotes").
+                func(&caProject::SetShowNotesOnLoad, "SetShowNotesOnLoad").
+                func(&caProject::GetShowNotesOnLoad, "GetShowNotesOnLoad").
+                func(&caProject::ShowNotes, "ShowNotes").
+                func(&caProject::AddToExtensions, "AddToExtensions").
+                func(&caProject::DefineVirtualBuildTarget, "DefineVirtualBuildTarget").
+                func(&caProject::HasVirtualBuildTarget, "HasVirtualBuildTarget").
+                func(&caProject::RemoveVirtualBuildTarget, "RemoveVirtualBuildTarget").
+                func(&caProject::GetVirtualBuildTargets, "GetVirtualBuildTargets").
+                func(&caProject::GetVirtualBuildTargetGroup, "GetVirtualBuildTargetGroup").
+                func(&caProject::GetExpandedVirtualBuildTargetGroup, "GetExpandedVirtualBuildTargetGroup").
+                func(&caProject::CanAddToVirtualBuildTarget, "CanAddToVirtualBuildTarget").
+                func(&caProject::SetTitle, "SetTitle");
 
 
         SqPlus::SQClassDef<ProjectManager>("ProjectManager").

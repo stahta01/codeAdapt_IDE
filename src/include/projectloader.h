@@ -7,7 +7,7 @@
 #define PROJECT_FILE_VERSION_MAJOR 1
 #define PROJECT_FILE_VERSION_MINOR 6
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class ProjectFile;
 
@@ -19,7 +19,7 @@ class DLLIMPORT ProjectLoader : public IBaseLoader
     public:
         /** Constructor.
           * @param project The project to handle (load/save). */
-        ProjectLoader(cbProject* project);
+        ProjectLoader(caProject* project);
         /// Destructor.
         virtual ~ProjectLoader();
 
@@ -98,7 +98,7 @@ class DLLIMPORT ProjectLoader : public IBaseLoader
 
         ProjectLoader(){} // no default ctor
 
-        cbProject* m_pProject;
+        caProject* m_pProject;
         bool m_Upgraded;
         bool m_OpenDirty; // set this to true if the project is loaded but modified (like the case when setting another compiler, if invalid)
         bool m_IsPre_1_2;

@@ -38,7 +38,7 @@
 
 
 // class constructor
-caProjectBuildTarget::caProjectBuildTarget(cbProject* parentProject) : m_Project(parentProject)
+caProjectBuildTarget::caProjectBuildTarget(caProject* parentProject) : m_Project(parentProject)
 {
     m_BuildWithAll = false;
     m_CreateStaticLib = true;
@@ -51,7 +51,7 @@ caProjectBuildTarget::~caProjectBuildTarget()
 {
 }
 
-cbProject* caProjectBuildTarget::GetParentProject()
+caProject* caProjectBuildTarget::GetParentProject()
 {
     return m_Project;
 }

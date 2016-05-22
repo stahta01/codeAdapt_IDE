@@ -99,7 +99,7 @@ private:
   void ToggleControls(bool DoEnable);
   int RunScan(const wxArrayString& FilesToProcess, const wxArrayString& Groups);
 
-  void AddFilesFromProject(wxArrayString& Files, cbProject* Project);
+  void AddFilesFromProject(wxArrayString& Files, caProject* Project);
   int ProcessFile(const wxString& GlobalFileName,const wxArrayString& Groups);
   void OperateToken(const wxString&      Token,
                     const wxArrayString& Groups,

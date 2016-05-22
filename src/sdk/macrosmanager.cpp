@@ -141,7 +141,7 @@ void MacrosManager::ClearProjectKeys()
     }
 }
 
-void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,caProjectBuildTarget* target)
+void MacrosManager::RecalcVars(caProject* project,EditorBase* editor,caProjectBuildTarget* target)
 {
     if(!editor)
     {
@@ -331,7 +331,7 @@ void MacrosManager::ReplaceMacros(wxString& buffer, caProjectBuildTarget* target
     if( buffer.find_first_of(delim) == wxString::npos )
         return;
 
-    cbProject* project = target
+    caProject* project = target
                         ? target->GetParentProject()
                         : Manager::Get()->GetProjectManager()->GetActiveProject();
     EditorBase* editor = Manager::Get()->GetEditorManager()->GetActiveEditor();

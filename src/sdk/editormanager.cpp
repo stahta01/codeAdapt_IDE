@@ -502,7 +502,7 @@ cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int
             ProjectsArray* projects = Manager::Get()->GetProjectManager()->GetProjects();
             for (unsigned int i = 0; i < projects->GetCount(); ++i)
             {
-                cbProject* prj = projects->Item(i);
+                caProject* prj = projects->Item(i);
                 ProjectFile* pf = prj->GetFileByFilename(ed->GetFilename(), false);
                 if (pf)
                 {
@@ -616,7 +616,7 @@ void EditorManager::RemoveEditorBase(EditorBase* eb, bool deleteObject)
     //        eb->Destroy();
 }
 
-bool EditorManager::UpdateProjectFiles(cbProject* project)
+bool EditorManager::UpdateProjectFiles(caProject* project)
 {
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
     {
@@ -967,7 +967,7 @@ bool EditorManager::SwapActiveHeaderSource()
     // create a list of search dirs
     wxArrayString dirs;
 
-    cbProject* project = 0;
+    caProject* project = 0;
 
     // if the file in question belongs to a different open project,
     // then use that project instead.
@@ -1072,7 +1072,7 @@ bool EditorManager::SwapActiveHeaderSource()
     if (cbMessageBox(_("The file does not exist. Do you want to create it?"),
                 _("Error"), wxICON_QUESTION | wxYES_NO) == wxID_YES)
     {
-        cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
+        caProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
         if (project)
             wxSetWorkingDirectory(project->GetBasePath());
 
@@ -1558,7 +1558,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
     if (data->scope == 0) // find in project files
     {
         // fill the search list with all the project files
-        cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+        caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
         if (!prj)
             return 0;
 
@@ -1596,7 +1596,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
             int count = pProjects->GetCount();
             for (int idxProject = 0; idxProject < count; ++idxProject)
             {
-                cbProject* pProject = pProjects->Item(idxProject);
+                caProject* pProject = pProjects->Item(idxProject);
                 if(pProject)
                 {
                     wxString fullpath = _T("");
@@ -2086,7 +2086,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     if (data->scope == 0) // find in project files
     {
         // fill the search list with all the project files
-        cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+        caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
         if (!prj)
         {
             cbMessageBox(_("No project to search in!"), _("Error"), wxICON_WARNING);
@@ -2149,7 +2149,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         }
         for (int idxProject = 0; idxProject < count; ++idxProject)
         {
-            cbProject* pProject = pProjects->Item(idxProject);
+            caProject* pProject = pProjects->Item(idxProject);
             if(pProject)
             {
                 wxString fullpath = _T("");

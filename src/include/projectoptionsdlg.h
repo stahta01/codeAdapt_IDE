@@ -6,7 +6,7 @@
 
 class wxTreeEvent;
 class wxSpinEvent;
-class cbProject;
+class caProject;
 class caCompilerPlugin;
 
 /*
@@ -16,7 +16,7 @@ class ProjectOptionsDlg : public wxDialog
 {
     public:
         // class constructor
-        ProjectOptionsDlg(wxWindow* parent, cbProject* project);
+        ProjectOptionsDlg(wxWindow* parent, caProject* project);
         // class destructor
         ~ProjectOptionsDlg();
 
@@ -59,7 +59,7 @@ class ProjectOptionsDlg : public wxDialog
         bool IsScriptValid(caProjectBuildTarget* target, const wxString& script);
         bool ValidateTargetName(const wxString& name);
         void UpdateTargetControls();
-        cbProject* m_Project;
+        caProject* m_Project;
         int m_Current_Sel; // current target selection (when selection changes it is the old selection - handy, eh?)
         caCompilerPlugin* m_pCompiler;
         ConfigurationPanelsArray m_PluginPanels;

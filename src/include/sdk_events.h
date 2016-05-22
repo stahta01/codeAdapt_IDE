@@ -5,7 +5,7 @@
 #include "settings.h"
 #include "blockallocated.h"
 
-class cbProject;
+class caProject;
 class EditorBase;
 class cbPlugin;
 class Logger;
@@ -14,7 +14,7 @@ class Logger;
 class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<CodeBlocksEvent, 75>
 {
 	public:
-		CodeBlocksEvent(wxEventType commandType = wxEVT_NULL, int id = 0, cbProject* project = 0L, EditorBase* editor = 0L, cbPlugin* plugin = 0L)
+		CodeBlocksEvent(wxEventType commandType = wxEVT_NULL, int id = 0, caProject* project = 0L, EditorBase* editor = 0L, cbPlugin* plugin = 0L)
 			: wxCommandEvent(commandType, id),
 			m_pProject(project),
 			m_pEditor(editor),
@@ -30,8 +30,8 @@ class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<C
 			m_Y(event.m_Y) {}
 		virtual wxEvent *Clone() const { return new CodeBlocksEvent(*this); }
 
-		cbProject* GetProject() const { return m_pProject; }
-		void SetProject(cbProject* project){ m_pProject = project; }
+		caProject* GetProject() const { return m_pProject; }
+		void SetProject(caProject* project){ m_pProject = project; }
 
 		EditorBase* GetEditor() const { return m_pEditor; }
 		void SetEditor(EditorBase* editor){ m_pEditor = editor; }
@@ -53,7 +53,7 @@ class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<C
 		const wxString& GetOldBuildTargetName() const { return m_OldTargetName; }
 		void SetOldBuildTargetName(const wxString& target){ m_OldTargetName = target; }
 	protected:
-		cbProject* m_pProject;
+		caProject* m_pProject;
 		EditorBase* m_pEditor;
 		cbPlugin* m_pPlugin;
 		// for some editor events

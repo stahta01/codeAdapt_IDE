@@ -17,7 +17,7 @@
 
 class wxTimer;
 class wxTimerEvent;
-class cbProject;
+class caProject;
 
 class AutoVersioning : public cbPlugin
 {
@@ -43,7 +43,7 @@ public: //Constructor and Destructor
 	void OnCompilerFinished(CodeBlocksEvent& event);
 	void OnTimerVerify(wxTimerEvent& event);
 private:
-	void SetVersionAndSettings(cbProject& Project, bool update = false);
+	void SetVersionAndSettings(caProject& Project, bool update = false);
 	void CommitChanges();
 	void GenerateChanges();
 	wxString FileNormalize(const wxString& relativeFile, const wxString& workingDirectory);
@@ -55,13 +55,13 @@ private:
     wxString m_versionHeaderPath;
     wxTimer* m_timerStatus;
     int m_AutoVerHookId; //!< project loader hook ID
-    std::map<cbProject*, avConfig> m_ProjectMap;
-    std::map<cbProject*, avVersionState> m_ProjectMapVersionState;
-    cbProject* m_Project; // keeps track of the last 'activated' project
+    std::map<caProject*, avConfig> m_ProjectMap;
+    std::map<caProject*, avVersionState> m_ProjectMapVersionState;
+    caProject* m_Project; // keeps track of the last 'activated' project
     bool m_Modified; // have some settings been modified
     bool m_IsCurrentProjectVersioned;
     /// fires when a project is being loaded / saved
-    void OnProjectLoadingHook(cbProject* project, TiXmlElement* elem, bool loading);
+    void OnProjectLoadingHook(caProject* project, TiXmlElement* elem, bool loading);
 
     /// fires when a project is being activated
     void OnProjectActivated(CodeBlocksEvent& event);

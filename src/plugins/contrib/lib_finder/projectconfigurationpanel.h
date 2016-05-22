@@ -48,7 +48,7 @@ class ProjectConfigurationPanel: public cbConfigurationPanel
 {
 	public:
 
-		ProjectConfigurationPanel(wxWindow* parent,ProjectConfiguration* Config,cbProject* Proj,TypedResults& KnownLibs);
+		ProjectConfigurationPanel(wxWindow* parent,ProjectConfiguration* Config,caProject* Proj,TypedResults& KnownLibs);
 		virtual ~ProjectConfigurationPanel();
 
 	private:
@@ -72,7 +72,7 @@ class ProjectConfigurationPanel: public cbConfigurationPanel
 
         ProjectConfiguration* m_Configuration;
         ProjectConfiguration  m_ConfCopy;
-        cbProject* m_Project;
+        caProject* m_Project;
         TypedResults& m_KnownLibs;
         IdsMap m_CategoryMap;
         bool m_IsOtherCategory;

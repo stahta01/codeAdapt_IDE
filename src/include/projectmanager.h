@@ -16,7 +16,7 @@
 // forward decls
 class wxMenuBar;
 class wxPanel;
-class cbProject;
+class caProject;
 class EditorBase;
 class wxImageList;
 class ProjectFile;
@@ -26,8 +26,8 @@ class wxFlatNotebook;
 class wxFlatNotebookEvent;
 
 DLLIMPORT extern int ID_ProjectManager; /* Used by both Project and Editor Managers */
-WX_DEFINE_ARRAY(cbProject*, ProjectsArray);
-WX_DECLARE_HASH_MAP(cbProject*, ProjectsArray*, wxPointerHash, wxPointerEqual, DepsMap); // for project dependencies
+WX_DEFINE_ARRAY(caProject*, ProjectsArray);
+WX_DECLARE_HASH_MAP(caProject*, ProjectsArray*, wxPointerHash, wxPointerEqual, DepsMap); // for project dependencies
 
 /** @brief The entry point singleton for working with projects.
   *
@@ -71,12 +71,12 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param project The project to check its validity.
           * @return True if the project is valid (i.e. still open), false if not.
           */
-        bool IsProjectStillOpen(cbProject* project);
+        bool IsProjectStillOpen(caProject* project);
         /** Retrieve the active project. Most of the times, this is the function
           * you 'll be calling in ProjectManager.
           * @return A pointer to the active project.
           */
-        cbProject* GetActiveProject(){ return m_pActiveProject; }
+        caProject* GetActiveProject(){ return m_pActiveProject; }
         /** Retrieve an array of all the opened projects. This is a standard
           * wxArray containing pointers to projects. Using this array you can
           * iterate through all the opened projects.
@@ -87,13 +87,13 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param filename The project's filename. Must be an absolute path.
           * @return A pointer to the project if it is open, or NULL if it is not.
           */
-        cbProject* IsOpen(const wxString& filename);
+        caProject* IsOpen(const wxString& filename);
         /** Set the active project. Use this function if you want to change the
           * active project.
           * @param project A pointer to the new active project.
           * @param refresh If true, refresh the project manager's tree, else do not refresh it.
           */
-        void SetProject(cbProject* project, bool refresh = true);
+        void SetProject(caProject* project, bool refresh = true);
         /** Load a project from disk. This function, internally, uses IsOpen()
           * so that the same project can't be loaded twice.
           * @param filename The project file's filename.
@@ -101,19 +101,19 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @return If the function succeeds, a pointer to the newly opened project
           * is returned. Else the return value is NULL.
           */
-        cbProject* LoadProject(const wxString& filename, bool activateIt = true);
+        caProject* LoadProject(const wxString& filename, bool activateIt = true);
         /** Save a project to disk.
           * @param project A pointer to the project to save.
           * @return True if saving was succesful, false if not.
           */
-        bool SaveProject(cbProject* project);
+        bool SaveProject(caProject* project);
         /** Save a project to disk, asking for a filename.
           * @param project A pointer to the project to save.
           * @return True if saving was succesful, false if not.
           * @note A false return value doesn't necessarily mean failure. The user
           * might have cancelled the SaveAs dialog...
           */
-        bool SaveProjectAs(cbProject* project);
+        bool SaveProjectAs(caProject* project);
         /** Save the active project to disk. Same as SaveProject(GetActiveProject()).
           * @return True if saving was succesful, false if not.
           */
@@ -135,7 +135,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param refresh Force a refresh of the project tree after closing a project.
           * @return True if project was closed, false if not.
           */
-        bool CloseProject(cbProject* project, bool dontsave = false, bool refresh = true);
+        bool CloseProject(caProject* project, bool dontsave = false, bool refresh = true);
         /** Close the active project. Same as CloseProject(GetActiveProject()).
           * @return True if project was closed, false if not.
           */
@@ -157,7 +157,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           *  Note: By default this asks the user if he should
           *  save any unmodified files in the project.
           */
-        bool QueryCloseProject(cbProject *proj,bool dontsavefiles=false);
+        bool QueryCloseProject(caProject *proj,bool dontsavefiles=false);
 
         /** Move a project up in the project manager tree. This effectively
           * re-orders the projects build order.
@@ -165,14 +165,14 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param warpAround If true and the project is at the top of the list order,
           * then it wraps and goes to the bottom of the list.
           */
-        void MoveProjectUp(cbProject* project, bool warpAround = false);
+        void MoveProjectUp(caProject* project, bool warpAround = false);
         /** Move a project down in the project manager tree. This effectively
           * re-orders the projects build order.
           * @param project The project to move down.
           * @param warpAround If true and the project is at the bottom of the list order,
           * then it wraps and goes to the top of the list.
           */
-        void MoveProjectDown(cbProject* project, bool warpAround = false);
+        void MoveProjectDown(caProject* project, bool warpAround = false);
         /** Create a new empty project.
           * @param filename the project's filename
           * @return A pointer to the new project if succesful, or NULL if not.
@@ -180,7 +180,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * it asks the user where to save it.
           * If the user cancels the Save dialog, then NULL is returned from this function.
           */
-        cbProject* NewProject(const wxString& filename = wxEmptyString);
+        caProject* NewProject(const wxString& filename = wxEmptyString);
         /** Add a file to a project. This function comes in two versions. This version,
           * expects a single build target index for the added file to belong to.
           * @param filename The file to add to the project.
@@ -192,7 +192,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * If the project has more than one build targets, a dialog appears so
           * that the user can select which build target this file should belong to.
           */
-        int AddFileToProject(const wxString& filename, cbProject* project = 0L, int target = -1);
+        int AddFileToProject(const wxString& filename, caProject* project = 0L, int target = -1);
         /** Add a file to a project. This function comes in two versions. This version,
           * expects an array of build target indices for the added file to belong to.
           * @param filename The file to add to the project.
@@ -206,7 +206,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * Also note than when this function returns, the targets array will contain
           * the user-selected build targets.
           */
-        int AddFileToProject(const wxString& filename, cbProject* project, wxArrayInt& targets);
+        int AddFileToProject(const wxString& filename, caProject* project, wxArrayInt& targets);
         /** Add multiple files to a project. This function comes in two versions. This version,
           * expects a single build target index for the added files to belong to.
           * @param filelist The files to add to the project.
@@ -218,7 +218,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * If the project has more than one build targets, a dialog appears so
           * that the user can select which build target these files should belong to.
           */
-        int AddMultipleFilesToProject(const wxArrayString& filelist, cbProject* project, int target = -1);
+        int AddMultipleFilesToProject(const wxArrayString& filelist, caProject* project, int target = -1);
         /** Add multiple files to a project. This function comes in two versions. This version,
           * expects an array of build target indices for the added files to belong to.
           * @param filelist The files to add to the project.
@@ -232,20 +232,20 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * Also note than when this function returns, the targets array will contain
           * the user-selected build targets.
           */
-        int AddMultipleFilesToProject(const wxArrayString& filelist, cbProject* project, wxArrayInt& targets);
+        int AddMultipleFilesToProject(const wxArrayString& filelist, caProject* project, wxArrayInt& targets);
         /** Utility function. Displays a single selection list of a project's
           * build targets to choose from.
           * @param project The project to use. If NULL, the active project is used.
           * @return The selected build target's index, or -1 if no build target was selected.
           */
-        int AskForBuildTargetIndex(cbProject* project = 0L);
+        int AskForBuildTargetIndex(caProject* project = 0L);
         /** Utility function. Displays a multiple selection list of a project's
           * build targets to choose from.
           * @param project The project to use. If NULL, the active project is used.
           * @return An integer array containing the selected build targets indices.
           * This array will be empty if no build targets were selected.
           */
-        wxArrayInt AskForMultiBuildTargetIndex(cbProject* project = 0L);
+        wxArrayInt AskForMultiBuildTargetIndex(caProject* project = 0L);
         /** Load a workspace.
           * @param filename The workspace to open.
           * @return True if the workspace loads succefully, false if not.
@@ -309,36 +309,36 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param base The project to set a dependency for.
           * @param dependsOn the project that must be built before @c base project.
           */
-        bool AddProjectDependency(cbProject* base, cbProject* dependsOn);
+        bool AddProjectDependency(caProject* base, caProject* dependsOn);
         /** @brief Removes a project dependency.
           * @see AddProjectDependency()
           * @param base The project to remove a dependency from.
           * @param doesNotDependOn The project that is to stop being a dependency of project @c base.
           */
-        void RemoveProjectDependency(cbProject* base, cbProject* doesNotDependOn);
+        void RemoveProjectDependency(caProject* base, caProject* doesNotDependOn);
         /** @brief Removes all dependencies from project @c base.
           * @see AddProjectDependency()
           * @param base The project to remove all dependencies from.
           */
-        void ClearProjectDependencies(cbProject* base);
+        void ClearProjectDependencies(caProject* base);
         /** @brief Removes the project @c base from being a dependency of any other project.
           * @see AddProjectDependency()
           * @param base The project to remove from all dependencies.
           */
-        void RemoveProjectFromAllDependencies(cbProject* base);
+        void RemoveProjectFromAllDependencies(caProject* base);
         /** @brief Get the array of projects @c base depends on.
           * @param base The project to get its dependencies.
           * @return An array of project dependencies, or NULL if no dependencies are set for @c base.
           */
-        const ProjectsArray* GetDependenciesForProject(cbProject* base);
+        const ProjectsArray* GetDependenciesForProject(caProject* base);
         /** Displays a dialog to setup project dependencies.
           * @param base The project to setup its dependencies. Can be NULL (default) because there's a project selection combo in the dialog.
           */
-        void ConfigureProjectDependencies(cbProject* base = 0);
+        void ConfigureProjectDependencies(caProject* base = 0);
         /** Checks for circular dependencies between @c base and @c dependsOn.
           * @return True if circular dependency is detected, false if it isn't.
           */
-        bool CausesCircularDependency(cbProject* base, cbProject* dependsOn);
+        bool CausesCircularDependency(caProject* base, caProject* dependsOn);
 
 
         /// Rebuild the project manager's tree.
@@ -400,7 +400,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
           * @param project The loaded project.
           * @note A call to BeginLoadingProject() must have preceded.
           */
-        void EndLoadingProject(cbProject* project);
+        void EndLoadingProject(caProject* project);
 
         /** Begins the workspace loading process. Only to be used by code that needs it (e.g. workspace importers).
           * @return True on success, false on failure.
@@ -466,13 +466,13 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
 
         void DoOpenSelectedFile();
         void DoOpenFile(ProjectFile* pf, const wxString& filename);
-        int DoAddFileToProject(const wxString& filename, cbProject* project, wxArrayInt& targets);
+        int DoAddFileToProject(const wxString& filename, caProject* project, wxArrayInt& targets);
         void RemoveFilesRecursively(wxTreeItemId& sel_id);
 
         wxFlatNotebook* m_pNotebook;
         wxTreeCtrl* m_pTree;
         wxTreeItemId m_TreeRoot;
-        cbProject* m_pActiveProject;
+        caProject* m_pActiveProject;
         wxImageList* m_pImages;
         ProjectsArray* m_pProjects;
         DepsMap m_ProjectDeps;

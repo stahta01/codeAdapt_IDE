@@ -6,12 +6,12 @@
 #include <wx/string.h>
 #include "compiler.h" // CompilerLineType
 
-class cbProject;
+class caProject;
 
 struct CompileError
 {
     CompilerLineType lineType;
-    cbProject* project;
+    caProject* project;
 	wxString filename;
 	long int line;
 	wxArrayString errors;
@@ -24,7 +24,7 @@ class CompilerErrors
 		CompilerErrors();
 		virtual ~CompilerErrors();
 
-		void AddError(CompilerLineType lt, cbProject* project, const wxString& filename, long int line, const wxString& error);
+		void AddError(CompilerLineType lt, caProject* project, const wxString& filename, long int line, const wxString& error);
 
         void GotoError(int nr);
 		void Next();

@@ -32,7 +32,7 @@
 #include "importers_globals.h"
 
 
-MSVC7Loader::MSVC7Loader(cbProject* project)
+MSVC7Loader::MSVC7Loader(caProject* project)
     : m_pProject(project),
     m_ConvertSwitches(false),
     m_Version(0)

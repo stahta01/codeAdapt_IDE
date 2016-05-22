@@ -26,7 +26,7 @@ class wxFlatNotebook;
 class wxFlatNotebookEvent;
 class wxMenuBar;
 class EditorColourSet;
-class cbProject;
+class caProject;
 class ProjectFile;
 class cbEditor;
 class cbStyledTextCtrl;
@@ -87,7 +87,7 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         void AddCustomEditor(EditorBase* eb);
         void RemoveCustomEditor(EditorBase* eb);
 
-        bool UpdateProjectFiles(cbProject* project);
+        bool UpdateProjectFiles(caProject* project);
         bool SwapActiveHeaderSource();
         bool CloseActive(bool dontsave = false);
         bool Close(const wxString& filename,bool dontsave = false);

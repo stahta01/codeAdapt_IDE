@@ -29,7 +29,7 @@ namespace EditorHooks
       * EditorHooks::UnregisterHook(id, true);
       *
       * Member functions used as hook callbacks must have the following signature:
-      * void YourFunctionName(cbProject*, TiXmlElement*, bool)
+      * void YourFunctionName(caProject*, TiXmlElement*, bool)
       *
       * Use normal TinyXML procedures to work with the TiXmlElement* argument.
       * The isLoading argument is true if your hook is called when the project is being loaded,

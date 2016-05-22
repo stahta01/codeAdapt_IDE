@@ -15,14 +15,14 @@
 #include <map>
 
 // forward decl
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class ProjectFile;
 class FilesGroupsAndMasks;
 class TiXmlNode;
 class TiXmlElement;
 
-// hashmap for fast searches in cbProject::GetFileByFilename()
+// hashmap for fast searches in caProject::GetFileByFilename()
 WX_DECLARE_STRING_HASH_MAP(ProjectFile*, ProjectFiles);
 
 typedef std::map<wxString, wxArrayString> VirtualBuildTargetsMap;
@@ -41,7 +41,7 @@ class DLLIMPORT caFileTreeData : public MiscTreeItemData
             ftdkVirtualFolder
         };
 
-        caFileTreeData(cbProject* project, FileTreeDataKind kind = ftdkUndefined)
+        caFileTreeData(caProject* project, FileTreeDataKind kind = ftdkUndefined)
             : m_Index(-1),
             m_Project(project),
             m_file(0),
@@ -49,13 +49,13 @@ class DLLIMPORT caFileTreeData : public MiscTreeItemData
         {}
 
         FileTreeDataKind GetKind() const { return m_kind; }
-        cbProject* GetProject() const { return m_Project; }
+        caProject* GetProject() const { return m_Project; }
         int GetFileIndex() const { return m_Index; }
         ProjectFile* GetProjectFile() const { return m_file; }
         const wxString& GetFolder() const { return m_folder; }
 
         void SetKind(FileTreeDataKind kind){ m_kind = kind; }
-        void SetProject(cbProject* project){ m_Project = project; }
+        void SetProject(caProject* project){ m_Project = project; }
         // only valid for file selections
         void SetFileIndex(int index){ m_Index = index; }
         void SetProjectFile(ProjectFile* file){ m_file = file; }
@@ -63,7 +63,7 @@ class DLLIMPORT caFileTreeData : public MiscTreeItemData
         void SetFolder(const wxString& folder){ m_folder = folder; }
     private:
         int m_Index;
-        cbProject* m_Project;
+        caProject* m_Project;
         ProjectFile* m_file;
         wxString m_folder;
         FileTreeDataKind m_kind;
@@ -86,13 +86,13 @@ enum PCHMode
   * Each project can contain any number of build targets and files.
   * @see caProjectBuildTarget, ProjectFile.
   */
-class DLLIMPORT cbProject : public caCompileTargetBase
+class DLLIMPORT caProject : public caCompileTargetBase
 {
      public:
         /// Constructor
-        cbProject(const wxString& filename = wxEmptyString);
+        caProject(const wxString& filename = wxEmptyString);
         /// Destructor
-        ~cbProject();
+        ~caProject();
 
         /** @return True if the project fully loaded, false if not. */
         bool IsLoaded() const { return m_Loaded; }
@@ -688,7 +688,7 @@ class DLLIMPORT cbProject : public caCompileTargetBase
         bool m_Loaded;
         wxTreeItemId m_ProjectNode;
 
-        wxArrayString m_VirtualFolders; // not saved, just used throughout cbProject's lifetime
+        wxArrayString m_VirtualFolders; // not saved, just used throughout caProject's lifetime
 
         bool m_CurrentlyLoading;
         wxString m_CommonTopLevelPath;
@@ -696,7 +696,7 @@ class DLLIMPORT cbProject : public caCompileTargetBase
 
         PCHMode m_PCHMode;
 
-        // hashmap for fast searches in cbProject::GetFileByFilename()
+        // hashmap for fast searches in caProject::GetFileByFilename()
         ProjectFiles m_ProjectFilesMap; // keeps UnixFilename(ProjectFile::relativeFilename)
         caProjectBuildTarget* m_CurrentlyCompilingTarget;
 

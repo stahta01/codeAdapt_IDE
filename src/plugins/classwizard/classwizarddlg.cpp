@@ -85,7 +85,7 @@ ClassWizardDlg::ClassWizardDlg(wxWindow* parent)
     wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgNewClass"));
 
     ProjectManager* prjMan = Manager::Get()->GetProjectManager();
-    cbProject* prj = prjMan->GetActiveProject();
+    caProject* prj = prjMan->GetActiveProject();
     if (prj)
     {
         XRCCTRL(*this, "txtIncludeDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath() + _T("include"));

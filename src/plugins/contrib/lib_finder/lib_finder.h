@@ -52,14 +52,14 @@ class lib_finder: public cbToolPlugin
 
     private:
 
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, cbProject* project);
+        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project);
 
         void SetGlobalVar(const LibraryResult* Result);
         void ReadDetectedResults();
         void ReadPkgConfigResults();
         void ReadPredefinedResults();
         void WriteDetectedResults();
-        void OnProjectHook(cbProject* project,TiXmlElement* elem,bool loading);
+        void OnProjectHook(caProject* project,TiXmlElement* elem,bool loading);
         void OnProjectClose(CodeBlocksEvent& event);
         void OnCompilerStarted(CodeBlocksEvent& event);
         void OnCompilerFinished(CodeBlocksEvent& event);
@@ -74,14 +74,14 @@ class lib_finder: public cbToolPlugin
         bool SameResults(LibraryResult* First, LibraryResult* Second);
 
         // These functions are used in scripting bindings
-		static bool AddLibraryToProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
-		static bool RemoveLibraryFromProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
-		static bool IsLibraryInProject(const wxString& LibName,cbProject* Project,const wxString& TargetName);
+		static bool AddLibraryToProject(const wxString& LibName,caProject* Project,const wxString& TargetName);
+		static bool RemoveLibraryFromProject(const wxString& LibName,caProject* Project,const wxString& TargetName);
+		static bool IsLibraryInProject(const wxString& LibName,caProject* Project,const wxString& TargetName);
 		static bool SetupTargetManually(caCompileTargetBase* Target);
 
-        ProjectConfiguration* GetProject(cbProject* Project);
+        ProjectConfiguration* GetProject(caProject* Project);
 
-        WX_DECLARE_HASH_MAP(cbProject*,ProjectConfiguration*,wxPointerHash,wxPointerEqual,ProjectMapT);
+        WX_DECLARE_HASH_MAP(caProject*,ProjectConfiguration*,wxPointerHash,wxPointerEqual,ProjectMapT);
         WX_DECLARE_HASH_MAP(caCompileTargetBase*,wxArrayString,wxPointerHash,wxPointerEqual,TargetLibsMapT);
 
         ResultMap m_KnownLibraries[rtCount];

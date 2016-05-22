@@ -167,7 +167,7 @@ class Wiz : public caWizardPlugin
 	protected:
         void OnAttach();
         void Clear();
-        void CopyFiles(cbProject* theproject, const wxString&  prjdir, const wxString& srcdir);
+        void CopyFiles(caProject* theproject, const wxString&  prjdir, const wxString& srcdir);
         wxString GenerateFile(const wxString& basePath, const wxString& filename, const wxString& contents);
 
         Wizards m_Wizards;

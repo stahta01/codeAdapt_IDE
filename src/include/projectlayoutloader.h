@@ -3,21 +3,21 @@
 
 #include <wx/string.h>
 
-class cbProject;
+class caProject;
 
 class DLLIMPORT ProjectLayoutLoader
 {
 	public:
-		ProjectLayoutLoader(cbProject* project);
+		ProjectLayoutLoader(caProject* project);
 		virtual ~ProjectLayoutLoader();
 
         bool Open(const wxString& filename);
         bool Save(const wxString& filename);
-        
+
         ProjectFile* GetTopProjectFile(){ return m_TopProjectFile; }
 	protected:
 	private:
-        cbProject* m_pProject;
+        caProject* m_pProject;
         ProjectFile* m_TopProjectFile;
 };
 

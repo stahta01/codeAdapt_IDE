@@ -1485,7 +1485,7 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
         case ftCodeBlocksProject:
         {
             // Make a check whether the project exists in current workspace
-            cbProject* prj = Manager::Get()->GetProjectManager()->IsOpen(fname.GetFullPath());
+            caProject* prj = Manager::Get()->GetProjectManager()->IsOpen(fname.GetFullPath());
             if (!prj)
             {
                 wxBusyCursor wait; // loading a worspace can take some time -> showhourglass
@@ -1539,7 +1539,7 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
         return false;
     }
 
-    cbProject* prj = Manager::Get()->GetProjectManager()->LoadProject(filename, true);
+    caProject* prj = Manager::Get()->GetProjectManager()->LoadProject(filename, true);
     if (prj)
     {
         if (addToHistory)
@@ -1712,7 +1712,7 @@ void MainFrame::DoUpdateLayout()
 void MainFrame::DoUpdateAppTitle()
 {
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0L;
-    cbProject* prj = 0;
+    caProject* prj = 0;
     if(ed && ed->IsBuiltinEditor())
     {
         ProjectFile* prjf = ((cbEditor*)ed)->GetProjectFile();
@@ -2174,7 +2174,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
             return;
 
         wxString filename;
-        cbProject* prj = TemplateManager::Get()->New(tot, &filename);
+        caProject* prj = TemplateManager::Get()->New(tot, &filename);
         // verify that the open files are still in sync
         // the new file might have overwritten an existing one)
         Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
@@ -2206,7 +2206,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 
     // new empty file quick shortcut code below
 
-    cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (project)
         wxSetWorkingDirectory(project->GetBasePath());
     cbEditor* ed = Manager::Get()->GetEditorManager()->New();
@@ -2421,7 +2421,7 @@ void MainFrame::OnFileSaveAllFiles(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveProject(wxCommandEvent& event)
 {
-    // no need to call SaveActiveProjectAs(), because this is handled in cbProject::Save()
+    // no need to call SaveActiveProjectAs(), because this is handled in caProject::Save()
     if (Manager::Get()->GetProjectManager()->SaveActiveProject())
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename());
     DoUpdateStatusBar();
@@ -2611,7 +2611,7 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     ProjectManager* prjman = Manager::Get()->GetProjectManager();
     if(prjman)
     {
-        cbProject* prj = prjman->GetActiveProject();
+        caProject* prj = prjman->GetActiveProject();
         if(prj && prj->GetCurrentlyCompilingTarget())
         {
             event.Veto();
@@ -3671,7 +3671,7 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0;
-    cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
+    caProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
     wxMenuBar* mbar = GetMenuBar();
@@ -3884,7 +3884,7 @@ void MainFrame::OnProjectMenuUpdateUI(wxUpdateUIEvent& event)
         event.Skip();
         return;
     }
-    cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
+    caProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     wxMenuBar* mbar = GetMenuBar();
 
     bool canCloseProject = (ProjectManager::CanShutdown() && EditorManager::CanShutdown());

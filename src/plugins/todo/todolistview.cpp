@@ -232,7 +232,7 @@ void ToDoListView::Parse()
             // loop all project files
             // but be aware: if a file is opened, use the open file because
             // it might not be the same on the disk...
-            cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+            caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
             if (!prj)
                 return;
             for (int i = 0; i < prj->GetFilesCount(); ++i)

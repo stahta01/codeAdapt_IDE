@@ -60,7 +60,7 @@ int HeaderFixup::Execute()
     return -1;
 
   // if no project is opened -> inform the user and do not operate
-  const cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+  const caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
   if (!prj)
   {
     cbMessageBox(_("You need to open a project/workspace before using this plugin!"),

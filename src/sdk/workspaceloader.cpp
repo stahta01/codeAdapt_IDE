@@ -113,7 +113,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
                 case TIXML_SUCCESS:
                     if (active == 1)
 					{
-						cbProject* pProject = GetpMan()->LoadProject(fname.GetFullPath(), true); // activate it
+						caProject* pProject = GetpMan()->LoadProject(fname.GetFullPath(), true); // activate it
 						if(!pProject)
 						{
 							cbMessageBox(_("Unable to open ") + projectFilename,
@@ -126,7 +126,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
                     GetpMsg()->DebugLog(_T("Wrong attribute type (expected 'int')"));
                     break;
                 default:
-					cbProject* pProject = GetpMan()->LoadProject(fname.GetFullPath(), false); // don't activate it
+					caProject* pProject = GetpMan()->LoadProject(fname.GetFullPath(), false); // don't activate it
 					if(!pProject)
 					{
 						cbMessageBox(_("Unable to open ") + projectFilename,
@@ -142,7 +142,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
     proj = wksp->FirstChildElement("Project");
     while (proj)
     {
-        cbProject* thisprj = 0;
+        caProject* thisprj = 0;
         wxString projectFilename = UnixFilename(cbC2U(proj->Attribute("filename")));
         if (projectFilename.IsEmpty())
         {
@@ -165,7 +165,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
                 wxFileName fname(UnixFilename(cbC2U(dep->Attribute("filename"))));
                 wxFileName wfname(filename);
                 fname.MakeAbsolute(wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
-                cbProject* depprj = Manager::Get()->GetProjectManager()->IsOpen(fname.GetFullPath());
+                caProject* depprj = Manager::Get()->GetProjectManager()->IsOpen(fname.GetFullPath());
                 if (depprj)
                     Manager::Get()->GetProjectManager()->AddProjectDependency(thisprj, depprj);
                 dep = dep->NextSiblingElement("Depends");
@@ -194,7 +194,7 @@ bool WorkspaceLoader::Save(const wxString& title, const wxString& filename)
     ProjectsArray* arr = Manager::Get()->GetProjectManager()->GetProjects();
     for (unsigned int i = 0; i < arr->GetCount(); ++i)
     {
-        cbProject* prj = arr->Item(i);
+        caProject* prj = arr->Item(i);
 
         wxFileName wfname(filename);
         wxFileName fname(prj->GetFilename());

@@ -19,7 +19,7 @@ class MakefileGenerator
 {
     public:
         // class constructor
-        MakefileGenerator(CompilerGCC* compiler, cbProject* project, const wxString& makefile, int logIndex);
+        MakefileGenerator(CompilerGCC* compiler, caProject* project, const wxString& makefile, int logIndex);
         // class destructor
         ~MakefileGenerator();
         bool CreateMakefile();
@@ -91,7 +91,7 @@ class MakefileGenerator
 
         CompilerGCC* m_Compiler;
         Compiler* m_CompilerSet;
-        cbProject* m_Project;
+        caProject* m_Project;
         wxString m_Makefile;
         TargetsArray m_LinkableTargets;
         FilesArray m_Files;

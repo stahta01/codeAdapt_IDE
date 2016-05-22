@@ -8,7 +8,7 @@
 
 // forward decls;
 class wxMenuBar;
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class EditorBase;
 class UserVariableManager;
@@ -25,11 +25,11 @@ public:
     void ReplaceMacros(wxString& buffer, caProjectBuildTarget* target = 0, bool subrequest = false);
     wxString ReplaceMacros(const wxString& buffer, caProjectBuildTarget* target = 0);
     void ReplaceEnvVars(wxString& buffer){ ReplaceMacros(buffer); }  /* misnomer, should be ReplaceVariables */;
-    void RecalcVars(cbProject* project,EditorBase* editor,caProjectBuildTarget* target);
+    void RecalcVars(caProject* project,EditorBase* editor,caProjectBuildTarget* target);
     void ClearProjectKeys();
 protected:
     caProjectBuildTarget* m_lastTarget;
-    cbProject* m_lastProject;
+    caProject* m_lastProject;
     EditorBase* m_lastEditor;
     wxFileName m_prjname;
     wxString m_AppPath, m_DataPath, m_Plugins, m_ActiveEditorFilename,

@@ -135,7 +135,7 @@ class DLLIMPORT caCompileTargetBase : public CompileOptionsBase
         virtual void SetMakeCommandFor(MakeCommand cmd, const wxString& make); ///< Set the "make" command used for @c cmd
         virtual bool MakeCommandsModified() const { return m_MakeCommandsModified; } ///< True if any of the "make" commands is modified.
     protected:
-        friend class cbProject;
+        friend class caProject;
 
         wxString m_Filename;
         wxString m_Title;

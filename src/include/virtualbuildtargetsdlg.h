@@ -11,13 +11,13 @@
 #include <wx/statline.h>
 //*)
 
-class cbProject;
+class caProject;
 
 class VirtualBuildTargetsDlg: public wxDialog
 {
 	public:
 
-		VirtualBuildTargetsDlg(wxWindow* parent,wxWindowID id, cbProject* project);
+		VirtualBuildTargetsDlg(wxWindow* parent,wxWindowID id, caProject* project);
 		virtual ~VirtualBuildTargetsDlg();
 
 		//(*Identifiers(VirtualBuildTargetsDlg)
@@ -45,7 +45,7 @@ class VirtualBuildTargetsDlg: public wxDialog
 
         void SetVirtualTarget(const wxString& targetName);
         void CheckTargets();
-		cbProject* m_pProject;
+		caProject* m_pProject;
 
 	private:
 

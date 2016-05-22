@@ -30,7 +30,7 @@ BEGIN_EVENT_TABLE(ProjectDepsDlg, wxDialog)
     EVT_COMBOBOX(XRCID("cmbProject"), ProjectDepsDlg::OnProjectChange)
 END_EVENT_TABLE()
 
-ProjectDepsDlg::ProjectDepsDlg(wxWindow* parent, cbProject* sel)
+ProjectDepsDlg::ProjectDepsDlg(wxWindow* parent, caProject* sel)
     : m_LastSel(-1)
 {
     //ctor
@@ -42,7 +42,7 @@ ProjectDepsDlg::ProjectDepsDlg(wxWindow* parent, cbProject* sel)
     ProjectsArray* mainarr = Manager::Get()->GetProjectManager()->GetProjects();
     for (size_t i = 0; i < mainarr->GetCount(); ++i)
     {
-        cbProject* prj = mainarr->Item(i);
+        caProject* prj = mainarr->Item(i);
         cmb->Append(prj->GetTitle(), prj);
         if (prj == sel)
             idx = i;
@@ -65,7 +65,7 @@ bool ProjectDepsDlg::SaveList()
     if (m_LastSel == -1)
         return true;
 
-    cbProject* thisprj = static_cast<cbProject*>(cmb->GetClientData(m_LastSel));
+    caProject* thisprj = static_cast<caProject*>(cmb->GetClientData(m_LastSel));
     if (!thisprj)
         return true;
 
@@ -78,7 +78,7 @@ bool ProjectDepsDlg::SaveList()
         if (!lst->IsChecked(i))
             continue;
 
-        cbProject* prj = 0;
+        caProject* prj = 0;
 
         ProjectsArray* mainarr = Manager::Get()->GetProjectManager()->GetProjects();
         for (size_t x = 0; x < mainarr->GetCount(); ++x)
@@ -119,7 +119,7 @@ void ProjectDepsDlg::FillList()
     if (idx == -1)
         return;
 
-    cbProject* thisprj = static_cast<cbProject*>(cmb->GetClientData(idx));
+    caProject* thisprj = static_cast<caProject*>(cmb->GetClientData(idx));
     if (!thisprj)
         return;
     const ProjectsArray* arr = Manager::Get()->GetProjectManager()->GetDependenciesForProject(thisprj);
@@ -128,7 +128,7 @@ void ProjectDepsDlg::FillList()
     ProjectsArray* mainarr = Manager::Get()->GetProjectManager()->GetProjects();
     for (size_t i = 0; i < mainarr->GetCount(); ++i)
     {
-        cbProject* prj = mainarr->Item(i);
+        caProject* prj = mainarr->Item(i);
         if (prj == thisprj)
             continue;
         lst->Append(prj->GetTitle());

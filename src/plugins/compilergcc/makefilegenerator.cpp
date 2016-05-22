@@ -36,7 +36,7 @@
 // TODO (mandrav#1#): Fix Makefile for targets using different compilers
 
 // class constructor
-MakefileGenerator::MakefileGenerator(CompilerGCC* compiler, cbProject* project, const wxString& makefile, int logIndex)
+MakefileGenerator::MakefileGenerator(CompilerGCC* compiler, caProject* project, const wxString& makefile, int logIndex)
     : m_Compiler(compiler),
     m_CompilerSet(CompilerFactory::GetCompiler(compiler->GetCurrentCompilerID())),
     m_Project(project),

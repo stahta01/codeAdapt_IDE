@@ -1307,7 +1307,7 @@ void PluginManager::GetConfigurationPanels(int group, wxWindow* parent, Configur
     }
 }
 
-void PluginManager::GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill)
+void PluginManager::GetProjectConfigurationPanels(wxWindow* parent, caProject* project, ConfigurationPanelsArray& arrayToFill)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {

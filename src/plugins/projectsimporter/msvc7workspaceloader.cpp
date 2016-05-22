@@ -130,8 +130,8 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
 
     int count = 0;
     wxArrayString keyvalue;
-    cbProject* project = 0;
-    cbProject* firstproject = 0;
+    caProject* project = 0;
+    caProject* firstproject = 0;
     wxString uuid;
     bool depSection = false;  // ProjectDependencies section?
     bool slnConfSection = false; // SolutionConfiguration section?

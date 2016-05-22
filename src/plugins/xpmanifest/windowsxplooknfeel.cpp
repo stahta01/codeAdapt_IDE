@@ -78,7 +78,7 @@ int WindowsXPLookNFeel::Execute()
 	if (!IsAttached())
 		return -1;
 
-	cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
+	caProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
 	if (!project)
 	{
 		wxString msg = _("No active project!");

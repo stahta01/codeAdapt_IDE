@@ -192,11 +192,11 @@ END_EVENT_TABLE()
 class ScopeTreeData : public wxTreeItemData
 {
     public:
-        ScopeTreeData(cbProject* project, caProjectBuildTarget* target){ m_Project = project; m_Target = target; }
-        cbProject* GetProject(){ return m_Project; }
+        ScopeTreeData(caProject* project, caProjectBuildTarget* target){ m_Project = project; m_Target = target; }
+        caProject* GetProject(){ return m_Project; }
         caProjectBuildTarget* GetTarget(){ return m_Target; }
     private:
-        cbProject* m_Project;
+        caProject* m_Project;
         caProjectBuildTarget* m_Target;
 };
 
@@ -210,7 +210,7 @@ class ScopeTreeData : public wxTreeItemData
         - the options exist on the level of the target
 */
 
-CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, cbProject* project, caProjectBuildTarget* target)
+CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, caProject* project, caProjectBuildTarget* target)
     : m_Compiler(compiler),
     m_CurrentCompilerIdx(0),
     m_pProject(project),

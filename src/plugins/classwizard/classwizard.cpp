@@ -70,7 +70,7 @@ void ClassWizard::OnRelease(bool appShutDown)
 int ClassWizard::Execute()
 {
     ProjectManager* prjMan = Manager::Get()->GetProjectManager();
-    cbProject* prj = prjMan->GetActiveProject();
+    caProject* prj = prjMan->GetActiveProject();
 
     ClassWizardDlg dlg(Manager::Get()->GetAppWindow());
     PlaceWindow(&dlg);

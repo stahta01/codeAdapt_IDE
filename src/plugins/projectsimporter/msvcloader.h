@@ -8,13 +8,13 @@
 #include "compiletargetbase.h" // for target type
 
 // forward decls
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 
 class MSVCLoader : public IBaseLoader
 {
 	public:
-		MSVCLoader(cbProject* project);
+		MSVCLoader(caProject* project);
 		virtual ~MSVCLoader();
 
 		bool Open(const wxString& filename);
@@ -30,7 +30,7 @@ class MSVCLoader : public IBaseLoader
         wxArrayString OptStringTokeniser(const wxString& opts);
         wxString RemoveQuotes(const wxString& src);
 
-        cbProject* m_pProject;
+        caProject* m_pProject;
         bool m_ConvertSwitches;
         wxArrayString m_Configurations;
         wxArrayInt m_ConfigurationsLineIndex;

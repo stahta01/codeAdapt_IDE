@@ -4,18 +4,18 @@
 #include "ibaseloader.h"
 
 // forward decls
-class cbProject;
+class caProject;
 
 class DevCppLoader : public IBaseLoader
 {
 	public:
-		DevCppLoader(cbProject* project);
+		DevCppLoader(caProject* project);
 		virtual ~DevCppLoader();
 
 		bool Open(const wxString& filename);
 		bool Save(const wxString& filename);
 	protected:
-        cbProject* m_pProject;
+        caProject* m_pProject;
 	private:
         DevCppLoader(){} // no default ctor
 };

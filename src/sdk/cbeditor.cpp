@@ -463,7 +463,7 @@ void cbEditor::DoInitializations(const wxString& filename, LoaderBase* fileLdr)
     {
         static int untitledCounter = 1;
         wxString f;
-        cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+        caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
         if (prj)
             f.Printf(_("%sUntitled%d"), prj->GetBasePath().c_str(), untitledCounter++);
         else

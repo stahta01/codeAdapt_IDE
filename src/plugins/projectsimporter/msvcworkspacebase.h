@@ -5,7 +5,7 @@
 #include <wx/arrstr.h>
 #include <wx/hashmap.h>
 
-class cbProject;
+class caProject;
 
 // common features for MSVC importers, version 6, 7 etc.
 // note that there's no workspace config in MSVC6...
@@ -16,7 +16,7 @@ public:
 
 protected:
     // register a new project in the project array
-    virtual void registerProject(const wxString& projectID, cbProject* project);
+    virtual void registerProject(const wxString& projectID, caProject* project);
     // add a dependency
     virtual void addDependency(const wxString& projectID, const wxString& dependencyID);
     // add a workspace config
@@ -32,7 +32,7 @@ private:
     // project record while parsing
     struct ProjectRecord {
         // current project data structure
-        cbProject* _project;
+        caProject* _project;
         // list of the IDs of projects that the current project depend on
         wxSortedArrayString _dependencyList;
         // which project-config each solution-config correspond to
@@ -40,7 +40,7 @@ private:
         // default constructor
         ProjectRecord() : _project(0) {}
         // constructor with a project data structure
-        ProjectRecord(cbProject* project) : _project(project) {}
+        ProjectRecord(caProject* project) : _project(project) {}
     };
 
     // an associative array of project records indexed by project ID which are:

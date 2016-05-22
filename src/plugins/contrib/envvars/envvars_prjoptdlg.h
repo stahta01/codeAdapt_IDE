@@ -7,7 +7,7 @@
 #include "configurationpanel.h"
 
 class EnvVars;
-class cbProject;
+class caProject;
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
@@ -16,7 +16,7 @@ class EnvVarsProjectOptionsDlg : public cbConfigurationPanel
 public:
   /// Ctor
            EnvVarsProjectOptionsDlg(wxWindow*  parent, EnvVars* plugin,
-                                    cbProject* project);
+                                    caProject* project);
   /// Dtor
   virtual ~EnvVarsProjectOptionsDlg();
 
@@ -41,7 +41,7 @@ private:
   { ; }
 
   EnvVars*   m_pPlugin;  //!< pointer to the EnvVars plugin (the parent)
-  cbProject* m_pProject; //!< pointer to the currently active C::B project
+  caProject* m_pProject; //!< pointer to the currently active C::B project
 
   DECLARE_EVENT_TABLE()
 };

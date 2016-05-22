@@ -535,7 +535,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
     CompilerFactory::UnregisterCompilers();
 }
 
-int CompilerGCC::Configure(cbProject* project, caProjectBuildTarget* target)
+int CompilerGCC::Configure(caProject* project, caProjectBuildTarget* target)
 {
     cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Project build options"));
     cbConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
@@ -1435,7 +1435,7 @@ void CompilerGCC::DoUpdateTargetMenu(int targetIndex)
 //    DBGLOG(_T("m_TargetIndex=%d, m_ToolTarget->GetCurrentSelection()=%d, m_RealTargetsStartIndex=%d"), m_TargetIndex, m_ToolTarget->GetCurrentSelection(), m_RealTargetsStartIndex);
 }
 
-void CompilerGCC::UpdateProjectTargets(cbProject* project)
+void CompilerGCC::UpdateProjectTargets(caProject* project)
 {
     m_Targets.Clear();
     if (!project)
@@ -1604,7 +1604,7 @@ bool CompilerGCC::DoCreateMakefile(bool temporary, const wxString& makefile)
     return true;
 }
 
-void CompilerGCC::PrintBanner(cbProject* prj, caProjectBuildTarget* target)
+void CompilerGCC::PrintBanner(caProject* prj, caProjectBuildTarget* target)
 {
     if (!CompilerValid(target))
         return;
@@ -1888,7 +1888,7 @@ int CompilerGCC::Run(caProjectBuildTarget* target)
     return 0;
 }
 
-wxString CompilerGCC::GetMakeCommandFor(MakeCommand cmd, cbProject* project, caProjectBuildTarget* target)
+wxString CompilerGCC::GetMakeCommandFor(MakeCommand cmd, caProject* project, caProjectBuildTarget* target)
 {
     if (!project)
         return wxEmptyString;
@@ -2284,7 +2284,7 @@ void CompilerGCC::BuildStateManagement()
     Manager::Yield();
 }
 
-int CompilerGCC::GetTargetIndexFromName(cbProject* prj, const wxString& name)
+int CompilerGCC::GetTargetIndexFromName(caProject* prj, const wxString& name)
 {
     if (!prj || name.IsEmpty())
         return -1;
@@ -2299,7 +2299,7 @@ int CompilerGCC::GetTargetIndexFromName(cbProject* prj, const wxString& name)
     return -1;
 }
 
-void CompilerGCC::ExpandTargets(cbProject* project, const wxString& targetName, wxArrayString& result)
+void CompilerGCC::ExpandTargets(caProject* project, const wxString& targetName, wxArrayString& result)
 {
     result.Clear();
     if (project)
@@ -2312,7 +2312,7 @@ void CompilerGCC::ExpandTargets(cbProject* project, const wxString& targetName, 
     }
 }
 
-void CompilerGCC::PreprocessJob(cbProject* project, const wxString& targetName)
+void CompilerGCC::PreprocessJob(caProject* project, const wxString& targetName)
 {
     wxArrayString tlist;
 
@@ -2334,7 +2334,7 @@ void CompilerGCC::PreprocessJob(cbProject* project, const wxString& targetName)
 //    Manager::Get()->GetMessageManager()->Log(m_PageIndex, _T("** Creating deps")));
     for (size_t i = 0; i < deps.GetCount(); ++i)
     {
-        cbProject* prj = Manager::Get()->GetProjectManager()->GetProjects()->Item(deps[i]);
+        caProject* prj = Manager::Get()->GetProjectManager()->GetProjects()->Item(deps[i]);
 
         if (!prj->SupportsCurrentPlatform())
         {
@@ -2456,7 +2456,7 @@ void CompilerGCC::CalculateWorkspaceDependencies(wxArrayInt& deps)
     }
 }
 
-void CompilerGCC::CalculateProjectDependencies(cbProject* prj, wxArrayInt& deps)
+void CompilerGCC::CalculateProjectDependencies(caProject* prj, wxArrayInt& deps)
 {
     int prjidx = Manager::Get()->GetProjectManager()->GetProjects()->Index(prj);
     const ProjectsArray* arr = Manager::Get()->GetProjectManager()->GetDependenciesForProject(prj);
@@ -2473,7 +2473,7 @@ void CompilerGCC::CalculateProjectDependencies(cbProject* prj, wxArrayInt& deps)
 
     for (size_t i = 0; i < arr->GetCount(); ++i)
     {
-        cbProject* thisprj = arr->Item(i);
+        caProject* thisprj = arr->Item(i);
         if (!Manager::Get()->GetProjectManager()->CausesCircularDependency(prj, thisprj))
         {
             // recursively check dependencies
@@ -2660,7 +2660,7 @@ int CompilerGCC::BuildWorkspace(const wxString& target)
     {
         for (size_t i = 0; i < arr->GetCount(); ++i)
         {
-            cbProject* prj = arr->Item(i);
+            caProject* prj = arr->Item(i);
             if (prj && !prj->SaveAllFiles())
                 Manager::Get()->GetLogManager()->Log(F(_("Could not save all files of %s..."), prj->GetTitle().c_str()), m_PageIndex);
         }
@@ -2697,7 +2697,7 @@ int CompilerGCC::CleanWorkspace(const wxString& target)
     m_IsWorkspaceOperation = true;
 
     ResetBuildState();
-    cbProject* bak = m_Project;
+    caProject* bak = m_Project;
     ProjectsArray* arr = Manager::Get()->GetProjectManager()->GetProjects();
     for (size_t i = 0; i < arr->GetCount(); ++i)
     {
@@ -2943,7 +2943,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
         ProjectFile* pf = ed->GetProjectFile();
         if (pf)
         {
-            cbProject* CurProject = pf->GetParentProject();
+            caProject* CurProject = pf->GetParentProject();
             if (CurProject)
             {
                 Manager::Get()->GetProjectManager()->SetProject(CurProject, true);
@@ -3093,7 +3093,7 @@ void CompilerGCC::OnProjectCompilerOptions(wxCommandEvent& event)
     }
     else
     {
-        if (cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject())
+        if (caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject())
         {
             Configure(prj);
         }
@@ -3153,7 +3153,7 @@ void CompilerGCC::OnClearErrors(wxCommandEvent& event)
 
 void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
 {
-    cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     wxMenuBar* mbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     bool running = IsRunning();
@@ -3211,7 +3211,7 @@ void CompilerGCC::OnProjectActivated(CodeBlocksEvent& event)
     //NOTE: this function is also called on PROJECT_TARGETS_MODIFIED events
     //      to keep the combobox in sync
 
-    cbProject* active = Manager::Get()->GetProjectManager()->GetActiveProject();
+    caProject* active = Manager::Get()->GetProjectManager()->GetActiveProject();
 //    DBGLOG(_T("Active: %s, Event: %s"),
 //            active ? active->GetTitle().c_str() : _T("<none>"),
 //            event.GetProject()->GetTitle().c_str());
@@ -3299,7 +3299,7 @@ void CompilerGCC::AddOutputLine(const wxString& output, bool forceErrorColour)
     LogMessage(output, clt, ltAll, forceErrorColour);
 }
 
-void CompilerGCC::LogWarningOrError(CompilerLineType lt, cbProject* prj, const wxString& filename, const wxString& line, const wxString& msg)
+void CompilerGCC::LogWarningOrError(CompilerLineType lt, caProject* prj, const wxString& filename, const wxString& line, const wxString& msg)
 {
     // add build message
     wxArrayString errors;

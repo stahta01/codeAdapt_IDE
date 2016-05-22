@@ -12,13 +12,13 @@ class wxToolBar;
 
 class TiXmlElement;
 
-class cbProject;
+class caProject;
 
 #include "api/plugin.h" // the base class we 're inheriting
 #include "configurationpanel.h"
 #include "sdk_events.h"
 
-typedef std::map<cbProject*, wxString> ProjectEnvvarMap;
+typedef std::map<caProject*, wxString> ProjectEnvvarMap;
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
@@ -30,14 +30,14 @@ public:
   /// Dtor
   virtual ~EnvVars();
 
-  wxString GetProjectEnvvarSet(cbProject* project)
+  wxString GetProjectEnvvarSet(caProject* project)
   { return m_ProjectSets[project]; }
 
-  void     SetProjectEnvvarSet(cbProject* project, const wxString& envvar_set);
+  void     SetProjectEnvvarSet(caProject* project, const wxString& envvar_set);
 
 protected:
   /// fires when a project is being loaded / saved
-  void     OnProjectLoadingHook(cbProject* project, TiXmlElement* elem,
+  void     OnProjectLoadingHook(caProject* project, TiXmlElement* elem,
                                 bool loading);
 
   /// fires when a project is being activated
@@ -69,7 +69,7 @@ private:
 
   /// returns the project configuration panel for the plugin (if any)
   virtual  cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent,
-                                                              cbProject* project);
+                                                              caProject* project);
 
   /// hooks into the menu build process to allow the plugin to add menu entries
   void     BuildMenu(wxMenuBar* menuBar)

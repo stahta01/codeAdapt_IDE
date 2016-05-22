@@ -339,7 +339,7 @@ caCompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
 
 caCompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
 {
-    cbProject* theproject = nullptr;
+    caProject* theproject = nullptr;
 
     // first get the project filename
     wxString prjname = GetProjectFullFilename();
@@ -540,7 +540,7 @@ caCompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
 
 caCompileTargetBase* Wiz::RunTargetWizard(/*cb_unused*/ wxString* pFilename)
 {
-    cbProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
+    caProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
 
     bool isDebug = false;
     wxString targetName;
@@ -777,7 +777,7 @@ wxString Wiz::GenerateFile(const wxString& basePath, const wxString& filename, c
     return wxEmptyString; // failed
 }
 
-void Wiz::CopyFiles(cbProject* theproject, const wxString&  prjdir, const wxString& srcdir)
+void Wiz::CopyFiles(caProject* theproject, const wxString&  prjdir, const wxString& srcdir)
 {
     // first get the dir with the files
     wxArrayString filesList;

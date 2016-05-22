@@ -31,7 +31,7 @@ MSVCWorkspaceBase::~MSVCWorkspaceBase() {
     // nothing to do
 }
 
-void MSVCWorkspaceBase::registerProject(const wxString& projectID, cbProject* project) {
+void MSVCWorkspaceBase::registerProject(const wxString& projectID, caProject* project) {
     // just set the initial project dependencies as empty and register the idcode
     _projects[projectID.Lower()] = ProjectRecord(project);
 }

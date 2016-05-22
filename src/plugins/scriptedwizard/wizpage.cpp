@@ -690,7 +690,7 @@ void WizBuildTargetPanel::OnPageChanging(wxWizardEvent& event)
             return;
         }
 
-        cbProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
+        caProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
         if (theproject->GetBuildTarget(m_pBuildTargetPanel->GetTargetName()))
         {
             cbMessageBox(_("A build target with that name already exists in the active project..."), _("Error"), wxICON_ERROR, GetParent());

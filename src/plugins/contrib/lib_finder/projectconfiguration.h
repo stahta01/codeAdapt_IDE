@@ -42,10 +42,10 @@ class ProjectConfiguration
         ~ProjectConfiguration();
 
         /** \brief Loading configuration from xml node */
-        void XmlLoad(TiXmlElement* Node,cbProject* Project);
+        void XmlLoad(TiXmlElement* Node,caProject* Project);
 
         /** \brief Writing configuration to xml node */
-        void XmlWrite(TiXmlElement* Node,cbProject* Project);
+        void XmlWrite(TiXmlElement* Node,caProject* Project);
 
         WX_DECLARE_STRING_HASH_MAP(wxArrayString,wxMultiStringMap);
 

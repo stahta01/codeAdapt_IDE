@@ -116,8 +116,8 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
                               100, 0, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT);
 
     int count = 0;
-    cbProject* project = 0;
-    cbProject* firstproject = 0;
+    caProject* project = 0;
+    caProject* firstproject = 0;
     wxFileName wfname = filename;
     wfname.Normalize();
     Manager::Get()->GetLogManager()->DebugLog(_T("Workspace dir: ") + wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));

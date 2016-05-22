@@ -12,7 +12,7 @@
 // forward decls
 class CompilerGCC;
 class Compiler;
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 class ProjectFile;
 class pfDetails;
@@ -24,7 +24,7 @@ class DirectCommands
     public:
         DirectCommands(CompilerGCC* compilerPlugin,
                         Compiler* compiler,
-                        cbProject* project,
+                        caProject* project,
                         int logPageIndex = 0);
         ~DirectCommands();
 
@@ -51,7 +51,7 @@ class DirectCommands
         int m_PageIndex;
         CompilerGCC* m_pCompilerPlugin;
         Compiler* m_pCompiler;
-        cbProject* m_pProject;
+        caProject* m_pProject;
         caProjectBuildTarget* m_pCurrTarget; // temp
     private:
 };

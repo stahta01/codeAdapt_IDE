@@ -43,7 +43,7 @@
  * compatibility function in wxWidgets-2.8. So in future it will be dropped.
  */
 
-MSVCLoader::MSVCLoader(cbProject* project)
+MSVCLoader::MSVCLoader(caProject* project)
     : m_pProject(project),
     m_ConvertSwitches(true)
 {

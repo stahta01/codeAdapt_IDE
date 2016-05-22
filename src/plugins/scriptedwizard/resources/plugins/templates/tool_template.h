@@ -53,7 +53,7 @@ class [PLUGIN_NAME] : public cbToolPlugin
           * @param project The project that is being edited.
           * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, cbProject* project){ return 0; }
+        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
 [ENDIF HAS_CONFIGURE]
         /** @brief Execute the plugin.
           *

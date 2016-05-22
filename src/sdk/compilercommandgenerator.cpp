@@ -34,7 +34,7 @@ CompilerCommandGenerator::~CompilerCommandGenerator()
     //dtor
 }
 
-void CompilerCommandGenerator::Init(cbProject* project)
+void CompilerCommandGenerator::Init(caProject* project)
 {
     // clear old arrays
     m_Output.clear();
@@ -362,7 +362,7 @@ void CompilerCommandGenerator::GenerateCommandLine(wxString& macro,
 }
 
 /// Apply pre-build scripts for @c base.
-void CompilerCommandGenerator::DoBuildScripts(cbProject* project, caCompileTargetBase* target, const wxString& funcName)
+void CompilerCommandGenerator::DoBuildScripts(caProject* project, caCompileTargetBase* target, const wxString& funcName)
 {
 	caProjectBuildTarget* bt = dynamic_cast<caProjectBuildTarget*>(target);
     static const wxString clearout_buildscripts = _T("SetBuildOptions <- null;");

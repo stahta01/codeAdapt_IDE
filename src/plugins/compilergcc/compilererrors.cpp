@@ -48,7 +48,7 @@ CompilerErrors::~CompilerErrors()
 	//dtor
 }
 
-void CompilerErrors::AddError(CompilerLineType lt, cbProject* project, const wxString& filename, long int line, const wxString& error)
+void CompilerErrors::AddError(CompilerLineType lt, caProject* project, const wxString& filename, long int line, const wxString& error)
 {
 	CompileError err;
 	err.lineType = lt;
@@ -153,7 +153,7 @@ void CompilerErrors::DoGotoError(const CompileError& error)
         return;
 	DoClearErrorMarkFromAllEditors();
 	cbEditor* ed = 0;
-	cbProject* project = error.project ? error.project : Manager::Get()->GetProjectManager()->GetActiveProject();
+	caProject* project = error.project ? error.project : Manager::Get()->GetProjectManager()->GetActiveProject();
 	if (project && Manager::Get()->GetProjectManager()->IsProjectStillOpen(project))
 	{
         wxString filename = error.filename;

@@ -3,13 +3,13 @@
 
 #include <wx/dialog.h>
 
-class cbProject;
+class caProject;
 class caProjectBuildTarget;
 
 class SelectTargetDlg : public wxDialog
 {
 	public:
-		SelectTargetDlg(wxWindow* parent, cbProject* project, int selected = 0);
+		SelectTargetDlg(wxWindow* parent, caProject* project, int selected = 0);
 		~SelectTargetDlg();
 
 		void EndModal(int retCode);
@@ -21,7 +21,7 @@ class SelectTargetDlg : public wxDialog
         void OnCheckboxSelection(wxCommandEvent& event);
         void OnHostApplicationButtonClick(wxCommandEvent& event);
 		void UpdateSelected();
-		cbProject* m_pProject;
+		caProject* m_pProject;
 		int m_Selected;
 
 		DECLARE_EVENT_TABLE()

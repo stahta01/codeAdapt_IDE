@@ -671,7 +671,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFil
 	    {
             if (data->GetKind()==caFileTreeData::ftdkProject)
             {
-                cbProject* prj = data->GetProject();
+                caProject* prj = data->GetProject();
                 wxString filename=wxFileName(prj->GetFilename()).GetPath();
                 wxString name=_T("");
                 size_t sep_pos=menu->GetMenuItemCount();

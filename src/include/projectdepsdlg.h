@@ -3,12 +3,12 @@
 
 #include <wx/dialog.h>
 
-class cbProject;
+class caProject;
 
 class ProjectDepsDlg : public wxDialog
 {
     public:
-        ProjectDepsDlg(wxWindow* parent, cbProject* sel = 0);
+        ProjectDepsDlg(wxWindow* parent, caProject* sel = 0);
         virtual ~ProjectDepsDlg();
         virtual void EndModal(int retCode);
     protected:
