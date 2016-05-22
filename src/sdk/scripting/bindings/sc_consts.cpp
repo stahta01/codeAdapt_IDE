@@ -169,12 +169,12 @@ namespace ScriptBindings
         BIND_INT_CONSTANT(mtUnknown);
 
         // FileTreeDataKind
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkUndefined, "ftdkUndefined");
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkProject, "ftdkProject");
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkFolder, "ftdkFolder");
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkFile, "ftdkFile");
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkVirtualGroup, "ftdkVirtualGroup");
-        BIND_INT_CONSTANT_NAMED(FileTreeData::ftdkVirtualFolder, "ftdkVirtualFolder");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkUndefined, "ftdkUndefined");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkProject, "ftdkProject");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkFolder, "ftdkFolder");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkFile, "ftdkFile");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkVirtualGroup, "ftdkVirtualGroup");
+        BIND_INT_CONSTANT_NAMED(caFileTreeData::ftdkVirtualFolder, "ftdkVirtualFolder");
 
         // file extensions
         BIND_WXSTR_CONSTANT_NAMED(FileFilters::WORKSPACE_EXT, "EXT_WORKSPACE");

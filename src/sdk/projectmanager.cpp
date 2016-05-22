@@ -503,17 +503,17 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
     wxString caption;
     wxMenu menu;
 
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(id);
-    bool is_vfolder = ftd && ftd->GetKind() == FileTreeData::ftdkVirtualFolder;
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(id);
+    bool is_vfolder = ftd && ftd->GetKind() == caFileTreeData::ftdkVirtualFolder;
     /* Following code will check for currently compiling project.
     *  If it finds the selected is project is currently compiling,
     *  then it will disable some of the options */
     bool PopUpMenuOption = true;
     ProjectsArray* Projects = Manager::Get()->GetProjectManager()->GetProjects();
     if (Projects && ftd
-        && (ftd->GetKind() == FileTreeData::ftdkProject
-        || ftd->GetKind() == FileTreeData::ftdkFile
-        || ftd->GetKind() == FileTreeData::ftdkFolder))
+        && (ftd->GetKind() == caFileTreeData::ftdkProject
+        || ftd->GetKind() == caFileTreeData::ftdkFile
+        || ftd->GetKind() == caFileTreeData::ftdkFolder))
     {
         int Count = Projects->GetCount();
         cbProject* ProjInTree = ftd->GetProject();
@@ -533,7 +533,7 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
     if (ftd)
     {
         // if it is a project...
-        if (ftd->GetKind() == FileTreeData::ftdkProject)
+        if (ftd->GetKind() == caFileTreeData::ftdkProject)
         {
             if (ftd->GetProject() != m_pActiveProject)
                 menu.Append(idMenuSetActiveProject, _("Activate project"));
@@ -556,7 +556,7 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
         }
 
         // if it is a file...
-        else if (ftd->GetKind() == FileTreeData::ftdkFile)
+        else if (ftd->GetKind() == caFileTreeData::ftdkFile)
         {
             // selected project file
             ProjectFile* pf = ftd->GetProjectFile();
@@ -610,7 +610,7 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
         }
 
         // if it is a folder...
-        else if (ftd->GetKind() == FileTreeData::ftdkFolder)
+        else if (ftd->GetKind() == caFileTreeData::ftdkFolder)
         {
             menu.Append(idMenuAddFilePopup, _("Add files..."));
             menu.Enable(idMenuAddFilePopup, PopUpMenuOption);
@@ -646,7 +646,7 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
         Manager::Get()->GetPluginManager()->AskPluginsForModuleMenu(mtProjectManager, &menu, ftd);
 
         // more project options
-        if (ftd->GetKind() == FileTreeData::ftdkProject)
+        if (ftd->GetKind() == caFileTreeData::ftdkProject)
         {
             // project
 /* FIXME (mandrav#1#): Move this submenu creation in a function.
@@ -676,7 +676,7 @@ it differs from the block currently in CreateMenu() by the following two IDs */
         }
 
         // more file options
-        else if (ftd->GetKind() == FileTreeData::ftdkFile)
+        else if (ftd->GetKind() == caFileTreeData::ftdkFile)
         {
             menu.AppendSeparator();
             menu.Append(idMenuTreeFileProperties, _("Properties..."));
@@ -1489,7 +1489,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
 void ProjectManager::DoOpenSelectedFile()
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
     if (ftd)
     {
@@ -1673,7 +1673,7 @@ void ProjectManager::OnTreeBeginDrag(wxTreeEvent& event)
         return;
 
     // if no data associated with it, disallow
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(id);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(id);
     if (!ftd)
         return;
 
@@ -1706,8 +1706,8 @@ void ProjectManager::OnTreeEndDrag(wxTreeEvent& event)
         return;
 
     // if no data associated with any of them, disallow
-    FileTreeData* ftd1 = (FileTreeData*)m_pTree->GetItemData(from);
-    FileTreeData* ftd2 = (FileTreeData*)m_pTree->GetItemData(to);
+    caFileTreeData* ftd1 = (caFileTreeData*)m_pTree->GetItemData(from);
+    caFileTreeData* ftd2 = (caFileTreeData*)m_pTree->GetItemData(to);
     if (!ftd1 || !ftd2)
         return;
 
@@ -1732,8 +1732,8 @@ void ProjectManager::OnProjectFileActivated(wxTreeEvent& event)
     #endif
 
     wxTreeItemId id = event.GetItem();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(id);
-    if (ftd && ftd->GetKind() == FileTreeData::ftdkProject)
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(id);
+    if (ftd && ftd->GetKind() == caFileTreeData::ftdkProject)
     {
         if (ftd->GetProject() != m_pActiveProject)
         {
@@ -1840,7 +1840,7 @@ void ProjectManager::OnSetActiveProject(wxCommandEvent& event)
     if (event.GetId() == idMenuSetActiveProject)
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
         if (!ftd)
             return;
 
@@ -1869,14 +1869,14 @@ void ProjectManager::OnSetActiveProject(wxCommandEvent& event)
     else if (event.GetId() == idMenuProjectUp)
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
         if (ftd)
             MoveProjectUp(ftd->GetProject());
     }
     else if (event.GetId() == idMenuProjectDown)
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
         if (ftd)
             MoveProjectDown(ftd->GetProject());
     }
@@ -1896,7 +1896,7 @@ void ProjectManager::OnAddFilesToProjectRecursively(wxCommandEvent& event)
     else
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
         if (ftd)
         {
              prj = ftd->GetProject();
@@ -1978,7 +1978,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
     else
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
         if (ftd)
         {
             prj = ftd->GetProject();
@@ -2019,7 +2019,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
 void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
     cbProject* prj = ftd->GetProject();
@@ -2106,8 +2106,8 @@ void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
         {
             return;
         }
-        bool is_virtual = ftd->GetKind() == FileTreeData::ftdkVirtualFolder;
-        if (is_virtual || ftd->GetKind() == FileTreeData::ftdkFolder)
+        bool is_virtual = ftd->GetKind() == caFileTreeData::ftdkVirtualFolder;
+        if (is_virtual || ftd->GetKind() == caFileTreeData::ftdkFolder)
         {
             prj->BeginRemoveFiles();
             RemoveFilesRecursively(sel);
@@ -2125,7 +2125,7 @@ void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
 void ProjectManager::OnCloseProject(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     cbProject *proj=NULL;
     if (ftd)
         proj = ftd->GetProject();
@@ -2146,7 +2146,7 @@ void ProjectManager::OnCloseProject(wxCommandEvent& event)
 void ProjectManager::OnCloseFile(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
     if (ftd)
     {
@@ -2165,7 +2165,7 @@ void ProjectManager::OnOpenFile(wxCommandEvent& event)
 void ProjectManager::OnOpenWith(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
     if (ftd)
     {
@@ -2221,7 +2221,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
     else if (event.GetId() == idMenuTreeProjectProperties)
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
         cbProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
         wxString backupTitle = project ? project->GetTitle() : _T("");
@@ -2236,7 +2236,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
     else if (event.GetId() == idMenuTreeFileProperties)
     {
         wxTreeItemId sel = m_pTree->GetSelection();
-        FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+        caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
 
         cbProject* project = ftd ? ftd->GetProject() : m_pActiveProject;
         if (project)
@@ -2372,7 +2372,7 @@ void ProjectManager::OnAddVirtualFolder(wxCommandEvent& event)
         return;
 
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
     cbProject* prj = ftd->GetProject();
@@ -2386,7 +2386,7 @@ void ProjectManager::OnAddVirtualFolder(wxCommandEvent& event)
 void ProjectManager::OnDeleteVirtualFolder(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
     cbProject* prj = ftd->GetProject();
@@ -2408,7 +2408,7 @@ void ProjectManager::OnBeginEditNode(wxTreeEvent& event)
     }
 
     // if no data associated with it, disallow
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(id);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(id);
     if (!ftd)
     {
         event.Veto();
@@ -2416,13 +2416,13 @@ void ProjectManager::OnBeginEditNode(wxTreeEvent& event)
     }
 
     // only allow editing virtual folders
-    if (ftd->GetKind() != FileTreeData::ftdkVirtualFolder)
+    if (ftd->GetKind() != caFileTreeData::ftdkVirtualFolder)
         event.Veto();
 }
 
 void ProjectManager::OnEndEditNode(wxTreeEvent& event)
 {
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(event.GetItem());
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(event.GetItem());
     if (!ftd)
     {
         event.Veto();
@@ -2462,7 +2462,7 @@ void ProjectManager::OnAppDoneStartup(CodeBlocksEvent& event)
 void ProjectManager::OnRenameFile(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
         return;
     cbProject* prj = ftd->GetProject();
@@ -2586,11 +2586,11 @@ void ProjectManager::RemoveFilesRecursively(wxTreeItemId& sel_id)
             child = m_pTree->GetNextChild(sel_id, cookie);
         if (child.IsOk())
         {
-            FileTreeData* data = (FileTreeData*)m_pTree->GetItemData(child);
+            caFileTreeData* data = (caFileTreeData*)m_pTree->GetItemData(child);
             if (data)
             {
                 cbProject* prj = data->GetProject();
-                if (prj && data->GetKind() == FileTreeData::ftdkFile)
+                if (prj && data->GetKind() == caFileTreeData::ftdkFile)
                 {
                     ProjectFile* pf = data->GetProjectFile();
                     if (pf && !pf->autoGeneratedBy)
@@ -2606,8 +2606,8 @@ void ProjectManager::RemoveFilesRecursively(wxTreeItemId& sel_id)
 //                    else
 //                        Manager::Get()->GetLogManager()->DebugLog(F(_T("Bad Project File!")));
                 }
-                else if (data->GetKind() == FileTreeData::ftdkFolder
-                        || data->GetKind() == FileTreeData::ftdkVirtualFolder)
+                else if (data->GetKind() == caFileTreeData::ftdkFolder
+                        || data->GetKind() == caFileTreeData::ftdkVirtualFolder)
                 {
                     RemoveFilesRecursively(child);
                 }

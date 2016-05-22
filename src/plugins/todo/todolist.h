@@ -9,12 +9,12 @@
 class wxMenuBar;
 class wxMenu;
 class wxToolBar;
-class FileTreeData;
+class caFileTreeData;
 class wxCommandEvent;
 class wxUpdateUIEvent;
 class CodeBlocksEvent;
 class ToDoListView;
-class FileTreeData;
+class caFileTreeData;
 
 class ToDoList : public cbPlugin
 {
@@ -24,7 +24,7 @@ class ToDoList : public cbPlugin
         virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
         int Configure();
         void BuildMenu(wxMenuBar* menuBar);
-        void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0);
+        void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0);
         bool BuildToolBar(wxToolBar* toolBar);
         void OnAttach(); // fires when the plugin is attached to the application
         void OnRelease(bool appShutDown); // fires when the plugin is released from the application

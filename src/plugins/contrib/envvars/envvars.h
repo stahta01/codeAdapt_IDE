@@ -77,7 +77,7 @@ private:
 
   /// hooks into the module menu build process to allow the plugin to add menu entries
   void     BuildModuleMenu(const ModuleType type, wxMenu* menu,
-                           const FileTreeData* data = 0)
+                           const caFileTreeData* data = 0)
   { return; }
 
   /// hooks into the toolbar build process to allow the plugin to add an own toolbar

@@ -77,7 +77,7 @@ class CompilerGCC : public caCompilerPlugin
         virtual void OnAttach();
         virtual void OnRelease(bool appShutDown);
         virtual void BuildMenu(wxMenuBar* menuBar); // offer for menu space by host
-        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0); // offer for menu space by a module
+        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0); // offer for menu space by a module
         virtual bool BuildToolBar(wxToolBar* toolBar);
 
         virtual int Run(caProjectBuildTarget* target = 0L);
@@ -167,7 +167,7 @@ class CompilerGCC : public caCompilerPlugin
         void DoClearTargetMenu();
         void DoRecreateTargetMenu();
         void DoUpdateTargetMenu(int targetIndex);
-        FileTreeData* DoSwitchProjectTemporarily();
+        caFileTreeData* DoSwitchProjectTemporarily();
         caProjectBuildTarget* DoAskForTarget();
         int DoGUIAskForTarget();
         void ClearLog();

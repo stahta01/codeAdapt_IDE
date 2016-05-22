@@ -27,7 +27,7 @@ WX_DECLARE_STRING_HASH_MAP(ProjectFile*, ProjectFiles);
 
 typedef std::map<wxString, wxArrayString> VirtualBuildTargetsMap;
 
-class DLLIMPORT FileTreeData : public MiscTreeItemData
+class DLLIMPORT caFileTreeData : public MiscTreeItemData
 {
     public:
         /// The kind of tree node
@@ -41,7 +41,7 @@ class DLLIMPORT FileTreeData : public MiscTreeItemData
             ftdkVirtualFolder
         };
 
-        FileTreeData(cbProject* project, FileTreeDataKind kind = ftdkUndefined)
+        caFileTreeData(cbProject* project, FileTreeDataKind kind = ftdkUndefined)
             : m_Index(-1),
             m_Project(project),
             m_file(0),
@@ -666,7 +666,7 @@ class DLLIMPORT cbProject : public caCompileTargetBase
     private:
         void Open();
         void ExpandVirtualBuildTargetGroup(const wxString& alias, wxArrayString& result) const;
-        wxTreeItemId AddTreeNode(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool useFolders, FileTreeData::FileTreeDataKind folders_kind, bool compiles, int image, FileTreeData* data = 0L);
+        wxTreeItemId AddTreeNode(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool useFolders, caFileTreeData::FileTreeDataKind folders_kind, bool compiles, int image, caFileTreeData* data = 0L);
         wxTreeItemId FindNodeToInsertAfter(wxTreeCtrl* tree, const wxString& text, const wxTreeItemId& parent, bool in_folders); // alphabetical sorting
         caProjectBuildTarget* AddDefaultBuildTarget();
         int IndexOfBuildTargetName(const wxString& targetName) const;

@@ -60,7 +60,7 @@ void [PLUGIN_NAME]::BuildMenu(wxMenuBar* menuBar)
     NotImplemented(_T("[PLUGIN_NAME]::BuildMenu()"));
 }[ENDIF HAS_MENU]
 [IF HAS_MODULE_MENU]
-void [PLUGIN_NAME]::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
+void [PLUGIN_NAME]::BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data)
 {
     //Some library module is ready to display a pop-up menu.
     //Check the parameter \"type\" and see which module it is

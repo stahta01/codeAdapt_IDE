@@ -21,7 +21,7 @@
     #include "cbeditor.h"
     #include "editormanager.h"
     #include "pluginmanager.h"
-    #include "cbproject.h" // FileTreeData
+    #include "cbproject.h" // caFileTreeData
     #include <wx/wfstream.h>
 #endif
 #include "cbstyledtextctrl.h"
@@ -285,7 +285,7 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   
         AddToContextMenu(popup, type, false);       //pecan 2006/03/22
 
         // ask other editors / plugins if they need to add any entries in this menu...
-        FileTreeData* ftd = new FileTreeData(0, FileTreeData::ftdkUndefined);
+        caFileTreeData* ftd = new caFileTreeData(0, caFileTreeData::ftdkUndefined);
         ftd->SetFolder(m_Filename);
         Manager::Get()->GetPluginManager()->AskPluginsForModuleMenu(type, popup, ftd);              //pecan 2006/03/22
         delete ftd;

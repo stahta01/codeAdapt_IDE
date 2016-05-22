@@ -1,6 +1,6 @@
 #include "sdk.h"
 
-#include "cbproject.h" // FileTreeData
+#include "cbproject.h" // caFileTreeData
 
 #include "ToolsPlus.h"
 #include "se_globals.h"
@@ -658,7 +658,7 @@ void ToolsPlus::BuildMenu(wxMenuBar* menuBar)
     }
 }
 
-void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
+void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data)
 {
 	//Some library module is ready to display a pop-up menu.
 	//Check the parameter \"type\" and see which module it is
@@ -669,7 +669,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
 	{
 	    if (data)
 	    {
-            if (data->GetKind()==FileTreeData::ftdkProject)
+            if (data->GetKind()==caFileTreeData::ftdkProject)
             {
                 cbProject* prj = data->GetProject();
                 wxString filename=wxFileName(prj->GetFilename()).GetPath();
@@ -697,7 +697,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
                 if (added>0)
                     menu->InsertSeparator(sep_pos);
             }
-            if (data->GetKind()==FileTreeData::ftdkFile)
+            if (data->GetKind()==caFileTreeData::ftdkFile)
             {
                 ProjectFile *f=data->GetProjectFile();
                 if (f)
@@ -769,7 +769,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
 	    {
             size_t sep_pos=menu->GetMenuItemCount();
             size_t added=0;
-            if (data->GetKind()==FileTreeData::ftdkFile)  //right clicked on folder in file explorer
+            if (data->GetKind()==caFileTreeData::ftdkFile)  //right clicked on folder in file explorer
             {
                 wxFileName f(data->GetFolder());
                 wxString filename=f.GetFullPath();
@@ -795,7 +795,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
                     }
                 }
             }
-            if (data->GetKind()==FileTreeData::ftdkFolder) //right clicked on folder in file explorer
+            if (data->GetKind()==caFileTreeData::ftdkFolder) //right clicked on folder in file explorer
             {
                 wxFileName f(data->GetFolder());
                 wxString filename=f.GetFullPath();
@@ -819,7 +819,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
                     }
                 }
             }
-            if (data->GetKind()==FileTreeData::ftdkVirtualGroup) //right clicked on multiple selections in file explorer
+            if (data->GetKind()==caFileTreeData::ftdkVirtualGroup) //right clicked on multiple selections in file explorer
             {
                 wxString paths=data->GetFolder(); //get folder contains a space separated list of the files/directories selected
                 for (unsigned int i=0;i<m_ic.interps.size();i++)

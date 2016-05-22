@@ -74,9 +74,9 @@ class ToolsPlus : public cbPlugin
           * just do nothing ;)
           * @param type the module that's preparing a popup menu
           * @param menu pointer to the popup menu
-          * @param data pointer to FileTreeData object (to access/modify the file tree)
+          * @param data pointer to caFileTreeData object (to access/modify the file tree)
           */
-        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0);
+        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0);
 
         /** This method is called by Code::Blocks and is used by the plugin
           * to add any toolbar items it needs on Code::Blocks's toolbar.\n

@@ -171,7 +171,7 @@ void ToDoList::BuildMenu(wxMenuBar* menuBar)
     }
 }
 
-void ToDoList::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
+void ToDoList::BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data)
 {
     if (!menu || !IsAttached())
         return;

@@ -20,7 +20,7 @@ class wxMenuBar;
 class wxMenu;
 class CodeBlocksEvent;
 class TiXmlDocument;
-class FileTreeData;
+class caFileTreeData;
 
 // typedefs for plugins' function pointers
 typedef void(*PluginSDKVersionProc)(int*,int*,int*);
@@ -109,7 +109,7 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         PluginsArray GetDebuggerOffers();
         PluginsArray GetCodeCompletionOffers();
         PluginsArray GetOffersFor(PluginType type);
-        void AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0);
+        void AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0);
         caMimePlugin* GetMIMEHandlerForFile(const wxString& filename);
         void GetConfigurationPanels(int group, wxWindow* parent, ConfigurationPanelsArray& arrayToFill);
         void GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill);

@@ -864,7 +864,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
     m_Files.Sort(filesSort);
 
     // add our project's root item
-    FileTreeData* ftd = new FileTreeData(this, FileTreeData::ftdkProject);
+    caFileTreeData* ftd = new caFileTreeData(this, caFileTreeData::ftdkProject);
     m_ProjectNode = tree->AppendItem(root, GetTitle(), prjIdx, prjIdx, ftd);
     wxTreeItemId others = m_ProjectNode;
     wxTreeItemId generated = m_ProjectNode;
@@ -876,23 +876,23 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         pGroupNodes = new wxTreeItemId[fgam->GetGroupsCount()];
         for (unsigned int i = 0; i < fgam->GetGroupsCount(); ++i)
         {
-            ftd = new FileTreeData(this, FileTreeData::ftdkVirtualGroup);
+            ftd = new caFileTreeData(this, caFileTreeData::ftdkVirtualGroup);
             ftd->SetFolder(fgam->GetGroupName(i));
             pGroupNodes[i] = tree->AppendItem(m_ProjectNode, fgam->GetGroupName(i), fldIdx, fldIdx, ftd);
         }
         // add a default category "Generated" for all auto-generated file types
-        ftd = new FileTreeData(this, FileTreeData::ftdkVirtualGroup);
+        ftd = new caFileTreeData(this, caFileTreeData::ftdkVirtualGroup);
         generated = tree->AppendItem(m_ProjectNode, _("Auto-generated"), fldIdx, fldIdx, ftd);
         // add a default category "Others" for all non-matching file-types
-        ftd = new FileTreeData(this, FileTreeData::ftdkVirtualGroup);
+        ftd = new caFileTreeData(this, caFileTreeData::ftdkVirtualGroup);
         others = tree->AppendItem(m_ProjectNode, _("Others"), fldIdx, fldIdx, ftd);
     }
     // Now add any virtual folders
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
     {
-        ftd = new FileTreeData(this, FileTreeData::ftdkVirtualFolder);
+        ftd = new caFileTreeData(this, caFileTreeData::ftdkVirtualFolder);
         ftd->SetFolder(m_VirtualFolders[i]);
-        AddTreeNode(tree, m_VirtualFolders[i], m_ProjectNode, true, FileTreeData::ftdkVirtualFolder, true, vfldIdx, ftd);
+        AddTreeNode(tree, m_VirtualFolders[i], m_ProjectNode, true, caFileTreeData::ftdkVirtualFolder, true, vfldIdx, ftd);
     }
 
     // iterate all project files and add them to the tree
@@ -900,7 +900,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
     for (FilesList::Node* node = m_Files.GetFirst(); node; node = node->GetNext())
     {
         ProjectFile* f = node->GetData();
-        ftd = new FileTreeData(this, FileTreeData::ftdkFile);
+        ftd = new caFileTreeData(this, caFileTreeData::ftdkFile);
         ftd->SetFileIndex(count++);
         ftd->SetProjectFile(f);
         ftd->SetFolder(f->file.GetFullPath());
@@ -908,7 +908,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         wxFileName nodefile = f->file;
         nodefile.MakeRelativeTo(m_CommonTopLevelPath);
         wxString nodetext = nodefile.GetFullPath();
-        FileTreeData::FileTreeDataKind folders_kind = FileTreeData::ftdkFolder;
+        caFileTreeData::FileTreeDataKind folders_kind = caFileTreeData::ftdkFolder;
 
         wxTreeItemId parentNode = m_ProjectNode;
         // check if files grouping is enabled and find the group parent
@@ -950,7 +950,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         else if (!f->virtual_path.IsEmpty())
         {
             nodetext = f->virtual_path + wxT_2('/') + f->file.GetFullName();
-            folders_kind = FileTreeData::ftdkVirtualFolder;
+            folders_kind = caFileTreeData::ftdkVirtualFolder;
             wxString slash = f->virtual_path.Last() == wxT_2('/') ? _T("") : wxString(wxT_2('/'));
             ftd->SetFolder(f->virtual_path);
 
@@ -959,7 +959,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         }
 
         // add file in the tree
-        f->m_TreeItemId = AddTreeNode(tree, nodetext, parentNode, useFolders || folders_kind == FileTreeData::ftdkVirtualFolder, folders_kind, f->compile, (int)f->m_VisualState, ftd);
+        f->m_TreeItemId = AddTreeNode(tree, nodetext, parentNode, useFolders || folders_kind == caFileTreeData::ftdkVirtualFolder, folders_kind, f->compile, (int)f->m_VisualState, ftd);
     }
 
     // remove empty tree nodes (like empty groups)
@@ -986,8 +986,8 @@ static wxString GetRelativeFolderPath(wxTreeCtrl* tree, wxTreeItemId parent)
     wxString fld;
     while (parent.IsOk())
     {
-        FileTreeData* ftd = (FileTreeData*)tree->GetItemData(parent);
-        if (!ftd || (ftd->GetKind() != FileTreeData::ftdkFolder && ftd->GetKind() != FileTreeData::ftdkVirtualFolder))
+        caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(parent);
+        if (!ftd || (ftd->GetKind() != caFileTreeData::ftdkFolder && ftd->GetKind() != caFileTreeData::ftdkVirtualFolder))
             break;
         fld.Prepend(tree->GetItemText(parent) + wxT_2('/'));
         parent = tree->GetItemParent(parent);
@@ -999,10 +999,10 @@ wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
                                     const wxString& text,
                                     const wxTreeItemId& parent,
                                     bool useFolders,
-                                    FileTreeData::FileTreeDataKind folders_kind,
+                                    caFileTreeData::FileTreeDataKind folders_kind,
                                     bool compiles,
                                     int image,
-                                    FileTreeData* data)
+                                    caFileTreeData* data)
 {
     // see if the text contains any path info, e.g. plugins/compilergcc/compilergcc.cpp
     // in that case, take the first element (plugins in this example), create a sub-folder
@@ -1051,14 +1051,14 @@ wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
 
             newparent = FindNodeToInsertAfter(tree, folder, parent, true);
 
-            FileTreeData* ftd = new FileTreeData(*data);
+            caFileTreeData* ftd = new caFileTreeData(*data);
             ftd->SetKind(folders_kind);
-            if (folders_kind != FileTreeData::ftdkVirtualFolder)
+            if (folders_kind != caFileTreeData::ftdkVirtualFolder)
                 ftd->SetFolder(m_CommonTopLevelPath + GetRelativeFolderPath(tree, parent) + folder + wxT_2('/'));
             else
                 ftd->SetFolder(GetRelativeFolderPath(tree, parent) + folder + wxT_2('/'));
             ftd->SetProjectFile(0);
-            int idx = folders_kind != FileTreeData::ftdkVirtualFolder ? fldIdx : vfldIdx;
+            int idx = folders_kind != caFileTreeData::ftdkVirtualFolder ? fldIdx : vfldIdx;
             newparent = tree->InsertItem(parent, newparent, folder, idx, idx, ftd);
         }
         //tree->SortChildren(parent);
@@ -1124,12 +1124,12 @@ void cbProject::CopyTreeNodeRecursively(wxTreeCtrl* tree, const wxTreeItemId& it
     if (!tree || !item.IsOk() || !new_parent.IsOk())
         return;
 
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(item);
-    FileTreeData* ftd_moved = ftd ? new FileTreeData(*ftd) : 0;
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(item);
+    caFileTreeData* ftd_moved = ftd ? new caFileTreeData(*ftd) : 0;
     int idx = tree->GetItemImage(item); // old image
     wxColour col = tree->GetItemTextColour(item); // old colour
 
-    wxTreeItemId insert = FindNodeToInsertAfter(tree, tree->GetItemText(item), new_parent, ftd && ftd->GetKind() == FileTreeData::ftdkVirtualFolder);
+    wxTreeItemId insert = FindNodeToInsertAfter(tree, tree->GetItemText(item), new_parent, ftd && ftd->GetKind() == caFileTreeData::ftdkVirtualFolder);
     wxTreeItemId target = tree->InsertItem(new_parent, insert, tree->GetItemText(item), idx, idx, ftd_moved);
     tree->SetItemTextColour(target, col);
 
@@ -1175,7 +1175,7 @@ bool cbProject::CanDragNode(wxTreeCtrl* tree, wxTreeItemId node)
         return false;
 
     // if no data associated with it, disallow
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(node);
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(node);
     if (!ftd)
         return false;
 
@@ -1184,7 +1184,7 @@ bool cbProject::CanDragNode(wxTreeCtrl* tree, wxTreeItemId node)
         return false;
 
     // allow only if it is a file or a virtual folder
-    return ftd->GetKind() == FileTreeData::ftdkFile || ftd->GetKind() == FileTreeData::ftdkVirtualFolder;
+    return ftd->GetKind() == caFileTreeData::ftdkFile || ftd->GetKind() == caFileTreeData::ftdkVirtualFolder;
 }
 
 bool cbProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to)
@@ -1194,8 +1194,8 @@ bool cbProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to
         return false;
 
     // if no data associated with it, disallow
-    FileTreeData* ftd1 = (FileTreeData*)tree->GetItemData(from);
-    FileTreeData* ftd2 = (FileTreeData*)tree->GetItemData(to);
+    caFileTreeData* ftd1 = (caFileTreeData*)tree->GetItemData(from);
+    caFileTreeData* ftd2 = (caFileTreeData*)tree->GetItemData(to);
     if (!ftd1 || !ftd2)
         return false;
 
@@ -1204,23 +1204,23 @@ bool cbProject::NodeDragged(wxTreeCtrl* tree, wxTreeItemId from, wxTreeItemId to
         return false;
 
     // allow only if a file or vfolder was dragged on a file, another vfolder or the project itself
-    if ((ftd1->GetKind() != FileTreeData::ftdkFile &&
-        ftd1->GetKind() != FileTreeData::ftdkVirtualFolder) ||
-        (ftd2->GetKind() != FileTreeData::ftdkFile &&
-         ftd2->GetKind() != FileTreeData::ftdkVirtualFolder &&
-         ftd2->GetKind() != FileTreeData::ftdkProject))
+    if ((ftd1->GetKind() != caFileTreeData::ftdkFile &&
+        ftd1->GetKind() != caFileTreeData::ftdkVirtualFolder) ||
+        (ftd2->GetKind() != caFileTreeData::ftdkFile &&
+         ftd2->GetKind() != caFileTreeData::ftdkVirtualFolder &&
+         ftd2->GetKind() != caFileTreeData::ftdkProject))
     {
         return false;
     }
 
     // don't drag under the same parent
-    wxTreeItemId parent1 = ftd1->GetKind() == FileTreeData::ftdkFile ? tree->GetItemParent(from) : from;
-    wxTreeItemId parent2 = ftd2->GetKind() == FileTreeData::ftdkFile ? tree->GetItemParent(to) : to;
+    wxTreeItemId parent1 = ftd1->GetKind() == caFileTreeData::ftdkFile ? tree->GetItemParent(from) : from;
+    wxTreeItemId parent2 = ftd2->GetKind() == caFileTreeData::ftdkFile ? tree->GetItemParent(to) : to;
     if (parent1 == parent2)
         return false;
 
     // A special check for virtual folders.
-    if (ftd1->GetKind() == FileTreeData::ftdkVirtualFolder && ftd2->GetKind() == FileTreeData::ftdkVirtualFolder)
+    if (ftd1->GetKind() == caFileTreeData::ftdkVirtualFolder && ftd2->GetKind() == caFileTreeData::ftdkVirtualFolder)
     {
         wxTreeItemId root = tree->GetRootItem();
         wxTreeItemId toParent = tree->GetItemParent(to);
@@ -1262,13 +1262,13 @@ bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, c
     }
     m_VirtualFolders.Add(foldername);
 
-    FileTreeData* ftd = new FileTreeData(this, FileTreeData::ftdkVirtualFolder);
+    caFileTreeData* ftd = new caFileTreeData(this, caFileTreeData::ftdkVirtualFolder);
     ftd->SetProjectFile(0);
     ftd->SetFolder(foldername);
 
     int vfldIdx = Manager::Get()->GetProjectManager()->VirtualFolderIconIndex();
 
-    AddTreeNode(tree, foldername, m_ProjectNode, true, FileTreeData::ftdkVirtualFolder, true, vfldIdx, ftd);
+    AddTreeNode(tree, foldername, m_ProjectNode, true, caFileTreeData::ftdkVirtualFolder, true, vfldIdx, ftd);
     if (!tree->IsExpanded(parent_node))
         tree->Expand(parent_node);
 
@@ -1285,7 +1285,7 @@ void cbProject::VirtualFolderDeleted(wxTreeCtrl* tree, wxTreeItemId node)
         return;
 
     // if no data associated with it, disallow
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(node);
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(node);
     if (!ftd)
         return;
 
@@ -1342,7 +1342,7 @@ bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const 
         return false;
 
     // if no data associated with it, disallow
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(node);
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(node);
     if (!ftd)
         return false;
 

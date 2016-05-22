@@ -22,7 +22,7 @@ class OpenFilesListPlugin : public cbPlugin
         virtual int GetConfigurationGroup() const { return cgEditor; }
 
         virtual void BuildMenu(wxMenuBar* menuBar);
-        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data = 0){}
+        virtual void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0){}
         virtual bool BuildToolBar(wxToolBar* toolBar){ return false; }
 
         virtual void OnAttach();

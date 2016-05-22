@@ -84,7 +84,7 @@ wxArrayInt CreateMenu(const wxString& name)
 // ask the script plugin what items to add in the context menu
 // and return an integer array of the menu IDs
 ////////////////////////////////////////////////////////////////////////////////
-wxArrayInt CreateModuleMenu(const ModuleType typ, wxMenu* menu, const FileTreeData* data)
+wxArrayInt CreateModuleMenu(const ModuleType typ, wxMenu* menu, const caFileTreeData* data)
 {
     wxArrayInt ret;
 

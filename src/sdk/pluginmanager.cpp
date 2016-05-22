@@ -1379,7 +1379,7 @@ PluginsArray PluginManager::GetOffersFor(PluginType type)
     return arr;
 }
 
-void PluginManager::AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
+void PluginManager::AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {

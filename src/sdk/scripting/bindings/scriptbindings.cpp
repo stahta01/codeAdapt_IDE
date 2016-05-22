@@ -641,17 +641,17 @@ namespace ScriptBindings
             var(&caPluginInfo::thanksTo, "thanksTo").
             var(&caPluginInfo::license, "license");
 
-        SqPlus::SQClassDef<FileTreeData>("FileTreeData").
-            func(&FileTreeData::GetKind, "GetKind").
-            func(&FileTreeData::GetProject, "GetProject").
-            func(&FileTreeData::GetFileIndex, "GetFileIndex").
-            func(&FileTreeData::GetProjectFile, "GetProjectFile").
-            func(&FileTreeData::GetFolder, "GetFolder").
-            func(&FileTreeData::SetKind, "SetKind").
-            func(&FileTreeData::SetProject, "SetProject").
-            func(&FileTreeData::SetFileIndex, "SetFileIndex").
-            func(&FileTreeData::SetProjectFile, "SetProjectFile").
-            func(&FileTreeData::SetFolder, "SetFolder");
+        SqPlus::SQClassDef<caFileTreeData>("caFileTreeData").
+            func(&caFileTreeData::GetKind, "GetKind").
+            func(&caFileTreeData::GetProject, "GetProject").
+            func(&caFileTreeData::GetFileIndex, "GetFileIndex").
+            func(&caFileTreeData::GetProjectFile, "GetProjectFile").
+            func(&caFileTreeData::GetFolder, "GetFolder").
+            func(&caFileTreeData::SetKind, "SetKind").
+            func(&caFileTreeData::SetProject, "SetProject").
+            func(&caFileTreeData::SetFileIndex, "SetFileIndex").
+            func(&caFileTreeData::SetProjectFile, "SetProjectFile").
+            func(&caFileTreeData::SetFolder, "SetFolder");
 
         // called last because it needs a few previously registered types
         Register_ScriptPlugin();

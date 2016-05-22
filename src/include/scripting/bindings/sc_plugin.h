@@ -4,7 +4,7 @@
 #include "sc_base_types.h"
 #include <wx/dynarray.h>
 
-class FileTreeData;
+class caFileTreeData;
 class wxMenu;
 
 namespace ScriptBindings
@@ -12,8 +12,8 @@ namespace ScriptBindings
     namespace ScriptPluginWrapper
     {
         wxArrayInt CreateMenu(wxMenuBar* mbar);
-        wxArrayInt CreateModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data);
-        
+        wxArrayInt CreateModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data);
+
         void OnScriptMenu(int id);
         void OnScriptModuleMenu(int id);
     }; // namespace ScriptPluginWrapper

@@ -39,7 +39,7 @@ DECLARE_INSTANCE_TYPE(ProjectFile);
 DECLARE_INSTANCE_TYPE(ProjectManager);
 DECLARE_INSTANCE_TYPE(CompilerFactory);
 DECLARE_INSTANCE_TYPE(caPluginInfo);
-DECLARE_INSTANCE_TYPE(FileTreeData);
+DECLARE_INSTANCE_TYPE(caFileTreeData);
 
 using SqPlus::GetTypeName;
 
@@ -63,7 +63,7 @@ DECLARE_ENUM_TYPE(MakeCommand);
 DECLARE_ENUM_TYPE(TemplateOutputType);
 DECLARE_ENUM_TYPE(SearchDirs);
 DECLARE_ENUM_TYPE(ModuleType);
-DECLARE_ENUM_TYPE(FileTreeData::FileTreeDataKind);
+DECLARE_ENUM_TYPE(caFileTreeData::FileTreeDataKind);
 DECLARE_ENUM_TYPE(TargetFilenameGenerationPolicy);
 
 using SqPlus::Push;

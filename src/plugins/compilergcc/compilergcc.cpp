@@ -621,7 +621,7 @@ void CompilerGCC::BuildMenu(wxMenuBar* menuBar)
 //    }
 }
 
-void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
+void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data)
 {
     if (!IsAttached())
         return;
@@ -632,13 +632,13 @@ void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fil
     if (!CheckProject())
         return;
 
-    if (!data || data->GetKind() == FileTreeData::ftdkUndefined)
+    if (!data || data->GetKind() == caFileTreeData::ftdkUndefined)
     {
         // popup menu in empty space in ProjectManager
         menu->Append(idMenuCompileAll, _("Build workspace"));
         menu->Append(idMenuRebuildAll, _("Rebuild workspace"));
     }
-    else if (data && data->GetKind() == FileTreeData::ftdkProject)
+    else if (data && data->GetKind() == caFileTreeData::ftdkProject)
     {
         // popup menu on a project
         menu->AppendSeparator();
@@ -648,7 +648,7 @@ void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fil
         menu->AppendSeparator();
         menu->Append(idMenuProjectCompilerOptionsFromProjectManager, _("Build options..."));
     }
-    else if (data && data->GetKind() == FileTreeData::ftdkFile)
+    else if (data && data->GetKind() == caFileTreeData::ftdkFile)
     {
         FileType ft = FileTypeOf(data->GetProjectFile()->relativeFilename);
         if (ft == ftSource || ft == ftHeader)
@@ -999,16 +999,16 @@ void CompilerGCC::ClearLog()
         m_Log->Clear();
 }
 
-FileTreeData* CompilerGCC::DoSwitchProjectTemporarily()
+caFileTreeData* CompilerGCC::DoSwitchProjectTemporarily()
 {
     wxTreeCtrl* tree = Manager::Get()->GetProjectManager()->GetTree();
     wxTreeItemId sel = tree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(sel);
     if (!ftd)
         return 0L;
     // copy ftd to a new instance, because after the SetProject() call
     // that follows, ftd will no longer be valid...
-    FileTreeData* newFtd = new FileTreeData(*ftd);
+    caFileTreeData* newFtd = new caFileTreeData(*ftd);
     Manager::Get()->GetProjectManager()->SetProject(ftd->GetProject(), false);
     AskForActiveProject();
 
@@ -2920,7 +2920,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
     {
         // we 're called from a menu in ProjectManager
         // let's check the selected project...
-        FileTreeData* ftd = DoSwitchProjectTemporarily();
+        caFileTreeData* ftd = DoSwitchProjectTemporarily();
         ProjectFile* pf = m_Project->GetFile(ftd->GetFileIndex());
         if (!pf)
         {
@@ -3079,7 +3079,7 @@ void CompilerGCC::OnProjectCompilerOptions(wxCommandEvent& event)
 {
     wxTreeCtrl* tree = Manager::Get()->GetProjectManager()->GetTree();
     wxTreeItemId sel = tree->GetSelection();
-    FileTreeData* ftd = (FileTreeData*)tree->GetItemData(sel);
+    caFileTreeData* ftd = (caFileTreeData*)tree->GetItemData(sel);
     if (ftd)
     {
         // 'configure' selected target, if other than 'All'
