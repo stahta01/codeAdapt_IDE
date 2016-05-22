@@ -30,7 +30,7 @@ PrintDialog::PrintDialog(wxWindow* parent)
 	//ctor
 	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgPrint"));
 
-	cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+	caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 	if (ed)
 	{
         bool hasSel = ed->GetControl()->GetSelectedText().Length();

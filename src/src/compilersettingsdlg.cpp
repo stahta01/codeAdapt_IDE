@@ -83,7 +83,7 @@ CompilerSettingsDlg::CompilerSettingsDlg(wxWindow* parent)
         PluginElement* elem = plugins[i];
         if (!elem)
             continue;
-        cbPlugin* plugin = elem->plugin;
+        caPlugin* plugin = elem->plugin;
         if (!plugin || !plugin->IsAttached())
             continue;
         wxString filename = wxFileName(elem->fileName).GetFullName();
@@ -133,7 +133,7 @@ void CompilerSettingsDlg::AddPluginPanels()
     Manager::Get()->GetPluginManager()->GetConfigurationPanels(cgCompiler, lb, local);
     for (size_t i = 0; i < local.GetCount(); ++i)
     {
-        cbConfigurationPanel* panel = local[i];
+        caConfigurationPanel* panel = local[i];
         lb->AddPage(panel, panel->GetTitle());
 
         wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
@@ -168,7 +168,7 @@ void CompilerSettingsDlg::AddPluginPanels()
     Manager::Get()->GetPluginManager()->GetConfigurationPanels(cgDebugger, lb, local);
     for (size_t i = 0; i < local.GetCount(); ++i)
     {
-        cbConfigurationPanel* panel = local[i];
+        caConfigurationPanel* panel = local[i];
         lb->AddPage(panel, panel->GetTitle());
 
         wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
@@ -274,7 +274,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
         // finally, apply settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnApply();
         }
     }
@@ -283,7 +283,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
         // finally, cancel settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnCancel();
         }
     }

@@ -14,14 +14,14 @@
 #include <api/plugin.h> // the base class we 're inheriting
 #include <settings.h> // needed to use the Code::Blocks SDK
 
-class AStylePlugin : public cbToolPlugin
+class AStylePlugin : public caToolPlugin
 {
   public:
     AStylePlugin();
     ~AStylePlugin();
     int Configure();
     int GetConfigurationGroup() const { return cgEditor; }
-    cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+    caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
     int Execute();
     void OnAttach(); // fires when the plugin is attached to the application
     void OnRelease(bool appShutDown); // fires when the plugin is released from the application

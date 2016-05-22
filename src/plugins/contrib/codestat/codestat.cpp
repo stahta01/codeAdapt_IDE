@@ -63,7 +63,7 @@ void CodeStat::OnRelease(bool appShutDown)
 
 /** Open the plugin configuration panel.
  */
-cbConfigurationPanel* CodeStat::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* CodeStat::GetConfigurationPanel(wxWindow* parent)
 {
     // if not attached, exit
     if (!IsAttached())

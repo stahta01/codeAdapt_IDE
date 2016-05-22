@@ -38,7 +38,7 @@ namespace
     };
 }
 
-BEGIN_EVENT_TABLE(OpenFilesListPlugin, cbPlugin)
+BEGIN_EVENT_TABLE(OpenFilesListPlugin, caPlugin)
     EVT_UPDATE_UI(idViewOpenFilesTree, OpenFilesListPlugin::OnUpdateUI)
     EVT_MENU(idViewOpenFilesTree, OpenFilesListPlugin::OnViewOpenFilesTree)
     EVT_TREE_ITEM_ACTIVATED(idOpenFilesTree, OpenFilesListPlugin::OnTreeItemActivated)

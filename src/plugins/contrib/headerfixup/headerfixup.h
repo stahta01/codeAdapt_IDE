@@ -18,7 +18,7 @@
 
 class wxWindow;
 
-class HeaderFixup : public cbToolPlugin
+class HeaderFixup : public caToolPlugin
 {
 public:
 
@@ -28,8 +28,8 @@ public:
   { return 50; }
   virtual int GetConfigurationGroup() const
   { return cgUnknown; }
-  virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
-  virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* /*parent*/, caProject* /*project*/)
+  virtual caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+  virtual caConfigurationPanel* GetProjectConfigurationPanel(wxWindow* /*parent*/, caProject* /*project*/)
   { return 0; }
   virtual int Execute();
 

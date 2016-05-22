@@ -37,7 +37,7 @@
 
 class LibraryResult;
 
-class lib_finder: public cbToolPlugin
+class lib_finder: public caToolPlugin
 {
 	public:
 
@@ -52,7 +52,7 @@ class lib_finder: public cbToolPlugin
 
     private:
 
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project);
+        virtual caConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project);
 
         void SetGlobalVar(const LibraryResult* Result);
         void ReadDetectedResults();

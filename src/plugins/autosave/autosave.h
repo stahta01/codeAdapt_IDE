@@ -22,7 +22,7 @@ This file is part of Code::Blocks Studio, an open-source cross-platform IDE
 class wxTimer;
 class wxTimerEvent;
 
-class Autosave : public cbPlugin
+class Autosave : public caPlugin
 {
     wxTimer *timer1;
     wxTimer *timer2;
@@ -39,13 +39,13 @@ class Autosave : public cbPlugin
         void OnAttach(); // fires when the plugin is attached to the application
         void Start();
         void OnRelease(bool appShutDown); // fires when the plugin is released from the application
-        virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        virtual caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
         void OnTimer(wxTimerEvent& event);
     DECLARE_EVENT_TABLE()
 };
 
 
-class AutosaveConfigDlg : public cbConfigurationPanel
+class AutosaveConfigDlg : public caConfigurationPanel
 {
     Autosave* plugin;
 

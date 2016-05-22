@@ -22,7 +22,7 @@ typedef std::map<caProject*, wxString> ProjectEnvvarMap;
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-class EnvVars : public cbPlugin
+class EnvVars : public caPlugin
 {
 public:
   /// Ctor
@@ -65,10 +65,10 @@ private:
   { return  cgContribPlugin; }
 
   /// returns the configuration panel for the plugin (if any)
-  virtual  cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+  virtual  caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
 
   /// returns the project configuration panel for the plugin (if any)
-  virtual  cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent,
+  virtual  caConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent,
                                                               caProject* project);
 
   /// hooks into the menu build process to allow the plugin to add menu entries

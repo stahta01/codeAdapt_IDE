@@ -7,7 +7,7 @@
 #include <map>
 using namespace std;
 
-class cbEditor;
+class caEditor;
 class wxArrayString;
 class wxCommandEvent;
 class wxListEvent;
@@ -43,7 +43,7 @@ class ToDoListView : public ListCtrlLogger, public wxEvtHandler
     private:
         void LoadUsers();
         void FillList();
-        void ParseEditor(cbEditor* pEditor);
+        void ParseEditor(caEditor* pEditor);
         void ParseFile(const wxString& filename);
         void ParseBuffer(const wxString& buffer, const wxString& filename);
         int CalculateLineNumber(const wxString& buffer, int upTo);

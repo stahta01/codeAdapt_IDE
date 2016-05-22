@@ -43,18 +43,18 @@ class [PLUGIN_NAME] : public cbMimePlugin
 
         /** Return plugin's configuration panel.
           * @param parent The parent window.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
+          * @return A pointer to the plugin's caConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
+        virtual caConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
 
         /** Return plugin's configuration panel for projects.
           * The panel returned from this function will be added in the project's
           * configuration dialog.
           * @param parent The parent window.
           * @param project The project that is being edited.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
+          * @return A pointer to the plugin's caConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
+        virtual caConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
 [ENDIF HAS_CONFIGURE]
         /** @brief Can a file be handled by this plugin?
           *

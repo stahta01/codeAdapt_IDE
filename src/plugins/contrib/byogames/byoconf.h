@@ -12,7 +12,7 @@ class wxSpinCtrl;
 class wxStaticText;
 class wxButton;
 
-class byoConf: public cbConfigurationPanel
+class byoConf: public caConfigurationPanel
 {
 	public:
 

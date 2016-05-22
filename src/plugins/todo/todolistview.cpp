@@ -142,7 +142,7 @@ void ToDoListView::FillList()
     if(m_pSource->GetSelection()==0) // Single file
     {
         wxString filename(wxEmptyString);
-        cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
+        caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if(ed)
             filename = ed->GetFilename();
         for(unsigned int i = 0; i < m_itemsmap[filename].size(); i++)
@@ -184,7 +184,7 @@ void ToDoListView::ParseCurrent(bool forced)
 {
     if(m_ignore)
         return; // Reentrancy
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
+    caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
     if(ed)
     {
         wxString filename = ed->GetFilename();
@@ -213,7 +213,7 @@ void ToDoListView::Parse()
         case 0: // current file only
         {
             // this is the easiest selection ;)
-            cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
+            caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
             ParseEditor(ed);
             break;
         }
@@ -222,7 +222,7 @@ void ToDoListView::Parse()
             // easy too; parse all open editor files...
             for (int i = 0; i < Manager::Get()->GetEditorManager()->GetEditorsCount(); ++i)
             {
-                cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetEditor(i));
+                caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetEditor(i));
                 ParseEditor(ed);
             }
             break;
@@ -239,7 +239,7 @@ void ToDoListView::Parse()
             {
                 ProjectFile* pf = prj->GetFile(i);
                 wxString filename = pf->file.GetFullPath();
-                cbEditor* ed = Manager::Get()->GetEditorManager()->IsBuiltinOpen(filename);
+                caEditor* ed = Manager::Get()->GetEditorManager()->IsBuiltinOpen(filename);
                 if (ed)
                     ParseEditor(ed);
                 else
@@ -265,7 +265,7 @@ int ToDoListView::CalculateLineNumber(const wxString& buffer, int upTo)
     return line;
 }
 
-void ToDoListView::ParseEditor(cbEditor* pEditor)
+void ToDoListView::ParseEditor(caEditor* pEditor)
 {
     if (pEditor)
         ParseBuffer(pEditor->GetControl()->GetText(), pEditor->GetFilename());
@@ -475,7 +475,7 @@ void ToDoListView::OnDoubleClick( wxCommandEvent& event )
         return;
 
     // jump to file/line selected
-    cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
+    caEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
     if (ed)
     {
         bool old_ignore = m_ignore;

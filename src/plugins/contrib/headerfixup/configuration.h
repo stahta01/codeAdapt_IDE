@@ -29,7 +29,7 @@
 
 class wxWindow;
 
-class Configuration: public cbConfigurationPanel
+class Configuration: public caConfigurationPanel
 {
 public:
 

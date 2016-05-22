@@ -10,7 +10,7 @@
 class ASStreamIterator : public astyle::ASSourceIterator
 {
 	public:
-		ASStreamIterator(cbEditor *cbe, const wxChar *in);
+		ASStreamIterator(caEditor *cbe, const wxChar *in);
 		virtual ~ASStreamIterator();
 
     bool hasMoreLines() const;
@@ -20,7 +20,7 @@ class ASStreamIterator : public astyle::ASSourceIterator
 
 	protected:
         bool IsEOL(wxChar ch);
-        cbEditor *m_cbe;
+        caEditor *m_cbe;
         const wxChar *m_In;
         std::vector<wxChar> m_buffer;
         int m_curline;

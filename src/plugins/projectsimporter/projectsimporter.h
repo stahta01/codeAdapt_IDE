@@ -19,7 +19,7 @@ class ProjectsImporter : public caMimePlugin
         ~ProjectsImporter();
         int Configure();
         int GetConfigurationGroup() const { return cgCorePlugin; }
-        cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
         bool HandlesEverything() const { return false; }
         bool CanHandleFile(const wxString& filename) const;
         int OpenFile(const wxString& filename);

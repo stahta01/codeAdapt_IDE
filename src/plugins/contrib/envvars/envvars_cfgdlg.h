@@ -12,7 +12,7 @@ class wxChoice;
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-class EnvVarsConfigDlg : public cbConfigurationPanel
+class EnvVarsConfigDlg : public caConfigurationPanel
 {
 public:
   /// Ctor

@@ -22,7 +22,7 @@ class DefaultMimeHandler : public caMimePlugin
         ~DefaultMimeHandler();
         int Configure();
         int GetConfigurationGroup() const { return cgCorePlugin; }
-        cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
         bool HandlesEverything() const { return true; }
         bool CanHandleFile(const wxString& filename) const;
         int OpenFile(const wxString& filename);

@@ -13,7 +13,7 @@
 #include <wx/timer.h>
 #include "api/plugin.h" // the base class we 're inheriting
 
-class BYOGames : public cbToolPlugin
+class BYOGames : public caToolPlugin
 {
 	public:
 
@@ -22,7 +22,7 @@ class BYOGames : public cbToolPlugin
 		int Configure(){ return  0; }
 		int GetConfigurationPriority() const{ return  25; }
 		int GetConfigurationGroup() const { return cgContribPlugin; }
-		cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+		caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
 		int Execute();
 		void OnAttach(); // fires when the plugin is attached to the application
 		void OnRelease(bool appShutDown); // fires when the plugin is released from the application

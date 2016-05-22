@@ -190,7 +190,7 @@ void ProjectOptionsDlg::AddPluginPanels()
 
     for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
     {
-        cbConfigurationPanel* panel = m_PluginPanels[i];
+        caConfigurationPanel* panel = m_PluginPanels[i];
         nb->AddPage(panel, panel->GetTitle());
     }
 }
@@ -1086,7 +1086,7 @@ void ProjectOptionsDlg::EndModal(int retCode)
         // finally, apply settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnApply();
         }
     }
@@ -1095,7 +1095,7 @@ void ProjectOptionsDlg::EndModal(int retCode)
         // finally, cancel settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnCancel();
         }
     }

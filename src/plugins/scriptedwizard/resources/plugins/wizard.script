@@ -1,6 +1,6 @@
 // table to hold all settings for this wizard
 PluginSettings <- {
-    Type = 0 // cbToolPlugin
+    Type = 0 // caToolPlugin
 
     Name = _T("")
     Title = _T("")

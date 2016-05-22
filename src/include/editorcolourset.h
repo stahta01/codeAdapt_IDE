@@ -9,7 +9,7 @@
 #include "globals.h" // HighlightLanguage
 
 // forward decls
-class cbEditor;
+class caEditor;
 class cbStyledTextCtrl;
 
 #define COLORSET_DEFAULT	_T("default")
@@ -82,7 +82,7 @@ class EditorColourSet
 		wxString GetLanguageName(HighlightLanguage lang);
 		wxString GetName(){ return m_Name; }
 		void SetName(const wxString& name){ m_Name = name; }
-		HighlightLanguage Apply(cbEditor* editor, HighlightLanguage lang=HL_AUTO);
+		HighlightLanguage Apply(caEditor* editor, HighlightLanguage lang=HL_AUTO);
 		void Apply(HighlightLanguage lang, cbStyledTextCtrl* control);
 		void Save();
 		void Reset(HighlightLanguage lang);

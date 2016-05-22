@@ -1033,7 +1033,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
 //        Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
         Manager::Get()->GetProjectManager()->CheckForExternallyModifiedProjects();
     }
-    cbEditor* ed = Manager::Get()->GetEditorManager()
+    caEditor* ed = Manager::Get()->GetEditorManager()
                     ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()
                     : 0;
     if (ed)

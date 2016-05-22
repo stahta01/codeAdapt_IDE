@@ -14,7 +14,7 @@
 #include "configurationpanel.h"
 #include "mimetypesarray.h"
 
-class EditMimeTypesDlg : public cbConfigurationPanel
+class EditMimeTypesDlg : public caConfigurationPanel
 {
     public:
         EditMimeTypesDlg(wxWindow* parent, MimeTypesArray& array);

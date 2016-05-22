@@ -13,7 +13,7 @@ class EditorBase;
 
 WX_DEFINE_ARRAY(EditorBase*, EditorArray);
 
-class OpenFilesListPlugin : public cbPlugin
+class OpenFilesListPlugin : public caPlugin
 {
     public:
         OpenFilesListPlugin();

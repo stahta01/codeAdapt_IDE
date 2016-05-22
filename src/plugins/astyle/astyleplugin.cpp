@@ -70,7 +70,7 @@ int AStylePlugin::Configure()
     return 0;
 }
 
-cbConfigurationPanel* AStylePlugin::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* AStylePlugin::GetConfigurationPanel(wxWindow* parent)
 {
     AstyleConfigDlg* dlg = new AstyleConfigDlg(parent);
     // deleted by the caller
@@ -85,7 +85,7 @@ int AStylePlugin::Execute()
         return -1;
     }
 
-    cbEditor *ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+    caEditor *ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 
     if (!ed)
     {

@@ -7,14 +7,14 @@
 
 class caProject;
 class EditorBase;
-class cbPlugin;
+class caPlugin;
 class Logger;
 
 /** A generic Code::Blocks event. */
 class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<CodeBlocksEvent, 75>
 {
 	public:
-		CodeBlocksEvent(wxEventType commandType = wxEVT_NULL, int id = 0, caProject* project = 0L, EditorBase* editor = 0L, cbPlugin* plugin = 0L)
+		CodeBlocksEvent(wxEventType commandType = wxEVT_NULL, int id = 0, caProject* project = 0L, EditorBase* editor = 0L, caPlugin* plugin = 0L)
 			: wxCommandEvent(commandType, id),
 			m_pProject(project),
 			m_pEditor(editor),
@@ -36,8 +36,8 @@ class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<C
 		EditorBase* GetEditor() const { return m_pEditor; }
 		void SetEditor(EditorBase* editor){ m_pEditor = editor; }
 
-		cbPlugin* GetPlugin() const { return m_pPlugin; }
-		void SetPlugin(cbPlugin* plugin){ m_pPlugin = plugin; }
+		caPlugin* GetPlugin() const { return m_pPlugin; }
+		void SetPlugin(caPlugin* plugin){ m_pPlugin = plugin; }
 
 		int GetX() const { return m_X; }
 		void SetX(int x){ m_X = x; }
@@ -55,7 +55,7 @@ class EVTIMPORT CodeBlocksEvent : public wxCommandEvent, public BlockAllocated<C
 	protected:
 		caProject* m_pProject;
 		EditorBase* m_pEditor;
-		cbPlugin* m_pPlugin;
+		caPlugin* m_pPlugin;
 		// for some editor events
 		int m_X;
 		int m_Y;

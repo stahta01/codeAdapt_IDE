@@ -240,7 +240,7 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   
     bool noeditor = (type != mtEditorManager);                                  //pecan 2006/03/22
     // noeditor:
     // True if context menu belongs to open files tree;
-    // False if belongs to cbEditor
+    // False if belongs to caEditor
 
     // inform the editors we 're just about to create a context menu
     if (!OnBeforeBuildContextMenu(position, type))              //pecan 2006/03/22
@@ -325,7 +325,7 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   
 void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
 {
     // we have a single event handler for all popup menu entries
-    // This was ported from cbEditor and used for the basic operations:
+    // This was ported from caEditor and used for the basic operations:
     // Switch to, close, save, etc.
 
     const int id = event.GetId();

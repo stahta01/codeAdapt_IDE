@@ -97,7 +97,7 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbEditor* ed = 0;
+            caEditor* ed = 0;
             if (sa.GetType(2) == OT_INTEGER)
                 ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(sa.GetInt(2));
             else
@@ -113,7 +113,7 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbEditor* ed = Manager::Get()->GetEditorManager()->Open(*SqPlus::GetInstance<wxString,false>(v, 2));
+            caEditor* ed = Manager::Get()->GetEditorManager()->Open(*SqPlus::GetInstance<wxString,false>(v, 2));
             SqPlus::Push(v, ed);
             return 1;
         }
@@ -278,15 +278,15 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
-            cbEditor* self = SqPlus::GetInstance<cbEditor,false>(v, 1);
+            caEditor* self = SqPlus::GetInstance<caEditor,false>(v, 1);
             if (self)
             {
                 self->GetControl()->SetText(*SqPlus::GetInstance<wxString,false>(v, 2));
                 return sa.Return();
             }
-            return sa.ThrowError("'this' is NULL!?! (type of cbEditor*)");
+            return sa.ThrowError("'this' is NULL!?! (type of caEditor*)");
         }
-        return sa.ThrowError("Invalid arguments to \"cbEditor::SetText\"");
+        return sa.ThrowError("Invalid arguments to \"caEditor::SetText\"");
     }
     SQInteger cbEditor_GetText(HSQUIRRELVM v)
     {
@@ -294,15 +294,15 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 1)
         {
-            cbEditor* self = SqPlus::GetInstance<cbEditor,false>(v, 1);
+            caEditor* self = SqPlus::GetInstance<caEditor,false>(v, 1);
             if (self)
             {
                 wxString str = self->GetControl()->GetText();
                 return SqPlus::ReturnCopy(v, str);
             }
-            return sa.ThrowError("'this' is NULL!?! (type of cbEditor*)");
+            return sa.ThrowError("'this' is NULL!?! (type of caEditor*)");
         }
-        return sa.ThrowError("Invalid arguments to \"cbEditor::GetText\"");
+        return sa.ThrowError("Invalid arguments to \"caEditor::GetText\"");
     }
     SQInteger CompilerFactory_GetCompilerIndex(HSQUIRRELVM v)
     {
@@ -570,26 +570,26 @@ namespace ScriptBindings
                 func(&EditorBase::IsReadOnly, "IsReadOnly").
                 func(&EditorBase::HasSelection, "HasSelection");
 
-        SqPlus::SQClassDef<cbEditor>("cbEditor", "EditorBase").
-                func(&cbEditor::SetEditorTitle, "SetEditorTitle").
-                func(&cbEditor::GetProjectFile, "GetProjectFile").
-                func(&cbEditor::Save, "Save").
-                func(&cbEditor::SaveAs, "SaveAs").
-                func(&cbEditor::FoldAll, "FoldAll").
-                func(&cbEditor::UnfoldAll, "UnfoldAll").
-                func(&cbEditor::ToggleAllFolds, "ToggleAllFolds").
-                func(&cbEditor::FoldBlockFromLine, "FoldBlockFromLine").
-                func(&cbEditor::UnfoldBlockFromLine, "UnfoldBlockFromLine").
-                func(&cbEditor::ToggleFoldBlockFromLine, "ToggleFoldBlockFromLine").
-                func(&cbEditor::GetLineIndentInSpaces, "GetLineIndentInSpaces").
-                func(&cbEditor::GetLineIndentString, "GetLineIndentString").
-                func(&cbEditor::Touch, "Touch").
-                func(&cbEditor::Reload, "Reload").
-                func(&cbEditor::Print, "Print").
-                func(&cbEditor::AutoComplete, "AutoComplete").
-                func(&cbEditor::AddBreakpoint, "AddBreakpoint").
-                func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").
-                // these are not present in cbEditor; included to help scripts edit text
+        SqPlus::SQClassDef<caEditor>("caEditor", "EditorBase").
+                func(&caEditor::SetEditorTitle, "SetEditorTitle").
+                func(&caEditor::GetProjectFile, "GetProjectFile").
+                func(&caEditor::Save, "Save").
+                func(&caEditor::SaveAs, "SaveAs").
+                func(&caEditor::FoldAll, "FoldAll").
+                func(&caEditor::UnfoldAll, "UnfoldAll").
+                func(&caEditor::ToggleAllFolds, "ToggleAllFolds").
+                func(&caEditor::FoldBlockFromLine, "FoldBlockFromLine").
+                func(&caEditor::UnfoldBlockFromLine, "UnfoldBlockFromLine").
+                func(&caEditor::ToggleFoldBlockFromLine, "ToggleFoldBlockFromLine").
+                func(&caEditor::GetLineIndentInSpaces, "GetLineIndentInSpaces").
+                func(&caEditor::GetLineIndentString, "GetLineIndentString").
+                func(&caEditor::Touch, "Touch").
+                func(&caEditor::Reload, "Reload").
+                func(&caEditor::Print, "Print").
+                func(&caEditor::AutoComplete, "AutoComplete").
+                func(&caEditor::AddBreakpoint, "AddBreakpoint").
+                func(&caEditor::RemoveBreakpoint, "RemoveBreakpoint").
+                // these are not present in caEditor; included to help scripts edit text
                 staticFuncVarArgs(&cbEditor_SetText, "SetText", "*").
                 staticFuncVarArgs(&cbEditor_GetText, "GetText", "*");
 

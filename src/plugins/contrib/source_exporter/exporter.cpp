@@ -33,7 +33,7 @@ namespace
     PluginRegistrant<Exporter> reg(_T("Exporter"));
 };
 
-BEGIN_EVENT_TABLE(Exporter, cbPlugin)
+BEGIN_EVENT_TABLE(Exporter, caPlugin)
   EVT_MENU(idFileExportHTML, Exporter::OnExportHTML)
   EVT_MENU(idFileExportRTF, Exporter::OnExportRTF)
   EVT_MENU(idFileExportODT, Exporter::OnExportODT)
@@ -184,7 +184,7 @@ void Exporter::ExportFile(BaseExporter *exp, const wxString &default_extension, 
   }
 
   EditorManager* em = Manager::Get()->GetEditorManager();
-  cbEditor*      cb = em->GetBuiltinActiveEditor();
+  caEditor*      cb = em->GetBuiltinActiveEditor();
 
   wxString filename = wxFileSelector(_("Choose the filename"), _T(""), wxFileName(cb->GetFilename()).GetName() + _T(".") + default_extension, default_extension, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
   if (filename.IsEmpty())

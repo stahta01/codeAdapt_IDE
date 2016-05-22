@@ -311,7 +311,7 @@ void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
     int eolmode = Manager::Get()->GetConfigManager(_T("editor"))->ReadInt(_T("/eol/eolmode"), 0);
 
     ForceDirectory(headerFname);
-    cbEditor* new_ed = Manager::Get()->GetEditorManager()->New(headerFname.GetFullPath());
+    caEditor* new_ed = Manager::Get()->GetEditorManager()->New(headerFname.GetFullPath());
     if (!new_ed)
     {
         cbMessageBox(_T("Class wizard can't continue. Possibly the Header file name is invalid.\n"

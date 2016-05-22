@@ -17,7 +17,7 @@
 
 #include "BaseExporter.h"
 
-class Exporter : public cbPlugin
+class Exporter : public caPlugin
 {
 	public:
 		Exporter();

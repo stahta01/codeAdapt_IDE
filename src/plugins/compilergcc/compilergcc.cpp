@@ -538,7 +538,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
 int CompilerGCC::Configure(caProject* project, caProjectBuildTarget* target)
 {
     cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Project build options"));
-    cbConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
+    caConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
     dlg.AttachConfigurationPanel(panel);
     PlaceWindow(&dlg);
     if(dlg.ShowModal() == wxID_OK)
@@ -557,7 +557,7 @@ int CompilerGCC::Configure(caProject* project, caProjectBuildTarget* target)
     return 0;
 }
 
-cbConfigurationPanel* CompilerGCC::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* CompilerGCC::GetConfigurationPanel(wxWindow* parent)
 {
     CompilerOptionsDlg* dlg = new CompilerOptionsDlg(parent, this, 0, 0);
     return dlg;
@@ -2932,7 +2932,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
     }
     else
     {
-        cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+        caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         if (ed)
         {
             // make sure it is saved
@@ -3154,7 +3154,7 @@ void CompilerGCC::OnClearErrors(wxCommandEvent& event)
 void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
 {
     caProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+    caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     wxMenuBar* mbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     bool running = IsRunning();
     if (mbar)
@@ -3619,7 +3619,7 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
         m_RunAfterCompile = false;
 
         // no matter what happened with the build, return the focus to the active editor
-        cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
+        caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if (ed)
             ed->GetControl()->SetFocus();
     }

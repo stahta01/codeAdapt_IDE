@@ -54,7 +54,7 @@ bool EditorHooks::HasRegisteredHooks()
     return s_HookFunctorsMap.size() != 0;
 }
 
-void EditorHooks::CallHooks(cbEditor* editor, wxScintillaEvent& event)
+void EditorHooks::CallHooks(caEditor* editor, wxScintillaEvent& event)
 {
     for (HookFunctorsMap::iterator it = s_HookFunctorsMap.begin(); it != s_HookFunctorsMap.end(); ++it)
     {

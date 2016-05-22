@@ -14,7 +14,7 @@ extern const wxString g_EditorModified;
 
 // forward decls
 struct cbEditorInternalData; // this is the private data struct used by the editor.
-class cbEditor;
+class caEditor;
 class ProjectFile;
 class EditorColourSet;
 class wxSplitterWindow;
@@ -35,26 +35,26 @@ class wxBoxSizer;
   * The actual editor component used is Scintilla and it can be accessed through
   * the member function GetControl().
   */
-class DLLIMPORT cbEditor : public EditorBase
+class DLLIMPORT caEditor : public EditorBase
 {
         DECLARE_EVENT_TABLE()
         friend class EditorManager;
 
     protected:
-        /** cbEditor constructor.
+        /** caEditor constructor.
           * @param parent the parent notebook - you should use EditorManager::Get()
           * @param filename the filename to open. If filename is empty, it creates a
           * new, empty, editor.
           * @param theme the initial colour set to use\n
-          * <em>Note: you cannot create a cbEditor object directly. Instead
+          * <em>Note: you cannot create a caEditor object directly. Instead
           * use EditorManager's methods to do it...</em>
           */
-        cbEditor(wxWindow* parent, const wxString& filename, EditorColourSet* theme = 0L);
-        cbEditor(wxWindow* parent, LoaderBase* fileLdr, const wxString& filename, EditorColourSet* theme = 0L);
+        caEditor(wxWindow* parent, const wxString& filename, EditorColourSet* theme = 0L);
+        caEditor(wxWindow* parent, LoaderBase* fileLdr, const wxString& filename, EditorColourSet* theme = 0L);
         /** Don't use this. It throws an exception if you do. */
-        cbEditor(const cbEditor& rhs) : EditorBase(rhs) { cbThrow(_T("Can't call cbEditor's copy ctor!!!")); }
-        /** cbEditor destructor. */
-        ~cbEditor();
+        caEditor(const caEditor& rhs) : EditorBase(rhs) { cbThrow(_T("Can't call caEditor's copy ctor!!!")); }
+        /** caEditor destructor. */
+        ~caEditor();
     public:
         enum SplitType
         {
@@ -64,7 +64,7 @@ class DLLIMPORT cbEditor : public EditorBase
         };
 
         /** Don't use this. It throws an exception if you do. */
-        virtual void operator=(const cbEditor& rhs){ cbThrow(_T("Can't assign an cbEditor* !!!")); }
+        virtual void operator=(const caEditor& rhs){ cbThrow(_T("Can't assign an caEditor* !!!")); }
 
         // properties
 
@@ -356,7 +356,7 @@ class DLLIMPORT cbEditor : public EditorBase
         // DO NOT ADD ANY MORE VARIABLES HERE!
         // ADD THEM IN cbEditorInternalData INSTEAD!
 
-        friend struct cbEditorInternalData; // allow cbEditorInternalData to access cbEditor
+        friend struct cbEditorInternalData; // allow cbEditorInternalData to access caEditor
         cbEditorInternalData* m_pData;
 };
 

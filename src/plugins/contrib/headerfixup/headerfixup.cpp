@@ -75,7 +75,7 @@ int HeaderFixup::Execute()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-cbConfigurationPanel* HeaderFixup::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* HeaderFixup::GetConfigurationPanel(wxWindow* parent)
 {
   return new Configuration(parent);
 }// GetConfigurationPanel

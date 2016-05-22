@@ -10,11 +10,11 @@ class wxButton;
 class wxWindow;
 
 /** @brief Base class for plugin configuration panels. */
-class DLLIMPORT cbConfigurationPanel : public wxPanel
+class DLLIMPORT caConfigurationPanel : public wxPanel
 {
     public:
-        cbConfigurationPanel(){}
-        virtual ~cbConfigurationPanel(){}
+        caConfigurationPanel(){}
+        virtual ~caConfigurationPanel(){}
 
         /// @return the panel's title.
         virtual wxString GetTitle() const = 0;
@@ -26,17 +26,17 @@ class DLLIMPORT cbConfigurationPanel : public wxPanel
         virtual void OnCancel() = 0;
 };
 
-/// @brief A simple dialog that wraps a cbConfigurationPanel.
+/// @brief A simple dialog that wraps a caConfigurationPanel.
 class DLLIMPORT cbConfigurationDialog : public wxDialog
 {
 	public:
 		cbConfigurationDialog(wxWindow* parent, int id, const wxString& title);
-		void AttachConfigurationPanel(cbConfigurationPanel* panel);
+		void AttachConfigurationPanel(caConfigurationPanel* panel);
 		~cbConfigurationDialog();
 
 		void EndModal(int retCode);
 	protected:
-        cbConfigurationPanel* m_pPanel;
+        caConfigurationPanel* m_pPanel;
         wxButton* m_pOK;
         wxButton* m_pCancel;
 	private:

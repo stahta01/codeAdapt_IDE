@@ -55,7 +55,7 @@ const long ProjectConfigurationPanel::ID_STATICTEXT2 = wxNewId();
 const long ProjectConfigurationPanel::ID_TIMER1 = wxNewId();
 //*)
 
-BEGIN_EVENT_TABLE(ProjectConfigurationPanel,cbConfigurationPanel)
+BEGIN_EVENT_TABLE(ProjectConfigurationPanel,caConfigurationPanel)
 	//(*EventTable(ProjectConfigurationPanel)
 	//*)
 END_EVENT_TABLE()

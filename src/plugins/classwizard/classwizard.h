@@ -3,7 +3,7 @@
 
 #include "api/plugin.h"
 
-class ClassWizard : public cbToolPlugin
+class ClassWizard : public caToolPlugin
 {
     public:
         ClassWizard();

@@ -228,7 +228,7 @@ void EditorManager::Configure()
         // tell all open editors to re-create their styles
         for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
         {
-            cbEditor* ed = InternalGetBuiltinEditor(i);
+            caEditor* ed = InternalGetBuiltinEditor(i);
             if (ed)
             {
                 bool saveSuccess = ed->SaveFoldState(); //First Save the old fold levels
@@ -381,17 +381,17 @@ EditorBase* EditorManager::InternalGetEditorBase(int page)
     return eb;
 }
 
-cbEditor* EditorManager::InternalGetBuiltinEditor(int page)
+caEditor* EditorManager::InternalGetBuiltinEditor(int page)
 {
     EditorBase* eb = InternalGetEditorBase(page);
     if (eb && eb->IsBuiltinEditor())
-        return (cbEditor*)eb;
+        return (caEditor*)eb;
     return 0;
 }
 
-cbEditor* EditorManager::GetBuiltinEditor(EditorBase* eb)
+caEditor* EditorManager::GetBuiltinEditor(EditorBase* eb)
 {
-    return eb && eb->IsBuiltinEditor() ? (cbEditor*)eb : 0;
+    return eb && eb->IsBuiltinEditor() ? (caEditor*)eb : 0;
 }
 
 EditorBase* EditorManager::IsOpen(const wxString& filename)
@@ -427,13 +427,13 @@ void EditorManager::SetColourSet(EditorColourSet* theme)
 
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
     {
-        cbEditor* ed = InternalGetBuiltinEditor(i);
+        caEditor* ed = InternalGetBuiltinEditor(i);
         if (ed)
             ed->SetColourSet(m_Theme);
     }
 }
 
-cbEditor* EditorManager::Open(const wxString& filename, int pos, ProjectFile* data)
+caEditor* EditorManager::Open(const wxString& filename, int pos, ProjectFile* data)
 {
     LoaderBase* fileLdr = Manager::Get()->GetFileManager()->Load(filename);
     if (!fileLdr)
@@ -442,7 +442,7 @@ cbEditor* EditorManager::Open(const wxString& filename, int pos, ProjectFile* da
     return Open(fileLdr, filename, pos, data);
 }
 
-cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int pos,ProjectFile* data)
+caEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int pos,ProjectFile* data)
 {
     bool can_updateui = !GetActiveEditor() || !Manager::Get()->GetProjectManager()->IsLoading();
     wxFileName fn(filename);
@@ -458,18 +458,18 @@ cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int
     s_CanShutdown = false;
 
     EditorBase* eb = IsOpen(fname);
-    cbEditor* ed = 0;
+    caEditor* ed = 0;
     if (eb)
     {
         if (eb->IsBuiltinEditor())
-            ed = (cbEditor*)eb;
+            ed = (caEditor*)eb;
         else
             return 0; // is open but not a builtin editor
     }
 
     if (!ed)
     {
-        ed = new cbEditor(m_pNotebook, fileLdr, fname, m_Theme);
+        ed = new caEditor(m_pNotebook, fileLdr, fname, m_Theme);
         if (ed->IsOK())
             AddEditorBase(ed);
         else
@@ -542,7 +542,7 @@ void EditorManager::SetActiveEditor(EditorBase* ed)
     if (!ed)
         return;
     if (ed->IsBuiltinEditor())
-        static_cast<cbEditor*>(ed)->GetControl()->SetFocus();
+        static_cast<caEditor*>(ed)->GetControl()->SetFocus();
     int page = FindPageFromEditor(ed);
     if (page != -1)
     {
@@ -550,7 +550,7 @@ void EditorManager::SetActiveEditor(EditorBase* ed)
     }
 }
 
-cbEditor* EditorManager::New(const wxString& newFileName)
+caEditor* EditorManager::New(const wxString& newFileName)
 {
 //    wxString old_title = Manager::Get()->GetAppWindow()->GetTitle(); // Fix for Bug #1389450
     // create a dummy file
@@ -560,7 +560,7 @@ cbEditor* EditorManager::New(const wxString& newFileName)
         if (!f.IsOpened())
             return 0;
     }
-    cbEditor* ed = new cbEditor(m_pNotebook, newFileName);
+    caEditor* ed = new caEditor(m_pNotebook, newFileName);
 //    if ((newFileName.IsEmpty() && !ed->SaveAs()) || !ed->Save())
 //    {
 //        //DeletePage(ed->GetPageIndex());
@@ -620,7 +620,7 @@ bool EditorManager::UpdateProjectFiles(caProject* project)
 {
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
     {
-        cbEditor* ed = InternalGetBuiltinEditor(i);
+        caEditor* ed = InternalGetBuiltinEditor(i);
         if (!ed)
             continue;
         ProjectFile* pf = ed->GetProjectFile();
@@ -754,7 +754,7 @@ bool EditorManager::Close(int index,bool dontsave)
 
 bool EditorManager::Save(const wxString& filename)
 {
-    //    cbEditor* ed = GetBuiltinEditor(IsOpen(filename));
+    //    caEditor* ed = GetBuiltinEditor(IsOpen(filename));
     EditorBase* ed = IsOpen(filename);
     if (ed)
     {
@@ -794,7 +794,7 @@ bool EditorManager::SaveActive()
 
 bool EditorManager::SaveAs(int index)
 {
-    cbEditor* ed = GetBuiltinEditor(GetEditor(index));
+    caEditor* ed = GetBuiltinEditor(GetEditor(index));
     if(!ed)
         return false;
     return ed->SaveAs();
@@ -802,7 +802,7 @@ bool EditorManager::SaveAs(int index)
 
 bool EditorManager::SaveActiveAs()
 {
-    cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
+    caEditor* ed = GetBuiltinEditor(GetActiveEditor());
     if (ed)
     {
         return ed->SaveAs();
@@ -834,7 +834,7 @@ void EditorManager::Print(PrintScope ps, PrintColourMode pcm, bool line_numbers)
         {
             for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
             {
-                cbEditor* ed = InternalGetBuiltinEditor(i);
+                caEditor* ed = InternalGetBuiltinEditor(i);
                 if (ed)
                     ed->Print(false, pcm, line_numbers);
             }
@@ -842,7 +842,7 @@ void EditorManager::Print(PrintScope ps, PrintColourMode pcm, bool line_numbers)
         }
     default:
         {
-            cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
+            caEditor* ed = GetBuiltinEditor(GetActiveEditor());
             if (ed)
                 ed->Print(ps == psSelection, pcm, line_numbers);
             break;
@@ -860,7 +860,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
     wxArrayString failedFiles; // list of files failed to reload
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
     {
-        cbEditor* ed = InternalGetBuiltinEditor(i);
+        caEditor* ed = InternalGetBuiltinEditor(i);
         bool b_modified = false;
 
         // no builtin editor or new file not yet saved
@@ -956,7 +956,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
 
 bool EditorManager::SwapActiveHeaderSource()
 {
-    cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
+    caEditor* ed = GetBuiltinEditor(GetActiveEditor());
     if (!ed)
         return false;
 
@@ -1061,7 +1061,7 @@ bool EditorManager::SwapActiveHeaderSource()
     if (fname.FileExists())
     {
         //Manager::Get()->GetLogManager()->DebugLog("ed=%s, pair=%s", ed->GetFilename().c_str(), pair.c_str());
-        cbEditor* newEd = Open(fname.GetFullPath());
+        caEditor* newEd = Open(fname.GetFullPath());
         //if (newEd)
         //    newEd->SetProjectFile(ed->GetProjectFile());
         return newEd;
@@ -1084,7 +1084,7 @@ bool EditorManager::SwapActiveHeaderSource()
         // else? Well, if the filename is not changed we could possibly
         // overwrite an existing file with our suggestion.
 
-        cbEditor* newEd = New(fn.GetFullPath());
+        caEditor* newEd = New(fn.GetFullPath());
         if (cbMessageBox(_("Do you want to add this new file in the active project?"),
                     _("Add file to project"),
                     wxYES_NO | wxICON_QUESTION) == wxID_YES)
@@ -1110,7 +1110,7 @@ int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
     bool hasSelection = false;
     cbStyledTextCtrl* control = 0;
 
-    cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
+    caEditor* ed = GetBuiltinEditor(GetActiveEditor());
     if (ed)
     {
         control = ed->GetControl();
@@ -1582,7 +1582,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
         // fill the search list with the open files
         for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
         {
-            cbEditor* ed = InternalGetBuiltinEditor(i);
+            caEditor* ed = InternalGetBuiltinEditor(i);
             if (ed)
                 filesList.Add(ed->GetFilename());
         }
@@ -1676,7 +1676,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
 
     for (int i = 0; i<filesCount && !stop; ++i)
     {
-        cbEditor *ed = NULL;
+        caEditor *ed = NULL;
         cbStyledTextCtrl *control = NULL;
         bool fileWasNotOpen = false;
 
@@ -2113,7 +2113,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         // fill the search list with the open files
         for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
         {
-            cbEditor* ed = InternalGetBuiltinEditor(i);
+            caEditor* ed = InternalGetBuiltinEditor(i);
             if (ed)
                 filesList.Add(ed->GetFilename());
         }
@@ -2212,7 +2212,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         *data = localData;
 
         // check if the file is already opened in built-in editor and do search in it
-        cbEditor* ed = IsBuiltinOpen(filesList[i]);
+        caEditor* ed = IsBuiltinOpen(filesList[i]);
         if (ed)
             control->SetText(ed->GetControl()->GetText());
         else if (!control->LoadFile(filesList[i])) // else load the file in the control
@@ -2280,7 +2280,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         {
             msg.Printf(_("Not found: %s"), data->findText.c_str());
             cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
-            cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+            caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
             if (ed)
                 ed->GetControl()->SetSCIFocus(true);
         }
@@ -2299,7 +2299,7 @@ int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRep
 {
     if (!control)
     {
-        cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
+        caEditor* ed = GetBuiltinEditor(GetActiveEditor());
         if (ed)
             control = ed->GetControl();
     }
@@ -2345,13 +2345,13 @@ int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRep
 void EditorManager::OnGenericContextMenuHandler(wxCommandEvent& event)
 {
     EditorBase* eb = GetActiveEditor();
-    cbEditor* ed = GetBuiltinEditor(eb);
+    caEditor* ed = GetBuiltinEditor(eb);
     int id = event.GetId();
 
     if (id == idNBTabSplitHorz && ed)
-        ed->Split(cbEditor::stHorizontal);
+        ed->Split(caEditor::stHorizontal);
     else if (id == idNBTabSplitVert && ed)
-        ed->Split(cbEditor::stVertical);
+        ed->Split(caEditor::stVertical);
     else if (id == idNBTabUnsplit && ed)
         ed->Unsplit();
 }
@@ -2408,7 +2408,7 @@ void EditorManager::OnPageContextMenu(wxFlatNotebookEvent& event)
     pop->Append(idNBTabTop, _("Tabs at top"));
     pop->Append(idNBTabBottom, _("Tabs at bottom"));
 
-    cbEditor* ed = GetBuiltinEditor(event.GetSelection());
+    caEditor* ed = GetBuiltinEditor(event.GetSelection());
     if (ed)
     {
         pop->AppendSeparator();
@@ -2419,9 +2419,9 @@ void EditorManager::OnPageContextMenu(wxFlatNotebookEvent& event)
         splitMenu->Append(idNBTabSplitVert, _("Vertically"));
         splitMenu->AppendSeparator();
         splitMenu->Append(idNBTabUnsplit, _("Unsplit"));
-        splitMenu->Enable(idNBTabSplitHorz, ed->GetSplitType() != cbEditor::stHorizontal);
-        splitMenu->Enable(idNBTabSplitVert, ed->GetSplitType() != cbEditor::stVertical);
-        splitMenu->Enable(idNBTabUnsplit, ed->GetSplitType() != cbEditor::stNoSplit);
+        splitMenu->Enable(idNBTabSplitHorz, ed->GetSplitType() != caEditor::stHorizontal);
+        splitMenu->Enable(idNBTabSplitVert, ed->GetSplitType() != caEditor::stVertical);
+        splitMenu->Enable(idNBTabUnsplit, ed->GetSplitType() != caEditor::stNoSplit);
 
         pop->AppendSeparator();
         pop->Append(-1, _("Split view"), splitMenu);
@@ -2490,7 +2490,7 @@ void EditorManager::OnTabPosition(wxCommandEvent& event)
 
 void EditorManager::OnProperties(wxCommandEvent& event)
 {
-    cbEditor* ed = GetBuiltinActiveEditor();
+    caEditor* ed = GetBuiltinActiveEditor();
     ProjectFile* pf = 0;
     if (ed)
         pf = ed->GetProjectFile();
@@ -2546,7 +2546,7 @@ void EditorManager::OnUpdateUI(wxUpdateUIEvent& event)
      * It may crash C::B */
     if (!Manager::Get()->IsAppShuttingDown() && m_pData->m_SetFocusFlag)
     {
-        cbEditor* ed = GetBuiltinActiveEditor();
+        caEditor* ed = GetBuiltinActiveEditor();
         if (ed)
             ed->GetControl()->SetFocus();
         m_pData->m_SetFocusFlag = false;

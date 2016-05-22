@@ -152,7 +152,7 @@ void CompilerErrors::DoGotoError(const CompileError& error)
     if (error.line <= 0)
         return;
 	DoClearErrorMarkFromAllEditors();
-	cbEditor* ed = 0;
+	caEditor* ed = 0;
 	caProject* project = error.project ? error.project : Manager::Get()->GetProjectManager()->GetActiveProject();
 	if (project && Manager::Get()->GetProjectManager()->IsProjectStillOpen(project))
 	{
@@ -198,7 +198,7 @@ void CompilerErrors::DoClearErrorMarkFromAllEditors()
 	EditorManager* edMan = Manager::Get()->GetEditorManager();
 	for (int i = 0; i < edMan->GetEditorsCount(); ++i)
 	{
-        cbEditor* ed = edMan->GetBuiltinEditor(i);
+        caEditor* ed = edMan->GetBuiltinEditor(i);
         if (ed)
             ed->SetErrorLine(-1);
 	}

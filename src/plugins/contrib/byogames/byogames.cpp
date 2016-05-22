@@ -20,7 +20,7 @@
 #include "byogameselect.h"
 #include "byoconf.h"
 
-BEGIN_EVENT_TABLE(BYOGames,cbToolPlugin)
+BEGIN_EVENT_TABLE(BYOGames,caToolPlugin)
     EVT_TIMER(1,BYOGames::OnTimer)
 END_EVENT_TABLE()
 
@@ -69,7 +69,7 @@ void BYOGames::OnTimer(wxTimerEvent& event)
     SecondTick.Start(-1,true);
 }
 
-cbConfigurationPanel* BYOGames::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* BYOGames::GetConfigurationPanel(wxWindow* parent)
 {
     return new byoConf(parent);
 }

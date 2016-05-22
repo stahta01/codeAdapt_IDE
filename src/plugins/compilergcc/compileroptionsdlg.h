@@ -18,7 +18,7 @@ class wxCommandEvent;
 class wxKeyEvent;
 class wxUpdateUIEvent;
 
-class CompilerOptionsDlg : public cbConfigurationPanel
+class CompilerOptionsDlg : public caConfigurationPanel
 {
 	public:
 		CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, caProject* project = 0L, caProjectBuildTarget* target = 0L);

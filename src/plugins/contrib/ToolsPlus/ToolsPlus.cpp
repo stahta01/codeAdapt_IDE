@@ -124,7 +124,7 @@ int ID_SubMenu_48=wxNewId();
 int ID_SubMenu_49=wxNewId();
 
 // events handling
-BEGIN_EVENT_TABLE(ToolsPlus, cbPlugin)
+BEGIN_EVENT_TABLE(ToolsPlus, caPlugin)
     EVT_MENU_RANGE(ID_ContextMenu_0,ID_ContextMenu_49,ToolsPlus::OnRunTarget)
     EVT_MENU_RANGE(ID_SubMenu_0, ID_SubMenu_49, ToolsPlus::OnRunTarget)
     EVT_MENU(ID_ToolMenu_ShowConsole,ToolsPlus::OnShowConsole)
@@ -445,7 +445,7 @@ ToolsPlus::ToolsPlus()
     m_ReUseToolsPage = cfg->ReadBool(_T("ReuseToolsPage"), false);
 }
 
-cbConfigurationPanel* ToolsPlus::GetConfigurationPanel(wxWindow* /*parent*/)
+caConfigurationPanel* ToolsPlus::GetConfigurationPanel(wxWindow* /*parent*/)
 {
 //    MyDialog* dlg = new MyDialog(this, *m_pKeyProfArr, parent,
 //        wxT("Keybindings"), mode);

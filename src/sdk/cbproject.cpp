@@ -504,7 +504,7 @@ bool caProject::LoadLayout()
                 size_t i = 0;
                 for (open_files_map::iterator it = open_files.begin(); it != open_files.end(); ++it)
                 {
-                    cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filesInMemory[i], (*it).second->file.GetFullPath(),0,(*it).second);
+                    caEditor* ed = Manager::Get()->GetEditorManager()->Open(filesInMemory[i], (*it).second->file.GetFullPath(),0,(*it).second);
                     if (ed)
                         ed->SetProjectFile((*it).second);
                     ++i;
@@ -1463,7 +1463,7 @@ bool caProject::QueryCloseAllFiles()
     while(node)
     {
         ProjectFile* f = node->GetData();
-        cbEditor* ed = Manager::Get()->GetEditorManager()->IsBuiltinOpen(f->file.GetFullPath());
+        caEditor* ed = Manager::Get()->GetEditorManager()->IsBuiltinOpen(f->file.GetFullPath());
         if (ed && ed->GetModified())
         {
             if (!Manager::Get()->GetEditorManager()->QueryClose(ed))

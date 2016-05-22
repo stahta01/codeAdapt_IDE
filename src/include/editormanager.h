@@ -28,7 +28,7 @@ class wxMenuBar;
 class EditorColourSet;
 class caProject;
 class ProjectFile;
-class cbEditor;
+class caEditor;
 class cbStyledTextCtrl;
 class ListCtrlLogger;
 class LoaderBase;
@@ -61,27 +61,27 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         AutoCompleteMap& GetAutoCompleteMap(){ return m_AutoCompleteMap; }
 
         EditorBase* IsOpen(const wxString& filename);
-        cbEditor* Open(const wxString& filename, int pos = 0,ProjectFile* data = 0);
-        cbEditor* Open(LoaderBase* fileLdr, const wxString& filename, int pos = 0,ProjectFile* data = 0);
+        caEditor* Open(const wxString& filename, int pos = 0,ProjectFile* data = 0);
+        caEditor* Open(LoaderBase* fileLdr, const wxString& filename, int pos = 0,ProjectFile* data = 0);
         EditorBase* GetEditor(int index);
         EditorBase* GetEditor(const wxString& filename){ return IsOpen(filename); } // synonym of IsOpen()
         EditorBase* GetActiveEditor();
-        cbEditor* GetBuiltinEditor(EditorBase* eb);
+        caEditor* GetBuiltinEditor(EditorBase* eb);
         int FindPageFromEditor(EditorBase* eb);
 
         // "overloaded" functions for easier access
-        // they all return a cbEditor pointer if the editor is builtin, or NULL
-        cbEditor* IsBuiltinOpen(const wxString& filename){ return GetBuiltinEditor(IsOpen(filename)); }
-        cbEditor* GetBuiltinEditor(int index){ return GetBuiltinEditor(GetEditor(index)); }
-        cbEditor* GetBuiltinEditor(const wxString& filename){ return IsBuiltinOpen(filename); } // synonym of IsBuiltinOpen()
-        cbEditor* GetBuiltinActiveEditor(){ return GetBuiltinEditor(GetActiveEditor()); }
+        // they all return a caEditor pointer if the editor is builtin, or NULL
+        caEditor* IsBuiltinOpen(const wxString& filename){ return GetBuiltinEditor(IsOpen(filename)); }
+        caEditor* GetBuiltinEditor(int index){ return GetBuiltinEditor(GetEditor(index)); }
+        caEditor* GetBuiltinEditor(const wxString& filename){ return IsBuiltinOpen(filename); } // synonym of IsBuiltinOpen()
+        caEditor* GetBuiltinActiveEditor(){ return GetBuiltinEditor(GetActiveEditor()); }
 
         void ActivateNext();
         void ActivatePrevious();
         void SetActiveEditor(EditorBase* ed);
         EditorColourSet* GetColourSet(){ return m_Theme; }
         void SetColourSet(EditorColourSet* theme);
-        cbEditor* New(const wxString& newFileName = wxEmptyString);
+        caEditor* New(const wxString& newFileName = wxEmptyString);
 
         // these are used *only* for custom editors
         void AddCustomEditor(EditorBase* eb);
@@ -144,7 +144,7 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         // m_EditorsList access
         void AddEditorBase(EditorBase* eb);
         void RemoveEditorBase(EditorBase* eb, bool deleteObject = true);
-        cbEditor* InternalGetBuiltinEditor(int page);
+        caEditor* InternalGetBuiltinEditor(int page);
         EditorBase* InternalGetEditorBase(int page);
 
         void CreateSearchLog();

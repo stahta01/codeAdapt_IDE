@@ -148,7 +148,7 @@ bool ProjectLayoutLoader::Save(const wxString& filename)
     tgtidx->SetAttribute("name", cbU2C(m_pProject->GetActiveBuildTarget()));
 
 	ProjectFile* active = 0L;
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+    caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 	if (ed)
 		active = ed->GetProjectFile();
 

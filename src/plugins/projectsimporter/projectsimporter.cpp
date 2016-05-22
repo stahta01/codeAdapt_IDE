@@ -70,7 +70,7 @@ int ProjectsImporter::Configure()
     return 0;
 }
 
-cbConfigurationPanel* ProjectsImporter::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* ProjectsImporter::GetConfigurationPanel(wxWindow* parent)
 {
     return 0;
 }

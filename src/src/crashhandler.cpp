@@ -39,7 +39,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
         {
             for(int i = 0; i < em->GetEditorsCount(); ++i)
             {
-                cbEditor* ed = em->GetBuiltinEditor(em->GetEditor(i));
+                caEditor* ed = em->GetBuiltinEditor(em->GetEditor(i));
                 if(ed)
                 {
                     wxFileName fn(ed->GetFilename());

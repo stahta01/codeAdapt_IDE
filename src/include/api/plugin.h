@@ -39,12 +39,12 @@ class wxMenu;
 class wxToolBar;
 class wxPanel;
 class wxWindow;
-class cbEditor;
+class caEditor;
 class caProject;
 class caProjectBuildTarget;
 class caCompileTargetBase;
 class caFileTreeData;
-class cbConfigurationPanel;
+class caConfigurationPanel;
 struct caPluginInfo;
 
 // Define basic groups for plugins' configuration.
@@ -58,23 +58,23 @@ static const int cgUnknown          = 0x20; ///< Unknown. This will be probably 
 /** @brief Base class for plugins
   * This is the most basic class a plugin must descend
   * from.
-  * cbPlugin descends from wxEvtHandler, so it provides its methods as well...
+  * caPlugin descends from wxEvtHandler, so it provides its methods as well...
   * \n \n
   * It's not enough to create a new plugin. You must also provide a resource
   * zip file containing a file named "manifest.xml". Check the manifest.xml
   * file of existing plugins to see how to create one (it's ultra-simple).
   */
-class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
+class PLUGIN_EXPORT caPlugin : public wxEvtHandler
 {
     public:
-        /** In default cbPlugin's constructor the associated caPluginInfo structure
-          * is filled with default values. If you inherit from cbPlugin, you
+        /** In default caPlugin's constructor the associated caPluginInfo structure
+          * is filled with default values. If you inherit from caPlugin, you
           * should fill the m_PluginInfo members with the appropriate values.
           */
-        cbPlugin();
+        caPlugin();
 
-        /** cbPlugin destructor. */
-        virtual ~cbPlugin();
+        /** caPlugin destructor. */
+        virtual ~caPlugin();
 
         /** The plugin must return its type on request. */
         virtual PluginType GetType() const { return m_Type; }
@@ -99,18 +99,18 @@ class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
 
         /** Return plugin's configuration panel.
           * @param parent The parent window.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
+          * @return A pointer to the plugin's caConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
+        virtual caConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
 
         /** Return plugin's configuration panel for projects.
           * The panel returned from this function will be added in the project's
           * configuration dialog.
           * @param parent The parent window.
           * @param project The project that is being edited.
-          * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
+          * @return A pointer to the plugin's caConfigurationPanel. It is deleted by the caller.
           */
-        virtual cbConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
+        virtual caConfigurationPanel* GetProjectConfigurationPanel(wxWindow* parent, caProject* project){ return 0; }
 
         /** This method is called by Code::Blocks and is used by the plugin
           * to add any menu items it needs on Code::Blocks's menu bar.\n
@@ -233,7 +233,7 @@ class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
   * This plugin type must offer some pre-defined build facilities, on top
   * of the generic plugin's.
   */
-class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
+class PLUGIN_EXPORT caCompilerPlugin: public caPlugin
 {
     public:
         caCompilerPlugin();
@@ -347,7 +347,7 @@ class PLUGIN_EXPORT caCompilerPlugin: public cbPlugin
   * This plugin type must offer some pre-defined debug facilities, on top
   * of the generic plugin's.
   */
-class PLUGIN_EXPORT caDebuggerPlugin: public cbPlugin
+class PLUGIN_EXPORT caDebuggerPlugin: public caPlugin
 {
     public:
         caDebuggerPlugin();
@@ -392,7 +392,7 @@ class PLUGIN_EXPORT caDebuggerPlugin: public cbPlugin
           * @param lines The number of lines added or removed. If it's a positive number,
           *              lines were added. If it's a negative number, lines were removed.
           */
-        virtual void EditorLinesAddedOrRemoved(cbEditor* editor, int startline, int lines) = 0;
+        virtual void EditorLinesAddedOrRemoved(caEditor* editor, int startline, int lines) = 0;
 
         /** @brief Start a new debugging process. */
         virtual int Debug() = 0;
@@ -426,20 +426,20 @@ class PLUGIN_EXPORT caDebuggerPlugin: public cbPlugin
   *
   * Tool plugins are automatically added under the "Plugins" menu.
   */
-class PLUGIN_EXPORT cbToolPlugin : public cbPlugin
+class PLUGIN_EXPORT caToolPlugin : public caPlugin
 {
     public:
-        cbToolPlugin();
+        caToolPlugin();
 
         /** @brief Execute the plugin.
           *
-          * This is the only function needed by a cbToolPlugin.
+          * This is the only function needed by a caToolPlugin.
           * This will be called when the user selects the plugin from the "Plugins"
           * menu.
           */
         virtual int Execute() = 0;
     private:
-        // "Hide" some virtual members, that are not needed in cbToolPlugin
+        // "Hide" some virtual members, that are not needed in caToolPlugin
         void BuildMenu(wxMenuBar* menuBar){}
         void RemoveMenu(wxMenuBar* menuBar){}
         void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0){}
@@ -452,7 +452,7 @@ class PLUGIN_EXPORT cbToolPlugin : public cbPlugin
   * Mime plugins are called by Code::Blocks to operate on files that Code::Blocks
   * wouldn't know how to handle on itself.
   */
-class PLUGIN_EXPORT caMimePlugin : public cbPlugin
+class PLUGIN_EXPORT caMimePlugin : public caPlugin
 {
     public:
         caMimePlugin();
@@ -496,7 +496,7 @@ class PLUGIN_EXPORT caMimePlugin : public cbPlugin
   *
   * This interface is subject to change, so not much info here...
   */
-class PLUGIN_EXPORT caCodeCompletionPlugin : public cbPlugin
+class PLUGIN_EXPORT caCodeCompletionPlugin : public caPlugin
 {
     public:
         caCodeCompletionPlugin();
@@ -515,7 +515,7 @@ class PLUGIN_EXPORT caCodeCompletionPlugin : public cbPlugin
   * The @c index used as a parameter to most of the functions, denotes 0-based index
   * of the project wizard to run.
   */
-class PLUGIN_EXPORT caWizardPlugin : public cbPlugin
+class PLUGIN_EXPORT caWizardPlugin : public caPlugin
 {
     public:
         caWizardPlugin();
@@ -591,12 +591,12 @@ template<class T> class PluginRegistrant
                                                                 &SDKVersion); // SDK version
         }
 
-        static cbPlugin* CreatePlugin()
+        static caPlugin* CreatePlugin()
         {
             return new T;
         }
 
-        static void FreePlugin(cbPlugin* plugin)
+        static void FreePlugin(caPlugin* plugin)
         {
             delete plugin;
         }

@@ -598,7 +598,7 @@ ProjectConfiguration* lib_finder::GetProject(caProject* Project)
     return Conf;
 }
 
-cbConfigurationPanel* lib_finder::GetProjectConfigurationPanel(wxWindow* parent, caProject* project)
+caConfigurationPanel* lib_finder::GetProjectConfigurationPanel(wxWindow* parent, caProject* project)
 {
     return new ProjectConfigurationPanel(parent,GetProject(project),project,m_KnownLibraries);
 }

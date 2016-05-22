@@ -364,7 +364,7 @@ void NewFromTemplateDlg::EditScript(const wxString& filename)
         script = ConfigManager::GetFolder(sdDataGlobal) + _T("/templates/wizard/") + filename;
     }
 
-    cbEditor* ed = Manager::Get()->GetEditorManager()->Open(script);
+    caEditor* ed = Manager::Get()->GetEditorManager()->Open(script);
     if (ed)
     {
         ed->GetControl()->SetFocus();

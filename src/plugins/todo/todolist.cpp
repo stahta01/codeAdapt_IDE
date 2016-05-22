@@ -45,7 +45,7 @@ const int idViewTodo = wxNewId();
 const int idAddTodo = wxNewId();
 const int idStartParsing = wxNewId();
 
-BEGIN_EVENT_TABLE(ToDoList, cbPlugin)
+BEGIN_EVENT_TABLE(ToDoList, caPlugin)
     EVT_UPDATE_UI(idViewTodo, ToDoList::OnUpdateUI)
     EVT_MENU(idViewTodo, ToDoList::OnViewList)
     EVT_MENU(idAddTodo, ToDoList::OnAddItem)
@@ -187,7 +187,7 @@ bool ToDoList::BuildToolBar(wxToolBar* toolBar)
     return false;
 }
 
-cbConfigurationPanel* ToDoList::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* ToDoList::GetConfigurationPanel(wxWindow* parent)
 {
     ToDoSettingsDlg* dlg = new ToDoSettingsDlg(parent);
     return dlg;
@@ -263,7 +263,7 @@ void ToDoList::OnViewList(wxCommandEvent& event)
 
 void ToDoList::OnAddItem(wxCommandEvent& event)
 {
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+    caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
 

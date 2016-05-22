@@ -14,7 +14,7 @@ enum AStylePredefinedStyle
   aspsCustom
 };
 
-class AstyleConfigDlg : public cbConfigurationPanel
+class AstyleConfigDlg : public caConfigurationPanel
 {
 	public:
 		AstyleConfigDlg(wxWindow* parent);

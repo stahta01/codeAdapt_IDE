@@ -7,7 +7,7 @@
     #error This plugin is for use under Win32 only!
 #endif
 
-class WindowsXPLookNFeel : public cbToolPlugin
+class WindowsXPLookNFeel : public caToolPlugin
 {
 	public:
 		WindowsXPLookNFeel();

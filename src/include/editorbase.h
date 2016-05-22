@@ -108,8 +108,8 @@ class DLLIMPORT EditorBase : public wxPanel
 
         /** @brief Is this a built-in editor?
           *
-          * Query if this is a built-in editor (a.k.a cbEditor).
-          * @return True if it is a cbEditor, false otherwise.
+          * Query if this is a built-in editor (a.k.a caEditor).
+          * @return True if it is a caEditor, false otherwise.
           */
         virtual bool IsBuiltinEditor() const;
 
@@ -248,7 +248,7 @@ class DLLIMPORT EditorBase : public wxPanel
           */
         virtual void InitFilename(const wxString& filename);
 
-        /** Creates context submenus. See cbEditor code for details.
+        /** Creates context submenus. See caEditor code for details.
           * @param id An event handler's ID.
           * @return The created submenu or NULL if not applicable.
           */

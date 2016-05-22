@@ -16,12 +16,12 @@ class CodeBlocksEvent;
 class ToDoListView;
 class caFileTreeData;
 
-class ToDoList : public cbPlugin
+class ToDoList : public caPlugin
 {
     public:
         ToDoList();
         ~ToDoList();
-        virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        virtual caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
         int Configure();
         void BuildMenu(wxMenuBar* menuBar);
         void BuildModuleMenu(const ModuleType type, wxMenu* menu, const caFileTreeData* data = 0);

@@ -164,7 +164,7 @@ EditorConfigurationDlg::EditorConfigurationDlg(wxWindow* parent)
     XRCCTRL(*this, "lstIndicators", wxChoice)->SetSelection(cfg->ReadInt(_T("/folding/indicator"), 2));
     XRCCTRL(*this, "chkFoldLimit", wxCheckBox)->SetValue(cfg->ReadBool(_T("/folding/limit"), false));
     XRCCTRL(*this, "spnFoldLimitLevel", wxSpinCtrl)->SetValue(cfg->ReadInt(_T("/folding/limit_level"), 1));
-    
+
 	//gutter
     wxColour gutterColour = cfg->ReadColour(_T("/gutter/colour"), *wxLIGHT_GREY);
     XRCCTRL(*this, "lstGutterMode", wxChoice)->SetSelection(cfg->ReadInt(_T("/gutter/mode"), 0));
@@ -288,7 +288,7 @@ void EditorConfigurationDlg::AddPluginPanels()
 
     for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
     {
-        cbConfigurationPanel* panel = m_PluginPanels[i];
+        caConfigurationPanel* panel = m_PluginPanels[i];
         lb->AddPage(panel, panel->GetTitle());
 
         wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
@@ -891,7 +891,7 @@ void EditorConfigurationDlg::EndModal(int retCode)
             EditorManager *em = Manager::Get()->GetEditorManager();
             for (int idx = 0; idx<em->GetEditorsCount(); ++idx)
             {
-                cbEditor *ed = em->GetBuiltinEditor(em->GetEditor(idx));
+                caEditor *ed = em->GetBuiltinEditor(em->GetEditor(idx));
                 if(ed)
                     ed->UnfoldAll();
             }
@@ -961,7 +961,7 @@ void EditorConfigurationDlg::EndModal(int retCode)
         // finally, apply settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnApply();
         }
     }
@@ -970,7 +970,7 @@ void EditorConfigurationDlg::EndModal(int retCode)
         // finally, cancel settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)
         {
-            cbConfigurationPanel* panel = m_PluginPanels[i];
+            caConfigurationPanel* panel = m_PluginPanels[i];
             panel->OnCancel();
         }
     }

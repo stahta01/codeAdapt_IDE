@@ -12,20 +12,20 @@
 
 #include "api/plugin.h" // the base class we 're inheriting
 
-class cbConfigurationPanel;
+class caConfigurationPanel;
 class CodeStatExecDlg;
 class wxWindow;
 
 /** Main class for the Code Statistics plugin.
  *  @see CodeStatConfigDlg, CodeStatExecDlg, LanguageDef
  */
-class CodeStat : public cbToolPlugin
+class CodeStat : public caToolPlugin
 {
 	public:
 		CodeStat();
 		~CodeStat();
 		int GetConfigurationGroup()  const { return cgEditor; }
-        cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
 		int Execute();
 		void OnAttach(); // fires when the plugin is attached to the application
 		void OnRelease(bool appShutDown); // fires when the plugin is released from the application

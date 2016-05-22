@@ -41,18 +41,18 @@
 #include <wx/toolbar.h>
 
 
-cbPlugin::cbPlugin()
+caPlugin::caPlugin()
     : m_Type(ptNone),
     m_IsAttached(false)
 {
 	SetEvtHandlerEnabled(false);
 }
 
-cbPlugin::~cbPlugin()
+caPlugin::~caPlugin()
 {
 }
 
-void cbPlugin::Attach()
+void caPlugin::Attach()
 {
 	if (m_IsAttached)
 		return;
@@ -72,7 +72,7 @@ void cbPlugin::Attach()
 	Manager::Get()->ProcessEvent(event);
 }
 
-void cbPlugin::Release(bool appShutDown)
+void caPlugin::Release(bool appShutDown)
 {
 	if (!m_IsAttached)
 		return;
@@ -99,7 +99,7 @@ void cbPlugin::Release(bool appShutDown)
     }
 }
 
-void cbPlugin::NotImplemented(const wxString& log) const
+void caPlugin::NotImplemented(const wxString& log) const
 {
     Manager::Get()->GetLogManager()->DebugLog(log + _T(" : not implemented"));
 }
@@ -123,10 +123,10 @@ caDebuggerPlugin::caDebuggerPlugin()
 }
 
 /////
-///// cbToolPlugin
+///// caToolPlugin
 /////
 
-cbToolPlugin::cbToolPlugin()
+caToolPlugin::caToolPlugin()
 {
     m_Type = ptTool;
 }

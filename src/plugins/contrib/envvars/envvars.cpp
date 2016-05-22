@@ -42,7 +42,7 @@ namespace
   PluginRegistrant<EnvVars> reg(_T("EnvVars"));
 };
 
-BEGIN_EVENT_TABLE(EnvVars, cbPlugin)
+BEGIN_EVENT_TABLE(EnvVars, caPlugin)
 END_EVENT_TABLE()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -233,7 +233,7 @@ int EnvVars::Configure()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-cbConfigurationPanel* EnvVars::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* EnvVars::GetConfigurationPanel(wxWindow* parent)
 {
   EnvVarsConfigDlg* dlg = new EnvVarsConfigDlg(parent, this);
   // deleted by the caller
@@ -243,7 +243,7 @@ cbConfigurationPanel* EnvVars::GetConfigurationPanel(wxWindow* parent)
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-cbConfigurationPanel* EnvVars::GetProjectConfigurationPanel(wxWindow* parent,
+caConfigurationPanel* EnvVars::GetProjectConfigurationPanel(wxWindow* parent,
                                                             caProject* project)
 {
   EnvVarsProjectOptionsDlg* dlg = new EnvVarsProjectOptionsDlg(parent, this, project);

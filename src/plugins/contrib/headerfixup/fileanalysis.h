@@ -9,7 +9,7 @@
 #include <wx/string.h>
 #include <wx/arrstr.h>
 
-class cbEditor;
+class caEditor;
 
 class FileAnalysis
 {
@@ -27,10 +27,10 @@ public:
   bool IsHeaderFile()
   { return m_IsHeaderFile; }
 
-  /// Load the file from cbEditor or disk and splits it up into lines
+  /// Load the file from caEditor or disk and splits it up into lines
   void LoadFile();
 
-  /// Saves the file to cbEditor or disk and prepends a string (the includes)
+  /// Saves the file to caEditor or disk and prepends a string (the includes)
   void SaveFile(const wxString& Prepend);
 
   /// Returns whether there is another line to parse for iterators
@@ -70,7 +70,7 @@ private:
   /// Internal function to reset all states (for re-initialisation).
   void          Reset();
 
-  cbEditor*     m_Editor;          //!< The editor that is being use to parse for contents
+  caEditor*     m_Editor;          //!< The editor that is being use to parse for contents
   wxString      m_Log;             //!< The protocol (log) of the current file analysis
   wxString      m_FileName;        //!< The filename of the currently operated file
   wxString      m_FileContent;     //!< The content of the currently operated file

@@ -22,7 +22,7 @@ cbConfigurationDialog::cbConfigurationDialog(wxWindow* parent, int id, const wxS
 {
 }
 
-void cbConfigurationDialog::AttachConfigurationPanel(cbConfigurationPanel* panel)
+void cbConfigurationDialog::AttachConfigurationPanel(caConfigurationPanel* panel)
 {
     assert(panel);
 

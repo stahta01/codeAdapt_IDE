@@ -423,7 +423,7 @@ void EditorColourSet::DoApplyStyle(cbStyledTextCtrl* control, int value, OptionC
     control->StyleSetUnderline(value, option->underlined);
 }
 
-HighlightLanguage EditorColourSet::Apply(cbEditor* editor, HighlightLanguage lang)
+HighlightLanguage EditorColourSet::Apply(caEditor* editor, HighlightLanguage lang)
 {
     if (!editor)
         return HL_NONE;

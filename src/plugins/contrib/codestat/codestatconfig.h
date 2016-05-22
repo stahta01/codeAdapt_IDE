@@ -23,7 +23,7 @@ class wxCommandEvent;
 /** This class manages the plugin's settings and display them.
  *  @see CodeStat, CodeStatExecDlg, LanguageDef
  */
-class CodeStatConfigDlg : public cbConfigurationPanel
+class CodeStatConfigDlg : public caConfigurationPanel
 {
 	public:
 		CodeStatConfigDlg(wxWindow* parent);

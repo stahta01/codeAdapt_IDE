@@ -102,7 +102,7 @@ class CompilerGCC : public caCompilerPlugin
 
         int GetConfigurationPriority() const { return 0; }
         int GetConfigurationGroup() const { return cgCompiler; }
-        cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+        caConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
 
         void SwitchCompiler(const wxString& id);
         const wxString& GetCurrentCompilerID();

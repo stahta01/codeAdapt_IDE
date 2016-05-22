@@ -6,7 +6,7 @@
 #include "configurationpanel.h"
 #include <settings.h>
 
-class ToDoSettingsDlg : public cbConfigurationPanel
+class ToDoSettingsDlg : public caConfigurationPanel
 {
 	public:
 		ToDoSettingsDlg(wxWindow* parent);

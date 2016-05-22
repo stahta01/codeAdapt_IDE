@@ -1,7 +1,7 @@
 #include "asstreamiterator.h"
 #include "globals.h"
 
-ASStreamIterator::ASStreamIterator(cbEditor *cbe, const wxChar* in)
+ASStreamIterator::ASStreamIterator(caEditor *cbe, const wxChar* in)
 : m_cbe(cbe), m_In(in), m_curline(0), m_foundBookmark(false)
 {
 	//ctor

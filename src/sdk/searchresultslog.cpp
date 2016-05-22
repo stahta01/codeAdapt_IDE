@@ -80,7 +80,7 @@ void SearchResultsLog::SyncEditor(int selIndex)
     control->GetItem(li);
     long line = 0;
     li.m_text.ToLong(&line);
-    cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
+    caEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
     if (!line || !ed)
         return;
 

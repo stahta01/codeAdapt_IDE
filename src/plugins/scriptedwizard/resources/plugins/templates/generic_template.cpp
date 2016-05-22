@@ -11,7 +11,7 @@ namespace
 
 [IF NEED_EVENTS]
 // events handling
-BEGIN_EVENT_TABLE([PLUGIN_NAME], cbPlugin)
+BEGIN_EVENT_TABLE([PLUGIN_NAME], caPlugin)
     // add any events you want to handle here
 END_EVENT_TABLE()[ENDIF NEED_EVENTS]
 

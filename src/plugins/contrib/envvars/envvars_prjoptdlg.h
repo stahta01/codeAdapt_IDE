@@ -11,7 +11,7 @@ class caProject;
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-class EnvVarsProjectOptionsDlg : public cbConfigurationPanel
+class EnvVarsProjectOptionsDlg : public caConfigurationPanel
 {
 public:
   /// Ctor

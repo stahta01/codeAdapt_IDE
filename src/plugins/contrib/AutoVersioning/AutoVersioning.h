@@ -19,7 +19,7 @@ class wxTimer;
 class wxTimerEvent;
 class caProject;
 
-class AutoVersioning : public cbPlugin
+class AutoVersioning : public caPlugin
 {
 public: //Constructor and Destructor
 	AutoVersioning();

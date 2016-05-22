@@ -341,7 +341,7 @@ void PipedProcessCtrl::OnDClick(wxMouseEvent &e)
     wxFileName f(file);
     if(f.FileExists())
     {
-        cbEditor* ed = Manager::Get()->GetEditorManager()->Open(f.GetFullPath());
+        caEditor* ed = Manager::Get()->GetEditorManager()->Open(f.GetFullPath());
         if (ed)
         {
             ed->Show(true);

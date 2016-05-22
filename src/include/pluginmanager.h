@@ -11,9 +11,9 @@
 
 //forward decls
 struct caPluginInfo;
-class cbPlugin;
+class caPlugin;
 class caMimePlugin;
-class cbConfigurationPanel;
+class caConfigurationPanel;
 class caProject;
 class wxDynamicLibrary;
 class wxMenuBar;
@@ -24,8 +24,8 @@ class caFileTreeData;
 
 // typedefs for plugins' function pointers
 typedef void(*PluginSDKVersionProc)(int*,int*,int*);
-typedef cbPlugin*(*CreatePluginProc)();
-typedef void(*FreePluginProc)(cbPlugin*);
+typedef caPlugin*(*CreatePluginProc)();
+typedef void(*FreePluginProc)(caPlugin*);
 
 /** Information about the plugin */
 struct caPluginInfo
@@ -48,12 +48,12 @@ struct PluginElement
     wxString fileName; // plugin's filename
     wxDynamicLibrary* library; // plugin's library
     FreePluginProc freeProc; // plugin's release function pointer
-    cbPlugin* plugin; // the plugin itself
+    caPlugin* plugin; // the plugin itself
 };
 
 WX_DEFINE_ARRAY(PluginElement*, PluginElementsArray);
-WX_DEFINE_ARRAY(cbPlugin*, PluginsArray);
-WX_DEFINE_ARRAY(cbConfigurationPanel*, ConfigurationPanelsArray);
+WX_DEFINE_ARRAY(caPlugin*, PluginsArray);
+WX_DEFINE_ARRAY(caConfigurationPanel*, ConfigurationPanelsArray);
 
 /**
  * PluginManager manages plugins.
@@ -83,25 +83,25 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         bool LoadPlugin(const wxString& pluginName);
         void LoadAllPlugins();
         void UnloadAllPlugins();
-        void UnloadPlugin(cbPlugin* plugin);
+        void UnloadPlugin(caPlugin* plugin);
         int ExecutePlugin(const wxString& pluginName);
         int ConfigurePlugin(const wxString& pluginName);
 
-        bool AttachPlugin(cbPlugin* plugin, bool ignoreSafeMode = false);
-        bool DetachPlugin(cbPlugin* plugin);
+        bool AttachPlugin(caPlugin* plugin, bool ignoreSafeMode = false);
+        bool DetachPlugin(caPlugin* plugin);
 
         bool InstallPlugin(const wxString& pluginName, bool forAllUsers = true, bool askForConfirmation = true);
-        bool UninstallPlugin(cbPlugin* plugin, bool removeFiles = true);
-        bool ExportPlugin(cbPlugin* plugin, const wxString& filename);
+        bool UninstallPlugin(caPlugin* plugin, bool removeFiles = true);
+        bool ExportPlugin(caPlugin* plugin, const wxString& filename);
 
         const caPluginInfo* GetPluginInfo(const wxString& pluginName);
-        const caPluginInfo* GetPluginInfo(cbPlugin* plugin);
+        const caPluginInfo* GetPluginInfo(caPlugin* plugin);
 
         PluginElementsArray& GetPlugins(){ return m_Plugins; }
 
         PluginElement* FindElementByName(const wxString& pluginName);
-        cbPlugin* FindPluginByName(const wxString& pluginName);
-        cbPlugin* FindPluginByFileName(const wxString& pluginFileName);
+        caPlugin* FindPluginByName(const wxString& pluginName);
+        caPlugin* FindPluginByFileName(const wxString& pluginFileName);
 
         PluginsArray GetToolOffers();
         PluginsArray GetMimeOffers();

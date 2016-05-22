@@ -141,7 +141,7 @@ int DefaultMimeHandler::Configure()
     return 0;
 }
 
-cbConfigurationPanel* DefaultMimeHandler::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* DefaultMimeHandler::GetConfigurationPanel(wxWindow* parent)
 {
     EditMimeTypesDlg* dlg = new EditMimeTypesDlg(parent, m_MimeTypes);
     return dlg;
@@ -285,7 +285,7 @@ int DefaultMimeHandler::DoOpenFile(cbMimeType* mt, const wxString& filename)
     if (mt->useEditor)
     {
         // easy. use internal editor.
-        cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
+        caEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
         if (ed)
         {
 //            ed->SetProjectFile(pf);

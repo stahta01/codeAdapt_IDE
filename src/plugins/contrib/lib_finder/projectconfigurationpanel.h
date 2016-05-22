@@ -44,7 +44,7 @@ class wxStaticBoxSizer;
 #include "resultmap.h"
 
 
-class ProjectConfigurationPanel: public cbConfigurationPanel
+class ProjectConfigurationPanel: public caConfigurationPanel
 {
 	public:
 

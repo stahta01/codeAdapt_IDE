@@ -1443,7 +1443,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
     if (ft == ftHeader || ft == ftSource)
     {
         // C/C++ header/source files, always get opened inside Code::Blocks
-        cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
+        caEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
         if (ed)
         {
             ed->SetProjectFile(pf);
@@ -2176,7 +2176,7 @@ void ProjectManager::OnOpenWith(wxCommandEvent& event)
             wxString filename = f->file.GetFullPath();
             if (event.GetId() == idOpenWithInternal)
             {
-                cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
+                caEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
                 if (ed)
                 {
                     ed->SetProjectFile(f);
@@ -2251,7 +2251,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
     }
     else // active editor properties
     {
-        cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+        caEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         if (ed)
         {
             ProjectFile* pf = ed->GetProjectFile();

@@ -3,7 +3,7 @@
 
 #include "settings.h"
 
-class cbEditor;
+class caEditor;
 class wxScintillaEvent;
 
 /** Provides static functions to add hooks to the project loading/saving procedure. */
@@ -14,7 +14,7 @@ namespace EditorHooks
     {
         public:
             virtual ~HookFunctorBase(){}
-            virtual void Call(cbEditor*, wxScintillaEvent&) const = 0;
+            virtual void Call(caEditor*, wxScintillaEvent&) const = 0;
     };
 
     /** Functor class for use as a project loading/saving hook.
@@ -38,12 +38,12 @@ namespace EditorHooks
     template<class T> class DLLIMPORT HookFunctor : public HookFunctorBase
     {
         public:
-            typedef void (T::*Func)(cbEditor*, wxScintillaEvent&);
+            typedef void (T::*Func)(caEditor*, wxScintillaEvent&);
             HookFunctor(T* obj, Func func)
                 : m_pObj(obj),
                 m_pFunc(func)
             {}
-            virtual void Call(cbEditor* editor, wxScintillaEvent& event) const
+            virtual void Call(caEditor* editor, wxScintillaEvent& event) const
             {
                 if (m_pObj && m_pFunc)
                     (m_pObj->*m_pFunc)(editor, event);
@@ -74,7 +74,7 @@ namespace EditorHooks
       * @param editor The editor in question.
       * @param event Paremeter (wxScintilla event) to provide to the registered hook
       */
-    extern DLLIMPORT void CallHooks(cbEditor* editor, wxScintillaEvent& event);
+    extern DLLIMPORT void CallHooks(caEditor* editor, wxScintillaEvent& event);
 };
 
 #endif // EDITOR_HOOKS_H

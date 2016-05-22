@@ -40,7 +40,7 @@ namespace
     PluginRegistrant<Autosave> reg(_T("Autosave"));
 }
 
-BEGIN_EVENT_TABLE(Autosave, cbPlugin)
+BEGIN_EVENT_TABLE(Autosave, caPlugin)
 EVT_TIMER(-1, Autosave::OnTimer)
 END_EVENT_TABLE()
 
@@ -169,7 +169,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
         {
             for(int i = 0; i < em->GetEditorsCount(); ++i)
             {
-                cbEditor* ed = em->GetBuiltinEditor(em->GetEditor(i));
+                caEditor* ed = em->GetBuiltinEditor(em->GetEditor(i));
                 if(ed && ed->GetModified())
                 {
                     wxFileName fn(ed->GetFilename());
@@ -201,7 +201,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
 
 }
 
-cbConfigurationPanel* Autosave::GetConfigurationPanel(wxWindow* parent)
+caConfigurationPanel* Autosave::GetConfigurationPanel(wxWindow* parent)
 {
     AutosaveConfigDlg* dlg = new AutosaveConfigDlg(parent, this);
     // deleted by the caller

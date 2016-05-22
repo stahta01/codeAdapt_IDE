@@ -18,7 +18,7 @@
 #include "aui_compat.h"
 
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, PluginIDsMap);
-WX_DECLARE_HASH_MAP(cbPlugin*, wxToolBar*, wxPointerHash, wxPointerEqual, PluginToolbarsMap);
+WX_DECLARE_HASH_MAP(caPlugin*, wxToolBar*, wxPointerHash, wxPointerEqual, PluginToolbarsMap);
 WX_DECLARE_STRING_HASH_MAP(wxString, LayoutViewsMap);
 
 struct CommentToken {
@@ -246,14 +246,14 @@ class MainFrame : public wxFrame
         void RunStartupScripts();
 
         enum { Installed, Uninstalled, Unloaded };
-        void PluginsUpdated(cbPlugin* plugin, int status);
+        void PluginsUpdated(caPlugin* plugin, int status);
 
-        void DoAddPlugin(cbPlugin* plugin);
-        void DoAddPluginToolbar(cbPlugin* plugin);
-        void AddPluginInPluginsMenu(cbPlugin* plugin);
-        void AddPluginInSettingsMenu(cbPlugin* plugin);
-        void AddPluginInHelpPluginsMenu(cbPlugin* plugin);
-        wxMenuItem* AddPluginInMenus(wxMenu* menu, cbPlugin* plugin, wxObjectEventFunction callback, int pos = -1, bool checkable = false);
+        void DoAddPlugin(caPlugin* plugin);
+        void DoAddPluginToolbar(caPlugin* plugin);
+        void AddPluginInPluginsMenu(caPlugin* plugin);
+        void AddPluginInSettingsMenu(caPlugin* plugin);
+        void AddPluginInHelpPluginsMenu(caPlugin* plugin);
+        wxMenuItem* AddPluginInMenus(wxMenu* menu, caPlugin* plugin, wxObjectEventFunction callback, int pos = -1, bool checkable = false);
         void RemovePluginFromMenus(const wxString& pluginName);
 
         void LoadViewLayout(const wxString& name, bool isTemp = false);

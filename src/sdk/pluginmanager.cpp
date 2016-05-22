@@ -201,7 +201,7 @@ void PluginManager::ReleaseMenu(wxMenuBar* menuBar)
 {
 }
 
-bool PluginManager::AttachPlugin(cbPlugin* plugin, bool ignoreSafeMode)
+bool PluginManager::AttachPlugin(caPlugin* plugin, bool ignoreSafeMode)
 {
     if (!plugin)
         return false;
@@ -213,7 +213,7 @@ bool PluginManager::AttachPlugin(cbPlugin* plugin, bool ignoreSafeMode)
     return true;
 }
 
-bool PluginManager::DetachPlugin(cbPlugin* plugin)
+bool PluginManager::DetachPlugin(caPlugin* plugin)
 {
     if (!plugin)
         return false;
@@ -245,7 +245,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("InstallPlugin: basename='%s', version=%s"), basename.c_str(), version.c_str()));
 
     // if plugin with the same name exists, ask to uninstall first
-    cbPlugin* existingPlugin = FindPluginByName(basename);
+    caPlugin* existingPlugin = FindPluginByName(basename);
     if (existingPlugin)
     {
         if (askForConfirmation)
@@ -354,7 +354,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading plugin...")));
     ScanForPlugins(pluginDir);
     LoadAllPlugins();
-    cbPlugin* plugin = FindPluginByFileName(pluginFilename);
+    caPlugin* plugin = FindPluginByFileName(pluginFilename);
     const caPluginInfo* info = GetPluginInfo(plugin);
     if (!plugin || !info)
     {
@@ -373,7 +373,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
     return true;
 }
 
-bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
+bool PluginManager::UninstallPlugin(caPlugin* plugin, bool removeFiles)
 {
     if (!plugin)
         return false;
@@ -509,7 +509,7 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
     return false;
 }
 
-bool PluginManager::ExportPlugin(cbPlugin* plugin, const wxString& filename)
+bool PluginManager::ExportPlugin(caPlugin* plugin, const wxString& filename)
 {
     if (!plugin)
         return false;
@@ -1039,7 +1039,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
     for (it = m_RegisteredPlugins.begin(); it != m_RegisteredPlugins.end(); ++it)
     {
         PluginRegistration& pr = *it;
-        cbPlugin* plug = 0L;
+        caPlugin* plug = 0L;
         try
         {
             plug = pr.createProc();
@@ -1091,7 +1091,7 @@ void PluginManager::LoadAllPlugins()
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
         elem = m_Plugins[i];
-        cbPlugin* plug = elem->plugin;
+        caPlugin* plug = elem->plugin;
         if (!plug || plug->IsAttached())
             continue;
 
@@ -1146,7 +1146,7 @@ void PluginManager::UnloadAllPlugins()
     LibLoader::Cleanup();
 }
 
-void PluginManager::UnloadPlugin(cbPlugin* plugin)
+void PluginManager::UnloadPlugin(caPlugin* plugin)
 {
     if (!plugin)
         return;
@@ -1189,7 +1189,7 @@ PluginElement* PluginManager::FindElementByName(const wxString& pluginName)
     return 0;
 }
 
-cbPlugin* PluginManager::FindPluginByName(const wxString& pluginName)
+caPlugin* PluginManager::FindPluginByName(const wxString& pluginName)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
@@ -1201,7 +1201,7 @@ cbPlugin* PluginManager::FindPluginByName(const wxString& pluginName)
     return 0;
 }
 
-cbPlugin* PluginManager::FindPluginByFileName(const wxString& pluginFileName)
+caPlugin* PluginManager::FindPluginByFileName(const wxString& pluginFileName)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
@@ -1222,7 +1222,7 @@ const caPluginInfo* PluginManager::GetPluginInfo(const wxString& pluginName)
     return 0;
 }
 
-const caPluginInfo* PluginManager::GetPluginInfo(cbPlugin* plugin)
+const caPluginInfo* PluginManager::GetPluginInfo(caPlugin* plugin)
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
@@ -1237,7 +1237,7 @@ const caPluginInfo* PluginManager::GetPluginInfo(cbPlugin* plugin)
 int PluginManager::ExecutePlugin(const wxString& pluginName)
 {
     PluginElement* elem = FindElementByName(pluginName);
-    cbPlugin* plug = elem ? elem->plugin : 0;
+    caPlugin* plug = elem ? elem->plugin : 0;
     if (plug)
     {
         if (plug->GetType() != ptTool)
@@ -1248,7 +1248,7 @@ int PluginManager::ExecutePlugin(const wxString& pluginName)
         {
             try
             {
-                return ((cbToolPlugin*)plug)->Execute();
+                return ((caToolPlugin*)plug)->Execute();
             }
             catch (cbException& exception)
             {
@@ -1261,7 +1261,7 @@ int PluginManager::ExecutePlugin(const wxString& pluginName)
 
 int PluginManager::ConfigurePlugin(const wxString& pluginName)
 {
-    cbPlugin* plug = FindPluginByName(pluginName);
+    caPlugin* plug = FindPluginByName(pluginName);
     if (plug)
     {
         try
@@ -1276,7 +1276,7 @@ int PluginManager::ConfigurePlugin(const wxString& pluginName)
     return 0;
 }
 
-int SortByConfigurationPriority(cbPlugin** first, cbPlugin** second)
+int SortByConfigurationPriority(caPlugin** first, caPlugin** second)
 {
     return (*first)->GetConfigurationPriority() - (*second)->GetConfigurationPriority();
 }
@@ -1287,7 +1287,7 @@ void PluginManager::GetConfigurationPanels(int group, wxWindow* parent, Configur
     PluginsArray arr;
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
-        cbPlugin* plug = m_Plugins[i]->plugin;
+        caPlugin* plug = m_Plugins[i]->plugin;
         // all check are done here
         if (plug && plug->IsAttached() && (plug->GetConfigurationGroup() & group))
             arr.Add(plug);
@@ -1300,8 +1300,8 @@ void PluginManager::GetConfigurationPanels(int group, wxWindow* parent, Configur
     arrayToFill.Clear();
     for (unsigned int i = 0; i < arr.GetCount(); ++i)
     {
-        cbPlugin* plug = arr[i];
-        cbConfigurationPanel* pnl = plug->GetConfigurationPanel(parent);
+        caPlugin* plug = arr[i];
+        caConfigurationPanel* pnl = plug->GetConfigurationPanel(parent);
         if (pnl)
             arrayToFill.Add(pnl);
     }
@@ -1311,10 +1311,10 @@ void PluginManager::GetProjectConfigurationPanels(wxWindow* parent, caProject* p
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
-        cbPlugin* plug = m_Plugins[i]->plugin;
+        caPlugin* plug = m_Plugins[i]->plugin;
         if (plug && plug->IsAttached())
         {
-            cbConfigurationPanel* pnl = plug->GetProjectConfigurationPanel(parent, project);
+            caConfigurationPanel* pnl = plug->GetProjectConfigurationPanel(parent, project);
             if (pnl)
                 arrayToFill.Add(pnl);
         }
@@ -1352,11 +1352,11 @@ PluginsArray PluginManager::GetOffersFor(PluginType type)
 
     // special case for MIME plugins
     // we 'll add the default MIME handler, last in the returned array
-    cbPlugin* dflt = 0;
+    caPlugin* dflt = 0;
 
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
-        cbPlugin* plug = m_Plugins[i]->plugin;
+        caPlugin* plug = m_Plugins[i]->plugin;
         if (plug && plug->IsAttached() && plug->GetType() == type)
         {
             if (type == ptMime)
@@ -1383,7 +1383,7 @@ void PluginManager::AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu,
 {
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
     {
-        cbPlugin* plug = m_Plugins[i]->plugin;
+        caPlugin* plug = m_Plugins[i]->plugin;
         if (plug)
         {
             try
