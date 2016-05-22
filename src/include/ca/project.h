@@ -1,5 +1,5 @@
-#ifndef CBPROJECT_H
-#define CBPROJECT_H
+#ifndef CA_PROJECT_H
+#define CA_PROJECT_H
 
 #include <wx/datetime.h>
 #include <wx/dynarray.h>
@@ -7,10 +7,10 @@
 #include <wx/treectrl.h>
 
 #include "settings.h"
-#include "misctreeitemdata.h"
 #include "compiletargetbase.h"
 #include "api/plugin.h"
 #include "projectbuildtarget.h"
+#include "ca/filetreedata.h"
 
 #include <map>
 
@@ -26,48 +26,6 @@ class TiXmlElement;
 WX_DECLARE_STRING_HASH_MAP(ProjectFile*, ProjectFiles);
 
 typedef std::map<wxString, wxArrayString> VirtualBuildTargetsMap;
-
-class DLLIMPORT caFileTreeData : public MiscTreeItemData
-{
-    public:
-        /// The kind of tree node
-        enum FileTreeDataKind
-        {
-            ftdkUndefined = 0,
-            ftdkProject,
-            ftdkFolder,
-            ftdkFile,
-            ftdkVirtualGroup, // wilcard matching
-            ftdkVirtualFolder
-        };
-
-        caFileTreeData(caProject* project, FileTreeDataKind kind = ftdkUndefined)
-            : m_Index(-1),
-            m_Project(project),
-            m_file(0),
-            m_kind(kind)
-        {}
-
-        FileTreeDataKind GetKind() const { return m_kind; }
-        caProject* GetProject() const { return m_Project; }
-        int GetFileIndex() const { return m_Index; }
-        ProjectFile* GetProjectFile() const { return m_file; }
-        const wxString& GetFolder() const { return m_folder; }
-
-        void SetKind(FileTreeDataKind kind){ m_kind = kind; }
-        void SetProject(caProject* project){ m_Project = project; }
-        // only valid for file selections
-        void SetFileIndex(int index){ m_Index = index; }
-        void SetProjectFile(ProjectFile* file){ m_file = file; }
-        // only valid for folder selections
-        void SetFolder(const wxString& folder){ m_folder = folder; }
-    private:
-        int m_Index;
-        caProject* m_Project;
-        ProjectFile* m_file;
-        wxString m_folder;
-        FileTreeDataKind m_kind;
-};
 
 /** Precompiled headers mode.
   * Defines where and how are the project's precompiled headers generated.
@@ -711,6 +669,4 @@ class DLLIMPORT caProject : public caCompileTargetBase
         TiXmlElement* m_pExtensionsElement;
 };
 
-#endif // CBPROJECT_H
-
-
+#endif // CA_PROJECT_H
