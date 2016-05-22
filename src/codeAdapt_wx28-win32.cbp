@@ -139,7 +139,7 @@
 				</Linker>
 			</Target>
 			<Target title="sdk">
-				<Option output="devel/codeadapt.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="devel/codeadapt" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="devel" />
 				<Option external_deps="lib/libtxml.a;lib28/libwxflatnotebook.a;lib/libsquirrel.a;lib/libsqstdlib.a;lib/libsqplus.a;" />
 				<Option type="3" />
