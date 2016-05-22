@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="contrib wx3.0.x win32">
+		<Project filename="tools/ca_share_config/ca_share_config_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/AutoVersioning/AutoVersioning_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/codestat/codestat_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/devpak_plugin/DevPakPlugin_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/envvars/envvars_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/byogames/byogames_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/headerfixup/headerfixup_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/lib_finder/lib_finder_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/source_exporter/Exporter_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/ToolsPlus/ToolsPlus_wx30-win32.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
