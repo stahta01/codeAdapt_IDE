@@ -21,9 +21,10 @@
     #include "cbeditor.h"
     #include "editormanager.h"
     #include "pluginmanager.h"
-    #include "cbproject.h" // caFileTreeData
     #include <wx/wfstream.h>
 #endif
+#include "ca/filetreedata.h" // caFileTreeData
+
 #include "cbstyledtextctrl.h"
 
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
