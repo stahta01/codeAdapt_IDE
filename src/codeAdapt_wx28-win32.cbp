@@ -537,6 +537,9 @@
 		<Unit filename="include/api/plugin.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/autorevision.h">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="include/backgroundthread.h">
 			<Option target="sdk" />
 		</Unit>
@@ -544,6 +547,12 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/blockallocated.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/ca/filetreedata.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/ca/project.h">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/cbeditor.h">
@@ -723,6 +732,9 @@
 		<Unit filename="include/menuitemsmanager.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/misctreeitemdata.h">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="include/multiselectdlg.h">
 			<Option target="sdk" />
 		</Unit>
@@ -781,6 +793,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/replacedlg.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/safedelete.h">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/scripting/bindings/sc_base_types.h">
@@ -973,6 +988,9 @@
 			<Option target="wxFlatNotebook" />
 		</Unit>
 		<Unit filename="include/wxFlatNotebook/include/wx/wxFlatNotebook/wxFlatNotebook.h">
+			<Option target="wxFlatNotebook" />
+		</Unit>
+		<Unit filename="include/wxFlatNotebook/include/wx/wxFlatNotebook/wxFlatNotebookSDK.h">
 			<Option target="wxFlatNotebook" />
 		</Unit>
 		<Unit filename="include/wxFlatNotebook/include/wx/wxFlatNotebook/xh_fnb.h">
@@ -3230,6 +3248,9 @@
 		<Unit filename="src/appglobals.h">
 			<Option target="src" />
 		</Unit>
+		<Unit filename="src/associations.h">
+			<Option target="src" />
+		</Unit>
 		<Unit filename="src/aui_compat.h">
 			<Option target="src" />
 		</Unit>
@@ -3349,6 +3370,60 @@
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
+		</Unit>
+		<Unit filename="src/resources/icons/app.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/asm.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/c.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/cbp.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/cg.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/cpp.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/csd.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/d.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/dev.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/dsp.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/dsw.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/f.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/filetempl.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/h.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/j.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/proj.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/rc.ico">
+			<Option target="src" />
+		</Unit>
+		<Unit filename="src/resources/icons/template.ico">
+			<Option target="src" />
 		</Unit>
 		<Unit filename="src/resources/main_menu.xrc">
 			<Option target="tinyXML" />
