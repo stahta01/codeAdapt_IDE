@@ -36,7 +36,6 @@ void CompilerCYGWIN::Reset()
 
     m_Switches.forceFwdSlashes = true;
 
-	m_Options.AddOption(_("Do not use cygwin specific functionality"), _T("-mno-cygwin"), _("General"));
 }
 
 AutoDetectResult CompilerCYGWIN::AutoDetectInstallationDir()
