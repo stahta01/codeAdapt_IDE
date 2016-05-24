@@ -54,7 +54,7 @@ CompilerSwitches::CompilerSwitches()
     genericSwitch = _T("-");
     objectExtension = _T("o");
     needDependencies = true;
-    forceFwdSlashes = false;
+    forceFwdSlashes = true;
     forceCompilerUseQuotes = false;
     forceLinkerUseQuotes = false;
     logging = clogSimple;
