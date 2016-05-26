@@ -51,6 +51,9 @@
 #include <wx/statline.h>
 #include <wx/ffile.h>
 #include <wx/utils.h>
+#include <wx/toolbar.h>
+#include <wx/textdlg.h>
+#include <wx/app.h>
 #include "makefilegenerator.h"
 #include "compileroptionsdlg.h"
 #include "directcommands.h"
