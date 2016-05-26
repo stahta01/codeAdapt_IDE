@@ -151,7 +151,7 @@ void SettingsDlg::GetFileName(wxString& newFileName)
                  wxEmptyString,                 //default directory
                  wxEmptyString,                 //default file
                  wxT("*.*"),                    //wildcards
-                 wxOPEN | wxFILE_MUST_EXIST );  //style
+                 wxFD_OPEN | wxFD_FILE_MUST_EXIST );  //style
 
    // move dialog into the parents frame space
     wxPoint mousePosn = ::wxGetMousePosition();
