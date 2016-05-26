@@ -44,6 +44,12 @@
     #include <wx/radiobox.h>
     #include <wx/imaglist.h>
 #endif
+#include <wx/button.h>
+#include <wx/checkbox.h>
+#include <wx/slider.h>
+#include <wx/stattext.h>
+#include <wx/textdlg.h>
+
 #include "cbstyledtextctrl.h"
 
 #include <wx/fontdlg.h>
