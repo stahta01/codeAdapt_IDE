@@ -47,6 +47,11 @@
     #include "macrosmanager.h" // ReplaceMacros
     #include "cbplugin.h"
 #endif
+#include <wx/filedlg.h>
+#include <wx/menu.h>
+#include <wx/sizer.h>
+#include <wx/textdlg.h>
+
 #include "cbstyledtextctrl.h"
 
 #include <wx/fontutil.h>
