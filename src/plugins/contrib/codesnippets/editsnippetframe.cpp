@@ -391,7 +391,7 @@ void EditSnippetFrame::OnFileOpen (wxCommandEvent &WXUNUSED(event))
     if (!m_pEdit) return;
     wxString fname;
     wxFileDialog dlg (this, _T("Open file"), _T(""), _T(""), _T("Any file (*)|*"),
-                      wxOPEN | wxFILE_MUST_EXIST | wxCHANGE_DIR);
+                      wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     fname = dlg.GetPath ();
     FileOpen (fname);
@@ -432,7 +432,7 @@ void EditSnippetFrame::OnFileSaveAs (wxCommandEvent &WXUNUSED(event))
 {
     if (!m_pEdit) return;
     wxString filename = wxEmptyString;
-    wxFileDialog dlg (this, _T("Save file"), _T(""), _T(""), _T("Any file (*)|*"), wxSAVE|wxOVERWRITE_PROMPT);
+    wxFileDialog dlg (this, _T("Save file"), _T(""), _T(""), _T("Any file (*)|*"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (dlg.ShowModal() != wxID_OK) return;
     filename = dlg.GetPath();
     m_pEdit->SaveFile (filename);
