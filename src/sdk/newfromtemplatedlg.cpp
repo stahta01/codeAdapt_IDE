@@ -41,6 +41,8 @@
     #include "globals.h"
     #include "manager.h"
 #endif
+#include <wx/button.h>
+
 #include "cbstyledtextctrl.h"
 
 #include <wx/listbook.h>
