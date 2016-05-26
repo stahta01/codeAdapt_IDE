@@ -274,7 +274,7 @@ namespace ScriptBindings
                 func(&wxColour::Blue, "Blue").
                 func(&wxColour::Green, "Green").
                 func(&wxColour::Red, "Red").
-                func(&wxColour::Ok, "Ok").
+                func<WXC_OK>(&wxColour::Ok, "Ok").
                 func<WXC_SET>(&wxColour::Set, "Set");
     }
 };
