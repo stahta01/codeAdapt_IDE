@@ -733,7 +733,7 @@ void ProjectOptionsDlg::OnBrowseOutputFilenameClick(wxCommandEvent& event)
                     fname.GetPath(),
                     fname.GetFullName(),
                     FileFilters::GetFilterAll(),
-                    wxSAVE | wxOVERWRITE_PROMPT);
+                    wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     PlaceWindow(&dlg);
     if (dlg.ShowModal() != wxID_OK)
