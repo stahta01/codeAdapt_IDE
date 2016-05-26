@@ -106,8 +106,12 @@ class UsrGlblMgrEditDialog : public wxDialog
         return;
         }
 
-    for(unsigned int i = 0; i < s.length(); ++i)
-        s[i] = isalnum(s.GetChar(i)) ? s.GetChar(i) : _T('_');
+    for(unsigned int i = 0; i < s.length(); ++i){
+        if (isalnum(s.GetChar(i)))
+            s[i] =  s.GetChar(i);
+        else
+            s[i] =  wxT_2('_');
+    }
 
     if(s.GetChar(0) == _T('_'))
             s.Prepend(_T("set"));
