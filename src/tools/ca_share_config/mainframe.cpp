@@ -346,7 +346,7 @@ void MainFrame::OnBtnExportClick(wxCommandEvent& event)
           wxT("*.conf"),                                          // default extension
           wxT("Code::Blocks configuration files (*.conf)|*.conf|"
               "All files (*.*)|*.*"),                             // wildcards
-          wxSAVE                                                  // flags
+          wxFD_SAVE                                                  // flags
         );
         if (!filename.IsEmpty())
         {
@@ -428,7 +428,7 @@ wxString MainFrame::FileSelector()
     wxT("*.conf"),                                   // default extension
     wxT("Code::Blocks configuration files (*.conf)|*.conf|"
         "All files (*.*)|*.*"),                      // wildcards
-    wxOPEN | wxFILE_MUST_EXIST                       // flags
+    wxFD_OPEN | wxFD_FILE_MUST_EXIST                       // flags
 #if (WXWIN_COMPATIBILITY_2_4)
     | wxHIDE_READONLY
 #endif
