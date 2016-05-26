@@ -44,6 +44,8 @@
 #include "macrosmanager.h"
 #include "projectmanager.h"
 #endif
+#include <wx/button.h>
+
 #include "cbstyledtextctrl.h"
 
 #include "classwizarddlg.h"
