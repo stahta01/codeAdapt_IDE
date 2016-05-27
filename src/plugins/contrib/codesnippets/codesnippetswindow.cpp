@@ -1043,8 +1043,6 @@ void CodeSnippetsWindow::OnItemGetToolTip(wxTreeEvent& event)
 {
 	// "My eyes! The goggles do nothing!"
 	//
-	// Use the following only on wxWidgets 2.8.
-	#if wxCHECK_VERSION(2, 8, 0)
 	if (const SnippetItemData* itemData = (SnippetItemData*)(GetSnippetsTreeCtrl()->GetItemData(event.GetItem())))
 	{
 		if (itemData->GetType() == SnippetItemData::TYPE_SNIPPET)
@@ -1074,7 +1072,6 @@ void CodeSnippetsWindow::OnItemGetToolTip(wxTreeEvent& event)
 			event.SetToolTip(snippetToolTip);
 		}
 	}
-	#endif
 }
 // ----------------------------------------------------------------------------
 bool CodeSnippetsWindow::AddTextToClipBoard(const wxString& text)
