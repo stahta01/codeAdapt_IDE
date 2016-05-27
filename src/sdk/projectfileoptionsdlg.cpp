@@ -46,6 +46,8 @@
 #include <wx/notebook.h>
 #include <wx/textfile.h>
 
+#include "compiler.h"
+
 BEGIN_EVENT_TABLE(ProjectFileOptionsDlg, wxDialog)
     EVT_CHOICE(-1, ProjectFileOptionsDlg::OnCompilerCombo)
     EVT_UPDATE_UI(-1, ProjectFileOptionsDlg::OnUpdateUI)

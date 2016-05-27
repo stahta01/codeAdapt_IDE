@@ -23,6 +23,7 @@
 #include "editorcolourset.h"
 #include "editorlexerloader.h"
 #include "filemanager.h"
+#include "tinyxml.h"
 
 EditorLexerLoader::EditorLexerLoader(EditorColourSet* target)
     : m_pTarget(target)

@@ -7,9 +7,9 @@
 #include <wx/wxscintilla.h> // wxSCI_KEYWORDSET_MAX
 #include "settings.h"
 
-#ifndef CB_PRECOMP
-    #include "globals.h" // HighlightLanguage
-#endif
+
+#include "globals.h" // HighlightLanguage
+
 
 // forward decls
 class cbEditor;

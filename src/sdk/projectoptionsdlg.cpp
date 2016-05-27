@@ -68,6 +68,8 @@
 #include "filefilters.h"
 #include "virtualbuildtargetsdlg.h"
 
+#include "compiler.h"
+
 BEGIN_EVENT_TABLE(ProjectOptionsDlg, wxDialog)
     EVT_UPDATE_UI( -1,                                 ProjectOptionsDlg::OnUpdateUI)
     EVT_BUTTON(    XRCID("wxID_OK"),                   ProjectOptionsDlg::OnOK)
