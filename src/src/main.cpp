@@ -1370,13 +1370,8 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
                     ++ccount;
                 }
             }
-            #if wxCHECK_VERSION(2, 8, 0)
             wxSize s(w + tb->GetEffectiveMinSize().GetWidth() - (ccount * (tb->GetToolSize().GetWidth() / 3)), 0);
             tb->SetInitialSize(s);
-            #else
-            wxSize s(w + tb->GetBestFittingSize().GetWidth() - (ccount * (tb->GetToolSize().GetWidth() / 3)), 0);
-            tb->SetBestFittingSize(s);
-            #endif
         }
         else
             tb->SetInitialSize();
