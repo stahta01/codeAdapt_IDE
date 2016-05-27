@@ -90,7 +90,6 @@
     #include <wx/txtstrm.h>
     #include <wx/utils.h>
     #include <wx/wfstream.h>
-    #include <wx/wxscintilla.h>
     #include <wx/xrc/xmlres.h>
 
     // basic headers
@@ -114,7 +113,6 @@
     #include "compilerfactory.h"
     #include "compiler.h"
     #include "workspaceloader.h"
-    #include "editorcolourset.h"
     #include "pipedprocess.h"
 
     // managers
