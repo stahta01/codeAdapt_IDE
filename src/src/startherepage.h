@@ -1,9 +1,8 @@
 #ifndef STARTHEREPAGE_H
 #define STARTHEREPAGE_H
 
-#ifndef CB_PRECOMP
-    #include <editorbase.h>
-#endif
+
+#include <editorbase.h>
 
 extern const wxString g_StartHereTitle;
 
