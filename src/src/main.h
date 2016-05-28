@@ -15,7 +15,7 @@
 #include "scripting/bindings/sc_base_types.h"
 
 // wxAUI
-#include "aui_compat.h"
+#include <wx/aui/aui.h>
 
 WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, PluginIDsMap);
 WX_DECLARE_HASH_MAP(cbPlugin*, wxToolBar*, wxPointerHash, wxPointerEqual, PluginToolbarsMap);
