@@ -4,7 +4,7 @@
 #include <wx/dialog.h>
 #include <pluginmanager.h>
 
-#include "aui_compat.h"
+#include <wx/aui/aui.h>
 
 class wxListbookEvent;
 class wxCheckListBox;
