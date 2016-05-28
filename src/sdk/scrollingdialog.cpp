@@ -9,7 +9,7 @@
 // Licence:
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+
 #include "wx/module.h"
 #include "wx/display.h"
 #include "wx/bookctrl.h"
