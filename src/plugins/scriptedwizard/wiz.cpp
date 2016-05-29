@@ -532,12 +532,12 @@ CompileTargetBase* Wiz::RunProjectWizard(wxString* pFilename)
         *pFilename = theproject->GetFilename();
 
     // finally, make sure everything looks ok
-    Manager::Get()->GetProjectManager()->GetUI().RebuildTree();
-    Manager::Get()->GetProjectManager()->GetUI().GetTree()->Expand(theproject->GetProjectNode());
+    Manager::Get()->GetProjectManager()->RebuildTree();
+    Manager::Get()->GetProjectManager()->GetTree()->Expand(theproject->GetProjectNode());
     return theproject;
 }
 
-CompileTargetBase* Wiz::RunTargetWizard(cb_unused wxString* pFilename)
+CompileTargetBase* Wiz::RunTargetWizard(CA_UNUSED wxString* pFilename)
 {
     cbProject* theproject = Manager::Get()->GetProjectManager()->GetActiveProject(); // can't fail; if no project, the wizard didn't even run
 
@@ -689,7 +689,7 @@ CompileTargetBase* Wiz::RunFilesWizard(wxString* pFilename)
     return nullptr;
 }
 
-CompileTargetBase* Wiz::RunCustomWizard(cb_unused wxString* pFilename)
+CompileTargetBase* Wiz::RunCustomWizard(CA_UNUSED wxString* pFilename)
 {
     try
     {
@@ -771,7 +771,7 @@ wxString Wiz::GenerateFile(const wxString& basePath, const wxString& filename, c
     wxFileName::Mkdir(fname.GetPath(),0777,wxPATH_MKDIR_FULL);
     wxFile f(fname.GetFullPath(), wxFile::write);
 
-    if ( cbWrite(f, contents + GetEOLStr(), wxFONTENCODING_UTF8) )
+    if ( cbWrite(f, contents + wxT_2("\n"), wxFONTENCODING_UTF8) )
         return fname.GetFullPath(); // success
 
     return wxEmptyString; // failed
@@ -1520,7 +1520,7 @@ void Wiz::SetFilePathSelectionFilter(const wxString& filter)
         m_pWizFilePathPanel->SetFilePathSelectionFilter(filter);
 }
 
-void Wiz::SetCompilerDefault(cb_unused const wxString& defCompilerID)
+void Wiz::SetCompilerDefault(CA_UNUSED const wxString& defCompilerID)
 {
     // default compiler settings (returned if no compiler page is added in the wizard)
     m_DefCompilerID = CompilerFactory::GetDefaultCompilerID();
