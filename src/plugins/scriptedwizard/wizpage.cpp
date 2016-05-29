@@ -364,7 +364,7 @@ wxString WizProjectPathPanel::GetTitle() const
 }
 
 //------------------------------------------------------------------------------
-void WizProjectPathPanel::OnButton(cb_unused wxCommandEvent& event)
+void WizProjectPathPanel::OnButton(CA_UNUSED wxCommandEvent& event)
 {
     wxString dir = m_pProjectPathPanel->GetPath();
     dir = ChooseDirectory(0, _("Please select the folder to create your project in"), dir, wxEmptyString, false, true);
@@ -456,7 +456,7 @@ WizGenericSelectPathPanel::~WizGenericSelectPathPanel()
 }
 
 //------------------------------------------------------------------------------
-void WizGenericSelectPathPanel::OnButton(cb_unused wxCommandEvent& event)
+void WizGenericSelectPathPanel::OnButton(CA_UNUSED wxCommandEvent& event)
 {
     wxString dir = Manager::Get()->GetMacrosManager()->ReplaceMacros(m_pGenericSelectPath->txtFolder->GetValue());
     dir = ChooseDirectory(this, _("Please select location"), dir, wxEmptyString, false, true);

@@ -86,7 +86,7 @@ BuildTargetPanel::~BuildTargetPanel()
 }
 
 
-void BuildTargetPanel::OntxtNameText(cb_unused wxCommandEvent& event)
+void BuildTargetPanel::OntxtNameText(CA_UNUSED wxCommandEvent& event)
 {
     // update output dirs based on target name
     txtOut->SetValue(_T("bin") + wxString(wxFILE_SEP_PATH) + txtName->GetValue());
