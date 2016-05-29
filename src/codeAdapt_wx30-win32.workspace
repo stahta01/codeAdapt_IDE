@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="codeAdapt wx3.0.x win32">
+		<Project filename="codeAdapt_wx30-win32.cbp" />
+		<Project filename="tools/ca_share_config/ca_share_config_wx30-win32.cbp" />
+		<Project filename="plugins/loghacker/loghacker_wx30-win32.cbp" />
+		<Project filename="plugins/modpoller/ModPoller_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/AutoVersioning/AutoVersioning_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/codestat/codestat_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/copystrings/copystrings_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/devpak_plugin/DevPakPlugin_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/envvars/envvars_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/byogames/byogames_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/help_plugin/help-plugin_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/profiler/profiler_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/regex_testbed/RegExTestbed_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/symtab/symtab_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/ToolsPlus/ToolsPlus_wx30-win32.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

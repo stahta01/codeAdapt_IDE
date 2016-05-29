@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="codeAdapt wx2.8.x win32">
+		<Project filename="codeAdapt_wx28-win32.cbp" />
+		<Project filename="tools/ca_share_config/ca_share_config_wx28-win32.cbp" />
+		<Project filename="plugins/loghacker/loghacker_wx28-win32.cbp" />
+		<Project filename="plugins/modpoller/ModPoller_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/AutoVersioning/AutoVersioning_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/codestat/codestat_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/codesnippets/codesnippets_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/copystrings/copystrings_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/devpak_plugin/DevPakPlugin_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/envvars/envvars_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/byogames/byogames_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/headerfixup/headerfixup_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/help_plugin/help-plugin_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/lib_finder/lib_finder_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/profiler/profiler_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/regex_testbed/RegExTestbed_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/source_exporter/Exporter_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/symtab/symtab_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/ToolsPlus/ToolsPlus_wx28-win32.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
