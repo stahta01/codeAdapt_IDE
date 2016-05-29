@@ -101,7 +101,7 @@ void cbPlugin::Release(bool appShutDown)
 
 void cbPlugin::NotImplemented(const wxString& log) const
 {
-    Manager::Get()->GetLogManager()->DebugLog(log + _T(" : not implemented"));
+    Manager::Get()->GetLogManager()->DebugLog(log + wxT_2(" : not implemented"));
 }
 
 /////

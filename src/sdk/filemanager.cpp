@@ -139,7 +139,7 @@ LoaderBase* FileManager::Load(const wxString& file /*, bool reuseEditors */ )
 #endif
 
 #if 0
-    if(file.StartsWith(_T("http://")))
+    if(file.StartsWith(wxT_2("http://")))
     {
         URLLoader *ul = new URLLoader(file);
         urlLoaderThread.Queue(ul);
@@ -149,7 +149,7 @@ LoaderBase* FileManager::Load(const wxString& file /*, bool reuseEditors */ )
 
     FileLoader *fl = new FileLoader(file);
 
-    if(file.length() > 2 && file[0] == _T('\\') && file[1] == _T('\\'))
+    if(file.length() > 2 && file[0] == wxT_2('\\') && file[1] == wxT_2('\\'))
     {
         // UNC files behave like "normal" files, but since we know they are served over the network,
         // we can run them independently from local filesystem files for higher concurrency
@@ -232,7 +232,7 @@ inline bool WriteWxStringToFile(wxFile& f, const wxString& data, wxFontEncoding 
 
         if(!buf || !(size = strlen(buf)))
             {
-                cbMessageBox(_T(    "The file could not be saved because it contains characters "
+                cbMessageBox(wxT_2(    "The file could not be saved because it contains characters "
                                     "that can neither be represented in your current code page, "
                                     "nor be converted to UTF-8.\n"
                                     "The latter should actually not be possible.\n\n"
@@ -270,7 +270,7 @@ bool FileManager::Save(const wxString& name, const char* data, size_t len)
             return false;
     }
 
-    wxString tempName(name + _T(".cbTemp"));
+    wxString tempName(name + wxT_2(".cbTemp"));
     do
     {
         wxFile f(tempName, wxFile::write);
@@ -305,7 +305,7 @@ bool FileManager::Save(const wxString& name, const wxString& data, wxFontEncodin
             return false;
     }
 
-    wxString tempName(name + _T(".cbTemp"));
+    wxString tempName(name + wxT_2(".cbTemp"));
     do
     {
         wxFile f(tempName, wxFile::write);
@@ -325,7 +325,7 @@ bool FileManager::Save(const wxString& name, const wxString& data, wxFontEncodin
 
 bool FileManager::ReplaceFile(const wxString& old_file, const wxString& new_file)
 {
-    wxString backup_file(old_file + _T(".backup"));
+    wxString backup_file(old_file + wxT_2(".backup"));
 
     // rename the old file into a backup file
     if(wxRenameFile(old_file, backup_file))

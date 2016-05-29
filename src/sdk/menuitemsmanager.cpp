@@ -21,7 +21,7 @@
 
 namespace
 {
-    wxRegEx reInsert(_T("([0-9]+):.+"));
+    wxRegEx reInsert(wxT_2("([0-9]+):.+"));
 };
 
 MenuItemsManager::MenuItemsManager(bool autoClearOnDestroy)
@@ -113,14 +113,14 @@ wxMenuItem* MenuItemsManager::CreateFromString(const wxString& menuPath, int id)
     while (true)
     {
         // ignore consecutive slashes
-        while (pos < menuPath.Length() && menuPath.GetChar(pos) == _T('/'))
+        while (pos < menuPath.Length() && menuPath.GetChar(pos) == wxT_2('/'))
         {
             ++pos;
         }
 
         // find next slash
         size_t nextPos = pos;
-        while (nextPos < menuPath.Length() && menuPath.GetChar(++nextPos) != _T('/'))
+        while (nextPos < menuPath.Length() && menuPath.GetChar(++nextPos) != wxT_2('/'))
             ;
 
         wxString current = menuPath.Mid(pos, nextPos - pos);
@@ -158,7 +158,7 @@ wxMenuItem* MenuItemsManager::CreateFromString(const wxString& menuPath, int id)
         }
         else
         {
-            bool needsSep = current.StartsWith(_T("-"));
+            bool needsSep = current.StartsWith(wxT_2("-"));
             if (needsSep)
                 current.Remove(0, 1); // remove dash (-)
 

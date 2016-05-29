@@ -117,7 +117,7 @@ public:
          * These functions allow to obtain a list of names for all generic Loggers that are presently available
          * and to create a new Logger by name without knowing the type at compile time.
 		 *
-         *   logptr = LogManager::Get()->New(_T("stdout"));     // does exactly the same as
+         *   logptr = LogManager::Get()->New(wxT_2("stdout"));     // does exactly the same as
 		 *   logptr = new StdoutLogger();
 		 *
          * You normally do not need to worry about creating Loggers. Only ever consider using these functions if you

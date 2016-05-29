@@ -85,7 +85,7 @@ void ProjectFile::AddBuildTarget(const wxString& targetName)
         if (target && !target->m_Files.Find(this))
             target->m_Files.Append(this);
     }
-    
+
     // also do this for auto-generated files
     for (size_t i = 0; i < generatedFiles.size(); ++i)
 		generatedFiles[i]->AddBuildTarget(targetName);
@@ -188,7 +188,7 @@ void ProjectFile::SetObjName(const wxString& name)
             if (compiler)
             {
                 if (extendedObjectNames)
-                    m_ObjName += _T('.') + compiler->GetSwitches().objectExtension;
+                    m_ObjName += wxT_2('.') + compiler->GetSwitches().objectExtension;
                 else
                 {
                     fname.SetExt(compiler->GetSwitches().objectExtension);
@@ -199,17 +199,17 @@ void ProjectFile::SetObjName(const wxString& name)
         else
         {
             if (extendedObjectNames)
-                m_ObjName += _T(".o"); // fallback?
+                m_ObjName += wxT_2(".o"); // fallback?
             else
             {
-                fname.SetExt(_T(".o"));
+                fname.SetExt(wxT_2(".o"));
                 m_ObjName = fname.GetFullPath();
             }
         }
     }
 //#ifdef __WXMSW__
 //    // special case for windows and files on a different drive
-//    if (name.Length() > 1 && name.GetChar(1) == _T(':'))
+//    if (name.Length() > 1 && name.GetChar(1) == wxT_2(':'))
 //    {
 //        m_ObjName.Remove(1, 1); // NOTE (mandrav): why remove the colon???
 //    }
@@ -324,8 +324,8 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
 
     wxFileName prjbase(target->GetParentProject()->GetBasePath());
 
-    wxString objOut = target ? target->GetObjectOutput() : _T(".");
-    wxString depsOut = target ? target->GetDepsOutput() : _T(".");
+    wxString objOut = target ? target->GetObjectOutput() : wxT_2(".");
+    wxString depsOut = target ? target->GetDepsOutput() : wxT_2(".");
 
     // we must replace any macros here early because if the macros expand
     // to absolute paths (like global vars usually do), we 're gonna create
@@ -352,19 +352,19 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
                 // if PCH is for a file called all.h, we create
                 // all.h.gch/<target>_all.h.gch
                 // (that's right: a directory)
-                wxString new_gch = target->GetTitle() + _T('_') + pf->GetObjName();
+                wxString new_gch = target->GetTitle() + wxT_2('_') + pf->GetObjName();
                 // make sure we 're not generating subdirs
                 size_t len = new_gch.Length();
                 for (size_t i = 0; i < len; ++i)
                 {
                     wxChar c = new_gch[i];
-                    if (c == _T('/') || c == _T('\\') || c == _T('.'))
-                        new_gch[i] = _T('_');
+                    if (c == wxT_2('/') || c == wxT_2('\\') || c == wxT_2('.'))
+                        new_gch[i] = wxT_2('_');
                 }
 
                 wxFileName fn(source_file_native);
                 object_file_native = fn.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) +
-                                    fn.GetName() + _T('.') + compiler->GetSwitches().PCHExtension +
+                                    fn.GetName() + wxT_2('.') + compiler->GetSwitches().PCHExtension +
                                     wxFILE_SEP_PATH +
                                     new_gch;
                 break;
@@ -410,7 +410,7 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
                 && (!fileVol.IsEmpty() && !fileVol.IsSameAs(prjbase.GetVolume())))
             {
                 objOut += fileVol;
-                obj_file_full_path = obj_file_full_path.AfterFirst(_T('\\'));
+                obj_file_full_path = obj_file_full_path.AfterFirst(wxT_2('\\'));
                 diffVolume = true;
             }
 
@@ -429,7 +429,7 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
                     fname.SetExt(FileFilters::RESOURCEBIN_EXT);
                     wxString obj_file_path = fname.GetFullPath();
                     if (diffVolume)
-                        obj_file_path = obj_file_path.AfterFirst(_T('\\'));
+                        obj_file_path = obj_file_path.AfterFirst(wxT_2('\\'));
                     object_file_native = objOut + sep + obj_file_path;
                     object_file_flat_native = objOut + sep + fname.GetFullName();
                 }
@@ -443,8 +443,8 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
 
                     if (compiler)
                     {
-                        object_file_native += _T('.') + compiler->GetSwitches().objectExtension;
-                        object_file_flat_native += _T('.') + compiler->GetSwitches().objectExtension;
+                        object_file_native += wxT_2('.') + compiler->GetSwitches().objectExtension;
+                        object_file_flat_native += wxT_2('.') + compiler->GetSwitches().objectExtension;
                     }
                 }
                 else
@@ -453,7 +453,7 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
                         fname.SetExt(compiler->GetSwitches().objectExtension);
                     wxString obj_file_path = fname.GetFullPath();
                     if (diffVolume)
-                        obj_file_path = obj_file_path.AfterFirst(_T('\\'));
+                        obj_file_path = obj_file_path.AfterFirst(wxT_2('\\'));
                     object_file_native = objOut + sep + obj_file_path;
                     object_file_flat_native = objOut + sep + fname.GetFullName();
                 }
@@ -467,7 +467,7 @@ void pfDetails::Update(ProjectBuildTarget* target, ProjectFile* pf)
     object_dir_native = o_file.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
     object_file_absolute_native = o_file.GetFullPath();
     object_file_flat_absolute_native = o_file_flat.GetFullPath();
-    tmp.SetExt(_T("depend"));
+    tmp.SetExt(wxT_2("depend"));
     dep_file_native = depsOut + sep + tmp.GetFullPath();
     wxFileName d_file(dep_file_native);
     d_file.MakeAbsolute(prjbase.GetFullPath());

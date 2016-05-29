@@ -111,7 +111,7 @@ ProjectOptionsDlg::ProjectOptionsDlg(wxWindow* parent, cbProject* project)
     m_Current_Sel(-1),
     m_pCompiler(0L)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgProjectOptions"));
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgProjectOptions"));
 
     wxCheckListBox* list = XRCCTRL(*this, "lstFiles", wxCheckListBox);
     int count = m_Project->GetFilesCount();
@@ -298,11 +298,11 @@ void ProjectOptionsDlg::DoTargetChange(bool saveOld)
                 break;
 
             default: // for commands-only targets
-                txt->SetValue(_T(""));
+                txt->SetValue(wxT_2(""));
                 txt->Enable(false);
-                txtW->SetValue(_T(""));
+                txtW->SetValue(wxT_2(""));
                 txtW->Enable(false);
-                txtO->SetValue(_T(""));
+                txtO->SetValue(wxT_2(""));
                 txtO->Enable(false);
                 browse->Enable(false);
                 browseW->Enable(false);
@@ -476,9 +476,9 @@ void ProjectOptionsDlg::OnProjectTypeChanged(wxCommandEvent& event)
             txt->SetValue(fname.GetFullPath());
             break;
         case ttCommandsOnly:
-            txt->SetValue(_T(""));
-            txtW->SetValue(_T(""));
-            txtO->SetValue(_T(""));
+            txt->SetValue(wxT_2(""));
+            txtW->SetValue(wxT_2(""));
+            txtO->SetValue(wxT_2(""));
             txt->Enable(false);
             txtW->Enable(false);
             txtO->Enable(false);
@@ -783,7 +783,7 @@ void ProjectOptionsDlg::OnScriptsOverviewSelChanged(wxTreeEvent& event)
 
 bool ProjectOptionsDlg::IsScriptValid(ProjectBuildTarget* target, const wxString& script)
 {
-    static const wxString clearout_buildscripts = _T("SetBuildOptions <- null;");
+    static const wxString clearout_buildscripts = wxT_2("SetBuildOptions <- null;");
     try
     {
         wxString script_nomacro = script;
@@ -825,7 +825,7 @@ bool ProjectOptionsDlg::ValidateTargetName(const wxString& name)
         return false;
     }
 
-    const wxString forbidden = _T(";,!@#$%^&*\"':`~=?\\><");
+    const wxString forbidden = wxT_2(";,!@#$%^&*\"':`~=?\\><");
     if (name.find_first_of(forbidden, 0) != wxString::npos)
     {
         cbMessageBox(_("The name contains at least one invalid character:\n\n") + forbidden,
@@ -846,8 +846,8 @@ bool ProjectOptionsDlg::DoCheckScripts(CompileTargetBase* base)
         if (!IsScriptValid(bt, scripts[i]))
         {
             wxString msg;
-            msg << _("Invalid build script: ") + scripts[i] << _T('\n');
-            msg << _("First seen in: ") + base->GetTitle() << _T('\n');
+            msg << _("Invalid build script: ") + scripts[i] << wxT_2('\n');
+            msg << _("First seen in: ") + base->GetTitle() << wxT_2('\n');
             cbMessageBox(msg, _("Error"), wxICON_ERROR);
             return false;
         }

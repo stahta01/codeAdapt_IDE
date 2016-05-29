@@ -41,14 +41,14 @@ class cbTextInputStream : public wxTextInputStream
         bool m_allowMBconversion;
     public:
 #if wxUSE_UNICODE
-        cbTextInputStream(wxInputStream& s, const wxString &sep=wxT(" \t"), wxMBConv& conv = wxConvLocal )
+        cbTextInputStream(wxInputStream& s, const wxString &sep=wxT_2(" \t"), wxMBConv& conv = wxConvLocal )
             : wxTextInputStream(s, sep, conv),
             m_allowMBconversion(true)
         {
             memset((void*)m_lastBytes, 0, 10);
         }
 #else
-        cbTextInputStream(wxInputStream& s, const wxString &sep=wxT(" \t") )
+        cbTextInputStream(wxInputStream& s, const wxString &sep=wxT_2(" \t") )
             : wxTextInputStream(s, sep)
         {
             memset((void*)m_lastBytes, 0, 10);
@@ -164,7 +164,7 @@ void PipedProcess::SendString(const wxString& text)
 	if (pOut)
 	{
 		wxTextOutputStream sin(*pOut);
-		wxString msg = text + _T('\n');
+		wxString msg = text + wxT_2('\n');
 		sin.WriteString(msg);
 	}
 }

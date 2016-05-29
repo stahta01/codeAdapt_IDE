@@ -112,9 +112,9 @@ void EditorLexerLoader::DoStyles(HighlightLanguage language, TiXmlElement* node)
             bool underlined = style->Attribute("underlined") ? atol(style->Attribute("underlined")) != 0 : false;
 
             // break-up arrays
-            wxArrayString indices = GetArrayFromString(index, _T(","));
-            wxArrayString fgarray = GetArrayFromString(fg, _T(","));
-            wxArrayString bgarray = GetArrayFromString(bg, _T(","));
+            wxArrayString indices = GetArrayFromString(index, wxT_2(","));
+            wxArrayString fgarray = GetArrayFromString(fg, wxT_2(","));
+            wxArrayString bgarray = GetArrayFromString(bg, wxT_2(","));
 
             wxColour fgcolour = wxNullColour;
             if (fgarray.GetCount() == 3)
@@ -141,7 +141,7 @@ void EditorLexerLoader::DoStyles(HighlightLanguage language, TiXmlElement* node)
                     continue;
                 long value = 0;
                 indices[i].ToLong(&value);
-//                LOGSTREAM << _("Adding style: ") << name << _T("(") << value << _T(")\n");
+//                LOGSTREAM << _("Adding style: ") << name << wxT_2("(") << value << wxT_2(")\n");
                 m_pTarget->AddOption(language, name, value,
                                     fgcolour,
                                     bgcolour,
@@ -160,10 +160,10 @@ void EditorLexerLoader::DoKeywords(HighlightLanguage language, TiXmlElement* nod
     TiXmlElement* keywords = node->FirstChildElement("Keywords");
     if (!keywords)
         return;
-    DoSingleKeywordNode(language, keywords, _T("Language"));
-    DoSingleKeywordNode(language, keywords, _T("Documentation"));
-    DoSingleKeywordNode(language, keywords, _T("User"));
-    DoSingleKeywordNode(language, keywords, _T("Set"));
+    DoSingleKeywordNode(language, keywords, wxT_2("Language"));
+    DoSingleKeywordNode(language, keywords, wxT_2("Documentation"));
+    DoSingleKeywordNode(language, keywords, wxT_2("User"));
+    DoSingleKeywordNode(language, keywords, wxT_2("Set"));
 }
 
 void EditorLexerLoader::DoSingleKeywordNode(HighlightLanguage language, TiXmlElement* node, const wxString& nodename)

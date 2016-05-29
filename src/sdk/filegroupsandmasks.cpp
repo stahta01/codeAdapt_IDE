@@ -67,50 +67,50 @@ void FilesGroupsAndMasks::SetDefault(bool do_clear)
 
     // only add default groups if none were loaded...
     unsigned int group = AddGroup(_("Sources"));
-    SetFileMasks(group, _T("*.c;*.cpp;*.cc;*.cxx;*.C;*.CPP;*.CC;*.CXX") );
+    SetFileMasks(group, wxT_2("*.c;*.cpp;*.cc;*.cxx;*.C;*.CPP;*.CC;*.CXX") );
     group = AddGroup(_("D Sources"));
-    SetFileMasks(group, _T("*.d;*.D") );
+    SetFileMasks(group, wxT_2("*.d;*.D") );
     group = AddGroup(_("Fortran Sources"));
-    SetFileMasks(group, _T("*.f;*.f77;*.f90;*.f95;*.F;*.F77;*.F90;*.F95") );
+    SetFileMasks(group, wxT_2("*.f;*.f77;*.f90;*.f95;*.F;*.F77;*.F90;*.F95") );
     group = AddGroup(_("Java Sources"));
-    SetFileMasks(group, _T("*.java;*.JAVA") );
+    SetFileMasks(group, wxT_2("*.java;*.JAVA") );
     group = AddGroup(_("Headers"));
-    SetFileMasks(group, _T("*.h;*.hpp;*.hh;*.hxx;*.H;*.HPP;*.HH;*.HXX") );
+    SetFileMasks(group, wxT_2("*.h;*.hpp;*.hh;*.hxx;*.H;*.HPP;*.HH;*.HXX") );
     group = AddGroup(_("ASM Sources"));
-    SetFileMasks(group, _T("*.asm;*.ASM;*.s;*.S;*.ss;*.SS;*.s62;*.S62") );
+    SetFileMasks(group, wxT_2("*.asm;*.ASM;*.s;*.S;*.ss;*.SS;*.s62;*.S62") );
     group = AddGroup(_("Resources"));
-    SetFileMasks(group, _T("*.res;*.xrc;*.rc;*.RES;*.XRC;*.RC") );
+    SetFileMasks(group, wxT_2("*.res;*.xrc;*.rc;*.RES;*.XRC;*.RC") );
     group = AddGroup(_("Scripts"));
-    SetFileMasks(group, _T("*.script;*.SCRIPT") );
+    SetFileMasks(group, wxT_2("*.script;*.SCRIPT") );
 }
 
 void FilesGroupsAndMasks::Load()
 {
     Clear();
-    ConfigManager* conf = Manager::Get()->GetConfigManager(_T("project_manager"));
-    wxArrayString list = conf->EnumerateSubPaths(_T("/file_groups"));
+    ConfigManager* conf = Manager::Get()->GetConfigManager(wxT_2("project_manager"));
+    wxArrayString list = conf->EnumerateSubPaths(wxT_2("/file_groups"));
     for (unsigned int i = 0; i < list.GetCount(); ++i)
     {
         // new way (reading groups)
-        wxString key = _T("/file_groups/") + list[i];
-        unsigned int group = AddGroup(conf->Read(key + _T("/name")));
-        SetFileMasks(group, conf->Read(key + _T("/mask")));
+        wxString key = wxT_2("/file_groups/") + list[i];
+        unsigned int group = AddGroup(conf->Read(key + wxT_2("/name")));
+        SetFileMasks(group, conf->Read(key + wxT_2("/mask")));
     }
 }
 
 void FilesGroupsAndMasks::Save()
 {
-    ConfigManager* conf = Manager::Get()->GetConfigManager(_T("project_manager"));
-    conf->DeleteSubPath(_T("/file_groups"));
+    ConfigManager* conf = Manager::Get()->GetConfigManager(wxT_2("project_manager"));
+    conf->DeleteSubPath(wxT_2("/file_groups"));
     for (unsigned int i = 0; i < m_Groups.GetCount(); ++i)
     {
         FileGroups* fg = m_Groups[i];
         wxString key;
-        key << _T("/file_groups/group") << wxString::Format(_T("%d"), i) << _T("/") << _T("name");
+        key << wxT_2("/file_groups/group") << wxString::Format(wxT_2("%d"), i) << wxT_2("/") << wxT_2("name");
         conf->Write(key, fg->groupName);
         key.Clear();
-        key << _T("/file_groups/group") << wxString::Format(_T("%d"), i) << _T("/") << _T("mask");
-        conf->Write(key, GetStringFromArray(fg->fileMasks, _T(";")));
+        key << wxT_2("/file_groups/group") << wxString::Format(wxT_2("%d"), i) << wxT_2("/") << wxT_2("mask");
+        conf->Write(key, GetStringFromArray(fg->fileMasks, wxT_2(";")));
     }
 }
 
@@ -158,7 +158,7 @@ void FilesGroupsAndMasks::SetFileMasks(unsigned int group, const wxString& masks
         return;
 
     FileGroups* fg = m_Groups[group];
-    fg->fileMasks = GetArrayFromString(masks, _T(";"));
+    fg->fileMasks = GetArrayFromString(masks, wxT_2(";"));
 }
 
 unsigned int FilesGroupsAndMasks::GetGroupsCount() const

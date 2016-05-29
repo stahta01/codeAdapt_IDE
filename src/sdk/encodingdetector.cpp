@@ -210,8 +210,8 @@ bool EncodingDetector::DetectEncoding(const wxByte* buffer, size_t size, bool Co
         else if (!DetectUTF16((wxByte*)buffer, size) && !DetectUTF32((wxByte*)buffer, size))
         {
             // Use user-specified one
-            ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("editor"));
-            wxString encname = cfg->Read(_T("/default_encoding"));
+            ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("editor"));
+            wxString encname = cfg->Read(wxT_2("/default_encoding"));
             wxFontMapper fontmap;
             m_Encoding = fontmap.CharsetToEncoding(encname);
         }

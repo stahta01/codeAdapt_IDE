@@ -65,12 +65,12 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
         return false;
 
     wxStopWatch sw;
-    pMsg->DebugLog(_T("Loading project file..."));
+    pMsg->DebugLog(wxT_2("Loading project file..."));
     TiXmlDocument doc;
     if (!TinyXML::LoadDocument(filename, &doc))
         return false;
 
-    pMsg->DebugLog(_T("Parsing project file..."));
+    pMsg->DebugLog(wxT_2("Parsing project file..."));
     TiXmlElement* root;
     TiXmlElement* proj;
 
@@ -81,14 +81,14 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
         root = doc.FirstChildElement("Code::Blocks_project_file");
         if (!root)
         {
-            pMsg->DebugLog(_T("Not a valid Code::Blocks project file..."));
+            pMsg->DebugLog(wxT_2("Not a valid Code::Blocks project file..."));
             return false;
         }
     }
     proj = root->FirstChildElement("Project");
     if (!proj)
     {
-        pMsg->DebugLog(_T("No 'Project' element in file..."));
+        pMsg->DebugLog(wxT_2("No 'Project' element in file..."));
         return false;
     }
 
@@ -108,12 +108,12 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
             (major == 1 && minor < 2))
         {
             // pre-1.2
-            pMsg->DebugLog(F(_T("Project version is %d.%d. Defaults have changed since then..."), major, minor));
+            pMsg->DebugLog(F(wxT("Project version is %d.%d. Defaults have changed since then..."), major, minor));
             m_IsPre_1_2 = true;
         }
         else if (major >= PROJECT_FILE_VERSION_MAJOR && minor > PROJECT_FILE_VERSION_MINOR)
         {
-            pMsg->DebugLog(F(_T("Project version is > %d.%d. Trying to load..."), PROJECT_FILE_VERSION_MAJOR, PROJECT_FILE_VERSION_MINOR));
+            pMsg->DebugLog(F(wxT("Project version is > %d.%d. Trying to load..."), PROJECT_FILE_VERSION_MAJOR, PROJECT_FILE_VERSION_MINOR));
             AnnoyingDialog dlg(_("Project file format is newer/unknown"),
                                 _("This project file was saved with a newer version of Code::Blocks.\n"
                                 "Will try to load, but you should make sure all the settings were loaded correctly..."),
@@ -208,7 +208,7 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
 
     // if targets still use the "build with all" flag,
     // it's time for conversion
-    if (!m_pProject->HasVirtualBuildTarget(_T("All")))
+    if (!m_pProject->HasVirtualBuildTarget(wxT_2("All")))
     {
         wxArrayString all;
         for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
@@ -219,7 +219,7 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
         }
         if (all.GetCount())
         {
-            m_pProject->DefineVirtualBuildTarget(_T("All"), all);
+            m_pProject->DefineVirtualBuildTarget(wxT_2("All"), all);
             m_Upgraded = true;
         }
     }
@@ -261,7 +261,7 @@ bool ProjectLoader::Open(const wxString& filename, TiXmlElement** ppExtensions)
 //        wxString minor = version->Attribute("minor");
     }
 
-    pMsg->DebugLog(wxString(_T("Done loading project in ")) << wxString::Format(_T("%d"), (int) sw.Time()) << _T("ms"));
+    pMsg->DebugLog(wxString(wxT_2("Done loading project in ")) << wxString::Format(wxT_2("%d"), (int) sw.Time()) << wxT_2("ms"));
     return true;
 }
 
@@ -308,7 +308,7 @@ void ProjectLoader::ConvertLibraries(CompileTargetBase* object)
             opt.Remove(0, 2);
             wxString ext = compiler->GetSwitches().libExtension;
             if (!ext.IsEmpty())
-                ext = _T(".") + ext;
+                ext = wxT_2(".") + ext;
             linkLibs.Add(compiler->GetSwitches().libPrefix + opt + ext);
             linkerOpts.RemoveAt(i, 1);
         }
@@ -364,7 +364,7 @@ void ProjectLoader::DoVirtualTargets(TiXmlElement* parentNode)
         {
             wxString alias = cbC2U(node->Attribute("alias"));
             wxString targets = cbC2U(node->Attribute("targets"));
-            wxArrayString arr = GetArrayFromString(targets, _T(";"), true);
+            wxArrayString arr = GetArrayFromString(targets, wxT_2(";"), true);
 
             m_pProject->DefineVirtualBuildTarget(alias, arr);
         }
@@ -383,7 +383,7 @@ void ProjectLoader::DoProjectOptions(TiXmlElement* parentNode)
     wxString makefile;
     bool makefile_custom = false;
     wxString defaultTarget;
-    wxString compilerId = _T("gcc");
+    wxString compilerId = wxT_2("gcc");
     bool extendedObjectNames = false;
     wxArrayString vfolders;
     int platformsFinal = spAll;
@@ -398,7 +398,7 @@ void ProjectLoader::DoProjectOptions(TiXmlElement* parentNode)
         {
             title = cbC2U(node->Attribute("title"));
             if (title.Trim().IsEmpty())
-                title = _T("untitled");
+                title = wxT_2("untitled");
         }
 
         else if (node->Attribute("platforms"))
@@ -420,7 +420,7 @@ void ProjectLoader::DoProjectOptions(TiXmlElement* parentNode)
             defaultTarget = cbC2U(node->Attribute("default_target"));
 
         else if (node->Attribute("compiler"))
-            compilerId = GetValidCompilerID(cbC2U(node->Attribute("compiler")), _T("the project"));
+            compilerId = GetValidCompilerID(cbC2U(node->Attribute("compiler")), wxT_2("the project"));
 
         else if (node->Attribute("extended_obj_names"))
             extendedObjectNames = strncmp(node->Attribute("extended_obj_names"), "1", 1) == 0;
@@ -429,7 +429,7 @@ void ProjectLoader::DoProjectOptions(TiXmlElement* parentNode)
             pch_mode = (PCHMode)atoi(node->Attribute("pch_mode"));
 
         else if (node->Attribute("virtualFolders"))
-            vfolders = GetArrayFromString(cbC2U(node->Attribute("virtualFolders")), _T(";"));
+            vfolders = GetArrayFromString(cbC2U(node->Attribute("virtualFolders")), wxT_2(";"));
 
         else if (node->Attribute("show_notes"))
         {
@@ -494,7 +494,7 @@ void ProjectLoader::DoBuildTarget(TiXmlElement* parentNode)
 
         if (target)
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Loading target ") + title);
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Loading target ") + title);
             DoBuildTargetOptions(node, target);
             DoCompilerOptions(node, target);
             DoResourceCompilerOptions(node, target);
@@ -800,7 +800,7 @@ void ProjectLoader::DoExtraCommands(TiXmlElement* parentNode, ProjectBuildTarget
         while (child)
         {
             wxString mode = cbC2U(child->Attribute("after"));
-            if (mode == _T("always"))
+            if (mode == wxT_2("always"))
                 base->SetAlwaysRunPostBuildSteps(true);
 
             child = child->NextSiblingElement("Mode");
@@ -851,7 +851,7 @@ void ProjectLoader::DoEnvironment(TiXmlElement* parentNode, CompileOptionsBase* 
 
 void ProjectLoader::DoUnits(TiXmlElement* parentNode)
 {
-    Manager::Get()->GetLogManager()->DebugLog(_T("Loading project files..."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Loading project files..."));
     m_pProject->BeginAddFiles();
     int count = 0;
     TiXmlElement* unit = parentNode->FirstChildElement("Unit");
@@ -862,7 +862,7 @@ void ProjectLoader::DoUnits(TiXmlElement* parentNode)
         {
             ProjectFile* file = m_pProject->AddFile(-1, UnixFilename(filename));
             if (!file)
-                Manager::Get()->GetLogManager()->DebugLog(_T("Can't load file ") + filename);
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("Can't load file ") + filename);
             else
             {
                 ++count;
@@ -873,7 +873,7 @@ void ProjectLoader::DoUnits(TiXmlElement* parentNode)
         unit = unit->NextSiblingElement("Unit");
     }
     m_pProject->EndAddFiles();
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("%d files loaded"), count));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("%d files loaded"), count));
 }
 
 void ProjectLoader::DoUnitOptions(TiXmlElement* parentNode, ProjectFile* file)
@@ -922,7 +922,7 @@ void ProjectLoader::DoUnitOptions(TiXmlElement* parentNode, ProjectFile* file)
             wxString tmp = cbC2U(node->Attribute("buildCommand"));
             if (!cmp.IsEmpty() && !tmp.IsEmpty())
             {
-                tmp.Replace(_T("\\n"), _T("\n"));
+                tmp.Replace(wxT_2("\\n"), wxT_2("\n"));
                 file->SetCustomBuildCommand(cmp, tmp);
                 if (node->QueryIntAttribute("use", &tempval) == TIXML_SUCCESS)
                     file->SetUseCustomBuildCommand(cmp, tempval != 0);
@@ -932,7 +932,7 @@ void ProjectLoader::DoUnitOptions(TiXmlElement* parentNode, ProjectFile* file)
         if (node->Attribute("target"))
         {
             wxString targetName = cbC2U(node->Attribute("target"));
-            if (!targetName.IsSameAs(_T("<{~None~}>")))
+            if (!targetName.IsSameAs(wxT_2("<{~None~}>")))
             {
                 file->AddBuildTarget(targetName);
                 foundTarget = true;
@@ -953,7 +953,7 @@ void ProjectLoader::DoUnitOptions(TiXmlElement* parentNode, ProjectFile* file)
         if (!foundLink)
             file->link = true;
         if (!foundCompilerVar)
-            file->compilerVar = _T("CPP");
+            file->compilerVar = wxT_2("CPP");
     }
 
     if (!foundTarget && !noTarget)
@@ -1071,7 +1071,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
         wxString platforms = GetStringFromPlatforms(m_pProject->GetPlatforms());
         AddElement(prjnode, "Option", "platforms", platforms);
     }
-    if (m_pProject->GetMakefile() != _T("Makefile"))
+    if (m_pProject->GetMakefile() != wxT_2("Makefile"))
         AddElement(prjnode, "Option", "makefile", m_pProject->GetMakefile());
     if (m_pProject->IsMakefileCustom())
         AddElement(prjnode, "Option", "makefile_is_custom", 1);
@@ -1081,7 +1081,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
         AddElement(prjnode, "Option", "default_target", m_pProject->GetDefaultExecuteTarget());
     AddElement(prjnode, "Option", "compiler", m_pProject->GetCompilerID());
     if (m_pProject->GetVirtualFolders().GetCount() > 0)
-        AddElement(prjnode, "Option", "virtualFolders", GetStringFromArray(m_pProject->GetVirtualFolders(), _T(";")));
+        AddElement(prjnode, "Option", "virtualFolders", GetStringFromArray(m_pProject->GetVirtualFolders(), wxT_2(";")));
     if (m_pProject->GetExtendedObjectNamesGeneration())
         AddElement(prjnode, "Option", "extended_obj_names", 1);
     if (m_pProject->GetShowNotesOnLoad() || !m_pProject->GetNotes().IsEmpty())
@@ -1150,11 +1150,11 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
             outnode->SetAttribute("prefix_auto", prefixPolicy == tgfpPlatformDefault ? "1" : "0");
             outnode->SetAttribute("extension_auto", extensionPolicy == tgfpPlatformDefault ? "1" : "0");
 
-            if (target->GetWorkingDir() != _T("."))
+            if (target->GetWorkingDir() != wxT_2("."))
                 AddElement(tgtnode, "Option", "working_dir", target->GetWorkingDir());
-            if (target->GetObjectOutput() != _T(".objs"))
+            if (target->GetObjectOutput() != wxT_2(".objs"))
                 AddElement(tgtnode, "Option", "object_output", target->GetObjectOutput());
-            if (target->GetDepsOutput() != _T(".deps"))
+            if (target->GetDepsOutput() != wxT_2(".deps"))
                 AddElement(tgtnode, "Option", "deps_output", target->GetDepsOutput());
         }
         if (!target->GetExternalDeps().IsEmpty())
@@ -1218,7 +1218,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
         else
         {
             if (target->GetAlwaysRunPostBuildSteps())
-                AddElement(node, "Mode", "after", wxString(_T("always")));
+                AddElement(node, "Mode", "after", wxString(wxT_2("always")));
         }
 
         SaveEnvironment(tgtnode, target);
@@ -1241,7 +1241,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
         for (size_t i = 0; i < virtuals.GetCount(); ++i)
         {
             const wxArrayString& group = m_pProject->GetVirtualBuildTargetGroup(virtuals[i]);
-            wxString groupStr = GetStringFromArray(group, _T(";"));
+            wxString groupStr = GetStringFromArray(group, wxT_2(";"));
             if (!groupStr.IsEmpty())
             {
                 TiXmlElement* elem = AddElement(virtnode, "Add", "alias", virtuals[i]);
@@ -1280,7 +1280,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
     else
     {
         if (m_pProject->GetAlwaysRunPostBuildSteps())
-            AddElement(node, "Mode", "after", wxString(_T("always")));
+            AddElement(node, "Mode", "after", wxString(wxT_2("always")));
     }
 
     int count = m_pProject->GetFilesCount();
@@ -1301,14 +1301,14 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
         TiXmlElement* unitnode = AddElement(prjnode, "Unit", "filename", f->relativeFilename);
         if (!f->compilerVar.IsEmpty())
         {
-            wxString ext = f->relativeFilename.AfterLast(_T('.')).Lower();
-            if (f->compilerVar != _T("CC") && (ext.IsSameAs(FileFilters::C_EXT)))
+            wxString ext = f->relativeFilename.AfterLast(wxT_2('.')).Lower();
+            if (f->compilerVar != wxT_2("CC") && (ext.IsSameAs(FileFilters::C_EXT)))
                 AddElement(unitnode, "Option", "compilerVar", f->compilerVar);
 #ifdef __WXMSW__
-            else if (f->compilerVar != _T("WINDRES") && ext.IsSameAs(FileFilters::RESOURCE_EXT))
+            else if (f->compilerVar != wxT_2("WINDRES") && ext.IsSameAs(FileFilters::RESOURCE_EXT))
                 AddElement(unitnode, "Option", "compilerVar", f->compilerVar);
 #endif
-            else if (f->compilerVar != _T("CPP")) // default
+            else if (f->compilerVar != wxT_2("CPP")) // default
                 AddElement(unitnode, "Option", "compilerVar", f->compilerVar);
         }
 
@@ -1337,7 +1337,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
             if (!pfcb.buildCommand.IsEmpty())
             {
                 wxString tmp = pfcb.buildCommand;
-                tmp.Replace(_T("\n"), _T("\\n"));
+                tmp.Replace(wxT_2("\n"), wxT_2("\\n"));
                 TiXmlElement* elem = AddElement(unitnode, "Option", "compiler", it->first);
                 elem->SetAttribute("use", pfcb.useCustomBuildCommand ? "1" : "0");
                 elem->SetAttribute("buildCommand", cbU2C(tmp));
@@ -1354,7 +1354,7 @@ bool ProjectLoader::ExportTargetAsProject(const wxString& filename, const wxStri
          * This will help us detecting a file with no targets.       */
         if ((int)f->buildTargets.GetCount() == 0)
         {
-            AddElement(unitnode, "Option", "target", _T("<{~None~}>"));
+            AddElement(unitnode, "Option", "target", wxT_2("<{~None~}>"));
         }
     }
 
@@ -1393,7 +1393,7 @@ wxString ProjectLoader::GetValidCompilerID(const wxString& proposal, const wxStr
 
     if (!compiler)
     {
-        if(!(Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/ignore_invalid_targets"), false)))
+        if(!(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/environment/ignore_invalid_targets"), false)))
         {
             wxString msg;
             msg.Printf(_("The defined compiler for %s cannot be located (ID: %s).\n"

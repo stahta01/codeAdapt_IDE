@@ -20,7 +20,7 @@ class SquirrelError;
   * Here's an example to load and execute a script:
   *
   * @code
-  * Manager::Get()->GetScriptingManager()->LoadScript(_T("some.script"));
+  * Manager::Get()->GetScriptingManager()->LoadScript(wxT_2("some.script"));
   * @endcode
   *
   * And here's an example to call a script function:
@@ -29,11 +29,11 @@ class SquirrelError;
   * // int return value
   * // C++ equivalent: int retValue = FunctionName("str_arg", 5, 1.0);
   * SqPlus::SquirrelFunction<int> myfunc("FunctionName");
-  * int retValue = myfunc(_T("str_arg"), 5, 1.0);
+  * int retValue = myfunc(wxT_2("str_arg"), 5, 1.0);
   * // void return
   * // C++ equivalent: FunctionName("str_arg", 5, 1.0);
   * SqPlus::SquirrelFunction<void> myfunc("FunctionName");
-  * myfunc(_T("str_arg"), 5, 1.0);
+  * myfunc(wxT_2("str_arg"), 5, 1.0);
   * @endcode
   *
   * The templated type denotes the function's return type. Also note that the
@@ -56,8 +56,8 @@ class DLLIMPORT ScriptingManager : public Mgr<ScriptingManager>, public wxEvtHan
         typedef std::map<wxString, TrustedScriptProps> TrustedScripts;
 
         // needed for SqPlus bindings
-        ScriptingManager(const ScriptingManager& rhs) { cbThrow(_T("Can't call ScriptingManager's copy ctor!!!")); }
-        void operator=(const ScriptingManager& rhs){ cbThrow(_T("Can't assign an ScriptingManager* !!!")); }
+        ScriptingManager(const ScriptingManager& rhs) { cbThrow(wxT_2("Can't call ScriptingManager's copy ctor!!!")); }
+        void operator=(const ScriptingManager& rhs){ cbThrow(wxT_2("Can't assign an ScriptingManager* !!!")); }
 
         /** @brief Loads a script.
           *
@@ -72,7 +72,7 @@ class DLLIMPORT ScriptingManager : public Mgr<ScriptingManager>, public wxEvtHan
           * @param debugName A debug name. This will appear in any errors displayed.
           * @return True if the script compiled, false if not.
           */
-        bool LoadBuffer(const wxString& buffer, const wxString& debugName = _T("CommandLine"));
+        bool LoadBuffer(const wxString& buffer, const wxString& debugName = wxT_2("CommandLine"));
 
         /** @brief Loads a string buffer and captures its output.
           *

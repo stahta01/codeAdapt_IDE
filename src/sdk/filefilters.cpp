@@ -15,26 +15,26 @@ void FileFilters::AddDefaultFileFilters()
 {
     if (s_Filters.size() != 0)
         return;
-    Add(_("Code::Blocks workspace files"),         _T("*.workspace"));
-    Add(_("Code::Blocks project files"),           _T("*.cbp"));
-    Add(_("Bloodshed Dev-C++ project files"),      _T("*.dev"));
-    Add(_("MS Visual C++ 6.0 project files"),      _T("*.dsp"));
-    Add(_("MS Visual Studio 7.0+ project files"),  _T("*.vcproj"));
-    Add(_("MS Visual C++ 6.0 workspace files"),    _T("*.dsw"));
-    Add(_("MS Visual Studio 7.0+ solution files"), _T("*.sln"));
-    Add(_("Apple Xcode 1.x project bundles"),      _T("*.xcode"));
-    Add(_("Apple Xcode 2.x project bundles"),      _T("*.xcodeproj"));
+    Add(_("Code::Blocks workspace files"),         wxT_2("*.workspace"));
+    Add(_("Code::Blocks project files"),           wxT_2("*.cbp"));
+    Add(_("Bloodshed Dev-C++ project files"),      wxT_2("*.dev"));
+    Add(_("MS Visual C++ 6.0 project files"),      wxT_2("*.dsp"));
+    Add(_("MS Visual Studio 7.0+ project files"),  wxT_2("*.vcproj"));
+    Add(_("MS Visual C++ 6.0 workspace files"),    wxT_2("*.dsw"));
+    Add(_("MS Visual Studio 7.0+ solution files"), wxT_2("*.sln"));
+    Add(_("Apple Xcode 1.x project bundles"),      wxT_2("*.xcode"));
+    Add(_("Apple Xcode 2.x project bundles"),      wxT_2("*.xcodeproj"));
 }
 
 bool FileFilters::Add(const wxString& name, const wxString& mask)
 {
     if (name.IsEmpty() || mask.IsEmpty())
         return false; // both must be valid
-    if (mask.Index(_T(',')) != wxString::npos)
+    if (mask.Index(wxT_2(',')) != wxString::npos)
     {
         // replace commas with semicolons
         wxString tmp = mask;
-        while (tmp.Replace(_T(","), _T(";")))
+        while (tmp.Replace(wxT_2(","), wxT_2(";")))
             ;
         s_Filters[name] = tmp;
     }
@@ -53,7 +53,7 @@ wxString FileFilters::GetFilterString(const wxString& ext)
         {
             // filter based on parameter
             bool match = false;
-            wxArrayString array = GetArrayFromString(it->second, _T(";"), true);
+            wxArrayString array = GetArrayFromString(it->second, wxT_2(";"), true);
             for (size_t i = 0; i < array.GetCount(); ++i)
             {
                 if (ext.Matches(array[i]))
@@ -67,13 +67,13 @@ wxString FileFilters::GetFilterString(const wxString& ext)
         }
         ++count;
         if (!ret.IsEmpty())
-            ret << _T('|');
-        ret << it->first << _T('|') << it->second;
+            ret << wxT_2('|');
+        ret << it->first << wxT_2('|') << it->second;
     }
 
     // last filter is always "All"
     if (!ret.IsEmpty())
-        ret << _T('|');
+        ret << wxT_2('|');
     ret << GetFilterAll();
 
     s_LastFilterAllIndex = count;
@@ -99,7 +99,7 @@ bool FileFilters::GetFilterIndexFromName(const wxString& FiltersList, const wxSt
 {
     bool bFound = false;
     // the List will contain 2 entries per type (description, mask)
-    wxArrayString List = GetArrayFromString(FiltersList, _T("|"), true);
+    wxArrayString List = GetArrayFromString(FiltersList, wxT_2("|"), true);
     int LoopEnd = static_cast<int>(List.GetCount());
     for(int idxList = 0; idxList < LoopEnd; idxList+=2)
     {
@@ -116,7 +116,7 @@ bool FileFilters::GetFilterNameFromIndex(const wxString& FiltersList, int Index,
 {    // we return the name (not the mask)
     bool bFound = false;
     // the List will contain 2 entries per type (description, mask)
-    wxArrayString List = GetArrayFromString(FiltersList, _T("|"), true);
+    wxArrayString List = GetArrayFromString(FiltersList, wxT_2("|"), true);
     int LoopEnd = static_cast<int>(List.GetCount());
     if(2*Index < LoopEnd)
     {
@@ -128,95 +128,95 @@ bool FileFilters::GetFilterNameFromIndex(const wxString& FiltersList, int Index,
 
 // define some constants used throughout C::B
 
-const wxString FileFilters::WORKSPACE_EXT                = _T("workspace");
-const wxString FileFilters::CODEBLOCKS_EXT               = _T("cbp");
-const wxString FileFilters::DEVCPP_EXT                   = _T("dev");
-const wxString FileFilters::MSVC6_EXT                    = _T("dsp");
-const wxString FileFilters::MSVC7_EXT                    = _T("vcproj");
-const wxString FileFilters::MSVC6_WORKSPACE_EXT          = _T("dsw");
-const wxString FileFilters::MSVC7_WORKSPACE_EXT          = _T("sln");
-const wxString FileFilters::XCODE1_EXT                   = _T("xcode");
-const wxString FileFilters::XCODE2_EXT                   = _T("xcodeproj");
-const wxString FileFilters::ASM_EXT                      = _T("asm");
-const wxString FileFilters::D_EXT                        = _T("d");
-const wxString FileFilters::F_EXT                        = _T("f");
-const wxString FileFilters::F77_EXT                      = _T("f77");
-const wxString FileFilters::F90_EXT                      = _T("f90");
-const wxString FileFilters::F95_EXT                      = _T("f95");
-const wxString FileFilters::JAVA_EXT                     = _T("java");
-const wxString FileFilters::C_EXT                        = _T("c");
-const wxString FileFilters::CC_EXT                       = _T("cc");
-const wxString FileFilters::CPP_EXT                      = _T("cpp");
-const wxString FileFilters::CXX_EXT                      = _T("cxx");
-const wxString FileFilters::H_EXT                        = _T("h");
-const wxString FileFilters::HH_EXT                       = _T("hh");
-const wxString FileFilters::HPP_EXT                      = _T("hpp");
-const wxString FileFilters::HXX_EXT                      = _T("hxx");
-const wxString FileFilters::S_EXT                        = _T("s");
-const wxString FileFilters::SS_EXT                       = _T("ss");
-const wxString FileFilters::S62_EXT                      = _T("s62");
-const wxString FileFilters::OBJECT_EXT                   = _T("o");
-const wxString FileFilters::XRCRESOURCE_EXT              = _T("xrc");
-const wxString FileFilters::STATICLIB_EXT                = _T("a");
-const wxString FileFilters::RESOURCE_EXT                 = _T("rc");
-const wxString FileFilters::RESOURCEBIN_EXT              = _T("res");
-const wxString FileFilters::XML_EXT                      = _T("xml");
-const wxString FileFilters::SCRIPT_EXT                   = _T("script");
+const wxString FileFilters::WORKSPACE_EXT                = wxT_2("workspace");
+const wxString FileFilters::CODEBLOCKS_EXT               = wxT_2("cbp");
+const wxString FileFilters::DEVCPP_EXT                   = wxT_2("dev");
+const wxString FileFilters::MSVC6_EXT                    = wxT_2("dsp");
+const wxString FileFilters::MSVC7_EXT                    = wxT_2("vcproj");
+const wxString FileFilters::MSVC6_WORKSPACE_EXT          = wxT_2("dsw");
+const wxString FileFilters::MSVC7_WORKSPACE_EXT          = wxT_2("sln");
+const wxString FileFilters::XCODE1_EXT                   = wxT_2("xcode");
+const wxString FileFilters::XCODE2_EXT                   = wxT_2("xcodeproj");
+const wxString FileFilters::ASM_EXT                      = wxT_2("asm");
+const wxString FileFilters::D_EXT                        = wxT_2("d");
+const wxString FileFilters::F_EXT                        = wxT_2("f");
+const wxString FileFilters::F77_EXT                      = wxT_2("f77");
+const wxString FileFilters::F90_EXT                      = wxT_2("f90");
+const wxString FileFilters::F95_EXT                      = wxT_2("f95");
+const wxString FileFilters::JAVA_EXT                     = wxT_2("java");
+const wxString FileFilters::C_EXT                        = wxT_2("c");
+const wxString FileFilters::CC_EXT                       = wxT_2("cc");
+const wxString FileFilters::CPP_EXT                      = wxT_2("cpp");
+const wxString FileFilters::CXX_EXT                      = wxT_2("cxx");
+const wxString FileFilters::H_EXT                        = wxT_2("h");
+const wxString FileFilters::HH_EXT                       = wxT_2("hh");
+const wxString FileFilters::HPP_EXT                      = wxT_2("hpp");
+const wxString FileFilters::HXX_EXT                      = wxT_2("hxx");
+const wxString FileFilters::S_EXT                        = wxT_2("s");
+const wxString FileFilters::SS_EXT                       = wxT_2("ss");
+const wxString FileFilters::S62_EXT                      = wxT_2("s62");
+const wxString FileFilters::OBJECT_EXT                   = wxT_2("o");
+const wxString FileFilters::XRCRESOURCE_EXT              = wxT_2("xrc");
+const wxString FileFilters::STATICLIB_EXT                = wxT_2("a");
+const wxString FileFilters::RESOURCE_EXT                 = wxT_2("rc");
+const wxString FileFilters::RESOURCEBIN_EXT              = wxT_2("res");
+const wxString FileFilters::XML_EXT                      = wxT_2("xml");
+const wxString FileFilters::SCRIPT_EXT                   = wxT_2("script");
 #ifdef __WXMSW__
-    const wxString FileFilters::DYNAMICLIB_EXT           = _T("dll");
-    const wxString FileFilters::EXECUTABLE_EXT           = _T("exe");
-    const wxString FileFilters::NATIVE_EXT               = _T("sys");
+    const wxString FileFilters::DYNAMICLIB_EXT           = wxT_2("dll");
+    const wxString FileFilters::EXECUTABLE_EXT           = wxT_2("exe");
+    const wxString FileFilters::NATIVE_EXT               = wxT_2("sys");
 #elif __WXMAC__
-    const wxString FileFilters::DYNAMICLIB_EXT           = _T("dylib");
-    const wxString FileFilters::EXECUTABLE_EXT           = _T("");
-    const wxString FileFilters::NATIVE_EXT               = _T("");
+    const wxString FileFilters::DYNAMICLIB_EXT           = wxT_2("dylib");
+    const wxString FileFilters::EXECUTABLE_EXT           = wxT_2("");
+    const wxString FileFilters::NATIVE_EXT               = wxT_2("");
 #else
-    const wxString FileFilters::DYNAMICLIB_EXT           = _T("so");
-    const wxString FileFilters::EXECUTABLE_EXT           = _T("");
-    const wxString FileFilters::NATIVE_EXT               = _T("");
+    const wxString FileFilters::DYNAMICLIB_EXT           = wxT_2("so");
+    const wxString FileFilters::EXECUTABLE_EXT           = wxT_2("");
+    const wxString FileFilters::NATIVE_EXT               = wxT_2("");
 #endif
 
 // dot.ext version
-const wxString FileFilters::WORKSPACE_DOT_EXT                = _T('.') + FileFilters::WORKSPACE_EXT;
-const wxString FileFilters::CODEBLOCKS_DOT_EXT               = _T('.') + FileFilters::CODEBLOCKS_EXT;
-const wxString FileFilters::DEVCPP_DOT_EXT                   = _T('.') + FileFilters::DEVCPP_EXT;
-const wxString FileFilters::MSVC6_DOT_EXT                    = _T('.') + FileFilters::MSVC6_EXT;
-const wxString FileFilters::MSVC7_DOT_EXT                    = _T('.') + FileFilters::MSVC7_EXT;
-const wxString FileFilters::MSVC6_WORKSPACE_DOT_EXT          = _T('.') + FileFilters::MSVC6_WORKSPACE_EXT;
-const wxString FileFilters::MSVC7_WORKSPACE_DOT_EXT          = _T('.') + FileFilters::MSVC7_WORKSPACE_EXT;
-const wxString FileFilters::XCODE1_DOT_EXT                   = _T('.') + FileFilters::XCODE1_EXT;
-const wxString FileFilters::XCODE2_DOT_EXT                   = _T('.') + FileFilters::XCODE2_EXT;
-const wxString FileFilters::ASM_DOT_EXT                      = _T('.') + FileFilters::ASM_EXT;
-const wxString FileFilters::D_DOT_EXT                        = _T('.') + FileFilters::D_EXT;
-const wxString FileFilters::F_DOT_EXT                        = _T('.') + FileFilters::F_EXT;
-const wxString FileFilters::F77_DOT_EXT                      = _T('.') + FileFilters::F77_EXT;
-const wxString FileFilters::F90_DOT_EXT                      = _T('.') + FileFilters::F90_EXT;
-const wxString FileFilters::F95_DOT_EXT                      = _T('.') + FileFilters::F95_EXT;
-const wxString FileFilters::JAVA_DOT_EXT                     = _T('.') + FileFilters::JAVA_EXT;
-const wxString FileFilters::C_DOT_EXT                        = _T('.') + FileFilters::C_EXT;
-const wxString FileFilters::CC_DOT_EXT                       = _T('.') + FileFilters::CC_EXT;
-const wxString FileFilters::CPP_DOT_EXT                      = _T('.') + FileFilters::CPP_EXT;
-const wxString FileFilters::CXX_DOT_EXT                      = _T('.') + FileFilters::CXX_EXT;
-const wxString FileFilters::H_DOT_EXT                        = _T('.') + FileFilters::H_EXT;
-const wxString FileFilters::HH_DOT_EXT                       = _T('.') + FileFilters::HH_EXT;
-const wxString FileFilters::HPP_DOT_EXT                      = _T('.') + FileFilters::HPP_EXT;
-const wxString FileFilters::HXX_DOT_EXT                      = _T('.') + FileFilters::HXX_EXT;
-const wxString FileFilters::S_DOT_EXT                        = _T('.') + FileFilters::S_EXT;
-const wxString FileFilters::SS_DOT_EXT                       = _T('.') + FileFilters::SS_EXT;
-const wxString FileFilters::S62_DOT_EXT                      = _T('.') + FileFilters::S62_EXT;
-const wxString FileFilters::OBJECT_DOT_EXT                   = _T('.') + FileFilters::OBJECT_EXT;
-const wxString FileFilters::XRCRESOURCE_DOT_EXT              = _T('.') + FileFilters::XRCRESOURCE_EXT;
-const wxString FileFilters::STATICLIB_DOT_EXT                = _T('.') + FileFilters::STATICLIB_EXT;
-const wxString FileFilters::RESOURCE_DOT_EXT                 = _T('.') + FileFilters::RESOURCE_EXT;
-const wxString FileFilters::RESOURCEBIN_DOT_EXT              = _T('.') + FileFilters::RESOURCEBIN_EXT;
-const wxString FileFilters::XML_DOT_EXT                      = _T('.') + FileFilters::XML_EXT;
-const wxString FileFilters::SCRIPT_DOT_EXT                   = _T('.') + FileFilters::SCRIPT_EXT;
+const wxString FileFilters::WORKSPACE_DOT_EXT                = wxT_2('.') + FileFilters::WORKSPACE_EXT;
+const wxString FileFilters::CODEBLOCKS_DOT_EXT               = wxT_2('.') + FileFilters::CODEBLOCKS_EXT;
+const wxString FileFilters::DEVCPP_DOT_EXT                   = wxT_2('.') + FileFilters::DEVCPP_EXT;
+const wxString FileFilters::MSVC6_DOT_EXT                    = wxT_2('.') + FileFilters::MSVC6_EXT;
+const wxString FileFilters::MSVC7_DOT_EXT                    = wxT_2('.') + FileFilters::MSVC7_EXT;
+const wxString FileFilters::MSVC6_WORKSPACE_DOT_EXT          = wxT_2('.') + FileFilters::MSVC6_WORKSPACE_EXT;
+const wxString FileFilters::MSVC7_WORKSPACE_DOT_EXT          = wxT_2('.') + FileFilters::MSVC7_WORKSPACE_EXT;
+const wxString FileFilters::XCODE1_DOT_EXT                   = wxT_2('.') + FileFilters::XCODE1_EXT;
+const wxString FileFilters::XCODE2_DOT_EXT                   = wxT_2('.') + FileFilters::XCODE2_EXT;
+const wxString FileFilters::ASM_DOT_EXT                      = wxT_2('.') + FileFilters::ASM_EXT;
+const wxString FileFilters::D_DOT_EXT                        = wxT_2('.') + FileFilters::D_EXT;
+const wxString FileFilters::F_DOT_EXT                        = wxT_2('.') + FileFilters::F_EXT;
+const wxString FileFilters::F77_DOT_EXT                      = wxT_2('.') + FileFilters::F77_EXT;
+const wxString FileFilters::F90_DOT_EXT                      = wxT_2('.') + FileFilters::F90_EXT;
+const wxString FileFilters::F95_DOT_EXT                      = wxT_2('.') + FileFilters::F95_EXT;
+const wxString FileFilters::JAVA_DOT_EXT                     = wxT_2('.') + FileFilters::JAVA_EXT;
+const wxString FileFilters::C_DOT_EXT                        = wxT_2('.') + FileFilters::C_EXT;
+const wxString FileFilters::CC_DOT_EXT                       = wxT_2('.') + FileFilters::CC_EXT;
+const wxString FileFilters::CPP_DOT_EXT                      = wxT_2('.') + FileFilters::CPP_EXT;
+const wxString FileFilters::CXX_DOT_EXT                      = wxT_2('.') + FileFilters::CXX_EXT;
+const wxString FileFilters::H_DOT_EXT                        = wxT_2('.') + FileFilters::H_EXT;
+const wxString FileFilters::HH_DOT_EXT                       = wxT_2('.') + FileFilters::HH_EXT;
+const wxString FileFilters::HPP_DOT_EXT                      = wxT_2('.') + FileFilters::HPP_EXT;
+const wxString FileFilters::HXX_DOT_EXT                      = wxT_2('.') + FileFilters::HXX_EXT;
+const wxString FileFilters::S_DOT_EXT                        = wxT_2('.') + FileFilters::S_EXT;
+const wxString FileFilters::SS_DOT_EXT                       = wxT_2('.') + FileFilters::SS_EXT;
+const wxString FileFilters::S62_DOT_EXT                      = wxT_2('.') + FileFilters::S62_EXT;
+const wxString FileFilters::OBJECT_DOT_EXT                   = wxT_2('.') + FileFilters::OBJECT_EXT;
+const wxString FileFilters::XRCRESOURCE_DOT_EXT              = wxT_2('.') + FileFilters::XRCRESOURCE_EXT;
+const wxString FileFilters::STATICLIB_DOT_EXT                = wxT_2('.') + FileFilters::STATICLIB_EXT;
+const wxString FileFilters::RESOURCE_DOT_EXT                 = wxT_2('.') + FileFilters::RESOURCE_EXT;
+const wxString FileFilters::RESOURCEBIN_DOT_EXT              = wxT_2('.') + FileFilters::RESOURCEBIN_EXT;
+const wxString FileFilters::XML_DOT_EXT                      = wxT_2('.') + FileFilters::XML_EXT;
+const wxString FileFilters::SCRIPT_DOT_EXT                   = wxT_2('.') + FileFilters::SCRIPT_EXT;
 #ifdef __WXMSW__
-    const wxString FileFilters::DYNAMICLIB_DOT_EXT           = _T('.') + FileFilters::DYNAMICLIB_EXT;
-    const wxString FileFilters::EXECUTABLE_DOT_EXT           = _T('.') + FileFilters::EXECUTABLE_EXT;
-    const wxString FileFilters::NATIVE_DOT_EXT               = _T('.') + FileFilters::NATIVE_EXT;
+    const wxString FileFilters::DYNAMICLIB_DOT_EXT           = wxT_2('.') + FileFilters::DYNAMICLIB_EXT;
+    const wxString FileFilters::EXECUTABLE_DOT_EXT           = wxT_2('.') + FileFilters::EXECUTABLE_EXT;
+    const wxString FileFilters::NATIVE_DOT_EXT               = wxT_2('.') + FileFilters::NATIVE_EXT;
 #else
-    const wxString FileFilters::DYNAMICLIB_DOT_EXT           = _T('.') + FileFilters::DYNAMICLIB_EXT;
+    const wxString FileFilters::DYNAMICLIB_DOT_EXT           = wxT_2('.') + FileFilters::DYNAMICLIB_EXT;
     const wxString FileFilters::EXECUTABLE_DOT_EXT           = EXECUTABLE_EXT; // no dot, since no extension
     const wxString FileFilters::NATIVE_DOT_EXT               = NATIVE_EXT; // no dot, since no extension
 #endif

@@ -66,7 +66,7 @@ ScriptingManager::ScriptingManager()
     SquirrelVM::Init((SquirrelInitFlags)(sqifAll & ~sqifIO));
 
     if (!SquirrelVM::GetVMPtr())
-        cbThrow(_T("Can't create scripting engine!"));
+        cbThrow(wxT_2("Can't create scripting engine!"));
 
     sq_setprintfunc(SquirrelVM::GetVMPtr(), ScriptsPrintFunc);
 
@@ -87,11 +87,11 @@ ScriptingManager::~ScriptingManager()
     {
         if (!it->second.permanent)
             continue;
-        wxString key = wxString::Format(_T("trust%d"), i++);
-        wxString value = wxString::Format(_T("%s?%x"), it->first.c_str(), it->second.crc);
+        wxString key = wxString::Format(wxT_2("trust%d"), i++);
+        wxString value = wxString::Format(wxT_2("%s?%x"), it->first.c_str(), it->second.crc);
         myMap.insert(myMap.end(), std::make_pair(key, value));
     }
-    Manager::Get()->GetConfigManager(_T("security"))->Write(_T("/trusted_scripts"), myMap);
+    Manager::Get()->GetConfigManager(wxT_2("security"))->Write(wxT_2("/trusted_scripts"), myMap);
 
     SquirrelVM::Shutdown();
 }
@@ -116,7 +116,7 @@ bool ScriptingManager::LoadScript(const wxString& filename)
     	// check in same dir as currently running script (if any)
     	if (!m_CurrentlyRunningScriptFile.IsEmpty())
     	{
-    		fname = wxFileName(m_CurrentlyRunningScriptFile).GetPath() + _T('/') + filename;
+    		fname = wxFileName(m_CurrentlyRunningScriptFile).GetPath() + wxT_2('/') + filename;
 			f.Open(fname);
 			found = f.IsOpened();
     	}
@@ -128,7 +128,7 @@ bool ScriptingManager::LoadScript(const wxString& filename)
 			f.Open(fname);
 			if (!f.IsOpened())
 			{
-				Manager::Get()->GetLogManager()->DebugLog(_T("Can't open script ") + filename);
+				Manager::Get()->GetLogManager()->DebugLog(wxT_2("Can't open script ") + filename);
 				return false;
 			}
 		}
@@ -147,7 +147,7 @@ bool ScriptingManager::LoadBuffer(const wxString& buffer, const wxString& debugN
     wxString incName = UnixFilename(debugName);
     if (m_IncludeSet.find(incName) != m_IncludeSet.end())
     {
-        Manager::Get()->GetLogManager()->LogWarning(F(_T("Ignoring Include(\"%s\") because it would cause recursion..."), incName.c_str()));
+        Manager::Get()->GetLogManager()->LogWarning(F(wxT("Ignoring Include(\"%s\") because it would cause recursion..."), incName.c_str()));
         return true;
     }
     m_IncludeSet.insert(incName);
@@ -164,7 +164,7 @@ bool ScriptingManager::LoadBuffer(const wxString& buffer, const wxString& debugN
     }
     catch (SquirrelError e)
     {
-        cbMessageBox(wxString::Format(_T("Filename: %s\nError: %s\nDetails: %s"), debugName.c_str(), cbC2U(e.desc).c_str(), s_ScriptErrors.c_str()), _("Script compile error"), wxICON_ERROR);
+        cbMessageBox(wxString::Format(wxT_2("Filename: %s\nError: %s\nDetails: %s"), debugName.c_str(), cbC2U(e.desc).c_str(), s_ScriptErrors.c_str()), _("Script compile error"), wxICON_ERROR);
         m_IncludeSet.erase(incName);
         return false;
     }
@@ -176,7 +176,7 @@ bool ScriptingManager::LoadBuffer(const wxString& buffer, const wxString& debugN
     }
     catch (SquirrelError e)
     {
-        cbMessageBox(wxString::Format(_T("Filename: %s\nError: %s\nDetails: %s"), debugName.c_str(), cbC2U(e.desc).c_str(), s_ScriptErrors.c_str()), _("Script run error"), wxICON_ERROR);
+        cbMessageBox(wxString::Format(wxT_2("Filename: %s\nError: %s\nDetails: %s"), debugName.c_str(), cbC2U(e.desc).c_str(), s_ScriptErrors.c_str()), _("Script run error"), wxICON_ERROR);
         m_IncludeSet.erase(incName);
         return false;
     }
@@ -283,7 +283,7 @@ bool ScriptingManager::RegisterScriptMenu(const wxString& menuPath, const wxStri
 bool ScriptingManager::UnRegisterScriptMenu(const wxString& menuPath)
 {
     // TODO: not implemented
-    Manager::Get()->GetLogManager()->DebugLog(_T("ScriptingManager::UnRegisterScriptMenu() not implemented"));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("ScriptingManager::UnRegisterScriptMenu() not implemented"));
     return false;
 }
 
@@ -302,7 +302,7 @@ bool ScriptingManager::IsScriptTrusted(const wxString& script)
     wxUint32 crc = wxCrc32::FromFile(script);
     if (crc == it->second.crc)
         return true;
-    cbMessageBox(script + _T("\n\n") + _("The script was marked as \"trusted\" but it has been modified "
+    cbMessageBox(script + wxT_2("\n\n") + _("The script was marked as \"trusted\" but it has been modified "
                     "since then.\nScript not trusted anymore."),
                 _("Warning"), wxICON_WARNING);
     m_TrustedScripts.erase(it);
@@ -354,12 +354,12 @@ void ScriptingManager::RefreshTrusts()
     // reload trusted scripts set
     m_TrustedScripts.clear();
     ConfigManagerContainer::StringToStringMap myMap;
-    Manager::Get()->GetConfigManager(_T("security"))->Read(_T("/trusted_scripts"), &myMap);
+    Manager::Get()->GetConfigManager(wxT_2("security"))->Read(wxT_2("/trusted_scripts"), &myMap);
     ConfigManagerContainer::StringToStringMap::iterator it;
     for (it = myMap.begin(); it != myMap.end(); ++it)
     {
-        wxString key = it->second.BeforeFirst(_T('?'));
-        wxString value = it->second.AfterFirst(_T('?'));
+        wxString key = it->second.BeforeFirst(wxT_2('?'));
+        wxString value = it->second.AfterFirst(wxT_2('?'));
 
         TrustedScriptProps props;
         props.permanent = true;

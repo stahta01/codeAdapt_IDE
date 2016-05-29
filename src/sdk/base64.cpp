@@ -15,7 +15,7 @@
 #include <wx/version.h>
 
 #if wxCHECK_VERSION(3, 0, 0)
-    #include <wx/base64.h> 
+    #include <wx/base64.h>
 #endif
 
 #include "base64.h"
@@ -24,7 +24,7 @@ const wxChar fillchar = '=';
 
                         // 00000000001111111111222222
                         // 01234567890123456789012345
-static wxString     cvt = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+static wxString     cvt = wxT_2("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
                         // 22223333333333444444444455
                         // 67890123456789012345678901
@@ -42,7 +42,7 @@ wxString caBase64::Encode(const wxString& data)
 wxString caBase64::Encode(const wxUint8* pData, size_t len)
 {
 #if wxCHECK_VERSION(3, 0, 0)
-    return wxBase64Encode( pData, len); 
+    return wxBase64Encode( pData, len);
 #else
     size_t c;
     wxString ret;
@@ -115,10 +115,10 @@ wxString caBase64::Decode(const wxString& data)
     {
         // TODO: check all Find results for -1 as result of wrong input data for release build
         c = cvt.Find(data[i]);
-        wxASSERT_MSG(c >= 0, _T("invalid base64 input"));
+        wxASSERT_MSG(c >= 0, wxT_2("invalid base64 input"));
         ++i;
         c1 = cvt.Find(data[i]);
-        wxASSERT_MSG(c1 >= 0, _T("invalid base64 input"));
+        wxASSERT_MSG(c1 >= 0, wxT_2("invalid base64 input"));
         c = (c << 2) | ((c1 >> 4) & 0x3);
         ret.Append(c, 1);
         if (++i < len)
@@ -128,7 +128,7 @@ wxString caBase64::Decode(const wxString& data)
                 break;
 
             c = cvt.Find(c);
-            wxASSERT_MSG(c >= 0, _T("invalid base64 input"));
+            wxASSERT_MSG(c >= 0, wxT_2("invalid base64 input"));
             c1 = ((c1 << 4) & 0xf0) | ((c >> 2) & 0xf);
             ret.Append(c1, 1);
         }
@@ -140,7 +140,7 @@ wxString caBase64::Decode(const wxString& data)
                 break;
 
             c1 = cvt.Find(c1);
-            wxASSERT_MSG(c1 >= 0, _T("invalid base64 input"));
+            wxASSERT_MSG(c1 >= 0, wxT_2("invalid base64 input"));
             c = ((c << 6) & 0xc0) | c1;
             ret.Append(c, 1);
         }

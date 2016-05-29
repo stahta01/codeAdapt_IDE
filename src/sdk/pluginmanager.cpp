@@ -71,10 +71,10 @@ template<> bool  Mgr<PluginManager>::isShutdown = false;
 
 void VersionStringToNumbers(const wxString& version, long* major, long* minor, long* release)
 {
-    wxString majorS = version.BeforeFirst(_T('.')); // 6.3.2 -> 6
-    wxString minorS = version.AfterFirst(_T('.')); // 6.3.2 -> 3.2
-    wxString releaseS = version.AfterLast(_T('.')); // 6.3.2 -> 2
-    minorS = minorS.BeforeFirst(_T('.')); // 3.2 -> 3
+    wxString majorS = version.BeforeFirst(wxT_2('.')); // 6.3.2 -> 6
+    wxString minorS = version.AfterFirst(wxT_2('.')); // 6.3.2 -> 3.2
+    wxString releaseS = version.AfterLast(wxT_2('.')); // 6.3.2 -> 2
+    minorS = minorS.BeforeFirst(wxT_2('.')); // 3.2 -> 3
     if (major)
         majorS.ToLong(major);
     if (minor)
@@ -236,13 +236,13 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
     // base name
     wxString basename = wxFileName(actualName).GetName();
     wxString version;
-    if (basename.Contains(_T('-')))
+    if (basename.Contains(wxT_2('-')))
     {
-        version = basename.AfterFirst(_T('-'));
-        basename = basename.BeforeFirst(_T('-'));
+        version = basename.AfterFirst(wxT_2('-'));
+        basename = basename.BeforeFirst(wxT_2('-'));
     }
 
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("InstallPlugin: basename='%s', version=%s"), basename.c_str(), version.c_str()));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("InstallPlugin: basename='%s', version=%s"), basename.c_str(), version.c_str()));
 
     // if plugin with the same name exists, ask to uninstall first
     cbPlugin* existingPlugin = FindPluginByName(basename);
@@ -261,7 +261,7 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
                 }
             }
 
-            if (cbMessageBox(msg + _T('\n') +
+            if (cbMessageBox(msg + wxT_2('\n') +
                             _("If you want to proceed, the installed plugin will be "
                             "uninstalled first.\n"
                             "Do you want to proceed?"),
@@ -287,21 +287,21 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
         resourceDir = ConfigManager::GetFolder(sdDataUser);
     }
 
-    wxProgressDialog pd(_("Installing: ") + basename, _T("A description wide enough for the dialog ;)"), 5);
+    wxProgressDialog pd(_("Installing: ") + basename, wxT_2("A description wide enough for the dialog ;)"), 5);
 
     wxString localName = basename + FileFilters::DYNAMICLIB_DOT_EXT;
-    wxString resourceName = basename + _T(".zip");
-    wxString settingsOnName = basename + _T(".png");
-    wxString settingsOffName = basename + _T("-off.png");
-    if (!platform::windows && resourceName.StartsWith(_T("lib")))
+    wxString resourceName = basename + wxT_2(".zip");
+    wxString settingsOnName = basename + wxT_2(".png");
+    wxString settingsOffName = basename + wxT_2("-off.png");
+    if (!platform::windows && resourceName.StartsWith(wxT_2("lib")))
         resourceName.Remove(0, 3);
-    if (!platform::windows && settingsOnName.StartsWith(_T("lib")))
+    if (!platform::windows && settingsOnName.StartsWith(wxT_2("lib")))
         settingsOnName.Remove(0, 3);
-    if (!platform::windows && settingsOffName.StartsWith(_T("lib")))
+    if (!platform::windows && settingsOffName.StartsWith(wxT_2("lib")))
         settingsOffName.Remove(0, 3);
-    wxString pluginFilename = pluginDir + _T('/') + localName;
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin filename: ") + pluginFilename));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin resources: ") + ConfigManager::GetDataFolder() + _T('/') + resourceName));
+    wxString pluginFilename = pluginDir + wxT_2('/') + localName;
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin filename: ") + pluginFilename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin resources: ") + ConfigManager::GetDataFolder() + wxT_2('/') + resourceName));
 
     pd.Update(1, _("Extracting plugin"));
 
@@ -310,32 +310,32 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
                     localName,
                     pluginFilename))
         return false;
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted plugin")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracted plugin")));
 
     pd.Update(2, _("Extracting plugin resources"));
 
     // extract resources from bundle
     if (!ExtractFile(actualName,
                     resourceName,
-                    resourceDir + _T('/') + resourceName))
+                    resourceDir + wxT_2('/') + resourceName))
         return false;
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted resources")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracted resources")));
 
     pd.Update(3, _("Extracting plugin icons for \"Settings\" dialog"));
 
     // extract resources from bundle
     ExtractFile(actualName,
                 settingsOnName,
-                resourceDir + _T("/images/settings/") + settingsOnName,
+                resourceDir + wxT_2("/images/settings/") + settingsOnName,
                 false);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted resources")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracted resources")));
 
     // extract resources from bundle
     ExtractFile(actualName,
                 settingsOffName,
-                resourceDir + _T("/images/settings/") + settingsOffName,
+                resourceDir + wxT_2("/images/settings/") + settingsOffName,
                 false);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted resources")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracted resources")));
 
     // extract extra files
     wxArrayString extraFiles;
@@ -344,31 +344,31 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
     {
         ExtractFile(actualName,
                     extraFiles[i],
-                    resourceDir + _T("/") + extraFiles[i],
+                    resourceDir + wxT_2("/") + extraFiles[i],
                     false);
     }
 
     pd.Update(4, _("Loading plugin"));
 
     // bundle extracted; now load the plugin on-the-fly
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading plugin...")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Loading plugin...")));
     ScanForPlugins(pluginDir);
     LoadAllPlugins();
     cbPlugin* plugin = FindPluginByFileName(pluginFilename);
     const PluginInfo* info = GetPluginInfo(plugin);
     if (!plugin || !info)
     {
-        Manager::Get()->GetLogManager()->DebugLog(_T("Failed"));
+        Manager::Get()->GetLogManager()->DebugLog(wxT_2("Failed"));
         return false;
     }
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Succeeded")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Succeeded")));
 
     // inform app to update menus and toolbars
     pd.Update(5, _("Updating menus and toolbars"));
     CodeBlocksEvent evt(cbEVT_PLUGIN_INSTALLED);
     evt.SetPlugin(plugin);
     Manager::Get()->ProcessEvent(evt);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Menus updated")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Menus updated")));
 
     return true;
 }
@@ -396,18 +396,18 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
             pluginFilename = elem->fileName;
             // now get the resource name
             wxFileName fname(pluginFilename);
-            resourceFilename = fname.GetName() + _T(".zip");
-            settingsOnFilename = fname.GetName() + _T(".png");
-            settingsOffFilename = fname.GetName() + _T("-off.png");
-            if (!platform::windows && resourceFilename.StartsWith(_T("lib")))
+            resourceFilename = fname.GetName() + wxT_2(".zip");
+            settingsOnFilename = fname.GetName() + wxT_2(".png");
+            settingsOffFilename = fname.GetName() + wxT_2("-off.png");
+            if (!platform::windows && resourceFilename.StartsWith(wxT_2("lib")))
                 resourceFilename.Remove(0, 3);
-            if (!platform::windows && settingsOnFilename.StartsWith(_T("lib")))
+            if (!platform::windows && settingsOnFilename.StartsWith(wxT_2("lib")))
                 settingsOnFilename.Remove(0, 3);
-            if (!platform::windows && settingsOffFilename.StartsWith(_T("lib")))
+            if (!platform::windows && settingsOffFilename.StartsWith(wxT_2("lib")))
                 settingsOffFilename.Remove(0, 3);
             resourceFilename = ConfigManager::LocateDataFile(resourceFilename, sdDataGlobal | sdDataUser);
-            settingsOnFilename = ConfigManager::LocateDataFile(_T("images/settings/") + settingsOnFilename, sdDataGlobal | sdDataUser);
-            settingsOffFilename = ConfigManager::LocateDataFile(_T("images/settings/") + settingsOffFilename, sdDataGlobal | sdDataUser);
+            settingsOnFilename = ConfigManager::LocateDataFile(wxT_2("images/settings/") + settingsOnFilename, sdDataGlobal | sdDataUser);
+            settingsOffFilename = ConfigManager::LocateDataFile(wxT_2("images/settings/") + settingsOffFilename, sdDataGlobal | sdDataUser);
 
             ReadExtraFilesFromManifestFile(resourceFilename, extrafiles);
             for (size_t n = 0; n < extrafiles.GetCount(); ++n)
@@ -427,26 +427,26 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
         return false;
     }
 
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("UninstallPlugin:")));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin filename: ") + pluginFilename));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin resources: ") + resourceFilename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("UninstallPlugin:")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin filename: ") + pluginFilename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin resources: ") + resourceFilename));
 
     wxProgressDialog pd(wxString::Format(_("Uninstalling %s"), title.c_str()),
-                        _T("A description wide enough for the dialog ;)"), 3);
+                        wxT_2("A description wide enough for the dialog ;)"), 3);
 
     pd.Update(1, _("Detaching plugin"));
     DetachPlugin(plugin);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin released")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin released")));
 
     pd.Update(2, _("Updating menus and toolbars"));
     CodeBlocksEvent event(cbEVT_PLUGIN_UNINSTALLED);
     event.SetPlugin(plugin);
     Manager::Get()->ProcessEvent(event);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Menus updated")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Menus updated")));
 
     pd.Update(3, _("Unloading plugin"));
     UnloadPlugin(plugin);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin unloaded")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin unloaded")));
 
     if (!removeFiles)
         return true;
@@ -461,35 +461,35 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
     {
         if (wxRemoveFile(pluginFilename))
         {
-//            Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin file removed")));
+//            Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin file removed")));
             if (!resourceFilename.IsEmpty())
             {
                 if (!wxRemoveFile(resourceFilename))
-                    Manager::Get()->GetLogManager()->LogWarning(_T("Failed to remove plugin resources: ") + resourceFilename);
+                    Manager::Get()->GetLogManager()->LogWarning(wxT_2("Failed to remove plugin resources: ") + resourceFilename);
             }
             if (!settingsOnFilename.IsEmpty() && wxFileExists(settingsOnFilename))
             {
                 if (!wxRemoveFile(settingsOnFilename))
-                    Manager::Get()->GetLogManager()->LogWarning(_T("Failed to remove icon for \"Settings\" dialog: ") + settingsOnFilename);
+                    Manager::Get()->GetLogManager()->LogWarning(wxT_2("Failed to remove icon for \"Settings\" dialog: ") + settingsOnFilename);
             }
             if (!settingsOffFilename.IsEmpty() && wxFileExists(settingsOffFilename))
             {
                 if (!wxRemoveFile(settingsOffFilename))
-                    Manager::Get()->GetLogManager()->LogWarning(_T("Failed to remove icon for \"Settings\" dialog: ") + settingsOffFilename);
+                    Manager::Get()->GetLogManager()->LogWarning(wxT_2("Failed to remove icon for \"Settings\" dialog: ") + settingsOffFilename);
             }
             for (size_t i = 0; i < extrafiles.GetCount(); ++i)
             {
                 if (!extrafiles[i].IsEmpty() && wxFileExists(extrafiles[i]))
                 {
                     if (!wxRemoveFile(extrafiles[i]))
-                        Manager::Get()->GetLogManager()->LogWarning(_T("Failed to remove extra file: ") + extrafiles[i]);
+                        Manager::Get()->GetLogManager()->LogWarning(wxT_2("Failed to remove extra file: ") + extrafiles[i]);
                 }
             }
             return true;
         }
         else
         {
-            Manager::Get()->GetLogManager()->LogWarning(_T("Failed to remove plugin file: ") + pluginFilename);
+            Manager::Get()->GetLogManager()->LogWarning(wxT_2("Failed to remove plugin file: ") + pluginFilename);
             cbMessageBox(_("Plugin could not be completely uninstalled because its files could not be removed.\n\n"
                             "This can happen if the plugin's file is in-use like, for "
                             "example, when the same plugin file provides more than one "
@@ -498,9 +498,9 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
                             "which are provided by the same file, or remove it yourself "
                             "(manually) when you shut down Code::Blocks.\n"
                             "The files that could not be deleted are:\n\n") +
-                            pluginFilename + _T('\n') +
-                            resourceFilename + _T('\n') +
-                            settingsOnFilename + _T('\n') +
+                            pluginFilename + wxT_2('\n') +
+                            resourceFilename + wxT_2('\n') +
+                            settingsOnFilename + wxT_2('\n') +
                             settingsOffFilename,
                             _("Warning"), wxICON_WARNING);
             return false;
@@ -533,33 +533,33 @@ bool PluginManager::ExportPlugin(cbPlugin* plugin, const wxString& filename)
             fname.Assign(elem->fileName);
 
             // now get the resource zip filename
-            resourceFilename = fname.GetName() + _T(".zip");
-            if (!platform::windows && resourceFilename.StartsWith(_T("lib")))
+            resourceFilename = fname.GetName() + wxT_2(".zip");
+            if (!platform::windows && resourceFilename.StartsWith(wxT_2("lib")))
                 resourceFilename.Remove(0, 3);
             resourceFilename = ConfigManager::LocateDataFile(resourceFilename, sdDataGlobal | sdDataUser);
             sourcefiles.Add(resourceFilename);
 
             // the highlighted icon the plugin may have for its "settings" page
-            resourceFilename = fname.GetName() + _T(".png");
-            if (!platform::windows && resourceFilename.StartsWith(_T("lib")))
+            resourceFilename = fname.GetName() + wxT_2(".png");
+            if (!platform::windows && resourceFilename.StartsWith(wxT_2("lib")))
                 resourceFilename.Remove(0, 3);
-            resourceFilename.Prepend(_T("images/settings/"));
+            resourceFilename.Prepend(wxT_2("images/settings/"));
             resourceFilename = ConfigManager::LocateDataFile(resourceFilename, sdDataGlobal | sdDataUser);
             if (!resourceFilename.IsEmpty())
                 sourcefiles.Add(resourceFilename);
 
             // the non-highlighted icon the plugin may have for its "settings" page
-            resourceFilename = fname.GetName() + _T("-off.png");
-            if (!platform::windows && resourceFilename.StartsWith(_T("lib")))
+            resourceFilename = fname.GetName() + wxT_2("-off.png");
+            if (!platform::windows && resourceFilename.StartsWith(wxT_2("lib")))
                 resourceFilename.Remove(0, 3);
-            resourceFilename.Prepend(_T("images/settings/"));
+            resourceFilename.Prepend(wxT_2("images/settings/"));
             resourceFilename = ConfigManager::LocateDataFile(resourceFilename, sdDataGlobal | sdDataUser);
             if (!resourceFilename.IsEmpty())
                 sourcefiles.Add(resourceFilename);
 
             // export extra files
-            resourceFilename = fname.GetName() + _T(".zip");
-            if (!platform::windows && resourceFilename.StartsWith(_T("lib")))
+            resourceFilename = fname.GetName() + wxT_2(".zip");
+            if (!platform::windows && resourceFilename.StartsWith(wxT_2("lib")))
                 resourceFilename.Remove(0, 3);
             ReadExtraFilesFromManifestFile(resourceFilename, extrafilesdest);
             for (size_t n = 0; n < extrafilesdest.GetCount(); ++n)
@@ -581,7 +581,7 @@ bool PluginManager::ExportPlugin(cbPlugin* plugin, const wxString& filename)
         }
     }
 
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Creating archive: ") + filename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Creating archive: ") + filename));
     wxFileOutputStream out(filename);
     wxZipOutputStream zip(out, 9); // max compression
     for (size_t i = 0; i < sourcefiles.GetCount(); ++i)
@@ -603,7 +603,7 @@ bool PluginManager::ExportPlugin(cbPlugin* plugin, const wxString& filename)
         zip.PutNextEntry(extrafilesdest[i]);
         zip << in;
     }
-    zip.SetComment(_T("This is a redistributable plugin for the Code::Blocks IDE.\n"
+    zip.SetComment(wxT_2("This is a redistributable plugin for the Code::Blocks IDE.\n"
                         "See http://www.codeblocks.org for details..."));
 
     return true;
@@ -614,15 +614,15 @@ bool PluginManager::ExtractFile(const wxString& bundlename,
                                 const wxString& dst_filename,
                                 bool isMandatory)
 {
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("ExtractFile:")));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin filename: ") + bundlename));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Source filename: ") + src_filename));
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Destination filename: ") + dst_filename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("ExtractFile:")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Plugin filename: ") + bundlename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Source filename: ") + src_filename));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Destination filename: ") + dst_filename));
 
     // check if the destination file already exists
     if (wxFileExists(dst_filename) && !wxFile::Access(dst_filename, wxFile::write))
     {
-//        Manager::Get()->GetLogManager()->DebugLog(F(_T("Destination file in use")));
+//        Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Destination file in use")));
         cbMessageBox(_("The destination file is in use.\nAborting..."), _("Warning"), wxICON_WARNING);
         return false;
     }
@@ -631,16 +631,16 @@ bool PluginManager::ExtractFile(const wxString& bundlename,
     CreateDirRecursively(wxFileName(dst_filename).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
 
     // actually extract file
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracting...")));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracting...")));
     wxFileSystem* fs = new wxFileSystem;
-    wxFSFile* f = fs->OpenFile(bundlename + _T("#zip:") + src_filename);
+    wxFSFile* f = fs->OpenFile(bundlename + wxT_2("#zip:") + src_filename);
     if (f)
     {
         // open output file for writing
         wxFile output(dst_filename, wxFile::write);
         if (!output.IsOpened())
         {
-//            Manager::Get()->GetLogManager()->DebugLog(F(_T("Can't open destination file for writing")));
+//            Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Can't open destination file for writing")));
             wxString msg = wxString::Format(_("Can't open destination file '%s' for writing..."),
                                             dst_filename.c_str());
             cbMessageBox(msg, _("Error"), wxICON_ERROR);
@@ -659,11 +659,11 @@ bool PluginManager::ExtractFile(const wxString& bundlename,
             output.Write(tmp, is->LastRead());
         }
         delete f;
-//        Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted")));
+//        Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Extracted")));
     }
     else
     {
-//        Manager::Get()->GetLogManager()->DebugLog(F(_T("File not found in plugin")));
+//        Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("File not found in plugin")));
         if (isMandatory)
         {
             wxString msg = wxString::Format(_("File '%s' not found in plugin '%s'"),
@@ -695,7 +695,7 @@ void PluginManager::RegisterPlugin(const wxString& name,
     if (!ReadManifestFile(m_CurrentlyLoadingFilename, name, &info) ||
         info.name.IsEmpty())
     {
-        Manager::Get()->GetLogManager()->LogError(_T("Invalid manifest file for: ") + name);
+        Manager::Get()->GetLogManager()->LogError(wxT_2("Invalid manifest file for: ") + name);
         return;
     }
 
@@ -743,24 +743,24 @@ bool PluginManager::ReadManifestFile(const wxString& pluginFilename,
         // find and load plugin's resource file
         // (pluginFilename contains no path info)
         wxFileName fname(pluginFilename);
-        fname.SetExt(_T("zip"));
+        fname.SetExt(wxT_2("zip"));
         wxString actual = fname.GetFullName();
 
         // remove 'lib' prefix from plugin name (if any)
-        if (!platform::windows && actual.StartsWith(_T("lib")))
+        if (!platform::windows && actual.StartsWith(wxT_2("lib")))
             actual.Remove(0, 3);
 
         actual = ConfigManager::LocateDataFile(actual, sdPluginsUser | sdDataUser | sdPluginsGlobal | sdDataGlobal);
         if (actual.IsEmpty())
         {
-            Manager::Get()->GetLogManager()->LogError(_T("Plugin resource not found: ") + fname.GetFullName());
+            Manager::Get()->GetLogManager()->LogError(wxT_2("Plugin resource not found: ") + fname.GetFullName());
             return false; // not found
         }
 
         // load XML from ZIP
         wxString contents;
         wxFileSystem* fs = new wxFileSystem;
-        wxFSFile* f = fs->OpenFile(actual + _T("#zip:manifest.xml"));
+        wxFSFile* f = fs->OpenFile(actual + wxT_2("#zip:manifest.xml"));
         if (f)
         {
             wxInputStream* is = f->GetStream();
@@ -775,7 +775,7 @@ bool PluginManager::ReadManifestFile(const wxString& pluginFilename,
         }
         else
         {
-            Manager::Get()->GetLogManager()->LogError(_T("No plugin manifest file in resource: ") + actual);
+            Manager::Get()->GetLogManager()->LogError(wxT_2("No plugin manifest file in resource: ") + actual);
             delete fs;
             return false;
         }
@@ -874,24 +874,24 @@ void PluginManager::ReadExtraFilesFromManifestFile(const wxString& pluginFilenam
     // find and load plugin's resource file
     // (pluginFilename contains no path info)
     wxFileName fname(pluginFilename);
-    fname.SetExt(_T("zip"));
+    fname.SetExt(wxT_2("zip"));
     wxString actual = fname.GetFullName();
 
     // remove 'lib' prefix from plugin name (if any)
-    if (!platform::windows && actual.StartsWith(_T("lib")))
+    if (!platform::windows && actual.StartsWith(wxT_2("lib")))
         actual.Remove(0, 3);
 
     actual = ConfigManager::LocateDataFile(actual, sdPluginsUser | sdDataUser | sdPluginsGlobal | sdDataGlobal);
     if (actual.IsEmpty())
     {
-        Manager::Get()->GetLogManager()->LogError(_T("Plugin resource not found: ") + fname.GetFullName());
+        Manager::Get()->GetLogManager()->LogError(wxT_2("Plugin resource not found: ") + fname.GetFullName());
         return; // not found
     }
 
     // load XML from ZIP
     wxString contents;
     wxFileSystem* fs = new wxFileSystem;
-    wxFSFile* f = fs->OpenFile(actual + _T("#zip:manifest.xml"));
+    wxFSFile* f = fs->OpenFile(actual + wxT_2("#zip:manifest.xml"));
     if (f)
     {
         wxInputStream* is = f->GetStream();
@@ -906,7 +906,7 @@ void PluginManager::ReadExtraFilesFromManifestFile(const wxString& pluginFilenam
     }
     else
     {
-        Manager::Get()->GetLogManager()->LogError(_T("No plugin manifest file in resource: %s") + actual);
+        Manager::Get()->GetLogManager()->LogError(wxT_2("No plugin manifest file in resource: %s") + actual);
         delete fs;
         return;
     }
@@ -936,7 +936,7 @@ void PluginManager::ReadExtraFilesFromManifestFile(const wxString& pluginFilenam
 
 int PluginManager::ScanForPlugins(const wxString& path)
 {
-    static const wxString PluginsMask = platform::windows ? _T("*.dll") : _T("*.so");
+    static const wxString PluginsMask = platform::windows ? wxT_2("*.dll") : wxT_2("*.so");
     int count = 0;
     if(!wxDirExists(path))
         return count;
@@ -949,15 +949,15 @@ int PluginManager::ScanForPlugins(const wxString& path)
     wxArrayString bbplugins;
     if (batch)
     {
-        ConfigManager *bbcfg = Manager::Get()->GetConfigManager(_T("plugins"));
-        bbplugins = bbcfg->ReadArrayString(_T("/batch_build_plugins"));
+        ConfigManager *bbcfg = Manager::Get()->GetConfigManager(wxT_2("plugins"));
+        bbplugins = bbcfg->ReadArrayString(wxT_2("/batch_build_plugins"));
         if (!bbplugins.GetCount())
         {
             // defaults
             if(platform::windows)
-                bbplugins.Add(_T("compiler.dll"));
+                bbplugins.Add(wxT_2("compiler.dll"));
             else
-                bbplugins.Add(_T("libcompiler.so"));
+                bbplugins.Add(wxT_2("libcompiler.so"));
         }
     }
 
@@ -990,10 +990,10 @@ int PluginManager::ScanForPlugins(const wxString& path)
         m_pCurrentlyLoadingManifestDoc = 0;
         if (ReadManifestFile(filename))
         {
-            if (LoadPlugin(path + _T('/') + filename))
+            if (LoadPlugin(path + wxT_2('/') + filename))
                 ++count;
             else
-                failed << _T('\n') << filename;
+                failed << wxT_2('\n') << filename;
         }
         delete m_pCurrentlyLoadingManifestDoc;
         m_pCurrentlyLoadingManifestDoc = 0;
@@ -1023,7 +1023,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
     m_pCurrentlyLoadingLib = LibLoader::LoadLibrary(pluginName);
     if (!m_pCurrentlyLoadingLib->IsLoaded())
     {
-        Manager::Get()->GetLogManager()->LogError(F(_T("%s: not loaded (missing symbols?)"), pluginName.c_str()));
+        Manager::Get()->GetLogManager()->LogError(F(wxT("%s: not loaded (missing symbols?)"), pluginName.c_str()));
         LibLoader::RemoveLibrary(m_pCurrentlyLoadingLib);
         m_pCurrentlyLoadingLib = 0;
         m_CurrentlyLoadingFilename.Clear();
@@ -1061,7 +1061,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
 
         SetupLocaleDomain(pr.name);
 
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("%s: loaded"), pr.name.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("%s: loaded"), pr.name.c_str()));
     }
 
     if (m_RegisteredPlugins.empty())
@@ -1077,14 +1077,14 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
 void PluginManager::LoadAllPlugins()
 {
     // check if a plugin crashed the app last time
-    wxString probPlugin = Manager::Get()->GetConfigManager(_T("plugins"))->Read(_T("/try_to_activate"), wxEmptyString);
+    wxString probPlugin = Manager::Get()->GetConfigManager(wxT_2("plugins"))->Read(wxT_2("/try_to_activate"), wxEmptyString);
     if (!probPlugin.IsEmpty())
     {
         wxString msg;
         msg.Printf(_("Plugin \"%s\" failed to load last time Code::Blocks was executed.\n"
                     "Do you want to disable this plugin from loading?"), probPlugin.c_str());
         if (cbMessageBox(msg, _("Warning"), wxICON_WARNING | wxYES_NO) == wxID_NO)
-            probPlugin = _T("");
+            probPlugin = wxT_2("");
     }
 
     PluginElement* elem = 0;
@@ -1097,8 +1097,8 @@ void PluginManager::LoadAllPlugins()
 
         // do not load it if the user has explicitly asked not to...
         wxString baseKey;
-        baseKey << _T("/") << elem->info.name;
-        bool loadIt = Manager::Get()->GetConfigManager(_T("plugins"))->ReadBool(baseKey, true);
+        baseKey << wxT_2("/") << elem->info.name;
+        bool loadIt = Manager::Get()->GetConfigManager(wxT_2("plugins"))->ReadBool(baseKey, true);
 
         // if we have a problematic plugin, check if this is it
         if (loadIt && !probPlugin.IsEmpty())
@@ -1106,32 +1106,32 @@ void PluginManager::LoadAllPlugins()
             loadIt = elem->info.title != probPlugin;
             // if this is the problematic plugin, don't load it
             if (!loadIt)
-                Manager::Get()->GetConfigManager(_T("plugins"))->Write(baseKey, false);
+                Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(baseKey, false);
         }
 
         if (loadIt)
         {
-            Manager::Get()->GetConfigManager(_T("plugins"))->Write(_T("/try_to_activate"), elem->info.title);
+            Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(wxT_2("/try_to_activate"), elem->info.title);
             Manager::Get()->GetLogManager()->Log(elem->info.name);
             try
             {
                 AttachPlugin(plug);
-                Manager::Get()->GetConfigManager(_T("plugins"))->Write(_T("/try_to_activate"), wxEmptyString, false);
+                Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(wxT_2("/try_to_activate"), wxEmptyString, false);
             }
             catch (cbException& exception)
             {
-                Manager::Get()->GetLogManager()->Log(_T("[failed]"));
+                Manager::Get()->GetLogManager()->Log(wxT_2("[failed]"));
                 exception.ShowErrorMessage(false);
 
                 wxString msg;
                 msg.Printf(_("Plugin \"%s\" failed to load...\n"
                             "Do you want to disable this plugin from loading next time?"), elem->info.title.c_str());
                 if (cbMessageBox(msg, _("Warning"), wxICON_WARNING | wxYES_NO) == wxID_YES)
-                    Manager::Get()->GetConfigManager(_T("plugins"))->Write(baseKey, false);
+                    Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(baseKey, false);
             }
         }
     }
-    Manager::Get()->GetConfigManager(_T("plugins"))->Write(_T("/try_to_activate"), wxEmptyString, false);
+    Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(wxT_2("/try_to_activate"), wxEmptyString, false);
 }
 
 void PluginManager::UnloadAllPlugins()
@@ -1242,7 +1242,7 @@ int PluginManager::ExecutePlugin(const wxString& pluginName)
     {
         if (plug->GetType() != ptTool)
         {
-            Manager::Get()->GetLogManager()->LogError(F(_T("Plugin %s is not a tool to have Execute() method!"), elem->info.name.c_str()));
+            Manager::Get()->GetLogManager()->LogError(F(wxT("Plugin %s is not a tool to have Execute() method!"), elem->info.name.c_str()));
         }
         else
         {
@@ -1438,19 +1438,19 @@ int PluginManager::Configure()
 
 void PluginManager::SetupLocaleDomain(const wxString& DomainName)
 {
-    int catalogNum=Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/locale/catalogNum"),(int)0);
+    int catalogNum=Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/locale/catalogNum"),(int)0);
     int i = 1;
     for (; i <= catalogNum; ++i)
     {
-        wxString catalogName=Manager::Get()->GetConfigManager(_T("app"))->Read(wxString::Format(_T("/locale/Domain%d"), i), wxEmptyString);
+        wxString catalogName=Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxString::Format(wxT_2("/locale/Domain%d"), i), wxEmptyString);
         if (catalogName.Cmp(DomainName) == 0)
             break;
     }
     if (i > catalogNum)
     {
         ++catalogNum;
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/locale/catalogNum"), (int)catalogNum);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(wxString::Format(_T("/locale/Domain%d"), i), DomainName);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/locale/catalogNum"), (int)catalogNum);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxString::Format(wxT_2("/locale/Domain%d"), i), DomainName);
     }
 }
 

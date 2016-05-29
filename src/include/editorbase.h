@@ -27,10 +27,10 @@ class DLLIMPORT EditorBase : public wxPanel
         virtual ~EditorBase();
 
         /** Don't use this. It throws an exception if you do. */
-        EditorBase(const EditorBase& rhs) { cbThrow(_T("Can't call EditorBase's copy ctor!!!")); }
+        EditorBase(const EditorBase& rhs) { cbThrow(wxT_2("Can't call EditorBase's copy ctor!!!")); }
 
         /** Don't use this. It throws an exception if you do. */
-        virtual void operator=(const EditorBase& rhs){ cbThrow(_T("Can't assign an EditorBase* !!!")); }
+        virtual void operator=(const EditorBase& rhs){ cbThrow(wxT_2("Can't assign an EditorBase* !!!")); }
 
         /** @brief Get the editor's filename (if applicable).
           *

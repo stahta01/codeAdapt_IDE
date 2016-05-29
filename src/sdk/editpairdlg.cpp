@@ -34,7 +34,7 @@ EditPairDlg::EditPairDlg(wxWindow* parent, wxString& key, wxString& value, const
     m_BrowseMode(allowBrowse)
 {
     //ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgEditPair"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgEditPair"));
 	SetTitle(title);
     XRCCTRL(*this, "btnBrowse", wxButton)->Enable(m_BrowseMode != bmDisable);
     XRCCTRL(*this, "txtKey", wxTextCtrl)->SetValue(key);
@@ -60,7 +60,7 @@ void EditPairDlg::OnBrowse(wxCommandEvent& event)
             wxFileDialog dlg(this,
                             _("Select file"),
                             XRCCTRL(*this, "txtValue", wxTextCtrl)->GetValue(),
-                            _T(""),
+                            wxT_2(""),
                             FileFilters::GetFilterAll(),
                             wxFD_OPEN | compatibility::wxHideReadonly);
             PlaceWindow(&dlg);
@@ -73,7 +73,7 @@ void EditPairDlg::OnBrowse(wxCommandEvent& event)
             wxString dir = ChooseDirectory(this,
                                             _("Select directory"),
                                             XRCCTRL(*this, "txtValue", wxTextCtrl)->GetValue(),
-                                            _T(""),
+                                            wxT_2(""),
                                             false,
                                             true);
             if (!dir.IsEmpty())

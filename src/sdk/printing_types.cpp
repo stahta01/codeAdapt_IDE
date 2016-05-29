@@ -30,8 +30,8 @@ void InitPrinting()
     if (!g_printer)
     {
         g_printer = new wxPrinter;
-        int paperid = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/printerdialog/paperid"), wxPAPER_A4 );
-        int paperorientation  = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/printerdialog/paperorientation"), wxPORTRAIT );
+        int paperid = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/printerdialog/paperid"), wxPAPER_A4 );
+        int paperorientation  = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/printerdialog/paperorientation"), wxPORTRAIT );
         wxPrintData* ppd = &(g_printer->GetPrintDialogData().GetPrintData());
         ppd->SetPaperId((wxPaperSize)paperid);
         ppd->SetOrientation(paperorientation);

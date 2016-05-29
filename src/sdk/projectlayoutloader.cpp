@@ -66,7 +66,7 @@ bool ProjectLayoutLoader::Open(const wxString& filename)
         root = doc.FirstChildElement("Code::Blocks_layout_file");
         if (!root)
         {
-            pMsg->DebugLog(_T("Not a valid Code::Blocks layout file..."));
+            pMsg->DebugLog(wxT_2("Not a valid Code::Blocks layout file..."));
             return false;
         }
     }
@@ -81,7 +81,7 @@ bool ProjectLayoutLoader::Open(const wxString& filename)
     elem = root->FirstChildElement("File");
     if (!elem)
     {
-        //pMsg->DebugLog(_T("No 'File' element in file..."));
+        //pMsg->DebugLog(wxT_2("No 'File' element in file..."));
         return false;
     }
 
@@ -91,7 +91,7 @@ bool ProjectLayoutLoader::Open(const wxString& filename)
         fname = cbC2U(elem->Attribute("name"));
         if (fname.IsEmpty())
         {
-            //pMsg->DebugLog(_T("'File' node exists, but no filename?!?"));
+            //pMsg->DebugLog(wxT_2("'File' node exists, but no filename?!?"));
             pf = 0L;
         }
         else

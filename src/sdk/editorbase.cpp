@@ -97,7 +97,7 @@ wxString EditorBase::CreateUniqueFilename()
     while (true)
     {
         tmp.Clear();
-        tmp << path << prefix << wxString::Format(_T("%d"), iter);
+        tmp << path << prefix << wxString::Format(wxT_2("%d"), iter);
         if (!Manager::Get()->GetEditorManager()->GetEditor(tmp) &&
                 !wxFileExists(path + tmp))
         {
@@ -110,8 +110,8 @@ wxString EditorBase::CreateUniqueFilename()
 EditorBase::EditorBase(wxWindow* parent, const wxString& filename)
         : wxPanel(parent, -1),
         m_IsBuiltinEditor(false),
-        m_Shortname(_T("")),
-        m_Filename(_T("")),
+        m_Shortname(wxT_2("")),
+        m_Filename(wxT_2("")),
         m_WinTitle(filename)
 {
 	m_pData = new EditorBaseInternalData(this);
@@ -375,15 +375,15 @@ void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
     {
         if (id == idGoogleCode)
         {
-            wxLaunchDefaultBrowser(wxString(_T("http://www.google.com/codesearch?q=")) << URLEncode(lastWord));
+            wxLaunchDefaultBrowser(wxString(wxT_2("http://www.google.com/codesearch?q=")) << URLEncode(lastWord));
         }
         else if (id == idGoogle)
         {
-            wxLaunchDefaultBrowser(wxString(_T("http://www.google.com/search?q=")) << URLEncode(lastWord));
+            wxLaunchDefaultBrowser(wxString(wxT_2("http://www.google.com/search?q=")) << URLEncode(lastWord));
         }
         else if (id == idMsdn)
         {
-            wxLaunchDefaultBrowser(wxString(_T("http://search.microsoft.com/search/results.aspx?qu=")) << URLEncode(lastWord) << _T("&View=msdn"));
+            wxLaunchDefaultBrowser(wxString(wxT_2("http://search.microsoft.com/search/results.aspx?qu=")) << URLEncode(lastWord) << wxT_2("&View=msdn"));
         }
     }
     else

@@ -40,7 +40,7 @@ AnnoyingDialog::AnnoyingDialog(const wxString& caption, const wxString& message,
 	// Code::Blocks needs wxWidgets 2.8
 	CompileTimeAssertion<wxMinimumVersion<2,8>::eval>::Assert();
 
-    ConfigManagerContainer::StringSet disabled = Manager::Get()->GetConfigManager(_T("an_dlg"))->ReadSSet(_T("/disabled"));
+    ConfigManagerContainer::StringSet disabled = Manager::Get()->GetConfigManager(wxT_2("an_dlg"))->ReadSSet(wxT_2("/disabled"));
     if(disabled.find(caption) != disabled.end())
     {
         dontAnnoy = true;
@@ -91,7 +91,7 @@ AnnoyingDialog::AnnoyingDialog(const wxString& caption, const wxString& message,
         bTxt3 = b3.IsEmpty() ? wxString(_("&Cancel")) : b3;
     }
     else
-        cbThrow(wxString(_T("Fatal error:\nUndefined style in dialog ")) << caption);
+        cbThrow(wxString(wxT_2("Fatal error:\nUndefined style in dialog ")) << caption);
 
 	wxSizer* buttonSizer = 0;
 	if (style < ONE_BUTTON) // standard buttons? use wxStdDialogButtonSizer
@@ -156,13 +156,13 @@ AnnoyingDialog::AnnoyingDialog(const wxString& caption, const wxString& message,
 void AnnoyingDialog::OnButton(wxCommandEvent& event)
 {
     if(!cb)
-        cbThrow(_T("Ow... null pointer."));
+        cbThrow(wxT_2("Ow... null pointer."));
 
     if(cb->IsChecked())
     {
-        ConfigManagerContainer::StringSet disabled = Manager::Get()->GetConfigManager(_T("an_dlg"))->ReadSSet(_T("/disabled"));
+        ConfigManagerContainer::StringSet disabled = Manager::Get()->GetConfigManager(wxT_2("an_dlg"))->ReadSSet(wxT_2("/disabled"));
         disabled.insert(GetTitle());
-        Manager::Get()->GetConfigManager(_T("an_dlg"))->Write(_T("/disabled"), disabled);
+        Manager::Get()->GetConfigManager(wxT_2("an_dlg"))->Write(wxT_2("/disabled"), disabled);
     }
     EndModal(event.GetId());
 }

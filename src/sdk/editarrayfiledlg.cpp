@@ -39,7 +39,7 @@ EditArrayFileDlg::EditArrayFileDlg(wxWindow* parent, wxArrayString& array, bool 
 	m_BasePath(basePath)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgEditArrayString"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgEditArrayString"));
 
 	wxListBox* list = XRCCTRL(*this, "lstItems", wxListBox);
 	list->Clear();
@@ -82,7 +82,7 @@ void EditArrayFileDlg::OnAdd(wxCommandEvent& event)
     wxFileDialog dlg(this,
                     _("Select file"),
                     m_BasePath,
-                    _T(""),
+                    wxT_2(""),
                     FileFilters::GetFilterAll(),
                     wxFD_OPEN | compatibility::wxHideReadonly);
     PlaceWindow(&dlg);

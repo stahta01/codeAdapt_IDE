@@ -85,7 +85,7 @@ void TemplateManager::BuildToolsMenu(wxMenu* menu)
 void TemplateManager::LoadUserTemplates()
 {
     m_UserTemplates.Clear();
-    wxString baseDir = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString baseDir = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("UserTemplates");
 
     wxDir dir(baseDir);
 
@@ -93,14 +93,14 @@ void TemplateManager::LoadUserTemplates()
         return;
 
     wxString filename;
-    bool ok = dir.GetFirst(&filename, _T("*"), wxDIR_DIRS);
+    bool ok = dir.GetFirst(&filename, wxT_2("*"), wxDIR_DIRS);
     while (ok)
     {
         m_UserTemplates.Add(filename);
         ok = dir.GetNext(&filename);
     }
 
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("%d user templates loaded"), m_UserTemplates.GetCount()));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("%d user templates loaded"), m_UserTemplates.GetCount()));
 }
 
 cbProject* TemplateManager::New(TemplateOutputType initial, wxString* pFilename)
@@ -142,15 +142,15 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
     cbProject* prj = NULL;
     if (!dlg.SelectedUserTemplate())
     {
-        Manager::Get()->GetLogManager()->DebugLog(_T("TemplateManager::NewProjectFromUserTemplate() called when no user template was selected ?!?"));
+        Manager::Get()->GetLogManager()->DebugLog(wxT_2("TemplateManager::NewProjectFromUserTemplate() called when no user template was selected ?!?"));
         return NULL;
     }
 
-    wxString path = Manager::Get()->GetConfigManager(_T("template_manager"))->Read(_T("/projects_path"));
+    wxString path = Manager::Get()->GetConfigManager(wxT_2("template_manager"))->Read(wxT_2("/projects_path"));
     wxString sep = caFileName::GetPathSeparator();
     // select directory to copy user template files
     path = ChooseDirectory(0, _("Choose a directory to create the new project"),
-                        path, _T(""), false, true);
+                        path, wxT_2(""), false, true);
     if (path.IsEmpty())
     {
         return NULL;
@@ -175,11 +175,11 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
 
     wxBusyCursor busy;
 
-    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("UserTemplates");
     templ << sep << dlg.GetSelectedUserTemplate();
     if (!wxDirExists(templ))
     {
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Cannot open user-template source path '%s'!"), templ.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("Cannot open user-template source path '%s'!"), templ.c_str()));
         return NULL;
     }
 
@@ -197,7 +197,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
         wxString dst = path + sep + dstname.GetFullPath();
 //        Manager::Get()->GetLogManager()->DebugLog("dst=%s, dstname=%s", dst.c_str(), dstname.GetFullPath().c_str());
         if (!CreateDirRecursively(dst))
-            Manager::Get()->GetLogManager()->DebugLog(_T("Failed creating directory for ") + dst);
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Failed creating directory for ") + dst);
         if (wxCopyFile(src, dst, true))
         {
             if (FileTypeOf(dst) == ftCodeBlocksProject)
@@ -205,7 +205,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
             ++count;
         }
         else
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.c_str(), dst.c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(wxT("Failed copying %s to %s"), src.c_str(), dst.c_str()));
     }
     if (count != total_count)
         cbMessageBox(_("Some files could not be loaded with the template..."), _("Error"), wxICON_ERROR);
@@ -270,7 +270,7 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     }
 
     // create destination dir
-    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("UserTemplates");
+    wxString templ = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("UserTemplates");
     if (!CreateDirRecursively(templ, 0755))
     {
         cbMessageBox(_("Couldn't create directory for user templates:\n") + templ, _("Error"), wxICON_ERROR);
@@ -309,13 +309,13 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     {
         wxString src = prj->GetFile(i)->file.GetFullPath();
         wxString dst = templ + prj->GetFile(i)->relativeToCommonTopLevelPath;
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Copying %s to %s"), src.c_str(), dst.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("Copying %s to %s"), src.c_str(), dst.c_str()));
         if (!CreateDirRecursively(dst))
-            Manager::Get()->GetLogManager()->DebugLog(_T("Failed creating directory for ") + dst);
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Failed creating directory for ") + dst);
         if (wxCopyFile(src, dst, true))
             ++count;
         else
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.c_str(), dst.c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(wxT("Failed copying %s to %s"), src.c_str(), dst.c_str()));
     }
 
     // cbProject doesn't have a GetRelativeToCommonTopLevelPath() function, so we simulate it here
@@ -333,7 +333,7 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     {
         if (!wxCopyFile(prj->GetFilename(), fname.GetFullPath()))
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Failed to copy the project file: ") + fname.GetFullPath());
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Failed to copy the project file: ") + fname.GetFullPath());
             cbMessageBox(_("Failed to copy the project file!"), _("Error"), wxICON_ERROR);
             ++count;
         }

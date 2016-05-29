@@ -123,19 +123,19 @@ bool ToolsManager::Execute(const cbTool* tool)
     {
 #ifndef __WXMSW__
         // for non-win platforms, use m_ConsoleTerm to run the console app
-        wxString term = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/console_terminal"), DEFAULT_CONSOLE_TERM);
-        term.Replace(_T("$TITLE"), _T("'") + tool->GetName() + _T("'"));
-        cmdline << term << _T(" ");
+        wxString term = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/console_terminal"), DEFAULT_CONSOLE_TERM);
+        term.Replace(wxT_2("$TITLE"), wxT_2("'") + tool->GetName() + wxT_2("'"));
+        cmdline << term << wxT_2(" ");
         #define CONSOLE_RUNNER "cb_console_runner"
 #else
         #define CONSOLE_RUNNER "cb_console_runner.exe"
 #endif
         wxString baseDir = ConfigManager::GetExecutableFolder();
-        if (wxFileExists(baseDir + wxT("/" CONSOLE_RUNNER)))
-            cmdline << baseDir << wxT("/" CONSOLE_RUNNER " ");
+        if (wxFileExists(baseDir + wxT_2("/" CONSOLE_RUNNER)))
+            cmdline << baseDir << wxT_2("/" CONSOLE_RUNNER " ");
     }
 
-    if (!cmdline.Replace(_T("$SCRIPT"), cmd << _T(" ") << params))
+    if (!cmdline.Replace(wxT_2("$SCRIPT"), cmd << wxT_2(" ") << params))
         // if they didn't specify $SCRIPT, append:
         cmdline << cmd;
 
@@ -271,20 +271,20 @@ cbTool* ToolsManager::GetToolByIndex(int index)
 
 void ToolsManager::LoadTools()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("tools"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("tools"));
     wxArrayString list = cfg->EnumerateSubPaths(_("/"));
     for (unsigned int i = 0; i < list.GetCount(); ++i)
     {
         cbTool tool;
-        tool.SetName( cfg->Read(_T("/") + list[i] + _T("/name")));
+        tool.SetName( cfg->Read(wxT_2("/") + list[i] + wxT_2("/name")));
         if (tool.GetName().IsEmpty())
             continue;
-        tool.SetCommand(cfg->Read(_T("/") + list[i] + _T("/command")));
+        tool.SetCommand(cfg->Read(wxT_2("/") + list[i] + wxT_2("/command")));
         if (tool.GetCommand().IsEmpty())
             continue;
-        tool.SetParams(cfg->Read(_T("/") + list[i] + _T("/params")));
-        tool.SetWorkingDir(cfg->Read(_T("/") + list[i] + _T("/workingDir")));
-        tool.SetLaunchOption(static_cast<cbTool::eLaunchOption>(cfg->ReadInt(_T("/") + list[i] + _T("/launchOption"))));
+        tool.SetParams(cfg->Read(wxT_2("/") + list[i] + wxT_2("/params")));
+        tool.SetWorkingDir(cfg->Read(wxT_2("/") + list[i] + wxT_2("/workingDir")));
+        tool.SetLaunchOption(static_cast<cbTool::eLaunchOption>(cfg->ReadInt(wxT_2("/") + list[i] + wxT_2("/launchOption"))));
 
         AddTool(&tool, false);
     }
@@ -293,7 +293,7 @@ void ToolsManager::LoadTools()
 
 void ToolsManager::SaveTools()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("tools"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("tools"));
     wxArrayString list = cfg->EnumerateSubPaths(_("/"));
     for (unsigned int i = 0; i < list.GetCount(); ++i)
     {
@@ -308,14 +308,14 @@ void ToolsManager::SaveTools()
 
         // prepend a 0-padded 2-digit number to keep ordering
         wxString tmp;
-        tmp.Printf(_T("tool%2.2d"), count++);
+        tmp.Printf(wxT_2("tool%2.2d"), count++);
 
-        elem << _T("/") << tmp  << _T("/");
-        cfg->Write(elem + _T("name"), tool->GetName());
-        cfg->Write(elem + _T("command"), tool->GetCommand());
-        cfg->Write(elem + _T("params"), tool->GetParams());
-        cfg->Write(elem + _T("workingDir"), tool->GetWorkingDir());
-        cfg->Write(elem + _T("launchOption"), static_cast<int>(tool->GetLaunchOption()));
+        elem << wxT_2("/") << tmp  << wxT_2("/");
+        cfg->Write(elem + wxT_2("name"), tool->GetName());
+        cfg->Write(elem + wxT_2("command"), tool->GetCommand());
+        cfg->Write(elem + wxT_2("params"), tool->GetParams());
+        cfg->Write(elem + wxT_2("workingDir"), tool->GetWorkingDir());
+        cfg->Write(elem + wxT_2("launchOption"), static_cast<int>(tool->GetLaunchOption()));
     }
 }
 
@@ -328,7 +328,7 @@ void ToolsManager::BuildToolsMenu(wxMenu* menu)
     m_Menu = menu;
     if (m_Menu->GetMenuItemCount() > 0)
     {
-        m_ItemsManager.Add(menu, wxID_SEPARATOR, _T(""), _T(""));
+        m_ItemsManager.Add(menu, wxID_SEPARATOR, wxT_2(""), wxT_2(""));
     }
 
     for (ToolsList::Node* node = m_Tools.GetFirst(); node; node = node->GetNext())
@@ -336,7 +336,7 @@ void ToolsManager::BuildToolsMenu(wxMenu* menu)
         cbTool* tool = node->GetData();
         if (tool->GetName() == CB_TOOLS_SEPARATOR)
         {
-            m_ItemsManager.Add(menu, wxID_SEPARATOR, _T(""), _T(""));
+            m_ItemsManager.Add(menu, wxID_SEPARATOR, wxT_2(""), wxT_2(""));
             continue;
         }
         if (tool->GetMenuId() == -1)
@@ -351,7 +351,7 @@ void ToolsManager::BuildToolsMenu(wxMenu* menu)
 
     if (m_Tools.GetCount() > 0)
     {
-        m_ItemsManager.Add(menu, wxID_SEPARATOR, _T(""), _T(""));
+        m_ItemsManager.Add(menu, wxID_SEPARATOR, wxT_2(""), wxT_2(""));
     }
     m_ItemsManager.Add(menu, idToolsConfigure, _("&Configure tools..."), _("Add/remove user-defined tools"));
 }
@@ -402,12 +402,12 @@ void ToolsManager::OnIdle(wxIdleEvent& event)
 
 void ToolsManager::OnToolStdOutput(CodeBlocksEvent& event)
 {
-    Manager::Get()->GetLogManager()->Log(_T("stdout> ") + event.GetString());
+    Manager::Get()->GetLogManager()->Log(wxT_2("stdout> ") + event.GetString());
 }
 
 void ToolsManager::OnToolErrOutput(CodeBlocksEvent& event)
 {
-    Manager::Get()->GetLogManager()->Log(_T("stderr> ") + event.GetString());
+    Manager::Get()->GetLogManager()->Log(wxT_2("stderr> ") + event.GetString());
 }
 
 void ToolsManager::OnToolTerminated(CodeBlocksEvent& event)
@@ -415,5 +415,5 @@ void ToolsManager::OnToolTerminated(CodeBlocksEvent& event)
     m_Pid = 0;
     m_pProcess = 0;
 
-    Manager::Get()->GetLogManager()->Log(F(_T("Tool execution terminated with status %d"), event.GetInt()));
+    Manager::Get()->GetLogManager()->Log(F(wxT("Tool execution terminated with status %d"), event.GetInt()));
 }

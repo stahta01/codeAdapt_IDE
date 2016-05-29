@@ -110,12 +110,12 @@ Manager* Manager::Get(wxFrame *appWindow)
     {
         if(Get()->m_pAppWindow)
         {
-            cbThrow(_T("Illegal argument to Manager::Get()"));
+            cbThrow(wxT_2("Illegal argument to Manager::Get()"));
         }
         else
         {
             Get()->m_pAppWindow = appWindow;
-            LoadResource(_T("manager_resources.zip"));
+            LoadResource(wxT_2("manager_resources.zip"));
             Get()->GetLogManager()->Log(_("Manager initialized"));
         }
     }
@@ -272,7 +272,7 @@ wxMenuBar *Manager::LoadMenuBar(wxString resid,bool createonfailure)
 wxMenu *Manager::LoadMenu(wxString menu_id,bool createonfailure)
 {
     wxMenu *m = wxXmlResource::Get()->LoadMenu(menu_id);
-    if(!m && createonfailure) m=new wxMenu(_T(""));
+    if(!m && createonfailure) m=new wxMenu(wxT_2(""));
     return m;
 }
 
@@ -299,7 +299,7 @@ void Manager::AddonToolBar(wxToolBar* toolBar,wxString resid)
 {
     if(!toolBar)
         return;
-    wxXmlResource::Get()->LoadObject(toolBar,NULL,resid,_T("wxToolBarAddOn"));
+    wxXmlResource::Get()->LoadObject(toolBar,NULL,resid,wxT_2("wxToolBarAddOn"));
 }
 
 bool Manager::isToolBar16x16(wxToolBar* toolBar)
@@ -381,7 +381,7 @@ FileManager* Manager::GetFileManager() const
 bool Manager::LoadResource(const wxString& file)
 {
     wxString resourceFile = ConfigManager::LocateDataFile(file, sdDataGlobal | sdDataUser);
-    wxString memoryFile = _T("memory:") + file;
+    wxString memoryFile = wxT_2("memory:") + file;
 
     if(wxFile::Access(resourceFile, wxFile::read) == false)
         return false;

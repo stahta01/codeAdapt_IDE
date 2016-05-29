@@ -223,11 +223,11 @@ wxString cbProject::CreateUniqueFilename()
     int projCount = arr->GetCount();
     int iter = 1;
     bool ok = false;
-    tmp << prefix << wxString::Format(_T("%d"), iter);
+    tmp << prefix << wxString::Format(wxT_2("%d"), iter);
     while (!ok)
     {
         tmp.Clear();
-        tmp << prefix << wxString::Format(_T("%d"), iter);
+        tmp << prefix << wxString::Format(wxT_2("%d"), iter);
 
         ok = true;
         for (int i = 0; i < projCount; ++i)
@@ -245,7 +245,7 @@ wxString cbProject::CreateUniqueFilename()
             break;
         ++iter;
     }
-    return tmp << _T(".") << FileFilters::CODEBLOCKS_EXT;
+    return tmp << wxT_2(".") << FileFilters::CODEBLOCKS_EXT;
 }
 
 void cbProject::ClearAllProperties()
@@ -334,7 +334,7 @@ void cbProject::CalculateCommonTopLevelPath()
     // in their paths
     wxString sep = caFileName::GetPathSeparator();
     wxFileName base = GetBasePath() + sep;
-    Manager::Get()->GetLogManager()->DebugLog(_T("Project's base path: ") + base.GetFullPath());
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Project's base path: ") + base.GetFullPath());
 
     // this loop takes ~30ms for 1000 project files
     // it's as fast as it can get, considered that it used to take ~1200ms ;)
@@ -347,7 +347,7 @@ void cbProject::CalculateCommonTopLevelPath()
 
         size_t pos = 0;
         while (pos < tmp.Length() &&
-            (tmp.GetChar(pos) == _T('.') || tmp.GetChar(pos) == _T('/') || tmp.GetChar(pos) == _T('\\')))
+            (tmp.GetChar(pos) == wxT_2('.') || tmp.GetChar(pos) == wxT_2('/') || tmp.GetChar(pos) == wxT_2('\\')))
         {
             ++pos;
         }
@@ -367,7 +367,7 @@ void cbProject::CalculateCommonTopLevelPath()
     }
 
     m_CommonTopLevelPath = base.GetFullPath();
-    Manager::Get()->GetLogManager()->DebugLog(_T("Project's common toplevel path: ") + m_CommonTopLevelPath);
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Project's common toplevel path: ") + m_CommonTopLevelPath);
 }
 
 wxString cbProject::GetCommonTopLevelPath() const
@@ -388,7 +388,7 @@ bool cbProject::SaveAs()
                     _("Save file"),
                     fname.GetPath(),
                     fname.GetFullName(),
-                    FileFilters::GetFilterString(_T('.') + FileFilters::CODEBLOCKS_EXT),
+                    FileFilters::GetFilterString(wxT_2('.') + FileFilters::CODEBLOCKS_EXT),
                     wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     PlaceWindow(&dlg);
@@ -403,7 +403,7 @@ bool cbProject::SaveAs()
     // (and it might not be)
     // so we just append the correct extension
     if (!fname.GetExt().Matches(FileFilters::CODEBLOCKS_EXT))
-        fname.Assign(m_Filename + _T('.') + FileFilters::CODEBLOCKS_EXT);
+        fname.Assign(m_Filename + wxT_2('.') + FileFilters::CODEBLOCKS_EXT);
 
 //    Manager::Get()->GetProjectManager()->GetTree()->SetItemText(m_ProjectNode, fname.GetFullName());
     if (!m_Loaded)
@@ -444,7 +444,7 @@ bool cbProject::SaveLayout()
         return false;
 
     wxFileName fname(m_Filename);
-    fname.SetExt(_T("layout"));
+    fname.SetExt(wxT_2("layout"));
     ProjectLayoutLoader loader(this);
     return loader.Save(fname.GetFullPath());
 }
@@ -453,7 +453,7 @@ bool cbProject::LoadLayout()
 {
    if (m_Filename.IsEmpty())
         return false;
-    int openmode = Manager::Get()->GetConfigManager(_T("project_manager"))->ReadInt(_T("/open_files"), (long int)1);
+    int openmode = Manager::Get()->GetConfigManager(wxT_2("project_manager"))->ReadInt(wxT_2("/open_files"), (long int)1);
     bool result = false;
 
     if(openmode==2)
@@ -478,7 +478,7 @@ bool cbProject::LoadLayout()
         else if(openmode == 1)// Open last open files
         {
             wxFileName fname(m_Filename);
-            fname.SetExt(_T("layout"));
+            fname.SetExt(wxT_2("layout"));
             ProjectLayoutLoader loader(this);
             if (loader.Open(fname.GetFullPath()))
             {
@@ -514,7 +514,7 @@ bool cbProject::LoadLayout()
                 ProjectFile* f = loader.GetTopProjectFile();
                 if (f)
                 {
-                    Manager::Get()->GetLogManager()->DebugLog(_T("Top Editor: ") + f->file.GetFullPath());
+                    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Top Editor: ") + f->file.GetFullPath());
                     EditorBase* eb = Manager::Get()->GetEditorManager()->Open(f->file.GetFullPath());
                     if(eb)
                         eb->Activate();
@@ -606,13 +606,13 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 
     FileType ft = FileTypeOf(filename);
 
-    ext = filename.AfterLast(_T('.')).Lower();
+    ext = filename.AfterLast(wxT_2('.')).Lower();
     if (ext.IsSameAs(FileFilters::C_EXT))
-        f->compilerVar = _T("CC");
+        f->compilerVar = wxT_2("CC");
     else if (platform::windows && ext.IsSameAs(FileFilters::RESOURCE_EXT))
-        f->compilerVar = _T("WINDRES");
+        f->compilerVar = wxT_2("WINDRES");
     else
-        f->compilerVar = _T("CPP"); // default
+        f->compilerVar = wxT_2("CPP"); // default
 
     if (!m_Targets.GetCount())
     {
@@ -703,7 +703,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 #ifdef __WXMSW__
     // for windows, make sure the filename is not on another drive...
     if (local_filename.Length() > 1 &&
-        local_filename.GetChar(1) == _T(':') && // quick test to avoid the costly wxFileName ctor below
+        local_filename.GetChar(1) == wxT_2(':') && // quick test to avoid the costly wxFileName ctor below
         fname.GetVolume() != wxFileName(m_Filename).GetVolume())
     {
         fname.Assign(filename);
@@ -769,16 +769,16 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 				wxString tmps = tmp.GetFullPath();
 				// any macro replacements here, should also be done in
 				// CompilerCommandGenerator::GenerateCommandLine !!!
-				tmps.Replace(_T("$file_basename"), f->file.GetName()); // old way - remove later
-				tmps.Replace(_T("$file_name"), f->file.GetName());
-				tmps.Replace(_T("$file_dir"), f->file.GetPath());
-				tmps.Replace(_T("$file_ext"), f->file.GetExt());
-				tmps.Replace(_T("$file"), f->file.GetFullName());
+				tmps.Replace(wxT_2("$file_basename"), f->file.GetName()); // old way - remove later
+				tmps.Replace(wxT_2("$file_name"), f->file.GetName());
+				tmps.Replace(wxT_2("$file_dir"), f->file.GetPath());
+				tmps.Replace(wxT_2("$file_ext"), f->file.GetExt());
+				tmps.Replace(wxT_2("$file"), f->file.GetFullName());
 				Manager::Get()->GetMacrosManager()->ReplaceMacros(tmps);
 
 				ProjectFile* pfile = AddFile(targetIndex, UnixFilename(tmps));
 				if (!pfile)
-					Manager::Get()->GetLogManager()->DebugLog(_T("Can't add auto-generated file ") + tmps);
+					Manager::Get()->GetLogManager()->DebugLog(wxT_2("Can't add auto-generated file ") + tmps);
 				else
 				{
 					f->generatedFiles.push_back(pfile);
@@ -801,7 +801,7 @@ bool cbProject::RemoveFile(ProjectFile* pf)
     FilesList::Node* node = m_Files.Find(pf);
     if (!node)
     {
-        Manager::Get()->GetLogManager()->DebugLog(_T("Can't locate node for ProjectFile* !"));
+        Manager::Get()->GetLogManager()->DebugLog(wxT_2("Can't locate node for ProjectFile* !"));
     }
     else
     {
@@ -952,7 +952,7 @@ void cbProject::BuildTree(wxTreeCtrl* tree, const wxTreeItemId& root, bool categ
         {
             nodetext = f->virtual_path + wxFILE_SEP_PATH + f->file.GetFullName();
             folders_kind = FileTreeData::ftdkVirtualFolder;
-            wxString slash = f->virtual_path.Last() == wxFILE_SEP_PATH ? _T("") : wxString(wxFILE_SEP_PATH);
+            wxString slash = f->virtual_path.Last() == wxFILE_SEP_PATH ? wxT_2("") : wxString(wxFILE_SEP_PATH);
             ftd->SetFolder(f->virtual_path);
 
             if (m_VirtualFolders.Index(f->virtual_path + slash) == wxNOT_FOUND)
@@ -1017,18 +1017,18 @@ wxTreeItemId cbProject::AddTreeNode(wxTreeCtrl* tree,
     wxString path = text;
 
     // special case for windows and files on a different drive
-    if (platform::windows && path.Length() > 1 && path.GetChar(1) == _T(':'))
+    if (platform::windows && path.Length() > 1 && path.GetChar(1) == wxT_2(':'))
         path.Remove(1, 1);
 
-    int pos = path.Find(_T('/'));
+    int pos = path.Find(wxT_2('/'));
     if (pos == -1)
-        pos = path.Find(_T('\\'));
+        pos = path.Find(wxT_2('\\'));
     if (useFolders && pos >= 0)
     {
         // ok, we got it. now split it up and recurse
         wxString folder = path.Left(pos);
         // avoid consecutive path separators
-        while (path.GetChar(pos + 1) == _T('/') || path.GetChar(pos + 1) == _T('\\'))
+        while (path.GetChar(pos + 1) == wxT_2('/') || path.GetChar(pos + 1) == wxT_2('\\'))
             ++pos;
         path = path.Right(path.Length() - pos - 1);
 
@@ -1164,8 +1164,8 @@ void cbProject::SetVirtualFolders(const wxArrayString& folders)
     m_VirtualFolders = folders;
     for (size_t i = 0; i < m_VirtualFolders.GetCount(); ++i)
     {
-        m_VirtualFolders[i].Replace(_T("/"), wxString(wxFILE_SEP_PATH));
-        m_VirtualFolders[i].Replace(_T("\\"), wxString(wxFILE_SEP_PATH));
+        m_VirtualFolders[i].Replace(wxT_2("/"), wxString(wxFILE_SEP_PATH));
+        m_VirtualFolders[i].Replace(wxT_2("\\"), wxString(wxFILE_SEP_PATH));
     }
 }
 
@@ -1247,8 +1247,8 @@ bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, c
 {
     wxString foldername = GetRelativeFolderPath(tree, parent_node);
     foldername << virtual_folder;
-    foldername.Replace(_T("/"), wxString(wxFILE_SEP_PATH), true);
-    foldername.Replace(_T("\\"), wxString(wxFILE_SEP_PATH), true);
+    foldername.Replace(wxT_2("/"), wxString(wxFILE_SEP_PATH), true);
+    foldername.Replace(wxT_2("\\"), wxString(wxFILE_SEP_PATH), true);
     if (foldername.Last() != wxFILE_SEP_PATH)
         foldername << wxFILE_SEP_PATH;
 
@@ -1275,7 +1275,7 @@ bool cbProject::VirtualFolderAdded(wxTreeCtrl* tree, wxTreeItemId parent_node, c
 
     SetModified(true);
 
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("VirtualFolderAdded: %s: %s"), foldername.c_str(), GetStringFromArray(m_VirtualFolders, _T(";")).c_str()));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("VirtualFolderAdded: %s: %s"), foldername.c_str(), GetStringFromArray(m_VirtualFolders, wxT_2(";")).c_str()));
     return true;
 }
 
@@ -1317,7 +1317,7 @@ void cbProject::VirtualFolderDeleted(wxTreeCtrl* tree, wxTreeItemId node)
         m_VirtualFolders.Add(parent_foldername);
 
     SetModified(true);
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("VirtualFolderDeleted: %s: %s"), foldername.c_str(), GetStringFromArray(m_VirtualFolders, _T(";")).c_str()));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("VirtualFolderDeleted: %s: %s"), foldername.c_str(), GetStringFromArray(m_VirtualFolders, wxT_2(";")).c_str()));
 }
 
 bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const wxString& new_name)
@@ -1325,9 +1325,9 @@ bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const 
     if (new_name.IsEmpty())
         return false;
 
-    if (new_name.First(_T(';')) != wxNOT_FOUND ||
-        new_name.First(_T('/')) != wxNOT_FOUND ||
-        new_name.First(_T('\\')) != wxNOT_FOUND)
+    if (new_name.First(wxT_2(';')) != wxNOT_FOUND ||
+        new_name.First(wxT_2('/')) != wxNOT_FOUND ||
+        new_name.First(wxT_2('\\')) != wxNOT_FOUND)
     {
         cbMessageBox(_("A virtual folder name cannot contain these special characters: \";\", \"\\\" or \"/\"."),
                     _("Error"), wxICON_WARNING);
@@ -1382,7 +1382,7 @@ bool cbProject::VirtualFolderRenamed(wxTreeCtrl* tree, wxTreeItemId node, const 
 
     SetModified(true);
 
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("VirtualFolderRenamed: %s to %s: %s"), old_foldername.c_str(), new_foldername.c_str(), GetStringFromArray(m_VirtualFolders, _T(";")).c_str()));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("VirtualFolderRenamed: %s to %s: %s"), old_foldername.c_str(), new_foldername.c_str(), GetStringFromArray(m_VirtualFolders, wxT_2(";")).c_str()));
     return true;
 }
 
@@ -1411,8 +1411,8 @@ const wxString& cbProject::GetMakefile()
 
     wxFileName makefile(m_Makefile);
     makefile.Assign(m_Filename);
-    makefile.SetName(_T("Makefile"));
-    makefile.SetExt(_T(""));
+    makefile.SetName(wxT_2("Makefile"));
+    makefile.SetExt(wxT_2(""));
     makefile.MakeRelativeTo(GetBasePath());
 
     m_Makefile = makefile.GetFullPath();
@@ -1445,8 +1445,8 @@ ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelat
         // make sure filename doesn't start with ".\"
         // our own relative files don't have it, so the search would fail
         // this happens when importing MS projects...
-        if (tmp.StartsWith(_T(".\\")) ||
-            tmp.StartsWith(_T("./")))
+        if (tmp.StartsWith(wxT_2(".\\")) ||
+            tmp.StartsWith(wxT_2("./")))
         {
             tmp.Remove(0, 2);
         }
@@ -1547,7 +1547,7 @@ int cbProject::SelectTarget(int initial, bool evenIfOne)
 
 ProjectBuildTarget* cbProject::AddDefaultBuildTarget()
 {
-    return AddBuildTarget(_T("default"));
+    return AddBuildTarget(wxT_2("default"));
 }
 
 ProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
@@ -1559,16 +1559,16 @@ ProjectBuildTarget* cbProject::AddBuildTarget(const wxString& targetName)
     target->SetTitle(targetName);
     target->SetCompilerID(GetCompilerID()); // same compiler as project's
     target->SetOutputFilename(wxFileName(GetOutputFilename()).GetFullName());
-    target->SetWorkingDir(_T("."));
-    target->SetObjectOutput(_T(".objs"));
-    target->SetDepsOutput(_T(".deps"));
+    target->SetWorkingDir(wxT_2("."));
+    target->SetObjectOutput(wxT_2(".objs"));
+    target->SetDepsOutput(wxT_2(".deps"));
     m_Targets.Add(target);
 
     // remove any virtual targets with the same name
     if (HasVirtualBuildTarget(targetName))
     {
         RemoveVirtualBuildTarget(targetName);
-        Manager::Get()->GetLogManager()->LogWarning(F(_T("Deleted existing virtual target '%s' because real target was added with the same name"), targetName.c_str()));
+        Manager::Get()->GetLogManager()->LogWarning(F(wxT("Deleted existing virtual target '%s' because real target was added with the same name"), targetName.c_str()));
     }
 
     SetModified(true);
@@ -1814,7 +1814,7 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
     LogManager* msgMan = Manager::Get()->GetLogManager();
     if (nameOrder.GetCount() != m_Targets.GetCount())
     {
-        msgMan->DebugLog(F(_T("cbProject::ReOrderTargets() : Count does not match (%d sent, %d had)..."), nameOrder.GetCount(), m_Targets.GetCount()));
+        msgMan->DebugLog(F(wxT("cbProject::ReOrderTargets() : Count does not match (%d sent, %d had)..."), nameOrder.GetCount(), m_Targets.GetCount()));
         return;
     }
 
@@ -1823,7 +1823,7 @@ void cbProject::ReOrderTargets(const wxArrayString& nameOrder)
         ProjectBuildTarget* target = GetBuildTarget(nameOrder[i]);
         if (!target)
         {
-            msgMan->DebugLog(F(_T("cbProject::ReOrderTargets() : Target \"%s\" not found..."), nameOrder[i].c_str()));
+            msgMan->DebugLog(F(wxT("cbProject::ReOrderTargets() : Target \"%s\" not found..."), nameOrder[i].c_str()));
             break;
         }
 
@@ -1855,14 +1855,14 @@ bool cbProject::DefineVirtualBuildTarget(const wxString& alias, const wxArrayStr
 {
     if (targets.GetCount() == 0)
     {
-        Manager::Get()->GetLogManager()->LogWarning(F(_T("Can't define virtual build target '%s': Group of build targets is empty!"), alias.c_str()));
+        Manager::Get()->GetLogManager()->LogWarning(F(wxT("Can't define virtual build target '%s': Group of build targets is empty!"), alias.c_str()));
         return false;
     }
 
     ProjectBuildTarget* existing = GetBuildTarget(alias);
     if (existing)
     {
-        Manager::Get()->GetLogManager()->LogWarning(F(_T("Can't define virtual build target '%s': Real build target exists with that name!"), alias.c_str()));
+        Manager::Get()->GetLogManager()->LogWarning(F(wxT("Can't define virtual build target '%s': Real build target exists with that name!"), alias.c_str()));
         return false;
     }
 
@@ -2076,7 +2076,7 @@ void cbProject::SetTitle(const wxString& title)
 TiXmlNode* cbProject::GetExtensionsNode()
 {
     if (!m_pExtensionsElement)
-        m_pExtensionsElement = new TiXmlElement(cbU2C(_T("Extensions")));
+        m_pExtensionsElement = new TiXmlElement(cbU2C(wxT_2("Extensions")));
     return m_pExtensionsElement;
 }
 
@@ -2090,22 +2090,22 @@ void cbProject::AddToExtensions(const wxString& stringDesc)
     while (true)
     {
         // ignore consecutive slashes
-        while (pos < stringDesc.Length() && stringDesc.GetChar(pos) == _T('/'))
+        while (pos < stringDesc.Length() && stringDesc.GetChar(pos) == wxT_2('/'))
         {
             ++pos;
         }
 
         // find next slash or colon
         size_t nextPos = pos;
-        while (nextPos < stringDesc.Length() && stringDesc.GetChar(++nextPos) != _T('/') && stringDesc.GetChar(nextPos) != _T(':'))
+        while (nextPos < stringDesc.Length() && stringDesc.GetChar(++nextPos) != wxT_2('/') && stringDesc.GetChar(nextPos) != wxT_2(':'))
             ;
 
         wxString current = stringDesc.Mid(pos, nextPos - pos);
-        if (current.IsEmpty() || current[0] == _T(':')) // abort on invalid case: "node/:attr=val" (consecutive "/:")
+        if (current.IsEmpty() || current[0] == wxT_2(':')) // abort on invalid case: "node/:attr=val" (consecutive "/:")
             break;
 
         // find or create the subnode
-        bool forceAdd = current[0] == _T('+');
+        bool forceAdd = current[0] == wxT_2('+');
         if (forceAdd)
             current.Remove(0, 1); // remove '+'
         TiXmlElement* sub = !forceAdd ? elem->FirstChildElement(cbU2C(current)) : 0;
@@ -2117,12 +2117,12 @@ void cbProject::AddToExtensions(const wxString& stringDesc)
         elem = sub;
 
         // last node?
-        if (stringDesc.GetChar(nextPos) == _T(':'))
+        if (stringDesc.GetChar(nextPos) == wxT_2(':'))
         {
             // yes, just parse the attribute now
             pos = nextPos + 1; // skip the colon
             nextPos = pos;
-            while (nextPos < stringDesc.Length() && stringDesc.GetChar(++nextPos) != _T('='))
+            while (nextPos < stringDesc.Length() && stringDesc.GetChar(++nextPos) != wxT_2('='))
                 ;
             if (pos == nextPos || nextPos == stringDesc.Length())
             {

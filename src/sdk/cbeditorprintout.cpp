@@ -59,11 +59,11 @@ bool cbEditorPrintout::OnPrintPage(int page)
             m_printed = (*m_pPageSelStart)[page-1];
         else
         {
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("OnPrintPage ERROR: page = %d , maxpage = %d"), page, maxpage));
+            Manager::Get()->GetLogManager()->DebugLog(F(wxT("OnPrintPage ERROR: page = %d , maxpage = %d"), page, maxpage));
             return false;
         }
 
-        //Manager::Get()->GetLogManager()->DebugLog(_T("OnPrintPage: page %d , m_printed %d"), page, m_printed);
+        //Manager::Get()->GetLogManager()->DebugLog(wxT_2("OnPrintPage: page %d , m_printed %d"), page, m_printed);
         m_printed = m_TextControl->FormatRange (1, m_printed, m_SelEnd,
                                                 dc, dc, m_printRect, m_pageRect);
         return true;
@@ -143,7 +143,7 @@ void cbEditorPrintout::GetPageInfo(int *minPage, int *maxPage, int *selPageFrom,
         m_printed = m_SelStart;
         while (HasPage(*maxPage))
         {
-            //Manager::Get()->GetLogManager()->DebugLog(_T("CountPages: PageCount %d , m_printed %d"), m_pPageSelStart->GetCount(), m_printed);
+            //Manager::Get()->GetLogManager()->DebugLog(wxT_2("CountPages: PageCount %d , m_printed %d"), m_pPageSelStart->GetCount(), m_printed);
             m_printed = m_TextControl->FormatRange (0, m_printed, m_SelEnd,
                                              dc, dc, m_printRect, m_pageRect);
             m_pPageSelStart->Add(m_printed);
@@ -169,7 +169,7 @@ bool cbEditorPrintout::OnBeginDocument(int startPage, int endPage)
     int maxpage = m_pPageSelStart->GetCount();
     if( startPage > maxpage || endPage > maxpage )
     {
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("OnBeginDocument ERROR: startPage %d , endPage %d , maxpage %d "), startPage, endPage, maxpage));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("OnBeginDocument ERROR: startPage %d , endPage %d , maxpage %d "), startPage, endPage, maxpage));
         return false;
     }
     return result;

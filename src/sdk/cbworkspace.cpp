@@ -73,11 +73,11 @@ void cbWorkspace::Load()
     wxString fname = m_Filename.GetFullPath();
     if (fname.IsEmpty())
         return;
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading workspace \"%s\""), fname.c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("Loading workspace \"%s\""), fname.c_str()));
 
     if (!m_Filename.FileExists())
     {
-        Manager::Get()->GetLogManager()->DebugLog(_T("File does not exist."));
+        Manager::Get()->GetLogManager()->DebugLog(wxT_2("File does not exist."));
         if (!m_IsDefault)
         {
             wxString msg;
@@ -110,12 +110,12 @@ void cbWorkspace::Load()
 bool cbWorkspace::Save(bool force)
 {
     if (m_Filename.GetFullPath().IsEmpty())
-        return SaveAs(_T(""));
+        return SaveAs(wxT_2(""));
 
     if (!force && !m_Modified)
         return true;
 
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Saving workspace \"%s\""), m_Filename.GetFullPath().c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("Saving workspace \"%s\""), m_Filename.GetFullPath().c_str()));
     WorkspaceLoader wsp;
     bool ret = wsp.Save(m_Title, m_Filename.GetFullPath());
     SetModified(!ret);
@@ -130,14 +130,14 @@ bool cbWorkspace::SaveAs(const wxString& filename)
                             _("Save workspace"),
                             m_Filename.GetPath(),
                             m_Filename.GetFullName(),
-                            FileFilters::GetFilterString(_T('.') + FileFilters::WORKSPACE_EXT),
+                            FileFilters::GetFilterString(wxT_2('.') + FileFilters::WORKSPACE_EXT),
                             wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     PlaceWindow(dlg);
     if (dlg->ShowModal() != wxID_OK)
         return false;
     m_Filename = dlg->GetPath();
     if(m_Filename.GetExt() == wxEmptyString)
-        m_Filename.SetExt(_T("workspace"));
+        m_Filename.SetExt(wxT_2("workspace"));
     m_IsDefault = false;
     return Save(true);
 }

@@ -79,7 +79,7 @@ IncrementalSelectListDlg::IncrementalSelectListDlg(wxWindow* parent, const wxArr
 	m_Text(0L),
 	m_Items(items)
 {
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgIncrementalSelectList"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgIncrementalSelectList"));
 	if (!caption.IsEmpty())
 		SetTitle(caption);
 	if (!message.IsEmpty())
@@ -118,7 +118,7 @@ void IncrementalSelectListDlg::FillList()
     Freeze();
 
     // We put a star before and after pattern to find search expression everywhere in path
-	wxString search(wxT("*") + m_Text->GetValue().Lower() + wxT("*"));
+	wxString search(wxT_2("*") + m_Text->GetValue().Lower() + wxT_2("*"));
 
 	wxArrayString result;
 	//Manager::Get()->GetLogManager()->Log(mltDevDebug, "FillList(): '%s'", search.c_str());

@@ -15,7 +15,7 @@
 class cbEditor;
 class cbStyledTextCtrl;
 
-#define COLORSET_DEFAULT	_T("default")
+#define COLORSET_DEFAULT	wxT_2("default")
 
 struct OptionColour
 {

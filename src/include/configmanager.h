@@ -124,11 +124,11 @@ public:
     * @par
     * So, code that looked like this in the old days:
     * @code
-    * wxString some_file = ConfigManager::GetScriptsFolder() + wxFILE_SEP_PATH + _T("startup.script");
+    * wxString some_file = ConfigManager::GetScriptsFolder() + wxFILE_SEP_PATH + wxT_2("startup.script");
     * @endcode
     * should be converted to this:
     * @code
-    * wxString some_file = ConfigManager::LocateDataFile(_T("startup.script"), sdScriptsUser | sdScriptsGlobal);
+    * wxString some_file = ConfigManager::LocateDataFile(wxT_2("startup.script"), sdScriptsUser | sdScriptsGlobal);
     * @endcode
     * This would try to locate the file named "startup.script" in the global and also in the user's scripts folders.
     * @note User's dirs @b always have precedence over global dirs.

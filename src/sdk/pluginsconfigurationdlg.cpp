@@ -73,13 +73,13 @@ END_EVENT_TABLE()
 // class constructor
 PluginsConfigurationDlg::PluginsConfigurationDlg(wxWindow* parent)
 {
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgConfigurePlugins"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgConfigurePlugins"));
     FillList();
 
     // install options
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("plugins"));
-    bool globalInstall = cfg->ReadBool(_T("/install_globally"), true);
-    bool confirmation = cfg->ReadBool(_T("/install_confirmation"), true);
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("plugins"));
+    bool globalInstall = cfg->ReadBool(wxT_2("/install_globally"), true);
+    bool confirmation = cfg->ReadBool(wxT_2("/install_confirmation"), true);
 
     // verify user can install globally
     DirAccessCheck access = cbDirAccessCheck(ConfigManager::GetFolder(sdPluginsGlobal));
@@ -107,24 +107,24 @@ PluginsConfigurationDlg::PluginsConfigurationDlg(wxWindow* parent)
 #endif
 
     wxString initialInfo;
-    initialInfo << _T("<html><body><font color=\"#0000AA\">");
+    initialInfo << wxT_2("<html><body><font color=\"#0000AA\">");
     initialInfo << _("Tip: The above list allows for multiple selections.");
-    initialInfo << _T("</font><br /><br /><b><font color=\"red\">");
+    initialInfo << wxT_2("</font><br /><br /><b><font color=\"red\">");
     initialInfo << _("Have you saved your work first?");
-    initialInfo << _T("</font></b><br /><i><font color=\"black\">\n");
+    initialInfo << wxT_2("</font></b><br /><i><font color=\"black\">\n");
     initialInfo << _("If a plugin is not well-written, it could cause Code::Blocks to crash ");
-    initialInfo << _T("when performing any operation on it...");
+    initialInfo << wxT_2("when performing any operation on it...");
 
 	if (PluginManager::GetSafeMode())
 	{
-		initialInfo << _T("</font></i><br /><br /><b><font color=\"red\">");
+		initialInfo << wxT_2("</font></i><br /><br /><b><font color=\"red\">");
 		initialInfo << _("Code::Blocks started up in \"safe-mode\"");
-		initialInfo << _T("</font></b><br /><i><font color=\"black\">\n");
+		initialInfo << wxT_2("</font></b><br /><i><font color=\"black\">\n");
 		initialInfo << _("All plugins were disabled on startup so that you can troubleshoot ");
-		initialInfo << _T("problematic plugins. Enable plugins at will now...");
+		initialInfo << wxT_2("problematic plugins. Enable plugins at will now...");
 	}
 
-    initialInfo << _T("</font></i><br /></body></html>\n");
+    initialInfo << wxT_2("</font></i><br /></body></html>\n");
 
     XRCCTRL(*this, "htmlInfo", wxHtmlWindow)->SetPage(initialInfo);
 }
@@ -134,10 +134,10 @@ void PluginsConfigurationDlg::FillList()
     wxListCtrl* list = XRCCTRL(*this, "lstPlugins", wxListCtrl);
     if (list->GetColumnCount() == 0)
     {
-        list->InsertColumn(0, _T("Title"));
-        list->InsertColumn(1, _T("Version"));
-        list->InsertColumn(2, _T("Enabled"), wxLIST_FORMAT_CENTER);
-        list->InsertColumn(3, _T("Filename"));
+        list->InsertColumn(0, wxT_2("Title"));
+        list->InsertColumn(1, wxT_2("Version"));
+        list->InsertColumn(2, wxT_2("Enabled"), wxLIST_FORMAT_CENTER);
+        list->InsertColumn(3, wxT_2("Filename"));
     }
 
     PluginManager* man = Manager::Get()->GetPluginManager();
@@ -185,7 +185,7 @@ void PluginsConfigurationDlg::OnToggle(wxCommandEvent& event)
     wxBusyCursor busy;
 
     wxProgressDialog pd(wxString::Format(_("%s plugin(s)"), isEnable ? _("Enabling") : _("Disabling")),
-                        _T("A description wide enough for the dialog ;)"),
+                        wxT_2("A description wide enough for the dialog ;)"),
                         list->GetSelectedItemCount(),
                         this,
                         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT);
@@ -229,8 +229,8 @@ void PluginsConfigurationDlg::OnToggle(wxCommandEvent& event)
 
             // update configuration
             wxString baseKey;
-            baseKey << _T("/") << elem->info.name;
-            Manager::Get()->GetConfigManager(_T("plugins"))->Write(baseKey, elem->plugin->IsAttached());
+            baseKey << wxT_2("/") << elem->info.name;
+            Manager::Get()->GetConfigManager(wxT_2("plugins"))->Write(baseKey, elem->plugin->IsAttached());
         }
     }
 }
@@ -240,7 +240,7 @@ void PluginsConfigurationDlg::OnInstall(wxCommandEvent& event)
     wxFileDialog fd(this,
                         _("Select plugin to install"),
                         wxEmptyString, wxEmptyString,
-                        _T("Code::Blocks Plugins (*.cbplugin)|*.cbplugin"),
+                        wxT_2("Code::Blocks Plugins (*.cbplugin)|*.cbplugin"),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE | compatibility::wxHideReadonly);
     if (fd.ShowModal() != wxID_OK)
         return;
@@ -258,7 +258,7 @@ void PluginsConfigurationDlg::OnInstall(wxCommandEvent& event)
     for (size_t i = 0; i < paths.GetCount(); ++i)
     {
         if (!Manager::Get()->GetPluginManager()->InstallPlugin(paths[i], globalInstall, confirm))
-            failure << paths[i] << _T('\n');
+            failure << paths[i] << wxT_2('\n');
     }
 
     FillList();
@@ -286,7 +286,7 @@ void PluginsConfigurationDlg::OnUninstall(wxCommandEvent& event)
         if (elem && elem->plugin)
         {
             if (!Manager::Get()->GetPluginManager()->UninstallPlugin(elem->plugin))
-                failure << elem->info.title << _T('\n');
+                failure << elem->info.title << wxT_2('\n');
         }
     }
 
@@ -301,15 +301,15 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
     if (list->GetSelectedItemCount() == 0)
         return;
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("plugins_configuration"));
-    wxDirDialog dd(this, _("Select directory to export plugin"), cfg->Read(_T("/last_export_path")), wxDD_NEW_DIR_BUTTON);
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("plugins_configuration"));
+    wxDirDialog dd(this, _("Select directory to export plugin"), cfg->Read(wxT_2("/last_export_path")), wxDD_NEW_DIR_BUTTON);
     if (dd.ShowModal() != wxID_OK)
         return;
-    cfg->Write(_T("/last_export_path"), dd.GetPath());
+    cfg->Write(wxT_2("/last_export_path"), dd.GetPath());
 
     wxBusyCursor busy;
     wxProgressDialog pd(_("Exporting plugin(s)"),
-                        _T("A description wide enough for the dialog ;)"),
+                        wxT_2("A description wide enough for the dialog ;)"),
                         list->GetSelectedItemCount(),
                         this,
                         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT |
@@ -330,7 +330,7 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
         const PluginElement* elem = (const PluginElement*)list->GetItemData(sel);
         if (!elem && !elem->plugin)
         {
-            failure << list->GetItemText(sel) << _T('\n');
+            failure << list->GetItemText(sel) << wxT_2('\n');
             continue;
         }
 
@@ -341,20 +341,20 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
 
         // normalize version
         wxString version = elem->info.version;
-        version.Replace(_T("/"), _T("_"), true);
-        version.Replace(_T("\\"), _T("_"), true);
-        version.Replace(_T("?"), _T("_"), true);
-        version.Replace(_T("*"), _T("_"), true);
-        version.Replace(_T(">"), _T("_"), true);
-        version.Replace(_T("<"), _T("_"), true);
-        version.Replace(_T(" "), _T("_"), true);
-        version.Replace(_T("\t"), _T("_"), true);
-        version.Replace(_T("|"), _T("_"), true);
+        version.Replace(wxT_2("/"), wxT_2("_"), true);
+        version.Replace(wxT_2("\\"), wxT_2("_"), true);
+        version.Replace(wxT_2("?"), wxT_2("_"), true);
+        version.Replace(wxT_2("*"), wxT_2("_"), true);
+        version.Replace(wxT_2(">"), wxT_2("_"), true);
+        version.Replace(wxT_2("<"), wxT_2("_"), true);
+        version.Replace(wxT_2(" "), wxT_2("_"), true);
+        version.Replace(wxT_2("\t"), wxT_2("_"), true);
+        version.Replace(wxT_2("|"), wxT_2("_"), true);
 
         wxFileName fname;
         fname.SetPath(dd.GetPath());
-        fname.SetName(wxFileName(elem->fileName).GetName() + _T('-') + version);
-        fname.SetExt(_T("cbplugin"));
+        fname.SetName(wxFileName(elem->fileName).GetName() + wxT_2('-') + version);
+        fname.SetExt(wxT_2("cbplugin"));
 
         pd.Update(++count,
                     wxString::Format(_("Exporting \"%s\"..."), elem->info.title.c_str()),
@@ -390,7 +390,7 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
         }
 
         if (!Manager::Get()->GetPluginManager()->ExportPlugin(elem->plugin, filename))
-            failure << list->GetItemText(sel) << _T('\n');
+            failure << list->GetItemText(sel) << wxT_2('\n');
     }
 
     if (!failure.IsEmpty())
@@ -409,16 +409,16 @@ void PluginsConfigurationDlg::OnSelect(wxListEvent& event)
         return;
 
     wxString description(elem->info.description);
-    description.Replace(_T("\n"), _T("<br />\n"));
+    description.Replace(wxT_2("\n"), wxT_2("<br />\n"));
 
     wxString info;
-    info << _T("<html><body>\n");
-    info << _T("<h3>") << elem->info.title << _T(" ");
-    info << _T("<font color=\"#0000AA\">") << elem->info.version << _T("</font></h3>");
-    info << _T("<i><font color=\"#808080\" size=\"-1\">") << UnixFilename(elem->fileName) << _T("</font></i><br />\n");
-    info << _T("<br />\n");
-    info << description << _T("<br />\n");
-    info << _T("</body></html>\n");
+    info << wxT_2("<html><body>\n");
+    info << wxT_2("<h3>") << elem->info.title << wxT_2(" ");
+    info << wxT_2("<font color=\"#0000AA\">") << elem->info.version << wxT_2("</font></h3>");
+    info << wxT_2("<i><font color=\"#808080\" size=\"-1\">") << UnixFilename(elem->fileName) << wxT_2("</font></i><br />\n");
+    info << wxT_2("<br />\n");
+    info << description << wxT_2("<br />\n");
+    info << wxT_2("</body></html>\n");
 
     XRCCTRL(*this, "htmlInfo", wxHtmlWindow)->SetPage(info);
 }
@@ -451,10 +451,10 @@ void PluginsConfigurationDlg::OnUpdateUI(wxUpdateUIEvent& event)
 
 void PluginsConfigurationDlg::EndModal(int retCode)
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("plugins"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("plugins"));
 
-    cfg->Write(_T("/install_globally"), XRCCTRL(*this, "chkInstallGlobally", wxCheckBox)->GetValue());
-    cfg->Write(_T("/install_confirmation"), XRCCTRL(*this, "chkInstallConfirmation", wxCheckBox)->GetValue());
+    cfg->Write(wxT_2("/install_globally"), XRCCTRL(*this, "chkInstallGlobally", wxCheckBox)->GetValue());
+    cfg->Write(wxT_2("/install_confirmation"), XRCCTRL(*this, "chkInstallConfirmation", wxCheckBox)->GetValue());
 
     wxDialog::EndModal(retCode);
 }

@@ -120,8 +120,8 @@ enum SupportedPlatforms
 // NOTE: if you add/remove platforms, remember to update the relevant Get/Set globals
 
 typedef wxString HighlightLanguage;
-#define HL_AUTO _T(" ")
-#define HL_NONE _T("  ")
+#define HL_AUTO wxT_2(" ")
+#define HL_NONE wxT_2("  ")
 
 extern DLLIMPORT const wxString DEFAULT_WORKSPACE;
 extern DLLIMPORT const wxString DEFAULT_ARRAY_SEP;
@@ -173,8 +173,8 @@ extern DLLIMPORT bool CreateDirRecursively(const wxString& full_path, int perms 
 extern DLLIMPORT bool CreateDir(const wxString& full_path, int perms = 0755);
 extern DLLIMPORT wxString ChooseDirectory(wxWindow* parent,
                                           const wxString& message = _("Select directory"),
-                                          const wxString& initialPath = _T(""),
-                                          const wxString& basePath = _T(""),
+                                          const wxString& initialPath = wxT_2(""),
+                                          const wxString& basePath = wxT_2(""),
                                           bool askToMakeRelative = false, // relative to basePath
                                           bool showCreateDirButton = false); // where supported
 
@@ -278,7 +278,7 @@ inline int cbMessageBox(const wxString& message, const wxString& caption = wxEmp
 inline void NotifyMissingFile(const wxString &name)
 {
     wxString msg;
-    msg.Printf(_T("The file %s could not be found.\nPlease check your installation."), name.c_str());
+    msg.Printf(wxT_2("The file %s could not be found.\nPlease check your installation."), name.c_str());
     cbMessageBox(msg);
 };
 

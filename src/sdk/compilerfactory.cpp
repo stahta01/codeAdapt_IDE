@@ -116,7 +116,7 @@ bool CompilerFactory::CompilerInheritsFrom(Compiler* compiler, const wxString& f
         Compiler* newcompiler = GetCompiler(id);
         if (compiler == newcompiler)
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Compiler circular dependency detected?!?!?"));
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Compiler circular dependency detected?!?!?"));
             break;
         }
         compiler = newcompiler;
@@ -134,16 +134,16 @@ void CompilerFactory::RegisterCompiler(Compiler* compiler)
 
 void CompilerFactory::RegisterUserCompilers()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("compiler"));
-    wxArrayString paths = cfg->EnumerateSubPaths(_T("/user_sets"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("compiler"));
+    wxArrayString paths = cfg->EnumerateSubPaths(wxT_2("/user_sets"));
     for (unsigned int i = 0; i < paths.GetCount(); ++i)
     {
-        wxString base = _T("/user_sets/") + paths[i];
-		wxString parent = cfg->Read(base + _T("/parent"), wxEmptyString);
+        wxString base = wxT_2("/user_sets/") + paths[i];
+		wxString parent = cfg->Read(base + wxT_2("/parent"), wxEmptyString);
         if (!parent.IsEmpty())
         {
             Compiler* compiler = GetCompiler(parent);
-            wxString name = cfg->Read(base + _T("/name"), wxEmptyString);
+            wxString name = cfg->Read(base + wxT_2("/name"), wxEmptyString);
             CreateCompilerCopy(compiler, name);
         }
 	}
@@ -174,8 +174,8 @@ Compiler* CompilerFactory::CreateCompilerCopy(Compiler* compiler, const wxString
         newC->MakeValidID();
     }
     RegisterCompiler(newC);
-    newC->LoadSettings(_T("/user_sets"));
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Added compiler \"%s\""), newC->GetName().c_str()));
+    newC->LoadSettings(wxT_2("/user_sets"));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("Added compiler \"%s\""), newC->GetName().c_str()));
     return newC; // return the index for the new compiler
 }
 
@@ -183,10 +183,10 @@ void CompilerFactory::RemoveCompiler(Compiler* compiler)
 {
     if (!compiler || compiler->m_ParentID.IsEmpty())
         return;
-    Manager::Get()->GetConfigManager(_T("compiler"))->DeleteSubPath(_T("/user_sets/") + compiler->GetID());
+    Manager::Get()->GetConfigManager(wxT_2("compiler"))->DeleteSubPath(wxT_2("/user_sets/") + compiler->GetID());
 
     Compilers.Remove(compiler);
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Compiler \"%s\" removed"), compiler->GetName().c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("Compiler \"%s\" removed"), compiler->GetName().c_str()));
 
     Compiler::m_CompilerIDs.Remove(compiler->GetID());
     delete compiler;
@@ -238,12 +238,12 @@ void CompilerFactory::SetDefaultCompiler(Compiler* compiler)
 void CompilerFactory::SaveSettings()
 {
 	// clear old keys before saving
-	Manager::Get()->GetConfigManager(_T("compiler"))->DeleteSubPath(_T("/sets"));
-	Manager::Get()->GetConfigManager(_T("compiler"))->DeleteSubPath(_T("/user_sets"));
+	Manager::Get()->GetConfigManager(wxT_2("compiler"))->DeleteSubPath(wxT_2("/sets"));
+	Manager::Get()->GetConfigManager(wxT_2("compiler"))->DeleteSubPath(wxT_2("/user_sets"));
 
     for (size_t i = 0; i < Compilers.GetCount(); ++i)
     {
-        wxString baseKey = Compilers[i]->GetParentID().IsEmpty() ? _T("/sets") : _T("/user_sets");
+        wxString baseKey = Compilers[i]->GetParentID().IsEmpty() ? wxT_2("/sets") : wxT_2("/user_sets");
         Compilers[i]->SaveSettings(baseKey);
     }
 }
@@ -253,7 +253,7 @@ void CompilerFactory::LoadSettings()
     bool needAutoDetection = false;
     for (size_t i = 0; i < Compilers.GetCount(); ++i)
     {
-        wxString baseKey = Compilers[i]->GetParentID().IsEmpty() ? _T("/sets") : _T("/user_sets");
+        wxString baseKey = Compilers[i]->GetParentID().IsEmpty() ? wxT_2("/sets") : wxT_2("/user_sets");
         Compilers[i]->LoadSettings(baseKey);
         if (Compilers[i]->GetMasterPath().IsEmpty())
             needAutoDetection = true;

@@ -29,19 +29,19 @@ void DebugLog(wxString cn, int blockSize, int poolSize, int max_refs, int total_
             if(total_refs == 0)
                 return; // pointless
 
-            wxRegEx r(_T("^[A-Z]?[0-9]+(.*)"));
+            wxRegEx r(wxT_2("^[A-Z]?[0-9]+(.*)"));
             if(r.Matches(cn))
                 cn2 = r.GetMatch(cn, 1);
 
-            s.Printf(_T("%s\n\n%d reserved pools of size %d (%d total objects)\n"
+            s.Printf(wxT_2("%s\n\n%d reserved pools of size %d (%d total objects)\n"
             "Maximum number of allocated objects: %d\n"
             "Total number of allocations: %d\n"
             "Number of stale objects: %d %s"),
             cn2.c_str(),
             blockSize, poolSize, blockSize * poolSize,
-            max_refs, total_refs, ref_count, (ref_count == 0 ? _T("") : _T("(memory leak)")));
+            max_refs, total_refs, ref_count, (ref_count == 0 ? wxT_2("") : wxT_2("(memory leak)")));
 
-            wxSafeShowMessage(_T("Block Allocator"), s);
+            wxSafeShowMessage(wxT_2("Block Allocator"), s);
 		} // end of DebugLog
 };
 

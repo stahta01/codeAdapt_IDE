@@ -35,7 +35,7 @@ void cbException::ShowErrorMessage(bool safe)
 {
     wxString gccvers;
 #ifdef __GNUC__
-    gccvers.Printf(_T("gcc %d.%d.%d"), __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+    gccvers.Printf(wxT_2("gcc %d.%d.%d"), __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
 #endif
 
     wxString title = _("Exception");
@@ -47,7 +47,7 @@ void cbException::ShowErrorMessage(bool safe)
                  "build: %s %s)"),
                File.c_str(), Line, Message.c_str(),
                ConfigManager::GetRevisionNumber(), gccvers.c_str(),
-               wxT(__DATE__), wxT(__TIME__));
+               wxT_2(__DATE__), wxT_2(__TIME__));
     if (safe)
         wxSafeShowMessage(title, err);
     else

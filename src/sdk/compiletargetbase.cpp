@@ -52,10 +52,10 @@ CompileTargetBase::CompileTargetBase()
     }
 
     // default "make" commands
-    m_MakeCommands[mcBuild] =       _T("$make -f $makefile $target");
-    m_MakeCommands[mcCompileFile] = _T("$make -f $makefile $file");
-    m_MakeCommands[mcClean] =       _T("$make -f $makefile clean$target");
-    m_MakeCommands[mcDistClean] =   _T("$make -f $makefile distclean$target");
+    m_MakeCommands[mcBuild] =       wxT_2("$make -f $makefile $target");
+    m_MakeCommands[mcCompileFile] = wxT_2("$make -f $makefile $file");
+    m_MakeCommands[mcClean] =       wxT_2("$make -f $makefile clean$target");
+    m_MakeCommands[mcDistClean] =   wxT_2("$make -f $makefile distclean$target");
     m_MakeCommandsModified = false;
 }
 
@@ -197,10 +197,10 @@ wxString CompileTargetBase::GetObjectOutput() const
     if (m_ObjectOutput.IsEmpty())
     {
         out = GetBasePath();
-        if (out.IsEmpty() || out.Matches(_T(".")))
-             return _T(".objs");
+        if (out.IsEmpty() || out.Matches(wxT_2(".")))
+             return wxT_2(".objs");
         else
-            return out + caFileName::GetPathSeparator() + _T(".objs");
+            return out + caFileName::GetPathSeparator() + wxT_2(".objs");
     }
     return m_ObjectOutput;
 }
@@ -213,10 +213,10 @@ wxString CompileTargetBase::GetDepsOutput() const
     if (m_DepsOutput.IsEmpty())
     {
         out = GetBasePath();
-        if (out.IsEmpty() || out.Matches(_T(".")))
-             return _T(".deps");
+        if (out.IsEmpty() || out.Matches(wxT_2(".")))
+             return wxT_2(".deps");
         else
-            return out + caFileName::GetPathSeparator() + _T(".deps");
+            return out + caFileName::GetPathSeparator() + wxT_2(".deps");
     }
     return m_DepsOutput;
 }
@@ -267,7 +267,7 @@ void CompileTargetBase::GenerateTargetFilename(wxString& filename) const
             if (m_PrefixGenerationPolicy == tgfpPlatformDefault)
             {
                 Compiler* compiler = CompilerFactory::GetCompiler(m_CompilerId);
-                wxString prefix = compiler ? compiler->GetSwitches().libPrefix : _T("");
+                wxString prefix = compiler ? compiler->GetSwitches().libPrefix : wxT_2("");
                 // avoid adding the prefix, if already there
                 if (!prefix.IsEmpty() && !fname.GetName().StartsWith(prefix))
                 {
@@ -278,7 +278,7 @@ void CompileTargetBase::GenerateTargetFilename(wxString& filename) const
             {
                 Compiler* compiler = CompilerFactory::GetCompiler(m_CompilerId);
                 wxString Ext = compiler ? compiler->GetSwitches().libExtension : FileFilters::STATICLIB_EXT;
-                filename << fname.GetName() << _T(".") << Ext;
+                filename << fname.GetName() << wxT_2(".") << Ext;
             }
             else
             {
@@ -290,7 +290,7 @@ void CompileTargetBase::GenerateTargetFilename(wxString& filename) const
             filename.Clear();
             break;
     }
-//    Manager::Get()->GetLogManager()->DebugLog(F(_T("GenerateTargetFilename: input '%s', output '%s'"), fname.GetFullPath().c_str(), filename.c_str()));
+//    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("GenerateTargetFilename: input '%s', output '%s'"), fname.GetFullPath().c_str(), filename.c_str()));
 }
 
 wxString CompileTargetBase::GetExecutableFilename() const
@@ -309,7 +309,7 @@ wxString CompileTargetBase::GetExecutableFilename() const
 #ifdef __WXMSW__
     fname.SetExt(FileFilters::EXECUTABLE_EXT);
 #else
-    fname.SetExt(_T(""));
+    fname.SetExt(wxT_2(""));
 #endif
     return fname.GetFullPath();
 }
@@ -370,14 +370,14 @@ wxString CompileTargetBase::GetDynamicLibDefFilename()
 
     wxFileName fname(m_Filename);
 
-    wxString prefix = _T("lib");
+    wxString prefix = wxT_2("lib");
     Compiler* compiler = CompilerFactory::GetCompiler(m_CompilerId);
     if (compiler)
     {
         prefix = compiler->GetSwitches().libPrefix;
     }
     fname.SetName(prefix + fname.GetName());
-    fname.SetExt(_T("def"));
+    fname.SetExt(wxT_2("def"));
     return fname.GetFullPath();
 }
 
@@ -400,7 +400,7 @@ wxString CompileTargetBase::GetStaticLibFilename()
 
     wxFileName fname(m_Filename);
 
-    wxString prefix = _T("lib");
+    wxString prefix = wxT_2("lib");
     wxString suffix = FileFilters::STATICLIB_EXT;
     Compiler* compiler = CompilerFactory::GetCompiler(m_CompilerId);
     if (compiler)
@@ -417,11 +417,11 @@ wxString CompileTargetBase::GetStaticLibFilename()
 wxString CompileTargetBase::GetBasePath() const
 {
     if (m_Filename.IsEmpty())
-        return _T(".");
+        return wxT_2(".");
 
     wxFileName basePath(m_Filename);
     wxString base = basePath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
-    return !base.IsEmpty() ? base : _T(".");
+    return !base.IsEmpty() ? base : wxT_2(".");
 }
 
 void CompileTargetBase::SetTargetType(TargetType pt)

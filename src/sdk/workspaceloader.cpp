@@ -71,14 +71,14 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
         root = doc.FirstChildElement("Code::Blocks_workspace_file");
         if (!root)
         {
-            GetpMsg()->DebugLog(_T("Not a valid Code::Blocks workspace file..."));
+            GetpMsg()->DebugLog(wxT_2("Not a valid Code::Blocks workspace file..."));
             return false;
         }
     }
     TiXmlElement* wksp = root->FirstChildElement("Workspace");
     if (!wksp)
     {
-        GetpMsg()->DebugLog(_T("No 'Workspace' element in file..."));
+        GetpMsg()->DebugLog(wxT_2("No 'Workspace' element in file..."));
         return false;
     }
 
@@ -87,7 +87,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
     TiXmlElement* proj = wksp->FirstChildElement("Project");
     if (!proj)
     {
-        GetpMsg()->DebugLog(_T("Workspace file contains no projects..."));
+        GetpMsg()->DebugLog(wxT_2("Workspace file contains no projects..."));
         return false;
     }
 
@@ -99,7 +99,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
         wxString projectFilename = UnixFilename(cbC2U(proj->Attribute("filename")));
         if (projectFilename.IsEmpty())
         {
-            GetpMsg()->DebugLog(_T("'Project' node exists, but no filename?!?"));
+            GetpMsg()->DebugLog(wxT_2("'Project' node exists, but no filename?!?"));
         }
         else
         {
@@ -122,8 +122,8 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
 					}
                     break;
                 case TIXML_WRONG_TYPE:
-                    GetpMsg()->DebugLog(F(_T("Error %s: %s"), doc.Value(), doc.ErrorDesc()));
-                    GetpMsg()->DebugLog(_T("Wrong attribute type (expected 'int')"));
+                    GetpMsg()->DebugLog(F(wxT("Error %s: %s"), doc.Value(), doc.ErrorDesc()));
+                    GetpMsg()->DebugLog(wxT_2("Wrong attribute type (expected 'int')"));
                     break;
                 default:
 					cbProject* pProject = GetpMan()->LoadProject(fname.GetFullPath(), false); // don't activate it
@@ -146,7 +146,7 @@ bool WorkspaceLoader::Open(const wxString& filename, wxString& Title)
         wxString projectFilename = UnixFilename(cbC2U(proj->Attribute("filename")));
         if (projectFilename.IsEmpty())
         {
-            GetpMsg()->DebugLog(_T("'Project' node exists, but no filename?!?"));
+            GetpMsg()->DebugLog(wxT_2("'Project' node exists, but no filename?!?"));
             thisprj = 0;
         }
         else

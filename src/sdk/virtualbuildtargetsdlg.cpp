@@ -37,7 +37,7 @@ VirtualBuildTargetsDlg::VirtualBuildTargetsDlg(wxWindow* parent,wxWindowID id, c
     m_pProject(project)
 {
 	//(*Initialize(VirtualBuildTargetsDlg)
-	wxXmlResource::Get()->LoadObject(this,parent,_T("VirtualBuildTargetsDlg"),_T("wxDialog"));
+	wxXmlResource::Get()->LoadObject(this,parent,wxT_2("VirtualBuildTargetsDlg"),wxT_2("wxDialog"));
 	lstAliases = (wxListBox*)FindWindow(XRCID("ID_LISTBOX1"));
 	btnAdd = (wxButton*)FindWindow(XRCID("ID_BUTTON1"));
 	btnEdit = (wxButton*)FindWindow(XRCID("ID_BUTTON2"));

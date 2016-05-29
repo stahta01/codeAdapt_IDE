@@ -16,7 +16,7 @@ GenericMultiLineNotesDlg::GenericMultiLineNotesDlg(wxWindow* parent, const wxStr
     m_ReadOnly(readOnly)
 {
     //ctor
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgGenericMultiLineNotes"));
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgGenericMultiLineNotes"));
     SetTitle(caption);
 
     XRCCTRL(*this, "txtNotes", wxTextCtrl)->SetValue(m_Notes);

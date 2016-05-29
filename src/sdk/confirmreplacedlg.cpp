@@ -47,9 +47,9 @@ END_EVENT_TABLE()
 ConfirmReplaceDlg::ConfirmReplaceDlg(wxWindow* parent, bool replaceInFiles, const wxString& label)
 {
     if (replaceInFiles)
-        wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgConfirmReplaceMultiple"));
+        wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgConfirmReplaceMultiple"));
     else
-        wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgConfirmReplace"));
+        wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgConfirmReplace"));
 	XRCCTRL(*this, "lblMessage", wxStaticText)->SetLabel(label);
 }
 

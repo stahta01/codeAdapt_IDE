@@ -36,7 +36,7 @@ EditArrayStringDlg::EditArrayStringDlg(wxWindow* parent, wxArrayString& array)
 	: m_Array(array)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgEditArrayString"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgEditArrayString"));
 
 	wxListBox* list = XRCCTRL(*this, "lstItems", wxListBox);
 	list->Clear();

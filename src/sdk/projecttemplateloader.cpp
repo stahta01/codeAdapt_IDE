@@ -41,7 +41,7 @@ bool ProjectTemplateLoader::Open(const wxString& filename)
     if (!pMsg)
         return false;
 
-//    pMsg->DebugLog(_T("Reading template file %s"), filename.c_str());
+//    pMsg->DebugLog(wxT_2("Reading template file %s"), filename.c_str());
 
     TiXmlDocument doc(filename.mb_str());
     if (!doc.LoadFile())
@@ -56,7 +56,7 @@ bool ProjectTemplateLoader::Open(const wxString& filename)
         root = doc.FirstChildElement("Code::Blocks_template_file");
         if (!root)
         {
-            pMsg->DebugLog(_T("Not a valid Code::Blocks template file..."));
+            pMsg->DebugLog(wxT_2("Not a valid Code::Blocks template file..."));
             return false;
         }
     }
@@ -94,10 +94,10 @@ void ProjectTemplateLoader::DoTemplateNotice(TiXmlElement* parentNode)
     if (!node)
         return;
     m_Notice = cbC2U(node->Attribute("value"));
-    while (m_Notice.Replace(_T("  "), _T(" ")))
+    while (m_Notice.Replace(wxT_2("  "), wxT_2(" ")))
         ;
-    m_Notice.Replace(_T("\t"), _T(""));
-    m_NoticeMsgType = cbC2U(node->Attribute("value")) == _T("0") ? wxICON_INFORMATION : wxICON_WARNING;
+    m_Notice.Replace(wxT_2("\t"), wxT_2(""));
+    m_NoticeMsgType = cbC2U(node->Attribute("value")) == wxT_2("0") ? wxICON_INFORMATION : wxICON_WARNING;
 }
 
 void ProjectTemplateLoader::DoFileSet(TiXmlElement* parentNode)
@@ -157,10 +157,10 @@ void ProjectTemplateLoader::DoOption(TiXmlElement* parentNode)
             TiXmlElement* tmpnode = node->FirstChildElement("Notice");
             if (tmpnode)
             {
-                to.notice << _T("\n") << cbC2U(tmpnode->Attribute("value"));
-                while (to.notice.Replace(_T("  "), _T(" ")))
+                to.notice << wxT_2("\n") << cbC2U(tmpnode->Attribute("value"));
+                while (to.notice.Replace(wxT_2("  "), wxT_2(" ")))
                     ;
-                to.notice.Replace(_T("\t"), _T(""));
+                to.notice.Replace(wxT_2("\t"), wxT_2(""));
                 to.noticeMsgType = strncmp(tmpnode->Attribute("value"), "0", 1) == 0 ? wxICON_INFORMATION : wxICON_WARNING;
             }
 

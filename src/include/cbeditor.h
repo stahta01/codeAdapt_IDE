@@ -52,7 +52,7 @@ class DLLIMPORT cbEditor : public EditorBase
         cbEditor(wxWindow* parent, const wxString& filename, EditorColourSet* theme = 0L);
         cbEditor(wxWindow* parent, LoaderBase* fileLdr, const wxString& filename, EditorColourSet* theme = 0L);
         /** Don't use this. It throws an exception if you do. */
-        cbEditor(const cbEditor& rhs) : EditorBase(rhs) { cbThrow(_T("Can't call cbEditor's copy ctor!!!")); }
+        cbEditor(const cbEditor& rhs) : EditorBase(rhs) { cbThrow(wxT_2("Can't call cbEditor's copy ctor!!!")); }
         /** cbEditor destructor. */
         ~cbEditor();
     public:
@@ -64,7 +64,7 @@ class DLLIMPORT cbEditor : public EditorBase
         };
 
         /** Don't use this. It throws an exception if you do. */
-        virtual void operator=(const cbEditor& rhs){ cbThrow(_T("Can't assign an cbEditor* !!!")); }
+        virtual void operator=(const cbEditor& rhs){ cbThrow(wxT_2("Can't assign an cbEditor* !!!")); }
 
         // properties
 

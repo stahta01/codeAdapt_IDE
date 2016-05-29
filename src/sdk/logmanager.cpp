@@ -60,14 +60,14 @@ LogManager::LogManager()
     SetLog(new StdoutLogger, stdout_log);
     SetLog(new StdoutLogger, app_log);
     SetLog(new StdoutLogger, debug_log);
-    slot[stdout_log].title = _T("stdout");
-    slot[app_log].title = _T("Code::Blocks");
-    slot[debug_log].title = _T("Code::Blocks Debug");
+    slot[stdout_log].title = wxT_2("stdout");
+    slot[app_log].title = wxT_2("Code::Blocks");
+    slot[debug_log].title = wxT_2("Code::Blocks Debug");
 
-    Register(_T("null"),   new Instantiator<NullLogger>);
-    Register(_T("stdout"), new Instantiator<StdoutLogger>);
-    Register(_T("text"),   new Instantiator<TextCtrlLogger>);
-    Register(_T("file"),   new Instantiator<FileLogger, true>);
+    Register(wxT_2("null"),   new Instantiator<NullLogger>);
+    Register(wxT_2("stdout"), new Instantiator<StdoutLogger>);
+    Register(wxT_2("text"),   new Instantiator<TextCtrlLogger>);
+    Register(wxT_2("file"),   new Instantiator<FileLogger, true>);
 }
 
 
@@ -169,11 +169,11 @@ void LogManager::Register(const wxString& name, InstantiatorBase* ins)
 
 void LogManager::Panic(const wxString& msg, const wxString& component)
 {
-	wxString title(_T("Panic: "));
+	wxString title(wxT_2("Panic: "));
 	title.Append(component);
 
 	if(!component)
-		title.Append(_T("Code::Blocks"));
+		title.Append(wxT_2("Code::Blocks"));
 
 	wxSafeShowMessage(title, msg);
 };

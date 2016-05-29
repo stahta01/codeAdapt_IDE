@@ -178,17 +178,17 @@ EditorManager::EditorManager()
     m_pData = new EditorManagerInternalData(this);
 
     m_pNotebook = new wxFlatNotebook(Manager::Get()->GetAppWindow(), ID_NBEditorManager, wxDefaultPosition, wxDefaultSize, wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN);
-    m_pNotebook->SetWindowStyleFlag(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/environment/editor_tabs_style"), wxFNB_DEFAULT_STYLE | wxFNB_MOUSE_MIDDLE_CLOSES_TABS));
+    m_pNotebook->SetWindowStyleFlag(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/environment/editor_tabs_style"), wxFNB_DEFAULT_STYLE | wxFNB_MOUSE_MIDDLE_CLOSES_TABS));
 
-	Manager::Get()->GetLogManager()->DebugLog(_T("Initialize EditColourSet ....."));
-    m_Theme = new EditorColourSet(Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/colour_sets/active_colour_set"), COLORSET_DEFAULT));
-	Manager::Get()->GetLogManager()->DebugLog(_T("Initialize EditColourSet: done."));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("Initialize EditColourSet ....."));
+    m_Theme = new EditorColourSet(Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/colour_sets/active_colour_set"), COLORSET_DEFAULT));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("Initialize EditColourSet: done."));
 
     Manager::Get()->GetAppWindow()->PushEventHandler(this);
 
     CreateSearchLog();
     LoadAutoComplete();
-    m_zoom = Manager::Get()->GetConfigManager(_T("editor"))->ReadInt(_T("/zoom"));
+    m_zoom = Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadInt(wxT_2("/zoom"));
 }
 
 // class destructor
@@ -202,7 +202,7 @@ EditorManager::~EditorManager()
     delete m_Theme;
     delete m_LastFindReplaceData;
     delete m_pData;
-    Manager::Get()->GetConfigManager(_T("editor"))->Write(_T("/zoom"), m_zoom);
+    Manager::Get()->GetConfigManager(wxT_2("editor"))->Write(wxT_2("/zoom"), m_zoom);
 } // end of destructor
 
 void EditorManager::CreateMenu(wxMenuBar* menuBar)
@@ -257,8 +257,8 @@ void EditorManager::CreateSearchLog()
     widths.Add(48);
     widths.Add(640);
 
-    wxString prefix = ConfigManager::GetDataFolder() + _T("/images/16x16/");
-    wxBitmap * bmp = new wxBitmap(cbLoadBitmap(prefix + _T("filefind.png"), wxBITMAP_TYPE_PNG));
+    wxString prefix = ConfigManager::GetDataFolder() + wxT_2("/images/16x16/");
+    wxBitmap * bmp = new wxBitmap(cbLoadBitmap(prefix + wxT_2("filefind.png"), wxBITMAP_TYPE_PNG));
 
     m_pSearchLog = new SearchResultsLog(titles, widths);
     CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_pSearchLog, _("Search results"), bmp);
@@ -274,16 +274,16 @@ void EditorManager::LogSearch(const wxString& file, int line, const wxString& li
     // line number -1 is used for empty string
     if( line != -1)
     {
-        lineStr.Printf(_T("%d"), line);
+        lineStr.Printf(wxT_2("%d"), line);
     }
     else
     {
-        lineStr.Printf(_T(" "));
+        lineStr.Printf(wxT_2(" "));
     }
     lineTextL = lineText;
-    lineTextL.Replace(_T("\t"), _T(" "));
-    lineTextL.Replace(_T("\r"), _T(" "));
-    lineTextL.Replace(_T("\n"), _T(" "));
+    lineTextL.Replace(wxT_2("\t"), wxT_2(" "));
+    lineTextL.Replace(wxT_2("\r"), wxT_2(" "));
+    lineTextL.Replace(wxT_2("\n"), wxT_2(" "));
     lineTextL.Trim(false);
     lineTextL.Trim(true);
 
@@ -297,50 +297,50 @@ void EditorManager::LogSearch(const wxString& file, int line, const wxString& li
 void EditorManager::LoadAutoComplete()
 {
     m_AutoCompleteMap.clear();
-    wxArrayString list = Manager::Get()->GetConfigManager(_T("editor"))->EnumerateSubPaths(_T("/auto_complete"));
+    wxArrayString list = Manager::Get()->GetConfigManager(wxT_2("editor"))->EnumerateSubPaths(wxT_2("/auto_complete"));
     for (unsigned int i = 0; i < list.GetCount(); ++i)
     {
-        wxString name = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/auto_complete/") + list[i] + _T("/name"), wxEmptyString);
-        wxString code = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/auto_complete/") + list[i] + _T("/code"), wxEmptyString);
+        wxString name = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/auto_complete/") + list[i] + wxT_2("/name"), wxEmptyString);
+        wxString code = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/auto_complete/") + list[i] + wxT_2("/code"), wxEmptyString);
         if (name.IsEmpty() || code.IsEmpty())
             continue;
         // convert non-printable chars to printable
-        code.Replace(_T("\\n"), _T("\n"));
-        code.Replace(_T("\\r"), _T("\r"));
-        code.Replace(_T("\\t"), _T("\t"));
+        code.Replace(wxT_2("\\n"), wxT_2("\n"));
+        code.Replace(wxT_2("\\r"), wxT_2("\r"));
+        code.Replace(wxT_2("\\t"), wxT_2("\t"));
         m_AutoCompleteMap[name] = code;
     }
 
     if (m_AutoCompleteMap.size() == 0)
     {
         // default auto-complete items
-        m_AutoCompleteMap[_T("if")] = _T("if (|)\n\t;");
-        m_AutoCompleteMap[_T("ifb")] = _T("if (|)\n{\n\t\n}");
-        m_AutoCompleteMap[_T("ife")] = _T("if (|)\n{\n\t\n}\nelse\n{\n\t\n}");
-        m_AutoCompleteMap[_T("ifei")] = _T("if (|)\n{\n\t\n}\nelse if ()\n{\n\t\n}\nelse\n{\n\t\n}");
-        m_AutoCompleteMap[_T("guard")] = _T("#ifndef $(Guard token)\n#define $(Guard token)\n\n|\n\n#endif // $(Guard token)\n");
-        m_AutoCompleteMap[_T("while")] = _T("while (|)\n\t;");
-        m_AutoCompleteMap[_T("whileb")] = _T("while (|)\n{\n\t\n}");
-        m_AutoCompleteMap[_T("switch")] = _T("switch (|)\n{\n\tcase :\n\t\tbreak;\n\n\tdefault:\n\t\tbreak;\n}\n");
-        m_AutoCompleteMap[_T("for")] = _T("for (|; ; )\n\t;");
-        m_AutoCompleteMap[_T("forb")] = _T("for (|; ; )\n{\n\t\n}");
-        m_AutoCompleteMap[_T("class")] = _T("class $(Class name)|\n{\n\tpublic:\n\t\t$(Class name)();\n\t\t~$(Class name)();\n\tprotected:\n\t\t\n\tprivate:\n\t\t\n};\n");
-        m_AutoCompleteMap[_T("struct")] = _T("struct |\n{\n\t\n};\n");
+        m_AutoCompleteMap[wxT_2("if")] = wxT_2("if (|)\n\t;");
+        m_AutoCompleteMap[wxT_2("ifb")] = wxT_2("if (|)\n{\n\t\n}");
+        m_AutoCompleteMap[wxT_2("ife")] = wxT_2("if (|)\n{\n\t\n}\nelse\n{\n\t\n}");
+        m_AutoCompleteMap[wxT_2("ifei")] = wxT_2("if (|)\n{\n\t\n}\nelse if ()\n{\n\t\n}\nelse\n{\n\t\n}");
+        m_AutoCompleteMap[wxT_2("guard")] = wxT_2("#ifndef $(Guard token)\n#define $(Guard token)\n\n|\n\n#endif // $(Guard token)\n");
+        m_AutoCompleteMap[wxT_2("while")] = wxT_2("while (|)\n\t;");
+        m_AutoCompleteMap[wxT_2("whileb")] = wxT_2("while (|)\n{\n\t\n}");
+        m_AutoCompleteMap[wxT_2("switch")] = wxT_2("switch (|)\n{\n\tcase :\n\t\tbreak;\n\n\tdefault:\n\t\tbreak;\n}\n");
+        m_AutoCompleteMap[wxT_2("for")] = wxT_2("for (|; ; )\n\t;");
+        m_AutoCompleteMap[wxT_2("forb")] = wxT_2("for (|; ; )\n{\n\t\n}");
+        m_AutoCompleteMap[wxT_2("class")] = wxT_2("class $(Class name)|\n{\n\tpublic:\n\t\t$(Class name)();\n\t\t~$(Class name)();\n\tprotected:\n\t\t\n\tprivate:\n\t\t\n};\n");
+        m_AutoCompleteMap[wxT_2("struct")] = wxT_2("struct |\n{\n\t\n};\n");
     }
 
     // date and time macros
     // these are auto-added if they 're found to be missing
     const wxString timeAndDate[9][2] =
     {
-        { _T("tday"), _T("$TDAY") },
-        { _T("tdayu"), _T("$TDAY_UTC") },
-        { _T("today"), _T("$TODAY") },
-        { _T("todayu"), _T("$TODAY_UTC") },
-        { _T("now"), _T("$NOW") },
-        { _T("nowl"), _T("$NOW_L") },
-        { _T("nowu"), _T("$NOW_UTC") },
-        { _T("nowlu"), _T("$NOW_L_UTC") },
-        { _T("wdu"), _T("$WEEKDAY_UTC") },
+        { wxT_2("tday"), wxT_2("$TDAY") },
+        { wxT_2("tdayu"), wxT_2("$TDAY_UTC") },
+        { wxT_2("today"), wxT_2("$TODAY") },
+        { wxT_2("todayu"), wxT_2("$TODAY_UTC") },
+        { wxT_2("now"), wxT_2("$NOW") },
+        { wxT_2("nowl"), wxT_2("$NOW_L") },
+        { wxT_2("nowu"), wxT_2("$NOW_UTC") },
+        { wxT_2("nowlu"), wxT_2("$NOW_L_UTC") },
+        { wxT_2("wdu"), wxT_2("$WEEKDAY_UTC") },
     };
     for (int i = 0; i < 9; ++i)
     {
@@ -351,23 +351,23 @@ void EditorManager::LoadAutoComplete()
 
 void EditorManager::SaveAutoComplete()
 {
-    Manager::Get()->GetConfigManager(_T("editor"))->DeleteSubPath(_T("/auto_complete"));
+    Manager::Get()->GetConfigManager(wxT_2("editor"))->DeleteSubPath(wxT_2("/auto_complete"));
     AutoCompleteMap::iterator it;
     int count = 0;
     for (it = m_AutoCompleteMap.begin(); it != m_AutoCompleteMap.end(); ++it)
     {
         wxString code = it->second;
         // convert non-printable chars to printable
-        code.Replace(_T("\n"), _T("\\n"));
-        code.Replace(_T("\r"), _T("\\r"));
-        code.Replace(_T("\t"), _T("\\t"));
+        code.Replace(wxT_2("\n"), wxT_2("\\n"));
+        code.Replace(wxT_2("\r"), wxT_2("\\r"));
+        code.Replace(wxT_2("\t"), wxT_2("\\t"));
 
         ++count;
         wxString key;
-        key.Printf(_T("/auto_complete/entry%d/name"), count);
-        Manager::Get()->GetConfigManager(_T("editor"))->Write(key, it->first);
-        key.Printf(_T("/auto_complete/entry%d/code"), count);
-        Manager::Get()->GetConfigManager(_T("editor"))->Write(key, code);
+        key.Printf(wxT_2("/auto_complete/entry%d/name"), count);
+        Manager::Get()->GetConfigManager(wxT_2("editor"))->Write(key, it->first);
+        key.Printf(wxT_2("/auto_complete/entry%d/code"), count);
+        Manager::Get()->GetConfigManager(wxT_2("editor"))->Write(key, code);
     }
 }
 
@@ -496,7 +496,7 @@ cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int
         // as a parameter
         if(data)
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("project data set for ") + data->file.GetFullPath());
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("project data set for ") + data->file.GetFullPath());
         }
         else
         {
@@ -507,7 +507,7 @@ cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int
                 ProjectFile* pf = prj->GetFileByFilename(ed->GetFilename(), false);
                 if (pf)
                 {
-                    Manager::Get()->GetLogManager()->DebugLog(_T("found ") + pf->file.GetFullPath());
+                    Manager::Get()->GetLogManager()->DebugLog(wxT_2("found ") + pf->file.GetFullPath());
                     data = pf;
                     break;
                 }
@@ -572,8 +572,8 @@ cbEditor* EditorManager::New(const wxString& newFileName)
 
     // add default text
     wxString key;
-    key.Printf(_T("/default_code/set%d"), (int)FileTypeOf(ed->GetFilename()));
-    wxString code = Manager::Get()->GetConfigManager(_T("editor"))->Read(key, wxEmptyString);
+    key.Printf(wxT_2("/default_code/set%d"), (int)FileTypeOf(ed->GetFilename()));
+    wxString code = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(key, wxEmptyString);
     ed->GetControl()->SetText(code);
 
     ed->SetColourSet(m_Theme);
@@ -601,14 +601,14 @@ void EditorManager::AddEditorBase(EditorBase* eb)
     int page = FindPageFromEditor(eb);
     if (page == -1)
     {
-        //        LOGSTREAM << wxString::Format(_T("AddEditorBase(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : _T(""));
+        //        LOGSTREAM << wxString::Format(wxT_2("AddEditorBase(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : wxT_2(""));
         m_pNotebook->AddPage(eb, eb->GetTitle(), true);
     }
 }
 
 void EditorManager::RemoveEditorBase(EditorBase* eb, bool deleteObject)
 {
-    //    LOGSTREAM << wxString::Format(_T("RemoveEditorBase(): ed=%p, title=%s\n"), eb, eb ? eb->GetFilename().c_str() : _T(""));
+    //    LOGSTREAM << wxString::Format(wxT_2("RemoveEditorBase(): ed=%p, title=%s\n"), eb, eb ? eb->GetFilename().c_str() : wxT_2(""));
     int page = FindPageFromEditor(eb);
    if (page != -1 && !Manager::isappShuttingDown())
         m_pNotebook->RemovePage(page, false);
@@ -738,7 +738,7 @@ bool EditorManager::Close(EditorBase* editor,bool dontsave)
                 if(!QueryClose(editor))
                     return false;
             wxString filename = editor->GetFilename();
-            //            LOGSTREAM << wxString::Format(_T("Close(): ed=%p, title=%s\n"), editor, editor ? editor->GetTitle().c_str() : _T(""));
+            //            LOGSTREAM << wxString::Format(wxT_2("Close(): ed=%p, title=%s\n"), editor, editor ? editor->GetTitle().c_str() : wxT_2(""));
             m_pNotebook->DeletePage(idx, true);
         }
     }
@@ -949,7 +949,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
     if (failedFiles.GetCount())
     {
         wxString msg;
-        msg.Printf(_("Could not reload all files:\n\n%s"), GetStringFromArray(failedFiles, _T("\n")).c_str());
+        msg.Printf(_("Could not reload all files:\n\n%s"), GetStringFromArray(failedFiles, wxT_2("\n")).c_str());
         cbMessageBox(msg, _("Error"), wxICON_ERROR);
     }
     m_isCheckingForExternallyModifiedFiles = false;
@@ -1339,10 +1339,10 @@ int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     if (data->regEx)
     {
         flags |= wxSCI_FIND_REGEXP;
-        if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
+        if (Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_posix_style_regexes"), false))
             flags |= wxSCI_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
-        AdvRegex=Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
+        AdvRegex=Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_advanced_regexes"), false);
         #endif
     }
 
@@ -1537,9 +1537,9 @@ int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     control->EndUndoAction();
     wxString msg;
     if (foundcount == 0)
-		msg = _T("No matches found for \"") + data->findText + _T("\"");
+		msg = wxT_2("No matches found for \"") + data->findText + wxT_2("\"");
     else if (replacecount == 0 && foundcount == 1)
-		msg = _T("One match found but not replaced");
+		msg = wxT_2("One match found but not replaced");
     else
 		msg.Printf(_("Replaced %i of %i matches"), replacecount, foundcount);
     cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
@@ -1563,7 +1563,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
         if (!prj)
             return 0;
 
-        wxString fullpath = _T("");
+        wxString fullpath = wxT_2("");
         for (int i = 0; i < prj->GetFilesCount(); ++i)
         {
             ProjectFile* pf = prj->GetFile(i);
@@ -1600,7 +1600,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
                 cbProject* pProject = pProjects->Item(idxProject);
                 if(pProject)
                 {
-                    wxString fullpath = _T("");
+                    wxString fullpath = wxT_2("");
                     for (int idxFile = 0; idxFile < pProject->GetFilesCount(); ++idxFile)
                     {
                         ProjectFile* pf = pProject->GetFile(idxFile);
@@ -1638,10 +1638,10 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
     if (data->regEx)
     {
         flags |= wxSCI_FIND_REGEXP;
-        if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
+        if (Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_posix_style_regexes"), false))
             flags |= wxSCI_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
-        AdvRegex=Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
+        AdvRegex=Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_advanced_regexes"), false);
         #endif
     }
 
@@ -1669,7 +1669,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
 
     wxProgressDialog* progress = 0;
     wxString fileContents;
-    wxString enc_name = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/default_encoding"), wxLocale::GetSystemEncodingName());
+    wxString enc_name = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/default_encoding"), wxLocale::GetSystemEncodingName());
     wxFontEncoding def_encoding = wxFontMapper::GetEncodingFromName(enc_name);
 
     // keep a copy of the find struct
@@ -1917,10 +1917,10 @@ int EditorManager::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
     if (data->regEx)
     {
         flags |= wxSCI_FIND_REGEXP;
-        if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
+        if (Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_posix_style_regexes"), false))
             flags |= wxSCI_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
-        AdvRegex=Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
+        AdvRegex=Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_advanced_regexes"), false);
         #endif
     }
 
@@ -2094,7 +2094,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
             return 0;
         }
 
-        wxString fullpath = _T("");
+        wxString fullpath = wxT_2("");
         for (int i = 0; i < prj->GetFilesCount(); ++i)
         {
             ProjectFile* pf = prj->GetFile(i);
@@ -2127,7 +2127,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
                     (data->hiddenSearch ? wxDIR_HIDDEN : 0);
         wxArrayString masks = GetArrayFromString(data->searchMask);
         if (!masks.GetCount())
-            masks.Add(_T("*"));
+            masks.Add(wxT_2("*"));
         unsigned int count = masks.GetCount();
 
         for (unsigned int i = 0; i < count; ++i)
@@ -2153,7 +2153,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
             cbProject* pProject = pProjects->Item(idxProject);
             if(pProject)
             {
-                wxString fullpath = _T("");
+                wxString fullpath = wxT_2("");
                 for (int idxFile = 0; idxFile < pProject->GetFilesCount(); ++idxFile)
                 {
                     ProjectFile* pf = pProject->GetFile(idxFile);
@@ -2197,7 +2197,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
 
     if ( !data->delOldSearches )
     {
-        LogSearch(_T("=========="), -1, _T("=== \"") + data->findText + _T("\" ==="));
+        LogSearch(wxT_2("=========="), -1, wxT_2("=== \"") + data->findText + wxT_2("\" ==="));
         oldcount++;
     }
 
@@ -2218,7 +2218,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
             control->SetText(ed->GetControl()->GetText());
         else if (!control->LoadFile(filesList[i])) // else load the file in the control
         {
-            //            LOGSTREAM << _("Failed opening ") << filesList[i] << wxT('\n');
+            //            LOGSTREAM << _("Failed opening ") << filesList[i] << wxT_2('\n');
             continue; // failed
         }
 
@@ -2264,7 +2264,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     if (count > 0)
     {
         static_cast<SearchResultsLog*>(m_pSearchLog)->SetBasePath(data->searchPath);
-        if (Manager::Get()->GetConfigManager(_T("message_manager"))->ReadBool(_T("/auto_show_search"), true))
+        if (Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadBool(wxT_2("/auto_show_search"), true))
         {
         	CodeBlocksLogEvent evtSwitch(cbEVT_SWITCH_TO_LOG_WINDOW, m_pSearchLog);
         	CodeBlocksLogEvent evtShow(cbEVT_SHOW_LOG_MANAGER);
@@ -2288,7 +2288,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         else
         {
             msg.Printf(_("not found in %d files"), filesList.GetCount());
-            LogSearch(_T(""), -1, msg );
+            LogSearch(wxT_2(""), -1, msg );
             static_cast<SearchResultsLog*>(m_pSearchLog)->FocusEntry(oldcount);
         }
     }
@@ -2360,7 +2360,7 @@ void EditorManager::OnGenericContextMenuHandler(wxCommandEvent& event)
 void EditorManager::OnPageChanged(wxFlatNotebookEvent& event)
 {
     EditorBase* eb = static_cast<EditorBase*>(m_pNotebook->GetPage(event.GetSelection()));
-    //    LOGSTREAM << wxString::Format(_T("OnPageChanged(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : _T(""));
+    //    LOGSTREAM << wxString::Format(wxT_2("OnPageChanged(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : wxT_2(""));
     CodeBlocksEvent evt(cbEVT_EDITOR_ACTIVATED, -1, 0, eb);
     Manager::Get()->GetPluginManager()->NotifyPlugins(evt);
 
@@ -2373,7 +2373,7 @@ void EditorManager::OnPageChanged(wxFlatNotebookEvent& event)
 void EditorManager::OnPageChanging(wxFlatNotebookEvent& event)
 {
     EditorBase* eb = static_cast<EditorBase*>(m_pNotebook->GetPage(event.GetOldSelection()));
-    //    LOGSTREAM << wxString::Format(_T("OnPageChanging(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : _T(""));
+    //    LOGSTREAM << wxString::Format(wxT_2("OnPageChanging(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : wxT_2(""));
     CodeBlocksEvent evt(cbEVT_EDITOR_DEACTIVATED, -1, 0, eb);
     Manager::Get()->GetPluginManager()->NotifyPlugins(evt);
 
@@ -2383,7 +2383,7 @@ void EditorManager::OnPageChanging(wxFlatNotebookEvent& event)
 void EditorManager::OnPageClosing(wxFlatNotebookEvent& event)
 {
     EditorBase* eb = static_cast<EditorBase*>(m_pNotebook->GetPage(event.GetSelection()));
-    //    LOGSTREAM << wxString::Format(_T("OnPageClosing(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : _T(""));
+    //    LOGSTREAM << wxString::Format(wxT_2("OnPageClosing(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : wxT_2(""));
     if (!QueryClose(eb))
         event.Veto();
     event.Skip(); // allow others to process it too
@@ -2486,7 +2486,7 @@ void EditorManager::OnTabPosition(wxCommandEvent& event)
         style |= wxFNB_BOTTOM;
     m_pNotebook->SetWindowStyleFlag(style);
     // (style & wxFNB_BOTTOM) saves info only about the the tabs position
-    Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/environment/editor_tabs_bottom"), (bool)(style & wxFNB_BOTTOM));
+    Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/environment/editor_tabs_bottom"), (bool)(style & wxFNB_BOTTOM));
 }
 
 void EditorManager::OnProperties(wxCommandEvent& event)

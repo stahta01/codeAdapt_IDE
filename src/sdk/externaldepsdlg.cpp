@@ -42,7 +42,7 @@ ExternalDepsDlg::ExternalDepsDlg(wxWindow* parent, cbProject* project, ProjectBu
     m_pTarget(target)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgExternalDeps"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgExternalDeps"));
 	FillAdditional();
 	FillExternal();
 }
@@ -80,7 +80,7 @@ void ExternalDepsDlg::EndModal(int retCode)
 	wxListBox* lst = XRCCTRL(*this, "lstExternalFiles", wxListBox);
     for (unsigned int i = 0; i < (unsigned int)lst->GetCount(); ++i)
     {
-    	deps << lst->GetString(i) << _T(';');
+    	deps << lst->GetString(i) << wxT_2(';');
     }
     m_pTarget->SetExternalDeps(deps);
 
@@ -88,7 +88,7 @@ void ExternalDepsDlg::EndModal(int retCode)
 	lst = XRCCTRL(*this, "lstAdditionalFiles", wxListBox);
     for (unsigned int i = 0; i < (unsigned int)lst->GetCount(); ++i)
     {
-    	files << lst->GetString(i) << _T(';');
+    	files << lst->GetString(i) << wxT_2(';');
     }
     m_pTarget->SetAdditionalOutputFiles(files);
 

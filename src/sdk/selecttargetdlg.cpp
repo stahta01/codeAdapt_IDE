@@ -52,7 +52,7 @@ SelectTargetDlg::SelectTargetDlg(wxWindow* parent, cbProject* project, int selec
 	m_Selected(selected)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgSelectTarget"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgSelectTarget"));
 
 	wxListBox* list = XRCCTRL(*this, "lstItems", wxListBox);
 	list->Clear();
@@ -121,7 +121,7 @@ void SelectTargetDlg::OnHostApplicationButtonClick(wxCommandEvent& /*event*/)
     {
         wxFileDialog* dlg = new wxFileDialog(this,
                             _("Select host application"),
-                            _T(""),
+                            wxT_2(""),
                             obj->GetValue(),
                             #ifdef __WXMSW__
                             _("Executable files (*.exe)|*.exe"),

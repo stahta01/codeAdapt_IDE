@@ -39,7 +39,7 @@ MultiSelectDlg::MultiSelectDlg(wxWindow* parent,
                                 const wxString& title)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgGenericMultiSelect"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgGenericMultiSelect"));
 
 	SetTitle(title);
 	XRCCTRL(*this, "lblLabel", wxStaticText)->SetLabel(label);
@@ -53,11 +53,11 @@ MultiSelectDlg::MultiSelectDlg(wxWindow* parent,
                                 const wxString& title)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgGenericMultiSelect"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgGenericMultiSelect"));
 
 	SetTitle(title);
 	XRCCTRL(*this, "lblLabel", wxStaticText)->SetLabel(label);
-    Init(items, selectall ? _T("*") : _T(""));
+    Init(items, selectall ? wxT_2("*") : wxT_2(""));
 }
 
 MultiSelectDlg::~MultiSelectDlg()
@@ -85,7 +85,7 @@ void MultiSelectDlg::UpdateStatus()
             ++count;
 	}
 	wxString msg;
-	msg << _("Selected: ") << wxString::Format(_T("%d"), count);
+	msg << _("Selected: ") << wxString::Format(wxT_2("%d"), count);
 	XRCCTRL(*this, "lblStatus", wxStaticText)->SetLabel(msg);
 } // end of UpdateStatus
 
@@ -117,7 +117,7 @@ void MultiSelectDlg::SelectWildCard(const wxString& wild, bool select, bool clea
 {
     if (wild.IsEmpty())
         return;
-	wxArrayString wilds = GetArrayFromString(wild, _T(";"));
+	wxArrayString wilds = GetArrayFromString(wild, wxT_2(";"));
     wxCheckListBox* lst = XRCCTRL(*this, "lstItems", wxCheckListBox);
 	for (int i = 0; i < (int)lst->GetCount(); ++i)
 	{
