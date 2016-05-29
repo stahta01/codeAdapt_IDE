@@ -49,6 +49,8 @@ namespace SqPlus \
     inline T Get(TypeWrapper<T>,HSQUIRRELVM v,int idx) { SQInteger i; SQPLUS_CHECK_GET(sq_getinteger(v,idx,&i)); return (T)i; } \
 }
 
+using SqPlus::Push;
+
 DECLARE_ENUM_TYPE(wxPathFormat);
 DECLARE_ENUM_TYPE(wxPathNormalize);
 DECLARE_ENUM_TYPE(PrintColourMode);
