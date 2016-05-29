@@ -25,6 +25,7 @@ CompilerMINGWGenerator::~CompilerMINGWGenerator()
 wxString CompilerMINGWGenerator::SetupIncludeDirs(Compiler* compiler, ProjectBuildTarget* target)
 {
     wxString result = CompilerCommandGenerator::SetupIncludeDirs(compiler, target);
+#if 0
     m_VerStr = compiler->GetVersionString();
     wxString pch_prepend;
     bool IsGcc4 = m_VerStr.Left(1).IsSameAs(_T("4"));
@@ -71,6 +72,7 @@ wxString CompilerMINGWGenerator::SetupIncludeDirs(Compiler* compiler, ProjectBui
         pch_prepend << _T("-I. ");
         result.Prepend(pch_prepend);
     }
+#endif // #if 0
 
     // add in array
     return result;
