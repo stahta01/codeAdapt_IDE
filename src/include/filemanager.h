@@ -89,7 +89,7 @@ public:
 };
 
 
-
+#if 0
 class AutoBuffer
 {
 std::auto_ptr<char> ptr;
@@ -126,6 +126,7 @@ public:
     URLLoader(const wxString& name) { fileName = name; };
     void operator()();
 };
+#endif
 
 
 #if 0
@@ -142,7 +143,7 @@ class FileManager : public Mgr<FileManager>
 {
     BackgroundThread fileLoaderThread;
     BackgroundThread uncLoaderThread;
-    BackgroundThread urlLoaderThread;
+//    BackgroundThread urlLoaderThread;
     BackgroundThread delayedDeleteThread;
 public:
     FileManager();

@@ -66,6 +66,7 @@ void FileLoader::operator()()
     Ready();
 }
 
+#if 0
 void URLLoader::operator()()
 {
     wxURL url(fileName);
@@ -96,11 +97,12 @@ void URLLoader::operator()()
 	buffer.Append("\0\0\0\0", 4);
     Ready();
 }
+#endif
 
 FileManager::FileManager()
     : fileLoaderThread(false),
-    uncLoaderThread(false),
-    urlLoaderThread(false)//,
+    uncLoaderThread(false) //,
+//    urlLoaderThread(false)//,
 //  delayedDeleteThread(false)
 {
 }
@@ -136,12 +138,14 @@ LoaderBase* FileManager::Load(const wxString& file /*, bool reuseEditors */ )
     }
 #endif
 
+#if 0
     if(file.StartsWith(_T("http://")))
     {
         URLLoader *ul = new URLLoader(file);
         urlLoaderThread.Queue(ul);
         return ul;
     }
+#endif
 
     FileLoader *fl = new FileLoader(file);
 
