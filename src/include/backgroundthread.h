@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include <wx/timer.h> // wxMilliSleep
-#include "wx/thread.h"
+#include <wx/thread.h>
 #include "manager.h"
 
 /*

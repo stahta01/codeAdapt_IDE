@@ -4,8 +4,8 @@
 #ifndef CB_PRECOMP
     #include "cbproject.h"
     #include "globals.h"
-    #include "wx/textdlg.h"
-    #include "wx/utils.h"
+    #include <wx/textdlg.h>
+    #include <wx/utils.h>
 #endif
 
 //(*InternalHeaders(VirtualBuildTargetsDlg)

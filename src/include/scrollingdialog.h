@@ -12,8 +12,8 @@
 #ifndef _WX_SCROLLINGDIALOG_H_
 #define _WX_SCROLLINGDIALOG_H_
 
-#include "wx/dialog.h"
-#include "wx/propdlg.h"
+#include <wx/dialog.h>
+#include <wx/propdlg.h>
 #include "settings.h" // DLLIMPORT
 
 /*!

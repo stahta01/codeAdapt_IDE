@@ -10,9 +10,9 @@
 /////////////////////////////////////////////////////////////////////////////
 
 
-#include "wx/module.h"
-#include "wx/display.h"
-#include "wx/bookctrl.h"
+#include <wx/module.h>
+#include <wx/display.h>
+#include <wx/bookctrl.h>
 
 #include "scrollingdialog.h"
 
