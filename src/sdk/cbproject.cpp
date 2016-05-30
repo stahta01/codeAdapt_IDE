@@ -85,7 +85,7 @@ cbProject::cbProject(const wxString& filename)
     SetModified(false);
 
     m_Files.Clear();
-    if (!filename.IsEmpty() && wxFileExists(filename) || wxDirExists(filename))
+    if (!filename.IsEmpty() && (wxFileExists(filename) || wxDirExists(filename)))
     {
         // existing project
         m_Filename = filename;
