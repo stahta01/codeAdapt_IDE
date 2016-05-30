@@ -47,7 +47,7 @@
 #define wxSCICallTipBase wxFrame
 #endif
 
-#include "wx/panel.h"
+#include <wx/panel.h>
 #include <wx/dcbuffer.h>
 
 #ifdef SCI_NAMESPACE
