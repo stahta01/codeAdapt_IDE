@@ -23,6 +23,7 @@
 #include "manager.h"
 #include "logmanager.h"
 #include "compilerMINGWgenerator.h"
+#include "ca/filename.h"
 
 #include <configmanager.h>
 
@@ -218,7 +219,7 @@ AutoDetectResult CompilerMINGW::AutoDetectInstallationDir()
         return adrDetected;
     }
 
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
     if (platform::windows)
     {
         // look first if MinGW was installed with Code::Blocks (new in beta6)
@@ -284,7 +285,7 @@ AutoDetectResult CompilerMINGW::AutoDetectInstallationDir()
 void CompilerMINGW::SetVersionString()
 {
     wxArrayString output, errors;
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
     wxString masterpath = m_MasterPath;
 
     /* We should read the master path from the configuration manager as

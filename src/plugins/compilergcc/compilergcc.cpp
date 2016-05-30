@@ -60,6 +60,7 @@
 #include "globals.h"
 #include "cbworkspace.h"
 #include "cbstyledtextctrl.h"
+#include "ca/filename.h"
 
 
 #if wxCHECK_VERSION(3, 0 ,0)
@@ -803,7 +804,7 @@ void CompilerGCC::SetEnvironmentForCompiler(const wxString& id, wxString& envPat
         return;
 
     Compiler* compiler = CompilerFactory::GetCompiler(id);
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
 
     wxString masterPath = compiler->GetMasterPath();
     Manager::Get()->GetMacrosManager()->ReplaceMacros(masterPath);
