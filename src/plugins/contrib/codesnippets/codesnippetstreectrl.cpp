@@ -29,7 +29,7 @@
     #include <wx/dataobj.h>
     #include <wx/dnd.h>
     #include <wx/filename.h>
-    #include "wx/mimetype.h"
+    #include <wx/mimetype.h>
 
 #if defined(BUILDING_PLUGIN)
     #include "sdk.h"

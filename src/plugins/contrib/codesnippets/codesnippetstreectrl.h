@@ -27,7 +27,7 @@ class TiXmlElement;
 
 #include <wx/treectrl.h>
 #include <wx/dynarray.h>
-#include "wx/mimetype.h"
+#include <wx/mimetype.h>
 
 #include "snippetitemdata.h"
 #include <tinyxml/tinyxml.h>
