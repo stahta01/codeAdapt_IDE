@@ -65,6 +65,7 @@
 #include "filefilters.h"
 #include "annoyingdialog.h"
 #include "genericmultilinenotesdlg.h"
+#include "ca/filename.h"
 
 
 namespace compatibility { typedef TernaryCondTypedef<wxMinimumVersion<2,5>::eval, wxTreeItemIdValue, long int>::eval tree_cookie_t; };
@@ -111,7 +112,7 @@ cbProject::cbProject(const wxString& filename)
             wxFileName fname(m_Filename);
             m_Title = fname.GetName();
             m_BasePath = GetBasePath();
-            m_CommonTopLevelPath = GetBasePath() + wxFileName::GetPathSeparator();
+            m_CommonTopLevelPath = GetBasePath() + caFileName::GetPathSeparator();
 
             // moved to ProjectManager::LoadProject()
             // see explanation there...
@@ -331,7 +332,7 @@ void cbProject::CalculateCommonTopLevelPath()
     // for simple projects, this might be the path to the project file
     // for projects where the project file is in a subdir, files will have ..
     // in their paths
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
     wxFileName base = GetBasePath() + sep;
     Manager::Get()->GetLogManager()->DebugLog(_T("Project's base path: ") + base.GetFullPath());
 

@@ -49,6 +49,7 @@
 #include <wx/textdlg.h>
 #include "filefilters.h"
 #include "newfromtemplatedlg.h"
+#include "ca/filename.h"
 
 #include "compiler.h"
 
@@ -146,7 +147,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
     }
 
     wxString path = Manager::Get()->GetConfigManager(_T("template_manager"))->Read(_T("/projects_path"));
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
     // select directory to copy user template files
     path = ChooseDirectory(0, _("Choose a directory to create the new project"),
                         path, _T(""), false, true);

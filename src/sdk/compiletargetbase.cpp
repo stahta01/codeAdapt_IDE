@@ -36,6 +36,7 @@
 #endif
 
 #include "filefilters.h"
+#include "ca/filename.h"
 
 #include "compiler.h" // Compiler
 
@@ -199,7 +200,7 @@ wxString CompileTargetBase::GetObjectOutput() const
         if (out.IsEmpty() || out.Matches(_T(".")))
              return _T(".objs");
         else
-            return out + wxFileName::GetPathSeparator() + _T(".objs");
+            return out + caFileName::GetPathSeparator() + _T(".objs");
     }
     return m_ObjectOutput;
 }
@@ -215,7 +216,7 @@ wxString CompileTargetBase::GetDepsOutput() const
         if (out.IsEmpty() || out.Matches(_T(".")))
              return _T(".deps");
         else
-            return out + wxFileName::GetPathSeparator() + _T(".deps");
+            return out + caFileName::GetPathSeparator() + _T(".deps");
     }
     return m_DepsOutput;
 }

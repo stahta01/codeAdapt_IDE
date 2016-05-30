@@ -67,6 +67,7 @@
 #include "annoyingdialog.h"
 #include "filefilters.h"
 #include "virtualbuildtargetsdlg.h"
+#include "ca/filename.h"
 
 #include "compiler.h"
 
@@ -709,7 +710,7 @@ void ProjectOptionsDlg::OnBrowseDirClick(wxCommandEvent& event)
     else
         return;
 
-    wxFileName fname(targettext->GetValue() + wxFileName::GetPathSeparator());
+    wxFileName fname(targettext->GetValue() + caFileName::GetPathSeparator());
     fname.Normalize(wxPATH_NORM_ALL & ~wxPATH_NORM_CASE, m_Project->GetBasePath());
 
     wxString path = ChooseDirectory(this,

@@ -66,6 +66,7 @@
 #include "filefilters.h"
 #include "searchresultslog.h"
 #include "projectfileoptionsdlg.h"
+#include "ca/filename.h"
 
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
 
@@ -1020,7 +1021,7 @@ bool EditorManager::SwapActiveHeaderSource()
 
     for (unsigned int i = 0; i < dirs.GetCount(); ++i)
     {
-        fname.Assign(dirs[i] + wxFileName::GetPathSeparator() + fn.GetFullName());
+        fname.Assign(dirs[i] + caFileName::GetPathSeparator() + fn.GetFullName());
         if (!fname.IsAbsolute() && project)
         {
             fname.Normalize(wxPATH_NORM_ALL & ~wxPATH_NORM_CASE, project->GetBasePath());

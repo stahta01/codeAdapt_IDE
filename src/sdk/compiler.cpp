@@ -28,6 +28,9 @@
 
 #include "compilercommandgenerator.h"
 #include <wx/filefn.h>
+#include "ca/filename.h"
+
+
 #include <wx/arrimpl.cpp>
 WX_DEFINE_OBJARRAY(RegExArray);
 
@@ -564,7 +567,7 @@ void Compiler::LoadSettings(const wxString& baseKey)
     if (!cfg->Exists(tmp + _T("/name")))
         return;
 
-    wxString sep = wxFileName::GetPathSeparator();
+    wxString sep = caFileName::GetPathSeparator();
 
 //    if (m_ID > 255) // name changes are allowed only for user compilers
     m_Name = cfg->Read(tmp + _T("/name"), m_Name);
