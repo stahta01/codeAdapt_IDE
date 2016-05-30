@@ -1,11 +1,18 @@
-#include "sdk_precomp.h"
+#ifdef USE_PCH
+    #ifndef WX_PCH_H_INCLUDED
+        #include "wx_pch.h"
+    #endif
+#else
+    #include <wx/defs.h> // Keep as first wx include.
 
-#ifndef CB_PRECOMP
-#include <wx/file.h>
-#include <wx/string.h>
+    #include <wx/file.h>
+    #include <wx/string.h>
+#endif // USE_PCH
+
+
 #include "filemanager.h"
 #include "manager.h"
-#endif
+
 #include "tinywxuni.h"
 #include "tinyxml.h"
 
