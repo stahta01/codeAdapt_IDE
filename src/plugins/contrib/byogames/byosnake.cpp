@@ -300,7 +300,7 @@ void byoSnake::DrawStats(wxDC* DC)
     DC->SetTextBackground(*wxBLACK);
     DC->SetFont(m_Font);
     wxString Line1 = wxString::Format(_("Lives: %d    Score: %d   Length: %d"),m_Lives,m_Score,m_SnakeLen);
-    wxString Line2 = IsPaused() ? _("Paused") : wxEmptyString;
+    wxString Line2 = IsPaused() ? _("Paused") : wxS("");
     wxString Line3 = GetBackToWorkString();
     DC->DrawText(Line1,5,5);
     int xs, ys;
