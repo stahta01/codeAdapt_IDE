@@ -79,7 +79,7 @@ void CompilerErrors::Next()
         if (m_Errors[bkp].lineType == cltError)
         {
             bool isNote =
-            	((m_Errors[bkp].errors.GetCount()>0) && m_Errors[bkp].errors[0].StartsWith(_T("note:")));
+            	((m_Errors[bkp].errors.GetCount()>0) && m_Errors[bkp].errors[0].StartsWith(wxT_2("note:")));
             if(!isNote)
             {
             	m_ErrorIndex = bkp;
@@ -104,7 +104,7 @@ void CompilerErrors::Previous()
         if (m_Errors[bkp].lineType == cltError)
         {
             bool isNote =
-            	((m_Errors[bkp].errors.GetCount()>0) && m_Errors[bkp].errors[0].StartsWith(_T("note:")));
+            	((m_Errors[bkp].errors.GetCount()>0) && m_Errors[bkp].errors[0].StartsWith(wxT_2("note:")));
             if(!isNote)
             {
             	m_ErrorIndex = bkp;
@@ -158,8 +158,8 @@ void CompilerErrors::DoGotoError(const CompileError& error)
 	{
         wxString filename = error.filename;
         bool isAbsolute = (filename.Length() > 1 && filename.GetChar(1) == ':') ||
-                           filename.StartsWith(_T("/")) ||
-                           filename.StartsWith(_T("\\"));
+                           filename.StartsWith(wxT_2("/")) ||
+                           filename.StartsWith(wxT_2("\\"));
 	    ProjectFile* f = project->GetFileByFilename(error.filename, !isAbsolute, true);
     	if (f)
         {

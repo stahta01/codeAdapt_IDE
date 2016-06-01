@@ -6,7 +6,7 @@
 #include <wx/msw/registry.h>
 
 CompilerCYGWIN::CompilerCYGWIN()
-    : CompilerMINGW(_("Cygwin GCC"), _T("cygwin"))
+    : CompilerMINGW(_("Cygwin GCC"), wxT_2("cygwin"))
 {
     Reset();
 }
@@ -26,13 +26,13 @@ void CompilerCYGWIN::Reset()
 {
     CompilerMINGW::Reset();
 
-	m_Programs.C = _T("gcc.exe");
-	m_Programs.CPP = _T("g++.exe");
-	m_Programs.LD = _T("g++.exe");
-	m_Programs.DBG = _T("gdb.exe");
-	m_Programs.LIB = _T("ar.exe");
-	m_Programs.WINDRES = _T("windres.exe");
-	m_Programs.MAKE = _T("make.exe");
+	m_Programs.C = wxT_2("gcc.exe");
+	m_Programs.CPP = wxT_2("g++.exe");
+	m_Programs.LD = wxT_2("g++.exe");
+	m_Programs.DBG = wxT_2("gdb.exe");
+	m_Programs.LIB = wxT_2("ar.exe");
+	m_Programs.WINDRES = wxT_2("windres.exe");
+	m_Programs.MAKE = wxT_2("make.exe");
 
     m_Switches.forceFwdSlashes = true;
 
@@ -40,19 +40,19 @@ void CompilerCYGWIN::Reset()
 
 AutoDetectResult CompilerCYGWIN::AutoDetectInstallationDir()
 {
-    m_MasterPath = _T("C:\\Cygwin"); // just a guess
+    m_MasterPath = wxT_2("C:\\Cygwin"); // just a guess
 
     // look in registry for Cygwin
 
     wxRegKey key; // defaults to HKCR
-    key.SetName(_T("HKEY_LOCAL_MACHINE\\Software\\Cygnus Solutions\\Cygwin\\mounts v2\\/"));
+    key.SetName(wxT_2("HKEY_LOCAL_MACHINE\\Software\\Cygnus Solutions\\Cygwin\\mounts v2\\/"));
     if (key.Exists() && key.Open(wxRegKey::Read))
     {
         // found; read it
-        key.QueryValue(_T("native"), m_MasterPath);
+        key.QueryValue(wxT_2("native"), m_MasterPath);
     }
     AutoDetectResult ret = wxFileExists(m_MasterPath + wxFILE_SEP_PATH +
-                                        _T("bin") + wxFILE_SEP_PATH +
+                                        wxT_2("bin") + wxFILE_SEP_PATH +
                                         m_Programs.C)
                             ? adrDetected
                             : adrGuessed;

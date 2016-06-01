@@ -42,7 +42,7 @@ DirectCommands::DirectCommands(CompilerGCC* compilerPlugin,
     depsSetCWD(cwd.GetPath(wxPATH_GET_VOLUME).mb_str());
 
     wxFileName fname(m_pProject->GetFilename());
-    fname.SetExt(_T("depend"));
+    fname.SetExt(wxT_2("depend"));
     depsCacheRead(fname.GetFullPath().mb_str());
 }
 
@@ -57,7 +57,7 @@ DirectCommands::~DirectCommands()
     if (stats.cache_updated)
     {
         wxFileName fname(m_pProject->GetFilename());
-        fname.SetExt(_T("depend"));
+        fname.SetExt(wxT_2("depend"));
         depsCacheWrite(fname.GetFullPath().mb_str());
     }
     Manager::Get()->GetLogManager()->DebugLog(
@@ -72,7 +72,7 @@ void DirectCommands::AddCommandsToArray(const wxString& cmds, wxArrayString& arr
     wxString cmd = cmds;
     while (!cmd.IsEmpty())
     {
-        int idx = cmd.Find(_T("\n"));
+        int idx = cmd.Find(wxT_2("\n"));
         wxString cmdpart = idx != -1 ? cmd.Left(idx) : cmd;
         cmdpart.Trim(false);
         cmdpart.Trim(true);
@@ -536,7 +536,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
     wxString linkfiles;
     wxString FlatLinkFiles;
     wxString resfiles;
-    bool IsOpenWatcom = target->GetCompilerID().IsSameAs(_T("ow"));
+    bool IsOpenWatcom = target->GetCompilerID().IsSameAs(wxT_2("ow"));
 
     time_t outputtime;
     depsTimeStamp(output.mb_str(), &outputtime);
@@ -562,7 +562,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
         // So, we first scan the command for this special case and, if found,
         // set a flag so that the linkfiles array is filled with the correct options
         wxString compilerCmd = compiler->GetCommand(ctLinkStaticCmd);
-        wxRegEx re(_T("\\$([-+]+)link_objects"));
+        wxRegEx re(wxT_2("\\$([-+]+)link_objects"));
         if (re.Matches(compilerCmd))
             prependHack = re.GetMatch(compilerCmd, 1);
     }
@@ -575,7 +575,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
         return ret;
     }
     if (IsOpenWatcom && target->GetTargetType() != ttStaticLib)
-        linkfiles << _T("file ");
+        linkfiles << wxT_2("file ");
     for (unsigned int i = 0; i < files.GetCount(); ++i)
     {
         ProjectFile* pf = files[i];
@@ -583,7 +583,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
         // we have to test again for each file if it is to be compiled
         // and we can't check the file for existence because we 're still
         // generating the command lines that will create the files...
-        wxString macro = _T("$compiler");
+        wxString macro = wxT_2("$compiler");
         compiler->GenerateCommandLine(macro, target, pf, wxEmptyString, wxEmptyString, wxEmptyString, wxEmptyString);
         if (macro.IsEmpty())
             continue;
@@ -596,9 +596,9 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
             // -----------------------------------------
             // Following lines have been modified for OpenWatcom
             if (IsOpenWatcom)
-                resfiles << _T("option resource=") << Object << _T(" ");
+                resfiles << wxT_2("option resource=") << Object << wxT_2(" ");
             else
-                resfiles << Object << _T(" ");
+                resfiles << Object << wxT_2(" ");
             // ------------------------------------------
         }
         else
@@ -607,13 +607,13 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
             // Following lines have been modified for OpenWatcom
             if (IsOpenWatcom && target->GetTargetType() != ttStaticLib)
             {
-                linkfiles << prependHack << Object << _T(","); // see QUICK HACK above (prependHack)
-                FlatLinkFiles << prependHack << pfd.object_file_flat << _T(","); // see QUICK HACK above (prependHack)
+                linkfiles << prependHack << Object << wxT_2(","); // see QUICK HACK above (prependHack)
+                FlatLinkFiles << prependHack << pfd.object_file_flat << wxT_2(","); // see QUICK HACK above (prependHack)
             }
             else
             {
-                linkfiles << prependHack << Object << _T(" "); // see QUICK HACK above (prependHack)
-                FlatLinkFiles << prependHack << pfd.object_file_flat << _T(" "); // see QUICK HACK above (prependHack)
+                linkfiles << prependHack << Object << wxT_2(" "); // see QUICK HACK above (prependHack)
+                FlatLinkFiles << prependHack << pfd.object_file_flat << wxT_2(" "); // see QUICK HACK above (prependHack)
             }
             // -----------------------------------------
         }
@@ -634,8 +634,8 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
     if (IsOpenWatcom)
     {
         linkfiles.Trim();
-        if (linkfiles.Right(1).IsSameAs(_T(",")))
-            linkfiles = linkfiles.BeforeLast(_T(','));
+        if (linkfiles.Right(1).IsSameAs(wxT_2(",")))
+            linkfiles = linkfiles.BeforeLast(wxT_2(','));
     }
 
     if (!force)
@@ -688,7 +688,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
             break;
         default:
             wxString ex;
-            ex.Printf(_T("Encountered invalid TargetType (value = %d)"), target->GetTargetType());
+            ex.Printf(wxT_2("Encountered invalid TargetType (value = %d)"), target->GetTargetType());
             cbThrow(ex);
         break;
     }
@@ -696,7 +696,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
     compiler->GenerateCommandLine(compilerCmd,
                                              target,
                                              0,
-                                             _T(""),
+                                             wxT_2(""),
                                              linkfiles,
                                              FlatLinkFiles,
                                              resfiles);
@@ -709,7 +709,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
                 break;
 
             default: // linker always simple log (if not full)
-                ret.Add(wxString(COMPILER_SIMPLE_LOG) + _("Linking ") + kind_of_output + _T(": ") + output);
+                ret.Add(wxString(COMPILER_SIMPLE_LOG) + _("Linking ") + kind_of_output + wxT_2(": ") + output);
                 break;
         }
 
@@ -795,8 +795,8 @@ wxArrayString DirectCommands::GetTargetCleanCommands(ProjectBuildTarget* target,
 bool DirectCommands::AreExternalDepsOutdated(const wxString& buildOutput, const wxString& additionalFiles, const wxString& externalDeps)
 {
     // array is separated by ;
-    wxArrayString deps = GetArrayFromString(externalDeps, _T(";"));
-    wxArrayString files = GetArrayFromString(additionalFiles, _T(";"));
+    wxArrayString deps = GetArrayFromString(externalDeps, wxT_2(";"));
+    wxArrayString files = GetArrayFromString(additionalFiles, wxT_2(";"));
     for (size_t i = 0; i < deps.GetCount(); ++i)
     {
         if (deps[i].IsEmpty())

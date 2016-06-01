@@ -24,22 +24,22 @@
 wxString ControlCharsToString(const wxString& src)
 {
     wxString ret = src;
-    ret.Replace(_T("\t"), _T("\\t"));
-    ret.Replace(_T("\n"), _T("\\n"));
-    ret.Replace(_T("\r"), _T("\\r"));
-    ret.Replace(_T("\a"), _T("\\a"));
-    ret.Replace(_T("\b"), _T("\\b"));
+    ret.Replace(wxT_2("\t"), wxT_2("\\t"));
+    ret.Replace(wxT_2("\n"), wxT_2("\\n"));
+    ret.Replace(wxT_2("\r"), wxT_2("\\r"));
+    ret.Replace(wxT_2("\a"), wxT_2("\\a"));
+    ret.Replace(wxT_2("\b"), wxT_2("\\b"));
     return ret;
 } // end of ControlCharsToString
 
 wxString StringToControlChars(const wxString& src)
 {
     wxString ret = src;
-    ret.Replace(_T("\\t"), _T("\t"));
-    ret.Replace(_T("\\n"), _T("\n"));
-    ret.Replace(_T("\\r"), _T("\r"));
-    ret.Replace(_T("\\a"), _T("\a"));
-    ret.Replace(_T("\\b"), _T("\b"));
+    ret.Replace(wxT_2("\\t"), wxT_2("\t"));
+    ret.Replace(wxT_2("\\n"), wxT_2("\n"));
+    ret.Replace(wxT_2("\\r"), wxT_2("\r"));
+    ret.Replace(wxT_2("\\a"), wxT_2("\a"));
+    ret.Replace(wxT_2("\\b"), wxT_2("\b"));
     return ret;
 } // end of StringToControlChars
 
@@ -63,7 +63,7 @@ AdvancedCompilerOptionsDlg::AdvancedCompilerOptionsDlg(wxWindow* parent, const w
     m_LastExtIndex(-1)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgAdvancedCompilerOptions"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgAdvancedCompilerOptions"));
 	ReadCompilerOptions();
 	m_bDirty = false;
 
@@ -181,7 +181,7 @@ void AdvancedCompilerOptionsDlg::DisplayCommand(int cmd, int ext)
 	if (CompilerTool* tool = GetCompilerTool(cmd,ext))
 	{
 		text->SetValue(tool->command);
-		gen->SetValue(GetStringFromArray(tool->generatedFiles, _T("\n"), false));
+		gen->SetValue(GetStringFromArray(tool->generatedFiles, wxT_2("\n"), false));
 	}
 	else
 	{
@@ -214,11 +214,11 @@ void AdvancedCompilerOptionsDlg::SaveCommands(int cmd, int ext)
 			// last command was changed; save it
 			tool->command = text->GetValue();
 		}
-		wxString gens = GetStringFromArray(tool->generatedFiles, _T("\n"), false);
+		wxString gens = GetStringFromArray(tool->generatedFiles, wxT_2("\n"), false);
 		if (gen->GetValue() != gens)
 		{
 			// last genfiles are changed; save it
-			tool->generatedFiles = GetArrayFromString(gen->GetValue(), _T("\n"));
+			tool->generatedFiles = GetArrayFromString(gen->GetValue(), wxT_2("\n"));
 		}
 	}
 } // end of SaveCommands
@@ -241,9 +241,9 @@ void AdvancedCompilerOptionsDlg::FillRegexDetails(int index)
 {
     if (index == -1)
     {
-        XRCCTRL(*this, "txtRegexDesc", wxTextCtrl)->SetValue(_T(""));
+        XRCCTRL(*this, "txtRegexDesc", wxTextCtrl)->SetValue(wxT_2(""));
         XRCCTRL(*this, "cmbRegexType", wxComboBox)->SetSelection(-1);
-        XRCCTRL(*this, "txtRegex", wxTextCtrl)->SetValue(_T(""));
+        XRCCTRL(*this, "txtRegex", wxTextCtrl)->SetValue(wxT_2(""));
         XRCCTRL(*this, "spnRegexMsg1", wxSpinCtrl)->SetValue(0);
         XRCCTRL(*this, "spnRegexMsg2", wxSpinCtrl)->SetValue(0);
         XRCCTRL(*this, "spnRegexMsg3", wxSpinCtrl)->SetValue(0);
@@ -316,7 +316,7 @@ void AdvancedCompilerOptionsDlg::OnAddExt(wxCommandEvent& WXUNUSED(event))
 
 void AdvancedCompilerOptionsDlg::OnDelExt(wxCommandEvent& WXUNUSED(event))
 {
-	if (cbMessageBox(_("Are you sure you want to remove this extension set from the list?"), _T("Confirmation"), wxYES_NO) == wxID_YES)
+	if (cbMessageBox(_("Are you sure you want to remove this extension set from the list?"), wxT_2("Confirmation"), wxYES_NO) == wxID_YES)
 	{
 		int nr = XRCCTRL(*this, "lstCommands", wxChoice)->GetSelection();
 		wxChoice* cmb = XRCCTRL(*this, "lstExt", wxChoice);
@@ -349,7 +349,7 @@ void AdvancedCompilerOptionsDlg::OnRegexChange(wxCommandEvent& WXUNUSED(event))
 void AdvancedCompilerOptionsDlg::OnRegexAdd(wxCommandEvent& WXUNUSED(event))
 {
     SaveRegexDetails(m_SelectedRegex);
-    m_Regexes.Add(RegExStruct(_("New regular expression"), cltError, _T(""), 0));
+    m_Regexes.Add(RegExStruct(_("New regular expression"), cltError, wxT_2(""), 0));
     m_SelectedRegex = m_Regexes.Count() - 1;
     FillRegexes();
 }

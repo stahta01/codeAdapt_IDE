@@ -26,7 +26,7 @@ class wxIccDirTraverser : public wxDirTraverser
         virtual wxDirTraverseResult OnDir(const wxString& dirname)
         {
             if (m_Dirs.Index(dirname) == wxNOT_FOUND
-                && dirname.AfterLast(_T('/')).BeforeFirst(_T('.')).IsNumber())
+                && dirname.AfterLast(wxT_2('/')).BeforeFirst(wxT_2('.')).IsNumber())
                 m_Dirs.Add(dirname);
             return wxDIR_CONTINUE;
         }

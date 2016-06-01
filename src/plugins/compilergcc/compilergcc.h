@@ -162,7 +162,7 @@ class CompilerGCC : public cbCompilerPlugin
         void LoadOptions();
         void DoPrepareQueue();
         int DoRunQueue();
-        bool DoCreateMakefile(bool temporary = true, const wxString& makefile = _T(""));
+        bool DoCreateMakefile(bool temporary = true, const wxString& makefile = wxT_2(""));
         void DoDeleteTempMakefile();
         void DoClearTargetMenu();
         void DoRecreateTargetMenu();

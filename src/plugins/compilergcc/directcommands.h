@@ -4,10 +4,10 @@
 #include <wx/string.h>
 #include <wx/hashmap.h>
 
-#define COMPILER_SIMPLE_LOG 	_T("SLOG:")
-#define COMPILER_TARGET_CHANGE  _T("TGT:")
-#define COMPILER_WAIT			_T("WAIT")
-#define COMPILER_WAIT_LINK		_T("LINK")
+#define COMPILER_SIMPLE_LOG 	wxT_2("SLOG:")
+#define COMPILER_TARGET_CHANGE  wxT_2("TGT:")
+#define COMPILER_WAIT			wxT_2("WAIT")
+#define COMPILER_WAIT_LINK		wxT_2("LINK")
 
 // forward decls
 class CompilerGCC;

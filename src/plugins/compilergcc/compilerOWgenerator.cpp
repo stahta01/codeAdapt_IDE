@@ -27,7 +27,7 @@ wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuil
     wxArrayString LibDirs = compiler->GetLibDirs();
     if (LibDirs.IsEmpty())
         return wxEmptyString;
-    wxString Result = compiler->GetSwitches().libDirs + _T(" ");
+    wxString Result = compiler->GetSwitches().libDirs + wxT_2(" ");
     if (target)
     {
         wxString tmp, targetStr, projectStr;
@@ -37,7 +37,7 @@ wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuil
         {
             tmp = targetArr[i];
             Manager::Get()->GetMacrosManager()->ReplaceMacros(tmp, target);
-            targetStr << tmp << _T(";");
+            targetStr << tmp << wxT_2(";");
         }
         // Now for project
         const wxArrayString projectArr = target->GetParentProject()->GetLibDirs();
@@ -45,7 +45,7 @@ wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuil
         {
             tmp = projectArr[i];
             Manager::Get()->GetMacrosManager()->ReplaceMacros(tmp, target);
-            projectStr << tmp << _T(";");
+            projectStr << tmp << wxT_2(";");
         }
         // Decide order and arrange it
         Result << GetOrderedOptions(target, ortLibDirs, projectStr, targetStr);
@@ -57,13 +57,13 @@ wxString CompilerOWGenerator::SetupLibrariesDirs(Compiler* compiler, ProjectBuil
     {
         tmp = compilerArr[i];
         Manager::Get()->GetMacrosManager()->ReplaceMacros(tmp, target);
-        compilerStr << tmp << _T(";");
+        compilerStr << tmp << wxT_2(";");
     }
     // Now append it
     Result << compilerStr;
     // Remove last ';' char
     Result = Result.Trim(true);
-    if (Result.Right(1).IsSameAs(_T(';')))
+    if (Result.Right(1).IsSameAs(wxT_2(';')))
         Result = Result.RemoveLast();
     return Result;
 }
@@ -104,38 +104,38 @@ wxString CompilerOWGenerator::SetupLinkerOptions(Compiler* compiler, ProjectBuil
 
 // TODO (Biplab#5#): Move the linker options parsing code to a different function
                 //Let's not scan all the options unnecessarily
-                if (Temp.Matches(_T("-b*")))
+                if (Temp.Matches(wxT_2("-b*")))
                 {
                     Temp = MapTargetType(Temp, target->GetTargetType());
-                    if (!Temp.IsEmpty() && LinkerOptions.Find(_T("system")) == wxNOT_FOUND)
+                    if (!Temp.IsEmpty() && LinkerOptions.Find(wxT_2("system")) == wxNOT_FOUND)
                         LinkerOptions += Temp;
                 }
                 // TODO: Map and Set All Debug Flags
-                else if (Temp.Matches(_T("-d*")) && Temp.Length() <= 4)
+                else if (Temp.Matches(wxT_2("-d*")) && Temp.Length() <= 4)
                 {
                     LinkerOptions = LinkerOptions + MapDebugOptions(Temp);
                 }
-                else if (Temp.StartsWith(_T("-l=")))
+                else if (Temp.StartsWith(wxT_2("-l=")))
                 {
-                    Temp = Temp.AfterFirst(_T('='));
-                    if (LinkerOptions.Find(_T("system")) == wxNOT_FOUND && !Temp.IsEmpty())
-                        LinkerOptions += _T("system ") + Temp + _T(" ");
+                    Temp = Temp.AfterFirst(wxT_2('='));
+                    if (LinkerOptions.Find(wxT_2("system")) == wxNOT_FOUND && !Temp.IsEmpty())
+                        LinkerOptions += wxT_2("system ") + Temp + wxT_2(" ");
                 }
-                else if (Temp.StartsWith(_T("-fm")))
+                else if (Temp.StartsWith(wxT_2("-fm")))
                 {
-                    LinkerOptions += _T("option map");
-                    int pos = Temp.Find(_T('='));
+                    LinkerOptions += wxT_2("option map");
+                    int pos = Temp.Find(wxT_2('='));
                     if (pos != wxNOT_FOUND)
                         LinkerOptions += Temp.Mid(pos);
-                    LinkerOptions.Append(_T(" "));
+                    LinkerOptions.Append(wxT_2(" "));
                 }
-                else if (Temp.StartsWith(_T("-k")))
+                else if (Temp.StartsWith(wxT_2("-k")))
                 {
-                    LinkerOptions += _T("option stack=") + Temp.Mid(2) + _T(" ");
+                    LinkerOptions += wxT_2("option stack=") + Temp.Mid(2) + wxT_2(" ");
                 }
-                else if (Temp.StartsWith(_T("@")))
+                else if (Temp.StartsWith(wxT_2("@")))
                 {
-                    LinkerOptions += Temp + _T(" ");
+                    LinkerOptions += Temp + wxT_2(" ");
                 }
             }
         }
@@ -149,8 +149,8 @@ wxString CompilerOWGenerator::SetupLinkerOptions(Compiler* compiler, ProjectBuil
             {
                 Temp = OtherLinkerOptions[i];
                 /* Let's make a small check. It should not start with - or /  */
-                if ((Temp[0] != _T('-')) && (Temp[0] != _T('/')))
-                    LinkerOptions = LinkerOptions + Temp + _T(" ");
+                if ((Temp[0] != wxT_2('-')) && (Temp[0] != wxT_2('/')))
+                    LinkerOptions = LinkerOptions + Temp + wxT_2(" ");
             }
         }
         // Finally add it to an array
@@ -176,11 +176,11 @@ wxString CompilerOWGenerator::SetupLinkLibraries(Compiler* compiler, ProjectBuil
         // Start with target first
         Libs = target->GetLinkLibs();
         for (size_t i = 0; i < Libs.GetCount(); ++i)
-            targetStr << Libs[i] + _T(",");
+            targetStr << Libs[i] + wxT_2(",");
         // Next process project
         Libs = target->GetParentProject()->GetLinkLibs();
         for (size_t i = 0; i < Libs.GetCount(); ++i)
-            projectStr << Libs[i] + _T(",");
+            projectStr << Libs[i] + wxT_2(",");
         // Set them in proper order
         if (!targetStr.IsEmpty() || !projectStr.IsEmpty())
             Result << GetOrderedOptions(target, ortLinkerOptions, projectStr, targetStr);
@@ -188,36 +188,36 @@ wxString CompilerOWGenerator::SetupLinkLibraries(Compiler* compiler, ProjectBuil
     // Now prepare compiler libraries, if any
     Libs = compiler->GetLinkLibs();
     for (size_t i = 0; i < Libs.GetCount(); ++i)
-        compilerStr << Libs[i] << _T(",");
+        compilerStr << Libs[i] << wxT_2(",");
     // Append it to result
     Result << compilerStr;
     // Now trim trailing spaces, if any, and the ',' at the end
     Result = Result.Trim(true);
-    if (Result.Right(1).IsSameAs(_T(',')))
+    if (Result.Right(1).IsSameAs(wxT_2(',')))
         Result = Result.RemoveLast();
 
     if (!Result.IsEmpty())
-        Result.Prepend(_T("library "));
+        Result.Prepend(wxT_2("library "));
     return Result;
 }
 
 wxString CompilerOWGenerator::MapTargetType(const wxString& Opt, int target_type)
 {
-    if (Opt.IsSameAs(_T("-bt=nt")) || Opt.IsSameAs(_T("-bcl=nt")))
+    if (Opt.IsSameAs(wxT_2("-bt=nt")) || Opt.IsSameAs(wxT_2("-bcl=nt")))
     {
         if (target_type == ttExecutable || target_type == ttStaticLib) // Win32 Executable
-            return _T("system nt_win ");
+            return wxT_2("system nt_win ");
         else if (target_type == ttConsoleOnly) // Console
-            return _T("system nt ");
+            return wxT_2("system nt ");
         else if (target_type == ttDynamicLib) // DLL
-            return _T("system nt_dll ");
+            return wxT_2("system nt_dll ");
         else
-            return _T("system nt_win ref '_WinMain@16' "); // Default to Win32 executables
+            return wxT_2("system nt_win ref '_WinMain@16' "); // Default to Win32 executables
     }
-    else if (Opt.IsSameAs(_T("-bt=linux")) || Opt.IsSameAs(_T("-bcl=linux")))
+    else if (Opt.IsSameAs(wxT_2("-bt=linux")) || Opt.IsSameAs(wxT_2("-bcl=linux")))
     {
         /* The support is experimental. Need proper manual to improve it. */
-        return _T("system linux ");
+        return wxT_2("system linux ");
     }
     return wxEmptyString;
 }
@@ -227,12 +227,12 @@ wxString CompilerOWGenerator::MapTargetType(const wxString& Opt, int target_type
 */
 wxString CompilerOWGenerator::MapDebugOptions(const wxString& Opt)
 {
-    if (Opt.IsSameAs(_T("-d0"))) // No Debug
+    if (Opt.IsSameAs(wxT_2("-d0"))) // No Debug
         return wxEmptyString;
-    if (Opt.IsSameAs(_T("-d1")))
-        return _T("debug watcom lines ");
-    if (Opt.IsSameAs(_T("-d2")))
-        return _T("debug watcom all ");
+    if (Opt.IsSameAs(wxT_2("-d1")))
+        return wxT_2("debug watcom lines ");
+    if (Opt.IsSameAs(wxT_2("-d2")))
+        return wxT_2("debug watcom all ");
     // Nothing Matched
     return wxEmptyString;
 }

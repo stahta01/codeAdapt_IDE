@@ -42,9 +42,9 @@ class MakefileGenerator
         void DoAppendCompilerOptions(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
         void DoAppendLinkerOptions(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
         void DoAppendLinkerLibs(wxString& cmd, ProjectBuildTarget* target = 0L, bool useGlobalOptions = false);
-        void DoAppendIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
-        void DoAppendResourceIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-I"), bool useGlobalOptions = false);
-        void DoAppendLibDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = _T("-L"), bool useGlobalOptions = false);
+        void DoAppendIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = wxT_2("-I"), bool useGlobalOptions = false);
+        void DoAppendResourceIncludeDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = wxT_2("-I"), bool useGlobalOptions = false);
+        void DoAppendLibDirs(wxString& cmd, ProjectBuildTarget* target = 0L, const wxString& prefix = wxT_2("-L"), bool useGlobalOptions = false);
 
         void DoAddVarsSet(wxString& buffer, CustomVars& vars);
         void DoAddMakefileVars(wxString& buffer);

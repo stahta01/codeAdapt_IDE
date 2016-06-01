@@ -216,7 +216,7 @@ CompilerOptionsDlg::CompilerOptionsDlg(wxWindow* parent, CompilerGCC* compiler, 
     m_bDirty(false),
     m_BuildingTree(false)
 {
-    wxXmlResource::Get()->LoadPanel(this, parent, _T("dlgCompilerOptions"));
+    wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("dlgCompilerOptions"));
 
     if (m_pProject)
     {
@@ -461,7 +461,7 @@ void CompilerOptionsDlg::DoFillVars()
         return;
     for (StringHash::const_iterator it = vars->begin(); it != vars->end(); ++it)
     {
-        wxString text = it->first + _T(" = ") + it->second;
+        wxString text = it->first + wxT_2(" = ") + it->second;
         lst->Append(text);
     }
 } // DoFillVars
@@ -470,40 +470,40 @@ void CompilerOptionsDlg::DoFillOthers()
 {
     wxCheckBox* chk = XRCCTRL(*this, "chkIncludeFileCwd", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/include_file_cwd"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/include_file_cwd"), false));
 
     chk = XRCCTRL(*this, "chkIncludePrjCwd", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/include_prj_cwd"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/include_prj_cwd"), false));
 
     chk = XRCCTRL(*this, "chkSaveHtmlLog", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/save_html_build_log"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/save_html_build_log"), false));
 
     chk = XRCCTRL(*this, "chkFullHtmlLog", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/save_html_build_log/full_command_line"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/save_html_build_log/full_command_line"), false));
 
     chk = XRCCTRL(*this, "chkBuildProgressBar", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/bar"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/build_progress/bar"), false));
 
     chk = XRCCTRL(*this, "chkBuildProgressPerc", wxCheckBox);
     if (chk)
-        chk->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadBool(_T("/build_progress/percentage"), false));
+        chk->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadBool(wxT_2("/build_progress/percentage"), false));
 
     wxSpinCtrl* spn = XRCCTRL(*this, "spnParallelProcesses", wxSpinCtrl);
     if (spn)
     {
         spn->SetRange(1, 16);
-        spn->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadInt(_T("/parallel_processes"), 1));
+        spn->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadInt(wxT_2("/parallel_processes"), 1));
     }
 
     spn = XRCCTRL(*this, "spnMaxErrors", wxSpinCtrl);
     if (spn)
     {
         spn->SetRange(0, 1000);
-        spn->SetValue(Manager::Get()->GetConfigManager(_T("compiler"))->ReadInt(_T("/max_reported_errors"), 50));
+        spn->SetValue(Manager::Get()->GetConfigManager(wxT_2("compiler"))->ReadInt(wxT_2("/max_reported_errors"), 50));
     }
 } // DoFillOthers
 
@@ -628,7 +628,7 @@ void CompilerOptionsDlg::TextToOptions()
         {
             // definition
             XRCCTRL(*this, "txtCompilerDefines", wxTextCtrl)->AppendText(rest);
-            XRCCTRL(*this, "txtCompilerDefines", wxTextCtrl)->AppendText(_T("\n"));
+            XRCCTRL(*this, "txtCompilerDefines", wxTextCtrl)->AppendText(wxT_2("\n"));
             m_CompilerOptions.RemoveAt(i, 1);
         }
         else
@@ -667,7 +667,7 @@ void ArrayString2TextCtrl(const wxArrayString& array, wxTextCtrl* control)
         if (!array[i].IsEmpty())
         {
             control->AppendText(array[i]);
-            control->AppendText(_T('\n'));
+            control->AppendText(wxT_2('\n'));
         }
     }
 } // ArrayString2TextCtrl
@@ -679,12 +679,12 @@ void DoGetCompileOptions(wxArrayString& array, const wxTextCtrl* control)
                       Now, we 're breaking up by newlines. */    array.Clear();
 #if 1
     wxString tmp = control->GetValue();
-    int nl = tmp.Find(_T('\n'));
+    int nl = tmp.Find(wxT_2('\n'));
     wxString line;
     if (nl == -1)
     {
         line = tmp;
-        tmp = _T("");
+        tmp = wxT_2("");
     }
     else
         line = tmp.Left(nl);
@@ -694,16 +694,16 @@ void DoGetCompileOptions(wxArrayString& array, const wxTextCtrl* control)
         if (!line.IsEmpty())
         {
             // just to make sure..
-            line.Replace(_T("\r"), _T(" "), true); // remove CRs
-            line.Replace(_T("\n"), _T(" "), true); // remove LFs
+            line.Replace(wxT_2("\r"), wxT_2(" "), true); // remove CRs
+            line.Replace(wxT_2("\n"), wxT_2(" "), true); // remove LFs
             array.Add(line.Strip(wxString::both));
         }
         tmp.Remove(0, nl + 1);
-        nl = tmp.Find(_T('\n'));
+        nl = tmp.Find(wxT_2('\n'));
         if (nl == -1)
         {
             line = tmp;
-            tmp = _T("");
+            tmp = wxT_2("");
         }
         else
             line = tmp.Left(nl);
@@ -715,8 +715,8 @@ void DoGetCompileOptions(wxArrayString& array, const wxTextCtrl* control)
         wxString tmp = control->GetLineText(i);
         if (!tmp.IsEmpty())
         {
-            tmp.Replace(_T("\r"), _T(" "), true); // remove CRs
-            tmp.Replace(_T("\n"), _T(" "), true); // remove LFs
+            tmp.Replace(wxT_2("\r"), wxT_2(" "), true); // remove CRs
+            tmp.Replace(wxT_2("\n"), wxT_2(" "), true); // remove LFs
             array.Add(tmp.Strip(wxString::both));
         }
     }
@@ -823,7 +823,7 @@ void CompilerOptionsDlg::OptionsToText()
     {
         if (!array[i].IsEmpty())
         {
-            if (array[i].StartsWith(_T("-")))
+            if (array[i].StartsWith(wxT_2("-")))
             {
                 if (m_CompilerOptions.Index(array[i]) == wxNOT_FOUND)
                     m_CompilerOptions.Add(array[i]);
@@ -1002,8 +1002,8 @@ void CompilerOptionsDlg::DoSaveVars()
                 case CVA_Edit:
                 {
                     // first split up the KeyValue
-                    wxString NewKey = Action.m_KeyValue.BeforeFirst(_T('=')).Trim(true).Trim(false);
-                    wxString NewValue = Action.m_KeyValue.AfterFirst(_T('=')).Trim(true).Trim(false);
+                    wxString NewKey = Action.m_KeyValue.BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
+                    wxString NewValue = Action.m_KeyValue.AfterFirst(wxT_2('=')).Trim(true).Trim(false);
                     if(Action.m_Key != NewKey)
                     {   // the key name changed
                         pBase->UnsetVar(Action.m_Key);
@@ -1315,8 +1315,8 @@ void CompilerOptionsDlg::OnOptionToggled(wxCommandEvent& event)
 void CompilerOptionsDlg::OnAddDirClick(wxCommandEvent& /*event*/)
 {
     EditPathDlg dlg(this,
-            m_pProject ? m_pProject->GetBasePath() : _T(""),
-            m_pProject ? m_pProject->GetBasePath() : _T(""),
+            m_pProject ? m_pProject->GetBasePath() : wxT_2(""),
+            m_pProject ? m_pProject->GetBasePath() : wxT_2(""),
             _("Add directory"));
 
     PlaceWindow(&dlg);
@@ -1341,7 +1341,7 @@ void CompilerOptionsDlg::OnEditDirClick(wxCommandEvent& /*event*/)
 
     EditPathDlg dlg(this,
             control->GetString(control->GetSelection()),
-            m_pProject ? m_pProject->GetBasePath() : _T(""),
+            m_pProject ? m_pProject->GetBasePath() : wxT_2(""),
             _("Edit directory"));
 
     PlaceWindow(&dlg);
@@ -1443,7 +1443,7 @@ void CompilerOptionsDlg::OnAddVarClick(wxCommandEvent& /*event*/)
         ::QuoteStringIfNeeded(value);
         CustomVarAction Action = {CVA_Add, key, value};
         m_CustomVarActions.push_back(Action);
-        XRCCTRL(*this, "lstVars", wxListBox)->Append(key + _T(" = ") + value);
+        XRCCTRL(*this, "lstVars", wxListBox)->Append(key + wxT_2(" = ") + value);
         m_bDirty = true;
     }
 } // OnAddVarClick
@@ -1454,11 +1454,11 @@ void CompilerOptionsDlg::OnEditVarClick(wxCommandEvent& /*event*/)
     if (sel == -1)
         return;
 
-    wxString key = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().BeforeFirst(_T('=')).Trim(true).Trim(false);
+    wxString key = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
     if (key.IsEmpty())
         return;
     wxString old_key = key;
-    wxString value = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().AfterFirst(_T('=')).Trim(true).Trim(false);
+    wxString value = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().AfterFirst(wxT_2('=')).Trim(true).Trim(false);
     wxString old_value = value;
 
     EditPairDlg dlg(this, key, value, _("Edit variable"), EditPairDlg::bmBrowseForDirectory);
@@ -1471,9 +1471,9 @@ void CompilerOptionsDlg::OnEditVarClick(wxCommandEvent& /*event*/)
 
         if (value != old_value  ||  key != old_key)
         { // something has changed
-            CustomVarAction Action = {CVA_Edit, old_key, key + _T(" = ") + value};
+            CustomVarAction Action = {CVA_Edit, old_key, key + wxT_2(" = ") + value};
             m_CustomVarActions.push_back(Action);
-            XRCCTRL(*this, "lstVars", wxListBox)->SetString(sel, key + _T(" = ") + value);
+            XRCCTRL(*this, "lstVars", wxListBox)->SetString(sel, key + wxT_2(" = ") + value);
             m_bDirty = true;
         }
     }
@@ -1485,7 +1485,7 @@ void CompilerOptionsDlg::OnRemoveVarClick(wxCommandEvent& /*event*/)
     if (sel == -1)
         return;
 
-    wxString key = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().BeforeFirst(_T('=')).Trim(true);
+    wxString key = XRCCTRL(*this, "lstVars", wxListBox)->GetStringSelection().BeforeFirst(wxT_2('=')).Trim(true);
     if (key.IsEmpty())
         return;
 
@@ -1513,7 +1513,7 @@ void CompilerOptionsDlg::OnClearVarClick(wxCommandEvent& /*event*/)
         // Unset all variables of lstVars
         for (int i=0; i < (int)lstVars->GetCount(); i++)
         {
-            wxString key = lstVars->GetString(i).BeforeFirst(_T('=')).Trim(true);
+            wxString key = lstVars->GetString(i).BeforeFirst(wxT_2('=')).Trim(true);
             if (!key.IsEmpty())
             {
                 CustomVarAction Action = {CVA_Remove, key, wxEmptyString};
@@ -1658,8 +1658,8 @@ void CompilerOptionsDlg::OnAddLibClick(wxCommandEvent& /*event*/)
     wxListBox* lstLibs = XRCCTRL(*this, "lstLibs", wxListBox);
 
     EditPathDlg dlg(this,
-            _T(""),
-            m_pProject ? m_pProject->GetBasePath() : _T(""),
+            wxT_2(""),
+            m_pProject ? m_pProject->GetBasePath() : wxT_2(""),
             _("Add library"),
             _("Choose library to link"),
             false,
@@ -1684,7 +1684,7 @@ void CompilerOptionsDlg::OnEditLibClick(wxCommandEvent& /*event*/)
 
     EditPathDlg dlg(this,
             lstLibs->GetStringSelection(),
-            m_pProject ? m_pProject->GetBasePath() : _T(""),
+            m_pProject ? m_pProject->GetBasePath() : wxT_2(""),
             _("Edit library"),
             _("Choose library to link"),
             false,
@@ -1762,7 +1762,7 @@ void CompilerOptionsDlg::OnCopyLibsClick(wxCommandEvent& /*event*/)
 
 void CompilerOptionsDlg::OnAddExtraPathClick(wxCommandEvent& /*event*/)
 {
-    EditPathDlg dlg(this, _T(""), _T(""), _("Add directory"));
+    EditPathDlg dlg(this, wxT_2(""), wxT_2(""), _("Add directory"));
 
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -1795,11 +1795,11 @@ void CompilerOptionsDlg::OnEditExtraPathClick(wxCommandEvent& /*event*/)
         return;
 
     wxFileName dir(control->GetString(control->GetSelection()) + wxFileName::GetPathSeparator());
-    wxString initial = _T("");
+    wxString initial = wxT_2("");
     if (dir.DirExists())
         initial = dir.GetPath(wxPATH_GET_VOLUME);
 
-    EditPathDlg dlg(this, initial, _T(""), _("Edit directory"));
+    EditPathDlg dlg(this, initial, wxT_2(""), _("Edit directory"));
 
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -1940,7 +1940,7 @@ void CompilerOptionsDlg::OnSelectProgramClick(wxCommandEvent& event)
         file_selection = _("Executable files (*.exe)|*.exe");
     wxFileDialog* dlg = new wxFileDialog(this,
                             _("Select file"),
-                            XRCCTRL(*this, "txtMasterPath", wxTextCtrl)->GetValue() + _T("/bin"),
+                            XRCCTRL(*this, "txtMasterPath", wxTextCtrl)->GetValue() + wxT_2("/bin"),
                             obj->GetValue(),
                             file_selection,
                             wxFD_OPEN | wxFD_FILE_MUST_EXIST | compatibility::wxHideReadonly );
@@ -2067,25 +2067,25 @@ void CompilerOptionsDlg::OnApply()
     //others
     wxCheckBox* chk = XRCCTRL(*this, "chkIncludeFileCwd", wxCheckBox);
     if (chk)
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/include_file_cwd"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/include_file_cwd"), (bool)chk->IsChecked());
     chk = XRCCTRL(*this, "chkIncludePrjCwd", wxCheckBox);
     if (chk)
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/include_prj_cwd"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/include_prj_cwd"), (bool)chk->IsChecked());
     chk = XRCCTRL(*this, "chkSaveHtmlLog", wxCheckBox);
     if (chk)
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/save_html_build_log"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/save_html_build_log"), (bool)chk->IsChecked());
     chk = XRCCTRL(*this, "chkFullHtmlLog", wxCheckBox);
     if (chk)
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/save_html_build_log/full_command_line"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/save_html_build_log/full_command_line"), (bool)chk->IsChecked());
     chk = XRCCTRL(*this, "chkBuildProgressBar", wxCheckBox);
     if (chk)
     {
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/build_progress/bar"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/build_progress/bar"), (bool)chk->IsChecked());
     }
     chk = XRCCTRL(*this, "chkBuildProgressPerc", wxCheckBox);
     if (chk)
     {
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/build_progress/percentage"), (bool)chk->IsChecked());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/build_progress/percentage"), (bool)chk->IsChecked());
         m_Compiler->m_LogBuildProgressPercentage = chk->IsChecked();
     }
     wxSpinCtrl* spn = XRCCTRL(*this, "spnParallelProcesses", wxSpinCtrl);
@@ -2095,13 +2095,13 @@ void CompilerOptionsDlg::OnApply()
             cbMessageBox(_("You can't change the number of parallel processes while building!\nSetting ignored..."), _("Warning"), wxICON_WARNING);
         else
         {
-            Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/parallel_processes"), (int)spn->GetValue());
+            Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/parallel_processes"), (int)spn->GetValue());
             m_Compiler->ReAllocProcesses();
         }
     }
     spn = XRCCTRL(*this, "spnMaxErrors", wxSpinCtrl);
     if (spn)
-        Manager::Get()->GetConfigManager(_T("compiler"))->Write(_T("/max_reported_errors"), (int)spn->GetValue());
+        Manager::Get()->GetConfigManager(wxT_2("compiler"))->Write(wxT_2("/max_reported_errors"), (int)spn->GetValue());
 
     m_Compiler->SaveOptions();
     m_Compiler->SetupEnvironment();
@@ -2123,10 +2123,10 @@ void CompilerOptionsDlg::OnMyCharHook(wxKeyEvent& event)
     int myid = 0;
     unsigned int myidx = 0;
 
-    const wxChar* str_libs[4] = { _T("btnEditLib"),  _T("btnAddLib"),  _T("btnDelLib"),     _T("btnClearLib")   };
-    const wxChar* str_dirs[4] = { _T("btnEditDir"),  _T("btnAddDir"),  _T("btnDelDir"),     _T("btnClearDir")   };
-    const wxChar* str_vars[4] = { _T("btnEditVar"),  _T("btnAddVar"),  _T("btnDeleteVar"),  _T("btnClearVar")   };
-    const wxChar* str_xtra[4] = { _T("btnExtraEdit"),_T("btnExtraAdd"),_T("btnExtraDelete"),_T("btnExtraClear") };
+    const wxChar* str_libs[4] = { wxT("btnEditLib"),  wxT("btnAddLib"),  wxT("btnDelLib"),     wxT("btnClearLib")   };
+    const wxChar* str_dirs[4] = { wxT("btnEditDir"),  wxT("btnAddDir"),  wxT("btnDelDir"),     wxT("btnClearDir")   };
+    const wxChar* str_vars[4] = { wxT("btnEditVar"),  wxT("btnAddVar"),  wxT("btnDeleteVar"),  wxT("btnClearVar")   };
+    const wxChar* str_xtra[4] = { wxT("btnExtraEdit"),wxT("btnExtraAdd"),wxT("btnExtraDelete"),wxT("btnExtraClear") };
 
     if(keycode == WXK_RETURN || keycode == WXK_NUMPAD_ENTER)
         { myidx = 0; } // Edit

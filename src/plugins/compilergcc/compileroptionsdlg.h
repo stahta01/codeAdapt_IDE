@@ -25,7 +25,7 @@ class CompilerOptionsDlg : public cbConfigurationPanel
 		~CompilerOptionsDlg();
 
         virtual wxString GetTitle() const { return _("Global compiler settings"); }
-        virtual wxString GetBitmapBaseName() const { return _T("compiler"); }
+        virtual wxString GetBitmapBaseName() const { return wxT_2("compiler"); }
         virtual void OnApply();
         virtual void OnCancel(){}
 	private:
