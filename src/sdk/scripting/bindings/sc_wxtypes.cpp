@@ -10,7 +10,7 @@
 
 namespace ScriptBindings
 {
-    // the _T() function for scripts
+    // the wxT_2() function for scripts
     wxString static_T(const SQChar* str)
     {
 		CompileTimeAssertion<wxMinimumVersion<2,8>::eval>::Assert();
@@ -30,13 +30,13 @@ namespace ScriptBindings
         wxString result;
         wxString& str1 = *SqPlus::GetInstance<wxString,false>(v, 1);
         if (sa.GetType(2) == OT_INTEGER)
-            result.Printf(_T("%s%d"), str1.c_str(), sa.GetInt(2));
+            result.Printf(wxT_2("%s%d"), str1.c_str(), sa.GetInt(2));
         else if (sa.GetType(2) == OT_FLOAT)
-            result.Printf(_T("%s%f"), str1.c_str(), sa.GetFloat(2));
+            result.Printf(wxT_2("%s%f"), str1.c_str(), sa.GetFloat(2));
         else if (sa.GetType(2) == OT_USERPOINTER)
-            result.Printf(_T("%s%p"), str1.c_str(), sa.GetUserPointer(2));
+            result.Printf(wxT_2("%s%p"), str1.c_str(), sa.GetUserPointer(2));
         else if (sa.GetType(2) == OT_STRING)
-            result.Printf(_T("%s%s"), str1.c_str(), cbC2U(sa.GetString(2)).c_str());
+            result.Printf(wxT_2("%s%s"), str1.c_str(), cbC2U(sa.GetString(2)).c_str());
         else
             result = str1 + *SqPlus::GetInstance<wxString,false>(v, 2);
         return SqPlus::ReturnCopy(v, result);
@@ -157,7 +157,7 @@ namespace ScriptBindings
     {
         StackHandler sa(v);
         wxColour& self = *SqPlus::GetInstance<wxColour,false>(v, 1);
-        wxString str = wxString::Format(_T("[r=%d, g=%d, b=%d]"), self.Red(), self.Green(), self.Blue());
+        wxString str = wxString::Format(wxT_2("[r=%d, g=%d, b=%d]"), self.Red(), self.Green(), self.Blue());
         return sa.Return((const SQChar*)str.mb_str(wxConvUTF8));
     }
 
@@ -166,7 +166,7 @@ namespace ScriptBindings
 
     void Register_wxTypes()
     {
-        SqPlus::RegisterGlobal(&static_T, "_T");
+        SqPlus::RegisterGlobal(&static_T, "wxT_2");
         SqPlus::RegisterGlobal(&static_, "_");
 
         typedef int(wxString::*WXSTR_FIRST_STR)(const wxString&)const;

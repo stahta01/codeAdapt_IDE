@@ -37,15 +37,15 @@ namespace ScriptBindings
         {
             wxString key = *SqPlus::GetInstance<wxString,false>(v, 2);
             if (sa.GetType(3) == OT_INTEGER)
-                return sa.Return((SQInteger)Manager::Get()->GetConfigManager(_T("scripts"))->ReadInt(key, sa.GetInt(3)));
+                return sa.Return((SQInteger)Manager::Get()->GetConfigManager(wxT_2("scripts"))->ReadInt(key, sa.GetInt(3)));
             else if (sa.GetType(3) == OT_BOOL)
-                return sa.Return(Manager::Get()->GetConfigManager(_T("scripts"))->ReadBool(key, sa.GetBool(3)));
+                return sa.Return(Manager::Get()->GetConfigManager(wxT_2("scripts"))->ReadBool(key, sa.GetBool(3)));
             else if (sa.GetType(3) == OT_FLOAT)
-                return sa.Return((float)Manager::Get()->GetConfigManager(_T("scripts"))->ReadDouble(key, sa.GetFloat(3)));
+                return sa.Return((float)Manager::Get()->GetConfigManager(wxT_2("scripts"))->ReadDouble(key, sa.GetFloat(3)));
             else
             {
                 wxString val = *SqPlus::GetInstance<wxString,false>(v, 3);
-                wxString ret = Manager::Get()->GetConfigManager(_T("scripts"))->Read(key, val);
+                wxString ret = Manager::Get()->GetConfigManager(wxT_2("scripts"))->Read(key, val);
                 return SqPlus::ReturnCopy(v, ret);
             }
         }
@@ -60,22 +60,22 @@ namespace ScriptBindings
             wxString key = *SqPlus::GetInstance<wxString,false>(v, 2);
             if (sa.GetType(3) == OT_INTEGER)
             {
-                Manager::Get()->GetConfigManager(_T("scripts"))->Write(key, (int)sa.GetInt(3));
+                Manager::Get()->GetConfigManager(wxT_2("scripts"))->Write(key, (int)sa.GetInt(3));
                 return SQ_OK;
             }
             else if (sa.GetType(3) == OT_BOOL)
             {
-                Manager::Get()->GetConfigManager(_T("scripts"))->Write(key, (bool)sa.GetBool(3));
+                Manager::Get()->GetConfigManager(wxT_2("scripts"))->Write(key, (bool)sa.GetBool(3));
                 return SQ_OK;
             }
             else if (sa.GetType(3) == OT_FLOAT)
             {
-                Manager::Get()->GetConfigManager(_T("scripts"))->Write(key, sa.GetFloat(3));
+                Manager::Get()->GetConfigManager(wxT_2("scripts"))->Write(key, sa.GetFloat(3));
                 return SQ_OK;
             }
             else
             {
-                Manager::Get()->GetConfigManager(_T("scripts"))->Write(key, *SqPlus::GetInstance<wxString,false>(v, 3));
+                Manager::Get()->GetConfigManager(wxT_2("scripts"))->Write(key, *SqPlus::GetInstance<wxString,false>(v, 3));
                 return SQ_OK;
             }
         }
@@ -85,7 +85,7 @@ namespace ScriptBindings
             wxString val = *SqPlus::GetInstance<wxString,false>(v, 3);
             if (sa.GetType(4) == OT_BOOL)
             {
-                Manager::Get()->GetConfigManager(_T("scripts"))->Write(key, val, sa.GetBool(4));
+                Manager::Get()->GetConfigManager(wxT_2("scripts"))->Write(key, val, sa.GetBool(4));
                 return SQ_OK;
             }
         }
@@ -316,7 +316,7 @@ namespace ScriptBindings
     void RegisterBindings()
     {
         if (!SquirrelVM::GetVMPtr())
-            cbThrow(_T("Scripting engine not initialized!?"));
+            cbThrow(wxT_2("Scripting engine not initialized!?"));
 
         Register_wxTypes();
         Register_Constants();

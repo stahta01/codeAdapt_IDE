@@ -26,7 +26,7 @@ namespace ScriptBindings
             if (Manager::Get()->GetScriptingManager()->IsCurrentlyRunningScriptTrusted())
                 return true;
 
-            if (Manager::Get()->GetConfigManager(_T("security"))->ReadBool(operation, false))
+            if (Manager::Get()->GetConfigManager(wxT_2("security"))->ReadBool(operation, false))
                 return true;
 
             ScriptSecurityWarningDlg dlg(Manager::Get()->GetAppWindow(), operation, descr);
@@ -40,7 +40,7 @@ namespace ScriptBindings
                     return true;
 
                 case ssrAllowAll:
-                    Manager::Get()->GetConfigManager(_T("security"))->Write(operation, true);
+                    Manager::Get()->GetConfigManager(wxT_2("security"))->Write(operation, true);
                     return true;
 
                 case ssrTrust: // purposely fall through
@@ -68,7 +68,7 @@ namespace ScriptBindings
         {
             wxFileName fname(Manager::Get()->GetMacrosManager()->ReplaceMacros(full_path));
             NormalizePath(fname, wxEmptyString);
-            if (!SecurityAllows(_T("CreateDir"), fname.GetFullPath()))
+            if (!SecurityAllows(wxT_2("CreateDir"), fname.GetFullPath()))
                 return false;
             return ::CreateDirRecursively(fname.GetFullPath(), perms);
         }
@@ -82,7 +82,7 @@ namespace ScriptBindings
         {
             wxFileName fname(Manager::Get()->GetMacrosManager()->ReplaceMacros(src));
             NormalizePath(fname, wxEmptyString);
-            if (!SecurityAllows(_T("RemoveDir"), fname.GetFullPath()))
+            if (!SecurityAllows(wxT_2("RemoveDir"), fname.GetFullPath()))
                 return false;
             return wxRmdir(fname.GetFullPath());
         }
@@ -100,7 +100,7 @@ namespace ScriptBindings
             wxFileName fname2(Manager::Get()->GetMacrosManager()->ReplaceMacros(dst));
             NormalizePath(fname1, wxEmptyString);
             NormalizePath(fname2, wxEmptyString);
-            if (!SecurityAllows(_T("CopyFile"), wxString::Format(_T("%s -> %s"), src.c_str(), dst.c_str())))
+            if (!SecurityAllows(wxT_2("CopyFile"), wxString::Format(wxT_2("%s -> %s"), src.c_str(), dst.c_str())))
                 return false;
             if (!wxFileExists(fname1.GetFullPath())) return false;
             return wxCopyFile(fname1.GetFullPath(),
@@ -114,7 +114,7 @@ namespace ScriptBindings
             wxFileName fname2(Manager::Get()->GetMacrosManager()->ReplaceMacros(dst));
             NormalizePath(fname1, wxEmptyString);
             NormalizePath(fname2, wxEmptyString);
-            if (!SecurityAllows(_T("RenameFile"), wxString::Format(_T("%s -> %s"),
+            if (!SecurityAllows(wxT_2("RenameFile"), wxString::Format(wxT_2("%s -> %s"),
                                             fname1.GetFullPath().c_str(), fname2.GetFullPath().c_str())))
                 return false;
             if (!wxFileExists(fname1.GetFullPath())) return false;
@@ -126,7 +126,7 @@ namespace ScriptBindings
         {
             wxFileName fname(Manager::Get()->GetMacrosManager()->ReplaceMacros(src));
             NormalizePath(fname, wxEmptyString);
-            if (!SecurityAllows(_T("RemoveFile"), fname.GetFullPath()))
+            if (!SecurityAllows(wxT_2("RemoveFile"), fname.GetFullPath()))
                 return false;
             if (!wxFileExists(fname.GetFullPath())) return false;
             return wxRemoveFile(fname.GetFullPath());
@@ -165,7 +165,7 @@ namespace ScriptBindings
         {
             wxFileName fname(Manager::Get()->GetMacrosManager()->ReplaceMacros(filename));
             NormalizePath(fname, wxEmptyString);
-            if (!SecurityAllows(_T("CreateFile"), fname.GetFullPath()))
+            if (!SecurityAllows(wxT_2("CreateFile"), fname.GetFullPath()))
                 return false;
             wxFile f(fname.GetFullPath(), wxFile::write);
             return cbWrite(f, contents);
@@ -173,7 +173,7 @@ namespace ScriptBindings
 
         int Execute(const wxString& command)
         {
-            if (!SecurityAllows(_T("Execute"), command))
+            if (!SecurityAllows(wxT_2("Execute"), command))
                 return -1;
             wxArrayString output;
             return wxExecute(command, output, wxEXEC_NODISABLE);
@@ -181,11 +181,11 @@ namespace ScriptBindings
 
         wxString ExecuteAndGetOutput(const wxString& command)
         {
-            if (!SecurityAllows(_T("Execute"), command))
+            if (!SecurityAllows(wxT_2("Execute"), command))
                 return wxEmptyString;
             wxArrayString output;
             wxExecute(command, output, wxEXEC_NODISABLE);
-            return GetStringFromArray(output, _T("\n"));
+            return GetStringFromArray(output, wxT_2("\n"));
         }
 
     } // namespace IOLib

@@ -27,7 +27,7 @@ class ProgressDialog : public wxProgressDialog
 
         ProgressDialog& operator=(const ProgressDialog&)
         {
-            cbThrow(_T("ProgressDialog copy constructor should never be called!"));
+            cbThrow(wxT_2("ProgressDialog copy constructor should never be called!"));
         }
 
         bool Update(int val, const wxString& msg)

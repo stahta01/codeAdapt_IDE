@@ -50,7 +50,7 @@ namespace ScriptBindings
     }
     ConfigManager* getCM()
     {
-        return Manager::Get()->GetConfigManager(_T("scripts"));
+        return Manager::Get()->GetConfigManager(wxT_2("scripts"));
     }
     CompilerFactory* getCF()
     {
