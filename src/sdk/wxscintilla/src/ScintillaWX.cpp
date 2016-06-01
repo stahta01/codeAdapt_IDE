@@ -631,7 +631,7 @@ void ScintillaWX::Paste() {
     wxTheClipboard->UsePrimarySelection(false);
     if (wxTheClipboard->Open()) {
         // Leave the following lines that way to enable compilation with GCC 3.3.3
-        wxDataFormat dataFormat(wxString(wxT("application/x-cbrectdata")));
+        wxDataFormat dataFormat(wxString(wxT_2("application/x-cbrectdata")));
         wxCustomDataObject selData(dataFormat);
         bool gotRectData = wxTheClipboard->GetData(selData);
 
@@ -711,7 +711,7 @@ void ScintillaWX::CopyToClipboard(const SelectionText& st) {
         // object for local use that remembers what kind of selection was made (stream or
         // rectangular).
         wxDataObjectComposite* obj = new wxDataObjectComposite();
-        wxCustomDataObject* rectData = new wxCustomDataObject(wxDataFormat(wxString(wxT("application/x-cbrectdata"))));
+        wxCustomDataObject* rectData = new wxCustomDataObject(wxDataFormat(wxString(wxT_2("application/x-cbrectdata"))));
 
         char* buffer = new char[st.LengthWithTerminator()];
         buffer[0] = (st.rectangular)? (char)1 : (char)0;

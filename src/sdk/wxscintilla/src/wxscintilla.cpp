@@ -82,7 +82,7 @@ static wxColour wxColourFromLong(long c)
 static wxColour wxColourFromSpec(const wxString& spec)
 {
     // spec should be a colour name or "#RRGGBB"
-    if (spec.GetChar(0) == wxT('#')) {
+    if (spec.GetChar(0) == wxT_2('#')) {
 
         long red, green, blue;
         red = green = blue = 0;
@@ -205,7 +205,7 @@ bool wxScintilla::Create(wxWindow *parent,
                             style | wxWANTS_CHARS | wxCLIP_CHILDREN,
                             wxDefaultValidator, name)) {
 /* C::B begin */
-        wxSafeShowMessage(wxT("wxScintilla"),wxT("Could not create a new wxControl instance."));
+        wxSafeShowMessage(wxT_2("wxScintilla"),wxT_2("Could not create a new wxControl instance."));
 /* C::B end */
         return false;
     }
@@ -216,7 +216,7 @@ bool wxScintilla::Create(wxWindow *parent,
     m_swx = new ScintillaWX(this);
 /* C::B begin */
     if (!m_swx)
-        wxSafeShowMessage(wxT("wxScintilla"),wxT("Could not create a new ScintillaWX instance."));
+        wxSafeShowMessage(wxT_2("wxScintilla"),wxT_2("Could not create a new ScintillaWX instance."));
 /* C::B end */
     m_stopWatch.Start();
     m_lastKeyDownConsumed = false;
@@ -621,10 +621,10 @@ void wxScintilla::SetCodePage(int codePage)
 {
 #if wxUSE_UNICODE
     wxASSERT_MSG (codePage == wxSCI_CP_UTF8,
-                  wxT("Only wxSCI_CP_UTF8 may be used when wxUSE_UNICODE is on."));
+                  wxT_2("Only wxSCI_CP_UTF8 may be used when wxUSE_UNICODE is on."));
 #else
     wxASSERT_MSG (codePage != wxSCI_CP_UTF8,
-                  wxT("wxSCI_CP_UTF8 may not be used when wxUSE_UNICODE is off."));
+                  wxT_2("wxSCI_CP_UTF8 may not be used when wxUSE_UNICODE is off."));
 #endif
     SendMsg(SCI_SETCODEPAGE, codePage);
 }
@@ -4739,38 +4739,38 @@ int wxScintilla::GetCurrentLine()
 //
 void wxScintilla::StyleSetSpec(int styleNum, const wxString& spec)
 {
-    wxStringTokenizer tkz(spec, wxT(","));
+    wxStringTokenizer tkz(spec, wxT_2(","));
     while (tkz.HasMoreTokens()) {
         wxString token = tkz.GetNextToken();
 
         wxString option = token.BeforeFirst(':');
         wxString val = token.AfterFirst(':');
 
-        if (option == wxT("bold"))
+        if (option == wxT_2("bold"))
             StyleSetBold(styleNum, true);
 
-        else if (option == wxT("italic"))
+        else if (option == wxT_2("italic"))
             StyleSetItalic(styleNum, true);
 
-        else if (option == wxT("underline"))
+        else if (option == wxT_2("underline"))
             StyleSetUnderline(styleNum, true);
 
-        else if (option == wxT("eol"))
+        else if (option == wxT_2("eol"))
             StyleSetEOLFilled(styleNum, true);
 
-        else if (option == wxT("size")) {
+        else if (option == wxT_2("size")) {
             long points;
             if (val.ToLong(&points))
                 StyleSetSize(styleNum, points);
         }
 
-        else if (option == wxT("face"))
+        else if (option == wxT_2("face"))
             StyleSetFaceName(styleNum, val);
 
-        else if (option == wxT("fore"))
+        else if (option == wxT_2("fore"))
             StyleSetForeground(styleNum, wxColourFromSpec(val));
 
-        else if (option == wxT("back"))
+        else if (option == wxT_2("back"))
             StyleSetBackground(styleNum, wxColourFromSpec(val));
     }
 }
@@ -4803,7 +4803,7 @@ void wxScintilla::StyleSetFont(int styleNum, wxFont& font)
 #ifdef __WXGTK__
     // Ensure that the native font is initialized
     int x, y;
-    GetTextExtent(wxT("X"), &x, &y, NULL, NULL, &font);
+    GetTextExtent(wxT_2("X"), &x, &y, NULL, NULL, &font);
 #endif
     int            size     = font.GetPointSize();
     wxString       faceName = font.GetFaceName();
@@ -4997,7 +4997,7 @@ bool wxScintilla::DoSaveFile(const wxString& filename, int WXUNUSED(fileType))
 #if wxUSE_FFILE
     // Take care to use "b" to ensure that possibly non-native EOLs in the file
     // contents are not mangled when saving it.
-    wxFFile file(filename, wxT("wb"));
+    wxFFile file(filename, wxT_2("wb"));
 #elif wxUSE_FILE
     wxFile file(filename, wxFile::write);
 #endif // wxUSE_FFILE
@@ -5024,7 +5024,7 @@ bool wxScintilla::DoLoadFile(const wxString& filename, int WXUNUSED(fileType))
     // As above, we want to read the real EOLs from the file, e.g. without
     // translating them to just LFs under Windows, so that the original CR LF
     // are preserved when it's written back.
-    wxFFile file(filename, wxT("rb"));
+    wxFFile file(filename, wxT_2("rb"));
 #else
     wxFile file(filename);
 #endif // wxUSE_FFILE

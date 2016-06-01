@@ -679,7 +679,7 @@ XYPOSITION SurfaceImpl::WidthChar(Font &font, char ch)
     return w;
 }
 
-#define EXTENT_TEST wxT(" `~!@#$%^&*()-_=+\\|[]{};:\"\'<,>.?/1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+#define EXTENT_TEST wxT_2(" `~!@#$%^&*()-_=+\\|[]{};:\"\'<,>.?/1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 XYPOSITION SurfaceImpl::Ascent(Font &font)
 {
@@ -1441,7 +1441,7 @@ void ListBoxImpl::Append(const wxString& text, int type) {
     GETLB(wid)->SetItem(itemID, 1, text);
     maxStrWidth = wxMax(maxStrWidth, text.length());
     if (type != -1) {
-        wxCHECK_RET(imgTypeMap, wxT("Unexpected NULL imgTypeMap"));
+        wxCHECK_RET(imgTypeMap, wxT_2("Unexpected NULL imgTypeMap"));
         idx = imgTypeMap->Item(type);
     }
     GETLB(wid)->SetItemImage(itemID, idx, idx);
@@ -1799,7 +1799,7 @@ void Platform::DebugDisplay(const char *s)
 {
 #ifdef TRACE
 /* C::B begin */
-    wxSafeShowMessage(wxT("wxScintilla"),sci2wx(s));
+    wxSafeShowMessage(wxT_2("wxScintilla"),sci2wx(s));
 /* C::B end */
 #else
     wxUnusedVar(s);
@@ -1838,7 +1838,7 @@ void Platform::Assert(const char *c, const char *file, int line)
     if (assertionPopUps) {
         /*int idButton = */
 /* C::B begin */
-        wxSafeShowMessage(wxT("wxScintilla"),sci2wx(buffer));
+        wxSafeShowMessage(wxT_2("wxScintilla"),sci2wx(buffer));
 /* C::B end */
     } else {
         strcat(buffer, "\r\n");
