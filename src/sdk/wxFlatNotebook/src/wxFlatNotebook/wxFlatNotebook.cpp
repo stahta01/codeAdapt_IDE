@@ -42,13 +42,13 @@ wxString WhereToString( int where )
 
 	if( first )
 	{
-		whereMap[wxFNB_TAB] = wxT("wxFNB_TAB");
-		whereMap[wxFNB_X] = wxT("wxFNB_X");
-		whereMap[wxFNB_TAB_X] = wxT("wxFNB_TAB_X");
-		whereMap[wxFNB_LEFT_ARROW] = wxT("wxFNB_LEFT_ARROW");
-		whereMap[wxFNB_RIGHT_ARROW] = wxT("wxFNB_RIGHT_ARROW");
-		whereMap[wxFNB_DROP_DOWN_ARROW] = wxT("wxFNB_DROP_DOWN_ARROW");
-		whereMap[wxFNB_NOWHERE] = wxT("wxFNB_NOWHERE");
+		whereMap[wxFNB_TAB] = wxT_2("wxFNB_TAB");
+		whereMap[wxFNB_X] = wxT_2("wxFNB_X");
+		whereMap[wxFNB_TAB_X] = wxT_2("wxFNB_TAB_X");
+		whereMap[wxFNB_LEFT_ARROW] = wxT_2("wxFNB_LEFT_ARROW");
+		whereMap[wxFNB_RIGHT_ARROW] = wxT_2("wxFNB_RIGHT_ARROW");
+		whereMap[wxFNB_DROP_DOWN_ARROW] = wxT_2("wxFNB_DROP_DOWN_ARROW");
+		whereMap[wxFNB_NOWHERE] = wxT_2("wxFNB_NOWHERE");
 		first = false;
 	}
 	return whereMap[where];
@@ -142,7 +142,7 @@ bool wxFlatNotebook::Create(wxWindow* parent, wxWindowID id, const wxPoint& pos,
 	memDc.SetFont( boldFont );
 #endif
 
-	wxString stam = wxT("Tp");	// Temp data to get the text height;
+	wxString stam = wxT_2("Tp");	// Temp data to get the text height;
 	memDc.GetTextExtent(stam, &width, &height);
 
 	int tabHeight = height + wxFNB_HEIGHT_SPACER; // We use 8 pixels as padding
@@ -796,7 +796,7 @@ wxPageContainer::wxPageContainer(wxWindow* parent, wxWindowID id, const wxPoint&
 	memDc.SetFont( boldFont );
 #endif
 
-	memDc.GetTextExtent(wxT("Tp"), &width, &height);
+	memDc.GetTextExtent(wxT_2("Tp"), &width, &height);
 	int tabHeight = height + wxFNB_HEIGHT_SPACER; // We use 10 pixels as padding
 
 	wxWindow::Create(parent, id, pos, wxSize(size.x, tabHeight), style | wxNO_BORDER | wxNO_FULL_REPAINT_ON_RESIZE);
@@ -945,7 +945,7 @@ void wxPageContainer::OnShowCustomizeDialog(wxCommandEvent &event)
 
 void wxPageContainer::OnRightDown(wxMouseEvent& event)
 {
-	FNB_LOG_MSG(wxT("OnRightDown") << event.GetPosition().x << wxT(",") << event.GetPosition().y );
+	FNB_LOG_MSG(wxT_2("OnRightDown") << event.GetPosition().x << wxT_2(",") << event.GetPosition().y );
 	wxPageInfo pgInfo;
 	int tabIdx;
 	int where = HitTest(event.GetPosition(), pgInfo, tabIdx);
@@ -1280,8 +1280,8 @@ void wxPageContainer::DoSetSelection(size_t page)
 
 	if( !IsTabVisible(page) )
 	{
-		FNB_LOG_MSG( wxT("Tab ") << (int)page << wxT(" is not visible"));
-		FNB_LOG_MSG( wxT("m_nFrom=") << m_nFrom << wxT(", Selection=") << (int)page );
+		FNB_LOG_MSG( wxT_2("Tab ") << (int)page << wxT_2(" is not visible"));
+		FNB_LOG_MSG( wxT_2("m_nFrom=") << m_nFrom << wxT_2(", Selection=") << (int)page );
 
 		// Try to remove one tab from start and try again
 		if( !CanFitToScreen(page) )
@@ -1297,12 +1297,12 @@ void wxPageContainer::DoSetSelection(size_t page)
 						break;
 				}
 			}
-			FNB_LOG_MSG( wxT("Adjusting m_nFrom to=") << m_nFrom);
+			FNB_LOG_MSG( wxT_2("Adjusting m_nFrom to=") << m_nFrom);
 		}
 	}
 	else
 	{
-		FNB_LOG_MSG( wxT("Tab ") << (int)page << wxT(" is visible"));
+		FNB_LOG_MSG( wxT_2("Tab ") << (int)page << wxT_2(" is visible"));
 	}
 	PushPageHistory((int)page);
 	Refresh();
@@ -1471,7 +1471,7 @@ void wxPageContainer::OnMouseMove(wxMouseEvent& event)
 			if(event.Dragging() && !(style & wxFNB_NODRAG))
 			{
 				wxFNBDragInfo draginfo(this, tabIdx);
-				wxFNBDragInfoDataObject dataobject(wxDataFormat(wxT("wxFNB")));
+				wxFNBDragInfoDataObject dataobject(wxDataFormat(wxT_2("wxFNB")));
 				dataobject.SetData(sizeof(wxFNBDragInfo), &draginfo);
 				wxFNBDropSource dragSource(this);
 				dragSource.SetData(dataobject);

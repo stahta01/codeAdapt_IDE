@@ -67,7 +67,7 @@ void wxTabNavigatorWindow::Create(wxWindow* parent)
 		font.SetWeight( wxFONTWEIGHT_BOLD );
 		mem_dc.SetFont(font);
 		int w;
-		mem_dc.GetTextExtent(wxT("Tp"), &w, &panelHeight);
+		mem_dc.GetTextExtent(wxT_2("Tp"), &w, &panelHeight);
 		panelHeight += 4; // Place a spacer of 2 pixels
 
 		// Out signpost bitmap is 24 pixels
@@ -218,7 +218,7 @@ void wxTabNavigatorWindow::OnPanelPaint(wxPaintEvent &event)
 		wxFont font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
 		font.SetWeight( wxFONTWEIGHT_BOLD );
 		mem_dc.SetFont( font );
-		mem_dc.GetTextExtent( wxT("Tp"), &w, &fontHeight );
+		mem_dc.GetTextExtent( wxT_2("Tp"), &w, &fontHeight );
 
 		txtPt.x = bmpPt.x + m_bmp.GetWidth() + 4;
 		txtPt.y = (rect.height - fontHeight)/2;

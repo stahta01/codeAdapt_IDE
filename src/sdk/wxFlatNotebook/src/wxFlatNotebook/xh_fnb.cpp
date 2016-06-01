@@ -56,12 +56,12 @@ wxFlatNotebookXmlHandler::wxFlatNotebookXmlHandler()
 
 wxObject *wxFlatNotebookXmlHandler::DoCreateResource()
 {
-    if (m_class == wxT("notebookpage"))
+    if (m_class == wxT_2("notebookpage"))
     {
-        wxXmlNode *n = GetParamNode(wxT("object"));
+        wxXmlNode *n = GetParamNode(wxT_2("object"));
 
         if ( !n )
-            n = GetParamNode(wxT("object_ref"));
+            n = GetParamNode(wxT_2("object_ref"));
 
         if (n)
         {
@@ -73,11 +73,11 @@ wxObject *wxFlatNotebookXmlHandler::DoCreateResource()
 
             if (wnd)
             {
-                m_notebook->AddPage(wnd, GetText(wxT("label")),
-                                         GetBool(wxT("selected")));
-                if ( HasParam(wxT("bitmap")) )
+                m_notebook->AddPage(wnd, GetText(wxT_2("label")),
+                                         GetBool(wxT_2("selected")));
+                if ( HasParam(wxT_2("bitmap")) )
                 {
-                    wxBitmap bmp = GetBitmap(wxT("bitmap"), wxART_OTHER);
+                    wxBitmap bmp = GetBitmap(wxT_2("bitmap"), wxART_OTHER);
                     wxFlatNotebookImageList *imgList = m_notebook->GetImageList();
                     if ( imgList == NULL )
                     {
@@ -106,7 +106,7 @@ wxObject *wxFlatNotebookXmlHandler::DoCreateResource()
         nb->Create(m_parentAsWindow,
                    GetID(),
                    GetPosition(), GetSize(),
-                   GetStyle(wxT("style")),
+                   GetStyle(wxT_2("style")),
                    GetName());
 
         SetupWindow(nb);
@@ -125,8 +125,8 @@ wxObject *wxFlatNotebookXmlHandler::DoCreateResource()
 
 bool wxFlatNotebookXmlHandler::CanHandle(wxXmlNode *node)
 {
-    return ((!m_isInside && IsOfClass(node, wxT("wxFlatNotebook"))) ||
-            (m_isInside && IsOfClass(node, wxT("notebookpage"))));
+    return ((!m_isInside && IsOfClass(node, wxT_2("wxFlatNotebook"))) ||
+            (m_isInside && IsOfClass(node, wxT_2("notebookpage"))));
 }
 
 #endif // wxUSE_XRC && wxUSE_NOTEBOOK

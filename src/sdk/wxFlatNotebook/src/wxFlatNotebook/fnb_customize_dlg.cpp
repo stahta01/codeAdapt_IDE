@@ -84,7 +84,7 @@ wxPanel *wxFNBCustomizeDialog::CreateOptionsPage()
 	mainSizer = new wxBoxSizer( wxVERTICAL );
 	page->SetSizer( mainSizer );
 
-	wxString m_stylesChoices[] = { _("Default"), wxT("Visual Studio 8.0"), wxT("Visual Studio 7.10"), wxT("Fancy Tabs"), wxT("Firefox 2") };
+	wxString m_stylesChoices[] = { _("Default"), wxT_2("Visual Studio 8.0"), wxT_2("Visual Studio 7.10"), wxT_2("Fancy Tabs"), wxT_2("Firefox 2") };
 	int m_stylesNChoices = sizeof( m_stylesChoices ) / sizeof( wxString );
 
 	// Set the selected tabs' style

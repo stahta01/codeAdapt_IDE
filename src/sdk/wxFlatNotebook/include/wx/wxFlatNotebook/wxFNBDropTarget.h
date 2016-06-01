@@ -1,13 +1,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Name:		wxFNBDropTarget.h
 // Purpose:     helper class to implement drag and drop of tabs in the wxFNB
-// Author:      T-Rex 
+// Author:      T-Rex
 // Modified by: Eran Ifrah <eran.ifrah@gmail.com>
 // Created:     30/12/2005
 // Modified:    01/01/2006
 // Licence:     wxWindows license <http://www.wxwidgets.org/licence3.txt>
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef _WX_FNB_DROP_TARGET_H 
+#ifndef _WX_FNB_DROP_TARGET_H
 #define _WX_FNB_DROP_TARGET_H
 
 #include <wx/wx.h>
@@ -19,19 +19,19 @@
 class wxFNBDragInfo
 {
 	wxWindow * m_Container;
-	int m_PageIndex;	
-public:		
+	int m_PageIndex;
+public:
 	/**
 	Constructor
 	\param container - pointer to wxPageContainer object which contains dragged page
 	\param pageindex - index of dragged page
 	*/
-	wxFNBDragInfo(wxWindow * container, int pageindex) : m_Container(container), m_PageIndex(pageindex){}	
+	wxFNBDragInfo(wxWindow * container, int pageindex) : m_Container(container), m_PageIndex(pageindex){}
 
 	/**
 	 * \brief default constructor
 	 */
-	wxFNBDragInfo() : m_Container(0), m_PageIndex(0){} 
+	wxFNBDragInfo() : m_Container(0), m_PageIndex(0){}
 
 	/**
 	Returns wxPageContainer object which contains dragged page
@@ -99,7 +99,7 @@ public:
 		, m_pt2CallbackFunc(pt2CallbackFunc)
 		, m_DataObject(NULL)
 	{
-		m_DataObject = new wxFNBDragInfoDataObject(wxDataFormat(wxT("wxFNB")));
+		m_DataObject = new wxFNBDragInfoDataObject(wxDataFormat(wxT_2("wxFNB")));
 		SetDataObject(m_DataObject);
 	}
 	/**
@@ -113,14 +113,14 @@ public:
 	\param def - Result of drag-n-drop operation
 	*/
     virtual wxDragResult OnData(wxCoord x, wxCoord y, wxDragResult WXUNUSED(def))
-	{		
+	{
 		GetData();
 		wxFNBDragInfo * draginfo = (wxFNBDragInfo *)m_DataObject->GetData();
-		if(!draginfo) 
+		if(!draginfo)
 		{
 			return wxDragNone;
 		}
-		return (m_pParent->*m_pt2CallbackFunc)(x, y, draginfo->GetPageIndex(), (T *)draginfo->GetContainer()); 	
+		return (m_pParent->*m_pt2CallbackFunc)(x, y, draginfo->GetPageIndex(), (T *)draginfo->GetContainer());
 	}
 };
 
@@ -136,16 +136,16 @@ public:
  *
  * \author Eran
  */
-class wxFNBDropSource : public wxDropSource 
+class wxFNBDropSource : public wxDropSource
 {
 	wxWindow* m_win;
 public:
 	/**
 	 * Parameterized constructor
-	 * \param win 
-	 * \param iconCopy 
-	 * \param iconMove 
-	 * \param iconNone 
+	 * \param win
+	 * \param iconCopy
+	 * \param iconMove
+	 * \param iconNone
 	 */
 	wxFNBDropSource(wxWindow* win = NULL)
 	: wxDropSource(win)
@@ -163,7 +163,7 @@ public:
 	/**
 	 * give some custom UI feedback during the drag and drop operation in this function. It is called on each mouse move, so your implementation must not be too slow
 	 * \param effect The effect to implement. One of wxDragCopy, wxDragMove, wxDragLink and wxDragNone
-	 * \return 
+	 * \return
 	 */
 	virtual bool GiveFeedback(wxDragResult effect);
 };
