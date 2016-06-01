@@ -47,12 +47,12 @@
 // images by order of pages
 const wxString base_imgs[] =
 {
-    _T("general-prefs"),
-    _T("view"),
-    _T("notebook-appearance"),
-    _T("colours"),
-    _T("dialogs"),
-    _T("net"),
+    wxT_2("general-prefs"),
+    wxT_2("view"),
+    wxT_2("notebook-appearance"),
+    wxT_2("colours"),
+    wxT_2("dialogs"),
+    wxT_2("net"),
 };
 const int IMAGES_COUNT = sizeof(base_imgs) / sizeof(wxString);
 
@@ -85,13 +85,13 @@ END_EVENT_TABLE()
 EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* art)
     : m_pArt(art)
 {
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
-    ConfigManager *pcfg = Manager::Get()->GetConfigManager(_T("project_manager"));
-    ConfigManager *mcfg = Manager::Get()->GetConfigManager(_T("message_manager"));
-    ConfigManager *acfg = Manager::Get()->GetConfigManager(_T("an_dlg"));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("app"));
+    ConfigManager *pcfg = Manager::Get()->GetConfigManager(wxT_2("project_manager"));
+    ConfigManager *mcfg = Manager::Get()->GetConfigManager(wxT_2("message_manager"));
+    ConfigManager *acfg = Manager::Get()->GetConfigManager(wxT_2("an_dlg"));
 
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgEnvironmentSettings"));
-    int sel = cfg->ReadInt(_T("/environment/settings_size"), 0);
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgEnvironmentSettings"));
+    int sel = cfg->ReadInt(wxT_2("/environment/settings_size"), 0);
     wxListbook* lb = XRCCTRL(*this, "nbMain", wxListbook);
     SetSettingsIconsStyle(lb->GetListView(), (SettingsIconsStyle)sel);
     LoadListbookImages();
@@ -102,50 +102,50 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
     #endif
 
     // tab "General"
-    XRCCTRL(*this, "chkShowSplash", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/show_splash"), true));
-    XRCCTRL(*this, "chkSingleInstance", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/single_instance"), true));
-    XRCCTRL(*this, "chkAssociations", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/check_associations"), true));
-    XRCCTRL(*this, "chkModifiedFiles", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/check_modified_files"), true));
-    XRCCTRL(*this, "chkInvalidTargets", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/ignore_invalid_targets"), true));
-    XRCCTRL(*this, "rbAppStart", wxRadioBox)->SetSelection(cfg->ReadBool(_T("/environment/blank_workspace"), true) ? 1 : 0);
+    XRCCTRL(*this, "chkShowSplash", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/show_splash"), true));
+    XRCCTRL(*this, "chkSingleInstance", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/single_instance"), true));
+    XRCCTRL(*this, "chkAssociations", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/check_associations"), true));
+    XRCCTRL(*this, "chkModifiedFiles", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/check_modified_files"), true));
+    XRCCTRL(*this, "chkInvalidTargets", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/ignore_invalid_targets"), true));
+    XRCCTRL(*this, "rbAppStart", wxRadioBox)->SetSelection(cfg->ReadBool(wxT_2("/environment/blank_workspace"), true) ? 1 : 0);
     wxTextCtrl* txt = XRCCTRL(*this, "txtConsoleTerm", wxTextCtrl);
-    txt->SetValue(cfg->Read(_T("/console_terminal"), DEFAULT_CONSOLE_TERM));
+    txt->SetValue(cfg->Read(wxT_2("/console_terminal"), DEFAULT_CONSOLE_TERM));
 #ifdef __WXMSW__
     // under win32, this option is not needed, so disable it
     txt->Enable(false);
 #endif
     txt = XRCCTRL(*this, "txtConsoleShell", wxTextCtrl);
-    txt->SetValue(cfg->Read(_T("/console_shell"), DEFAULT_CONSOLE_SHELL));
+    txt->SetValue(cfg->Read(wxT_2("/console_shell"), DEFAULT_CONSOLE_SHELL));
 #ifdef __WXMSW__
     // under win32, this option is not needed, so disable it
     txt->Enable(false);
 #endif
 
     // tab "View"
-    bool do_place = cfg->ReadBool(_T("/dialog_placement/do_place"), false);
+    bool do_place = cfg->ReadBool(wxT_2("/dialog_placement/do_place"), false);
     XRCCTRL(*this, "chkDoPlace", wxCheckBox)->SetValue(do_place);
-    XRCCTRL(*this, "chkPlaceHead", wxCheckBox)->SetValue(cfg->ReadInt(_T("/dialog_placement/dialog_position"), 0) == pdlHead ? 1 : 0);
+    XRCCTRL(*this, "chkPlaceHead", wxCheckBox)->SetValue(cfg->ReadInt(wxT_2("/dialog_placement/dialog_position"), 0) == pdlHead ? 1 : 0);
     XRCCTRL(*this, "chkPlaceHead", wxCheckBox)->Enable(do_place);
 
-    XRCCTRL(*this, "rbProjectOpen", wxRadioBox)->SetSelection(pcfg->ReadInt(_T("/open_files"), 1));
-    XRCCTRL(*this, "rbToolbarSize", wxRadioBox)->SetSelection(cfg->ReadBool(_T("/environment/toolbar_size"), true) ? 1 : 0);
-    XRCCTRL(*this, "rbSettingsIconsSize", wxRadioBox)->SetSelection(cfg->ReadInt(_T("/environment/settings_size"), 0));
-    XRCCTRL(*this, "chkShowStartPage", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/start_here_page"), true));
-    XRCCTRL(*this, "spnLogFontSize", wxSpinCtrl)->SetValue(mcfg->ReadInt(_T("/log_font_size"), 8));
+    XRCCTRL(*this, "rbProjectOpen", wxRadioBox)->SetSelection(pcfg->ReadInt(wxT_2("/open_files"), 1));
+    XRCCTRL(*this, "rbToolbarSize", wxRadioBox)->SetSelection(cfg->ReadBool(wxT_2("/environment/toolbar_size"), true) ? 1 : 0);
+    XRCCTRL(*this, "rbSettingsIconsSize", wxRadioBox)->SetSelection(cfg->ReadInt(wxT_2("/environment/settings_size"), 0));
+    XRCCTRL(*this, "chkShowStartPage", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/start_here_page"), true));
+    XRCCTRL(*this, "spnLogFontSize", wxSpinCtrl)->SetValue(mcfg->ReadInt(wxT_2("/log_font_size"), 8));
 
-    bool en = mcfg->ReadBool(_T("/auto_hide"), false);
+    bool en = mcfg->ReadBool(wxT_2("/auto_hide"), false);
     XRCCTRL(*this, "chkAutoHideMessages", wxCheckBox)->SetValue(en);
-    XRCCTRL(*this, "chkAutoShowMessagesOnSearch", wxCheckBox)->SetValue(mcfg->ReadBool(_T("/auto_show_search"), true));
-    XRCCTRL(*this, "chkAutoShowMessagesOnWarn", wxCheckBox)->SetValue(mcfg->ReadBool(_T("/auto_show_build_warnings"), true));
-    XRCCTRL(*this, "chkAutoShowMessagesOnErr", wxCheckBox)->SetValue(mcfg->ReadBool(_T("/auto_show_build_errors"), true));
+    XRCCTRL(*this, "chkAutoShowMessagesOnSearch", wxCheckBox)->SetValue(mcfg->ReadBool(wxT_2("/auto_show_search"), true));
+    XRCCTRL(*this, "chkAutoShowMessagesOnWarn", wxCheckBox)->SetValue(mcfg->ReadBool(wxT_2("/auto_show_build_warnings"), true));
+    XRCCTRL(*this, "chkAutoShowMessagesOnErr", wxCheckBox)->SetValue(mcfg->ReadBool(wxT_2("/auto_show_build_errors"), true));
     XRCCTRL(*this, "chkAutoShowMessagesOnSearch", wxCheckBox)->Enable(en);
     XRCCTRL(*this, "chkAutoShowMessagesOnWarn", wxCheckBox)->Enable(en);
     XRCCTRL(*this, "chkAutoShowMessagesOnErr", wxCheckBox)->Enable(en);
 
-    bool i18n=cfg->ReadBool(_T("/locale/enable"), false);
+    bool i18n=cfg->ReadBool(wxT_2("/locale/enable"), false);
         XRCCTRL(*this, "chkI18N", wxCheckBox)->SetValue(i18n);
 
-    wxDir locDir(ConfigManager::GetDataFolder() + _T("/locale"));
+    wxDir locDir(ConfigManager::GetDataFolder() + wxT_2("/locale"));
     wxString locFName;
 
     if(locDir.IsOpened() && locDir.GetFirst(&locFName/*, wxEmptyString, wxDIR_DIRS*/))
@@ -160,40 +160,40 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
 
     XRCCTRL(*this, "cbxLanguage", wxComboBox)->Enable(i18n);
 
-    const wxLanguageInfo *info = wxLocale::FindLanguageInfo(cfg->Read(_T("/locale/language")));
+    const wxLanguageInfo *info = wxLocale::FindLanguageInfo(cfg->Read(wxT_2("/locale/language")));
     if(info);
         XRCCTRL(*this, "cbxLanguage", wxComboBox)->SetStringSelection(info->Description);
 
 
     // tab "Notebook"
-    XRCCTRL(*this, "cmbEditorTabs", wxComboBox)->SetSelection(cfg->ReadInt(_T("/environment/tabs_style"), 0));
-    XRCCTRL(*this, "chkSmartTabs", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/tabs_smart"), 0));
-    XRCCTRL(*this, "chkListTabs", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/tabs_list"), 0));
-    XRCCTRL(*this, "btnFNBorder", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/gradient_border"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW))));
-    XRCCTRL(*this, "btnFNFrom", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
-    XRCCTRL(*this, "btnFNTo", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/gradient_to"), *wxWHITE));
+    XRCCTRL(*this, "cmbEditorTabs", wxComboBox)->SetSelection(cfg->ReadInt(wxT_2("/environment/tabs_style"), 0));
+    XRCCTRL(*this, "chkSmartTabs", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/tabs_smart"), 0));
+    XRCCTRL(*this, "chkListTabs", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("/environment/tabs_list"), 0));
+    XRCCTRL(*this, "btnFNBorder", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/gradient_border"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW))));
+    XRCCTRL(*this, "btnFNFrom", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
+    XRCCTRL(*this, "btnFNTo", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/gradient_to"), *wxWHITE));
 
     // tab "Docking"
-    XRCCTRL(*this, "spnAuiBorder", wxSpinCtrl)->SetValue(cfg->ReadInt(_T("/environment/aui/border_size"), m_pArt->GetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE)));
-    XRCCTRL(*this, "spnAuiSash", wxSpinCtrl)->SetValue(cfg->ReadInt(_T("/environment/aui/sash_size"), m_pArt->GetMetric(wxAUI_DOCKART_SASH_SIZE)));
-    XRCCTRL(*this, "spnAuiCaption", wxSpinCtrl)->SetValue(cfg->ReadInt(_T("/environment/aui/caption_size"), m_pArt->GetMetric(wxAUI_DOCKART_CAPTION_SIZE)));
-    XRCCTRL(*this, "btnAuiActiveCaptionColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/active_caption_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR)));
-    XRCCTRL(*this, "btnAuiActiveCaptionGradientColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/active_caption_gradient_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR)));
-    XRCCTRL(*this, "btnAuiActiveCaptionTextColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/active_caption_text_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR)));
-    XRCCTRL(*this, "btnAuiInactiveCaptionColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/inactive_caption_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR)));
-    XRCCTRL(*this, "btnAuiInactiveCaptionGradientColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/inactive_caption_gradient_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR)));
-    XRCCTRL(*this, "btnAuiInactiveCaptionTextColour", wxButton)->SetBackgroundColour(cfg->ReadColour(_T("/environment/aui/inactive_caption_text_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR)));
+    XRCCTRL(*this, "spnAuiBorder", wxSpinCtrl)->SetValue(cfg->ReadInt(wxT_2("/environment/aui/border_size"), m_pArt->GetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE)));
+    XRCCTRL(*this, "spnAuiSash", wxSpinCtrl)->SetValue(cfg->ReadInt(wxT_2("/environment/aui/sash_size"), m_pArt->GetMetric(wxAUI_DOCKART_SASH_SIZE)));
+    XRCCTRL(*this, "spnAuiCaption", wxSpinCtrl)->SetValue(cfg->ReadInt(wxT_2("/environment/aui/caption_size"), m_pArt->GetMetric(wxAUI_DOCKART_CAPTION_SIZE)));
+    XRCCTRL(*this, "btnAuiActiveCaptionColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/active_caption_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR)));
+    XRCCTRL(*this, "btnAuiActiveCaptionGradientColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/active_caption_gradient_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR)));
+    XRCCTRL(*this, "btnAuiActiveCaptionTextColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/active_caption_text_colour"), m_pArt->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR)));
+    XRCCTRL(*this, "btnAuiInactiveCaptionColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR)));
+    XRCCTRL(*this, "btnAuiInactiveCaptionGradientColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_gradient_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR)));
+    XRCCTRL(*this, "btnAuiInactiveCaptionTextColour", wxButton)->SetBackgroundColour(cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_text_colour"), m_pArt->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR)));
 
     // tab "Dialogs"
     wxCheckListBox* clb = XRCCTRL(*this, "chkDialogs", wxCheckListBox);
     clb->Clear();
 
-    ConfigManagerContainer::StringSet dialogs = acfg->ReadSSet(_T("/disabled"));
+    ConfigManagerContainer::StringSet dialogs = acfg->ReadSSet(wxT_2("/disabled"));
     for (ConfigManagerContainer::StringSet::iterator i = dialogs.begin(); i != dialogs.end(); ++i)
             clb->Append(*i);
 
     // tab "Network"
-    XRCCTRL(*this, "txtProxy", wxTextCtrl)->SetValue(cfg->Read(_T("/network_proxy")));
+    XRCCTRL(*this, "txtProxy", wxTextCtrl)->SetValue(cfg->Read(wxT_2("/network_proxy")));
 
     // disable some windows-only settings, in other platforms
 #ifndef __WXMSW__
@@ -217,8 +217,8 @@ EnvironmentSettingsDlg::~EnvironmentSettingsDlg()
 
 void EnvironmentSettingsDlg::AddPluginPanels()
 {
-    const wxString base = _T("images/settings/");
-    const wxString noimg = _T("images/settings/generic-plugin");
+    const wxString base = wxT_2("images/settings/");
+    const wxString noimg = wxT_2("images/settings/generic-plugin");
 
     wxListbook* lb = XRCCTRL(*this, "nbMain", wxListbook);
     // get all configuration panels which are *not* about compiler, debugger and editor.
@@ -229,12 +229,12 @@ void EnvironmentSettingsDlg::AddPluginPanels()
         cbConfigurationPanel* panel = m_PluginPanels[i];
         lb->AddPage(panel, panel->GetTitle());
 
-        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
+        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2(".png"), sdDataGlobal | sdDataUser);
         if (onFile.IsEmpty())
-			onFile = ConfigManager::LocateDataFile(noimg + _T(".png"), sdDataGlobal | sdDataUser);
-        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T("-off.png"), sdDataGlobal | sdDataUser);
+			onFile = ConfigManager::LocateDataFile(noimg + wxT_2(".png"), sdDataGlobal | sdDataUser);
+        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
         if (offFile.IsEmpty())
-			offFile = ConfigManager::LocateDataFile(noimg + _T("-off.png"), sdDataGlobal | sdDataUser);
+			offFile = ConfigManager::LocateDataFile(noimg + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
 
         lb->GetImageList()->Add(cbLoadBitmap(onFile));
         lb->GetImageList()->Add(cbLoadBitmap(offFile));
@@ -246,15 +246,15 @@ void EnvironmentSettingsDlg::AddPluginPanels()
 
 void EnvironmentSettingsDlg::LoadListbookImages()
 {
-    const wxString base = ConfigManager::GetDataFolder() + _T("/images/settings/");
+    const wxString base = ConfigManager::GetDataFolder() + wxT_2("/images/settings/");
 
     wxImageList* images = new wxImageList(80, 80);
     wxBitmap bmp;
     for (int i = 0; i < IMAGES_COUNT; ++i)
     {
-        bmp = cbLoadBitmap(base + base_imgs[i] + _T(".png"));
+        bmp = cbLoadBitmap(base + base_imgs[i] + wxT_2(".png"));
         images->Add(bmp);
-        bmp = cbLoadBitmap(base + base_imgs[i] + _T("-off.png"));
+        bmp = cbLoadBitmap(base + base_imgs[i] + wxT_2("-off.png"));
         images->Add(bmp);
     }
     wxListbook* lb = XRCCTRL(*this, "nbMain", wxListbook);
@@ -282,7 +282,7 @@ void EnvironmentSettingsDlg::UpdateListbookImages()
     // update the page title
     wxString label = lb->GetPageText(sel);
     // replace any stray & with && because label makes it an underscore
-    while (label.Replace(_T(" & "), _T(" && ")))
+    while (label.Replace(wxT_2(" & "), wxT_2(" && ")))
         ;
     XRCCTRL(*this, "lblBigTitle", wxStaticText)->SetLabel(label);
 }
@@ -376,58 +376,58 @@ void EnvironmentSettingsDlg::EndModal(int retCode)
 {
     if (retCode == wxID_OK)
     {
-        ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
-        ConfigManager *pcfg = Manager::Get()->GetConfigManager(_T("project_manager"));
-        ConfigManager *mcfg = Manager::Get()->GetConfigManager(_T("message_manager"));
-        ConfigManager *acfg = Manager::Get()->GetConfigManager(_T("an_dlg"));
+        ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("app"));
+        ConfigManager *pcfg = Manager::Get()->GetConfigManager(wxT_2("project_manager"));
+        ConfigManager *mcfg = Manager::Get()->GetConfigManager(wxT_2("message_manager"));
+        ConfigManager *acfg = Manager::Get()->GetConfigManager(wxT_2("an_dlg"));
 
         // tab "General"
-        cfg->Write(_T("/environment/show_splash"),           (bool) XRCCTRL(*this, "chkShowSplash", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/single_instance"),       (bool) XRCCTRL(*this, "chkSingleInstance", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/check_associations"),    (bool) XRCCTRL(*this, "chkAssociations", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/check_modified_files"),  (bool) XRCCTRL(*this, "chkModifiedFiles", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/ignore_invalid_targets"),(bool) XRCCTRL(*this, "chkInvalidTargets", wxCheckBox)->GetValue());
-        cfg->Write(_T("/console_shell"),                            XRCCTRL(*this, "txtConsoleShell", wxTextCtrl)->GetValue());
-        cfg->Write(_T("/console_terminal"),                         XRCCTRL(*this, "txtConsoleTerm", wxTextCtrl)->GetValue());
+        cfg->Write(wxT_2("/environment/show_splash"),           (bool) XRCCTRL(*this, "chkShowSplash", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/single_instance"),       (bool) XRCCTRL(*this, "chkSingleInstance", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/check_associations"),    (bool) XRCCTRL(*this, "chkAssociations", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/check_modified_files"),  (bool) XRCCTRL(*this, "chkModifiedFiles", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/ignore_invalid_targets"),(bool) XRCCTRL(*this, "chkInvalidTargets", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/console_shell"),                            XRCCTRL(*this, "txtConsoleShell", wxTextCtrl)->GetValue());
+        cfg->Write(wxT_2("/console_terminal"),                         XRCCTRL(*this, "txtConsoleTerm", wxTextCtrl)->GetValue());
 
         // tab "View"
-        cfg->Write(_T("/environment/blank_workspace"),       (bool) XRCCTRL(*this, "rbAppStart", wxRadioBox)->GetSelection() ? true : false);
-        pcfg->Write(_T("/open_files"),                       (int)  XRCCTRL(*this, "rbProjectOpen", wxRadioBox)->GetSelection());
-        cfg->Write(_T("/environment/toolbar_size"),          (bool) XRCCTRL(*this, "rbToolbarSize", wxRadioBox)->GetSelection() == 1);
-        cfg->Write(_T("/environment/settings_size"),         (int)  XRCCTRL(*this, "rbSettingsIconsSize", wxRadioBox)->GetSelection());
-        mcfg->Write(_T("/auto_hide"),                        (bool) XRCCTRL(*this, "chkAutoHideMessages", wxCheckBox)->GetValue());
-        mcfg->Write(_T("/auto_show_search"),                 (bool) XRCCTRL(*this, "chkAutoShowMessagesOnSearch", wxCheckBox)->GetValue());
-        mcfg->Write(_T("/auto_show_build_warnings"),         (bool) XRCCTRL(*this, "chkAutoShowMessagesOnWarn", wxCheckBox)->GetValue());
-        mcfg->Write(_T("/auto_show_build_errors"),           (bool) XRCCTRL(*this, "chkAutoShowMessagesOnErr", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/start_here_page"),       (bool) XRCCTRL(*this, "chkShowStartPage", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/blank_workspace"),       (bool) XRCCTRL(*this, "rbAppStart", wxRadioBox)->GetSelection() ? true : false);
+        pcfg->Write(wxT_2("/open_files"),                       (int)  XRCCTRL(*this, "rbProjectOpen", wxRadioBox)->GetSelection());
+        cfg->Write(wxT_2("/environment/toolbar_size"),          (bool) XRCCTRL(*this, "rbToolbarSize", wxRadioBox)->GetSelection() == 1);
+        cfg->Write(wxT_2("/environment/settings_size"),         (int)  XRCCTRL(*this, "rbSettingsIconsSize", wxRadioBox)->GetSelection());
+        mcfg->Write(wxT_2("/auto_hide"),                        (bool) XRCCTRL(*this, "chkAutoHideMessages", wxCheckBox)->GetValue());
+        mcfg->Write(wxT_2("/auto_show_search"),                 (bool) XRCCTRL(*this, "chkAutoShowMessagesOnSearch", wxCheckBox)->GetValue());
+        mcfg->Write(wxT_2("/auto_show_build_warnings"),         (bool) XRCCTRL(*this, "chkAutoShowMessagesOnWarn", wxCheckBox)->GetValue());
+        mcfg->Write(wxT_2("/auto_show_build_errors"),           (bool) XRCCTRL(*this, "chkAutoShowMessagesOnErr", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/start_here_page"),       (bool) XRCCTRL(*this, "chkShowStartPage", wxCheckBox)->GetValue());
 
-        cfg->Write(_T("/locale/enable"),                     (bool) XRCCTRL(*this, "chkI18N", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/locale/enable"),                     (bool) XRCCTRL(*this, "chkI18N", wxCheckBox)->GetValue());
         const wxLanguageInfo *info = wxLocale::FindLanguageInfo(XRCCTRL(*this, "cbxLanguage", wxComboBox)->GetStringSelection());
         if(info)
-            cfg->Write(_T("/locale/language"), info->CanonicalName);
+            cfg->Write(wxT_2("/locale/language"), info->CanonicalName);
         else
-            cfg->Write(_T("/locale/language"), wxEmptyString);
+            cfg->Write(wxT_2("/locale/language"), wxEmptyString);
 
-        mcfg->Write(_T("/log_font_size"),                    (int)  XRCCTRL(*this, "spnLogFontSize", wxSpinCtrl)->GetValue());
-        cfg->Write(_T("/dialog_placement/do_place"),         (bool) XRCCTRL(*this, "chkDoPlace", wxCheckBox)->GetValue());
-        cfg->Write(_T("/dialog_placement/dialog_position"),  (int)  XRCCTRL(*this, "chkPlaceHead", wxCheckBox)->GetValue() ? pdlHead : pdlCentre);
+        mcfg->Write(wxT_2("/log_font_size"),                    (int)  XRCCTRL(*this, "spnLogFontSize", wxSpinCtrl)->GetValue());
+        cfg->Write(wxT_2("/dialog_placement/do_place"),         (bool) XRCCTRL(*this, "chkDoPlace", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/dialog_placement/dialog_position"),  (int)  XRCCTRL(*this, "chkPlaceHead", wxCheckBox)->GetValue() ? pdlHead : pdlCentre);
 
         // tab "Appearence"
-        cfg->Write(_T("/environment/tabs_style"),           (int)XRCCTRL(*this, "cmbEditorTabs", wxComboBox)->GetSelection());
-        cfg->Write(_T("/environment/tabs_smart"),           (bool)XRCCTRL(*this, "chkSmartTabs", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/tabs_list"),           (bool)XRCCTRL(*this, "chkListTabs", wxCheckBox)->GetValue());
-        cfg->Write(_T("/environment/gradient_border"),      XRCCTRL(*this, "btnFNBorder", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/gradient_from"),        XRCCTRL(*this, "btnFNFrom", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/gradient_to"),          XRCCTRL(*this, "btnFNTo", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/border_size"),          (int)XRCCTRL(*this, "spnAuiBorder", wxSpinCtrl)->GetValue());
-        cfg->Write(_T("/environment/aui/sash_size"),            (int)XRCCTRL(*this, "spnAuiSash", wxSpinCtrl)->GetValue());
-        cfg->Write(_T("/environment/aui/caption_size"),         (int)XRCCTRL(*this, "spnAuiCaption", wxSpinCtrl)->GetValue());
-        cfg->Write(_T("/environment/aui/active_caption_colour"),             XRCCTRL(*this, "btnAuiActiveCaptionColour", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/active_caption_gradient_colour"),    XRCCTRL(*this, "btnAuiActiveCaptionGradientColour", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/active_caption_text_colour"),        XRCCTRL(*this, "btnAuiActiveCaptionTextColour", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/inactive_caption_colour"),           XRCCTRL(*this, "btnAuiInactiveCaptionColour", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/inactive_caption_gradient_colour"),  XRCCTRL(*this, "btnAuiInactiveCaptionGradientColour", wxButton)->GetBackgroundColour());
-        cfg->Write(_T("/environment/aui/inactive_caption_text_colour"),      XRCCTRL(*this, "btnAuiInactiveCaptionTextColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/tabs_style"),           (int)XRCCTRL(*this, "cmbEditorTabs", wxComboBox)->GetSelection());
+        cfg->Write(wxT_2("/environment/tabs_smart"),           (bool)XRCCTRL(*this, "chkSmartTabs", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/tabs_list"),           (bool)XRCCTRL(*this, "chkListTabs", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("/environment/gradient_border"),      XRCCTRL(*this, "btnFNBorder", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/gradient_from"),        XRCCTRL(*this, "btnFNFrom", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/gradient_to"),          XRCCTRL(*this, "btnFNTo", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/border_size"),          (int)XRCCTRL(*this, "spnAuiBorder", wxSpinCtrl)->GetValue());
+        cfg->Write(wxT_2("/environment/aui/sash_size"),            (int)XRCCTRL(*this, "spnAuiSash", wxSpinCtrl)->GetValue());
+        cfg->Write(wxT_2("/environment/aui/caption_size"),         (int)XRCCTRL(*this, "spnAuiCaption", wxSpinCtrl)->GetValue());
+        cfg->Write(wxT_2("/environment/aui/active_caption_colour"),             XRCCTRL(*this, "btnAuiActiveCaptionColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/active_caption_gradient_colour"),    XRCCTRL(*this, "btnAuiActiveCaptionGradientColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/active_caption_text_colour"),        XRCCTRL(*this, "btnAuiActiveCaptionTextColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/inactive_caption_colour"),           XRCCTRL(*this, "btnAuiInactiveCaptionColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/inactive_caption_gradient_colour"),  XRCCTRL(*this, "btnAuiInactiveCaptionGradientColour", wxButton)->GetBackgroundColour());
+        cfg->Write(wxT_2("/environment/aui/inactive_caption_text_colour"),      XRCCTRL(*this, "btnAuiInactiveCaptionTextColour", wxButton)->GetBackgroundColour());
 
         m_pArt->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE,   XRCCTRL(*this, "spnAuiBorder", wxSpinCtrl)->GetValue());
         m_pArt->SetMetric(wxAUI_DOCKART_SASH_SIZE,          XRCCTRL(*this, "spnAuiSash", wxSpinCtrl)->GetValue());
@@ -442,7 +442,7 @@ void EnvironmentSettingsDlg::EndModal(int retCode)
         // tab "Dialogs"
         wxCheckListBox* lb = XRCCTRL(*this, "chkDialogs", wxCheckListBox);
 
-        ConfigManagerContainer::StringSet dialogs = acfg->ReadSSet(_T("/disabled"));
+        ConfigManagerContainer::StringSet dialogs = acfg->ReadSSet(wxT_2("/disabled"));
 
         for (int i = 0; i < (int)lb->GetCount(); ++i)
         {
@@ -450,10 +450,10 @@ void EnvironmentSettingsDlg::EndModal(int retCode)
                 dialogs.erase(lb->GetString(i));
         }
 
-        acfg->Write(_T("/disabled"), dialogs);
+        acfg->Write(wxT_2("/disabled"), dialogs);
 
         // tab "Network"
-        cfg->Write(_T("/network_proxy"),    XRCCTRL(*this, "txtProxy", wxTextCtrl)->GetValue());
+        cfg->Write(wxT_2("/network_proxy"),    XRCCTRL(*this, "txtProxy", wxTextCtrl)->GetValue());
 
         // finally, apply settings in all plugins' panels
         for (size_t i = 0; i < m_PluginPanels.GetCount(); ++i)

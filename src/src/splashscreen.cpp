@@ -21,7 +21,7 @@ namespace
 
 void cbSplashScreen::DoPaint(wxDC &dc)
 {
-  static const wxString release(wxT(RELEASE));
+  static const wxString release(wxT_2(RELEASE));
   static const wxString revision = ConfigManager::GetRevisionString();
 
   #ifdef __WIN32__

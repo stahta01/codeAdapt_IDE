@@ -93,7 +93,7 @@ private:
     MainFrame* m_frame;
 };
 
-const static wxString gDefaultLayout = _T("Code::Blocks default");
+const static wxString gDefaultLayout = wxT_2("Code::Blocks default");
 static wxString gDefaultLayoutData; // this will keep the "hardcoded" default layout
 
 int wxID_FILE10 = wxNewId();
@@ -461,7 +461,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 END_EVENT_TABLE()
 
 MainFrame::MainFrame(wxWindow* parent)
-       : wxFrame(parent, -1, _T("MainWin"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+       : wxFrame(parent, -1, wxT_2("MainWin"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
        m_LayoutManager(this),
        m_pAccel(0L),
        m_pFilesHistory(0),
@@ -512,7 +512,7 @@ MainFrame::MainFrame(wxWindow* parent)
     // add file filters for supported projects/workspaces
     FileFilters::AddDefaultFileFilters();
 
-    m_SmallToolBar = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/toolbar_size"), true);
+    m_SmallToolBar = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/environment/toolbar_size"), true);
     CreateIDE();
 
 #ifdef __WXMSW__
@@ -523,17 +523,17 @@ MainFrame::MainFrame(wxWindow* parent)
 
     DoCreateStatusBar();
 #if wxUSE_STATUSBAR
-    SetStatusText(_("Welcome to ")+ appglobals::AppName + _T("!"));
+    SetStatusText(_("Welcome to ")+ appglobals::AppName + wxT_2("!"));
 #endif // wxUSE_STATUSBAR
 
-    SetTitle(appglobals::AppName + _T(" v") + appglobals::AppVersion);
+    SetTitle(appglobals::AppName + wxT_2(" v") + appglobals::AppVersion);
 
     ScanForPlugins();
 
     // save default view
-    wxString deflayout = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/default"));
+    wxString deflayout = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/main_frame/layout/default"));
     if (deflayout.IsEmpty())
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), gDefaultLayout);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/default"), gDefaultLayout);
     DoFixToolbarsLayout();
     gDefaultLayoutData = m_LayoutManager.SavePerspective(); // keep the "hardcoded" layout handy
     SaveViewLayout(gDefaultLayout, gDefaultLayoutData);
@@ -542,7 +542,7 @@ MainFrame::MainFrame(wxWindow* parent)
     ShowHideStartPage();
 
     // create script console (if needed)
-    if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/show_script_console"), false))
+    if (Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/show_script_console"), false))
         ShowHideScriptConsole();
 
     RegisterScriptFunctions();
@@ -564,7 +564,7 @@ MainFrame::MainFrame(wxWindow* parent)
 //                                                    "Please review them in the logs...\n\n"), 8000, 1000);
 //    }
 
-    Manager::Get()->GetLogManager()->DebugLog(_T("Initializing plugins..."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Initializing plugins..."));
 }
 
 MainFrame::~MainFrame()
@@ -620,23 +620,23 @@ void MainFrame::RegisterEvents()
 
 void MainFrame::ShowTips(bool forceShow)
 {
-    bool showAtStartup = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/show_tips"), true);
+    bool showAtStartup = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/show_tips"), true);
     if (forceShow || showAtStartup)
     {
-        wxString tipsFile = ConfigManager::GetDataFolder() + _T("/tips.txt");
-        long tipsIndex = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/next_tip"), 0);
+        wxString tipsFile = ConfigManager::GetDataFolder() + wxT_2("/tips.txt");
+        long tipsIndex = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/next_tip"), 0);
         wxTipProvider* tipProvider = wxCreateFileTipProvider(tipsFile, tipsIndex);
         showAtStartup = wxShowTip(this, tipProvider, showAtStartup);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/show_tips"), showAtStartup);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/next_tip"), (int)tipProvider->GetCurrentTip());
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/show_tips"), showAtStartup);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/next_tip"), (int)tipProvider->GetCurrentTip());
         delete tipProvider;
     }
 }
 
 void MainFrame::CreateIDE()
 {
-    int leftW = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_width"), 200);
-//    int bottomH = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_height"), 150);
+    int leftW = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/left_block_width"), 200);
+//    int bottomH = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/bottom_block_height"), 150);
     SetSize(800,600);
     wxSize clientsize = GetClientSize();
 
@@ -647,7 +647,7 @@ void MainFrame::CreateIDE()
     // project manager
     Manager::Get(this);
     m_LayoutManager.AddPane(Manager::Get()->GetProjectManager()->GetNotebook(), wxAuiPaneInfo().
-                              Name(wxT("ManagementPane")).Caption(_("Management")).
+                              Name(wxT_2("ManagementPane")).Caption(_("Management")).
                               BestSize(wxSize(leftW, clientsize.GetHeight())).MinSize(wxSize(100,100)).
                               Left().Layer(1));
 
@@ -664,7 +664,7 @@ void MainFrame::CreateIDE()
     SetToolBar(0);
 
     // editor manager
-    m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
+    m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT_2("MainPane")).
                             CentrePane());
 
     DoUpdateLayout();
@@ -678,9 +678,9 @@ void MainFrame::CreateIDE()
 
 void MainFrame::SetupGUILogging()
 {
-    m_AutoHideLogs = Manager::Get()->GetConfigManager(_T("message_manager"))->ReadBool(_T("/auto_hide"), false);
+    m_AutoHideLogs = Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadBool(wxT_2("/auto_hide"), false);
 
-    int bottomH = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_height"), 150);
+    int bottomH = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/bottom_block_height"), 150);
     wxSize clientsize = GetClientSize();
 
     LogManager* mgr = Manager::Get()->GetLogManager();
@@ -689,7 +689,7 @@ void MainFrame::SetupGUILogging()
     {
         infoPane = new InfoPane(this);
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
-                                  Name(wxT("MessagesPane")).Caption(_("Logs & others")).
+                                  Name(wxT_2("MessagesPane")).Caption(_("Logs & others")).
                                   BestSize(wxSize(clientsize.GetWidth(), bottomH)).//MinSize(wxSize(50,50)).
                                   Bottom());
 
@@ -732,14 +732,14 @@ void MainFrame::RegisterScriptFunctions()
 void MainFrame::RunStartupScripts()
 {
     ConfigManager* mgr = 0;
-    mgr = Manager::Get()->GetConfigManager(_T("scripting"));
-    wxArrayString keys = mgr->EnumerateKeys(_T("/startup_scripts"));
+    mgr = Manager::Get()->GetConfigManager(wxT_2("scripting"));
+    wxArrayString keys = mgr->EnumerateKeys(wxT_2("/startup_scripts"));
 
     for (size_t i = 0; i < keys.GetCount(); ++i)
     {
         ScriptEntry se;
         wxString ser;
-        if (mgr->Read(_T("/startup_scripts/") + keys[i], &ser))
+        if (mgr->Read(wxT_2("/startup_scripts/") + keys[i], &ser))
         {
             se.SerializeIn(ser);
             if (!se.enabled)
@@ -840,8 +840,8 @@ void MainFrame::CreateMenubar()
 
     wxString resPath = ConfigManager::GetDataFolder();
     wxXmlResource *myres = wxXmlResource::Get();
-    myres->Load(resPath + _T("/resources.zip#zip:main_menu.xrc"));
-    mbar = myres->LoadMenuBar(_T("main_menu_bar"));
+    myres->Load(resPath + wxT_2("/resources.zip#zip:main_menu.xrc"));
+    mbar = myres->LoadMenuBar(wxT_2("main_menu_bar"));
     if(!mbar)
     {
       mbar = new wxMenuBar(); // Some error happened.
@@ -942,11 +942,11 @@ void MainFrame::CreateToolbars()
     }
 
     wxString resPath = ConfigManager::GetDataFolder();
-    wxString xrcToolbarName = _T("main_toolbar");
+    wxString xrcToolbarName = wxT_2("main_toolbar");
     if(m_SmallToolBar) // Insert logic here
-        xrcToolbarName += _T("_16x16");
-    myres->Load(resPath + _T("/resources.zip#zip:*.xrc"));
-    Manager::Get()->GetLogManager()->DebugLog(_T("Loading toolbar..."));
+        xrcToolbarName += wxT_2("_16x16");
+    myres->Load(resPath + wxT_2("/resources.zip#zip:*.xrc"));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Loading toolbar..."));
 
     wxSize size = m_SmallToolBar ? wxSize(16, 16) : (platform::macosx ? wxSize(32, 32) : wxSize(22, 22));
     m_pToolbar = new wxToolBar(this, -1, wxDefaultPosition, size, wxTB_FLAT | wxTB_NODIVIDER);
@@ -959,7 +959,7 @@ void MainFrame::CreateToolbars()
 
     // add toolbars in docking system
     m_LayoutManager.AddPane(m_pToolbar, wxAuiPaneInfo().
-                          Name(wxT("MainToolbar")).Caption(_("Main Toolbar")).
+                          Name(wxT_2("MainToolbar")).Caption(_("Main Toolbar")).
                           ToolbarPane().Top());
     DoUpdateLayout();
 
@@ -1030,7 +1030,7 @@ wxMenuItem* MainFrame::AddPluginInMenus(wxMenu* menu, cbPlugin* plugin, wxObject
     }
 
     int id = wxNewId();
-    wxString title = info->title + (menu == m_HelpPluginsMenu ? _T("...") : wxEmptyString);
+    wxString title = info->title + (menu == m_HelpPluginsMenu ? wxT("...") : wxEmptyString);
     m_PluginIDsMap[id] = info->name;
     if (pos == -1)
         pos = menu->GetMenuItemCount();
@@ -1055,7 +1055,7 @@ void MainFrame::AddPluginInPluginsMenu(cbPlugin* plugin)
 
     // this will insert a separator when the first plugin is added in the "Plugins" menu
     if (m_PluginsMenu->GetMenuItemCount() == 1)
-         m_PluginsMenu->Insert(0, wxID_SEPARATOR, _T(""));
+         m_PluginsMenu->Insert(0, wxID_SEPARATOR, wxT_2(""));
 
     AddPluginInMenus(m_PluginsMenu, plugin,
                     (wxObjectEventFunction)(wxEventFunction)(wxCommandEventFunction)&MainFrame::OnPluginsExecuteMenu,
@@ -1116,19 +1116,19 @@ void MainFrame::RemovePluginFromMenus(const wxString& pluginName)
 
 void MainFrame::LoadWindowState()
 {
-    wxArrayString subs = Manager::Get()->GetConfigManager(_T("app"))->EnumerateSubPaths(_T("/main_frame/layout"));
+    wxArrayString subs = Manager::Get()->GetConfigManager(wxT_2("app"))->EnumerateSubPaths(wxT_2("/main_frame/layout"));
     for (size_t i = 0; i < subs.GetCount(); ++i)
     {
-        wxString name = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/") + subs[i] + _T("/name"));
-        wxString layout = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/") + subs[i] + _T("/data"));
+        wxString name = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/main_frame/layout/") + subs[i] + wxT_2("/name"));
+        wxString layout = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/main_frame/layout/") + subs[i] + wxT_2("/data"));
         SaveViewLayout(name, layout);
     }
-    wxString deflayout = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/default"));
+    wxString deflayout = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/main_frame/layout/default"));
     LoadViewLayout(deflayout);
 
     // load manager and messages selected page
-    Manager::Get()->GetProjectManager()->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_selection"), 0));
-    infoPane->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_selection"), 0));
+    Manager::Get()->GetProjectManager()->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/left_block_selection"), 0));
+    infoPane->SetSelection(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/bottom_block_selection"), 0));
 
 #ifndef __WXMAC__
     int x = 0;
@@ -1141,12 +1141,12 @@ void MainFrame::LoadWindowState()
     int h = 600;
 
     // load window size and position
-    wxRect rect(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left"), x),
-                Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/top"), y),
-                Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/width"), w),
-                Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/height"), h));
+    wxRect rect(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/left"), x),
+                Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/top"), y),
+                Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/width"), w),
+                Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/main_frame/layout/height"), h));
     // maximize if needed
-    Maximize(Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/main_frame/layout/maximized"), true));
+    Maximize(Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/main_frame/layout/maximized"), true));
     // set size and position
     SetSize(rect);
 
@@ -1164,23 +1164,23 @@ void MainFrame::SaveWindowState()
         if (it->first.IsEmpty())
             continue;
         ++count;
-        wxString key = wxString::Format(_T("/main_frame/layout/view%d/"), count);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(key + _T("name"), it->first);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(key + _T("data"), it->second);
+        wxString key = wxString::Format(wxT_2("/main_frame/layout/view%d/"), count);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(key + wxT_2("name"), it->first);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(key + wxT_2("data"), it->second);
     }
 
     // save manager and messages selected page
-    Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left_block_selection"), Manager::Get()->GetProjectManager()->GetNotebook()->GetSelection());
-    Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/bottom_block_selection"), infoPane->GetSelection());
+    Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/left_block_selection"), Manager::Get()->GetProjectManager()->GetNotebook()->GetSelection());
+    Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/bottom_block_selection"), infoPane->GetSelection());
 
     // save window size and position
-    Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/maximized"), IsMaximized());
+    Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/maximized"), IsMaximized());
     if (!IsMaximized() && !IsIconized())
     {
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left"), GetPosition().x);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/top"), GetPosition().y);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/width"), GetSize().x);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/height"), GetSize().y);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/left"), GetPosition().x);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/top"), GetPosition().y);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/width"), GetSize().x);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/height"), GetSize().y);
     }
 }
 
@@ -1242,11 +1242,11 @@ bool MainFrame::LayoutDifferent(const wxString& layout1,const wxString& layout2,
     wxArrayString arLayout1;
     while(strTok.HasMoreTokens())
     {
-        wxStringTokenizer strTokColon(strTok.GetNextToken(), _T(";"));
+        wxStringTokenizer strTokColon(strTok.GetNextToken(), wxT_2(";"));
         while(strTokColon.HasMoreTokens())
         {
             wxString theToken = strTokColon.GetNextToken();
-            if (!theToken.StartsWith(_T("state="))) arLayout1.Add(theToken);
+            if (!theToken.StartsWith(wxT_2("state="))) arLayout1.Add(theToken);
         }
     }
 
@@ -1254,11 +1254,11 @@ bool MainFrame::LayoutDifferent(const wxString& layout1,const wxString& layout2,
     wxArrayString arLayout2;
     while(strTok.HasMoreTokens())
     {
-        wxStringTokenizer strTokColon(strTok.GetNextToken(), _T(";"));
+        wxStringTokenizer strTokColon(strTok.GetNextToken(), wxT_2(";"));
         while(strTokColon.HasMoreTokens())
         {
             wxString theToken = strTokColon.GetNextToken();
-            if (!theToken.StartsWith(_T("state="))) arLayout2.Add(theToken);
+            if (!theToken.StartsWith(wxT_2("state="))) arLayout2.Add(theToken);
         }
     }
 
@@ -1323,7 +1323,7 @@ void MainFrame::DoSelectLayout(const wxString& name)
         }
         
         if (!m_LastLayoutIsTemp)
-			Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), name);
+			Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/main_frame/layout/default"), name);
     }
 }
 
@@ -1381,11 +1381,11 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
 
         const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
         if (!info)
-            cbThrow(_T("No plugin info?!?"));
+            cbThrow(wxT_2("No plugin info?!?"));
 
         static int row = 1;
         m_LayoutManager.AddPane(tb, wxAuiPaneInfo().
-                              Name(info->name + _T("Toolbar")).Caption(info->title + _(" Toolbar")).
+                              Name(info->name + wxT_2("Toolbar")).Caption(info->title + _(" Toolbar")).
                               ToolbarPane().Top().Row(row++));
         DoUpdateLayout();
     }
@@ -1395,7 +1395,7 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
 
 void MainFrame::DoAddPlugin(cbPlugin* plugin)
 {
-    //Manager::Get()->GetLogManager()->DebugLog(_T("Adding plugin: %s"), plugin->GetInfo()->name.c_str());
+    //Manager::Get()->GetLogManager()->DebugLog(wxT_2("Adding plugin: %s"), plugin->GetInfo()->name.c_str());
     AddPluginInSettingsMenu(plugin);
     AddPluginInHelpPluginsMenu(plugin);
     if (plugin->GetType() == ptTool)
@@ -1425,8 +1425,8 @@ bool MainFrame::Open(const wxString& filename, bool addToHistory)
     wxFileName fn(filename);
     fn.Normalize(); // really important so that two same files with different names are not loaded twice
     wxString name = fn.GetFullPath();
-    //Manager::Get()->GetLogManager()->DebugLog(_T("Opening file '%s'"), sname.c_str());
-    Manager::Get()->GetLogManager()->DebugLog(_T("Opening file ") + name);
+    //Manager::Get()->GetLogManager()->DebugLog(wxT_2("Opening file '%s'"), sname.c_str());
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Opening file ") + name);
     bool ret = OpenGeneric(name, addToHistory);
     return ret;
 }
@@ -1453,7 +1453,7 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
         return false;
     wxFileName fname(filename);
     fname.ClearExt();
-    fname.SetExt(_T("cbp"));
+    fname.SetExt(wxT_2("cbp"));
     switch(FileTypeOf(filename))
     {
         //
@@ -1527,7 +1527,7 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
 
 bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
 {
-//    Manager::Get()->GetLogManager()->DebugLog(_T("Opening project '%s'"), filename.c_str());
+//    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Opening project '%s'"), filename.c_str());
     if (!wxFileExists(filename))
     {
         cbMessageBox(_("The project file does not exist..."), _("Error"), wxICON_ERROR);
@@ -1611,7 +1611,7 @@ void MainFrame::DoUpdateStatusBar()
     else
     {
         int panel = 0;
-        SetStatusText(_("Welcome to ") + appglobals::AppName + _T("!"), panel++);
+        SetStatusText(_("Welcome to ") + appglobals::AppName + wxT_2("!"), panel++);
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(wxEmptyString, panel++);
@@ -1627,8 +1627,8 @@ void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& pref
     if (!target)
         return;
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("app"));
-    long nbstyle = cfg->ReadInt(_T("/environment/tabs_style"), 0);
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("app"));
+    long nbstyle = cfg->ReadInt(wxT_2("/environment/tabs_style"), 0);
     switch (nbstyle)
     {
         case 1: // gradient
@@ -1648,51 +1648,51 @@ void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& pref
             break;
     }
     nbstyle |= defaultStyle;
-    if (cfg->ReadBool(_T("/environment/") + prefix + _T("_tabs_bottom")))
+    if (cfg->ReadBool(wxT_2("/environment/") + prefix + wxT_2("_tabs_bottom")))
         nbstyle |= wxFNB_BOTTOM;
 
-    if (cfg->ReadBool(_T("/environment/tabs_smart")))
+    if (cfg->ReadBool(wxT_2("/environment/tabs_smart")))
         nbstyle |= wxFNB_SMART_TABS;
 
-    if (cfg->ReadBool(_T("/environment/tabs_list")))
+    if (cfg->ReadBool(wxT_2("/environment/tabs_list")))
     {
         nbstyle |= wxFNB_DROPDOWN_TABS_LIST;
         nbstyle |= wxFNB_NO_NAV_BUTTONS;
     }
 
     target->SetWindowStyleFlag(nbstyle);
-    target->SetGradientColorBorder(cfg->ReadColour(_T("/environment/gradient_border"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW))));
-    target->SetGradientColorFrom(cfg->ReadColour(_T("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
-    target->SetGradientColorTo(cfg->ReadColour(_T("/environment/gradient_to"), *wxWHITE));
+    target->SetGradientColorBorder(cfg->ReadColour(wxT_2("/environment/gradient_border"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW))));
+    target->SetGradientColorFrom(cfg->ReadColour(wxT_2("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
+    target->SetGradientColorTo(cfg->ReadColour(wxT_2("/environment/gradient_to"), *wxWHITE));
 }
 
 void MainFrame::DoUpdateEditorStyle()
 {
     wxFlatNotebook* fn = Manager::Get()->GetEditorManager()->GetNotebook();
-    DoUpdateEditorStyle(fn, _T("editor"), wxFNB_MOUSE_MIDDLE_CLOSES_TABS | wxFNB_X_ON_TAB | wxFNB_NO_X_BUTTON);
+    DoUpdateEditorStyle(fn, wxT_2("editor"), wxFNB_MOUSE_MIDDLE_CLOSES_TABS | wxFNB_X_ON_TAB | wxFNB_NO_X_BUTTON);
 
     fn = infoPane;
-    DoUpdateEditorStyle(fn, _T("message"), wxFNB_NO_X_BUTTON);
+    DoUpdateEditorStyle(fn, wxT_2("message"), wxFNB_NO_X_BUTTON);
 
     fn = Manager::Get()->GetProjectManager()->GetNotebook();
-    DoUpdateEditorStyle(fn, _T("project"), wxFNB_NO_X_BUTTON);
+    DoUpdateEditorStyle(fn, wxT_2("project"), wxFNB_NO_X_BUTTON);
 }
 
 void MainFrame::DoUpdateLayoutColours()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("app"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("app"));
     wxAuiDockArt* art = m_LayoutManager.GetArtProvider();
 
     m_LayoutManager.SetFlags(wxAUI_MGR_DEFAULT | wxAUI_MGR_ALLOW_ACTIVE_PANE | wxAUI_MGR_TRANSPARENT_DRAG);
-    art->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE,   cfg->ReadInt(_T("/environment/aui/border_size"), art->GetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE)));
-    art->SetMetric(wxAUI_DOCKART_SASH_SIZE,          cfg->ReadInt(_T("/environment/aui/sash_size"), art->GetMetric(wxAUI_DOCKART_SASH_SIZE)));
-    art->SetMetric(wxAUI_DOCKART_CAPTION_SIZE,       cfg->ReadInt(_T("/environment/aui/caption_size"), art->GetMetric(wxAUI_DOCKART_CAPTION_SIZE)));
-    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR,              cfg->ReadColour(_T("/environment/aui/active_caption_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR)));
-    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR,     cfg->ReadColour(_T("/environment/aui/active_caption_gradient_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR)));
-    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR,         cfg->ReadColour(_T("/environment/aui/active_caption_text_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR)));
-    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR,            cfg->ReadColour(_T("/environment/aui/inactive_caption_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR)));
-    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR,   cfg->ReadColour(_T("/environment/aui/inactive_caption_gradient_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR)));
-    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR,       cfg->ReadColour(_T("/environment/aui/inactive_caption_text_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR)));
+    art->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE,   cfg->ReadInt(wxT_2("/environment/aui/border_size"), art->GetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE)));
+    art->SetMetric(wxAUI_DOCKART_SASH_SIZE,          cfg->ReadInt(wxT_2("/environment/aui/sash_size"), art->GetMetric(wxAUI_DOCKART_SASH_SIZE)));
+    art->SetMetric(wxAUI_DOCKART_CAPTION_SIZE,       cfg->ReadInt(wxT_2("/environment/aui/caption_size"), art->GetMetric(wxAUI_DOCKART_CAPTION_SIZE)));
+    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR,              cfg->ReadColour(wxT_2("/environment/aui/active_caption_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_COLOUR)));
+    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR,     cfg->ReadColour(wxT_2("/environment/aui/active_caption_gradient_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR)));
+    art->SetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR,         cfg->ReadColour(wxT_2("/environment/aui/active_caption_text_colour"), art->GetColour(wxAUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR)));
+    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR,            cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR)));
+    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR,   cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_gradient_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR)));
+    art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR,       cfg->ReadColour(wxT_2("/environment/aui/inactive_caption_text_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR)));
 
     DoUpdateLayout();
 }
@@ -1724,18 +1724,18 @@ void MainFrame::DoUpdateAppTitle()
         if(prj)
         {
             if(Manager::Get()->GetProjectManager()->GetActiveProject() == prj)
-                projname = wxString(_T(" [")) + prj->GetTitle() + _T("]");
+                projname = wxString(wxT_2(" [")) + prj->GetTitle() + wxT_2("]");
             else
-                projname = wxString(_T(" (")) + prj->GetTitle() + _T(")");
+                projname = wxString(wxT_2(" (")) + prj->GetTitle() + wxT_2(")");
         }
         if(ed)
             edname = ed->GetTitle();
         fulltitle = edname + projname;
         if(!fulltitle.IsEmpty())
-            fulltitle.Append(_T(" - "));
+            fulltitle.Append(wxT_2(" - "));
     }
     fulltitle.Append(appglobals::AppName);
-    fulltitle.Append(_T(" "));
+    fulltitle.Append(wxT_2(" "));
     fulltitle.Append(appglobals::AppVersion);
     SetTitle(fulltitle);
 }
@@ -1759,7 +1759,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 
     bool show = !forceHasProject &&
                 Manager::Get()->GetProjectManager()->GetProjects()->GetCount() == 0 &&
-                Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/start_here_page"), true);
+                Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/environment/start_here_page"), true);
 
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show && !sh)
@@ -1782,7 +1782,7 @@ void MainFrame::ShowHideScriptConsole()
         infoPane->DeleteNonLogger(m_pScriptConsole);
         m_pScriptConsole = 0;
     }
-    Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/show_script_console"), m_pScriptConsole != 0);
+    Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/show_script_console"), m_pScriptConsole != 0);
 }
 
 void MainFrame::OnStartHereLink(wxCommandEvent& event)
@@ -1790,21 +1790,21 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
     wxCommandEvent evt;
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
-    if(link.IsSameAs(_T("CB_CMD_NEW_PROJECT")))
+    if(link.IsSameAs(wxT_2("CB_CMD_NEW_PROJECT")))
         OnFileNewWhat(evt);
-    else if(link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
+    else if(link.IsSameAs(wxT_2("CB_CMD_OPEN_PROJECT")))
         DoOnFileOpen(true);
-//    else if (link.IsSameAs(_T("CB_CMD_CONF_ENVIRONMENT")))
+//    else if (link.IsSameAs(wxT_2("CB_CMD_CONF_ENVIRONMENT")))
 //        OnSettingsEnvironment(evt);
-//    else if (link.IsSameAs(_T("CB_CMD_CONF_EDITOR")))
+//    else if (link.IsSameAs(wxT_2("CB_CMD_CONF_EDITOR")))
 //        Manager::Get()->GetEditorManager()->Configure();
-//    else if (link.IsSameAs(_T("CB_CMD_CONF_COMPILER")))
+//    else if (link.IsSameAs(wxT_2("CB_CMD_CONF_COMPILER")))
 //        OnSettingsCompilerDebugger(evt);
-    else if(link.StartsWith(_T("CB_CMD_OPEN_HISTORY_")))
+    else if(link.StartsWith(wxT_2("CB_CMD_OPEN_HISTORY_")))
     {
-        wxFileHistory* hist = link.StartsWith(_T("CB_CMD_OPEN_HISTORY_PROJECT_")) ? m_pProjectsHistory : m_pFilesHistory;
+        wxFileHistory* hist = link.StartsWith(wxT_2("CB_CMD_OPEN_HISTORY_PROJECT_")) ? m_pProjectsHistory : m_pFilesHistory;
         unsigned long count;
-        link.AfterLast(_T('_')).ToULong(&count);
+        link.AfterLast(wxT_2('_')).ToULong(&count);
         --count;
         if(count < hist->GetCount())
         {
@@ -1841,41 +1841,41 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     wxString buf = event.GetString();
     wxString links;
 
-    links << _T("<b>Recent projects</b><br>\n");
+    links << wxT_2("<b>Recent projects</b><br>\n");
     if (m_pProjectsHistory->GetCount())
     {
-        links << _T("<ul>");
+        links << wxT_2("<ul>");
         for (int i = 0; i < 9; ++i)
         {
             if (i >= (int)m_pProjectsHistory->GetCount())
                 break;
-            links << wxString::Format(_T("<li><a href=\"CB_CMD_OPEN_HISTORY_PROJECT_%d\">%s</a></li>"),
+            links << wxString::Format(wxT_2("<li><a href=\"CB_CMD_OPEN_HISTORY_PROJECT_%d\">%s</a></li>"),
                                         i + 1, m_pProjectsHistory->GetHistoryFile(i).c_str());
         }
-        links << _T("</ul><br>");
+        links << wxT_2("</ul><br>");
     }
     else
-        links << _T("&nbsp;&nbsp;&nbsp;&nbsp;No recent projects<br>\n");
+        links << wxT_2("&nbsp;&nbsp;&nbsp;&nbsp;No recent projects<br>\n");
 
-    links << _T("<br><b>Recent files</b><br>\n");
+    links << wxT_2("<br><b>Recent files</b><br>\n");
     if (m_pFilesHistory->GetCount())
     {
-        links << _T("<ul>");
+        links << wxT_2("<ul>");
         for (int i = 0; i < 9; ++i)
         {
             if (i >= (int)m_pFilesHistory->GetCount())
                 break;
-            links << wxString::Format(_T("<li><a href=\"CB_CMD_OPEN_HISTORY_FILE_%d\">%s</a></li>"),
+            links << wxString::Format(wxT_2("<li><a href=\"CB_CMD_OPEN_HISTORY_FILE_%d\">%s</a></li>"),
                                         i + 1, m_pFilesHistory->GetHistoryFile(i).c_str());
         }
-        links << _T("</ul>");
+        links << wxT_2("</ul>");
     }
     else
-        links << _T("&nbsp;&nbsp;&nbsp;&nbsp;No recent files<br>\n");
+        links << wxT_2("&nbsp;&nbsp;&nbsp;&nbsp;No recent files<br>\n");
 
 
     // update page
-    buf.Replace(_T("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
+    buf.Replace(wxT_2("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
     ((StartHerePage*)sh)->SetPageContent(buf);
 }
 
@@ -1900,7 +1900,7 @@ void MainFrame::InitializeRecentFilesHistory()
         {
             recentFiles->Remove(clear);
 
-            wxArrayString files = Manager::Get()->GetConfigManager(_T("app"))->ReadArrayString(_T("/recent_files"));
+            wxArrayString files = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadArrayString(wxT_2("/recent_files"));
             for (int i = (int)files.GetCount() - 1; i >= 0; --i)
             {
                 if(wxFileExists(files[i]))
@@ -1919,7 +1919,7 @@ void MainFrame::InitializeRecentFilesHistory()
             m_pProjectsHistory = new wxFileHistory(9, wxID_FILE10);
             recentProjects->Remove(clear);
 
-            wxArrayString files = Manager::Get()->GetConfigManager(_T("app"))->ReadArrayString(_T("/recent_projects"));
+            wxArrayString files = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadArrayString(wxT_2("/recent_projects"));
             for (int i = (int)files.GetCount() - 1; i >= 0; --i)
             {
                 if(wxFileExists(files[i]))
@@ -2061,7 +2061,7 @@ void MainFrame::TerminateRecentFilesHistory()
         wxArrayString files;
         for (unsigned int i = 0; i < m_pFilesHistory->GetCount(); ++i)
             files.Add(m_pFilesHistory->GetHistoryFile(i));
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/recent_files"), files);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/recent_files"), files);
 
         wxMenuBar* mbar = GetMenuBar();
         if (mbar)
@@ -2088,7 +2088,7 @@ void MainFrame::TerminateRecentFilesHistory()
         wxArrayString files;
         for (unsigned int i = 0; i < m_pProjectsHistory->GetCount(); ++i)
             files.Add(m_pProjectsHistory->GetHistoryFile(i));
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/recent_projects"), files);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/recent_projects"), files);
 
         wxMenuBar* mbar = GetMenuBar();
         if (mbar)
@@ -2121,7 +2121,7 @@ void MainFrame::OnPluginsExecuteMenu(wxCommandEvent& event)
     if (!pluginName.IsEmpty())
         Manager::Get()->GetPluginManager()->ExecutePlugin(pluginName);
     else
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("No plugin found for ID %d"), event.GetId()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("No plugin found for ID %d"), event.GetId()));
 }
 
 void MainFrame::OnPluginSettingsMenu(wxCommandEvent& event)
@@ -2130,7 +2130,7 @@ void MainFrame::OnPluginSettingsMenu(wxCommandEvent& event)
     if (!pluginName.IsEmpty())
         Manager::Get()->GetPluginManager()->ConfigurePlugin(pluginName);
     else
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("No plugin found for ID %d"), event.GetId()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("No plugin found for ID %d"), event.GetId()));
 }
 
 void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
@@ -2141,7 +2141,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
         const PluginInfo* pi = Manager::Get()->GetPluginManager()->GetPluginInfo(pluginName);
         if (!pi)
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("No plugin info for ") + pluginName);
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("No plugin info for ") + pluginName);
             return;
         }
         dlgAboutPlugin dlg(this, pi);
@@ -2149,7 +2149,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
         dlg.ShowModal();
     }
     else
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("No plugin found for ID %d"), event.GetId()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("No plugin found for ID %d"), event.GetId()));
 }
 
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
@@ -2289,17 +2289,17 @@ void MainFrame::DoOnFileOpen(bool bProject)
     // the value returned by GetIndexForFilterAll() is updated by GetFilterString()
     int StoredIndex = FileFilters::GetIndexForFilterAll();
     wxString Path;
-    ConfigManager* mgr = Manager::Get()->GetConfigManager(_T("app"));
+    ConfigManager* mgr = Manager::Get()->GetConfigManager(wxT_2("app"));
     if(mgr)
     {
         if(!bProject)
         {
-            wxString Filter = mgr->Read(_T("/file_dialogs/file_new_open/filter"));
+            wxString Filter = mgr->Read(wxT_2("/file_dialogs/file_new_open/filter"));
             if(!Filter.IsEmpty())
             {
                 FileFilters::GetFilterIndexFromName(Filters, Filter, StoredIndex);
             }
-            Path = mgr->Read(_T("/file_dialogs/file_new_open/directory"), Path);
+            Path = mgr->Read(wxT_2("/file_dialogs/file_new_open/directory"), Path);
         }
         else
         {
@@ -2325,10 +2325,10 @@ void MainFrame::DoOnFileOpen(bool bProject)
             wxString Filter;
             if(FileFilters::GetFilterNameFromIndex(Filters, Index, Filter))
             {
-                mgr->Write(_T("/file_dialogs/file_new_open/filter"), Filter);
+                mgr->Write(wxT_2("/file_dialogs/file_new_open/filter"), Filter);
             }
             wxString Test = dlg->GetDirectory();
-            mgr->Write(_T("/file_dialogs/file_new_open/directory"), dlg->GetDirectory());
+            mgr->Write(wxT_2("/file_dialogs/file_new_open/directory"), dlg->GetDirectory());
         }
         wxArrayString files;
         dlg->GetPaths(files);
@@ -2359,7 +2359,7 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
     {
         m_pProjectsHistory->RemoveFileFromHistory(0);
     }
-    Manager::Get()->GetConfigManager(_T("app"))->DeleteSubPath(_T("/recent_projects"));
+    Manager::Get()->GetConfigManager(wxT_2("app"))->DeleteSubPath(wxT_2("/recent_projects"));
 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
@@ -2383,7 +2383,7 @@ void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
     {
         m_pFilesHistory->RemoveFileFromHistory(0);
     }
-    Manager::Get()->GetConfigManager(_T("app"))->DeleteSubPath(_T("/recent_files"));
+    Manager::Get()->GetConfigManager(wxT_2("app"))->DeleteSubPath(wxT_2("/recent_files"));
 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
@@ -2484,27 +2484,27 @@ void MainFrame::OnFileCloseAllProjects(wxCommandEvent& event)
 
 void MainFrame::OnFileImportProjectDevCpp(wxCommandEvent& event)
 {
-    OpenGeneric(ShowOpenFileDialog(_("Import Dev-C++ project"), FileFilters::GetFilterString(_T('.') + FileFilters::DEVCPP_EXT)), false);
+    OpenGeneric(ShowOpenFileDialog(_("Import Dev-C++ project"), FileFilters::GetFilterString(wxT_2('.') + FileFilters::DEVCPP_EXT)), false);
 }
 
 void MainFrame::OnFileImportProjectMSVC(wxCommandEvent& event)
 {
-    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual C++ 6.0 project"), FileFilters::GetFilterString(_T('.') + FileFilters::MSVC6_EXT)), false);
+    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual C++ 6.0 project"), FileFilters::GetFilterString(wxT_2('.') + FileFilters::MSVC6_EXT)), false);
 }
 
 void MainFrame::OnFileImportProjectMSVCWksp(wxCommandEvent& event)
 {
-    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual C++ 6.0 workspace"), FileFilters::GetFilterString(_T('.') + FileFilters::MSVC6_WORKSPACE_EXT)), false);
+    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual C++ 6.0 workspace"), FileFilters::GetFilterString(wxT_2('.') + FileFilters::MSVC6_WORKSPACE_EXT)), false);
 }
 
 void MainFrame::OnFileImportProjectMSVS(wxCommandEvent& event)
 {
-    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual Studio 7.0+ project"), FileFilters::GetFilterString(_T('.') + FileFilters::MSVC7_EXT)), false);
+    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual Studio 7.0+ project"), FileFilters::GetFilterString(wxT_2('.') + FileFilters::MSVC7_EXT)), false);
 }
 
 void MainFrame::OnFileImportProjectMSVSWksp(wxCommandEvent& event)
 {
-    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual Studio 7.0+ solution"), FileFilters::GetFilterString(_T('.') + FileFilters::MSVC7_WORKSPACE_EXT)), false);
+    OpenGeneric(ShowOpenFileDialog(_("Import MS Visual Studio 7.0+ solution"), FileFilters::GetFilterString(wxT_2('.') + FileFilters::MSVC7_WORKSPACE_EXT)), false);
 }
 
 void MainFrame::OnFileOpenDefWorkspace(wxCommandEvent& event)
@@ -2526,7 +2526,7 @@ void MainFrame::OnFileSaveWorkspace(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveWorkspaceAs(wxCommandEvent& event)
 {
-    if (Manager::Get()->GetProjectManager()->SaveWorkspaceAs(_T("")))
+    if (Manager::Get()->GetProjectManager()->SaveWorkspaceAs(wxT_2("")))
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetWorkspace()->GetFilename());
 }
 
@@ -2633,7 +2633,7 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
         return;
     }
 
-    Manager::Get()->GetLogManager()->DebugLog(_T("Deinitializing plugins..."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Deinitializing plugins..."));
     CodeBlocksEvent evtShutdown(cbEVT_APP_START_SHUTDOWN);
     Manager::Get()->ProcessEvent(evtShutdown);
 
@@ -2906,171 +2906,171 @@ void MainFrame::OnEditSelectAll(wxCommandEvent& event)
 CommentToken GetCommentToken(cbStyledTextCtrl* stc)
 {
     CommentToken comment;
-    comment.lineComment        = _T("");
-    comment.streamCommentStart = _T("");
-    comment.streamCommentEnd   = _T("");
-    comment.boxCommentStart    = _T("");
-    comment.boxCommentMid      = _T("");
-    comment.boxCommentEnd      = _T("");
+    comment.lineComment        = wxT_2("");
+    comment.streamCommentStart = wxT_2("");
+    comment.streamCommentEnd   = wxT_2("");
+    comment.boxCommentStart    = wxT_2("");
+    comment.boxCommentMid      = wxT_2("");
+    comment.boxCommentEnd      = wxT_2("");
 
     switch(stc->GetLexer())
     {
-        case wxSCI_LEX_CONTAINER:  comment.lineComment = _T(""); break;
-        case wxSCI_LEX_NULL:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_PYTHON:     comment.lineComment = _T("#"); break;
+        case wxSCI_LEX_CONTAINER:  comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_NULL:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_PYTHON:     comment.lineComment = wxT_2("#"); break;
         case wxSCI_LEX_CPP:
-            comment.lineComment        = _T("//");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("//");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
         case wxSCI_LEX_HTML:
-            comment.lineComment        = _T("//");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("//");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break; // PHP uses HTML lexer
         case wxSCI_LEX_XML:
-            comment.streamCommentStart = _T("<!--");
-            comment.streamCommentEnd   = _T("-->");
-            comment.boxCommentStart    = _T("<!-- ");
-            comment.boxCommentMid      = _T("  -- ");
-            comment.boxCommentEnd      = _T("  -->");
+            comment.streamCommentStart = wxT_2("<!--");
+            comment.streamCommentEnd   = wxT_2("-->");
+            comment.boxCommentStart    = wxT_2("<!-- ");
+            comment.boxCommentMid      = wxT_2("  -- ");
+            comment.boxCommentEnd      = wxT_2("  -->");
             break;
-        case wxSCI_LEX_PERL:       comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_SQL:        comment.lineComment = _T("--"); break;
-        case wxSCI_LEX_VB:         comment.lineComment = _T("'"); break;
-        case wxSCI_LEX_PROPERTIES: comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_ERRORLIST:  comment.lineComment = _T(""); break;
-        case wxSCI_LEX_MAKEFILE:   comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_BATCH:      comment.lineComment = _T("REM "); break;
-        case wxSCI_LEX_XCODE:      comment.lineComment = _T(""); break;
-        case wxSCI_LEX_LATEX:      comment.lineComment = _T("%"); break;
+        case wxSCI_LEX_PERL:       comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_SQL:        comment.lineComment = wxT_2("--"); break;
+        case wxSCI_LEX_VB:         comment.lineComment = wxT_2("'"); break;
+        case wxSCI_LEX_PROPERTIES: comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_ERRORLIST:  comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_MAKEFILE:   comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_BATCH:      comment.lineComment = wxT_2("REM "); break;
+        case wxSCI_LEX_XCODE:      comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_LATEX:      comment.lineComment = wxT_2("%"); break;
         case wxSCI_LEX_LUA:
-            comment.lineComment        = _T("--");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("--");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
-        case wxSCI_LEX_DIFF:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_CONF:       comment.lineComment = _T(""); break;
+        case wxSCI_LEX_DIFF:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_CONF:       comment.lineComment = wxT_2(""); break;
         case wxSCI_LEX_PASCAL:
-            comment.lineComment        = _T("//");  //delphi style lineComments, otherwise use { } or (* and *)
-            comment.streamCommentStart = _T("{");
-            comment.streamCommentEnd   = _T("}");
-            comment.boxCommentStart    = _T("(* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" *)");
+            comment.lineComment        = wxT_2("//");  //delphi style lineComments, otherwise use { } or (* and *)
+            comment.streamCommentStart = wxT_2("{");
+            comment.streamCommentEnd   = wxT_2("}");
+            comment.boxCommentStart    = wxT_2("(* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" *)");
             break;
-        case wxSCI_LEX_AVE:        comment.lineComment = _T(""); break;
-        case wxSCI_LEX_ADA:        comment.lineComment = _T("--"); break;
+        case wxSCI_LEX_AVE:        comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_ADA:        comment.lineComment = wxT_2("--"); break;
         case wxSCI_LEX_LISP:
-            comment.lineComment        = _T(";");
-            comment.streamCommentStart = _T("#|");
-            comment.streamCommentEnd   = _T("|#");
-            comment.boxCommentStart    = _T("#| ");
-            comment.boxCommentMid      = _T(" | ");
-            comment.boxCommentEnd      = _T(" |#");
+            comment.lineComment        = wxT_2(";");
+            comment.streamCommentStart = wxT_2("#|");
+            comment.streamCommentEnd   = wxT_2("|#");
+            comment.boxCommentStart    = wxT_2("#| ");
+            comment.boxCommentMid      = wxT_2(" | ");
+            comment.boxCommentEnd      = wxT_2(" |#");
             break;
         case wxSCI_LEX_RUBY:
-            comment.lineComment        = _T("#");
-            comment.boxCommentStart    = _T("=begin");
-            comment.boxCommentEnd      = _T("=end");
+            comment.lineComment        = wxT_2("#");
+            comment.boxCommentStart    = wxT_2("=begin");
+            comment.boxCommentEnd      = wxT_2("=end");
             break;
-        case wxSCI_LEX_EIFFEL:     comment.lineComment = _T("--"); break;
-        case wxSCI_LEX_EIFFELKW:   comment.lineComment = _T("--"); break;
-        case wxSCI_LEX_TCL:        comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_NNCRONTAB:  comment.lineComment = _T(""); break;
-        case wxSCI_LEX_BULLANT:    comment.lineComment = _T(""); break;
-        case wxSCI_LEX_VBSCRIPT:   comment.lineComment = _T("'"); break;
-        case wxSCI_LEX_BAAN:       comment.lineComment = _T(""); break;
+        case wxSCI_LEX_EIFFEL:     comment.lineComment = wxT_2("--"); break;
+        case wxSCI_LEX_EIFFELKW:   comment.lineComment = wxT_2("--"); break;
+        case wxSCI_LEX_TCL:        comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_NNCRONTAB:  comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_BULLANT:    comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_VBSCRIPT:   comment.lineComment = wxT_2("'"); break;
+        case wxSCI_LEX_BAAN:       comment.lineComment = wxT_2(""); break;
         case wxSCI_LEX_MATLAB:
-            comment.lineComment        = _T("%");
-            comment.streamCommentStart = _T("%{");
-            comment.streamCommentEnd   = _T("}%");
-            comment.boxCommentStart    = _T("%{ ");
-            comment.boxCommentEnd      = _T(" }%");
+            comment.lineComment        = wxT_2("%");
+            comment.streamCommentStart = wxT_2("%{");
+            comment.streamCommentEnd   = wxT_2("}%");
+            comment.boxCommentStart    = wxT_2("%{ ");
+            comment.boxCommentEnd      = wxT_2(" }%");
             break;
-        case wxSCI_LEX_SCRIPTOL:   comment.lineComment = _T("`"); break;
-        case wxSCI_LEX_ASM:        comment.lineComment = _T(";"); break;
+        case wxSCI_LEX_SCRIPTOL:   comment.lineComment = wxT_2("`"); break;
+        case wxSCI_LEX_ASM:        comment.lineComment = wxT_2(";"); break;
         case wxSCI_LEX_CPPNOCASE:
-            comment.lineComment        = _T("//");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("//");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
-        case wxSCI_LEX_FORTRAN:    comment.lineComment = _T("!"); break;
+        case wxSCI_LEX_FORTRAN:    comment.lineComment = wxT_2("!"); break;
         case wxSCI_LEX_CSS:
-            comment.lineComment        = _T("");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
         case wxSCI_LEX_POV:
-            comment.lineComment        = _T("//"); // original here was "//@-" don't know why
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("//"); // original here was "//@-" don't know why
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
-        case wxSCI_LEX_LOUT:       comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_ESCRIPT:    comment.lineComment = _T(""); break; //couldn't find
-        case wxSCI_LEX_PS:         comment.lineComment = _T("%"); break; // not sure if it's only one % or multiple
-        case wxSCI_LEX_NSIS:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_MMIXAL:     comment.lineComment = _T(""); break;
-        case wxSCI_LEX_CLW:        comment.lineComment = _T(""); break;
-        case wxSCI_LEX_CLWNOCASE:  comment.lineComment = _T(""); break;
-        case wxSCI_LEX_LOT:        comment.lineComment = _T(""); break;
-        case wxSCI_LEX_YAML:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_TEX:        comment.lineComment = _T("%"); break;
-        case wxSCI_LEX_METAPOST:   comment.lineComment = _T(""); break;
-        case wxSCI_LEX_POWERBASIC: comment.lineComment = _T(""); break;
-        case wxSCI_LEX_FORTH:      comment.lineComment = _T(""); break;
-        case wxSCI_LEX_ERLANG:     comment.lineComment = _T(""); break;
-        case wxSCI_LEX_OCTAVE:     comment.lineComment = _T("#"); break; // or '%'
-        case wxSCI_LEX_MSSQL:      comment.lineComment = _T(""); break;
-        case wxSCI_LEX_VERILOG:    comment.lineComment = _T("//"); break;
-        case wxSCI_LEX_KIX:        comment.lineComment = _T(""); break;
-        case wxSCI_LEX_SPECMAN:    comment.lineComment = _T(""); break;
-        case wxSCI_LEX_APDL:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_BASH:       comment.lineComment = _T("#"); break;
-        case wxSCI_LEX_VHDL:       comment.lineComment = _T("--"); break;
-        case wxSCI_LEX_CAML:       comment.lineComment = _T(""); break;
-        case wxSCI_LEX_BLITZBASIC: comment.lineComment = _T(""); break;
-        case wxSCI_LEX_PUREBASIC:  comment.lineComment = _T(""); break;
-        case wxSCI_LEX_HASKELL:    comment.lineComment = _T("--"); break;
+        case wxSCI_LEX_LOUT:       comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_ESCRIPT:    comment.lineComment = wxT_2(""); break; //couldn't find
+        case wxSCI_LEX_PS:         comment.lineComment = wxT_2("%"); break; // not sure if it's only one % or multiple
+        case wxSCI_LEX_NSIS:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_MMIXAL:     comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_CLW:        comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_CLWNOCASE:  comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_LOT:        comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_YAML:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_TEX:        comment.lineComment = wxT_2("%"); break;
+        case wxSCI_LEX_METAPOST:   comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_POWERBASIC: comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_FORTH:      comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_ERLANG:     comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_OCTAVE:     comment.lineComment = wxT_2("#"); break; // or '%'
+        case wxSCI_LEX_MSSQL:      comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_VERILOG:    comment.lineComment = wxT_2("//"); break;
+        case wxSCI_LEX_KIX:        comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_SPECMAN:    comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_APDL:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_BASH:       comment.lineComment = wxT_2("#"); break;
+        case wxSCI_LEX_VHDL:       comment.lineComment = wxT_2("--"); break;
+        case wxSCI_LEX_CAML:       comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_BLITZBASIC: comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_PUREBASIC:  comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_HASKELL:    comment.lineComment = wxT_2("--"); break;
         case wxSCI_LEX_PHPSCRIPT:
-            comment.lineComment        = _T("#");
-            //comment.lineComment        = _T("//");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("#");
+            //comment.lineComment        = wxT_2("//");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
             break;
-        case wxSCI_LEX_REBOL:      comment.lineComment = _T(""); break; // couldn't find
-        case wxSCI_LEX_SMALLTALK:  comment.lineComment = _T(""); break; // uses double quotes at start and end i.e. "lineComment"
-        case wxSCI_LEX_FLAGSHIP:   comment.lineComment = _T(""); break;
-        case wxSCI_LEX_CSOUND:     comment.lineComment = _T(""); break;
-        case wxSCI_LEX_FREEBASIC:  comment.lineComment = _T(""); break;
+        case wxSCI_LEX_REBOL:      comment.lineComment = wxT_2(""); break; // couldn't find
+        case wxSCI_LEX_SMALLTALK:  comment.lineComment = wxT_2(""); break; // uses double quotes at start and end i.e. "lineComment"
+        case wxSCI_LEX_FLAGSHIP:   comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_CSOUND:     comment.lineComment = wxT_2(""); break;
+        case wxSCI_LEX_FREEBASIC:  comment.lineComment = wxT_2(""); break;
         default: // Let the user decide if he wants to lineComment or not
-            comment.lineComment        = _T("//");
-            comment.streamCommentStart = _T("/*");
-            comment.streamCommentEnd   = _T("*/");
-            comment.boxCommentStart    = _T("/* ");
-            comment.boxCommentMid      = _T(" * ");
-            comment.boxCommentEnd      = _T(" */");
+            comment.lineComment        = wxT_2("//");
+            comment.streamCommentStart = wxT_2("/*");
+            comment.streamCommentEnd   = wxT_2("*/");
+            comment.boxCommentStart    = wxT_2("/* ");
+            comment.boxCommentMid      = wxT_2(" * ");
+            comment.boxCommentEnd      = wxT_2(" */");
     }
     return comment;
 }
@@ -3328,9 +3328,9 @@ void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
         wxString nlc;
         switch (stc->GetEOLMode())
         {
-            case wxSCI_EOL_CRLF: nlc=_T("\r\n");
-            case wxSCI_EOL_CR:   nlc=_T("\r");
-            case wxSCI_EOL_LF:   nlc=_T("\n");
+            case wxSCI_EOL_CRLF: nlc=wxT_2("\r\n");
+            case wxSCI_EOL_CR:   nlc=wxT_2("\r");
+            case wxSCI_EOL_LF:   nlc=wxT_2("\n");
 
         }
 
@@ -3398,7 +3398,7 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
         EditorColourSet* theme = Manager::Get()->GetEditorManager()->GetColourSet();
         if (theme)
         {
-            HighlightLanguage lang = theme->GetHighlightLanguage(_T(""));
+            HighlightLanguage lang = theme->GetHighlightLanguage(wxT_2(""));
             if (event.GetId() != idEditHighlightModeText)
             {
                 wxMenu* hl = 0;
@@ -3528,7 +3528,7 @@ void MainFrame::OnViewLayout(wxCommandEvent& event)
 
 void MainFrame::OnViewLayoutSave(wxCommandEvent& event)
 {
-    wxString def = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/default"));
+    wxString def = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/main_frame/layout/default"));
     wxString name = wxGetTextFromUser(_("Enter the name for this layout"), _("Save current layout"), def);
     if (!name.IsEmpty())
     {
@@ -3634,7 +3634,7 @@ void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
     */
     wxString strLine = wxGetTextFromUser( wxString::Format(_("Line (1 - %d): "), max),
                                         _("Goto line"),
-                                        _T( "" ),
+                                        wxT_2( "" ),
                                         this );
     long int line = 0;
     strLine.ToLong(&line);
@@ -4003,7 +4003,7 @@ void MainFrame::OnPluginLoaded(CodeBlocksEvent& event)
         DoAddPlugin(plug);
         const PluginInfo* info = Manager::Get()->GetPluginManager()->GetPluginInfo(plug);
         wxString msg = info ? info->title : wxString(_("<Unknown plugin>"));
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("%s plugin activated"), msg.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("%s plugin activated"), msg.c_str()));
     }
 }
 
@@ -4038,7 +4038,7 @@ void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
         DoUpdateEditorStyle();
         DoUpdateLayoutColours();
 
-        m_SmallToolBar = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/toolbar_size"), true);
+        m_SmallToolBar = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/environment/toolbar_size"), true);
         needRestart = m_SmallToolBar != tbarsmall;
         Manager::Get()->GetLogManager()->NotifyUpdate();
         ShowHideStartPage();
@@ -4151,7 +4151,7 @@ void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
     if (name.IsEmpty())
     {
         static int idx = 1;
-        name = wxString::Format(_T("UntitledPane%d"), idx++);
+        name = wxString::Format(wxT_2("UntitledPane%d"), idx++);
     }
 // TODO (mandrav##): Check for existing pane with the same name
     info = info.Name(name);

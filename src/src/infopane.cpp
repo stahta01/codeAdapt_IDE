@@ -28,7 +28,7 @@ END_EVENT_TABLE()
 
 InfoPane::InfoPane(wxWindow* parent) : InfoPaneNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, infopane_flags), baseID(wxNewId())
 {
-	defaultBitmap = cbLoadBitmap(ConfigManager::GetDataFolder() + _T("/images/edit_16x16.png"), wxBITMAP_TYPE_PNG);
+	defaultBitmap = cbLoadBitmap(ConfigManager::GetDataFolder() + wxT_2("/images/edit_16x16.png"), wxBITMAP_TYPE_PNG);
 	
     wxRegisterId(baseID + num_pages);
     for(int i = 0; i < num_pages; ++i)
@@ -271,7 +271,7 @@ bool InfoPane::RemoveNonLogger(wxWindow* p)
         if(page[i].window == p)
         {
             if(page[i].islogger)
-                cbThrow(_T("Bad API usage. Shame on you."));
+                cbThrow(wxT_2("Bad API usage. Shame on you."));
 
             RemovePage(page[i].indexInNB);
             page[i] = Page();
@@ -289,7 +289,7 @@ bool InfoPane::DeleteNonLogger(wxWindow* p)
         if(page[i].window == p)
         {
             if(page[i].islogger)
-                cbThrow(_T("Bad API usage. Shame on you."));
+                cbThrow(wxT_2("Bad API usage. Shame on you."));
 
 			if (page[i].indexInNB != -1)
 				DeletePage(page[i].indexInNB);

@@ -49,8 +49,8 @@ class MainFrame : public wxFrame
         ~MainFrame();
 
         // needed for binding with SqPlus
-        MainFrame(const MainFrame& rhs){ cbThrow(_T("Can't use MainFrame's copy constructor")); }
-        MainFrame& operator=(const MainFrame& rhs){ cbThrow(_T("Can't use MainFrame's operator=")); }
+        MainFrame(const MainFrame& rhs){ cbThrow(wxT_2("Can't use MainFrame's copy constructor")); }
+        MainFrame& operator=(const MainFrame& rhs){ cbThrow(wxT_2("Can't use MainFrame's operator=")); }
 
         bool Open(const wxString& filename, bool addToHistory = true);
         bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames);

@@ -35,7 +35,7 @@
 // images by order of pages
 const wxString base_imgs[] =
 {
-    _T("batch"),
+    wxT_2("batch"),
 };
 const int IMAGES_COUNT = sizeof(base_imgs) / sizeof(wxString);
 
@@ -50,29 +50,29 @@ END_EVENT_TABLE()
 
 CompilerSettingsDlg::CompilerSettingsDlg(wxWindow* parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgCompilerSettings"));
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgCompilerSettings"));
     wxListbook* lb = XRCCTRL(*this, "nbMain", wxListbook);
     wxImageList* images = new wxImageList(80, 80);
     lb->AssignImageList(images);
-    int sel = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/environment/settings_size"), 0);
+    int sel = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/environment/settings_size"), 0);
     SetSettingsIconsStyle(lb->GetListView(), (SettingsIconsStyle)sel);
 
     // tab "Batch builds"
     if(platform::windows)
-        XRCCTRL(*this, "txtBatchBuildsCmdLine", wxTextCtrl)->SetValue(Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/batch_build_args"), appglobals::DefaultBatchBuildArgs));
+        XRCCTRL(*this, "txtBatchBuildsCmdLine", wxTextCtrl)->SetValue(Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/batch_build_args"), appglobals::DefaultBatchBuildArgs));
     else
         XRCCTRL(*this, "txtBatchBuildsCmdLine", wxTextCtrl)->Enable(false);
 
     // fill plugins list
-    ConfigManager *bbcfg = Manager::Get()->GetConfigManager(_T("plugins"));
-    wxArrayString bbplugins = bbcfg->ReadArrayString(_T("/batch_build_plugins"));
+    ConfigManager *bbcfg = Manager::Get()->GetConfigManager(wxT_2("plugins"));
+    wxArrayString bbplugins = bbcfg->ReadArrayString(wxT_2("/batch_build_plugins"));
     if (!bbplugins.GetCount())
     {
         // defaults
         if(platform::windows)
-            bbplugins.Add(_T("compiler.dll"));
+            bbplugins.Add(wxT_2("compiler.dll"));
         else
-            bbplugins.Add(_T("libcompiler.so"));
+            bbplugins.Add(wxT_2("libcompiler.so"));
     }
     wxCheckListBox* clb = XRCCTRL(*this, "chkBBPlugins", wxCheckListBox);
     clb->Clear();
@@ -114,8 +114,8 @@ CompilerSettingsDlg::~CompilerSettingsDlg()
 
 void CompilerSettingsDlg::AddPluginPanels()
 {
-    const wxString base = _T("images/settings/");
-    const wxString noimg = _T("images/settings/generic-plugin");
+    const wxString base = wxT_2("images/settings/");
+    const wxString noimg = wxT_2("images/settings/generic-plugin");
     wxListbook* lb = XRCCTRL(*this, "nbMain", wxListbook);
 
     // we 'll remove the existing page and add it when appropriate
@@ -136,12 +136,12 @@ void CompilerSettingsDlg::AddPluginPanels()
         cbConfigurationPanel* panel = local[i];
         lb->AddPage(panel, panel->GetTitle());
 
-        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
+        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2(".png"), sdDataGlobal | sdDataUser);
         if (onFile.IsEmpty())
-			onFile = ConfigManager::LocateDataFile(noimg + _T(".png"), sdDataGlobal | sdDataUser);
-        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T("-off.png"), sdDataGlobal | sdDataUser);
+			onFile = ConfigManager::LocateDataFile(noimg + wxT_2(".png"), sdDataGlobal | sdDataUser);
+        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
         if (offFile.IsEmpty())
-			offFile = ConfigManager::LocateDataFile(noimg + _T("-off.png"), sdDataGlobal | sdDataUser);
+			offFile = ConfigManager::LocateDataFile(noimg + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
 
         lb->GetImageList()->Add(cbLoadBitmap(onFile));
         lb->GetImageList()->Add(cbLoadBitmap(offFile));
@@ -153,12 +153,12 @@ void CompilerSettingsDlg::AddPluginPanels()
 
     // now load the builtin pages' images
     lb->AddPage(existingPage, existingTitle);
-	wxString onFile = ConfigManager::LocateDataFile(base + base_imgs[0] + _T(".png"), sdDataGlobal | sdDataUser);
+	wxString onFile = ConfigManager::LocateDataFile(base + base_imgs[0] + wxT_2(".png"), sdDataGlobal | sdDataUser);
 	if (onFile.IsEmpty())
-		onFile = ConfigManager::LocateDataFile(noimg + _T(".png"), sdDataGlobal | sdDataUser);
-	wxString offFile = ConfigManager::LocateDataFile(base + base_imgs[0] + _T("-off.png"), sdDataGlobal | sdDataUser);
+		onFile = ConfigManager::LocateDataFile(noimg + wxT_2(".png"), sdDataGlobal | sdDataUser);
+	wxString offFile = ConfigManager::LocateDataFile(base + base_imgs[0] + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
 	if (offFile.IsEmpty())
-		offFile = ConfigManager::LocateDataFile(noimg + _T("-off.png"), sdDataGlobal | sdDataUser);
+		offFile = ConfigManager::LocateDataFile(noimg + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
 
 	lb->GetImageList()->Add(cbLoadBitmap(onFile));
 	lb->GetImageList()->Add(cbLoadBitmap(offFile));
@@ -171,12 +171,12 @@ void CompilerSettingsDlg::AddPluginPanels()
         cbConfigurationPanel* panel = local[i];
         lb->AddPage(panel, panel->GetTitle());
 
-        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T(".png"), sdDataGlobal | sdDataUser);
+        wxString onFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2(".png"), sdDataGlobal | sdDataUser);
         if (onFile.IsEmpty())
-			onFile = ConfigManager::LocateDataFile(noimg + _T(".png"), sdDataGlobal | sdDataUser);
-        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + _T("-off.png"), sdDataGlobal | sdDataUser);
+			onFile = ConfigManager::LocateDataFile(noimg + wxT_2(".png"), sdDataGlobal | sdDataUser);
+        wxString offFile = ConfigManager::LocateDataFile(base + panel->GetBitmapBaseName() + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
         if (offFile.IsEmpty())
-			offFile = ConfigManager::LocateDataFile(noimg + _T("-off.png"), sdDataGlobal | sdDataUser);
+			offFile = ConfigManager::LocateDataFile(noimg + wxT_2("-off.png"), sdDataGlobal | sdDataUser);
 
         lb->GetImageList()->Add(cbLoadBitmap(onFile));
         lb->GetImageList()->Add(cbLoadBitmap(offFile));
@@ -208,7 +208,7 @@ void CompilerSettingsDlg::UpdateListbookImages()
     // update the page title
     wxString label = lb->GetPageText(sel);
     // replace any stray & with && because label makes it an underscore
-    while (label.Replace(_T(" & "), _T(" && ")))
+    while (label.Replace(wxT_2(" & "), wxT_2(" && ")))
         ;
     XRCCTRL(*this, "lblBigTitle", wxStaticText)->SetLabel(label);
 }
@@ -228,16 +228,16 @@ void CompilerSettingsDlg::EndModal(int retCode)
     {
         // tab "Batch builds"
 #ifdef __WXMSW__  /* TODO: remove preprocessor when Associations::SetXXX are supported on non-Windows platforms */
-        ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
+        ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("app"));
         wxString bbargs = XRCCTRL(*this, "txtBatchBuildsCmdLine", wxTextCtrl)->GetValue();
-        if (bbargs != cfg->Read(_T("/batch_build_args"), appglobals::DefaultBatchBuildArgs))
+        if (bbargs != cfg->Read(wxT_2("/batch_build_args"), appglobals::DefaultBatchBuildArgs))
         {
-            cfg->Write(_T("/batch_build_args"), bbargs);
+            cfg->Write(wxT_2("/batch_build_args"), bbargs);
             Associations::SetBatchBuildOnly();
         }
 
         // batch build plugins
-        ConfigManager *bbcfg = Manager::Get()->GetConfigManager(_T("plugins"));
+        ConfigManager *bbcfg = Manager::Get()->GetConfigManager(wxT_2("plugins"));
         wxArrayString bbplugins;
         wxCheckListBox* clb = XRCCTRL(*this, "chkBBPlugins", wxCheckListBox);
         for (int i = 0; i < (int)clb->GetCount(); ++i)
@@ -259,7 +259,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
             }
         }
 
-        const wxString compiler(platform::windows ? _T("compiler.dll") : _T("libcompiler.so"));
+        const wxString compiler(platform::windows ? wxT_2("compiler.dll") : wxT_2("libcompiler.so"));
 
         if (bbplugins.Index(compiler) == wxNOT_FOUND)
         {
@@ -268,7 +268,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
                         "Automatically re-enabled."),
                         _("Warning"), wxICON_WARNING);
         }
-        bbcfg->Write(_T("/batch_build_plugins"), bbplugins);
+        bbcfg->Write(wxT_2("/batch_build_plugins"), bbplugins);
 #endif
 
         // finally, apply settings in all plugins' panels

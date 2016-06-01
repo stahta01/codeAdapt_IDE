@@ -48,10 +48,10 @@
 
 dlgAbout::dlgAbout(wxWindow* parent)
 {
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgAbout"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgAbout"));
 
-    const wxString description = _("Welcome to ") + appglobals::AppName + _T(" ") +
-                                 appglobals::AppVersion + _T("!\n") + appglobals::AppName +
+    const wxString description = _("Welcome to ") + appglobals::AppName + wxT_2(" ") +
+                                 appglobals::AppVersion + wxT_2("!\n") + appglobals::AppName +
 					             _(" is a full-featured IDE (Integrated Development Environment) "
 					"aiming to make the individual developer (and the development team) "
 					"work in a nice programming environment offering everything he/they "
@@ -60,7 +60,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
 					"any kind of functionality to the core program, through the use of "
 					"plugins...\n");
 
-	wxString file = ConfigManager::ReadDataPath() + _T("/images/splash_new.png");
+	wxString file = ConfigManager::ReadDataPath() + wxT_2("/images/splash_new.png");
 
 
 	wxStaticBitmap *bmpControl = XRCCTRL(*this, "lblTitle", wxStaticBitmap);
@@ -71,7 +71,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
 	wxBitmap bmp(im);
 
     {   // copied from splashscreen.cpp
-        const wxString release(wxT(RELEASE));
+        const wxString release(wxT_2(RELEASE));
         const wxString revision = ConfigManager::GetRevisionString();
 
         wxMemoryDC dc;

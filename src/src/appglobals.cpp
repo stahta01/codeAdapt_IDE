@@ -20,43 +20,43 @@
 
 namespace appglobals
 {
-    const wxString AppVendor              = _T("Code::Blocks");
-    const wxString AppName			    = _T("Code::Blocks");
+    const wxString AppVendor              = wxT_2("Code::Blocks");
+    const wxString AppName			    = wxT_2("Code::Blocks");
 
     #if SVN_BUILD
-        const wxString AppVersion				= _T("svn build");
-        const wxString AppActualVersionVerb	= _T("svn build  rev ") +  ConfigManager::GetRevisionString();
-        const wxString AppActualVersion		= _T("svn-r") +  ConfigManager::GetRevisionString();
+        const wxString AppVersion				= wxT_2("svn build");
+        const wxString AppActualVersionVerb	= wxT_2("svn build  rev ") +  ConfigManager::GetRevisionString();
+        const wxString AppActualVersion		= wxT_2("svn-r") +  ConfigManager::GetRevisionString();
     #else
-        const wxString AppVersion				= _T(RELEASE);
-        const wxString AppActualVersionVerb	= _T("Release " RELEASE "  rev ") + ConfigManager::GetRevisionString();
-        const wxString AppActualVersion		= _T(RELEASE "-r") + ConfigManager::GetRevisionString();
+        const wxString AppVersion				= wxT_2(RELEASE);
+        const wxString AppActualVersionVerb	= wxT_2("Release " RELEASE "  rev ") + ConfigManager::GetRevisionString();
+        const wxString AppActualVersion		= wxT_2(RELEASE "-r") + ConfigManager::GetRevisionString();
     #endif
 
-    const wxString AppUrl					= _T("http://www.codeblocks.org");
-    const wxString AppContactEmail		= _T("info@codeblocks.org");
+    const wxString AppUrl					= wxT_2("http://www.codeblocks.org");
+    const wxString AppContactEmail		= wxT_2("info@codeblocks.org");
 
     #if defined(__WXMSW__)
-      const wxString AppPlatform = _T("Windows");
+      const wxString AppPlatform = wxT_2("Windows");
     #elif defined(__WXOS2__)
-      const wxString AppPlatform = _T("OS/2");
+      const wxString AppPlatform = wxT_2("OS/2");
     #elif defined(__WXMAC__) || defined(__WXCOCOA__)
-      const wxString AppPlatform = _T("Mac OS X");
+      const wxString AppPlatform = wxT_2("Mac OS X");
     #elif defined(__APPLE__)
-      const wxString AppPlatform = _T("Darwin");
+      const wxString AppPlatform = wxT_2("Darwin");
     #elif defined(__FreeBSD__)
-      const wxString AppPlatform = _T("FreeBSD");
+      const wxString AppPlatform = wxT_2("FreeBSD");
     #elif defined(__UNIX__)
-      const wxString AppPlatform = _T("Linux");
+      const wxString AppPlatform = wxT_2("Linux");
     #else
-      const wxString AppPlatform = _T("Unknown");
+      const wxString AppPlatform = wxT_2("Unknown");
     #endif
 
-    const wxString AppWXAnsiUnicode = platform::unicode ? _T("unicode") : wxT("ANSI");
+    const wxString AppWXAnsiUnicode = platform::unicode ? wxT_2("unicode") : wxT_2("ANSI");
 
-    const wxString AppBuildTimestamp = (wxString(wxT(__DATE__)) + wxT(", ") + wxT(__TIME__) + wxT(" - wx") + wxString(wxT(wxVERSION_NUM_DOT_STRING)) + wxT(" (") + AppPlatform + wxT(", ") + AppWXAnsiUnicode + wxT(")") );
+    const wxString AppBuildTimestamp = (wxString(wxT_2(__DATE__)) + wxT_2(", ") + wxT_2(__TIME__) + wxT_2(" - wx") + wxString(wxT_2(wxVERSION_NUM_DOT_STRING)) + wxT_2(" (") + AppPlatform + wxT_2(", ") + AppWXAnsiUnicode + wxT_2(")") );
 
-    const wxString DefaultBatchBuildArgs = _T("-na -nd -ns --batch-build-notify");
+    const wxString DefaultBatchBuildArgs = wxT_2("-na -nd -ns --batch-build-notify");
 };
 
 

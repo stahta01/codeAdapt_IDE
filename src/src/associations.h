@@ -7,8 +7,8 @@
 #ifdef __WXMSW__
     #include <wx/msw/registry.h>
     #include <shlobj.h> // for SHChangeNotify()
-    #define DDE_SERVICE    _T("CODEBLOCKS")
-    #define DDE_TOPIC    _T("CodeBlocksDDEServer")
+    #define DDE_SERVICE    wxT_2("CODEBLOCKS")
+    #define DDE_TOPIC    wxT_2("CodeBlocksDDEServer")
     #ifdef __CBDEBUG__
         #include <windows.h>
         #include <wincon.h>

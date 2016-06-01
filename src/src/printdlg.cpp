@@ -28,7 +28,7 @@
 PrintDialog::PrintDialog(wxWindow* parent)
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgPrint"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgPrint"));
 
 	cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 	if (ed)
@@ -39,9 +39,9 @@ PrintDialog::PrintDialog(wxWindow* parent)
 	else
         XRCCTRL(*this, "rbScope", wxRadioBox)->SetSelection(1);
 
-    int mode = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/print_mode"), 1);
+    int mode = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadInt(wxT_2("/print_mode"), 1);
     XRCCTRL(*this, "rbColourMode", wxRadioBox)->SetSelection(mode);
-    bool print_line_numbers = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/print_line_numbers"), true);
+    bool print_line_numbers = Manager::Get()->GetConfigManager(wxT_2("app"))->ReadBool(wxT_2("/print_line_numbers"), true);
     XRCCTRL(*this, "chkLineNumbers", wxCheckBox)->SetValue(print_line_numbers);
 }
 
@@ -70,8 +70,8 @@ void PrintDialog::EndModal(int retCode)
     if (retCode == wxID_OK)
     {
         int mode = XRCCTRL(*this, "rbColourMode", wxRadioBox)->GetSelection();
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/print_mode"), (int)mode);
-        Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/print_line_numbers"), GetPrintLineNumbers());
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/print_mode"), (int)mode);
+        Manager::Get()->GetConfigManager(wxT_2("app"))->Write(wxT_2("/print_line_numbers"), GetPrintLineNumbers());
     }
     return wxDialog::EndModal(retCode);
 }

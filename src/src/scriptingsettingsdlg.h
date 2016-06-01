@@ -10,18 +10,18 @@ class ScriptEntry// : public ISerializable (<-- can't make it work)
 public:
     wxString SerializeOut() const
     {
-        return wxString::Format(_T("%s;%d;%d;%s"), script.c_str(), enabled ? 1 : 0, registered ? 1 : 0, menu.c_str());
+        return wxString::Format(wxT_2("%s;%d;%d;%s"), script.c_str(), enabled ? 1 : 0, registered ? 1 : 0, menu.c_str());
     }
     void SerializeIn(const wxString& s)
     {
         wxString tmp = s;
-        script = tmp.BeforeFirst(_T(';'));
-        tmp = tmp.AfterFirst(_T(';'));
-        enabled = tmp.BeforeFirst(_T(';')) == _T("1") ? true : false;
-        tmp = tmp.AfterFirst(_T(';'));
-        registered = tmp.BeforeFirst(_T(';')) == _T("1") ? true : false;
-        tmp = tmp.AfterFirst(_T(';'));
-        menu = tmp.BeforeFirst(_T(';'));
+        script = tmp.BeforeFirst(wxT_2(';'));
+        tmp = tmp.AfterFirst(wxT_2(';'));
+        enabled = tmp.BeforeFirst(wxT_2(';')) == wxT_2("1") ? true : false;
+        tmp = tmp.AfterFirst(wxT_2(';'));
+        registered = tmp.BeforeFirst(wxT_2(';')) == wxT_2("1") ? true : false;
+        tmp = tmp.AfterFirst(wxT_2(';'));
+        menu = tmp.BeforeFirst(wxT_2(';'));
     }
 
     wxString script;

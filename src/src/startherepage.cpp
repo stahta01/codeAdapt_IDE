@@ -82,14 +82,14 @@ StartHerePage::StartHerePage(wxEvtHandler* owner, wxWindow* parent)
 	m_pWin->SetFonts(wxEmptyString, wxEmptyString, &sizes[0]);
 
     // must load the page this way because if we don't the image can't be found...
-	m_pWin->LoadPage(resPath + _T("/start_here.zip#zip:start_here.html"));
+	m_pWin->LoadPage(resPath + wxT_2("/start_here.zip#zip:start_here.html"));
 
     // alternate way to read the file so we can perform some search and replace
     // the C::B image referenced in the default start page can be found now
     // because we used LoadPage() above...
     wxString buf;
     wxFileSystem* fs = new wxFileSystem;
-    wxFSFile* f = fs->OpenFile(resPath + _T("/start_here.zip#zip:start_here.html"));
+    wxFSFile* f = fs->OpenFile(resPath + wxT_2("/start_here.zip#zip:start_here.html"));
     if (f)
     {
     	wxInputStream* is = f->GetStream();
@@ -107,19 +107,19 @@ StartHerePage::StartHerePage(wxEvtHandler* owner, wxWindow* parent)
     delete fs;
 
 	#ifdef __GNUC__
-	revInfo.Printf(_T("%s (%s)   gcc %d.%d.%d %s/%s"),
+	revInfo.Printf(wxT_2("%s (%s)   gcc %d.%d.%d %s/%s"),
 					appglobals::AppActualVersionVerb.c_str(), ConfigManager::GetSvnDate().c_str(),
 					__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__, appglobals::AppPlatform.c_str(), appglobals::AppWXAnsiUnicode.c_str());
 	#else
-	revInfo.Printf(_T("%s (%s)   %s/%s"),
+	revInfo.Printf(wxT_2("%s (%s)   %s/%s"),
 					appglobals::AppActualVersionVerb.c_str(), ConfigManager::GetSvnDate().c_str(),
 					appglobals::AppPlatform.c_str(), appglobals::AppWXAnsiUnicode.c_str());
 	#endif
     // perform var substitution
-    buf.Replace(_T("CB_VAR_REVISION_INFO"), revInfo);
-    buf.Replace(_T("CB_VAR_VERSION_VERB"), appglobals::AppActualVersionVerb);
-    buf.Replace(_T("CB_VAR_VERSION"), appglobals::AppActualVersion);
-    buf.Replace(_T("CB_SAFE_MODE"), PluginManager::GetSafeMode() ? _("SAFE MODE") : _T(""));
+    buf.Replace(wxT_2("CB_VAR_REVISION_INFO"), revInfo);
+    buf.Replace(wxT_2("CB_VAR_VERSION_VERB"), appglobals::AppActualVersionVerb);
+    buf.Replace(wxT_2("CB_VAR_VERSION"), appglobals::AppActualVersion);
+    buf.Replace(wxT_2("CB_SAFE_MODE"), PluginManager::GetSafeMode() ? _("SAFE MODE") : wxT_2(""));
     m_pWin->SetPage(buf);
 
     m_OriginalPageContent = buf; // keep a copy of original for Reload()
@@ -164,7 +164,7 @@ bool StartHerePage::LinkClicked(const wxHtmlLinkInfo& link)
         return true;
 
     wxString href = link.GetHref();
-    if (href.StartsWith(_T("CB_CMD_")))
+    if (href.StartsWith(wxT_2("CB_CMD_")))
     {
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, idStartHerePageLink);
         evt.SetString(link.GetHref());
@@ -172,14 +172,14 @@ bool StartHerePage::LinkClicked(const wxHtmlLinkInfo& link)
         return true;
     }
 
-    if(href.IsSameAs(_T("http://www.codeblocks.org/"))
-    || href.StartsWith(_T("http://developer.berlios.de/bugs/")))
+    if(href.IsSameAs(wxT_2("http://www.codeblocks.org/"))
+    || href.StartsWith(wxT_2("http://developer.berlios.de/bugs/")))
     {
         wxTextDataObject *data = new wxTextDataObject(revInfo);
         wxTheClipboard->SetData(data);
     }
 
-    if(href.IsSameAs(_T("rev")))
+    if(href.IsSameAs(wxT_2("rev")))
     {
         wxTextDataObject *data = new wxTextDataObject(revInfo);
         wxTheClipboard->SetData(data);

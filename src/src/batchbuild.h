@@ -14,8 +14,8 @@ class BatchLogWindow : public wxDialog
             : wxDialog(parent, -1, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX | wxMINIMIZE_BOX)
         {
             wxSize size;
-            size.SetWidth(Manager::Get()->GetConfigManager(_T("message_manager"))->ReadInt(_T("/batch_build_log/width"), wxDefaultSize.GetWidth()));
-            size.SetHeight(Manager::Get()->GetConfigManager(_T("message_manager"))->ReadInt(_T("/batch_build_log/height"), wxDefaultSize.GetHeight()));
+            size.SetWidth(Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadInt(wxT_2("/batch_build_log/width"), wxDefaultSize.GetWidth()));
+            size.SetHeight(Manager::Get()->GetConfigManager(wxT_2("message_manager"))->ReadInt(wxT_2("/batch_build_log/height"), wxDefaultSize.GetHeight()));
             SetSize(size);
         }
         void EndModal(int retCode)
@@ -43,8 +43,8 @@ class BatchLogWindow : public wxDialog
                 }
             }
 
-            Manager::Get()->GetConfigManager(_T("message_manager"))->Write(_T("/batch_build_log/width"), (int)GetSize().GetWidth());
-            Manager::Get()->GetConfigManager(_T("message_manager"))->Write(_T("/batch_build_log/height"), (int)GetSize().GetHeight());
+            Manager::Get()->GetConfigManager(wxT_2("message_manager"))->Write(wxT_2("/batch_build_log/width"), (int)GetSize().GetWidth());
+            Manager::Get()->GetConfigManager(wxT_2("message_manager"))->Write(wxT_2("/batch_build_log/height"), (int)GetSize().GetHeight());
             wxDialog::EndModal(retCode);
         }
 };
