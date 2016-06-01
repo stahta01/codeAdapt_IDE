@@ -15,21 +15,21 @@ function BeginWizard()
 
     if (wiz_type == wizProject)
     {
-        local intro_msg = _T("Welcome to the new DLL wizard!\n" +
+        local intro_msg = wxT_2("Welcome to the new DLL wizard!\n" +
                              "This wizard will guide you to create a new DLL.\n\n" +
                              "When you 're ready to proceed, please click \"Next\"...");
 
-        Wizard.AddInfoPage(_T("DllIntro"), intro_msg);
+        Wizard.AddInfoPage(wxT_2("DllIntro"), intro_msg);
         Wizard.AddProjectPathPage();
-        Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+        Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
     }
     else if (wiz_type == wizTarget)
     {
-        local intro_msg = _T("Welcome to the new DLL build target wizard!\n" +
+        local intro_msg = wxT_2("Welcome to the new DLL build target wizard!\n" +
                              "This wizard will guide you to create a new DLL build target.\n\n" +
                              "When you 're ready to proceed, please click \"Next\"...");
-        Wizard.AddInfoPage(_T("DllIntro"), intro_msg);
-        Wizard.AddBuildTargetPage(_T(""), false, true, _T(""), _T("*"), true);
+        Wizard.AddInfoPage(wxT_2("DllIntro"), intro_msg);
+        Wizard.AddBuildTargetPage(wxT_2(""), false, true, wxT_2(""), wxT_2("*"), true);
     }
     else
         print(wiz_type);
@@ -37,7 +37,7 @@ function BeginWizard()
 
 function GetFilesDir()
 {
-    local result = _T("dll/files");
+    local result = wxT_2("dll/files");
     return result;
 }
 
@@ -83,30 +83,30 @@ function SetupTarget(target, is_debug)
     WarningsOn(target, Wizard.GetCompilerID());
 
     // Now define BUILD_DLL to export the functions
-    if (    GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("gcc"))
-        ||  GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("dmc")))
+    if (    GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("gcc"))
+        ||  GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("dmc")))
     {
-        target.AddCompilerOption(_T("-DBUILD_DLL"));
+        target.AddCompilerOption(wxT_2("-DBUILD_DLL"));
     }
-    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("bcc")))
+    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("bcc")))
     {
-        target.AddCompilerOption(_T("-DBUILD_DLL"));
-        target.AddCompilerOption(_T("-tWR")); // To use Dynamic RTL
-        target.AddLinkerOption(_T("-Gi")); // To create an import library
+        target.AddCompilerOption(wxT_2("-DBUILD_DLL"));
+        target.AddCompilerOption(wxT_2("-tWR")); // To use Dynamic RTL
+        target.AddLinkerOption(wxT_2("-Gi")); // To create an import library
     }
-    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc*")))
+    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc*")))
     {
-        target.AddCompilerOption(_T("/DBUILD_DLL"));
+        target.AddCompilerOption(wxT_2("/DBUILD_DLL"));
     }
-    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("ow")))
+    else if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("ow")))
     {
-        target.AddCompilerOption(_T("-dBUILD_DLL"));
-        target.AddCompilerOption(_T("-bt=nt"));
-        target.AddLinkerOption(_T("OPTION IMPLIB")); // To create an import library
+        target.AddCompilerOption(wxT_2("-dBUILD_DLL"));
+        target.AddCompilerOption(wxT_2("-bt=nt"));
+        target.AddLinkerOption(wxT_2("OPTION IMPLIB")); // To create an import library
     }
 
     // Add user32.lib for MessageBox()
-    target.AddLinkLib(_T("user32"));
+    target.AddLinkLib(wxT_2("user32"));
 
     if (is_debug)
     {
@@ -121,20 +121,20 @@ function SetupTarget(target, is_debug)
         OptimizationsOn(target, Wizard.GetCompilerID());
     }
 
-    if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc*")))
+    if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc*")))
     {
         if (is_debug)
-            target.AddCompilerOption(_T("/MDd"));
+            target.AddCompilerOption(wxT_2("/MDd"));
         else
-            target.AddCompilerOption(_T("/MD"));
-        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc8"))
-            || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc10")))
+            target.AddCompilerOption(wxT_2("/MD"));
+        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc8"))
+            || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc10")))
         {
             /* Incremental linking shall be set to NO to embed manifest in the following way.
             * Visit http://msdn2.microsoft.com/en-us/library/ms235605(VS.80).aspx for more details.
             */
-            target.AddLinkerOption(_T("/INCREMENTAL:NO"));
-            target.AddCommandsAfterBuild(_T("mt.exe /nologo /manifest \"") + dll_filename_with_path + _T(".manifest\" /outputresource:\"") + dll_filename_with_path + _T("\";2"));
+            target.AddLinkerOption(wxT_2("/INCREMENTAL:NO"));
+            target.AddCommandsAfterBuild(wxT_2("mt.exe /nologo /manifest \"") + dll_filename_with_path + wxT_2(".manifest\" /outputresource:\"") + dll_filename_with_path + wxT_2("\";2"));
         }
     }
 

@@ -5,27 +5,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // globals
-GlfwPathDefault    <- _T("$(#glfw)");
-GlfwPathDefaultInc <- _T("$(#glfw.include)");
-GlfwPathDefaultLib <- _T("$(#glfw.lib)");
-GlfwPath <- _T("");
+GlfwPathDefault    <- wxT_2("$(#glfw)");
+GlfwPathDefaultInc <- wxT_2("$(#glfw.include)");
+GlfwPathDefaultLib <- wxT_2("$(#glfw.lib)");
+GlfwPath <- wxT_2("");
 
 function BeginWizard()
 {
-    local intro_msg = _T("Welcome to the new GLFW project wizard!\n\n" +
+    local intro_msg = wxT_2("Welcome to the new GLFW project wizard!\n\n" +
                          "This wizard will guide you to create a new project\n" +
                          "using the GLFW OpenGL extensions.\n\n" +
                          "When you 're ready to proceed, please click \"Next\"...");
 
-    local glfwpath_descr = _T("Please select the location of GLFW on your computer.\n" +
+    local glfwpath_descr = wxT_2("Please select the location of GLFW on your computer.\n" +
                               "This is the top-level folder where GLFW was installed (unpacked).\n" +
                               "To help you, this folder must contain the subfolders\n" +
                               "\"include\" and \"lib\".");
 
-    Wizard.AddInfoPage(_T("GlfwIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("GlfwIntro"), intro_msg);
     Wizard.AddProjectPathPage();
-    Wizard.AddGenericSelectPathPage(_T("GlfwPath"), glfwpath_descr, _T("Please select GLFW's location:"), GlfwPathDefault);
-    Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+    Wizard.AddGenericSelectPathPage(wxT_2("GlfwPath"), glfwpath_descr, wxT_2("Please select GLFW's location:"), GlfwPathDefault);
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ function OnLeave_GlfwPath(fwd)
 {
     if (fwd)
     {
-        local dir         = Wizard.GetTextControlValue(_T("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
+        local dir         = Wizard.GetTextControlValue(wxT_2("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
         local dir_nomacro = VerifyDirectory(dir);
 
         if (dir_nomacro.IsEmpty())
@@ -46,18 +46,18 @@ function OnLeave_GlfwPath(fwd)
         local dir_nomacro_inc = GetCompilerIncludeDir(dir, GlfwPathDefault, GlfwPathDefaultInc);
         if (dir_nomacro_inc.IsEmpty())
             return false;
-        if (!VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + _T("GL"), _T("glfw.h"), _T("GLFW's include"))) return false;
+        if (!VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + wxT_2("GL"), wxT_2("glfw.h"), wxT_2("GLFW's include"))) return false;
 
         // verify library dependencies
         local dir_nomacro_lib = GetCompilerLibDir(dir, GlfwPathDefault, GlfwPathDefaultLib);
         if (dir_nomacro_lib.IsEmpty())
             return false;
-        if (!VerifyLibFile(dir_nomacro_lib, _T("glfw"), _T("GLFW's"))) return false;
+        if (!VerifyLibFile(dir_nomacro_lib, wxT_2("glfw"), wxT_2("GLFW's"))) return false;
 
 
         GlfwPath = dir; // Remember the original selection.
 
-        local is_macro = _T("");
+        local is_macro = wxT_2("");
 
         // try to resolve the include directory as macro
         is_macro = GetCompilerIncludeMacro(dir, GlfwPathDefault, GlfwPathDefaultInc);
@@ -81,7 +81,7 @@ function OnLeave_GlfwPath(fwd)
 // return the files this project contains
 function GetFilesDir()
 {
-    return _T("glfw/files");
+    return wxT_2("glfw/files");
 }
 
 // setup the already created project
@@ -92,19 +92,19 @@ function SetupProject(project)
     project.AddLibDir(GlfwPathDefaultLib);
 
     // add link libraries
-    project.AddLinkLib(_T("glfw"));
+    project.AddLinkLib(wxT_2("glfw"));
     if (PLATFORM == PLATFORM_MSW)
     {
-        project.AddLinkLib(_T("opengl32"));
-        project.AddLinkLib(_T("glu32"));
-        project.AddLinkLib(_T("gdi32"));
+        project.AddLinkLib(wxT_2("opengl32"));
+        project.AddLinkLib(wxT_2("glu32"));
+        project.AddLinkLib(wxT_2("gdi32"));
     }
     else
     {
-        project.AddLinkLib(_T("GL"));
-        project.AddLinkLib(_T("GLU"));
-        project.AddLinkLib(_T("pthread"));
-        project.AddLinkLib(_T("Xxf86vm"));
+        project.AddLinkLib(wxT_2("GL"));
+        project.AddLinkLib(wxT_2("GLU"));
+        project.AddLinkLib(wxT_2("pthread"));
+        project.AddLinkLib(wxT_2("Xxf86vm"));
     }
 
     // enable compiler warnings (project-wide)
@@ -116,7 +116,7 @@ function SetupProject(project)
     {
         target.SetTargetType(ttConsoleOnly); // ttConsoleOnly: console for debugging
         target.SetOutputFilename(Wizard.GetDebugOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
-        target.SetWorkingDir(GlfwPath + _T("/bin"));
+        target.SetWorkingDir(GlfwPath + wxT_2("/bin"));
         // enable generation of debugging symbols for target
         DebugSymbolsOn(target, Wizard.GetCompilerID());
     }
@@ -127,7 +127,7 @@ function SetupProject(project)
     {
         target.SetTargetType(ttExecutable); // ttExecutable: no console
         target.SetOutputFilename(Wizard.GetReleaseOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
-        target.SetWorkingDir(GlfwPath + _T("/bin"));
+        target.SetWorkingDir(GlfwPath + wxT_2("/bin"));
         // enable optimizations for target
         OptimizationsOn(target, Wizard.GetCompilerID());
     }

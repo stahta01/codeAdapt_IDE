@@ -24,27 +24,27 @@ function BeginWizard()
     if (wiz_type == wizProject)
     {
         // this is the text that will appear in the start (intro) page
-        local intro_msg = _T("Welcome to the new console application wizard!\n" +
+        local intro_msg = wxT_2("Welcome to the new console application wizard!\n" +
                             "This wizard will guide you to create a new console application.\n\n" +
                             "When you 're ready to proceed, please click \"Next\"...");
 
         // intro
-        Wizard.AddInfoPage(_T("ConsoleIntro"), intro_msg);
+        Wizard.AddInfoPage(wxT_2("ConsoleIntro"), intro_msg);
         // select language
-        Wizard.AddGenericSingleChoiceListPage(_T("ConsoleLanguagePage"), _T("Please select the language you want to use."), _T("C;C++"), ConsoleLang); // select language
+        Wizard.AddGenericSingleChoiceListPage(wxT_2("ConsoleLanguagePage"), wxT_2("Please select the language you want to use."), wxT_2("C;C++"), ConsoleLang); // select language
         // select project name and path
         Wizard.AddProjectPathPage();
         // select compiler and configurations
-        Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+        Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
     }
     else if (wiz_type == wizTarget)
     {
         WizardType = 1;
-        local intro_msg = _T("Welcome to the new console build target wizard!\n" +
+        local intro_msg = wxT_2("Welcome to the new console build target wizard!\n" +
                             "This wizard will guide you to create a new console build target.\n\n" +
                             "When you 're ready to proceed, please click \"Next\"...");
-        Wizard.AddInfoPage(_T("ConsoleIntro"), intro_msg);
-        Wizard.AddBuildTargetPage(_T(""), false, true, _T(""), _T("*"), true);
+        Wizard.AddInfoPage(wxT_2("ConsoleIntro"), intro_msg);
+        Wizard.AddBuildTargetPage(wxT_2(""), false, true, wxT_2(""), wxT_2("*"), true);
     }
 }
 
@@ -53,7 +53,7 @@ function BeginWizard()
 //------------------------------------------------------------------------------
 function OnEnter_ConsoleLanguagePage(fwd)
 {
-    Wizard.SetListboxSelection(_T("GenericChoiceList"), ConsoleLang);
+    Wizard.SetListboxSelection(wxT_2("GenericChoiceList"), ConsoleLang);
     return true;
 }
 //------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function OnLeave_ConsoleLanguagePage(fwd)
 {
     if (fwd)
     {
-        ConsoleLang = Wizard.GetListboxSelection(_T("GenericChoiceList"));
+        ConsoleLang = Wizard.GetListboxSelection(wxT_2("GenericChoiceList"));
     }
     return true;
 }
@@ -75,14 +75,14 @@ function OnLeave_CompilerPage(fwd)
 {
     if (fwd)
     {
-        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvctk"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc8"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc10")))
+        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvctk"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc8"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc10")))
         {
-            local msg = _T("Wizard will setup the Project in Multi-threaded Dynamic CRT mode by default.\n\n");
-            msg = msg + _T("Click Yes to continue with Multi-threaded Dynamic CRT mode\n\n");
-            msg = msg + _T("Click No to continue with Multi-threaded Static CRT mode");
-            local thread = Message(msg, _T("Console Wizard"), wxICON_QUESTION | wxYES_NO);
+            local msg = wxT_2("Wizard will setup the Project in Multi-threaded Dynamic CRT mode by default.\n\n");
+            msg = msg + wxT_2("Click Yes to continue with Multi-threaded Dynamic CRT mode\n\n");
+            msg = msg + wxT_2("Click No to continue with Multi-threaded Static CRT mode");
+            local thread = Message(msg, wxT_2("Console Wizard"), wxICON_QUESTION | wxYES_NO);
             if (thread == wxID_YES)
                 multi_thread_dynamic = true;
             else
@@ -100,9 +100,9 @@ function GetFilesDir()
 
     // depending on the source type setting, return the appropriate value.
     if (ConsoleLang == 0) // C source file
-        result = _T("console/c");
+        result = wxT_2("console/c");
     else // C++ source file
-        result = _T("console/cpp");
+        result = wxT_2("console/cpp");
 
     return result;
 }
@@ -124,10 +124,10 @@ function SetupProject(project)
     WarningsOn(project, Wizard.GetCompilerID());
 
     // add additional libs for special compilers
-    if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("bcc")))
+    if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("bcc")))
     {
-        project.AddLinkLib(_T("cw32mt.lib"));
-        project.AddLinkLib(_T("import32.lib"));
+        project.AddLinkLib(wxT_2("cw32mt.lib"));
+        project.AddLinkLib(wxT_2("import32.lib"));
     }
 
     // We setup the targets using SetupTarget() which is conveniently called by Code::Blocks
@@ -165,7 +165,7 @@ function SetupTarget(target,is_debug)
     if (is_debug)
     {
         local TargetName = (WizardType == 0) ? Wizard.GetDebugOutputDir() : Wizard.GetTargetOutputDir();
-        if (target.GetWorkingDir().Matches(_T("")))
+        if (target.GetWorkingDir().Matches(wxT_2("")))
             target.SetOutputFilename(target.SuggestOutputFilename());
         else
             //target.SetOutputFilename(Wizard.GetDebugOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
@@ -175,28 +175,28 @@ function SetupTarget(target,is_debug)
         // DebugSymbolsOn(target, Wizard.GetTargetCompilerID()); // TODO: doesn't seem to work?
         DebugSymbolsOn(target, Wizard.GetCompilerID());
         //Special consideration for MSVC 7.1
-        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvctk"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc8"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc10")))
+        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvctk"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc8"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc10")))
         {
             if (!multi_thread_dynamic)
             {
-                target.AddCompilerOption(_T("/MTd"));
-                target.AddLinkLib(_T("libcmtd.lib"));
-                target.AddLinkLib(_T("libcpmtd.lib"));
+                target.AddCompilerOption(wxT_2("/MTd"));
+                target.AddLinkLib(wxT_2("libcmtd.lib"));
+                target.AddLinkLib(wxT_2("libcpmtd.lib"));
             }
             else
             {
-                target.AddCompilerOption(_T("/MDd"));
-                target.AddLinkLib(_T("msvcrtd.lib"));
-                target.AddLinkLib(_T("msvcprtd.lib"));
+                target.AddCompilerOption(wxT_2("/MDd"));
+                target.AddLinkLib(wxT_2("msvcrtd.lib"));
+                target.AddLinkLib(wxT_2("msvcprtd.lib"));
             }
         }
     }
     else
     {
         local TargetName = (WizardType == 0) ? Wizard.GetReleaseOutputDir() : Wizard.GetTargetOutputDir();
-        if (target.GetWorkingDir().Matches(_T("")))
+        if (target.GetWorkingDir().Matches(wxT_2("")))
             target.SetOutputFilename(target.SuggestOutputFilename());
         else
             //target.SetOutputFilename(TargetName + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
@@ -206,21 +206,21 @@ function SetupTarget(target,is_debug)
         // OptimizationsOn(target, Wizard.GetTargetCompilerID()); // TODO: doesn't seem to work?
         OptimizationsOn(target, Wizard.GetCompilerID());
         //Special consideration for MSVC 7.1
-        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvctk"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc8"))
-         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), _T("msvc10")))
+        if (GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvctk"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc8"))
+         || GetCompilerFactory().CompilerInheritsFrom(Wizard.GetCompilerID(), wxT_2("msvc10")))
         {
             if (!multi_thread_dynamic)
             {
-                target.AddCompilerOption(_T("/MT"));
-                target.AddLinkLib(_T("libcmt.lib"));
-                target.AddLinkLib(_T("libcpmt.lib"));
+                target.AddCompilerOption(wxT_2("/MT"));
+                target.AddLinkLib(wxT_2("libcmt.lib"));
+                target.AddLinkLib(wxT_2("libcpmt.lib"));
             }
             else
             {
-                target.AddCompilerOption(_T("/MD"));
-                target.AddLinkLib(_T("msvcrt.lib"));
-                target.AddLinkLib(_T("msvcprt.lib"));
+                target.AddCompilerOption(wxT_2("/MD"));
+                target.AddLinkLib(wxT_2("msvcrt.lib"));
+                target.AddLinkLib(wxT_2("msvcprt.lib"));
             }
         }
     }

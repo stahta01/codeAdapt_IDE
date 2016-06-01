@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // globals
-OgrePath <- _T("");
+OgrePath <- wxT_2("");
 // we have two possible types of OGRE SDK installation:
 // 1) Source distribution
 //    : identical configuration for both linux and windows (except link libs)
@@ -20,13 +20,13 @@ OgreIsSource <- false;
 function BeginWizard()
 {
     // intro text
-    local intro_msg = _T("Welcome to the new OGRE project wizard!\n\n" +
+    local intro_msg = wxT_2("Welcome to the new OGRE project wizard!\n\n" +
                         "This wizard will guide you to create a new project\n" +
                         "using the OGRE 3D rendering engine.\n\n" +
                         "When you 're ready to proceed, please click \"Next\"...");
 
     // "select OGRE path" text
-    local ogrepath_descr = _T("Please select the location of OGRE on your computer.\n" +
+    local ogrepath_descr = wxT_2("Please select the location of OGRE on your computer.\n" +
                               "This is the top-level folder where OGRE was installed\n(unpacked).\n" +
                               "To help you, this folder must contain the subfolders\n" +
                               "\"include\" and \"lib\".\n" +
@@ -34,25 +34,25 @@ function BeginWizard()
                               "OGRE_HOME, it 'll automatically be used below.");
 
     // source or SDK?
-    local sdk_descr = _T("OGRE might exist on your system as a source package\n" +
+    local sdk_descr = wxT_2("OGRE might exist on your system as a source package\n" +
                         "(you built it yourself), or as a pre-made SDK which you installed.\n\n" +
                         "It is important for this wizard to know which SDK type is\n" +
                         "installed so that it can setup your project properly.");
 
     // choices
-    local sdk_choices =  _T("I have a folder with the OGRE source code;" +
+    local sdk_choices =  wxT_2("I have a folder with the OGRE source code;" +
                             "I have installed a pre-made OGRE SDK");
 
     // compilers: GCC and MSVC for windows, GCC for linux
     local compilers = PLATFORM == PLATFORM_MSW
-                        ? _T("gcc*;msv*")
-                        : _T("gcc*");
+                        ? wxT_2("gcc*;msv*")
+                        : wxT_2("gcc*");
 
-    Wizard.AddInfoPage(_T("OgreIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("OgreIntro"), intro_msg);
     Wizard.AddProjectPathPage();
-    Wizard.AddGenericSingleChoiceListPage(_T("OgreSDKType"), sdk_descr, sdk_choices, OgreIsSource ? 0 : 1);
-    Wizard.AddGenericSelectPathPage(_T("OgrePath"), ogrepath_descr, _T("Please select OGRE's location:"), _T("$(OGRE_HOME)"));
-    Wizard.AddCompilerPage(_T(""), compilers, true, true);
+    Wizard.AddGenericSingleChoiceListPage(wxT_2("OgreSDKType"), sdk_descr, sdk_choices, OgreIsSource ? 0 : 1);
+    Wizard.AddGenericSelectPathPage(wxT_2("OgrePath"), ogrepath_descr, wxT_2("Please select OGRE's location:"), wxT_2("$(OGRE_HOME)"));
+    Wizard.AddCompilerPage(wxT_2(""), compilers, true, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -63,11 +63,11 @@ function OnGetNextPage_OgreSDKType()
 {
     // for pre-made SDK under linux, skip OGRE path selection
     // we will use pkg-config for this ;)
-    OgreIsSource = Wizard.GetListboxSelection(_T("lstSelections")) == 0;
+    OgreIsSource = Wizard.GetListboxSelection(wxT_2("lstSelections")) == 0;
     if (PLATFORM != PLATFORM_MSW && !OgreIsSource)
-        return _T("CompilerPage");
+        return wxT_2("CompilerPage");
 
-    return _T("OgrePath");
+    return wxT_2("OgrePath");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,9 +79,9 @@ function OnGetPrevPage_CompilerPage()
     // for pre-made SDK under linux, skip OGRE path selection
     // we will use pkg-config for this ;)
     if (PLATFORM != PLATFORM_MSW && !OgreIsSource)
-        return _T("OgreSDKType");
+        return wxT_2("OgreSDKType");
 
-    return _T("OgrePath");
+    return wxT_2("OgrePath");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,12 +92,12 @@ function OnLeave_OgrePath(fwd)
 {
     if (fwd)
     {
-        local dir         = Wizard.GetTextControlValue(_T("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
+        local dir         = Wizard.GetTextControlValue(wxT_2("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
         local dir_nomacro = ReplaceMacros(dir, true);
-        if ((OgreIsSource && !IO.FileExists(dir_nomacro + _T("/OgreMain/include/Ogre.h"))) ||
-            (!OgreIsSource && !IO.FileExists(dir_nomacro + _T("/include/Ogre.h"))))
+        if ((OgreIsSource && !IO.FileExists(dir_nomacro + wxT_2("/OgreMain/include/Ogre.h"))) ||
+            (!OgreIsSource && !IO.FileExists(dir_nomacro + wxT_2("/include/Ogre.h"))))
         {
-            ShowError(_T("The path you entered seems valid, but this wizard " +
+            ShowError(wxT_2("The path you entered seems valid, but this wizard " +
                     "can't locate OGRE's files in it..."));
             return false;
         }
@@ -110,7 +110,7 @@ function OnLeave_OgrePath(fwd)
 // return the files this project contains
 function GetFilesDir()
 {
-    return _T("ogre/files");
+    return wxT_2("ogre/files");
 }
 
 // setup the already created project
@@ -123,46 +123,46 @@ function SetupProject(project)
     {
         if (!OgreIsSource) // SDK
         {
-//            project.AddIncludeDir(OgrePath + _T("/stlport/stlport"));
-            project.AddIncludeDir(OgrePath + _T("/include"));
-            project.AddIncludeDir(OgrePath + _T("/samples/include"));
-            project.AddIncludeDir(OgrePath + _T("/samples/refapp/include"));
-            project.AddLibDir(OgrePath + _T("/lib"));
-//            project.AddCompilerOption(_T("-D_STLP_NO_CUSTOM_IO"));
-//            project.AddCompilerOption(_T("-D_STLP_USE_DYNAMIC_LIB"));
+//            project.AddIncludeDir(OgrePath + wxT_2("/stlport/stlport"));
+            project.AddIncludeDir(OgrePath + wxT_2("/include"));
+            project.AddIncludeDir(OgrePath + wxT_2("/samples/include"));
+            project.AddIncludeDir(OgrePath + wxT_2("/samples/refapp/include"));
+            project.AddLibDir(OgrePath + wxT_2("/lib"));
+//            project.AddCompilerOption(wxT_2("-D_STLP_NO_CUSTOM_IO"));
+//            project.AddCompilerOption(wxT_2("-D_STLP_USE_DYNAMIC_LIB"));
         }
 
-        project.AddCompilerOption(_T("-mthreads"));
-        project.AddCompilerOption(_T("-fmessage-length=0"));
-        project.AddCompilerOption(_T("-fexceptions"));
-        project.AddCompilerOption(_T("-fident"));
-        project.AddCompilerOption(_T("-DWIN32"));
-        project.AddCompilerOption(_T("-D_WINDOWS"));
-//        project.AddLinkLib(_T("opengl32"));
-//        project.AddLinkLib(_T("gdi32"));
-//        project.AddLinkLib(_T("user32"));
-//        project.AddLinkLib(_T("kernel32"));
+        project.AddCompilerOption(wxT_2("-mthreads"));
+        project.AddCompilerOption(wxT_2("-fmessage-length=0"));
+        project.AddCompilerOption(wxT_2("-fexceptions"));
+        project.AddCompilerOption(wxT_2("-fident"));
+        project.AddCompilerOption(wxT_2("-DWIN32"));
+        project.AddCompilerOption(wxT_2("-D_WINDOWS"));
+//        project.AddLinkLib(wxT_2("opengl32"));
+//        project.AddLinkLib(wxT_2("gdi32"));
+//        project.AddLinkLib(wxT_2("user32"));
+//        project.AddLinkLib(wxT_2("kernel32"));
 
         // help the linker
-        project.AddLinkerOption(_T("-Wl,--enable-runtime-pseudo-reloc"));
-        project.AddLinkerOption(_T("-Wl,--enable-auto-image-base"));
-        project.AddLinkerOption(_T("-Wl,--add-stdcall-alias"));
-        project.AddLinkerOption(_T("-mthreads"));
+        project.AddLinkerOption(wxT_2("-Wl,--enable-runtime-pseudo-reloc"));
+        project.AddLinkerOption(wxT_2("-Wl,--enable-auto-image-base"));
+        project.AddLinkerOption(wxT_2("-Wl,--add-stdcall-alias"));
+        project.AddLinkerOption(wxT_2("-mthreads"));
     }
     else
     {
         if (!OgreIsSource) // SDK
         {
-            project.AddCompilerOption(_T("`pkg-config --cflags OGRE`"));
-            project.AddLinkerOption(_T("`pkg-config --libs OGRE`"));
+            project.AddCompilerOption(wxT_2("`pkg-config --cflags OGRE`"));
+            project.AddLinkerOption(wxT_2("`pkg-config --libs OGRE`"));
         }
-        project.AddLinkLib(_T("GL"));
+        project.AddLinkLib(wxT_2("GL"));
     }
 
     if (OgreIsSource) // source: common for windows and linux
     {
-        project.AddIncludeDir(OgrePath + _T("/OgreMain/include"));
-        project.AddIncludeDir(OgrePath + _T("/Samples/Common/include"));
+        project.AddIncludeDir(OgrePath + wxT_2("/OgreMain/include"));
+        project.AddIncludeDir(OgrePath + wxT_2("/Samples/Common/include"));
         // lib dirs are different based on Debug/Release targets
     }
 
@@ -178,13 +178,13 @@ function SetupProject(project)
         target.SetTargetType(ttConsoleOnly); // ttConsoleOnly: console for debugging
 
         if (OgreIsSource)
-            target.SetWorkingDir(OgrePath + _T("/Samples/Common/bin/Debug"));
+            target.SetWorkingDir(OgrePath + wxT_2("/Samples/Common/bin/Debug"));
         else if (PLATFORM == PLATFORM_MSW)
-            target.SetWorkingDir(OgrePath + _T("/bin/Debug"));
-        project.AddLibDir(OgrePath + _T("/bin/Debug"));
+            target.SetWorkingDir(OgrePath + wxT_2("/bin/Debug"));
+        project.AddLibDir(OgrePath + wxT_2("/bin/Debug"));
         // TODO: linux package contains samples?
 
-        if (target.GetWorkingDir().Matches(_T("")))
+        if (target.GetWorkingDir().Matches(wxT_2("")))
             target.SetOutputFilename(target.SuggestOutputFilename());
         else
             target.SetOutputFilename(target.GetWorkingDir() + wxFILE_SEP_PATH + target.SuggestOutputFilename());
@@ -192,25 +192,25 @@ function SetupProject(project)
 
         if (PLATFORM == PLATFORM_MSW)
         {
-            target.AddLinkLib(_T("OgreMain_d"));
-            target.AddLinkLib(_T("OIS_d"));
+            target.AddLinkLib(wxT_2("OgreMain_d"));
+            target.AddLinkLib(wxT_2("OIS_d"));
 
-            target.AddCompilerOption(_T("-D_DEBUG"));
+            target.AddCompilerOption(wxT_2("-D_DEBUG"));
 //            // windows SDK uses STLport
 //            if (!OgreIsSource)
 //            {
-//                target.AddCompilerOption(_T("-D_STLP_DEBUG"));
-//                target.AddLinkLib(_T("stlportstlg.5.0"));
+//                target.AddCompilerOption(wxT_2("-D_STLP_DEBUG"));
+//                target.AddLinkLib(wxT_2("stlportstlg.5.0"));
 //            }
         }
         else
         {
-            target.AddLinkLib(_T("OgreMain"));
-            target.AddLinkLib(_T("OIS"));
+            target.AddLinkLib(wxT_2("OgreMain"));
+            target.AddLinkLib(wxT_2("OIS"));
         }
 
         if (OgreIsSource)
-            target.AddLibDir(OgrePath + _T("/OgreMain/lib/Debug"));
+            target.AddLibDir(OgrePath + wxT_2("/OgreMain/lib/Debug"));
 
         // enable generation of debugging symbols for target
         DebugSymbolsOn(target, Wizard.GetCompilerID());
@@ -222,29 +222,29 @@ function SetupProject(project)
         target.SetTargetType(ttExecutable); // ttExecutable: no console
 
         if (OgreIsSource)
-            target.SetWorkingDir(OgrePath + _T("/Samples/Common/bin/Release"));
+            target.SetWorkingDir(OgrePath + wxT_2("/Samples/Common/bin/Release"));
         else if (PLATFORM == PLATFORM_MSW)
-            target.SetWorkingDir(OgrePath + _T("/bin/Release"));
-        project.AddLibDir(OgrePath + _T("/bin/Release"));
+            target.SetWorkingDir(OgrePath + wxT_2("/bin/Release"));
+        project.AddLibDir(OgrePath + wxT_2("/bin/Release"));
         // TODO: linux package contains samples?
 
-        if (target.GetWorkingDir().Matches(_T("")))
+        if (target.GetWorkingDir().Matches(wxT_2("")))
             target.SetOutputFilename(target.SuggestOutputFilename());
         else
             target.SetOutputFilename(target.GetWorkingDir() + wxFILE_SEP_PATH + target.SuggestOutputFilename());
 //        target.SetOutputFilename(Wizard.GetReleaseOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
 
-        target.AddLinkLib(_T("OgreMain"));
-        target.AddLinkLib(_T("OIS"));
+        target.AddLinkLib(wxT_2("OgreMain"));
+        target.AddLinkLib(wxT_2("OIS"));
         if (PLATFORM == PLATFORM_MSW)
         {
-            target.AddCompilerOption(_T("-DNDEBUG"));
+            target.AddCompilerOption(wxT_2("-DNDEBUG"));
 //            // windows SDK uses STLport
 //            if (!OgreIsSource)
-//                target.AddLinkLib(_T("stlport.5.0"));
+//                target.AddLinkLib(wxT_2("stlport.5.0"));
         }
         if (OgreIsSource)
-            target.AddLibDir(OgrePath + _T("/OgreMain/lib/Release"));
+            target.AddLibDir(OgrePath + wxT_2("/OgreMain/lib/Release"));
 
         // enable optimizations for target
         OptimizationsOn(target, Wizard.GetCompilerID());

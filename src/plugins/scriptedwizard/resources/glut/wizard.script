@@ -5,32 +5,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // globals
-GlutPathDefault    <- _T("$(#glut)");
-GlutPathDefaultInc <- _T("$(#glut.include)");
-GlutPathDefaultLib <- _T("$(#glut.lib)");
-GlutPath <- _T("");
+GlutPathDefault    <- wxT_2("$(#glut)");
+GlutPathDefaultInc <- wxT_2("$(#glut.include)");
+GlutPathDefaultLib <- wxT_2("$(#glut.lib)");
+GlutPath <- wxT_2("");
 
 function BeginWizard()
 {
-    local intro_msg = _T("Welcome to the new GLUT project wizard!\n\n" +
+    local intro_msg = wxT_2("Welcome to the new GLUT project wizard!\n\n" +
                          "This wizard will guide you to create a new project\n" +
                          "using the GLUT OpenGL extensions.\n\n" +
                          "When you 're ready to proceed, please click \"Next\"...");
 
-    local glutpath_descr = _T("Please select the location of GLUT on your computer.\n" +
+    local glutpath_descr = wxT_2("Please select the location of GLUT on your computer.\n" +
                               "This is the top-level folder where GLUT was installed (unpacked).\n" +
                               "To help you, this folder must contain the subfolders\n" +
                               "\"include\" and \"lib\".");
 
-    Wizard.AddInfoPage(_T("GlutIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("GlutIntro"), intro_msg);
     Wizard.AddProjectPathPage();
     if (PLATFORM == PLATFORM_MAC)
     {
         GlutPathDefault="/System/Library/Frameworks/GLUT.framework";
     }
     else
-        Wizard.AddGenericSelectPathPage(_T("GlutPath"), glutpath_descr, _T("Please select GLUT's location:"), GlutPathDefault);
-    Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+        Wizard.AddGenericSelectPathPage(wxT_2("GlutPath"), glutpath_descr, wxT_2("Please select GLUT's location:"), GlutPathDefault);
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ function OnLeave_GlutPath(fwd)
 {
     if (fwd)
     {
-        local dir         = Wizard.GetTextControlValue(_T("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
+        local dir         = Wizard.GetTextControlValue(wxT_2("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
         local dir_nomacro = VerifyDirectory(dir);
 
         if (dir_nomacro.IsEmpty())
@@ -51,7 +51,7 @@ function OnLeave_GlutPath(fwd)
         local dir_nomacro_inc = GetCompilerIncludeDir(dir, GlutPathDefault, GlutPathDefaultInc);
         if (dir_nomacro_inc.IsEmpty())
             return false;
-        if (!VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + _T("GL"), _T("glut.h"), _T("GLUT's include"))) return false;
+        if (!VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + wxT_2("GL"), wxT_2("glut.h"), wxT_2("GLUT's include"))) return false;
 
         // verify library dependencies
         local dir_nomacro_lib = GetCompilerLibDir(dir, GlutPathDefault, GlutPathDefaultLib);
@@ -60,17 +60,17 @@ function OnLeave_GlutPath(fwd)
 
         if (PLATFORM == PLATFORM_MSW)
         {
-            if (!VerifyLibFile(dir_nomacro_lib, _T("glut32"), _T("GLUT's"))) return false;
+            if (!VerifyLibFile(dir_nomacro_lib, wxT_2("glut32"), wxT_2("GLUT's"))) return false;
         }
         else
         {
-            if (!VerifyLibFile(dir_nomacro_lib, _T("glut"), _T("GLUT's"))) return false;
+            if (!VerifyLibFile(dir_nomacro_lib, wxT_2("glut"), wxT_2("GLUT's"))) return false;
         }
 
 
         GlutPath = dir; // Remember the original selection.
 
-        local is_macro = _T("");
+        local is_macro = wxT_2("");
 
         // try to resolve the include directory as macro
         is_macro = GetCompilerIncludeMacro(dir, GlutPathDefault, GlutPathDefaultInc);
@@ -94,7 +94,7 @@ function OnLeave_GlutPath(fwd)
 // return the files this project contains
 function GetFilesDir()
 {
-    return _T("glut/files");
+    return wxT_2("glut/files");
 }
 
 // setup the already created project
@@ -110,25 +110,25 @@ function SetupProject(project)
     // add link libraries
     if (PLATFORM == PLATFORM_MSW)
     {
-        project.AddLinkLib(_T("glut32"));
-        project.AddLinkLib(_T("opengl32"));
-        project.AddLinkLib(_T("glu32"));
-        project.AddLinkLib(_T("winmm"));
-        project.AddLinkLib(_T("gdi32"));
+        project.AddLinkLib(wxT_2("glut32"));
+        project.AddLinkLib(wxT_2("opengl32"));
+        project.AddLinkLib(wxT_2("glu32"));
+        project.AddLinkLib(wxT_2("winmm"));
+        project.AddLinkLib(wxT_2("gdi32"));
     }
     else if (PLATFORM == PLATFORM_MAC)
     {
-        project.AddLinkerOption(_T("-framework GLUT"));
-        project.AddLinkerOption(_T("-framework OpenGL"));
+        project.AddLinkerOption(wxT_2("-framework GLUT"));
+        project.AddLinkerOption(wxT_2("-framework OpenGL"));
 
-        project.AddLinkerOption(_T("-framework Cocoa")); // GLUT dependency
+        project.AddLinkerOption(wxT_2("-framework Cocoa")); // GLUT dependency
     }
     else
     {
-        project.AddLinkLib(_T("glut"));
-        project.AddLinkLib(_T("GL"));
-        project.AddLinkLib(_T("GLU"));
-        project.AddLinkLib(_T("Xxf86vm"));
+        project.AddLinkLib(wxT_2("glut"));
+        project.AddLinkLib(wxT_2("GL"));
+        project.AddLinkLib(wxT_2("GLU"));
+        project.AddLinkLib(wxT_2("Xxf86vm"));
     }
 
     // enable compiler warnings (project-wide)
@@ -140,7 +140,7 @@ function SetupProject(project)
     {
         target.SetTargetType(ttConsoleOnly); // ttConsoleOnly: console for debugging
         target.SetOutputFilename(Wizard.GetDebugOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
-        target.SetWorkingDir(GlutPath + _T("/bin"));
+        target.SetWorkingDir(GlutPath + wxT_2("/bin"));
         // enable generation of debugging symbols for target
         DebugSymbolsOn(target, Wizard.GetCompilerID());
     }
@@ -151,7 +151,7 @@ function SetupProject(project)
     {
         target.SetTargetType(ttExecutable); // ttExecutable: no console
         target.SetOutputFilename(Wizard.GetReleaseOutputDir() + Wizard.GetProjectName() + DOT_EXT_EXECUTABLE);
-        target.SetWorkingDir(GlutPath + _T("/bin"));
+        target.SetWorkingDir(GlutPath + wxT_2("/bin"));
         // enable optimizations for target
         OptimizationsOn(target, Wizard.GetCompilerID());
     }

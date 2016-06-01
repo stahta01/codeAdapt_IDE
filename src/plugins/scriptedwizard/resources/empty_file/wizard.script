@@ -9,12 +9,12 @@
 
 function BeginWizard()
 {
-    local info_msg = _T("Welcome to the new empty file wizard!\n" +
+    local info_msg = wxT_2("Welcome to the new empty file wizard!\n" +
                         "This wizard will guide you to create a new empty file.\n\n" +
                         "When you 're ready to proceed, please click \"Next\"...");
 
     // add builtin pages
-    Wizard.AddInfoPage(_T("EmptyFileIntro"), info_msg); // intro
+    Wizard.AddInfoPage(wxT_2("EmptyFileIntro"), info_msg); // intro
     Wizard.AddFilePathPage(false); // select filename (no header guard for source files)
 }
 
@@ -24,13 +24,13 @@ function CreateFiles()
     local ed    = GetEditorManager();
     if (IsNull(ed))
     {
-        ShowError(_T("The wizard could not locate the editor manager."));
+        ShowError(wxT_2("The wizard could not locate the editor manager."));
     }
 
     local ed_new = ed.New(fname);
     if (IsNull(ed_new))
     {
-        ShowError(_T("The wizard could not create a new file.\n" +
+        ShowError(wxT_2("The wizard could not create a new file.\n" +
                      "Maybe the target folder is write-protected?"));
     }
     else

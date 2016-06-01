@@ -5,27 +5,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // globals
-QtPathDefault    <- _T("$(#qt4)");
-QtPathDefaultInc <- _T("$(#qt4.include)");
-QtPathDefaultLib <- _T("$(#qt4.lib)");
-QtPath <- _T("");
+QtPathDefault    <- wxT_2("$(#qt4)");
+QtPathDefaultInc <- wxT_2("$(#qt4.include)");
+QtPathDefaultLib <- wxT_2("$(#qt4.lib)");
+QtPath <- wxT_2("");
 
 function BeginWizard()
 {
-    local intro_msg = _T("Welcome to the new Trolltech Qt4 project wizard!\n" +
+    local intro_msg = wxT_2("Welcome to the new Trolltech Qt4 project wizard!\n" +
                          "This wizard will guide you to create a new Qt4 project\n" +
                          "using the Trolltech Qt4 cross-platform GUI toolkit\n\n" +
                          "When you're ready to proceed, please click \"Next\"...");
 
-    local qtpath_msg = _T("Please select the location of Trolltech Qt4 on your computer.\n" +
+    local qtpath_msg = wxT_2("Please select the location of Trolltech Qt4 on your computer.\n" +
                           "This is the top-level folder where Qt4 was installed.\n" +
                           "To help you, this folder must contain the subfolders\n" +
                           "\"include\" and \"lib\".");
 
-    Wizard.AddInfoPage(_T("QtIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("QtIntro"), intro_msg);
     Wizard.AddProjectPathPage();
-    Wizard.AddGenericSelectPathPage(_T("QtPath"), qtpath_msg, _T("Qt's location:"), QtPathDefault);
-    Wizard.AddCompilerPage(_T(""), _T("gcc*"), true, true);
+    Wizard.AddGenericSelectPathPage(wxT_2("QtPath"), qtpath_msg, wxT_2("Qt's location:"), QtPathDefault);
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("gcc*"), true, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ function OnLeave_QtPath(fwd)
 {
     if (fwd)
     {
-        local dir         = Wizard.GetTextControlValue(_T("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
+        local dir         = Wizard.GetTextControlValue(wxT_2("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
         local dir_nomacro = VerifyDirectory(dir);
 
         if (dir_nomacro.IsEmpty())
@@ -47,22 +47,22 @@ function OnLeave_QtPath(fwd)
         if (dir_nomacro_inc.IsEmpty())
             return false;
         if (PLATFORM == PLATFORM_MSW
-            && !VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + _T("QtGui"), _T("QApplication"), _T("Qt's include")))
+            && !VerifyFile(dir_nomacro_inc + wxFILE_SEP_PATH + wxT_2("QtGui"), wxT_2("QApplication"), wxT_2("Qt's include")))
             return false;
 
         // verify library dependencies
         local dir_nomacro_lib = GetCompilerLibDir(dir, QtPathDefault, QtPathDefaultLib);
         if (dir_nomacro_lib.IsEmpty())
             return false;
-        if (PLATFORM == PLATFORM_MSW && !VerifyLibFile(dir_nomacro_lib, _T("QtCore4"), _T("Qt's")))
+        if (PLATFORM == PLATFORM_MSW && !VerifyLibFile(dir_nomacro_lib, wxT_2("QtCore4"), wxT_2("Qt's")))
             return false;
-        else if (PLATFORM != PLATFORM_MSW && !VerifyLibFile(dir_nomacro_lib, _T("QtCore"), _T("Qt's")))
+        else if (PLATFORM != PLATFORM_MSW && !VerifyLibFile(dir_nomacro_lib, wxT_2("QtCore"), wxT_2("Qt's")))
             return false;
 
 
         QtPath = dir; // Remember the original selection.
 
-        local is_macro = _T("");
+        local is_macro = wxT_2("");
 
         // try to resolve the include directory as macro
         is_macro = GetCompilerIncludeMacro(dir, QtPathDefault, QtPathDefaultInc);
@@ -86,27 +86,27 @@ function OnLeave_QtPath(fwd)
 // return the files this project contains
 function GetFilesDir()
 {
-    return _T("qt4/files");
+    return wxT_2("qt4/files");
 }
 
 // setup the already created project
 function SetupProject(project)
 {
     project.AddIncludeDir(QtPathDefaultInc);
-    project.AddIncludeDir(QtPathDefaultInc + wxFILE_SEP_PATH + _T("QtGui"));
+    project.AddIncludeDir(QtPathDefaultInc + wxFILE_SEP_PATH + wxT_2("QtGui"));
 
     project.AddLibDir(QtPathDefaultLib);
 
     // add link libraries
     if (PLATFORM == PLATFORM_MSW)
     {
-        project.AddLinkLib(_T("QtCore4"));
-        project.AddLinkLib(_T("QtGui4"));
+        project.AddLinkLib(wxT_2("QtCore4"));
+        project.AddLinkLib(wxT_2("QtGui4"));
     }
     else
     {
-        project.AddLinkLib(_T("QtCore"));
-        project.AddLinkLib(_T("QtGui"));
+        project.AddLinkLib(wxT_2("QtCore"));
+        project.AddLinkLib(wxT_2("QtGui"));
     }
 
     // enable compiler warnings (project-wide)

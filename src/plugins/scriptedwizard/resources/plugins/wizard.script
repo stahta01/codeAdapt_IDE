@@ -2,14 +2,14 @@
 PluginSettings <- {
     Type = 0 // cbToolPlugin
 
-    Name = _T("")
-    Title = _T("")
-    Version = _T("")
-    Description = _T("")
-    Author = _T("")
-    Email = _T("")
-    Website = _T("")
-    ThanksTo = _T("")
+    Name = wxT_2("")
+    Title = wxT_2("")
+    Version = wxT_2("")
+    Description = wxT_2("")
+    Author = wxT_2("")
+    Email = wxT_2("")
+    Website = wxT_2("")
+    ThanksTo = wxT_2("")
 
     HasConfig = false
     HasMenu = false
@@ -24,11 +24,11 @@ function BeginWizard()
 {
     local wiz_type = Wizard.GetWizardType();
 
-    local intro_msg = _T("Welcome to the new Code::Blocks plugin wizard!\n" +
+    local intro_msg = wxT_2("Welcome to the new Code::Blocks plugin wizard!\n" +
                          "This wizard will guide you to create a new Code::Blocks plugin.\n\n");
     if (PLATFORM == PLATFORM_MSW)
     {
-        intro_msg += _T("\nVERY IMPORTANT NOTE:\n\n" +
+        intro_msg += wxT_2("\nVERY IMPORTANT NOTE:\n\n" +
                         "Code::Blocks is built with the GNU GCC compiler and links to\n" +
                         "the monolithic unicode wxWidgets DLL.\n" +
                         "This means that you must have exactly this setup to be able to\n" +
@@ -37,14 +37,14 @@ function BeginWizard()
                         "   1. $(#cb) pointing to Code::Blocks base dir (where CodeBlocks.cbp is)\n" +
                         "   2. $(#wx) pointing to wxWidgets base directory\n\n\n");
     }
-    intro_msg += _T("When you 're ready to proceed, please click \"Next\"...");
+    intro_msg += wxT_2("When you 're ready to proceed, please click \"Next\"...");
 
-    Wizard.AddInfoPage(_T("PluginIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("PluginIntro"), intro_msg);
     Wizard.AddProjectPathPage();
-    Wizard.AddPage(_T("PluginOptions"));
-    Wizard.AddPage(_T("PluginInfo"));
-    Wizard.AddGenericSingleChoiceListPage(_T("wxVersionPage"), _T("Please select the wxWidgets version you want to use."), _T("wxWidgets 2.6.x;wxWidgets 2.8.x"), WxVersion); // select wxwidgets version
-    Wizard.AddCompilerPage(_T(""), _T("gcc*"), true, false);
+    Wizard.AddPage(wxT_2("PluginOptions"));
+    Wizard.AddPage(wxT_2("PluginInfo"));
+    Wizard.AddGenericSingleChoiceListPage(wxT_2("wxVersionPage"), wxT_2("Please select the wxWidgets version you want to use."), wxT_2("wxWidgets 2.6.x;wxWidgets 2.8.x"), WxVersion); // select wxwidgets version
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("gcc*"), true, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -59,15 +59,15 @@ function OnEnter_PluginOptions(fwd)
 // enable/disable available options based on selected plugin type
 function OnClick_cmbPluginType()
 {
-    PluginSettings.Type = Wizard.GetComboboxSelection(_T("cmbPluginType"));
+    PluginSettings.Type = Wizard.GetComboboxSelection(wxT_2("cmbPluginType"));
 
     local isTool = PluginSettings.Type == 1;
     local isMime = PluginSettings.Type == 2;
     local isWizard = PluginSettings.Type == 3;
-    Wizard.EnableWindow(_T("chkHasConfig"), !isWizard);
-    Wizard.EnableWindow(_T("chkHasMenu"), !isTool && !isMime && !isWizard);
-    Wizard.EnableWindow(_T("chkHasModuleMenu"), !isTool && !isMime && !isWizard);
-    Wizard.EnableWindow(_T("chkHasToolbar"), !isTool && !isMime && !isWizard);
+    Wizard.EnableWindow(wxT_2("chkHasConfig"), !isWizard);
+    Wizard.EnableWindow(wxT_2("chkHasMenu"), !isTool && !isMime && !isWizard);
+    Wizard.EnableWindow(wxT_2("chkHasModuleMenu"), !isTool && !isMime && !isWizard);
+    Wizard.EnableWindow(wxT_2("chkHasToolbar"), !isTool && !isMime && !isWizard);
 }
 
 // -----------------------------------------------------------------------------
@@ -77,17 +77,17 @@ function OnLeave_PluginOptions(fwd)
     if (fwd)
     {
         // read text values entered
-        PluginSettings.Name = Wizard.GetTextControlValue(_T("txtPluginName"));
-        PluginSettings.Type = Wizard.GetComboboxSelection(_T("cmbPluginType"));
-        PluginSettings.HasConfig = Wizard.IsCheckboxChecked(_T("chkHasConfig"));
-        PluginSettings.HasMenu = Wizard.IsCheckboxChecked(_T("chkHasMenu"));
-        PluginSettings.HasModuleMenu = Wizard.IsCheckboxChecked(_T("chkHasModuleMenu"));
-        PluginSettings.HasToolbar = Wizard.IsCheckboxChecked(_T("chkHasToolbar"));
+        PluginSettings.Name = Wizard.GetTextControlValue(wxT_2("txtPluginName"));
+        PluginSettings.Type = Wizard.GetComboboxSelection(wxT_2("cmbPluginType"));
+        PluginSettings.HasConfig = Wizard.IsCheckboxChecked(wxT_2("chkHasConfig"));
+        PluginSettings.HasMenu = Wizard.IsCheckboxChecked(wxT_2("chkHasMenu"));
+        PluginSettings.HasModuleMenu = Wizard.IsCheckboxChecked(wxT_2("chkHasModuleMenu"));
+        PluginSettings.HasToolbar = Wizard.IsCheckboxChecked(wxT_2("chkHasToolbar"));
 
         // check that essentials were filled in
         if (PluginSettings.Name.IsEmpty())
         {
-            ShowWarning(_T("You have to enter the plugin's name before you can proceed..."));
+            ShowWarning(wxT_2("You have to enter the plugin's name before you can proceed..."));
             return false;
         }
     }
@@ -101,15 +101,15 @@ function OnEnter_PluginInfo(fwd)
     if (fwd)
     {
         // set the title same as the project title
-        if (Wizard.GetTextControlValue(_T("txtTitle")).IsEmpty())
-            Wizard.SetTextControlValue(_T("txtTitle"), Wizard.GetProjectTitle());
-        if (Wizard.GetTextControlValue(_T("txtVersion")).IsEmpty())
-            Wizard.SetTextControlValue(_T("txtVersion"), _T("0.1"));
+        if (Wizard.GetTextControlValue(wxT_2("txtTitle")).IsEmpty())
+            Wizard.SetTextControlValue(wxT_2("txtTitle"), Wizard.GetProjectTitle());
+        if (Wizard.GetTextControlValue(wxT_2("txtVersion")).IsEmpty())
+            Wizard.SetTextControlValue(wxT_2("txtVersion"), wxT_2("0.1"));
 
         // load config
-        Wizard.SetTextControlValue(_T("txtAuthor"), GetConfigManager().Read(_T("/cb_plugin_wizard/author"), _T("")));
-        Wizard.SetTextControlValue(_T("txtEmail"), GetConfigManager().Read(_T("/cb_plugin_wizard/email"), _T("")));
-        Wizard.SetTextControlValue(_T("txtWebsite"), GetConfigManager().Read(_T("/cb_plugin_wizard/website"), _T("")));
+        Wizard.SetTextControlValue(wxT_2("txtAuthor"), GetConfigManager().Read(wxT_2("/cb_plugin_wizard/author"), wxT_2("")));
+        Wizard.SetTextControlValue(wxT_2("txtEmail"), GetConfigManager().Read(wxT_2("/cb_plugin_wizard/email"), wxT_2("")));
+        Wizard.SetTextControlValue(wxT_2("txtWebsite"), GetConfigManager().Read(wxT_2("/cb_plugin_wizard/website"), wxT_2("")));
     }
 }
 
@@ -120,28 +120,28 @@ function OnLeave_PluginInfo(fwd)
     if (fwd)
     {
         // read text values entered
-        PluginSettings.Title = Wizard.GetTextControlValue(_T("txtTitle"));
-        PluginSettings.Version = Wizard.GetTextControlValue(_T("txtVersion"));
-        PluginSettings.Description = Wizard.GetTextControlValue(_T("txtDescription"));
-        PluginSettings.Author = Wizard.GetTextControlValue(_T("txtAuthor"));
-        PluginSettings.Email = Wizard.GetTextControlValue(_T("txtEmail"));
-        PluginSettings.Website = Wizard.GetTextControlValue(_T("txtWebsite"));
-        PluginSettings.ThanksTo = Wizard.GetTextControlValue(_T("txtThanksTo"));
+        PluginSettings.Title = Wizard.GetTextControlValue(wxT_2("txtTitle"));
+        PluginSettings.Version = Wizard.GetTextControlValue(wxT_2("txtVersion"));
+        PluginSettings.Description = Wizard.GetTextControlValue(wxT_2("txtDescription"));
+        PluginSettings.Author = Wizard.GetTextControlValue(wxT_2("txtAuthor"));
+        PluginSettings.Email = Wizard.GetTextControlValue(wxT_2("txtEmail"));
+        PluginSettings.Website = Wizard.GetTextControlValue(wxT_2("txtWebsite"));
+        PluginSettings.ThanksTo = Wizard.GetTextControlValue(wxT_2("txtThanksTo"));
 
         // check that essentials were filled in
         if (PluginSettings.Name.IsEmpty() ||
             PluginSettings.Version.IsEmpty())
         {
-            ShowWarning(_T("You have to fill the Title and Version fields before you can proceed..."));
+            ShowWarning(wxT_2("You have to fill the Title and Version fields before you can proceed..."));
             return false;
         }
         PluginSettings.Name = GetFixedProjectName(PluginSettings.Name);
     }
 
     // save config
-    GetConfigManager().Write(_T("/cb_plugin_wizard/author"), PluginSettings.Author);
-    GetConfigManager().Write(_T("/cb_plugin_wizard/email"), PluginSettings.Email);
-    GetConfigManager().Write(_T("/cb_plugin_wizard/website"), PluginSettings.Website);
+    GetConfigManager().Write(wxT_2("/cb_plugin_wizard/author"), PluginSettings.Author);
+    GetConfigManager().Write(wxT_2("/cb_plugin_wizard/email"), PluginSettings.Email);
+    GetConfigManager().Write(wxT_2("/cb_plugin_wizard/website"), PluginSettings.Website);
     return true;
 }
 
@@ -153,7 +153,7 @@ function OnEnter_wxVersionPage(fwd)
 {
     if (fwd)
     {
-        WxVersion = Wizard.GetListboxSelection(_T("GenericChoiceList"));
+        WxVersion = Wizard.GetListboxSelection(wxT_2("GenericChoiceList"));
     }
     return true;
 }
@@ -162,7 +162,7 @@ function OnLeave_wxVersionPage(fwd)
 {
     if (fwd)
     {
-        WxVersion = Wizard.GetListboxSelection(_T("GenericChoiceList"));
+        WxVersion = Wizard.GetListboxSelection(wxT_2("GenericChoiceList"));
     }
     return true;
 }
@@ -176,22 +176,22 @@ function GetGeneratedFile(file_index)
     switch (file_index)
     {
         // header file
-        case 0: return PluginSettings.Name + DOT_EXT_H + _T(";") + GenerateHeader();
+        case 0: return PluginSettings.Name + DOT_EXT_H + wxT_2(";") + GenerateHeader();
         // source file
-        case 1: return PluginSettings.Name + DOT_EXT_CPP + _T(";") + GenerateSource();
+        case 1: return PluginSettings.Name + DOT_EXT_CPP + wxT_2(";") + GenerateSource();
         // manifest
-        case 2: return _T("manifest") + DOT_EXT_XML + _T(";") + GenerateManifest();
+        case 2: return wxT_2("manifest") + DOT_EXT_XML + wxT_2(";") + GenerateManifest();
     }
-    return _T(""); // no more generated files
+    return wxT_2(""); // no more generated files
 }
 
 // -----------------------------------------------------------------------------
 // setup the project options
 function SetupProject(project)
 {
-    local target = project.GetBuildTarget(_T("default"));
+    local target = project.GetBuildTarget(wxT_2("default"));
     if (IsNull(target))
-        target = project.AddBuildTarget(_T("default"));
+        target = project.AddBuildTarget(wxT_2("default"));
     SetupTarget(target, true);
 
     return true;
@@ -209,58 +209,58 @@ function SetupTarget(target,is_debug)
 
     if (PLATFORM == PLATFORM_MSW)
     {
-        target.AddCompilerOption(_T("-DBUILDING_PLUGIN"));
-        target.AddCompilerOption(_T("-DHAVE_W32API_H"));
-        target.AddCompilerOption(_T("-D__WXMSW__"));
-        target.AddCompilerOption(_T("-DWXUSINGDLL"));
-        target.AddCompilerOption(_T("-DcbDEBUG"));
-        target.AddCompilerOption(_T("-DCB_PRECOMP"));
-        target.AddCompilerOption(_T("-DWX_PRECOMP"));
-        target.AddCompilerOption(_T("-DwxUSE_UNICODE"));
-        target.AddCompilerOption(_T("-pipe"));
-        target.AddCompilerOption(_T("-mthreads"));
-        target.AddCompilerOption(_T("-fmessage-length=0"));
-        target.AddCompilerOption(_T("-fexceptions"));
-        target.AddCompilerOption(_T("-Winvalid-pch"));
+        target.AddCompilerOption(wxT_2("-DBUILDING_PLUGIN"));
+        target.AddCompilerOption(wxT_2("-DHAVE_W32API_H"));
+        target.AddCompilerOption(wxT_2("-D__WXMSW__"));
+        target.AddCompilerOption(wxT_2("-DWXUSINGDLL"));
+        target.AddCompilerOption(wxT_2("-DcbDEBUG"));
+        target.AddCompilerOption(wxT_2("-DCB_PRECOMP"));
+        target.AddCompilerOption(wxT_2("-DWX_PRECOMP"));
+        target.AddCompilerOption(wxT_2("-DwxUSE_UNICODE"));
+        target.AddCompilerOption(wxT_2("-pipe"));
+        target.AddCompilerOption(wxT_2("-mthreads"));
+        target.AddCompilerOption(wxT_2("-fmessage-length=0"));
+        target.AddCompilerOption(wxT_2("-fexceptions"));
+        target.AddCompilerOption(wxT_2("-Winvalid-pch"));
 
-        target.AddLinkerOption(_T("-mthreads"));
+        target.AddLinkerOption(wxT_2("-mthreads"));
 
-        target.AddIncludeDir(_T("$(#cb)\\include"));
-        target.AddIncludeDir(_T("$(#cb)\\sdk\\wxscintilla\\include"));
-        target.AddIncludeDir(_T("$(#wx.include)"));
-        target.AddIncludeDir(_T("$(#wx.lib)\\gcc_dll\\mswu"));
+        target.AddIncludeDir(wxT_2("$(#cb)\\include"));
+        target.AddIncludeDir(wxT_2("$(#cb)\\sdk\\wxscintilla\\include"));
+        target.AddIncludeDir(wxT_2("$(#wx.include)"));
+        target.AddIncludeDir(wxT_2("$(#wx.lib)\\gcc_dll\\mswu"));
 
-        target.AddLinkLib(_T("codeblocks"));
+        target.AddLinkLib(wxT_2("codeblocks"));
         if (WxVersion == 0)
-            target.AddLinkLib(_T("wxmsw26u"));
+            target.AddLinkLib(wxT_2("wxmsw26u"));
         else
-            target.AddLinkLib(_T("wxmsw28u"));
+            target.AddLinkLib(wxT_2("wxmsw28u"));
 
-        target.AddLibDir(_T("$(#cb)\\devel"));
-        target.AddLibDir(_T("$(#wx.lib)\\gcc_dll"));
+        target.AddLibDir(wxT_2("$(#cb)\\devel"));
+        target.AddLibDir(wxT_2("$(#wx.lib)\\gcc_dll"));
 
-        target.SetHostApplication(_T("$(#cb)\\devel\\codeblocks") + DOT_EXT_EXECUTABLE);
+        target.SetHostApplication(wxT_2("$(#cb)\\devel\\codeblocks") + DOT_EXT_EXECUTABLE);
     }
     else
     {
-        target.AddCompilerOption(_T("`pkg-config --cflags codeblocks`"));
-        target.AddCompilerOption(_T("`wx-config --cflags`"));
-        target.AddCompilerOption(_T("-ansi"));
-        target.AddCompilerOption(_T("-fPIC"));
+        target.AddCompilerOption(wxT_2("`pkg-config --cflags codeblocks`"));
+        target.AddCompilerOption(wxT_2("`wx-config --cflags`"));
+        target.AddCompilerOption(wxT_2("-ansi"));
+        target.AddCompilerOption(wxT_2("-fPIC"));
 
-        target.AddLinkerOption(_T("`pkg-config --libs codeblocks`"));
-        target.AddLinkerOption(_T("`wx-config --libs`"));
+        target.AddLinkerOption(wxT_2("`pkg-config --libs codeblocks`"));
+        target.AddLinkerOption(wxT_2("`wx-config --libs`"));
 
-        target.SetHostApplication(_T("codeblocks") + DOT_EXT_EXECUTABLE);
+        target.SetHostApplication(wxT_2("codeblocks") + DOT_EXT_EXECUTABLE);
     }
 
     // create plugin resources
-    target.AddCommandsAfterBuild(_T("zip -j9 ") +
-                                PluginSettings.Name + _T(".zip manifest") + DOT_EXT_XML);
+    target.AddCommandsAfterBuild(wxT_2("zip -j9 ") +
+                                PluginSettings.Name + wxT_2(".zip manifest") + DOT_EXT_XML);
     // create plugin distribution file
-    target.AddCommandsAfterBuild(_T("zip -j9 ") + PluginSettings.Name + _T(".cbplugin ") +
-                                target.GetOutputFilename() + _T(" ") +
-                                PluginSettings.Name + _T(".zip"));
+    target.AddCommandsAfterBuild(wxT_2("zip -j9 ") + PluginSettings.Name + wxT_2(".cbplugin ") +
+                                target.GetOutputFilename() + wxT_2(" ") +
+                                PluginSettings.Name + wxT_2(".zip"));
 
     if (is_debug)
         DebugSymbolsOn(target, Wizard.GetCompilerID());
@@ -286,11 +286,11 @@ function GenerateHeader()
     local buffer = IO.ReadFileContents(path);
 
     // create header guard word
-    local guard = PluginSettings.Name + DOT_EXT_H + _T("_INCLUDED");
+    local guard = PluginSettings.Name + DOT_EXT_H + wxT_2("_INCLUDED");
     guard.MakeUpper();
-    guard.Replace(_T(" "), _T("_"));
-    guard.Replace(_T("."), _T("_"));
-    buffer.Replace(_T("[GUARD_WORD]"), guard);
+    guard.Replace(wxT_2(" "), wxT_2("_"));
+    guard.Replace(wxT_2("."), wxT_2("_"));
+    buffer.Replace(wxT_2("[GUARD_WORD]"), guard);
 
     return SubstituteMacros(buffer);
 }
@@ -309,7 +309,7 @@ function GenerateSource()
 // return the manifest contents string
 function GenerateManifest()
 {
-    local path = Wizard.FindTemplateFile(_T("plugins/templates/manifest_template.xml"));
+    local path = Wizard.FindTemplateFile(wxT_2("plugins/templates/manifest_template.xml"));
     local buffer = IO.ReadFileContents(path);
 
     return SubstituteMacros(buffer);
@@ -319,17 +319,17 @@ function GenerateManifest()
 // return the template's filename, appending <dot_ext> as an extension (must include the dot)
 function GetTemplateFile(dot_ext)
 {
-    local template_file = _T("");
+    local template_file = wxT_2("");
     switch (PluginSettings.Type)
     {
         // generic plugin
-        case 0: template_file = _T("plugins/templates/generic_template") + dot_ext; break;
+        case 0: template_file = wxT_2("plugins/templates/generic_template") + dot_ext; break;
         // tool plugin
-        case 1: template_file = _T("plugins/templates/tool_template") + dot_ext; break;
+        case 1: template_file = wxT_2("plugins/templates/tool_template") + dot_ext; break;
         // mime plugin
-        case 2: template_file = _T("plugins/templates/mime_template") + dot_ext; break;
+        case 2: template_file = wxT_2("plugins/templates/mime_template") + dot_ext; break;
         // wizard plugin
-        case 3: template_file = _T("plugins/templates/wizard_template") + dot_ext; break;
+        case 3: template_file = wxT_2("plugins/templates/wizard_template") + dot_ext; break;
 
         default: break; // error
     }
@@ -341,29 +341,29 @@ function GetTemplateFile(dot_ext)
 function SubstituteMacros(buffer)
 {
     // handle [IF] / [ENDIF] pairs
-    buffer = HandleDirective(buffer, _T("HAS_CONFIGURE"), PluginSettings.HasConfig);
-    buffer = HandleDirective(buffer, _T("HAS_MENU"), PluginSettings.HasMenu);
-    buffer = HandleDirective(buffer, _T("HAS_MODULE_MENU"), PluginSettings.HasModuleMenu);
-    buffer = HandleDirective(buffer, _T("HAS_TOOLBAR"), PluginSettings.HasToolbar);
-    buffer = HandleDirective(buffer, _T("NEED_EVENTS"), PluginSettings.HasMenu ||
+    buffer = HandleDirective(buffer, wxT_2("HAS_CONFIGURE"), PluginSettings.HasConfig);
+    buffer = HandleDirective(buffer, wxT_2("HAS_MENU"), PluginSettings.HasMenu);
+    buffer = HandleDirective(buffer, wxT_2("HAS_MODULE_MENU"), PluginSettings.HasModuleMenu);
+    buffer = HandleDirective(buffer, wxT_2("HAS_TOOLBAR"), PluginSettings.HasToolbar);
+    buffer = HandleDirective(buffer, wxT_2("NEED_EVENTS"), PluginSettings.HasMenu ||
                                                         PluginSettings.HasModuleMenu ||
                                                         PluginSettings.HasToolbar);
 
     // macros substitution
-    buffer.Replace(_T("[PLUGIN_SDK_VERSION_MAJOR]"), _T("") + PLUGIN_SDK_VERSION_MAJOR);
-    buffer.Replace(_T("[PLUGIN_SDK_VERSION_MINOR]"), _T("") + PLUGIN_SDK_VERSION_MINOR);
-    buffer.Replace(_T("[PLUGIN_SDK_VERSION_RELEASE]"), _T("") + PLUGIN_SDK_VERSION_RELEASE);
-    buffer.Replace(_T("[PLUGIN_NAME]"), PluginSettings.Name);
-    buffer.Replace(_T("[PLUGIN_TITLE]"), PluginSettings.Title);
-    buffer.Replace(_T("[PLUGIN_VERSION]"), PluginSettings.Version);
-    buffer.Replace(_T("[PLUGIN_DESCRIPTION]"), PluginSettings.Description);
-    buffer.Replace(_T("[PROJECT_NAME]"), Wizard.GetProjectName());
-    buffer.Replace(_T("[AUTHOR_NAME]"), PluginSettings.Author);
-    buffer.Replace(_T("[AUTHOR_EMAIL]"), PluginSettings.Email);
-    buffer.Replace(_T("[AUTHOR_WWW]"), PluginSettings.Website);
-    buffer.Replace(_T("[THANKS_TO]"), PluginSettings.ThanksTo);
-    buffer.Replace(_T("[HEADER_FILENAME]"), PluginSettings.Name + DOT_EXT_H);
-    buffer.Replace(_T("[NOW]"), ReplaceMacros(_T("$(TODAY)"), false));
+    buffer.Replace(wxT_2("[PLUGIN_SDK_VERSION_MAJOR]"), wxT_2("") + PLUGIN_SDK_VERSION_MAJOR);
+    buffer.Replace(wxT_2("[PLUGIN_SDK_VERSION_MINOR]"), wxT_2("") + PLUGIN_SDK_VERSION_MINOR);
+    buffer.Replace(wxT_2("[PLUGIN_SDK_VERSION_RELEASE]"), wxT_2("") + PLUGIN_SDK_VERSION_RELEASE);
+    buffer.Replace(wxT_2("[PLUGIN_NAME]"), PluginSettings.Name);
+    buffer.Replace(wxT_2("[PLUGIN_TITLE]"), PluginSettings.Title);
+    buffer.Replace(wxT_2("[PLUGIN_VERSION]"), PluginSettings.Version);
+    buffer.Replace(wxT_2("[PLUGIN_DESCRIPTION]"), PluginSettings.Description);
+    buffer.Replace(wxT_2("[PROJECT_NAME]"), Wizard.GetProjectName());
+    buffer.Replace(wxT_2("[AUTHOR_NAME]"), PluginSettings.Author);
+    buffer.Replace(wxT_2("[AUTHOR_EMAIL]"), PluginSettings.Email);
+    buffer.Replace(wxT_2("[AUTHOR_WWW]"), PluginSettings.Website);
+    buffer.Replace(wxT_2("[THANKS_TO]"), PluginSettings.ThanksTo);
+    buffer.Replace(wxT_2("[HEADER_FILENAME]"), PluginSettings.Name + DOT_EXT_H);
+    buffer.Replace(wxT_2("[NOW]"), ReplaceMacros(wxT_2("$(TODAY)"), false));
 
     return buffer;
 }
@@ -375,8 +375,8 @@ function SubstituteMacros(buffer)
 // and [ENDIF <directive>] macros (including them).
 function HandleDirective(buffer, directive, enabled)
 {
-    local dir_if = _T("[IF ") + directive + _T("]");
-    local dir_endif = _T("[ENDIF ") + directive + _T("]");
+    local dir_if = wxT_2("[IF ") + directive + wxT_2("]");
+    local dir_endif = wxT_2("[ENDIF ") + directive + wxT_2("]");
 
     local findStart = buffer.Find(dir_if);
     if (findStart == -1)
@@ -388,7 +388,7 @@ function HandleDirective(buffer, directive, enabled)
 
     // look for [ELSE]
     local block = buffer.Mid(findStart, findEnd - findStart);
-    local findElse = block.Find(_T("[ELSE]")); // findElse is in "local scope", i.e. offset from findStart
+    local findElse = block.Find(wxT_2("[ELSE]")); // findElse is in "local scope", i.e. offset from findStart
 
     if (!enabled)
     {

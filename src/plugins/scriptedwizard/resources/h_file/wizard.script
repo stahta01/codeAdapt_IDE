@@ -18,15 +18,15 @@ AUTO_GENERATED_CONTENTS
 function BeginWizard()
 {
     // this is the text that will appear in the start (intro) page
-    local intro_msg = _T("Welcome to the new C/C++ header file wizard!\n" +
+    local intro_msg = wxT_2("Welcome to the new C/C++ header file wizard!\n" +
                          "This wizard will guide you to create a new C/C++ header file.\n\n" +
                          "When you 're ready to proceed, please click \"Next\"...");
 
     // add builtin pages
-    Wizard.AddInfoPage(_T("HFileIntro"), intro_msg); // intro
+    Wizard.AddInfoPage(wxT_2("HFileIntro"), intro_msg); // intro
     Wizard.AddFilePathPage(true); // select filename (header guard required for header files)
 
-    Wizard.SetFilePathSelectionFilter(_T("C/C++ header files (*.h;*.hpp;*.hxx;*.hh)|*.h;*.hpp;*.hxx;*.hh"));
+    Wizard.SetFilePathSelectionFilter(wxT_2("C/C++ header files (*.h;*.hpp;*.hxx;*.hh)|*.h;*.hpp;*.hxx;*.hh"));
 }
 
 function CreateFiles()
@@ -35,23 +35,23 @@ function CreateFiles()
     local ed    = GetEditorManager();
     if (IsNull(ed))
     {
-        ShowError(_T("The wizard could not locate the editor manager."));
+        ShowError(wxT_2("The wizard could not locate the editor manager."));
     }
 
     local ed_new = ed.New(fname);
     if (IsNull(ed_new))
     {
-        ShowError(_T("The wizard could not create a new file.\n" +
+        ShowError(wxT_2("The wizard could not create a new file.\n" +
                      "Maybe the target folder is write-protected?"));
     }
     else
     {
         // succeeded -> add header guard
         local guard = Wizard.GetFileHeaderGuard();
-        local text = _T(header_contents);
+        local text = wxT_2(header_contents);
         local auto_text = ed_new.GetText();
-        text.Replace(_T("GUARD"), guard);
-        text.Replace(_T("AUTO_GENERATED_CONTENTS"), auto_text);
+        text.Replace(wxT_2("GUARD"), guard);
+        text.Replace(wxT_2("AUTO_GENERATED_CONTENTS"), auto_text);
         ed_new.SetText(text);
 
         // succeeded -> add file to project if needed

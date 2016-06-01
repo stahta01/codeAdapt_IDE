@@ -43,7 +43,7 @@ class Wiz : public cbWizardPlugin
 
         Wiz& operator=(CA_UNUSED const Wiz& rhs)  // prevent assignment operator
         {
-        	cbThrow(_T("Can't assign an Wiz* !!!"));
+        	cbThrow(wxT_2("Can't assign an Wiz* !!!"));
         	return *this;
 		}
 
@@ -155,7 +155,7 @@ class Wiz : public cbWizardPlugin
         void AddFilePathPage(bool showHeaderGuard);
         void AddProjectPathPage();
         void AddCompilerPage(const wxString& compilerID, const wxString& validCompilerIDs, bool allowCompilerChange = true, bool allowConfigChange = true);
-        void AddBuildTargetPage(const wxString& targetName, bool isDebug, bool showCompiler = false, const wxString& compilerID = wxEmptyString, const wxString& validCompilerIDs = _T("*"), bool allowCompilerChange = true);
+        void AddBuildTargetPage(const wxString& targetName, bool isDebug, bool showCompiler = false, const wxString& compilerID = wxEmptyString, const wxString& validCompilerIDs = wxT_2("*"), bool allowCompilerChange = true);
         void AddGenericSingleChoiceListPage(const wxString& pageName, const wxString& descr, const wxString& choices, int defChoice);
         void AddGenericSelectPathPage(const wxString& pageId, const wxString& descr, const wxString& label, const wxString& defValue);
         // XRC pages

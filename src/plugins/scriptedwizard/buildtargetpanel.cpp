@@ -45,31 +45,31 @@ BuildTargetPanel::BuildTargetPanel(wxWindow* parent,wxWindowID id)
     wxStaticText* StaticText5;
     wxStaticBoxSizer* StaticBoxSizer1;
 
-    Create(parent, id, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("id"));
+    Create(parent, id, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxT_2("id"));
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Please setup the options for the new build target."), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Please setup the options for the new build target."), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT1"));
     BoxSizer1->Add(StaticText1, 0, wxALL|wxALIGN_LEFT, 8);
-    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Build target name:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+    StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Build target name:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT3"));
     BoxSizer1->Add(StaticText3, 0, wxTOP|wxLEFT|wxRIGHT|wxALIGN_LEFT, 8);
-    txtName = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    txtName = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_TEXTCTRL1"));
     BoxSizer1->Add(txtName, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 8);
-    lblCompiler = new wxStaticText(this, ID_STATICTEXT2, _("Compiler:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    lblCompiler = new wxStaticText(this, ID_STATICTEXT2, _("Compiler:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT2"));
     BoxSizer1->Add(lblCompiler, 0, wxTOP|wxLEFT|wxRIGHT|wxALIGN_LEFT, 8);
-    cmbCompiler = new wxComboBox(this, ID_COMBOBOX1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 0, wxCB_SIMPLE|wxCB_READONLY, wxDefaultValidator, _T("ID_COMBOBOX1"));
+    cmbCompiler = new wxComboBox(this, ID_COMBOBOX1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 0, wxCB_SIMPLE|wxCB_READONLY, wxDefaultValidator, wxT_2("ID_COMBOBOX1"));
     BoxSizer1->Add(cmbCompiler, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 8);
     StaticBoxSizer1 = new wxStaticBoxSizer(wxVERTICAL, this, _("Options"));
     FlexGridSizer1 = new wxFlexGridSizer(0, 2, 5, 5);
     FlexGridSizer1->AddGrowableCol(1);
-    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Output dir.:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+    StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Output dir.:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT4"));
     FlexGridSizer1->Add(StaticText4, 0, wxEXPAND, 5);
-    txtOut = new wxTextCtrl(this, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    txtOut = new wxTextCtrl(this, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_TEXTCTRL2"));
     FlexGridSizer1->Add(txtOut, 0, wxEXPAND, 5);
-    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("Objects output dir.:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+    StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("Objects output dir.:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT5"));
     FlexGridSizer1->Add(StaticText5, 0, wxEXPAND, 5);
-    txtObjOut = new wxTextCtrl(this, ID_TEXTCTRL3, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+    txtObjOut = new wxTextCtrl(this, ID_TEXTCTRL3, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_TEXTCTRL3"));
     FlexGridSizer1->Add(txtObjOut, 0, wxEXPAND, 5);
     StaticBoxSizer1->Add(FlexGridSizer1, 1, wxALL|wxEXPAND, 8);
-    chkEnableDebug = new wxCheckBox(this, ID_CHECKBOX1, _("Enable debugging symbols for this target"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+    chkEnableDebug = new wxCheckBox(this, ID_CHECKBOX1, _("Enable debugging symbols for this target"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_CHECKBOX1"));
     chkEnableDebug->SetValue(false);
     StaticBoxSizer1->Add(chkEnableDebug, 0, wxALL|wxALIGN_LEFT, 8);
     BoxSizer1->Add(StaticBoxSizer1, 0, wxALL|wxEXPAND, 8);
@@ -89,6 +89,6 @@ BuildTargetPanel::~BuildTargetPanel()
 void BuildTargetPanel::OntxtNameText(CA_UNUSED wxCommandEvent& event)
 {
     // update output dirs based on target name
-    txtOut->SetValue(_T("bin") + wxString(wxFILE_SEP_PATH) + txtName->GetValue());
-    txtObjOut->SetValue(_T("obj") + wxString(wxFILE_SEP_PATH) + txtName->GetValue());
+    txtOut->SetValue(wxT_2("bin") + wxString(wxFILE_SEP_PATH) + txtName->GetValue());
+    txtObjOut->SetValue(wxT_2("obj") + wxString(wxFILE_SEP_PATH) + txtName->GetValue());
 }

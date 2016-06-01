@@ -5,28 +5,28 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // globals (used under windows only)
-SDLPathDefault    <- _T("$(#sdl)");
-SDLPathDefaultInc <- _T("$(#sdl.include)");
-SDLPathDefaultLib <- _T("$(#sdl.lib)");
-SDLPath           <- _T("");
+SDLPathDefault    <- wxT_2("$(#sdl)");
+SDLPathDefaultInc <- wxT_2("$(#sdl.include)");
+SDLPathDefaultLib <- wxT_2("$(#sdl.lib)");
+SDLPath           <- wxT_2("");
 
 function BeginWizard()
 {
-    local intro_msg = _T("Welcome to the new SDL project wizard!\n\n" +
+    local intro_msg = wxT_2("Welcome to the new SDL project wizard!\n\n" +
                          "This wizard will guide you to create a new project\n" +
                          "using the SDL graphics library.\n\n" +
                          "When you 're ready to proceed, please click \"Next\"...");
 
-    local sdlpath_descr = _T("Please select the location of SDL on your computer.\n" +
+    local sdlpath_descr = wxT_2("Please select the location of SDL on your computer.\n" +
                              "This is the top-level folder where SDL was installed (unpacked).\n" +
                              "To help you, this folder must contain the subfolders\n" +
                              "\"include\" and \"lib\".");
 
-    Wizard.AddInfoPage(_T("SDLIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("SDLIntro"), intro_msg);
     Wizard.AddProjectPathPage();
     if (PLATFORM == PLATFORM_MSW)
-        Wizard.AddGenericSelectPathPage(_T("SDLPath"), sdlpath_descr, _T("Please select SDL's location:"), SDLPathDefault);
-    Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+        Wizard.AddGenericSelectPathPage(wxT_2("SDLPath"), sdlpath_descr, wxT_2("Please select SDL's location:"), SDLPathDefault);
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ function OnLeave_SDLPath(fwd)
 {
     if (fwd)
     {
-        local dir         = Wizard.GetTextControlValue(_T("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
+        local dir         = Wizard.GetTextControlValue(wxT_2("txtFolder")); // txtFolder is the text control in GenericSelectPathPage
         local dir_nomacro = VerifyDirectory(dir);
 
         if (dir_nomacro.IsEmpty())
@@ -47,29 +47,29 @@ function OnLeave_SDLPath(fwd)
         local dir_nomacro_inc = GetCompilerIncludeDir(dir, SDLPathDefault, SDLPathDefaultInc);
         if (dir_nomacro_inc.IsEmpty())
             return false;
-            
-        if (!IO.FileExists(dir_nomacro_inc + wxFILE_SEP_PATH + _T("SDL.h")))
+
+        if (!IO.FileExists(dir_nomacro_inc + wxFILE_SEP_PATH + wxT_2("SDL.h")))
         {
-            if (VerifyFile(dir_nomacro_inc, _T("SDL/SDL.h"), _T("SDL's include")))
-                SDLPathDefaultInc = SDLPathDefaultInc + _T("/SDL");
+            if (VerifyFile(dir_nomacro_inc, wxT_2("SDL/SDL.h"), wxT_2("SDL's include")))
+                SDLPathDefaultInc = SDLPathDefaultInc + wxT_2("/SDL");
             else
                 return false;
         }
-        
+
         // verify library dependencies
         local dir_nomacro_lib = GetCompilerLibDir(dir, SDLPathDefault, SDLPathDefaultLib);
         if (dir_nomacro_lib.IsEmpty())
             return false;
 
-        if (!VerifyLibFile(dir_nomacro_lib, _T("SDLmain"), _T("SDL's")))
+        if (!VerifyLibFile(dir_nomacro_lib, wxT_2("SDLmain"), wxT_2("SDL's")))
             return false;
 
-        if (!VerifyLibFile(dir_nomacro_lib, _T("SDL.dll"), _T("SDL's")))
+        if (!VerifyLibFile(dir_nomacro_lib, wxT_2("SDL.dll"), wxT_2("SDL's")))
             return false;
 
         SDLPath = dir; // Remember the original selection.
 
-        local is_macro = _T("");
+        local is_macro = wxT_2("");
 
         // try to resolve the include directory as macro
         is_macro = GetCompilerIncludeMacro(dir, SDLPathDefault, SDLPathDefaultInc);
@@ -93,7 +93,7 @@ function OnLeave_SDLPath(fwd)
 // return the files this project contains
 function GetFilesDir()
 {
-    return _T("sdl/files");
+    return wxT_2("sdl/files");
 }
 
 // setup the already created project
@@ -105,28 +105,28 @@ function SetupProject(project)
         project.AddLibDir(SDLPathDefaultLib);
 
         // add link libraries
-        project.AddLinkLib(_T("mingw32"));
-        project.AddLinkLib(_T("SDLmain"));
-        project.AddLinkLib(_T("SDL.dll"));
-        project.AddLinkLib(_T("user32"));
-        project.AddLinkLib(_T("gdi32"));
-        project.AddLinkLib(_T("winmm"));
-        project.AddLinkLib(_T("dxguid"));
+        project.AddLinkLib(wxT_2("mingw32"));
+        project.AddLinkLib(wxT_2("SDLmain"));
+        project.AddLinkLib(wxT_2("SDL.dll"));
+        project.AddLinkLib(wxT_2("user32"));
+        project.AddLinkLib(wxT_2("gdi32"));
+        project.AddLinkLib(wxT_2("winmm"));
+        project.AddLinkLib(wxT_2("dxguid"));
     }
     else if (PLATFORM == PLATFORM_MAC)
     {
-        //project.AddCompilerOption(_T("-D_GNU_SOURCE=1 -D_THREAD_SAFE"));
-        project.AddLinkerOption(_T("-framework SDL"));
+        //project.AddCompilerOption(wxT_2("-D_GNU_SOURCE=1 -D_THREAD_SAFE"));
+        project.AddLinkerOption(wxT_2("-framework SDL"));
         // libSDLmain.a does not exist by default, needs to be built from SDLMain.m:
-        project.AddLinkLib(_T("SDLmain"));
+        project.AddLinkLib(wxT_2("SDLmain"));
 
-        project.AddLinkerOption(_T("-framework Cocoa")); // SDL dependency
+        project.AddLinkerOption(wxT_2("-framework Cocoa")); // SDL dependency
     }
     else
     {
         // unix way
-        project.AddCompilerOption(_T("`sdl-config --cflags`"));
-        project.AddLinkerOption(_T("`sdl-config --libs`"));
+        project.AddCompilerOption(wxT_2("`sdl-config --cflags`"));
+        project.AddLinkerOption(wxT_2("`sdl-config --libs`"));
     }
 
     // enable compiler warnings (project-wide)

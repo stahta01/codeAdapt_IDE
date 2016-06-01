@@ -10,26 +10,26 @@
 function BeginWizard()
 {
     // this is the text that will appear in the start (intro) page
-    local intro_msg = _T("Welcome to the new D application wizard!\n" +
+    local intro_msg = wxT_2("Welcome to the new D application wizard!\n" +
                         "This wizard will guide you to create a new D application.\n\n" +
                         "When you 're ready to proceed, please click \"Next\"...");
 
     // add builtin pages
-    Wizard.AddInfoPage(_T("DIntro"), intro_msg); // intro
+    Wizard.AddInfoPage(wxT_2("DIntro"), intro_msg); // intro
     Wizard.AddProjectPathPage(); // select project name and path
-    Wizard.AddCompilerPage(_T(""), _T("dmd;gdc;ldc"), true, true); // select compiler and configurations
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("dmd;gdc;ldc"), true, true); // select compiler and configurations
     // nothing more needs to be done here
 }
 
 function GetFilesDir()
 {
-    return _T("d/console");
+    return wxT_2("d/console");
 }
 
 function SetupProject(project)
 {
     // enable compiler warnings (project-wide)
-    if (Wizard.GetCompilerID().Matches(_T("gdc")))
+    if (Wizard.GetCompilerID().Matches(wxT_2("gdc")))
         WarningsOn(project, Wizard.GetCompilerID());
 
     // Debug build target

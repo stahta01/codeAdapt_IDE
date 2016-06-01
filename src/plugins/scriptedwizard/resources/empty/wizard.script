@@ -10,26 +10,26 @@
 
 function BeginWizard()
 {
-    local intro_msg = _T("Welcome to the new empty project wizard!\n" +
+    local intro_msg = wxT_2("Welcome to the new empty project wizard!\n" +
                         "This wizard will guide you to create a new empty project.\n\n" +
                         "When you 're ready to proceed, please click \"Next\"...");
 
     // intro
-    Wizard.AddInfoPage(_T("EmptyProjectIntro"), intro_msg);
+    Wizard.AddInfoPage(wxT_2("EmptyProjectIntro"), intro_msg);
     // select project name and path
     Wizard.AddProjectPathPage();
     // select compiler and configurations
     // args:
     //  1) string: which compiler ID will be pre-selected (empty means default)
-    //  2) string: semi-colon separated list of allowed compiler ids. Use _T("*") for all. * and ? wildcards allowed.
+    //  2) string: semi-colon separated list of allowed compiler ids. Use wxT_2("*") for all. * and ? wildcards allowed.
     //  3) boolean: if false, the compiler selection will be disabled
     //  4) boolean: if false, the config targets will be disabled
-    Wizard.AddCompilerPage(_T(""), _T("*"), true, true);
+    Wizard.AddCompilerPage(wxT_2(""), wxT_2("*"), true, true);
 }
 
 function GetFilesDir()
 {
-    return _T("");
+    return wxT_2("");
 }
 
 function SetupProject(project)

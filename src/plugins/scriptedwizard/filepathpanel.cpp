@@ -50,42 +50,42 @@ FilePathPanel::FilePathPanel(wxWindow* parent,wxWindowID id) :
 	wxBoxSizer* BoxSizer1;
 	wxStaticText* StaticText2;
 
-	Create(parent, id, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("id"));
+	Create(parent, id, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, wxT_2("id"));
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Please enter the file\'s location and name and\nwhether to add it to the active project."), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Please enter the file\'s location and name and\nwhether to add it to the active project."), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT1"));
 	BoxSizer1->Add(StaticText1, 0, wxALL|wxALIGN_LEFT, 8);
-	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Filename with full path:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Filename with full path:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT2"));
 	BoxSizer1->Add(StaticText2, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 8);
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-	txtFilename = new wxTextCtrl(this, ID_TEXTCTRL1, _("Text"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	txtFilename = new wxTextCtrl(this, ID_TEXTCTRL1, _("Text"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_TEXTCTRL1"));
 	BoxSizer2->Add(txtFilename, 1, wxALL|wxALIGN_TOP, 0);
-	btnBrowse = new wxButton(this, ID_BUTTON1, _("..."), wxDefaultPosition, wxSize(22,22), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	btnBrowse = new wxButton(this, ID_BUTTON1, _("..."), wxDefaultPosition, wxSize(22,22), 0, wxDefaultValidator, wxT_2("ID_BUTTON1"));
 	BoxSizer2->Add(btnBrowse, 0, wxALL|wxALIGN_TOP, 0);
 	BoxSizer1->Add(BoxSizer2, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 8);
-	lblGuard = new wxStaticText(this, ID_STATICTEXT3, _("Header guard word:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+	lblGuard = new wxStaticText(this, ID_STATICTEXT3, _("Header guard word:"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT3"));
 	BoxSizer1->Add(lblGuard, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 8);
-	txtGuard = new wxTextCtrl(this, ID_TEXTCTRL2, _("Text"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+	txtGuard = new wxTextCtrl(this, ID_TEXTCTRL2, _("Text"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_TEXTCTRL2"));
 	BoxSizer1->Add(txtGuard, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 8);
 	BoxSizer1->Add(-1,-1,0, wxALL|wxEXPAND, 0);
-	chkAddToProject = new wxCheckBox(this, ID_CHECKBOX1, _("Add file to active project"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	chkAddToProject = new wxCheckBox(this, ID_CHECKBOX1, _("Add file to active project"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_CHECKBOX1"));
 	chkAddToProject->SetValue(false);
 	BoxSizer1->Add(chkAddToProject, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 8);
 	FlexGridSizer1 = new wxFlexGridSizer(0, 2, 0, 0);
 	FlexGridSizer1->AddGrowableCol(1);
 	FlexGridSizer1->AddGrowableRow(1);
 	FlexGridSizer1->Add(16,16,0, wxALL|wxALIGN_TOP, 0);
-	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("In build target(s):"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("In build target(s):"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT4"));
 	FlexGridSizer1->Add(StaticText4, 0, wxALL|wxEXPAND, 0);
 	FlexGridSizer1->Add(16,16,0, wxALL|wxALIGN_TOP, 0);
-	clbTargets = new wxCheckListBox(this, ID_CHECKLISTBOX2, wxDefaultPosition, wxSize(222,111), 0, 0, wxLB_SINGLE|wxLB_HSCROLL, wxDefaultValidator, _T("ID_CHECKLISTBOX2"));
+	clbTargets = new wxCheckListBox(this, ID_CHECKLISTBOX2, wxDefaultPosition, wxSize(222,111), 0, 0, wxLB_SINGLE|wxLB_HSCROLL, wxDefaultValidator, wxT_2("ID_CHECKLISTBOX2"));
 	clbTargets->Disable();
 	FlexGridSizer1->Add(clbTargets, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 0);
 	FlexGridSizer1->Add(16,16,0, wxALL|wxALIGN_TOP, 0);
 	BoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
-	btnAll = new wxButton(this, ID_BUTTON2, _("All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	btnAll = new wxButton(this, ID_BUTTON2, _("All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON2"));
 	btnAll->Disable();
 	BoxSizer6->Add(btnAll, 0, wxRIGHT|wxALIGN_CENTER_VERTICAL, 4);
-	btnNone = new wxButton(this, ID_BUTTON3, _("None"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	btnNone = new wxButton(this, ID_BUTTON3, _("None"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON3"));
 	btnNone->Disable();
 	BoxSizer6->Add(btnNone, 0, wxALIGN_CENTER_VERTICAL, 0);
 	FlexGridSizer1->Add(BoxSizer6, 0, wxALL|wxALIGN_TOP, 0);
@@ -169,14 +169,14 @@ void FilePathPanel::OntxtFilenameText(CA_UNUSED wxCommandEvent& event)
     if (!txtFilename || txtFilename->GetValue().IsEmpty())
         return;
     wxString name = wxFileNameFromPath(txtFilename->GetValue());
-    while (name.Replace(_T(" "), _T("_")))
+    while (name.Replace(wxT_2(" "), wxT_2("_")))
         ;
-    while (name.Replace(_T("\t"), _T("_")))
+    while (name.Replace(wxT_2("\t"), wxT_2("_")))
         ;
-    while (name.Replace(_T("."), _T("_")))
+    while (name.Replace(wxT_2("."), wxT_2("_")))
         ;
     name.MakeUpper();
-    name << _T("_INCLUDED");
+    name << wxT_2("_INCLUDED");
     txtGuard->SetValue(name);
 }
 
@@ -185,7 +185,7 @@ void FilePathPanel::OnbtnBrowseClick(CA_UNUSED wxCommandEvent& event)
     cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
     wxFileDialog dlg(this,
                      _("Select filename"),
-                     prj ? prj->GetBasePath() : _T(""),
+                     prj ? prj->GetBasePath() : wxT_2(""),
                      txtFilename->GetValue(),
                      m_ExtFilter,
                      wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
