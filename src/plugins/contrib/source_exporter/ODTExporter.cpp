@@ -156,7 +156,7 @@ string ODTExporter::ODTStylesFileMID(wxZipOutputStream &zout)
   string theFont("Courier New");
   string thePt("8");
 
-  wxString fontstring = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/font"), wxEmptyString);
+  wxString fontstring = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/font"), wxEmptyString);
 
   if (!fontstring.IsEmpty())
   {
@@ -220,27 +220,27 @@ const char *ODTExporter::ODTContentFileEND =
 
 void ODTExporter::ODTCreateDirectoryStructure(wxZipOutputStream &zout)
 {
-  zout.PutNextEntry(_T("META-INF/"));
-  zout.PutNextEntry(_T("Thumbnails/"));
-  zout.PutNextEntry(_T("Pictures/"));
-  zout.PutNextEntry(_T("Configurations2/"));
+  zout.PutNextEntry(wxT_2("META-INF/"));
+  zout.PutNextEntry(wxT_2("Thumbnails/"));
+  zout.PutNextEntry(wxT_2("Pictures/"));
+  zout.PutNextEntry(wxT_2("Configurations2/"));
 }
 
 void ODTExporter::ODTCreateCommonFiles(wxZipOutputStream &zout)
 {
-  zout.PutNextEntry(_T("META-INF/manifest.xml"));
+  zout.PutNextEntry(wxT_2("META-INF/manifest.xml"));
   zout.Write(ODTManifestFile, strlen(ODTManifestFile));
-  zout.PutNextEntry(_T("meta.xml"));
+  zout.PutNextEntry(wxT_2("meta.xml"));
   zout.Write(ODTMetaFile, strlen(ODTMetaFile));
-  zout.PutNextEntry(_T("mimetype"));
+  zout.PutNextEntry(wxT_2("mimetype"));
   zout.Write(ODTMIMETypeFile, strlen(ODTMIMETypeFile));
-  zout.PutNextEntry(_T("settings.xml"));
+  zout.PutNextEntry(wxT_2("settings.xml"));
   zout.Write(ODTSettingsFile, strlen(ODTSettingsFile));
 }
 
 void ODTExporter::ODTCreateStylesFile(wxZipOutputStream &zout, const EditorColourSet *color_set, HighlightLanguage lang)
 {
-  zout.PutNextEntry(_T("styles.xml"));
+  zout.PutNextEntry(wxT_2("styles.xml"));
   zout.Write(ODTStylesFileBEG, strlen(ODTStylesFileBEG));
   string fontName = ODTStylesFileMID(zout);
 
@@ -312,7 +312,7 @@ void ODTExporter::ODTCreateContentFile(wxZipOutputStream &zout, const wxMemoryBu
   int lineno = 1;
   int width = calcWidth(lineCount);
 
-  zout.PutNextEntry(_T("content.xml"));
+  zout.PutNextEntry(wxT_2("content.xml"));
   zout.Write(ODTContentFileBEG, strlen(ODTContentFileBEG));
 
   if (buffer_size)

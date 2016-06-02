@@ -169,7 +169,7 @@ string HTMLExporter::HTMLBody(const wxMemoryBuffer &styled_text, int lineCount, 
   int lineno = 1;
   int width = calcWidth(lineCount);
 
-  wxString fontstring = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/font"), wxEmptyString);
+  wxString fontstring = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/font"), wxEmptyString);
 
   if (!fontstring.IsEmpty())
   {

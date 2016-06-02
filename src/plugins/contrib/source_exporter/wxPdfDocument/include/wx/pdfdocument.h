@@ -31,7 +31,7 @@
 #include "wx/pdflinks.h"
 #include "wx/pdfproperties.h"
 
-#define wxPDF_PRODUCER       wxT("wxPdfDocument 0.9.4")
+#define wxPDF_PRODUCER       wxT_2("wxPdfDocument 0.9.4")
 
 #define wxPDF_EPSILON        1e-6
 
@@ -162,11 +162,11 @@ public:
   * \param format Defines the page format. All known wxWidgets paper types are allowed. (Default: wxPAPER_A4)
   */
   wxPdfDocument(int orientation = wxPORTRAIT, 
-                const wxString& unit = wxString(wxT("mm")), 
+                const wxString& unit = wxString(wxT_2("mm")), 
                 wxPaperSize format = wxPAPER_A4);
 
   wxPdfDocument(int orientation, double pageWidth, double pageHeight,
-                const wxString& unit = wxString(wxT("mm")));
+                const wxString& unit = wxString(wxT_2("mm")));
 
   virtual ~wxPdfDocument();
 
@@ -420,7 +420,7 @@ public:
   * \param alias The alias. Default value: {nb}.
   * \see PageNo(), Footer()
   */
-  virtual void AliasNbPages(const wxString& alias = wxString(wxT("{nb}")));
+  virtual void AliasNbPages(const wxString& alias = wxString(wxT_2("{nb}")));
 
   /// This method begins the generation of the PDF document.
   /**

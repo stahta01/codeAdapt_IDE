@@ -43,8 +43,8 @@ wxPdfFontDetails::wxPdfFontDetails(int index, const wxPdfFont& font)
   {
     m_usedGlyphs = new wxPdfSortedArrayInt(CompareInts);
     m_usedGlyphs->Add(0);
-    if (m_font.GetType().IsSameAs(wxT("TrueTypeUnicode")) ||
-        m_font.GetType().IsSameAs(wxT("OpenTypeUnicode")))
+    if (m_font.GetType().IsSameAs(wxT_2("TrueTypeUnicode")) ||
+        m_font.GetType().IsSameAs(wxT_2("OpenTypeUnicode")))
     {
       m_subsetGlyphs = new wxPdfChar2GlyphMap();
       (*m_subsetGlyphs)[0] = 0;
@@ -163,19 +163,19 @@ wxPdfFontDetails::GetDescription() const
 wxString
 wxPdfFontDetails::CreateSubsetPrefix() const
 {
-  wxString prefix = wxT("WXP");
+  wxString prefix = wxT_2("WXP");
   int k;
   int code = m_index;
   for (k = 0; k < 3; k++)
   {
 #if wxCHECK_VERSION(2,9,0)
-    prefix += wxUniChar(wxT('A' + (code % 26)));
+    prefix += wxUniChar(wxT_2('A' + (code % 26)));
 #else
-    prefix += wxChar(wxT('A' + (code % 26)));
+    prefix += wxChar(wxT_2('A' + (code % 26)));
 #endif
     code /= 26;
   }
-  prefix += wxT("+");
+  prefix += wxT_2("+");
   return prefix;
 }
 

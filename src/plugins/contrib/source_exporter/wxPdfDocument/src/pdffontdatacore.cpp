@@ -36,7 +36,7 @@ wxPdfFontDataCore::wxPdfFontDataCore(const wxString& family, const wxString& ali
                                      const wxPdfFontDescription& desc)
   : wxPdfFontData()
 {
-  m_type   = wxT("core");
+  m_type   = wxT_2("core");
   m_family = family;
   m_alias  = alias;
   m_name   = name;
@@ -97,13 +97,13 @@ wxPdfFontDataCore::GetWidthsAsString(bool subset, wxPdfSortedArrayInt* usedGlyph
   wxUnusedVar(subset);
   wxUnusedVar(usedGlyphs);
   wxUnusedVar(subsetGlyphs);
-  wxString s = wxString(wxT("["));
+  wxString s = wxString(wxT_2("["));
   int i;
   for (i = 32; i <= 255; i++)
   {
-    s += wxString::Format(wxT("%u "), (*m_cw)[i]);
+    s += wxString::Format(wxT_2("%u "), (*m_cw)[i]);
   }
-  s += wxString(wxT("]"));
+  s += wxString(wxT_2("]"));
   return s;
 }
 
@@ -194,7 +194,7 @@ wxPdfFontDataCore::ConvertCID2GID(const wxString& s,
       }
       else
       {
-        t += wxT("?");
+        t += wxT_2("?");
       }
     }
   }

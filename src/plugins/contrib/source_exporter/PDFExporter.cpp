@@ -70,8 +70,8 @@ bool PDFExporter::Style::operator == (int aValue)
 
 void PDFExporter::PDFSetFont(wxPdfDocument &pdf)
 {
-  wxString fontstring = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/font"), wxEmptyString);
-  wxString faceNameDefault(_T("Courier"));
+  wxString fontstring = Manager::Get()->GetConfigManager(wxT_2("editor"))->Read(wxT_2("/font"), wxEmptyString);
+  wxString faceNameDefault(wxT_2("Courier"));
   wxString faceName(faceNameDefault);
   double   fontSize = 8; // Default point size
 
@@ -175,17 +175,17 @@ void PDFExporter::PDFBody(wxPdfDocument &pdf, const wxMemoryBuffer &styled_text,
 
       if (i->bold)
       {
-        style += _T("B");
+        style += wxT_2("B");
       }
 
       if (i->italics)
       {
-        style += _T("I");
+        style += wxT_2("I");
       }
 
       if (i->underlined)
       {
-        style += _T("U");
+        style += wxT_2("U");
       }
 
       pdf.SetFont(wxEmptyString, style);
@@ -224,17 +224,17 @@ void PDFExporter::PDFBody(wxPdfDocument &pdf, const wxMemoryBuffer &styled_text,
 
           if (newStyle->bold)
           {
-            style += _T("B");
+            style += wxT_2("B");
           }
 
           if (newStyle->italics)
           {
-            style += _T("I");
+            style += wxT_2("I");
           }
 
           if (newStyle->underlined)
           {
-            style += _T("U");
+            style += wxT_2("U");
           }
 
           pdf.SetFont(wxEmptyString, style);

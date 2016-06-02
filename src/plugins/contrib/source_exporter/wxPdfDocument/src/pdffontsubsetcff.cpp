@@ -249,7 +249,7 @@ wxPdfFontSubsetCff::ReadFontIndex(wxPdfCffIndexArray* index)
   int maxLength = GetSizeI();
   if (TellI() + 2 > maxLength)
   {
-    wxLogError(wxString(wxT("wxPdfCffSubset::ReadFontIndex: ")) +
+    wxLogError(wxString(wxT_2("wxPdfCffSubset::ReadFontIndex: ")) +
                wxString(_("Premature end of CFF stream reached while reading index count.")));
     return false;
   }
@@ -259,7 +259,7 @@ wxPdfFontSubsetCff::ReadFontIndex(wxPdfCffIndexArray* index)
     int offsetSize = ReadByte();
     if (TellI() + (count+1)*offsetSize > maxLength)
     {
-      wxLogError(wxString(wxT("wxPdfCffSubset::ReadFontIndex: ")) +
+      wxLogError(wxString(wxT_2("wxPdfCffSubset::ReadFontIndex: ")) +
                  wxString(_("Premature end of CFF stream reached while reading index data.")));
       return false;
     }
@@ -306,7 +306,7 @@ wxPdfFontSubsetCff::ReadFontName()
     wxPdfCffIndexElement& element = index[0];
     SeekI(element.GetOffset());
     m_fontName = ReadString(element.GetLength());
-    m_fontName += wxT("-Subset");
+    m_fontName += wxT_2("-Subset");
     SeekI(currentPosition);
   }
   return ok;
@@ -1296,13 +1296,13 @@ wxPdfFontSubsetCff::WriteFontSubset()
   WriteCidPrivateDictAndLocalSub();
 
 #if 0
-  wxFileOutputStream cffSubset(wxT("cffsubset.dat"));
+  wxFileOutputStream cffSubset(wxT_2("cffsubset.dat"));
   wxMemoryInputStream tmp(*m_outFont);
   cffSubset.Write(tmp);
   cffSubset.Close();
 #endif
 #if 0
-  wxLogMessage(wxT("-- Dump outFont --"));
+  wxLogMessage(wxT_2("-- Dump outFont --"));
     char locBuffer[1024];
     tmp.SeekI(0);
     int copyLength = tmp.GetLength();
@@ -1316,7 +1316,7 @@ wxPdfFontSubsetCff::WriteFontSubset()
       int kk;
       for (kk = 0; kk < bufferLength; kk++)
       {
-        str += wxString::Format(wxT(" %d"), locBuffer[kk]);
+        str += wxString::Format(wxT_2(" %d"), locBuffer[kk]);
         if (kk % 10 == 9)
         {
           wxLogDebug(str);
@@ -1330,7 +1330,7 @@ wxPdfFontSubsetCff::WriteFontSubset()
     }
 #endif
 #if 0
-  wxFileInputStream cairoIn(wxT("gfsdidot-test-cairo2.pdf"));
+  wxFileInputStream cairoIn(wxT_2("gfsdidot-test-cairo2.pdf"));
   cairoIn.SeekI(960);
   char cairoBuffer[18710];
   cairoIn.Read(cairoBuffer,18710);
@@ -1339,7 +1339,7 @@ wxPdfFontSubsetCff::WriteFontSubset()
   cairoOut.Close();
   wxMemoryInputStream inCairo(cairoOut);
   wxZlibInputStream zinCairo(inCairo);
-  wxFileOutputStream cairoCff(wxT("cairo-cff.dat"));
+  wxFileOutputStream cairoCff(wxT_2("cairo-cff.dat"));
   cairoCff.Write(zinCairo);
   cairoCff.Close();
 #endif
@@ -1512,7 +1512,7 @@ wxPdfFontSubsetCff::FindGlobalSubrsUsed()
       else
       {
 #if 0
-        wxLogDebug(wxT("Call ReadASubr i=%d subr=%d"), i, subr);
+        wxLogDebug(wxT_2("Call ReadASubr i=%d subr=%d"), i, subr);
 #endif
         m_decoder->ReadASubr(m_inFont, start, end, m_globalBias, localBias,
                              *m_hLocalSubrsUsed, m_lLocalSubrsUsed, *m_localSubrIndex);
@@ -1524,7 +1524,7 @@ wxPdfFontSubsetCff::FindGlobalSubrsUsed()
             //Pop the value + check valid
             int lSubr = m_lLocalSubrsUsed.Item(j);
 #if 0
-            wxLogDebug(wxT("Call ReadASubr j=%d subr=%d"), i, subr);
+            wxLogDebug(wxT_2("Call ReadASubr j=%d subr=%d"), i, subr);
 #endif
             if (lSubr < nLocalSubrs && lSubr >= 0)
             {

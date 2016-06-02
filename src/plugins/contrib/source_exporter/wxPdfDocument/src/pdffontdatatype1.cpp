@@ -36,7 +36,7 @@
 wxPdfFontDataType1::wxPdfFontDataType1(wxMemoryInputStream* pfbStream)
   : wxPdfFontData()
 {
-  m_type  = wxT("Type1");
+  m_type  = wxT_2("Type1");
   m_pfbStream = pfbStream;
   m_conv = NULL;
 
@@ -93,47 +93,47 @@ wxPdfFontDataType1::LoadFontMetrics(wxXmlNode* root)
   while (child)
   {
     // parse the children
-    if (child->GetName() == wxT("font-name"))
+    if (child->GetName() == wxT_2("font-name"))
     {
       m_name = GetNodeContent(child);
       m_style = FindStyleFromName(m_name);
       bName = m_name.Length() > 0;
     }
-    else if (child->GetName() == wxT("encoding"))
+    else if (child->GetName() == wxT_2("encoding"))
     {
       m_enc = GetNodeContent(child);
     }
-    else if (child->GetName() == wxT("description"))
+    else if (child->GetName() == wxT_2("description"))
     {
       bDesc = GetFontDescription(child, m_desc);
     }
-    else if (child->GetName() == wxT("diff"))
+    else if (child->GetName() == wxT_2("diff"))
     {
       m_diffs = GetNodeContent(child);
     }
-    else if (child->GetName() == wxT("file"))
+    else if (child->GetName() == wxT_2("file"))
     {
 #if wxCHECK_VERSION(2,9,0)
-      value = child->GetAttribute(wxT("name"), wxT(""));
+      value = child->GetAttribute(wxT_2("name"), wxT_2(""));
 #else
-      value = child->GetPropVal(wxT("name"), wxT(""));
+      value = child->GetPropVal(wxT_2("name"), wxT_2(""));
 #endif
       if (value.Length() > 0)
       {
         m_file = value;
 #if wxCHECK_VERSION(2,9,0)
-        value = child->GetAttribute(wxT("size1"), wxT(""));
+        value = child->GetAttribute(wxT_2("size1"), wxT_2(""));
 #else
-        value = child->GetPropVal(wxT("size1"), wxT(""));
+        value = child->GetPropVal(wxT_2("size1"), wxT_2(""));
 #endif
         if (value.Length() > 0 && value.ToLong(&number))
         {
           bFile = true;
           m_size1 = number;
 #if wxCHECK_VERSION(2,9,0)
-          value = child->GetAttribute(wxT("size2"), wxT(""));
+          value = child->GetAttribute(wxT_2("size2"), wxT_2(""));
 #else
-          value = child->GetPropVal(wxT("size2"), wxT(""));
+          value = child->GetPropVal(wxT_2("size2"), wxT_2(""));
 #endif
           if (value.Length() > 0 && value.ToLong(&number))
           {
@@ -143,11 +143,11 @@ wxPdfFontDataType1::LoadFontMetrics(wxXmlNode* root)
         else
         {
           bFile = false;
-          m_file = wxT("");
+          m_file = wxT_2("");
         }
       }
     }
-    else if (child->GetName() == wxT("widths"))
+    else if (child->GetName() == wxT_2("widths"))
     {
       bWidth = true;
       m_cw = new wxPdfGlyphWidthMap();
@@ -156,14 +156,14 @@ wxPdfFontDataType1::LoadFontMetrics(wxXmlNode* root)
       {
         wxString strId, strWidth;
         long charId, charWidth;
-        if (charNode->GetName() == wxT("char"))
+        if (charNode->GetName() == wxT_2("char"))
         {
 #if wxCHECK_VERSION(2,9,0)
-          strId = charNode->GetAttribute(wxT("id"), wxT(""));
-          strWidth = charNode->GetAttribute(wxT("width"), wxT(""));
+          strId = charNode->GetAttribute(wxT_2("id"), wxT_2(""));
+          strWidth = charNode->GetAttribute(wxT_2("width"), wxT_2(""));
 #else
-          strId = charNode->GetPropVal(wxT("id"), wxT(""));
-          strWidth = charNode->GetPropVal(wxT("width"), wxT(""));
+          strId = charNode->GetPropVal(wxT_2("id"), wxT_2(""));
+          strWidth = charNode->GetPropVal(wxT_2("width"), wxT_2(""));
 #endif
           if (strId.Length() > 0 && strId.ToLong(&charId) &&
               strWidth.Length() > 0 && strWidth.ToLong(&charWidth))
@@ -326,7 +326,7 @@ wxPdfFontDataType1::ConvertCID2GID(const wxString& s,
       }
       else
       {
-        t += wxT(" ");
+        t += wxT_2(" ");
       }
     }
   }
@@ -343,13 +343,13 @@ wxPdfFontDataType1::GetWidthsAsString(bool subset, wxPdfSortedArrayInt* usedGlyp
   wxUnusedVar(subset);
   wxUnusedVar(usedGlyphs);
   wxUnusedVar(subsetGlyphs);
-  wxString s = wxString(wxT("["));
+  wxString s = wxString(wxT_2("["));
   int i;
   for (i = 32; i <= 255; i++)
   {
-    s += wxString::Format(wxT("%u "), (*m_cw)[i]);
+    s += wxString::Format(wxT_2("%u "), (*m_cw)[i]);
   }
-  s += wxString(wxT("]"));
+  s += wxString(wxT_2("]"));
   return s;
 }
 
@@ -362,7 +362,7 @@ wxPdfFontDataType1::GetWidthsAsString(const wxArrayString& glyphNames, bool subs
   wxUnusedVar(subsetGlyphs);
   wxString glyph;
   wxPdfFontType1GlyphWidthMap::const_iterator glyphIter;
-  wxString s = wxString(wxT("["));
+  wxString s = wxString(wxT_2("["));
   int missingWidth = m_desc.GetMissingWidth();
   int width;
   int i;
@@ -378,9 +378,9 @@ wxPdfFontDataType1::GetWidthsAsString(const wxArrayString& glyphNames, bool subs
     {
       width = missingWidth;
     }
-    s += wxString::Format(wxT("%d "), width);
+    s += wxString::Format(wxT_2("%d "), width);
   }
-  s += wxString(wxT("]"));
+  s += wxString(wxT_2("]"));
   return s;
 }
 
@@ -498,7 +498,7 @@ wxPdfFontDataType1::CompressFontData(wxOutputStream* fontData, wxInputStream* pf
   }
   if (size1 < 0 || size2 < 0)
   {
-    wxLogError(wxString(wxT("wxPdfFontDataType1::CompressFontData: ")) + 
+    wxLogError(wxString(wxT_2("wxPdfFontDataType1::CompressFontData: ")) + 
                wxString(_("Font file does not seem to be valid Type1, font embedding not possible.")));
     ok = false;
   }
@@ -517,7 +517,7 @@ wxPdfFontDataType1::WriteFontData(wxOutputStream* fontData, wxPdfSortedArrayInt*
   if (m_fontFileName.IsEmpty())
   {
     // Font data preprocessed by MakeFont
-    compressed = m_file.Lower().Right(2) == wxT(".z");
+    compressed = m_file.Lower().Right(2) == wxT_2(".z");
     fileName = m_file;
     fileName.MakeAbsolute(m_path);
   }
@@ -540,7 +540,7 @@ wxPdfFontDataType1::WriteFontData(wxOutputStream* fontData, wxPdfSortedArrayInt*
     else
     {
       // usually this should not happen since file accessability was already checked
-      wxLogError(wxString(wxT("wxPdfFontDataType1::WriteFontData: ")) +
+      wxLogError(wxString(wxT_2("wxPdfFontDataType1::WriteFontData: ")) +
                  wxString::Format(_("Font file '%s' not found."), fileName.GetFullPath().c_str()));
     }
   }
@@ -606,7 +606,7 @@ wxPdfFontDataType1::WriteUnicodeMap(wxOutputStream* mapData,
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfFontDataType1::WriteUnicodeMap: ")) +
+    wxLogError(wxString(wxT_2("wxPdfFontDataType1::WriteUnicodeMap: ")) +
                wxString::Format(_("Encoding not found.")));
   }
 

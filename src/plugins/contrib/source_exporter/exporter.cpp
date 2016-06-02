@@ -30,7 +30,7 @@ static int idFileExportPDF = wxNewId();
 // Register the plugin
 namespace
 {
-    PluginRegistrant<Exporter> reg(_T("Exporter"));
+    PluginRegistrant<Exporter> reg(wxT_2("Exporter"));
 };
 
 BEGIN_EVENT_TABLE(Exporter, cbPlugin)
@@ -79,7 +79,7 @@ void Exporter::BuildMenu(wxMenuBar *menuBar)
 
   if (fileMenuPos == -1)
   {
-    //cbThrow(_T("Can't find \"File\" menu position?!?"));
+    //cbThrow(wxT_2("Can't find \"File\" menu position?!?"));
     return;
   }
 
@@ -88,7 +88,7 @@ void Exporter::BuildMenu(wxMenuBar *menuBar)
 
   if (!file)
   {
-    //cbThrow(_T("Can't find \"File\" menu?!?"));
+    //cbThrow(wxT_2("Can't find \"File\" menu?!?"));
     return;
   }
 
@@ -109,7 +109,7 @@ void Exporter::BuildMenu(wxMenuBar *menuBar)
   export_submenu->Append(idFileExportODT, _("As &ODT..."), _("Exports the current file to ODT"));
   export_submenu->Append(idFileExportPDF, _("As &PDF..."), _("Exports the current file to PDF"));
 
-  wxMenuItem *export_menu = new wxMenuItem(0, idFileExport, _("&Export"), _T(""), wxITEM_NORMAL);
+  wxMenuItem *export_menu = new wxMenuItem(0, idFileExport, _("&Export"), wxT_2(""), wxITEM_NORMAL);
   export_menu->SetSubMenu(export_submenu);
 
   file->Insert(printPos, export_menu);
@@ -154,26 +154,26 @@ void Exporter::OnUpdateUI(wxUpdateUIEvent &event)
 void Exporter::OnExportHTML(wxCommandEvent & /*event*/)
 {
   HTMLExporter exp;
-  ExportFile(&exp, _T("html"), _("HTML files|*.html;*.htm"));
+  ExportFile(&exp, wxT_2("html"), _("HTML files|*.html;*.htm"));
 }
 
 void Exporter::OnExportRTF(wxCommandEvent & /*event*/)
 {
   RTFExporter exp;
-  ExportFile(&exp, _T("rtf"), _("RTF files|*.rtf"));
+  ExportFile(&exp, wxT_2("rtf"), _("RTF files|*.rtf"));
 }
 
 
 void Exporter::OnExportODT(wxCommandEvent & /*event*/)
 {
   ODTExporter exp;
-  ExportFile(&exp, _T("odt"), _("ODT files|*.odt"));
+  ExportFile(&exp, wxT_2("odt"), _("ODT files|*.odt"));
 }
 
 void Exporter::OnExportPDF(wxCommandEvent & /*event*/)
 {
   PDFExporter exp;
-  ExportFile(&exp, _T("pdf"), _("PDF files|*.pdf"));
+  ExportFile(&exp, wxT_2("pdf"), _("PDF files|*.pdf"));
 }
 
 void Exporter::ExportFile(BaseExporter *exp, const wxString &default_extension, const wxString &wildcard)
@@ -186,7 +186,7 @@ void Exporter::ExportFile(BaseExporter *exp, const wxString &default_extension, 
   EditorManager* em = Manager::Get()->GetEditorManager();
   cbEditor*      cb = em->GetBuiltinActiveEditor();
 
-  wxString filename = wxFileSelector(_("Choose the filename"), _T(""), wxFileName(cb->GetFilename()).GetName() + _T(".") + default_extension, default_extension, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+  wxString filename = wxFileSelector(_("Choose the filename"), wxT_2(""), wxFileName(cb->GetFilename()).GetName() + wxT_2(".") + default_extension, default_extension, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
   if (filename.IsEmpty())
   {
     return;

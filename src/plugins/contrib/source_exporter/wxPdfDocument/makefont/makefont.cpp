@@ -74,14 +74,14 @@ public:
 
 protected:
   bool MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
-                   const wxString& encoding = wxT("cp1252"),
-                   const wxString& type = wxT("TrueType"),
+                   const wxString& encoding = wxT_2("cp1252"),
+                   const wxString& type = wxT_2("TrueType"),
                    const wxString& patch = wxEmptyString);
 #if wxUSE_UNICODE
   bool MakeFontUFM(const wxString& fontFileName,
                    const wxString& ufmFileName,
-                   const wxString& type = wxT("TrueType"),
-                   const wxString& volt = wxT(""));
+                   const wxString& type = wxT_2("TrueType"),
+                   const wxString& volt = wxT_2(""));
   bool MakeFontImmediate(const wxString& fontFileName);
 
   void WriteStreamBuffer(wxOutputStream& stream, const char* buffer);
@@ -161,11 +161,11 @@ bool
 MakeFont::ReadMap(const wxString& enc, CTGMap& cc2gn)
 {
   //Read a map file
-  wxString mapFileName = enc.Lower() + wxT(".map");
+  wxString mapFileName = enc.Lower() + wxT_2(".map");
   wxFileInputStream mapFile(mapFileName);
   if (!mapFile.Ok())
   {
-    wxLogMessage(wxT("Error: Unable to read map file '") + mapFileName + wxT("'."));
+    wxLogMessage(wxT_2("Error: Unable to read map file '") + mapFileName + wxT_2("'."));
     return false;
   }
 
@@ -178,7 +178,7 @@ MakeFont::ReadMap(const wxString& enc, CTGMap& cc2gn)
     text >> charcode >> unicode >> glyphname;
     if (!mapFile.Eof() && charcode.Length() > 0)
     {
-      if (charcode[0] == wxT('!'))
+      if (charcode[0] == wxT_2('!'))
       {
         int cc = wxHexToDec(charcode.Mid(1));
         cc2gn[cc] = glyphname;
@@ -192,7 +192,7 @@ MakeFont::ReadMap(const wxString& enc, CTGMap& cc2gn)
     CTGMap::iterator iter = cc2gn.find(i);
     if (iter == cc2gn.end())
     {
-      cc2gn[i] = wxT(".notdef");
+      cc2gn[i] = wxT_2(".notdef");
     }
   }
   return true;
@@ -232,7 +232,7 @@ MakeFont::CheckTTF(const wxString& fileName, bool& embeddingAllowed, bool& subse
   if (!ttfFile.Ok())
   {
     // Can't open file
-    wxLogMessage(wxT("Error: Unable to read font file '") + fileName + wxT("'."));
+    wxLogMessage(wxT_2("Error: Unable to read font file '") + fileName + wxT_2("'."));
     return;
   }
   // Extract number of tables
@@ -240,7 +240,7 @@ MakeFont::CheckTTF(const wxString& fileName, bool& embeddingAllowed, bool& subse
   int id = ReadInt(&ttfFile);
   if (id != 0x00010000 && id != 0x4f54544f)
   {
-    wxLogError(wxT("Error: File '") + fileName + wxT("' is not a valid font file."));
+    wxLogError(wxT_2("Error: File '") + fileName + wxT_2("' is not a valid font file."));
     return;
   }
   short nb = ReadShort(&ttfFile);
@@ -295,142 +295,142 @@ MakeFont::CreateFontMetricsFile(const wxString& xmlFileName, wxPdfFontData& font
   wxXmlDocument fontMetrics;
   const wxPdfFontDescription& fd = font.GetDescription();
 
-  wxXmlNode* rootNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("wxpdfdoc-font-metrics"));
+  wxXmlNode* rootNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("wxpdfdoc-font-metrics"));
 #if wxCHECK_VERSION(2,9,0)
-  rootNode->AddAttribute(wxT("type"), font.GetType() /*wxT("TrueTypeUnicode")*/);
+  rootNode->AddAttribute(wxT_2("type"), font.GetType() /*wxT_2("TrueTypeUnicode")*/);
 #else
-  rootNode->AddProperty(wxT("type"), font.GetType() /*wxT("TrueTypeUnicode")*/);
+  rootNode->AddProperty(wxT_2("type"), font.GetType() /*wxT_2("TrueTypeUnicode")*/);
 #endif
   wxXmlNode* node;
   wxXmlNode* textNode;
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("font-name"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), font.GetName());
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("font-name"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), font.GetName());
   node->AddChild(textNode);
   rootNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("encoding"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), font.GetEncoding());
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("encoding"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), font.GetEncoding());
   node->AddChild(textNode);
   rootNode->AddChild(node);
 
-  wxXmlNode* descNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("description"));
+  wxXmlNode* descNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("description"));
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("ascent"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetAscent()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("ascent"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetAscent()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("descent"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetDescent()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("descent"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetDescent()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("cap-height"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetCapHeight()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("cap-height"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetCapHeight()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("flags"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetFlags()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("flags"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetFlags()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("font-bbox"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), fd.GetFontBBox());
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("font-bbox"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), fd.GetFontBBox());
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("italic-angle"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetItalicAngle()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("italic-angle"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetItalicAngle()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("stem-v"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetStemV()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("stem-v"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetStemV()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("missing-width"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetMissingWidth()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("missing-width"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetMissingWidth()));
   node->AddChild(textNode);
   descNode->AddChild(node);
   
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("x-height"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetXHeight()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("x-height"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetXHeight()));
   node->AddChild(textNode);
   descNode->AddChild(node);
   
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("underline-position"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetUnderlinePosition()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("underline-position"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetUnderlinePosition()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("underline-thickness"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), wxString::Format(wxT("%d"), fd.GetUnderlineThickness()));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("underline-thickness"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), wxString::Format(wxT_2("%d"), fd.GetUnderlineThickness()));
   node->AddChild(textNode);
   descNode->AddChild(node);
 
   rootNode->AddChild(descNode);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("diff"));
-  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT("text"), font.GetDiffs());
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("diff"));
+  textNode = new wxXmlNode(wxXML_TEXT_NODE, wxT_2("text"), font.GetDiffs());
   node->AddChild(textNode);
   rootNode->AddChild(node);
 
-  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("file"));
+  node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("file"));
 #if wxCHECK_VERSION(2,9,0)
-  node->AddAttribute(wxT("name"), font.GetFontFile());
+  node->AddAttribute(wxT_2("name"), font.GetFontFile());
 #else
-  node->AddProperty(wxT("name"), font.GetFontFile());
+  node->AddProperty(wxT_2("name"), font.GetFontFile());
 #endif
   wxString fontType = font.GetType();
-  if (fontType == wxT("TrueTypeUnicode") || fontType == wxT("OpenTypeUnicode"))
+  if (fontType == wxT_2("TrueTypeUnicode") || fontType == wxT_2("OpenTypeUnicode"))
   {
     // TrueTypeUnicode (name,ctg,originalsize)
 #if wxCHECK_VERSION(2,9,0)
-    node->AddAttribute(wxT("ctg"), font.GetCtgFile());
-    node->AddAttribute(wxT("originalsize"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddAttribute(wxT_2("ctg"), font.GetCtgFile());
+    node->AddAttribute(wxT_2("originalsize"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #else
-    node->AddProperty(wxT("ctg"), font.GetCtgFile());
-    node->AddProperty(wxT("originalsize"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddProperty(wxT_2("ctg"), font.GetCtgFile());
+    node->AddProperty(wxT_2("originalsize"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #endif
   }
-  else if (fontType == wxT("TrueType"))
+  else if (fontType == wxT_2("TrueType"))
   {
     // Truetype (name, originalsize)
 #if wxCHECK_VERSION(2,9,0)
-    node->AddAttribute(wxT("originalsize"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddAttribute(wxT_2("originalsize"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #else
-    node->AddProperty(wxT("originalsize"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddProperty(wxT_2("originalsize"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #endif
   }
-  else if  (fontType == wxT("Type1"))
+  else if  (fontType == wxT_2("Type1"))
   {
     // Type1 (name, size1, size2)
 #if wxCHECK_VERSION(2,9,0)
-    node->AddAttribute(wxT("size1"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddAttribute(wxT_2("size1"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #else
-    node->AddProperty(wxT("size1"), wxString::Format(wxT("%d"), font.GetSize1()));
+    node->AddProperty(wxT_2("size1"), wxString::Format(wxT_2("%d"), font.GetSize1()));
 #endif
     if (font.HasSize2())
     {
 #if wxCHECK_VERSION(2,9,0)
-      node->AddAttribute(wxT("size2"), wxString::Format(wxT("%d"), font.GetSize2()));
+      node->AddAttribute(wxT_2("size2"), wxString::Format(wxT_2("%d"), font.GetSize2()));
 #else
-      node->AddProperty(wxT("size2"), wxString::Format(wxT("%d"), font.GetSize2()));
+      node->AddProperty(wxT_2("size2"), wxString::Format(wxT_2("%d"), font.GetSize2()));
 #endif
     }
   }
   rootNode->AddChild(node);
 
-  wxXmlNode* widthsNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("widths"));
+  wxXmlNode* widthsNode = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("widths"));
   if (includeGlyphInfo)
   {
 #if wxCHECK_VERSION(2,9,0)
-    widthsNode->AddAttribute(wxT("subsetting"), wxT("enabled"));
+    widthsNode->AddAttribute(wxT_2("subsetting"), wxT_2("enabled"));
 #else
-    widthsNode->AddProperty(wxT("subsetting"), wxT("enabled"));
+    widthsNode->AddProperty(wxT_2("subsetting"), wxT_2("enabled"));
 #endif
   }
 
@@ -445,25 +445,25 @@ MakeFont::CreateFontMetricsFile(const wxString& xmlFileName, wxPdfFontData& font
   size_t j;
   for (j = 0; j < idList.GetCount(); j++)
   {
-    node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("char"));
+    node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT_2("char"));
 #if wxCHECK_VERSION(2,9,0)
-    node->AddAttribute(wxT("id"), wxString::Format(wxT("%d"), idList[j]));
+    node->AddAttribute(wxT_2("id"), wxString::Format(wxT_2("%d"), idList[j]));
 #else
-    node->AddProperty(wxT("id"), wxString::Format(wxT("%d"), idList[j]));
+    node->AddProperty(wxT_2("id"), wxString::Format(wxT_2("%d"), idList[j]));
 #endif
     if (includeGlyphInfo)
     {
       int glyph = (*glyphs)[idList[j]];
 #if wxCHECK_VERSION(2,9,0)
-      node->AddAttribute(wxT("gn"), wxString::Format(wxT("%d"), glyph));
+      node->AddAttribute(wxT_2("gn"), wxString::Format(wxT_2("%d"), glyph));
 #else
-      node->AddProperty(wxT("gn"), wxString::Format(wxT("%d"), glyph));
+      node->AddProperty(wxT_2("gn"), wxString::Format(wxT_2("%d"), glyph));
 #endif
     }
 #if wxCHECK_VERSION(2,9,0)
-    node->AddAttribute(wxT("width"), wxString::Format(wxT("%d"), (*widths)[idList[j]]));
+    node->AddAttribute(wxT_2("width"), wxString::Format(wxT_2("%d"), (*widths)[idList[j]]));
 #else
-    node->AddProperty(wxT("width"), wxString::Format(wxT("%d"), (*widths)[idList[j]]));
+    node->AddProperty(wxT_2("width"), wxString::Format(wxT_2("%d"), (*widths)[idList[j]]));
 #endif
     widthsNode->AddChild(node);
   }
@@ -483,7 +483,7 @@ MakeFont::CreateFontMetricsFile(const wxString& xmlFileName, wxPdfFontData& font
       delete xmlVoltData;
       if (loaded)
       {
-        if (voltData.IsOk() && voltData.GetRoot()->GetName().IsSameAs(wxT("volt")))
+        if (voltData.IsOk() && voltData.GetRoot()->GetName().IsSameAs(wxT_2("volt")))
         {
           voltRoot = voltData.GetRoot();
           rootNode->AddChild(voltRoot);
@@ -512,17 +512,17 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   if (fontFileName.Length() > 0)
   {
     wxString ext = fileName.GetExt();
-    if (ext == wxT("ttf"))
+    if (ext == wxT_2("ttf"))
     {
-      fontType = wxT("TrueType");
+      fontType = wxT_2("TrueType");
     }
-    else if (ext == wxT("pfb"))
+    else if (ext == wxT_2("pfb"))
     {
-      fontType = wxT("Type1");
+      fontType = wxT_2("Type1");
     }
     else
     {
-      wxLogMessage(wxT("Warning: Unrecognized font file extension (") + ext + wxT("), ") + fontType + wxT(" font assumed."));
+      wxLogMessage(wxT_2("Warning: Unrecognized font file extension (") + ext + wxT_2("), ") + fontType + wxT_2(" font assumed."));
     }
   }
 
@@ -531,14 +531,14 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   if (fontFileName.Length() > 0)
   {
     int cffOffset, cffLength;
-    if (fontType == wxT("TrueType"))
+    if (fontType == wxT_2("TrueType"))
     {
       CheckTTF(fontFileName, embeddingAllowed, subsettingAllowed, cffOffset, cffLength);
     }
   }
 
   wxPdfFontData* afmFont;
-  if (fontType == wxT("TrueType"))
+  if (fontType == wxT_2("TrueType"))
   {
     afmFont = new wxPdfFontDataTrueType();
   }
@@ -588,7 +588,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
       }
       else
       {
-        wxLogMessage(wxT("Warning: Unable to read patch file '") + patch + wxT("'."));
+        wxLogMessage(wxT_2("Warning: Unable to read patch file '") + patch + wxT_2("'."));
       }
     }
   }
@@ -597,7 +597,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   wxFileInputStream afmFile(afmFileName);
   if (!afmFile.Ok())
   {
-    wxLogMessage(wxT("Error: Unable to read AFM file '") + afmFileName + wxT("'."));
+    wxLogMessage(wxT_2("Error: Unable to read AFM file '") + afmFileName + wxT_2("'."));
     delete afmFont;
     return false;
   }
@@ -605,39 +605,39 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
 
   FixGlyphMap fix;
 
-  fix[wxT("Edot")] = wxT("Edotaccent");
-  fix[wxT("edot")] = wxT("edotaccent");
-  fix[wxT("Idot")] = wxT("Idotaccent");
-  fix[wxT("Zdot")] = wxT("Zdotaccent");
-  fix[wxT("zdot")] = wxT("zdotaccent");
-  fix[wxT("Odblacute")] = wxT("Ohungarumlaut");
-  fix[wxT("odblacute")] = wxT("ohungarumlaut");
-  fix[wxT("Udblacute")] = wxT("Uhungarumlaut");
-  fix[wxT("udblacute")] = wxT("uhungarumlaut");
-  fix[wxT("Gcedilla")] = wxT("Gcommaaccent");
-  fix[wxT("gcedilla")] = wxT("gcommaaccent");
-  fix[wxT("Kcedilla")] = wxT("Kcommaaccent");
-  fix[wxT("kcedilla")] = wxT("kcommaaccent");
-  fix[wxT("Lcedilla")] = wxT("Lcommaaccent");
-  fix[wxT("lcedilla")] = wxT("lcommaaccent");
-  fix[wxT("Ncedilla")] = wxT("Ncommaaccent");
-  fix[wxT("ncedilla")] = wxT("ncommaaccent");
-  fix[wxT("Rcedilla")] = wxT("Rcommaaccent");
-  fix[wxT("rcedilla")] = wxT("rcommaaccent");
-  fix[wxT("Scedilla")] = wxT("Scommaaccent");
-  fix[wxT("scedilla")] = wxT("scommaaccent");
-  fix[wxT("Tcedilla")] = wxT("Tcommaaccent");
-  fix[wxT("tcedilla")] = wxT("tcommaaccent");
-  fix[wxT("Dslash")] = wxT("Dcroat");
-  fix[wxT("dslash")] = wxT("dcroat");
-  fix[wxT("Dmacron")] = wxT("Dcroat");
-  fix[wxT("dmacron")] = wxT("dcroat");
-  fix[wxT("combininggraveaccent")] = wxT("gravecomb");
-  fix[wxT("combininghookabove")] = wxT("hookabovecomb");
-  fix[wxT("combiningtildeaccent")] = wxT("tildecomb");
-  fix[wxT("combiningacuteaccent")] = wxT("acutecomb");
-  fix[wxT("combiningdotbelow")] = wxT("dotbelowcomb");
-  fix[wxT("dongsign")] = wxT("dong");
+  fix[wxT_2("Edot")] = wxT_2("Edotaccent");
+  fix[wxT_2("edot")] = wxT_2("edotaccent");
+  fix[wxT_2("Idot")] = wxT_2("Idotaccent");
+  fix[wxT_2("Zdot")] = wxT_2("Zdotaccent");
+  fix[wxT_2("zdot")] = wxT_2("zdotaccent");
+  fix[wxT_2("Odblacute")] = wxT_2("Ohungarumlaut");
+  fix[wxT_2("odblacute")] = wxT_2("ohungarumlaut");
+  fix[wxT_2("Udblacute")] = wxT_2("Uhungarumlaut");
+  fix[wxT_2("udblacute")] = wxT_2("uhungarumlaut");
+  fix[wxT_2("Gcedilla")] = wxT_2("Gcommaaccent");
+  fix[wxT_2("gcedilla")] = wxT_2("gcommaaccent");
+  fix[wxT_2("Kcedilla")] = wxT_2("Kcommaaccent");
+  fix[wxT_2("kcedilla")] = wxT_2("kcommaaccent");
+  fix[wxT_2("Lcedilla")] = wxT_2("Lcommaaccent");
+  fix[wxT_2("lcedilla")] = wxT_2("lcommaaccent");
+  fix[wxT_2("Ncedilla")] = wxT_2("Ncommaaccent");
+  fix[wxT_2("ncedilla")] = wxT_2("ncommaaccent");
+  fix[wxT_2("Rcedilla")] = wxT_2("Rcommaaccent");
+  fix[wxT_2("rcedilla")] = wxT_2("rcommaaccent");
+  fix[wxT_2("Scedilla")] = wxT_2("Scommaaccent");
+  fix[wxT_2("scedilla")] = wxT_2("scommaaccent");
+  fix[wxT_2("Tcedilla")] = wxT_2("Tcommaaccent");
+  fix[wxT_2("tcedilla")] = wxT_2("tcommaaccent");
+  fix[wxT_2("Dslash")] = wxT_2("Dcroat");
+  fix[wxT_2("dslash")] = wxT_2("dcroat");
+  fix[wxT_2("Dmacron")] = wxT_2("Dcroat");
+  fix[wxT_2("dmacron")] = wxT_2("dcroat");
+  fix[wxT_2("combininggraveaccent")] = wxT_2("gravecomb");
+  fix[wxT_2("combininghookabove")] = wxT_2("hookabovecomb");
+  fix[wxT_2("combiningtildeaccent")] = wxT_2("tildecomb");
+  fix[wxT_2("combiningacuteaccent")] = wxT_2("acutecomb");
+  fix[wxT_2("combiningdotbelow")] = wxT_2("dotbelowcomb");
+  fix[wxT_2("dongsign")] = wxT_2("dong");
 
   // Read the AFM font metric file
   wxPdfGlyphWidthMap* widths = new wxPdfGlyphWidthMap();
@@ -665,12 +665,12 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
     line = text.ReadLine();
     line.Trim();
 
-    wxStringTokenizer tkz(line, wxT(" "));
+    wxStringTokenizer tkz(line, wxT_2(" "));
     int count = (int) tkz.CountTokens();
     if (count < 2) continue;
     code  = tkz.GetNextToken(); // 0
     param = tkz.GetNextToken(); // 1
-    if (code == wxT("C"))
+    if (code == wxT_2("C"))
     {
       width = -1;
       glyphNumber = 0;
@@ -682,25 +682,25 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
       while (tkz.HasMoreTokens())
       {
         token = tkz.GetNextToken();
-        if (token == wxT("WX")) // Character width
+        if (token == wxT_2("WX")) // Character width
         {
           param = tkz.GetNextToken(); // Width
           param.ToLong(&width);
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("N")) // Glyph name
+        else if (token == wxT_2("N")) // Glyph name
         {
           glyphname = tkz.GetNextToken(); // Glyph name
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("G")) // Glyph number
+        else if (token == wxT_2("G")) // Glyph number
         {
           hasGlyphNumbers = true;
           param = tkz.GetNextToken(); // Number
           param.ToLong(&glyphNumber);
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("B")) // Character bounding box
+        else if (token == wxT_2("B")) // Character bounding box
         {
           dummy = tkz.GetNextToken(); // x left
           dummy = tkz.GetNextToken(); // y bottom
@@ -711,15 +711,15 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
         }
         else
         {
-          while (tkz.HasMoreTokens() && tkz.GetNextToken() != wxT(";"));
+          while (tkz.HasMoreTokens() && tkz.GetNextToken() != wxT_2(";"));
         }
       }
 
-      if (glyphname.Right(4) == wxT("20AC"))
+      if (glyphname.Right(4) == wxT_2("20AC"))
       {
-        glyphname = wxT("Euro");
+        glyphname = wxT_2("Euro");
       }
-      if (glyphname == wxT("increment"))
+      if (glyphname == wxT_2("increment"))
       {
         incWidth = width;
         if (hasGlyphNumbers)
@@ -775,38 +775,38 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
         }
         if (!found)
         {
-          wxLogMessage(wxT("Warning: character '") + glyphname + wxT("' is undefined."));
+          wxLogMessage(wxT_2("Warning: character '") + glyphname + wxT_2("' is undefined."));
         }
-        if (!hasCapHeight && !hasXCapHeight && glyphname == wxT("X") && tokenBoxHeight != wxEmptyString)
+        if (!hasCapHeight && !hasXCapHeight && glyphname == wxT_2("X") && tokenBoxHeight != wxEmptyString)
         {
           hasXCapHeight = true;
           fd.SetCapHeight(boxHeight);
         }
-        if (!hasXHeight && glyphname == wxT("x") && tokenBoxHeight != wxEmptyString)
+        if (!hasXHeight && glyphname == wxT_2("x") && tokenBoxHeight != wxEmptyString)
         {
           hasXHeight = true;
           fd.SetXHeight(boxHeight);
         }
       }
-      if (!hasMissingWidth && glyphname == wxT(".notdef"))
+      if (!hasMissingWidth && glyphname == wxT_2(".notdef"))
       {
         hasMissingWidth = true;
         fd.SetMissingWidth(width);
       }
     }
-    else if (code == wxT("FontName"))
+    else if (code == wxT_2("FontName"))
     {
       afmFont->SetName(param);
     }
-    else if (code == wxT("Weight"))
+    else if (code == wxT_2("Weight"))
     {
       wxString weight = param.Lower();
-      if (!hasStemV && (weight == wxT("black") || weight == wxT("bold")))
+      if (!hasStemV && (weight == wxT_2("black") || weight == wxT_2("bold")))
       {
         fd.SetStemV(120);
       }
     }
-    else if (code == wxT("ItalicAngle"))
+    else if (code == wxT_2("ItalicAngle"))
     {
       double italic;
       param.ToDouble(&italic);
@@ -817,51 +817,51 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
         flags += 1 << 6;
       }
     }
-    else if (code == wxT("Ascender"))
+    else if (code == wxT_2("Ascender"))
     {
       long ascent;
       param.ToLong(&ascent);
       fd.SetAscent(ascent);
     }
-    else if (code == wxT("Descender"))
+    else if (code == wxT_2("Descender"))
     {
       param.ToLong(&nParam);
       fd.SetDescent(nParam);
     }
-    else if (code == wxT("UnderlineThickness"))
+    else if (code == wxT_2("UnderlineThickness"))
     {
       param.ToLong(&nParam);
       fd.SetUnderlineThickness(nParam);
     }
-    else if (code == wxT("UnderlinePosition"))
+    else if (code == wxT_2("UnderlinePosition"))
     {
       param.ToLong(&nParam);
       fd.SetUnderlinePosition(nParam);
     }
-    else if (code == wxT("IsFixedPitch"))
+    else if (code == wxT_2("IsFixedPitch"))
     {
-      if (param == wxT("true"))
+      if (param == wxT_2("true"))
       {
         flags += 1 << 0;
       }
     }
-    else if (code == wxT("FontBBox"))
+    else if (code == wxT_2("FontBBox"))
     {
       hasFontBBox = true;
       wxString bbox2 = tkz.GetNextToken();
       wxString bbox3 = tkz.GetNextToken();
       wxString bbox4 = tkz.GetNextToken();
-      wxString bBox = wxT("[") + param + wxT(" ") + bbox2 + wxT(" ") + bbox3 + wxT(" ") + bbox4 + wxT("]");
+      wxString bBox = wxT_2("[") + param + wxT_2(" ") + bbox2 + wxT_2(" ") + bbox3 + wxT_2(" ") + bbox4 + wxT_2("]");
       fd.SetFontBBox(bBox);
     }
-    else if (code == wxT("CapHeight"))
+    else if (code == wxT_2("CapHeight"))
     {
       hasCapHeight = true;
       long capHeight;
       param.ToLong(&capHeight);
       fd.SetCapHeight(capHeight);
     }
-    else if (code == wxT("StdVW"))
+    else if (code == wxT_2("StdVW"))
     {
       hasStemV = true;
       long stemV;
@@ -874,7 +874,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   {
     if ((*widths)[cc] == 0xFFFF)
     {
-      if (cc2gn[cc] == wxT("Delta") && incWidth >= 0)
+      if (cc2gn[cc] == wxT_2("Delta") && incWidth >= 0)
       {
         (*widths)[cc] = incWidth;
         if (hasGlyphNumbers)
@@ -889,7 +889,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
         {
           (*glyphs)[cc] = 0;
         }
-        wxLogMessage(wxT("Warning: character '") + cc2gn[cc] + wxT("' is missing."));
+        wxLogMessage(wxT_2("Warning: character '") + cc2gn[cc] + wxT_2("' is missing."));
       }
     }
   }
@@ -899,8 +899,8 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   {
     // Build differences from reference encoding
     CTGMap cc2gnRef;
-    valid = ReadMap(wxT("cp1252"), cc2gnRef);
-    diffs = wxT("");
+    valid = ReadMap(wxT_2("cp1252"), cc2gnRef);
+    diffs = wxT_2("");
     int last = 0;
     for (int i = 32; i <= 255; i++)
     {
@@ -908,10 +908,10 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
       {
         if (i != last+1)
         {
-          diffs += wxString::Format(wxT("%d "), i);
+          diffs += wxString::Format(wxT_2("%d "), i);
         }
         last = i;
-        diffs = diffs + wxT("/") + cc2gn[i] + wxT(" ");
+        diffs = diffs + wxT_2("/") + cc2gn[i] + wxT_2(" ");
       }
     }
   }
@@ -932,7 +932,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   }
   if (!hasFontBBox)
   {
-    wxString fbb = wxString::Format(wxT("[0 %d 1000 %d]"), fd.GetDescent()-100, fd.GetAscent()+100);
+    wxString fbb = wxString::Format(wxT_2("[0 %d 1000 %d]"), fd.GetDescent()-100, fd.GetAscent()+100);
     fd.SetFontBBox(fbb);
   }
 
@@ -944,30 +944,30 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   wxString baseName = fileName.GetName();
   if (embeddingAllowed)
   {
-    if (fontType == wxT("TrueType"))
+    if (fontType == wxT_2("TrueType"))
     {
       wxFileInputStream ttfFile(fontFileName);
       if (!ttfFile.Ok())
       {
-        wxLogMessage(wxT("Error: Unable to read font file '") + fontFileName + wxT("'."));
+        wxLogMessage(wxT_2("Error: Unable to read font file '") + fontFileName + wxT_2("'."));
         delete afmFont;
         return false;
       }
       size_t len = ttfFile.GetLength();
-      wxFileOutputStream outFontFile(m_outputDir + baseName + wxT(".z"));
+      wxFileOutputStream outFontFile(m_outputDir + baseName + wxT_2(".z"));
       wxZlibOutputStream zOutFontFile(outFontFile);
       zOutFontFile.Write(ttfFile);
       zOutFontFile.Close();
-      afmFont->SetFontFile(baseName + wxT(".z"));
+      afmFont->SetFontFile(baseName + wxT_2(".z"));
       afmFont->SetSize1(len);
-      wxLogMessage(wxT("Font file compressed (") + baseName + wxT(".z)."));
+      wxLogMessage(wxT_2("Font file compressed (") + baseName + wxT_2(".z)."));
     }
     else
     {
       wxFileInputStream pfbFile(fontFileName);
       if (!pfbFile.Ok())
       {
-        wxLogMessage(wxT("Error: Unable to read font file '") + fontFileName + wxT("'."));
+        wxLogMessage(wxT_2("Error: Unable to read font file '") + fontFileName + wxT_2("'."));
         delete afmFont;
         return false;
       }
@@ -1006,11 +1006,11 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
         delete [] f;
         if (size2 >= 0)
         {
-          wxFileOutputStream outFontFile(m_outputDir + baseName + wxT(".z"));
+          wxFileOutputStream outFontFile(m_outputDir + baseName + wxT_2(".z"));
           wxZlibOutputStream zOutFontFile(outFontFile);
           zOutFontFile.Write(buf1, size1);
           zOutFontFile.Write(buf2, size2);
-          afmFont->SetFontFile(baseName + wxT(".z"));
+          afmFont->SetFontFile(baseName + wxT_2(".z"));
           afmFont->SetSize1(size1);
           afmFont->SetSize2(size2);
         }
@@ -1018,7 +1018,7 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
       delete [] buffer;
       if (size1 < 0 || size2 < 0)
       {
-        wxLogMessage(wxT("Warning: Font file does not seem to be valid Type1, font embedding not possible."));
+        wxLogMessage(wxT_2("Warning: Font file does not seem to be valid Type1, font embedding not possible."));
       }
     }
   }
@@ -1026,17 +1026,17 @@ MakeFont::MakeFontAFM(const wxString& fontFileName, const wxString& afmFileName,
   {
     if (fontFileName.Length() > 0)
     {
-      wxLogMessage(wxT("Warning: Font license does not allow embedding."));
+      wxLogMessage(wxT_2("Warning: Font license does not allow embedding."));
     }
     else
     {
-      wxLogMessage(wxT("Warning: Font file name missing, font embedding not possible."));
+      wxLogMessage(wxT_2("Warning: Font file name missing, font embedding not possible."));
     }
   }
 
   // Create XML file
-  CreateFontMetricsFile(m_outputDir + baseName + wxT(".xml"), *afmFont, hasGlyphNumbers);
-  wxLogMessage(wxT("Font definition file generated (") + baseName + wxT(".xml)."));
+  CreateFontMetricsFile(m_outputDir + baseName + wxT_2(".xml"), *afmFont, hasGlyphNumbers);
+  wxLogMessage(wxT_2("Font definition file generated (") + baseName + wxT_2(".xml)."));
 
   //delete widths;
   delete afmFont;
@@ -1080,14 +1080,14 @@ MakeFont::WriteToUnicode(GlyphList& glyphs, wxMemoryOutputStream& toUnicode)
         WriteStreamBuffer(toUnicode, "endbfrange\n");
       }
       size = (numGlyphs-k > 100) ? 100 : numGlyphs - k;
-      wxString sizeStr = wxString::Format(wxT("%d"), size);
+      wxString sizeStr = wxString::Format(wxT_2("%d"), size);
       WriteStreamBuffer(toUnicode, sizeStr.ToAscii());
       WriteStreamBuffer(toUnicode, " beginbfrange\n");
     }
     size--;
     GlyphListEntry* entry = glyphs[k];
-    wxString fromTo = wxString::Format(wxT("<%04x>"), entry->m_gid);
-    wxString uniChr = wxString::Format(wxT("<%04x>"), entry->m_uid);
+    wxString fromTo = wxString::Format(wxT_2("<%04x>"), entry->m_gid);
+    wxString uniChr = wxString::Format(wxT_2("<%04x>"), entry->m_uid);
     WriteStreamBuffer(toUnicode, fromTo.ToAscii());
     WriteStreamBuffer(toUnicode, fromTo.ToAscii());
     WriteStreamBuffer(toUnicode, uniChr.ToAscii());
@@ -1123,7 +1123,7 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
   }
   else
   {
-    cff = (type == wxT("OpenType"));
+    cff = (type == wxT_2("OpenType"));
   }
 
   wxPdfFontData* ufmFont;
@@ -1154,7 +1154,7 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
   wxFileInputStream ufmFile(ufmFileName);
   if (!ufmFile.Ok())
   {
-    wxLogMessage(wxT("Error: Unable to read UFM file '") + ufmFileName + wxT("'."));
+    wxLogMessage(wxT_2("Error: Unable to read UFM file '") + ufmFileName + wxT_2("'."));
     return false;
   }
   wxTextInputStream text(ufmFile);
@@ -1182,12 +1182,12 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
     line = text.ReadLine();
     line.Trim();
 
-    wxStringTokenizer tkz(line, wxT(" "));
+    wxStringTokenizer tkz(line, wxT_2(" "));
     int count = (int) tkz.CountTokens();
     if (count < 2) continue;
     code  = tkz.GetNextToken(); // 0
     param = tkz.GetNextToken(); // 1
-    if (code == wxT("U"))
+    if (code == wxT_2("U"))
     {
       long cc;
       param.ToLong(&cc); // Character code
@@ -1199,24 +1199,24 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
       while (tkz.HasMoreTokens())
       {
         token = tkz.GetNextToken();
-        if (token == wxT("WX")) // Character width
+        if (token == wxT_2("WX")) // Character width
         {
           param = tkz.GetNextToken(); // Width
           param.ToLong(&width);
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("N")) // Glyph name
+        else if (token == wxT_2("N")) // Glyph name
         {
           glyphname = tkz.GetNextToken(); // Glyph name
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("G")) // Glyph number
+        else if (token == wxT_2("G")) // Glyph number
         {
           param = tkz.GetNextToken(); // Number
           param.ToLong(&glyphNumber);
           dummy = tkz.GetNextToken(); // Semicolon
         }
-        else if (token == wxT("B")) // Character bounding box
+        else if (token == wxT_2("B")) // Character bounding box
         {
           dummy = tkz.GetNextToken(); // x left
           dummy = tkz.GetNextToken(); // y bottom
@@ -1227,7 +1227,7 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
         }
         else
         {
-          while (tkz.HasMoreTokens() && tkz.GetNextToken() != wxT(";"));
+          while (tkz.HasMoreTokens() && tkz.GetNextToken() != wxT_2(";"));
         }
       }
       if (cc != -1 || (hasVolt && glyphNumber > 0))
@@ -1263,25 +1263,25 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
           glyphList.Add(glEntry);
         }
       }
-      if (!hasMissingWidth && glyphname == wxT(".notdef"))
+      if (!hasMissingWidth && glyphname == wxT_2(".notdef"))
       {
         hasMissingWidth = true;
         fd.SetMissingWidth(width);
       }
     }
-    else if (code == wxT("FontName"))
+    else if (code == wxT_2("FontName"))
     {
       ufmFont->SetName(param);
     }
-    else if (code == wxT("Weight"))
+    else if (code == wxT_2("Weight"))
     {
       wxString weight = param.Lower();
-      if (!hasStemV && (weight == wxT("black") || weight == wxT("bold")))
+      if (!hasStemV && (weight == wxT_2("black") || weight == wxT_2("bold")))
       {
         fd.SetStemV(120);
       }
     }
-    else if (code == wxT("ItalicAngle"))
+    else if (code == wxT_2("ItalicAngle"))
     {
       double italic;
       param.ToDouble(&italic);
@@ -1292,51 +1292,51 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
         flags += 1 << 6;
       }
     }
-    else if (code == wxT("Ascender"))
+    else if (code == wxT_2("Ascender"))
     {
       long ascent;
       param.ToLong(&ascent);
       fd.SetAscent(ascent);
     }
-    else if (code == wxT("Descender"))
+    else if (code == wxT_2("Descender"))
     {
       param.ToLong(&nParam);
       fd.SetDescent(nParam);
     }
-    else if (code == wxT("UnderlineThickness"))
+    else if (code == wxT_2("UnderlineThickness"))
     {
       param.ToLong(&nParam);
       fd.SetUnderlineThickness(nParam);
     }
-    else if (code == wxT("UnderlinePosition"))
+    else if (code == wxT_2("UnderlinePosition"))
     {
       param.ToLong(&nParam);
       fd.SetUnderlinePosition(nParam);
     }
-    else if (code == wxT("IsFixedPitch"))
+    else if (code == wxT_2("IsFixedPitch"))
     {
-      if (param == wxT("true"))
+      if (param == wxT_2("true"))
       {
         flags += 1 << 0;
       }
     }
-    else if (code == wxT("FontBBox"))
+    else if (code == wxT_2("FontBBox"))
     {
       hasFontBBox = true;
       wxString bbox2 = tkz.GetNextToken();
       wxString bbox3 = tkz.GetNextToken();
       wxString bbox4 = tkz.GetNextToken();
-      wxString bBox = wxT("[") + param + wxT(" ") + bbox2 + wxT(" ") + bbox3 + wxT(" ") + bbox4 + wxT("]");
+      wxString bBox = wxT_2("[") + param + wxT_2(" ") + bbox2 + wxT_2(" ") + bbox3 + wxT_2(" ") + bbox4 + wxT_2("]");
       fd.SetFontBBox(bBox);
     }
-    else if (code == wxT("CapHeight"))
+    else if (code == wxT_2("CapHeight"))
     {
       hasCapHeight = true;
       long capHeight;
       param.ToLong(&capHeight);
       fd.SetCapHeight(capHeight);
     }
-    else if (code == wxT("StdVW"))
+    else if (code == wxT_2("StdVW"))
     {
       hasStemV = true;
       long stemV;
@@ -1353,7 +1353,7 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
   if (!hasFontBBox)
   {
     hasFontBBox = true;
-    wxString fbb = wxString::Format(wxT("[0 %d 1000 %d]"), fd.GetDescent()-100, fd.GetAscent()+100);
+    wxString fbb = wxString::Format(wxT_2("[0 %d 1000 %d]"), fd.GetDescent()-100, fd.GetAscent()+100);
     fd.SetFontBBox(fbb);
   }
 
@@ -1368,12 +1368,12 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
     wxFileInputStream fontFile(fontFileName);
     if (!fontFile.Ok())
     {
-      wxLogMessage(wxT("Error: Unable to read font file '") + fontFileName + wxT("'."));
+      wxLogMessage(wxT_2("Error: Unable to read font file '") + fontFileName + wxT_2("'."));
       delete [] cc2gn;
       return false;
     }
     size_t len = fontFile.GetLength();
-    wxFileOutputStream outFontFile(m_outputDir + baseName + wxT(".z"));
+    wxFileOutputStream outFontFile(m_outputDir + baseName + wxT_2(".z"));
     wxZlibOutputStream zOutFontFile(outFontFile);
     if (cff)
     {
@@ -1388,26 +1388,26 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
       zOutFontFile.Write(fontFile);
     }
     zOutFontFile.Close();
-    ufmFont->SetFontFile(baseName + wxT(".z"));
+    ufmFont->SetFontFile(baseName + wxT_2(".z"));
     ufmFont->SetSize1(len);
-    wxLogMessage(wxT("Font file compressed (") + baseName + wxT(".z)."));
+    wxLogMessage(wxT_2("Font file compressed (") + baseName + wxT_2(".z)."));
   }
   else
   {
     if (fontFileName.Length() > 0)
     {
-      wxLogMessage(wxT("Warning: Font license does not allow embedding."));
+      wxLogMessage(wxT_2("Warning: Font license does not allow embedding."));
     }
     else
     {
-      wxLogMessage(wxT("Warning: Font file name missing, font embedding not possible."));
+      wxLogMessage(wxT_2("Warning: Font file name missing, font embedding not possible."));
     }
   }
 
   if (embeddingAllowed)
   {
     // Create CID to GID map file
-    wxFileOutputStream outCtgFile(m_outputDir + baseName + wxT(".ctg.z"));
+    wxFileOutputStream outCtgFile(m_outputDir + baseName + wxT_2(".ctg.z"));
     wxZlibOutputStream zOutCtgFile(outCtgFile);
     if (cff)
     {
@@ -1423,19 +1423,19 @@ MakeFont::MakeFontUFM(const wxString& fontFileName,
       size_t j;
       for (j = 0; j < CC2GNSIZE; j+=2)
       {
-        wxLogMessage(wxT("C %ld G %ld"), j/2, cc2gn[j] * 256 + cc2gn[j+1]);
+        wxLogMessage(wxT_2("C %ld G %ld"), j/2, cc2gn[j] * 256 + cc2gn[j+1]);
       }
 #endif
       zOutCtgFile.Write(cc2gn, CC2GNSIZE);
     }
     zOutCtgFile.Close();
-    ufmFont->SetCtgFile(baseName + wxT(".ctg.z"));
-    wxLogMessage(wxT("CIDToGIDMap created and compressed (") + baseName + wxT(".ctg.z)"));
+    ufmFont->SetCtgFile(baseName + wxT_2(".ctg.z"));
+    wxLogMessage(wxT_2("CIDToGIDMap created and compressed (") + baseName + wxT_2(".ctg.z)"));
   }
 
   // Create XML file
-  CreateFontMetricsFile(m_outputDir + baseName + wxT(".xml"), *ufmFont, cff);
-  wxLogMessage(wxT("Font definition file generated (") + baseName + wxT(".xml)."));
+  CreateFontMetricsFile(m_outputDir + baseName + wxT_2(".xml"), *ufmFont, cff);
+  wxLogMessage(wxT_2("Font definition file generated (") + baseName + wxT_2(".xml)."));
 
   if (cff)
   {
@@ -1457,7 +1457,7 @@ MakeFont::MakeFontImmediate(const wxString& fontFileName)
   wxFileInputStream fontStream(fontFileName);
   if (!fontStream.Ok())
   {
-    wxLogMessage(wxT("Error: Unable to read font file '") + fontFileName + wxT("'."));
+    wxLogMessage(wxT_2("Error: Unable to read font file '") + fontFileName + wxT_2("'."));
     return false;
   }
   size_t len = fontStream.GetLength();
@@ -1475,11 +1475,11 @@ MakeFont::MakeFontImmediate(const wxString& fontFileName)
     wxString baseName = fileName.GetName();
     if (loadedFont->EmbedSupported())
     {
-      wxFileOutputStream outFontFile(m_outputDir + baseName + wxT(".z"));
+      wxFileOutputStream outFontFile(m_outputDir + baseName + wxT_2(".z"));
       loadedFont->WriteFontData(&outFontFile);
       outFontFile.Close();
-      wxLogMessage(wxT("Font file compressed (") + baseName + wxT(".z)"));
-      wxFileOutputStream outCtgFile(m_outputDir + baseName + wxT(".ctg.z"));
+      wxLogMessage(wxT_2("Font file compressed (") + baseName + wxT_2(".z)"));
+      wxFileOutputStream outCtgFile(m_outputDir + baseName + wxT_2(".ctg.z"));
       if (!cff)
       {
         static size_t CC2GNSIZE = 131072; // 2*64kB
@@ -1509,21 +1509,21 @@ MakeFont::MakeFontImmediate(const wxString& fontFileName)
         loadedFont->WriteUnicodeMap(&outCtgFile);
       }
       outCtgFile.Close();
-      wxLogMessage(wxT("CIDToGIDMap file compressed (") + baseName + wxT(".ctg.z)"));
-      loadedFont->SetFontFile(baseName + wxT(".z"));
+      wxLogMessage(wxT_2("CIDToGIDMap file compressed (") + baseName + wxT_2(".ctg.z)"));
+      loadedFont->SetFontFile(baseName + wxT_2(".z"));
       loadedFont->SetSize1(len);
-      loadedFont->SetCtgFile(baseName + wxT(".ctg.z"));
+      loadedFont->SetCtgFile(baseName + wxT_2(".ctg.z"));
     }
     else
     {
-      loadedFont->SetFontFile(wxT(""));
-      loadedFont->SetCtgFile(wxT(""));
-      wxLogMessage(wxT("Warning: Font license does not allow embedding."));
+      loadedFont->SetFontFile(wxT_2(""));
+      loadedFont->SetCtgFile(wxT_2(""));
+      wxLogMessage(wxT_2("Warning: Font license does not allow embedding."));
     }
 
     // Create XML file
-    CreateFontMetricsFile(m_outputDir + baseName + wxT(".xml"), *loadedFont, cff);
-    wxLogMessage(wxT("Font definition file generated (") + baseName + wxT(".xml)."));
+    CreateFontMetricsFile(m_outputDir + baseName + wxT_2(".xml"), *loadedFont, cff);
+    wxLogMessage(wxT_2("Font definition file generated (") + baseName + wxT_2(".xml)."));
     delete loadedFont;
   }
 
@@ -1549,19 +1549,19 @@ static const wxCmdLineEntryDesc cmdLineDesc[] =
   { wxCMD_LINE_OPTION, "t", "type",      "Font type (type = otf, ttf or t1, default: ttf)", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
   { wxCMD_LINE_OPTION, "o", "output",    "Path to output directory",                        wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 #else
-  { wxCMD_LINE_OPTION, wxT("a"), wxT("afm"),       wxT("Adobe Font Metric file (AFM)"),                    wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("a"), wxT_2("afm"),       wxT_2("Adobe Font Metric file (AFM)"),                    wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 #if wxUSE_UNICODE
-  { wxCMD_LINE_OPTION, wxT("u"), wxT("ufm"),       wxT("Unicode Font Metric file (UFM)"),                  wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_SWITCH, wxT("i"), wxT("immediate"), wxT("Extract font metrics from ttf/otf font file"),     wxCMD_LINE_VAL_NONE,   wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_OPTION, wxT("f"), wxT("font"),      wxT("Font file (ttf, otf or pfb)"),                     wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_OPTION, wxT("v"), wxT("volt"),      wxT("Visual order layout table"),                       wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("u"), wxT_2("ufm"),       wxT_2("Unicode Font Metric file (UFM)"),                  wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_SWITCH, wxT_2("i"), wxT_2("immediate"), wxT_2("Extract font metrics from ttf/otf font file"),     wxCMD_LINE_VAL_NONE,   wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("f"), wxT_2("font"),      wxT_2("Font file (ttf, otf or pfb)"),                     wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("v"), wxT_2("volt"),      wxT_2("Visual order layout table"),                       wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 #else
-  { wxCMD_LINE_OPTION, wxT("f"), wxT("font"),      wxT("Font file (ttf or pfb)"),                          wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("f"), wxT_2("font"),      wxT_2("Font file (ttf or pfb)"),                          wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 #endif
-  { wxCMD_LINE_OPTION, wxT("e"), wxT("enc"),       wxT("Character encoding of the font (for AFM only)"),   wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_OPTION, wxT("p"), wxT("patch"),     wxT("Patch file (for AFM only)"),                       wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_OPTION, wxT("t"), wxT("type"),      wxT("Font type (type = otf, ttf or t1, default: ttf)"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-  { wxCMD_LINE_OPTION, wxT("o"), wxT("output"),    wxT("Path to output directory"),                        wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("e"), wxT_2("enc"),       wxT_2("Character encoding of the font (for AFM only)"),   wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("p"), wxT_2("patch"),     wxT_2("Patch file (for AFM only)"),                       wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("t"), wxT_2("type"),      wxT_2("Font type (type = otf, ttf or t1, default: ttf)"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
+  { wxCMD_LINE_OPTION, wxT_2("o"), wxT_2("output"),    wxT_2("Path to output directory"),                        wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 #endif
   { wxCMD_LINE_NONE }
 };
@@ -1571,31 +1571,31 @@ MakeFont::OnInit()
 {
   // Set the font path and working directory
   wxFileName exePath = wxStandardPaths::Get().GetExecutablePath();
-  wxString fontPath = exePath.GetPathWithSep() + wxT("../lib/fonts");
+  wxString fontPath = exePath.GetPathWithSep() + wxT_2("../lib/fonts");
   wxString cwdPath  = exePath.GetPath();
   wxPdfFontManager::GetFontManager()->AddSearchPath(fontPath);
   wxSetWorkingDirectory(cwdPath);
 
-  m_version = wxT("1.6.1 (March 2013)");
+  m_version = wxT_2("1.6.1 (March 2013)");
   bool valid = false;
   //gets the parameters from cmd line
   wxCmdLineParser parser (cmdLineDesc, argc, argv);
-  wxString logo = wxT("wxPdfDocument MakeFont Utility Version ") + m_version + 
-                  wxT("\n\nCreate wxPdfDocument font support files.\n") +
-                  wxT("Please specify file extensions in ALL file name parameters.\n") +
-                  wxT("Select exactly one method to provide font metrics.\n");
+  wxString logo = wxT_2("wxPdfDocument MakeFont Utility Version ") + m_version + 
+                  wxT_2("\n\nCreate wxPdfDocument font support files.\n") +
+                  wxT_2("Please specify file extensions in ALL file name parameters.\n") +
+                  wxT_2("Select exactly one method to provide font metrics.\n");
   parser.SetLogo(logo);
   if (parser.Parse() == 0)
   {
-    bool hasAfm       = parser.Found(wxT("afm"),    &m_afmFile);
-    bool hasUfm       = parser.Found(wxT("ufm"),    &m_ufmFile);
-    bool hasImmediate = parser.Found(wxT("immediate"));
-    bool hasFont      = parser.Found(wxT("font"),   &m_fontFile);
-    bool hasEnc       = parser.Found(wxT("enc"),    &m_encoding);
-    bool hasPatch     = parser.Found(wxT("patch"),  &m_patchFile);
-    bool hasType      = parser.Found(wxT("type"),   &m_fontType);
-    bool hasVolt      = parser.Found(wxT("volt"),   &m_volt);
-    bool hasOutput    = parser.Found(wxT("output"), &m_outputDir);
+    bool hasAfm       = parser.Found(wxT_2("afm"),    &m_afmFile);
+    bool hasUfm       = parser.Found(wxT_2("ufm"),    &m_ufmFile);
+    bool hasImmediate = parser.Found(wxT_2("immediate"));
+    bool hasFont      = parser.Found(wxT_2("font"),   &m_fontFile);
+    bool hasEnc       = parser.Found(wxT_2("enc"),    &m_encoding);
+    bool hasPatch     = parser.Found(wxT_2("patch"),  &m_patchFile);
+    bool hasType      = parser.Found(wxT_2("type"),   &m_fontType);
+    bool hasVolt      = parser.Found(wxT_2("volt"),   &m_volt);
+    bool hasOutput    = parser.Found(wxT_2("output"), &m_outputDir);
 
 #if wxUSE_UNICODE
     m_unicode = hasUfm || hasImmediate;
@@ -1616,11 +1616,11 @@ MakeFont::OnInit()
     {
       if (hasAfm)
       {
-        m_fontType = (hasType && m_fontType == wxT("t1")) ? wxT("Type1") : wxT("TrueType");
+        m_fontType = (hasType && m_fontType == wxT_2("t1")) ? wxT_2("Type1") : wxT_2("TrueType");
       }
       else if (hasUfm)
       {
-        m_fontType = (hasType && m_fontType == wxT("otf")) ? wxT("OpenType") : wxT("TrueType");
+        m_fontType = (hasType && m_fontType == wxT_2("otf")) ? wxT_2("OpenType") : wxT_2("TrueType");
       }
     }
     else
@@ -1641,8 +1641,8 @@ int
 MakeFont::OnRun()
 {
   bool valid;
-  wxLogMessage(wxT("wxPdfDocument MakeFont Utility Version ") + m_version);
-  wxLogMessage(wxT("*** Starting to create font support files for ..."));
+  wxLogMessage(wxT_2("wxPdfDocument MakeFont Utility Version ") + m_version);
+  wxLogMessage(wxT_2("*** Starting to create font support files for ..."));
   if (!m_outputDir.IsEmpty())
   {
     wxFileName outputDirName(m_outputDir, wxEmptyString);
@@ -1652,34 +1652,34 @@ MakeFont::OnRun()
     }
     else
     {
-      wxLogMessage(wxT("*** Warning: Output directory doesn't exist: ") + m_outputDir);
+      wxLogMessage(wxT_2("*** Warning: Output directory doesn't exist: ") + m_outputDir);
       m_outputDir = wxEmptyString;
     }
   }
   if (!m_outputDir.IsEmpty())
   {
-    wxLogMessage(wxT("  OutputDir: ") + m_outputDir);
+    wxLogMessage(wxT_2("  OutputDir: ") + m_outputDir);
   }
   else
   {
-    wxLogMessage(wxT("  OutputDir: (current working directory)"));
+    wxLogMessage(wxT_2("  OutputDir: (current working directory)"));
   }
 #if wxUSE_UNICODE
   if (m_unicode)
   {
     if (m_immediate)
     {
-      wxLogMessage(wxT("  Metrics  : Immediately from font file"));
-      wxLogMessage(wxT("  Font file: ") + m_fontFile);
+      wxLogMessage(wxT_2("  Metrics  : Immediately from font file"));
+      wxLogMessage(wxT_2("  Font file: ") + m_fontFile);
       valid = MakeFontImmediate(m_fontFile);
     }
     else
     {
-      wxLogMessage(wxT("  UFM file : ") + m_ufmFile);
-      wxLogMessage(wxT("  Font file: ") + m_fontFile);
+      wxLogMessage(wxT_2("  UFM file : ") + m_ufmFile);
+      wxLogMessage(wxT_2("  Font file: ") + m_fontFile);
       if (!m_volt.IsEmpty())
       {
-        wxLogMessage(wxT("  VOLT file: ") + m_volt);
+        wxLogMessage(wxT_2("  VOLT file: ") + m_volt);
       }
       valid = MakeFontUFM(m_fontFile, m_ufmFile, m_fontType, m_volt);
     }
@@ -1687,13 +1687,13 @@ MakeFont::OnRun()
   else
 #endif
   {
-    wxLogMessage(wxT("  AFM file : ") + m_afmFile);
-    wxLogMessage(wxT("  Font file: ") + m_fontFile);
-    wxLogMessage(wxT("  Encoding : ") + m_encoding);
-    wxLogMessage(wxT("  Font type: ") + m_fontType);
+    wxLogMessage(wxT_2("  AFM file : ") + m_afmFile);
+    wxLogMessage(wxT_2("  Font file: ") + m_fontFile);
+    wxLogMessage(wxT_2("  Encoding : ") + m_encoding);
+    wxLogMessage(wxT_2("  Font type: ") + m_fontType);
     valid = MakeFontAFM(m_fontFile, m_afmFile, m_encoding, m_patchFile);
   }
-  wxLogMessage(wxT("*** wxPdfDocument MakeFont finished."));
+  wxLogMessage(wxT_2("*** wxPdfDocument MakeFont finished."));
 
   return 0;
 }

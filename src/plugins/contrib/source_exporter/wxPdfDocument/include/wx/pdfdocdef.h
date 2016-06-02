@@ -771,16 +771,16 @@ You have to copy the generated file(s) to the font directory.
 
 The last step is the most simple. You just need to call the AddFont() method. For instance: 
  
-<tt>pdf.AddFont(wxT("Comic"),wxT(""),wxT("comic.xml"));</tt>
+<tt>pdf.AddFont(wxT_2("Comic"),wxT_2(""),wxT_2("comic.xml"));</tt>
   
 or simply: 
  
-<tt>pdf.AddFont(wxT("Comic"));</tt>
+<tt>pdf.AddFont(wxT_2("Comic"));</tt>
   
 And the font is now available (in regular and underlined styles), usable like the others.
 If we had worked with Comic Sans MS Bold (comicbd.ttf), we would have put: 
  
-<tt>pdf.AddFont(wxT("Comic"),wxT("B"),wxT("comicbd.xml"));</tt>
+<tt>pdf.AddFont(wxT_2("Comic"),wxT_2("B"),wxT_2("comicbd.xml"));</tt>
   
 \section mkfontreduce Reducing the size of TrueType fonts
 

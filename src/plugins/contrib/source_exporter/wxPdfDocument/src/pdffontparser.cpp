@@ -80,7 +80,7 @@ wxPdfFontParser::SkipBytes(int count, wxInputStream* stream)
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfFontParser::SkipBytes: ")) +
+    wxLogError(wxString(wxT_2("wxPdfFontParser::SkipBytes: ")) +
                wxString(_("Input stream not set.")));
   }
 }

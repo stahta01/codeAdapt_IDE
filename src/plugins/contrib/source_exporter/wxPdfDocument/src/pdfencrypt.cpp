@@ -773,7 +773,7 @@ wxPdfEncrypt::AES(unsigned char* key, unsigned int keylen,
   // It is a good idea to check the error code
   if (len < 0)
   {
-    wxLogError(wxString(wxT("wxPdfEncrypt::AES: ")) +
+    wxLogError(wxString(wxT_2("wxPdfEncrypt::AES: ")) +
                wxString(_("Error on encrypting.")));
   }
 }

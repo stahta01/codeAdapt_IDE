@@ -544,7 +544,7 @@ public:
   * \param replace the character used to replace invalid characters
   * \return converted string
   */
-  virtual wxString ConvertToValid(const wxString& s, wxChar replace = wxT('?')) const;
+  virtual wxString ConvertToValid(const wxString& s, wxChar replace = wxT_2('?')) const;
 
   /// Convert character codes to glyph numbers
   /**

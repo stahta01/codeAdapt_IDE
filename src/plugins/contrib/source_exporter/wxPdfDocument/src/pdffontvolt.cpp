@@ -34,7 +34,7 @@ class wxPdfVoltRule
 public :
   /// Default constructor
   wxPdfVoltRule()
-    : m_repeat(false), m_match(wxT("")), m_replace(wxT(""))
+    : m_repeat(false), m_match(wxT_2("")), m_replace(wxT_2(""))
   {
   }
 
@@ -77,23 +77,23 @@ wxPdfVolt::LoadVoltData(wxXmlNode* volt)
   wxXmlNode* child = volt->GetChildren();
   while (child)
   {
-    if (child->GetName() == wxT("ruleset"))
+    if (child->GetName() == wxT_2("ruleset"))
     {
       wxXmlNode* rule = child->GetChildren();
       while (rule)
       {
-        if (rule->GetName() == wxT("rule"))
+        if (rule->GetName() == wxT_2("rule"))
         {
 #if wxCHECK_VERSION(2,9,0)
-          repeat  = rule->GetAttribute(wxT("repeat"), wxT("false"));
-          match   = rule->GetAttribute(wxT("match"), wxT(""));
-          replace = rule->GetAttribute(wxT("replace"), wxT(""));
+          repeat  = rule->GetAttribute(wxT_2("repeat"), wxT_2("false"));
+          match   = rule->GetAttribute(wxT_2("match"), wxT_2(""));
+          replace = rule->GetAttribute(wxT_2("replace"), wxT_2(""));
 #else
-          repeat  = rule->GetPropVal(wxT("repeat"), wxT("false"));
-          match   = rule->GetPropVal(wxT("match"), wxT(""));
-          replace = rule->GetPropVal(wxT("replace"), wxT(""));
+          repeat  = rule->GetPropVal(wxT_2("repeat"), wxT_2("false"));
+          match   = rule->GetPropVal(wxT_2("match"), wxT_2(""));
+          replace = rule->GetPropVal(wxT_2("replace"), wxT_2(""));
 #endif
-          doRepeat = repeat.IsSameAs(wxT("true"));
+          doRepeat = repeat.IsSameAs(wxT_2("true"));
           wxPdfVoltRule* voltRule = new wxPdfVoltRule(doRepeat, match, replace);
           m_rules.Add(voltRule);
         }
@@ -108,7 +108,7 @@ wxString
 wxPdfVolt::ProcessRules(const wxString& text)
 {
 #if 0
-  wxFFileOutputStream dbgOut( wxT("d:/temp/pdfdoc-indic-dbg.txt"), wxT("a"));
+  wxFFileOutputStream dbgOut( wxT_2("d:/temp/pdfdoc-indic-dbg.txt"), wxT_2("a"));
   wxTextOutputStream dbgIndic( dbgOut );
 
   wxString str;
@@ -128,9 +128,9 @@ wxPdfVolt::ProcessRules(const wxString& text)
       wxString::const_iterator ch;
       for (ch = processText.begin(); ch != processText.end(); ++ch)
       {
-        str += wxString::Format(wxT(" %04x"), *ch);
+        str += wxString::Format(wxT_2(" %04x"), *ch);
       }
-      str += wxT("\n");
+      str += wxT_2("\n");
       dbgIndic.WriteString(str);
 #endif
     }

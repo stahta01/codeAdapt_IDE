@@ -117,7 +117,7 @@ wxPdfBoolean::~wxPdfBoolean()
 wxString
 wxPdfBoolean::GetAsString()
 {
-  return (m_value) ? wxT("true") : wxT("false");
+  return (m_value) ? wxT_2("true") : wxT_2("false");
 }
 
 // --- String / Hex string
@@ -146,7 +146,7 @@ wxPdfNumber::wxPdfNumber(int value)
   : wxPdfObject(OBJTYPE_NUMBER)
 {
   m_value = value;
-  m_string = wxString::Format(wxT("%d"), value);
+  m_string = wxString::Format(wxT_2("%d"), value);
   m_isInt = true;
 }
 
@@ -244,7 +244,7 @@ wxPdfDictionary::wxPdfDictionary(const wxString& type)
   : wxPdfObject(OBJTYPE_DICTIONARY)
 {
   m_hashMap = new wxPdfDictionaryMap();
-  Put(wxT("Type"), new wxPdfName(type));
+  Put(wxT_2("Type"), new wxPdfName(type));
 }
 
 wxPdfDictionary::~wxPdfDictionary()

@@ -81,7 +81,7 @@ wxPdfDocument::SetAlphaState(int alphaState)
 {
   if (alphaState > 0 && (size_t) alphaState <= (*m_extGStates).size())
   {
-    OutAscii(wxString::Format(wxT("/GS%d gs"), alphaState));
+    OutAscii(wxString::Format(wxT_2("/GS%d gs"), alphaState));
   }
 }
 
@@ -164,7 +164,7 @@ wxPdfShape::LineTo(double x, double y)
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfShape::LineTo: ")) +
+    wxLogError(wxString(wxT_2("wxPdfShape::LineTo: ")) +
                wxString(_("Invalid subpath.")));
   }
 }
@@ -184,7 +184,7 @@ wxPdfShape::CurveTo(double x1, double y1, double x2, double y2, double x3, doubl
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfShape::CurveTo: ")) +
+    wxLogError(wxString(wxT_2("wxPdfShape::CurveTo: ")) +
                wxString(_("Invalid subpath.")));
   }
 }
@@ -718,10 +718,10 @@ void
 wxPdfDocument::Line(double x1, double y1, double x2, double y2)
 {
   // Draw a line
-  OutAscii(wxPdfUtility::Double2String(x1*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y1*m_k,2) + wxString(wxT(" m ")) +
-           wxPdfUtility::Double2String(x2*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y2*m_k,2) + wxString(wxT(" l S")));
+  OutAscii(wxPdfUtility::Double2String(x1*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y1*m_k,2) + wxString(wxT_2(" m ")) +
+           wxPdfUtility::Double2String(x2*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y2*m_k,2) + wxString(wxT_2(" l S")));
 }
 
 void
@@ -731,20 +731,20 @@ wxPdfDocument::Rect(double x, double y, double w, double h, int style)
   // Draw a rectangle
   if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
   {
-    op = wxT("f");
+    op = wxT_2("f");
   }
   else if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
   {
-    op = wxT("B");
+    op = wxT_2("B");
   }
   else
   {
-    op = wxT("S");
+    op = wxT_2("S");
   }
-  OutAscii(wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(w*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(h*m_k,2) + wxString(wxT(" re ")) + op);
+  OutAscii(wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(w*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(h*m_k,2) + wxString(wxT_2(" re ")) + op);
 }
 
 void
@@ -763,17 +763,17 @@ wxPdfDocument::RoundedRect(double x, double y, double w, double h,
     // Draw a rectangle
     if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
     {
-      op = wxT("f");
+      op = wxT_2("f");
     }
     else
     {
       if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
       {
-        op = wxT("B");
+        op = wxT_2("B");
       }
       else
       {
-        op = wxT("S");
+        op = wxT_2("S");
       }
     }
 
@@ -845,17 +845,17 @@ wxPdfDocument::Curve(double x0, double y0, double x1, double y1,
   // Draw a rectangle
   if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
   {
-    op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f");
+    op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f");
   }
   else
   {
     if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
     {
-      op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B");
+      op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B");
     }
     else
     {
-      op = wxT("S");
+      op = wxT_2("S");
     }
   }
 
@@ -878,26 +878,26 @@ wxPdfDocument::Ellipse(double x0, double y0, double rx, double ry,
     // Close the path as well
     if ((style & wxPDF_STYLE_FILL) == wxPDF_STYLE_FILL)
     {
-      op = wxT("b"); // small 'b' means closing the path as well
+      op = wxT_2("b"); // small 'b' means closing the path as well
     }
     else
     {
-      op = wxT("s"); // small 's' means closing the path as well
+      op = wxT_2("s"); // small 's' means closing the path as well
     }
   }
   else
   {
     if ((style & wxPDF_STYLE_MASK) == wxPDF_STYLE_FILL)
     {
-      op = wxT("f");
+      op = wxT_2("f");
     }
     else if ((style & wxPDF_STYLE_MASK) == wxPDF_STYLE_FILLDRAW)
     {
-      op = (doSector) ? wxT("b") : wxT("B");
+      op = (doSector) ? wxT_2("b") : wxT_2("B");
     }
     else
     {
-      op = (doSector) ? wxT("s") : wxT("S");
+      op = (doSector) ? wxT_2("s") : wxT_2("S");
     }
   }
 
@@ -934,13 +934,13 @@ wxPdfDocument::Ellipse(double x0, double y0, double rx, double ry,
     {
       a *= -1.0;
     }
-    OutAscii(wxString(wxT("q ")) + 
-             wxPdfUtility::Double2String(cos(a),2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(-1 * sin(a),2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(sin(a),2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(cos(a),2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(x0,2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(y0,2) + wxString(wxT(" cm")));
+    OutAscii(wxString(wxT_2("q ")) + 
+             wxPdfUtility::Double2String(cos(a),2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(-1 * sin(a),2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(sin(a),2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(cos(a),2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(x0,2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(y0,2) + wxString(wxT_2(" cm")));
     x0 = 0;
     y0 = 0;
   }
@@ -1028,17 +1028,17 @@ wxPdfDocument::Sector(double xc, double yc, double r, double astart, double afin
   wxString op;
   if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
   {
-    op = wxT("f");
+    op = wxT_2("f");
   }
   else
   {
     if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
     {
-      op = wxT("b");
+      op = wxT_2("b");
     }
     else
     {
-      op = wxT("s");
+      op = wxT_2("s");
     }
   }
 
@@ -1112,17 +1112,17 @@ wxPdfDocument::Polygon(const wxPdfArrayDouble& x, const wxPdfArrayDouble& y, int
   wxString op;
   if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
   {
-    op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f");
+    op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f");
   }
   else
   {
     if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
     {
-      op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B");
+      op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B");
     }
     else
     {
-      op = wxT("S");
+      op = wxT_2("S");
     }
   }
 
@@ -1244,7 +1244,7 @@ GetBezierControlPoints(const wxPdfArrayDouble& x, const wxPdfArrayDouble& y,
   size_t n = x.GetCount() - 1;
   if (n <= 1)
   {
-    wxLogDebug(wxString(wxT("GetBezierControlPoints: "))+_("n must be greater than 2."));
+    wxLogDebug(wxString(wxT_2("GetBezierControlPoints: "))+_("n must be greater than 2."));
     return false;
   }
 #if 0
@@ -1318,17 +1318,17 @@ wxPdfDocument::BezierSpline(const wxPdfArrayDouble& x, const wxPdfArrayDouble& y
         wxString op;
         if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
         {
-          op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f");
+          op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f");
         }
         else
         {
           if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
           {
-            op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B");
+            op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B");
           }
           else
           {
-            op = wxT("S");
+            op = wxT_2("S");
           }
         }
         MoveTo(x[0], y[0]);
@@ -1356,12 +1356,12 @@ SolveTridiagonalGeneral(const wxPdfArrayDouble& a, const wxPdfArrayDouble& b,
   // a, b, c and rhs vectors must have the same size.
   if (n != a.GetCount() || n != b.GetCount() || n != c.GetCount())
   {
-    wxLogDebug(wxString(wxT("SolveTridiagonal: "))+_("Mismatch of vector sizes."));
+    wxLogDebug(wxString(wxT_2("SolveTridiagonal: "))+_("Mismatch of vector sizes."));
     return false;
   }
   if (b[0] == 0.0)
   {
-    wxLogDebug(wxString(wxT("SolveTridiagonal: "))+_("Singular matrix."));
+    wxLogDebug(wxString(wxT_2("SolveTridiagonal: "))+_("Singular matrix."));
     return false;
   }
 
@@ -1379,7 +1379,7 @@ SolveTridiagonalGeneral(const wxPdfArrayDouble& a, const wxPdfArrayDouble& b,
     beta = b[j] - a[j] * gamma[j];
     if (beta == 0.0)
     {
-      wxLogDebug(wxString(wxT("SolveTridiagonal: "))+_("Singular matrix."));
+      wxLogDebug(wxString(wxT_2("SolveTridiagonal: "))+_("Singular matrix."));
       return false;
     }
     u[j] = (r[j] - a[j] * u[j - 1]) / beta;
@@ -1403,12 +1403,12 @@ SolveCyclic(const wxPdfArrayDouble& a, const wxPdfArrayDouble& b,
   // a, b, c and rhs vectors must have the same size.
   if (n != a.GetCount() || n != b.GetCount() || n != c.GetCount())
   {
-    wxLogDebug(wxString(wxT("SolveCyclic: "))+_("Mismatch of vector sizes."));
+    wxLogDebug(wxString(wxT_2("SolveCyclic: "))+_("Mismatch of vector sizes."));
     return false;
   }
   if (n <= 2)
   {
-    wxLogDebug(wxString(wxT("SolveCyclic: "))+_("n must be greater than 2."));
+    wxLogDebug(wxString(wxT_2("SolveCyclic: "))+_("n must be greater than 2."));
     return false;
   }
 
@@ -1462,7 +1462,7 @@ GetCyclicControlPoints(const wxPdfArrayDouble& x, const wxPdfArrayDouble& y,
   bool ok = (n == y.GetCount());
   if (n <= 2 || !ok)
   {
-    wxLogDebug(wxString(wxT("GetCyclicControlPoints: "))+_("n must be greater than 2."));
+    wxLogDebug(wxString(wxT_2("GetCyclicControlPoints: "))+_("n must be greater than 2."));
     return false;
   }
 
@@ -1528,17 +1528,17 @@ wxPdfDocument::ClosedBezierSpline(const wxPdfArrayDouble& x, const wxPdfArrayDou
         wxString op;
         if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILL)
         {
-          op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f");
+          op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f");
         }
         else
         {
           if ((style & wxPDF_STYLE_FILLDRAW) == wxPDF_STYLE_FILLDRAW)
           {
-            op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B");
+            op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B");
           }
           else
           {
-            op = wxT("S");
+            op = wxT_2("S");
           }
         }
         MoveTo(x[0], y[0]);
@@ -1564,26 +1564,26 @@ wxPdfDocument::Shape(const wxPdfShape& shape, int style)
   wxString op;
   if ((style & wxPDF_STYLE_MASK) == wxPDF_STYLE_FILL)
   {
-    op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f");
+    op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f");
   }
   else
   {
     if ((style & wxPDF_STYLE_MASK) == wxPDF_STYLE_FILLDRAW)
     {
-      op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B");
+      op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B");
     }
     else if ((style & wxPDF_STYLE_MASK) == (wxPDF_STYLE_DRAWCLOSE | wxPDF_STYLE_FILL))
     {
       // small 'b' means closing the path as well
-      op = (m_fillRule == wxODDEVEN_RULE) ? wxT("b*") : wxT("b");
+      op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("b*") : wxT_2("b");
     }
     else if ((style & wxPDF_STYLE_MASK) == wxPDF_STYLE_DRAWCLOSE)
     {
-      op = wxT("s"); // small 's' means closing the path as well
+      op = wxT_2("s"); // small 's' means closing the path as well
     }
     else
     {
-      op = wxT("S");
+      op = wxT_2("S");
     }
   }
 
@@ -1625,20 +1625,20 @@ wxPdfDocument::Shape(const wxPdfShape& shape, int style)
 void
 wxPdfDocument::ClippingText(double x, double y, const wxString& txt, bool outline)
 {
-  wxString op = outline ? wxT("5") : wxT("7");
+  wxString op = outline ? wxT_2("5") : wxT_2("7");
   if (m_yAxisOriginTop)
   {
-    OutAscii(wxString(wxT("q BT 1 0 0 -1 ")) +
-             wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" Tm ")) +
-             op + wxString(wxT(" Tr (")),false);
+    OutAscii(wxString(wxT_2("q BT 1 0 0 -1 ")) +
+             wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" Tm ")) +
+             op + wxString(wxT_2(" Tr (")),false);
   }
   else
   {
-    OutAscii(wxString(wxT("q BT ")) +
-             wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-             wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" Td ")) +
-             op + wxString(wxT(" Tr (")),false);
+    OutAscii(wxString(wxT_2("q BT ")) +
+             wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+             wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" Td ")) +
+             op + wxString(wxT_2(" Tr (")),false);
   }
   TextEscape(txt,false);
   Out(") Tj ET");
@@ -1648,19 +1648,19 @@ wxPdfDocument::ClippingText(double x, double y, const wxString& txt, bool outlin
 void
 wxPdfDocument::ClippingRect(double x, double y, double w, double h, bool outline)
 {
-  wxString op = outline ? wxT("S") : wxT("n");
-  OutAscii(wxString(wxT("q ")) +
-           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(w*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(h*m_k,2) + wxString(wxT(" re W ")) + op);
+  wxString op = outline ? wxT_2("S") : wxT_2("n");
+  OutAscii(wxString(wxT_2("q ")) +
+           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(w*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(h*m_k,2) + wxString(wxT_2(" re W ")) + op);
   SaveGraphicState();
 }
 
 void
 wxPdfDocument::ClippingEllipse(double x, double y, double rx, double ry, bool outline)
 {
-  wxString op = outline ? wxT("S") : wxT("n");
+  wxString op = outline ? wxT_2("S") : wxT_2("n");
   if (ry <= 0)
   {
     ry = rx;
@@ -1668,36 +1668,36 @@ wxPdfDocument::ClippingEllipse(double x, double y, double rx, double ry, bool ou
   double lx = 4./3. * (sqrt(2.)-1.) * rx;
   double ly = 4./3. * (sqrt(2.)-1.) * ry;
 
-  OutAscii(wxString(wxT("q ")) +
-           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" m ")) +
-           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y-ly)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x+lx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT(" c")));
+  OutAscii(wxString(wxT_2("q ")) +
+           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" m ")) +
+           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y-ly)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x+lx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT_2(" c")));
 
-  OutAscii(wxPdfUtility::Double2String((x-lx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y-ly)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" c")));
+  OutAscii(wxPdfUtility::Double2String((x-lx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y-ry)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y-ly)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" c")));
 
-  OutAscii(wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y+ly)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x-lx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT(" c")));
+  OutAscii(wxPdfUtility::Double2String((x-rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y+ly)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x-lx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(x*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT_2(" c")));
 
-  OutAscii(wxPdfUtility::Double2String((x+lx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((y+ly)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT(" c W ")) + op);
+  OutAscii(wxPdfUtility::Double2String((x+lx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y+ry)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((y+ly)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String((x+rx)*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String(y*m_k,2) + wxString(wxT_2(" c W ")) + op);
   SaveGraphicState();
 }
 
@@ -1706,7 +1706,7 @@ wxPdfDocument::ClippingPolygon(const wxPdfArrayDouble& x, const wxPdfArrayDouble
 {
   unsigned int np = (x.GetCount() < y.GetCount()) ? (unsigned int) x.GetCount() : (unsigned int) y.GetCount();
 
-  wxString op = outline ? wxT("S") : wxT("n");
+  wxString op = outline ? wxT_2("S") : wxT_2("n");
 
   Out("q");
   OutPoint(x[0], y[0]);
@@ -1716,7 +1716,7 @@ wxPdfDocument::ClippingPolygon(const wxPdfArrayDouble& x, const wxPdfArrayDouble
     OutLine(x[i], y[i]);
   }
   OutLine(x[0], y[0]);
-  OutAscii(wxString(wxT("h W ")) + op);
+  OutAscii(wxString(wxT_2("h W ")) + op);
   SaveGraphicState();
 }
 
@@ -1751,10 +1751,10 @@ wxPdfDocument::EndPath(int style)
   wxString op;
   switch (style)
   {
-    case wxPDF_STYLE_FILL:     op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f"); break;
-    case wxPDF_STYLE_FILLDRAW: op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B"); break;
+    case wxPDF_STYLE_FILL:     op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f"); break;
+    case wxPDF_STYLE_FILLDRAW: op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B"); break;
     case wxPDF_STYLE_DRAW:
-    default:                   op = wxT("S"); break;
+    default:                   op = wxT_2("S"); break;
   }
   OutAscii(op);
 }
@@ -1765,12 +1765,12 @@ wxPdfDocument::ClosePath(int style)
   wxString op;
   switch (style)
   {
-    case wxPDF_STYLE_DRAW:     op = wxT("S"); break;
-    case wxPDF_STYLE_FILL:     op = (m_fillRule == wxODDEVEN_RULE) ? wxT("f*") : wxT("f"); break;
-    case wxPDF_STYLE_FILLDRAW: op = (m_fillRule == wxODDEVEN_RULE) ? wxT("B*") : wxT("B"); break;
-    default:                   op = wxT("n"); break;
+    case wxPDF_STYLE_DRAW:     op = wxT_2("S"); break;
+    case wxPDF_STYLE_FILL:     op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("f*") : wxT_2("f"); break;
+    case wxPDF_STYLE_FILLDRAW: op = (m_fillRule == wxODDEVEN_RULE) ? wxT_2("B*") : wxT_2("B"); break;
+    default:                   op = wxT_2("n"); break;
   }
-  OutAscii(wxString(wxT("h W ")) + op);
+  OutAscii(wxString(wxT_2("h W ")) + op);
 }
 
 void
@@ -1820,7 +1820,7 @@ wxPdfDocument::ClippedCell(double w, double h, const wxString& txt,
   bool doPageBreak = (m_yAxisOriginTop) ? (m_y+h > m_pageBreakTrigger) : (m_y-h < m_pageBreakTrigger);
   if ((border != wxPDF_BORDER_NONE) || (fill != 0) || doPageBreak)
   {
-    Cell(w, h, wxT(""), border, 0, wxPDF_ALIGN_LEFT, fill);
+    Cell(w, h, wxT_2(""), border, 0, wxPDF_ALIGN_LEFT, fill);
     m_x -= w;
   }
   ClippingRect(m_x, m_y, w, h);
@@ -1843,7 +1843,7 @@ wxPdfDocument::SetLineStyle(const wxPdfLineStyle& linestyle)
     case wxPDF_LINECAP_BUTT:
     case wxPDF_LINECAP_ROUND:
     case wxPDF_LINECAP_SQUARE:
-      OutAscii(wxString::Format(wxT("%d  J"), linestyle.GetLineCap()));
+      OutAscii(wxString::Format(wxT_2("%d  J"), linestyle.GetLineCap()));
       break;
     default:
       break;
@@ -1853,7 +1853,7 @@ wxPdfDocument::SetLineStyle(const wxPdfLineStyle& linestyle)
     case wxPDF_LINEJOIN_MITER:
     case wxPDF_LINEJOIN_ROUND:
     case wxPDF_LINEJOIN_BEVEL:
-      OutAscii(wxString::Format(wxT("%d  j"), linestyle.GetLineJoin()));
+      OutAscii(wxString::Format(wxT_2("%d  j"), linestyle.GetLineJoin()));
       break;
     default:
       break;
@@ -1862,13 +1862,13 @@ wxPdfDocument::SetLineStyle(const wxPdfLineStyle& linestyle)
   const wxPdfArrayDouble& dash = linestyle.GetDash();
   if (&dash != NULL)
   {
-    wxString dashString = wxT("");
+    wxString dashString = wxT_2("");
     size_t j;
     for (j = 0; j < dash.GetCount(); j++)
     {
       if (j > 0)
       {
-        dashString += wxString(wxT(" "));
+        dashString += wxString(wxT_2(" "));
       }
       dashString += wxPdfUtility::Double2String(dash[j]*m_k,2);
     }
@@ -1877,8 +1877,8 @@ wxPdfDocument::SetLineStyle(const wxPdfLineStyle& linestyle)
     {
       phase = 0;
     }
-    OutAscii(wxString(wxT("[")) + dashString + wxString(wxT("] ")) +
-             wxPdfUtility::Double2String(phase*m_k,2) + wxString(wxT(" d")));
+    OutAscii(wxString(wxT_2("[")) + dashString + wxString(wxT_2("] ")) +
+             wxPdfUtility::Double2String(phase*m_k,2) + wxString(wxT_2(" d")));
   }
   SetDrawColour(linestyle.GetColour());
 }
@@ -1929,7 +1929,7 @@ wxPdfDocument::Scale(double sx, double sy, double x, double y)
   }
   if (sx == 0 || sy == 0)
   {
-    wxLogError(wxString(wxT("wxPdfDocument::Scale: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::Scale: ")) +
                wxString(_("Please use values unequal to zero for Scaling.")));
     return false;
   }
@@ -2075,7 +2075,7 @@ wxPdfDocument::Skew(double xAngle, double yAngle, double x, double y)
   }
   if (xAngle <= -90 || xAngle >= 90 || yAngle <= -90 || yAngle >= 90)
   {
-    wxLogError(wxString(wxT("wxPdfDocument::Skew: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::Skew: ")) +
                wxString(_("Please use values between -90 and 90 degree for skewing.")));
     return false;
   }
@@ -2168,7 +2168,7 @@ wxPdfDocument::LinearGradient(const wxPdfColour& col1, const wxPdfColour& col2,
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfDocument::LinearGradient: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::LinearGradient: ")) +
                wxString(_("Colour spaces do not match.")));
   }
   return n;
@@ -2187,7 +2187,7 @@ wxPdfDocument::AxialGradient(const wxPdfColour& col1, const wxPdfColour& col2,
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfDocument::AxialGradient: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::AxialGradient: ")) +
                wxString(_("Colour spaces do not match.")));
   }
   return n;
@@ -2206,7 +2206,7 @@ wxPdfDocument::MidAxialGradient(const wxPdfColour& col1, const wxPdfColour& col2
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfDocument::MidAxialGradient: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::MidAxialGradient: ")) +
                wxString(_("Colour spaces do not match.")));
   }
   return n;
@@ -2225,7 +2225,7 @@ wxPdfDocument::RadialGradient(const wxPdfColour& col1, const wxPdfColour& col2,
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfDocument::RadialGradient: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::RadialGradient: ")) +
                wxString(_("Colour spaces do not match.")));
   }
   return n;
@@ -2242,7 +2242,7 @@ wxPdfDocument::CoonsPatchGradient(const wxPdfCoonsPatchMesh& mesh, double minCoo
   }
   else
   {
-    wxLogError(wxString(wxT("wxPdfDocument::CoonsPatchGradient: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::CoonsPatchGradient: ")) +
                wxString(_("Mesh is invalid.")));
   }
   return n;
@@ -2497,12 +2497,12 @@ wxPdfDocument::Arrow(double x1, double y1, double x2, double y2, double linewidt
   SetLineWidth(0.2);
 
   //Draw a arrow head
-  OutAscii(wxPdfUtility::Double2String( x2*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String( y2*m_k,2) + wxString(wxT(" m ")) +
-           wxPdfUtility::Double2String( x3*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String( y3*m_k,2) + wxString(wxT(" l ")) +
-           wxPdfUtility::Double2String( x4*m_k,2) + wxString(wxT(" ")) +
-           wxPdfUtility::Double2String( y4*m_k,2) + wxString(wxT(" l b")));
+  OutAscii(wxPdfUtility::Double2String( x2*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String( y2*m_k,2) + wxString(wxT_2(" m ")) +
+           wxPdfUtility::Double2String( x3*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String( y3*m_k,2) + wxString(wxT_2(" l ")) +
+           wxPdfUtility::Double2String( x4*m_k,2) + wxString(wxT_2(" ")) +
+           wxPdfUtility::Double2String( y4*m_k,2) + wxString(wxT_2(" l b")));
 
   SetLineWidth(linewidth);
   Line(x1+cosa*linewidth, y1+sina*linewidth, x2-cosa*height, y2-sina*height);

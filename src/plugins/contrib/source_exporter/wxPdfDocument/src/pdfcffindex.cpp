@@ -123,7 +123,7 @@ void
 wxPdfCffIndexElement::Emit(wxMemoryOutputStream& buffer)
 {
 #if 0
-  wxLogDebug(wxT("Emit: offset=%d length=%d"), m_offset, m_length);
+  wxLogDebug(wxT_2("Emit: offset=%d length=%d"), m_offset, m_length);
 #endif
   char locBuffer[1024];
   m_buf->SeekI(m_offset);
@@ -140,7 +140,7 @@ wxPdfCffIndexElement::Emit(wxMemoryOutputStream& buffer)
     int kk;
     for (kk = 0; kk < bufferLength; kk++)
     {
-      str += wxString::Format(wxT(" %d"), locBuffer[kk]);
+      str += wxString::Format(wxT_2(" %d"), locBuffer[kk]);
       if (kk % 10 == 9)
       {
         wxLogDebug(str);

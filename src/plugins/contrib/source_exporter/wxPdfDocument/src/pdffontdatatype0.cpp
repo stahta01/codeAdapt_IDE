@@ -38,7 +38,7 @@
 wxPdfFontDataType0::wxPdfFontDataType0()
   : wxPdfFontData()
 {
-  m_type = wxT("Type0");
+  m_type = wxT_2("Type0");
   m_conv = NULL;
   m_hwRange = false;
 }
@@ -49,7 +49,7 @@ wxPdfFontDataType0::wxPdfFontDataType0(const wxString& family, const wxString& n
                                        short* cwArray, const wxPdfFontDescription& desc)
   : wxPdfFontData()
 {
-  m_type   = wxT("Type0");
+  m_type   = wxT_2("Type0");
   m_conv = NULL;
   m_family = family;
   m_name   = name;
@@ -73,7 +73,7 @@ wxPdfFontDataType0::wxPdfFontDataType0(const wxString& family, const wxString& n
   }
 
   CreateDefaultEncodingConv();
-  if (m_ordering == wxT("Japan1"))
+  if (m_ordering == wxT_2("Japan1"))
   {
     m_hwRange = true;
     m_hwFirst = 0xff61;
@@ -131,20 +131,20 @@ wxPdfFontDataType0::LoadFontMetrics(wxXmlNode* root)
   while (child)
   {
     // parse the children
-    if (child->GetName() == wxT("font-name"))
+    if (child->GetName() == wxT_2("font-name"))
     {
       m_name = GetNodeContent(child);
       bName = m_name.Length() > 0;
     }
-    else if (child->GetName() == wxT("encoding"))
+    else if (child->GetName() == wxT_2("encoding"))
     {
       m_enc = GetNodeContent(child);
     }
-    else if (child->GetName() == wxT("description"))
+    else if (child->GetName() == wxT_2("description"))
     {
       bDesc = GetFontDescription(child, m_desc);
     }
-    else if (child->GetName() == wxT("cmap"))
+    else if (child->GetName() == wxT_2("cmap"))
     {
       m_cmap = wxEmptyString;
       value = GetNodeContent(child);
@@ -154,22 +154,22 @@ wxPdfFontDataType0::LoadFontMetrics(wxXmlNode* root)
         m_cmap = value;
       }
     }
-    else if (child->GetName() == wxT("registry"))
+    else if (child->GetName() == wxT_2("registry"))
     {
       m_ordering = wxEmptyString;
       m_supplement = wxEmptyString;
 #if wxCHECK_VERSION(2,9,0)
-      value = child->GetAttribute(wxT("ordering"), wxT(""));
+      value = child->GetAttribute(wxT_2("ordering"), wxT_2(""));
 #else
-      value = child->GetPropVal(wxT("ordering"), wxT(""));
+      value = child->GetPropVal(wxT_2("ordering"), wxT_2(""));
 #endif
       if (value.Length() > 0)
       {
         m_ordering = value;
 #if wxCHECK_VERSION(2,9,0)
-        value = child->GetAttribute(wxT("supplement"), wxT(""));
+        value = child->GetAttribute(wxT_2("supplement"), wxT_2(""));
 #else
-        value = child->GetPropVal(wxT("supplement"), wxT(""));
+        value = child->GetPropVal(wxT_2("supplement"), wxT_2(""));
 #endif
         if (value.Length() > 0)
         {
@@ -182,7 +182,7 @@ wxPdfFontDataType0::LoadFontMetrics(wxXmlNode* root)
         }
       }
     }
-    else if (child->GetName() == wxT("widths"))
+    else if (child->GetName() == wxT_2("widths"))
     {
       bWidth = true;
       m_cw = new wxPdfGlyphWidthMap();
@@ -191,14 +191,14 @@ wxPdfFontDataType0::LoadFontMetrics(wxXmlNode* root)
       {
         wxString strId, strWidth;
         long charId, charWidth;
-        if (charNode->GetName() == wxT("char"))
+        if (charNode->GetName() == wxT_2("char"))
         {
 #if wxCHECK_VERSION(2,9,0)
-          strId = charNode->GetAttribute(wxT("id"), wxT(""));
-          strWidth = charNode->GetAttribute(wxT("width"), wxT(""));
+          strId = charNode->GetAttribute(wxT_2("id"), wxT_2(""));
+          strWidth = charNode->GetAttribute(wxT_2("width"), wxT_2(""));
 #else
-          strId = charNode->GetPropVal(wxT("id"), wxT(""));
-          strWidth = charNode->GetPropVal(wxT("width"), wxT(""));
+          strId = charNode->GetPropVal(wxT_2("id"), wxT_2(""));
+          strWidth = charNode->GetPropVal(wxT_2("width"), wxT_2(""));
 #endif
           if (strId.Length() > 0 && strId.ToLong(&charId) &&
               strWidth.Length() > 0 && strWidth.ToLong(&charWidth))
@@ -212,7 +212,7 @@ wxPdfFontDataType0::LoadFontMetrics(wxXmlNode* root)
     child = child->GetNext();
   }
   CreateDefaultEncodingConv();
-  if (m_ordering == wxT("Japan1"))
+  if (m_ordering == wxT_2("Japan1"))
   {
     m_hwRange = true;
     m_hwFirst = 0xff61;
@@ -228,18 +228,18 @@ wxPdfFontDataType0::GetWidthsAsString(bool subset, wxPdfSortedArrayInt* usedGlyp
   wxUnusedVar(subset);
   wxUnusedVar(usedGlyphs);
   wxUnusedVar(subsetGlyphs);
-  wxString s = wxString(wxT("[1 ["));
+  wxString s = wxString(wxT_2("[1 ["));
   int i;
   for (i = 32; i <= 126; i++)
   {
-    s += wxString::Format(wxT("%u "), (*m_cw)[i]);
+    s += wxString::Format(wxT_2("%u "), (*m_cw)[i]);
   }
-  s += wxString(wxT("]"));
+  s += wxString(wxT_2("]"));
   if (HasHalfWidthRange())
   {
-    s += wxString(wxT(" 231 325 500 631 [500] 326 389 500"));
+    s += wxString(wxT_2(" 231 325 500 631 [500] 326 389 500"));
   }
-  s += wxString(wxT("]"));
+  s += wxString(wxT_2("]"));
   return s;
 }
 

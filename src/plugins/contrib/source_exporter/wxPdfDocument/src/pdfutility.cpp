@@ -58,7 +58,7 @@ wxPdfUtility::GetUniqueId(const wxString& prefix)
     z += 2147483562;
   }
 
-  uid += wxString::Format(wxT("%08x%05x"), ts.GetSecond(), ts.GetMillisecond());
+  uid += wxString::Format(wxT_2("%08x%05x"), ts.GetSecond(), ts.GetMillisecond());
   uid += Double2String(z * 4.656613e-9,8);
 
   return uid;
@@ -89,19 +89,19 @@ wxPdfUtility::Double2String(double value, int precision)
 
   if (value < 0)
   {
-    number += wxString(wxT("-"));
+    number += wxString(wxT_2("-"));
   }
 
-  number += wxString::Format(wxT("%.0f"), floor(localValue));
+  number += wxString::Format(wxT_2("%.0f"), floor(localValue));
 
   // generate fraction, padding with zero if necessary.
   if (precision > 0)
   {
-    number += wxString(wxT("."));
-    wxString fraction = wxString::Format(wxT("%.0f"), floor(localFraction));
+    number += wxString(wxT_2("."));
+    wxString fraction = wxString::Format(wxT_2("%.0f"), floor(localFraction));
     if (fraction.Length() < ((size_t) precision))
     {
-      number += wxString(wxT('0'), precision-fraction.Length());
+      number += wxString(wxT_2('0'), precision-fraction.Length());
     }
     number += fraction;
   }
@@ -122,45 +122,45 @@ wxPdfUtility::String2Double(const wxString& str)
   int jMax = (int) value.Length();
   if (jMax > 0)
   {
-    if (value[j] == wxT('+'))
+    if (value[j] == wxT_2('+'))
     {
       j++;
     }
-    else if (value[j] == wxT('-'))
+    else if (value[j] == wxT_2('-'))
     {
       sign = -1;
       j++;
     }
     while (j < jMax && wxIsdigit(value[j]))
     {
-      result = result*10 + (value[j] - wxT('0'));
+      result = result*10 + (value[j] - wxT_2('0'));
       j++;
     }
-    if (j < jMax && value[j] == wxT('.'))
+    if (j < jMax && value[j] == wxT_2('.'))
     {
       j++;
       while (j < jMax && wxIsdigit(value[j]))
       {
-        result = result*10 + (value[j] - wxT('0'));
+        result = result*10 + (value[j] - wxT_2('0'));
         scale++;
         j++;
       }
     }
-    if (j < jMax && (value[j] == wxT('E') || value[j] == wxT('e')))
+    if (j < jMax && (value[j] == wxT_2('E') || value[j] == wxT_2('e')))
     {
       j++;
-      if (value[j] == wxT('+'))
+      if (value[j] == wxT_2('+'))
       {
         j++;
       }
-      else if (value[j] == wxT('-'))
+      else if (value[j] == wxT_2('-'))
       {
         expsign = -1;
         j++;
       }
       while (j < jMax && wxIsdigit(value[j]))
       {
-        exponent = exponent*10 + (value[j] - wxT('0'));
+        exponent = exponent*10 + (value[j] - wxT_2('0'));
         j++;
       }
       exponent *= expsign;
@@ -177,7 +177,7 @@ wxPdfUtility::Convert2Roman(int value)
 
   if (value > 0 && value < 4000)
   {
-    static wxString romans = wxT("MDCLXVI");
+    static wxString romans = wxT_2("MDCLXVI");
     int pos = 6;  // Point to LAST character in 'romans'
     int currentDigit;
 
@@ -207,7 +207,7 @@ wxPdfUtility::Convert2Roman(int value)
   }
   else
   {
-    result = wxT("???");
+    result = wxT_2("???");
   }
   return result;
 }
@@ -232,8 +232,8 @@ wxPdfUtility::RGB2String(const wxColour& colour)
   double r = colour.Red();
   double g = colour.Green();
   double b = colour.Blue();
-  wxString rgb = Double2String(r/255.,3) + wxT(" ") + 
-                 Double2String(g/255.,3) + wxT(" ") + 
+  wxString rgb = Double2String(r/255.,3) + wxT_2(" ") + 
+                 Double2String(g/255.,3) + wxT_2(" ") + 
                  Double2String(b/255.,3);
   return rgb;
 }

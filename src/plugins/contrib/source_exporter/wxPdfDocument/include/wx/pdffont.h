@@ -184,7 +184,7 @@ public :
   * \param replace the character used to replace invalid characters
   * \return converted string
   */
-  wxString ConvertToValid(const wxString& s, wxChar replace = wxT('?')) const;
+  wxString ConvertToValid(const wxString& s, wxChar replace = wxT_2('?')) const;
 
   /// Get list of supported glyph names
   /**

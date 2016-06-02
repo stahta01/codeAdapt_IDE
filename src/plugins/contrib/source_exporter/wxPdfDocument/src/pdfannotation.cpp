@@ -116,7 +116,7 @@ wxPdfDocument::AddLink()
 {
   if (m_inTemplate)
   {
-    wxLogError(wxString(wxT("wxPdfDocument::AddLink: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::AddLink: ")) +
                wxString::Format(_("Adding links in templates is impossible. Current template ID is %d."), m_templateId));
     return -1;
   }
@@ -132,7 +132,7 @@ wxPdfDocument::SetLink(int link, double ypos, int page)
 {
   if (m_inTemplate)
   {
-    wxLogError(wxString(wxT("wxPdfDocument::SetLink: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::SetLink: ")) +
                wxString::Format(_("Setting links in templates is impossible. Current template ID is %d."), m_templateId));
     return false;
   }
@@ -162,7 +162,7 @@ wxPdfDocument::Link(double x, double y, double w, double h, const wxPdfLink& lin
 {
   if (m_inTemplate)
   {
-    wxLogError(wxString(wxT("wxPdfDocument::Link: ")) +
+    wxLogError(wxString(wxT_2("wxPdfDocument::Link: ")) +
                wxString::Format(_("Using links in templates is impossible. Current template ID is %d."), m_templateId));
     return;
   }

@@ -80,7 +80,7 @@ wxPdfLayer::AddChild(wxPdfLayer* child)
     }
     else
     {
-      wxLogDebug(wxString(wxT("wxPdfLayer::AddChild: ")) +
+      wxLogDebug(wxString(wxT_2("wxPdfLayer::AddChild: ")) +
                  wxString::Format(_("The layer '%s' already has a parent."), child->GetName().c_str()));
       ok = false;
     }
@@ -118,16 +118,16 @@ void
 wxPdfLayer::SetCreatorInfo(const wxString& creator, const wxString& subtype)
 {
   wxPdfDictionary* usage = AllocateUsage();
-  if (usage->Get(wxT("CreatorInfo")) == NULL)
+  if (usage->Get(wxT_2("CreatorInfo")) == NULL)
   {
     wxPdfDictionary* dic = new wxPdfDictionary();
-    dic->Put(wxT("Creator"), new wxPdfString(creator));
-    dic->Put(wxT("Subtype"), new wxPdfName(subtype));
-    usage->Put(wxT("CreatorInfo"), dic);
+    dic->Put(wxT_2("Creator"), new wxPdfString(creator));
+    dic->Put(wxT_2("Subtype"), new wxPdfName(subtype));
+    usage->Put(wxT_2("CreatorInfo"), dic);
   }
   else
   {
-    wxLogDebug(wxString(wxT("wxPdfLayer::SetPrint: ")) +
+    wxLogDebug(wxString(wxT_2("wxPdfLayer::SetPrint: ")) +
                wxString(_("Usage entry 'CreatorInfo' already defined.")));
   }
 }
@@ -136,19 +136,19 @@ void
 wxPdfLayer::SetLanguage(const wxString& lang, bool preferred)
 {
   wxPdfDictionary* usage = AllocateUsage();
-  if (usage->Get(wxT("Language")) == NULL)
+  if (usage->Get(wxT_2("Language")) == NULL)
   {
     wxPdfDictionary* dic = new wxPdfDictionary();
-    dic->Put(wxT("Lang"), new wxPdfString(lang));
+    dic->Put(wxT_2("Lang"), new wxPdfString(lang));
     if (preferred)
     {
-      dic->Put(wxT("Preferred"), new wxPdfName(wxT("ON")));
+      dic->Put(wxT_2("Preferred"), new wxPdfName(wxT_2("ON")));
     }
-    usage->Put(wxT("Language"), dic);
+    usage->Put(wxT_2("Language"), dic);
   }
   else
   {
-    wxLogDebug(wxString(wxT("wxPdfLayer::SetPrint: ")) +
+    wxLogDebug(wxString(wxT_2("wxPdfLayer::SetPrint: ")) +
                wxString(_("Usage entry 'Language' already defined.")));
   }
 }
@@ -157,15 +157,15 @@ void
 wxPdfLayer::SetExport(bool exportState)
 {
   wxPdfDictionary* usage = AllocateUsage();
-  if (usage->Get(wxT("Export")) == NULL)
+  if (usage->Get(wxT_2("Export")) == NULL)
   {
     wxPdfDictionary* dic = new wxPdfDictionary();
-    dic->Put(wxT("ExportState"), exportState ? new wxPdfName(wxT("ON")) : new wxPdfName(wxT("OFF")));
-    usage->Put(wxT("Export"), dic);
+    dic->Put(wxT_2("ExportState"), exportState ? new wxPdfName(wxT_2("ON")) : new wxPdfName(wxT_2("OFF")));
+    usage->Put(wxT_2("Export"), dic);
   }
   else
   {
-    wxLogDebug(wxString(wxT("wxPdfLayer::SetPrint: ")) +
+    wxLogDebug(wxString(wxT_2("wxPdfLayer::SetPrint: ")) +
                wxString(_("Usage entry 'Export' already defined.")));
   }
 }
@@ -176,22 +176,22 @@ wxPdfLayer::SetZoom(double minZoom, double maxZoom)
   if (minZoom > 0 || maxZoom >= 0)
   {
     wxPdfDictionary* usage = AllocateUsage();
-    if (usage->Get(wxT("Zoom")) == NULL)
+    if (usage->Get(wxT_2("Zoom")) == NULL)
     {
       wxPdfDictionary* dic = new wxPdfDictionary();
       if (minZoom > 0)
       {
-        dic->Put(wxT("min"), new wxPdfNumber(minZoom));
+        dic->Put(wxT_2("min"), new wxPdfNumber(minZoom));
       }
       if (maxZoom >= 0)
       {
-        dic->Put(wxT("max"), new wxPdfNumber(maxZoom));
+        dic->Put(wxT_2("max"), new wxPdfNumber(maxZoom));
       }
-      usage->Put(wxT("Zoom"), dic);
+      usage->Put(wxT_2("Zoom"), dic);
     }
     else
     {
-      wxLogDebug(wxString(wxT("wxPdfLayer::SetPrint: ")) +
+      wxLogDebug(wxString(wxT_2("wxPdfLayer::SetPrint: ")) +
                  wxString(_("Usage entry 'Zoom' already defined.")));
     }
   }
@@ -201,16 +201,16 @@ void
 wxPdfLayer::SetPrint(const wxString& subtype, bool printState)
 {
   wxPdfDictionary* usage = AllocateUsage();
-  if (usage->Get(wxT("Print")) == NULL)
+  if (usage->Get(wxT_2("Print")) == NULL)
   {
     wxPdfDictionary* dic = new wxPdfDictionary();
-    dic->Put(wxT("Subtype"), new wxPdfName(subtype));
-    dic->Put(wxT("PrintState"), printState ? new wxPdfName(wxT("ON")) : new wxPdfName(wxT("OFF")));
-    usage->Put(wxT("Print"), dic);
+    dic->Put(wxT_2("Subtype"), new wxPdfName(subtype));
+    dic->Put(wxT_2("PrintState"), printState ? new wxPdfName(wxT_2("ON")) : new wxPdfName(wxT_2("OFF")));
+    usage->Put(wxT_2("Print"), dic);
   }
   else
   {
-    wxLogDebug(wxString(wxT("wxPdfLayer::SetPrint: ")) +
+    wxLogDebug(wxString(wxT_2("wxPdfLayer::SetPrint: ")) +
                wxString(_("Usage entry 'Print' already defined.")));
   }
 }
@@ -219,15 +219,15 @@ void
 wxPdfLayer::SetView(bool viewState)
 {
   wxPdfDictionary* usage = AllocateUsage();
-  if (usage->Get(wxT("View")) == NULL)
+  if (usage->Get(wxT_2("View")) == NULL)
   {
     wxPdfDictionary* dic = new wxPdfDictionary();
-    dic->Put(wxT("ViewState"), viewState ? new wxPdfName(wxT("ON")) : new wxPdfName(wxT("OFF")));
-    usage->Put(wxT("View"), dic);
+    dic->Put(wxT_2("ViewState"), viewState ? new wxPdfName(wxT_2("ON")) : new wxPdfName(wxT_2("OFF")));
+    usage->Put(wxT_2("View"), dic);
   }
   else
   {
-    wxLogDebug(wxString(wxT("wxPdfLayer::SetView: ")) +
+    wxLogDebug(wxString(wxT_2("wxPdfLayer::SetView: ")) +
                wxString(_("Usage entry 'View' already defined.")));
   }
 }

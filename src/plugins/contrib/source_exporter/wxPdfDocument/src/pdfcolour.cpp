@@ -58,7 +58,7 @@ wxPdfColour::wxPdfColour()
 {
   m_type   = wxPDF_COLOURTYPE_UNKNOWN;
   m_prefix = wxEmptyString;
-  m_colour  = wxT("0");
+  m_colour  = wxT_2("0");
 }
 
 wxPdfColour::wxPdfColour(const unsigned char grayscale)
@@ -151,16 +151,16 @@ wxPdfColour::SetColour(double cyan, double magenta, double yellow, double black)
 {
   m_type   = wxPDF_COLOURTYPE_CMYK;
   m_prefix = wxEmptyString;
-  m_colour = wxPdfUtility::Double2String(wxPdfUtility::ForceRange(cyan,    0., 100.)/100.,3) + wxT(" ") +
-             wxPdfUtility::Double2String(wxPdfUtility::ForceRange(magenta, 0., 100.)/100.,3) + wxT(" ") +
-             wxPdfUtility::Double2String(wxPdfUtility::ForceRange(yellow,  0., 100.)/100.,3) + wxT(" ") +
+  m_colour = wxPdfUtility::Double2String(wxPdfUtility::ForceRange(cyan,    0., 100.)/100.,3) + wxT_2(" ") +
+             wxPdfUtility::Double2String(wxPdfUtility::ForceRange(magenta, 0., 100.)/100.,3) + wxT_2(" ") +
+             wxPdfUtility::Double2String(wxPdfUtility::ForceRange(yellow,  0., 100.)/100.,3) + wxT_2(" ") +
              wxPdfUtility::Double2String(wxPdfUtility::ForceRange(black,   0., 100.)/100.,3);
 }
 
 void
 wxPdfColour::SetColour(const wxString& name)
 {
-  if (name.Length() == 7 && name[0] == wxT('#'))
+  if (name.Length() == 7 && name[0] == wxT_2('#'))
   {
     unsigned long r = 0, g = 0, b = 0;
     if (name.Mid(1,2).ToULong(&r,16) &&
@@ -193,7 +193,7 @@ void
 wxPdfColour::SetColour(const wxPdfSpotColour& spot, double tint)
 {
   m_type   = wxPDF_COLOURTYPE_SPOT;
-  m_prefix = wxString::Format(wxT("/CS%d"), spot.GetIndex());
+  m_prefix = wxString::Format(wxT_2("/CS%d"), spot.GetIndex());
   m_colour = wxPdfUtility::Double2String(wxPdfUtility::ForceRange(tint, 0., 100.)/100.,3);
 }
 
@@ -201,8 +201,8 @@ void
 wxPdfColour::SetColour(const wxPdfPattern& pattern)
 {
   m_type   = wxPDF_COLOURTYPE_PATTERN;
-  m_prefix = wxString(wxT("/Pattern"));
-  m_colour = wxString::Format(wxT("/P%d"), pattern.GetIndex());
+  m_prefix = wxString(wxT_2("/Pattern"));
+  m_colour = wxString::Format(wxT_2("/P%d"), pattern.GetIndex());
 }
 
 const wxString
@@ -212,24 +212,24 @@ wxPdfColour::GetColour(bool drawing) const
   switch (m_type)
   {
     case wxPDF_COLOURTYPE_GRAY:
-      colour = m_colour + ((drawing) ? wxString(wxT(" G")) : wxString(wxT(" g")));
+      colour = m_colour + ((drawing) ? wxString(wxT_2(" G")) : wxString(wxT_2(" g")));
       break;
     case wxPDF_COLOURTYPE_RGB:
-      colour = m_colour + ((drawing) ? wxString(wxT(" RG")) : wxString(wxT(" rg")));
+      colour = m_colour + ((drawing) ? wxString(wxT_2(" RG")) : wxString(wxT_2(" rg")));
       break;
     case wxPDF_COLOURTYPE_CMYK:
-      colour = m_colour + ((drawing) ? wxString(wxT(" K")) : wxString(wxT(" k")));
+      colour = m_colour + ((drawing) ? wxString(wxT_2(" K")) : wxString(wxT_2(" k")));
       break;
     case wxPDF_COLOURTYPE_SPOT:
-      colour = m_prefix + ((drawing) ? wxString(wxT(" CS ")) : wxString(wxT(" cs "))) +
-               m_colour + ((drawing) ? wxString(wxT(" SCN")) : wxString(wxT(" scn")));
+      colour = m_prefix + ((drawing) ? wxString(wxT_2(" CS ")) : wxString(wxT_2(" cs "))) +
+               m_colour + ((drawing) ? wxString(wxT_2(" SCN")) : wxString(wxT_2(" scn")));
       break;
     case wxPDF_COLOURTYPE_PATTERN:
-      colour = m_prefix + ((drawing) ? wxString(wxT(" CS ")) : wxString(wxT(" cs "))) +
-               m_colour + ((drawing) ? wxString(wxT(" SCN")) : wxString(wxT(" scn")));
+      colour = m_prefix + ((drawing) ? wxString(wxT_2(" CS ")) : wxString(wxT_2(" cs "))) +
+               m_colour + ((drawing) ? wxString(wxT_2(" SCN")) : wxString(wxT_2(" scn")));
       break;
     default:
-      colour = ((drawing) ? wxString(wxT("0 G")) : wxString(wxT("0 g")));
+      colour = ((drawing) ? wxString(wxT_2("0 G")) : wxString(wxT_2("0 g")));
       break;
   }
   return colour;

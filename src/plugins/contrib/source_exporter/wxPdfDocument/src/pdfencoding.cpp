@@ -74,7 +74,7 @@ wxPdfEncoding::GlyphName2Unicode(const wxString& glyphName, wxUint32& unicode)
   {
     wxString glyphRest;
     unsigned long convUni = 0;
-    if (glyphName.StartsWith(wxT("uni"), &glyphRest))
+    if (glyphName.StartsWith(wxT_2("uni"), &glyphRest))
     {
       if (glyphRest.length() >= 4)
       {
@@ -82,7 +82,7 @@ wxPdfEncoding::GlyphName2Unicode(const wxString& glyphName, wxUint32& unicode)
         if (found) unicode = convUni;
       }
     }
-    else if (glyphName.StartsWith(wxT("u"), &glyphRest))
+    else if (glyphName.StartsWith(wxT_2("u"), &glyphRest))
     {
       if (glyphRest.length() >= 6)
       {
@@ -151,7 +151,7 @@ wxPdfEncoding::wxPdfEncoding()
   m_glyphNames.Alloc(256);
   m_cmap.Insert(0, 0, 256);
   m_cmapBase.Insert(0, 0, 256);
-  m_glyphNames.Insert(wxString(wxT(".notdef")), 0, 256);
+  m_glyphNames.Insert(wxString(wxT_2(".notdef")), 0, 256);
   m_encodingMap = NULL;
 }
 
@@ -201,7 +201,7 @@ bool
 wxPdfEncoding::SetEncoding(const wxString& encoding)
 {
   wxString encodingName = encoding.Lower();
-  bool isWinAnsi = encodingName.IsSameAs(wxT("winansi"));
+  bool isWinAnsi = encodingName.IsSameAs(wxT_2("winansi"));
   bool found = false;
   size_t j = 0;
   while (!found && gs_encodingData[j].m_encodingName != NULL)
@@ -248,11 +248,11 @@ wxPdfEncoding::SetEncoding(const wxString& encoding)
       {
         if (k > 40 && isWinAnsi)
         {
-          m_glyphNames[k] = wxString(wxT("bullet"));
+          m_glyphNames[k] = wxString(wxT_2("bullet"));
         }
         else
         {
-          m_glyphNames[k] = wxString(wxT(".notdef"));
+          m_glyphNames[k] = wxString(wxT_2(".notdef"));
         }
       }
     }
@@ -270,11 +270,11 @@ wxPdfEncoding::SetEncoding(const wxString& encoding)
       {
         if (isWinAnsi)
         {
-          m_glyphNames[k] = wxString(wxT("bullet"));
+          m_glyphNames[k] = wxString(wxT_2("bullet"));
         }
         else
         {
-          m_glyphNames[k] = wxString(wxT(".notdef"));
+          m_glyphNames[k] = wxString(wxT_2(".notdef"));
         }
       }
     }
@@ -306,10 +306,10 @@ wxPdfEncoding::GetDifferences() const
     {
       if (i != last+1)
       {
-        diffs += wxString::Format(wxT("%d "), i);
+        diffs += wxString::Format(wxT_2("%d "), i);
       }
       last = i;
-      diffs = diffs + wxString(wxT("/")) + m_glyphNames[i] + wxString(wxT(" "));
+      diffs = diffs + wxString(wxT_2("/")) + m_glyphNames[i] + wxString(wxT_2(" "));
     }
   }
   return diffs;
