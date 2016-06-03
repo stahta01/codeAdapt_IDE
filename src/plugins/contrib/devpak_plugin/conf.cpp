@@ -38,7 +38,7 @@ UpdateRec* ReadConf(const IniParser& ini, int* recCount, const wxString& current
     	// devpaks.org has changed the title to contain some extra info
         // e.g.: [libunicows   Library version: 1.1.1   Devpak revision: 1sid]
     	// we don't need this extra info, so if we find it we remove it
-    	int pos = rec.title.Find(_T("Library version:"));
+    	int pos = rec.title.Find(wxT_2("Library version:"));
     	if (pos != -1)
     	{
     		rec.title.Truncate(pos);
@@ -46,24 +46,24 @@ UpdateRec* ReadConf(const IniParser& ini, int* recCount, const wxString& current
     		rec.title = rec.title.Trim(true);
     	}
 
-    	rec.name = ini.GetKeyValue(i, _T("Name"));
-    	rec.desc = ini.GetKeyValue(i, _T("Description"));
-    	rec.remote_file = ini.GetKeyValue(i, _T("RemoteFilename"));
-    	rec.local_file = ini.GetKeyValue(i, _T("LocalFilename"));
-    	rec.groups = GetArrayFromString(ini.GetKeyValue(i, _T("Group")), _T(","));
-    	rec.install = ini.GetKeyValue(i, _T("InstallPath"));
-    	rec.version = ini.GetKeyValue(i, _T("Version"));
-        ini.GetKeyValue(i, _T("Size")).ToLong(&rec.bytes);
-    	rec.date = ini.GetKeyValue(i, _T("Date"));
-    	rec.installable = ini.GetKeyValue(i, _T("Execute")) == _T("1");
+    	rec.name = ini.GetKeyValue(i, wxT_2("Name"));
+    	rec.desc = ini.GetKeyValue(i, wxT_2("Description"));
+    	rec.remote_file = ini.GetKeyValue(i, wxT_2("RemoteFilename"));
+    	rec.local_file = ini.GetKeyValue(i, wxT_2("LocalFilename"));
+    	rec.groups = GetArrayFromString(ini.GetKeyValue(i, wxT_2("Group")), wxT_2(","));
+    	rec.install = ini.GetKeyValue(i, wxT_2("InstallPath"));
+    	rec.version = ini.GetKeyValue(i, wxT_2("Version"));
+        ini.GetKeyValue(i, wxT_2("Size")).ToLong(&rec.bytes);
+    	rec.date = ini.GetKeyValue(i, wxT_2("Date"));
+    	rec.installable = ini.GetKeyValue(i, wxT_2("Execute")) == wxT_2("1");
 
         // read .entry file (if exists)
-        rec.entry = (!rec.name.IsEmpty() ? rec.name : wxFileName(rec.local_file).GetName()) + _T(".entry");
+        rec.entry = (!rec.name.IsEmpty() ? rec.name : wxFileName(rec.local_file).GetName()) + wxT_2(".entry");
         IniParser p;
         p.ParseFile(appPath + rec.entry);
-        rec.installed_version = p.GetValue(_T("Setup"), _T("AppVersion"));
+        rec.installed_version = p.GetValue(wxT_2("Setup"), wxT_2("AppVersion"));
 
-        rec.downloaded = wxFileExists(appPath + _T("/") + rec.local_file);
+        rec.downloaded = wxFileExists(appPath + wxT_2("/") + rec.local_file);
         rec.installed = !rec.installed_version.IsEmpty();
 
         // calculate size
@@ -72,12 +72,12 @@ UpdateRec* ReadConf(const IniParser& ini, int* recCount, const wxString& current
         // fix-up
         if (rec.name.IsEmpty())
             rec.name = rec.title;
-        rec.desc.Replace(_T("<CR>"), _T("\n"));
-        rec.desc.Replace(_T("<LF>"), _T("\r"));
+        rec.desc.Replace(wxT_2("<CR>"), wxT_2("\n"));
+        rec.desc.Replace(wxT_2("<LF>"), wxT_2("\r"));
         wxURL url(rec.remote_file);
         if (!url.GetServer().IsEmpty())
         {
-            rec.remote_server = url.GetScheme() + _T("://") + url.GetServer();
+            rec.remote_server = url.GetScheme() + wxT_2("://") + url.GetServer();
             int pos = rec.remote_file.Find(url.GetServer());
             if (pos != wxNOT_FOUND)
                 rec.remote_file.Remove(0, pos + url.GetServer().Length() + 1);

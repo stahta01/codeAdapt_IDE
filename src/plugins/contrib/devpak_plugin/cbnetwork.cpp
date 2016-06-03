@@ -78,7 +78,7 @@ bool cbNetwork::Connect(const wxString& remote)
 {
     Disconnect();
 
-    wxString sep = _T("/");
+    wxString sep = wxT_2("/");
     if (m_ServerURL.Last() == sep.GetChar(0) || remote.StartsWith(sep))
         sep.Clear();
     m_pURL = new wxURL(m_ServerURL + sep + remote);
@@ -125,7 +125,7 @@ bool cbNetwork::ReadFileContents(const wxString& remote, wxString& buffer)
     wxTextInputStream tis(*m_pStream);
     while (!m_Abort && !m_pStream->Eof())
     {
-        buffer += tis.ReadLine() + _T('\n');
+        buffer += tis.ReadLine() + wxT_2('\n');
         Notify(cbEVT_CBNET_PROGRESS, name, buffer.Length());
     }
 

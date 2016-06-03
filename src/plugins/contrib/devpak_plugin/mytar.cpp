@@ -118,19 +118,19 @@ bool TAR::Next(TAR::Record* rec)
     switch (buffer.typeflag)
     {
         case 0:
-        case _T('0'): rec->ft = ftNormal; break;
-        case _T('1'): rec->ft = ftLink; break;
-        case _T('2'): rec->ft = ftSymbolicLink; break;
-        case _T('3'): rec->ft = ftCharacter; break;
-        case _T('4'): rec->ft = ftBlock; break;
-        case _T('5'): rec->ft = ftDirectory; break;
-        case _T('6'): rec->ft = ftFifo; break;
-        case _T('7'): rec->ft = ftContiguous; break;
-        case _T('D'): rec->ft = ftDumpDir; break;
-        case _T('M'): rec->ft = ftMultiVolume; break;
-        case _T('V'): rec->ft = ftVolumeHeader; break;
-//        case _T('L'): rec.ft = ftLongName; break;
-//        case _T('K'): rec.ft = ftLongLink; break;
+        case wxT_2('0'): rec->ft = ftNormal; break;
+        case wxT_2('1'): rec->ft = ftLink; break;
+        case wxT_2('2'): rec->ft = ftSymbolicLink; break;
+        case wxT_2('3'): rec->ft = ftCharacter; break;
+        case wxT_2('4'): rec->ft = ftBlock; break;
+        case wxT_2('5'): rec->ft = ftDirectory; break;
+        case wxT_2('6'): rec->ft = ftFifo; break;
+        case wxT_2('7'): rec->ft = ftContiguous; break;
+        case wxT_2('D'): rec->ft = ftDumpDir; break;
+        case wxT_2('M'): rec->ft = ftMultiVolume; break;
+        case wxT_2('V'): rec->ft = ftVolumeHeader; break;
+//        case wxT_2('L'): rec.ft = ftLongName; break;
+//        case wxT_2('K'): rec.ft = ftLongLink; break;
         default: break;
     }
 
@@ -162,7 +162,7 @@ bool TAR::ExtractAll(const wxString& dirname, wxString& status, wxArrayString* f
         wxString convertedFile;
         if (!ExtractFile(&r, dirname, status, &convertedFile))
         {
-            status << _("Failed extracting") << _T(" \"") << r.name << _T("\"\n");
+            status << _("Failed extracting") << wxT_2(" \"") << r.name << wxT_2("\"\n");
             return false;
         }
         if (files && !convertedFile.IsEmpty())
@@ -180,10 +180,10 @@ void TAR::AddReplacer(const wxString& from, const wxString& to)
 {
     Replacers r;
     r.from = from;
-    if (r.from.Last() != _T('/'))
-        r.from << _T('/');
+    if (r.from.Last() != wxT_2('/'))
+        r.from << wxT_2('/');
     r.to = to;
-    r.to.Replace(_T("<app>"), _T(""));
+    r.to.Replace(wxT_2("<app>"), wxT_2(""));
 
     // avoid duplicates
     for (unsigned int i = 0; i < m_Replacers.GetCount(); ++i)
@@ -197,13 +197,13 @@ void TAR::AddReplacer(const wxString& from, const wxString& to)
 
 void TAR::ReplaceThings(wxString& path)
 {
-    while (path.Replace(_T("\\"), _T("/")))
+    while (path.Replace(wxT_2("\\"), wxT_2("/")))
         ;
     for (unsigned int i = 0; i < m_Replacers.GetCount(); ++i)
         path.Replace(m_Replacers[i].from, m_Replacers[i].to);
-    while (path.Replace(_T("\\"), _T("/")))
+    while (path.Replace(wxT_2("\\"), wxT_2("/")))
         ;
-    while (path.Replace(_T("//"), _T("/")))
+    while (path.Replace(wxT_2("//"), wxT_2("/")))
         ;
 }
 
@@ -219,7 +219,7 @@ bool TAR::ExtractFile(Record* rec, const wxString& dirname, wxString& status, wx
         return true;
     if (!dirname.IsEmpty())
     {
-        path << dirname << _T("/");
+        path << dirname << wxT_2("/");
     }
     path << rec->name;
     ReplaceThings(path);
@@ -229,14 +229,14 @@ bool TAR::ExtractFile(Record* rec, const wxString& dirname, wxString& status, wx
         case ftNormal:
         {
             CreateDirRecursively(path);
-            status << _("Unpacking ") << path << _T('\n');
+            status << _("Unpacking ") << path << wxT_2('\n');
             if (convertedFile)
                 *convertedFile = path;
 
             FILE* out = fopen(path.mb_str(), "wb");
             if (!out)
             {
-                status << wxString(_("Can't open file ")) << path << _T("\n");
+                status << wxString(_("Can't open file ")) << path << wxT_2("\n");
                 return false;
             }
             if (rec->size > 0)
@@ -249,7 +249,7 @@ bool TAR::ExtractFile(Record* rec, const wxString& dirname, wxString& status, wx
                     delete[] buffer;
                     fclose(out);
                     fseek(m_pFile, oldpos, SEEK_SET);
-                    status << _("Failure reading file ") << path << _T("\n");
+                    status << _("Failure reading file ") << path << wxT_2("\n");
                     return false;
                 }
                 fwrite(buffer, rec->size, 1, out);

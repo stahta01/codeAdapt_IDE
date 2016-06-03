@@ -50,10 +50,10 @@ UpdateDlg::UpdateDlg(wxWindow* parent)
     m_LastBlockSize(0),
     m_HasUpdated(false),
     m_FirstTimeCheck(true),
-    m_Net(this, idNet, _T("http://devpaks.sourceforge.net/"))
+    m_Net(this, idNet, wxT_2("http://devpaks.sourceforge.net/"))
 {
 	//ctor
-	wxXmlResource::Get()->LoadDialog(this, parent, _T("MainFrame"));
+	wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("MainFrame"));
 	CreateListColumns();
     FillServers();
 	UpdateStatus(_("Ready"), 0);
@@ -184,7 +184,7 @@ void UpdateDlg::FillFiles(const wxTreeItemId& id)
     lst->ClearAll();
     CreateListColumns();
 
-    wxString group = id == tree->GetRootItem() ? _T("") : tree->GetItemText(id);
+    wxString group = id == tree->GetRootItem() ? wxT_2("") : tree->GetItemText(id);
 
     // add files belonging to group
     int counter = 0;
@@ -218,12 +218,12 @@ void UpdateDlg::FillFileDetails(const wxListItem& id)
         EnableButtons();
         return;
     }
-    txt->AppendText(_("Name: ") + cur->name + _T("\n"));
-//    txt->AppendText(_("Server: ") + cur->remote_server + _T("\n"));
-//    txt->AppendText(_("File: ") + cur->remote_file + _T("\n"));
-    txt->AppendText(_("Version: ") + cur->version + _T("\n"));
-    txt->AppendText(_("Size: ") + cur->size + _T("\n"));
-    txt->AppendText(_("Date: ") + cur->date + _T("\n\n"));
+    txt->AppendText(_("Name: ") + cur->name + wxT_2("\n"));
+//    txt->AppendText(_("Server: ") + cur->remote_server + wxT_2("\n"));
+//    txt->AppendText(_("File: ") + cur->remote_file + wxT_2("\n"));
+    txt->AppendText(_("Version: ") + cur->version + wxT_2("\n"));
+    txt->AppendText(_("Size: ") + cur->size + wxT_2("\n"));
+    txt->AppendText(_("Date: ") + cur->date + wxT_2("\n\n"));
     txt->AppendText(_("Description: \n"));
     txt->AppendText(cur->desc);
 
@@ -243,7 +243,7 @@ void UpdateDlg::InternetUpdate(bool forceDownload)
     bool forceDownloadMirrors = forceDownload || !wxFileExists(GetMirrorsFilename());
     if (forceDownloadMirrors)
     {
-        if (!m_Net.DownloadFile(_T("mirrors.cfg"), GetMirrorsFilename()))
+        if (!m_Net.DownloadFile(wxT_2("mirrors.cfg"), GetMirrorsFilename()))
         {
             UpdateStatus(_("Error downloading list of mirrors"), 0, 0);
             return;
@@ -257,7 +257,7 @@ void UpdateDlg::InternetUpdate(bool forceDownload)
 
     wxString config = GetConfFilename();
     forceDownload = forceDownload || !wxFileExists(config);
-    if (forceDownload && !m_Net.DownloadFile(_T("webupdate.conf"), config))
+    if (forceDownload && !m_Net.DownloadFile(wxT_2("webupdate.conf"), config))
     {
         UpdateStatus(_("Error downloading list of updates"), 0, 0);
         return;
@@ -295,7 +295,7 @@ void UpdateDlg::FillServers()
 
     IniParser ini;
     ini.ParseFile(GetMirrorsFilename());
-    int group = ini.FindGroupByName(_T("WebUpdate mirrors"));
+    int group = ini.FindGroupByName(wxT_2("WebUpdate mirrors"));
     for (int i = 0; group != -1 && i < ini.GetKeysCount(group); ++i)
     {
         cmb->Append(ini.GetKeyName(group, i));
@@ -304,7 +304,7 @@ void UpdateDlg::FillServers()
     if (cmb->GetCount() == 0)
     {
         cmb->Append(_("devpaks.org Community Devpaks"));
-        m_Servers.Add(_T("http://devpaks.sourceforge.net/"));
+        m_Servers.Add(wxT_2("http://devpaks.sourceforge.net/"));
     }
     cmb->SetSelection(0);
 }
@@ -314,14 +314,14 @@ wxString UpdateDlg::GetConfFilename()
     int server_hash = GetTextCRC32(GetCurrentServer().mb_str());
     wxString config;
     config = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH;
-    config.Printf(_T("%sdevpak_%x.conf"), config.c_str(), server_hash);
+    config.Printf(wxT_2("%sdevpak_%x.conf"), config.c_str(), server_hash);
     return config;
 }
 
 wxString UpdateDlg::GetMirrorsFilename() const
 {
     wxString config;
-    config = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("devpak_mirrors.cfg");
+    config = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("devpak_mirrors.cfg");
     return config;
 }
 
@@ -337,7 +337,7 @@ wxString UpdateDlg::GetBasePath() const
 
 wxString UpdateDlg::GetPackagePath() const
 {
-    return GetBasePath() + _T("Packages") + wxFILE_SEP_PATH;
+    return GetBasePath() + wxT_2("Packages") + wxFILE_SEP_PATH;
 }
 
 bool UpdateDlg::FilterRec(UpdateRec* rec)
@@ -427,7 +427,7 @@ void UpdateDlg::DownloadFile(bool dontInstall)
     if (!m_Net.DownloadFile(rec->remote_file, GetPackagePath() + rec->local_file))
     {
         rec->downloaded = false;
-        UpdateStatus(_("Error downloading file: ") + rec->remote_server + _T(" > ") + rec->remote_file, 0, 0);
+        UpdateStatus(_("Error downloading file: ") + rec->remote_server + wxT_2(" > ") + rec->remote_file, 0, 0);
         return;
     }
     else
@@ -448,7 +448,7 @@ void UpdateDlg::InstallFile()
     }
     wxYield();
 
-    if (rec->title == _T("WebUpdate Mirrors list"))
+    if (rec->title == wxT_2("WebUpdate Mirrors list"))
     {
         InstallMirrors(GetPackagePath() + rec->local_file);
         rec->installed = true;
@@ -536,15 +536,15 @@ void UpdateDlg::UninstallFile()
 void UpdateDlg::CreateEntryFile(UpdateRec* rec, const wxString& filename, const wxArrayString& files)
 {
     wxString entry;
-    entry << _T("[Setup]\n");
-    entry << _T("AppName=") << rec->name << _T("\n");
-    entry << _T("AppVersion=") << rec->version << _T("\n");
+    entry << wxT_2("[Setup]\n");
+    entry << wxT_2("AppName=") << rec->name << wxT_2("\n");
+    entry << wxT_2("AppVersion=") << rec->version << wxT_2("\n");
 
-    entry << _T("\n");
-    entry << _T("[Files]\n");
+    entry << wxT_2("\n");
+    entry << wxT_2("[Files]\n");
     for (unsigned int i = 0; i < files.GetCount(); ++i)
     {
-        entry << files[i] << _T("\n");
+        entry << files[i] << wxT_2("\n");
     }
 
     wxFile f(filename, wxFile::write);
@@ -659,7 +659,7 @@ void UpdateDlg::OnProgress(wxCommandEvent& event)
 void UpdateDlg::OnAborted(wxCommandEvent& event)
 {
     UpdateStatus(_("Download aborted: ") + event.GetString(), 0, 0);
-    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(_T(""));
+    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(wxT_2(""));
     m_LastBlockSize = 0;
 }
 
@@ -667,14 +667,14 @@ void UpdateDlg::OnDownloadStarted(wxCommandEvent& event)
 {
     m_CurrFileSize = event.GetInt();
     UpdateStatus(_("Download started: ") + event.GetString(), 0, 100);
-    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(_T(""));
+    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(wxT_2(""));
     m_LastBlockSize = 0;
 }
 
 void UpdateDlg::OnDownloadEnded(wxCommandEvent& event)
 {
     UpdateStatus(_("Download finished: ") + event.GetString());
-    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(_T(""));
+    XRCCTRL(*this, "lblProgress", wxStaticText)->SetLabel(wxT_2(""));
     m_LastBlockSize = 0;
 
     if (m_HasUpdated && event.GetInt() == 0)
@@ -693,7 +693,7 @@ void UpdateDlg::OnDownloadEnded(wxCommandEvent& event)
         }
         if (rec && rec->installable && wxMessageBox(_("Do you want to install ") + event.GetString() + _(" now?"), _("Confirmation"), wxICON_QUESTION | wxYES_NO) == wxYES)
             InstallFile();
-        else if (rec && rec->title == _T("WebUpdate Mirrors list"))
+        else if (rec && rec->title == wxT_2("WebUpdate Mirrors list"))
             InstallMirrors(GetPackagePath() + rec->local_file);
     }
     m_CurrFileSize = 0;

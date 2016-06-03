@@ -21,17 +21,17 @@
 // Register the plugin
 namespace
 {
-    PluginRegistrant<DevPakUpdater> reg(_T("DevPakUpdater"));
+    PluginRegistrant<DevPakUpdater> reg(wxT_2("DevPakUpdater"));
 };
 
 DevPakUpdater::DevPakUpdater()
 {
 	//ctor
-    if(!Manager::LoadResource(_T("devpakupdater.zip")))
+    if(!Manager::LoadResource(wxT_2("devpakupdater.zip")))
     {
-        NotifyMissingFile(_T("devpakupdater.zip"));
+        NotifyMissingFile(wxT_2("devpakupdater.zip"));
     }
-    g_MasterPath = Manager::Get()->GetConfigManager(_T("devpak_plugin"))->Read(_T("/master_path"));
+    g_MasterPath = Manager::Get()->GetConfigManager(wxT_2("devpak_plugin"))->Read(wxT_2("/master_path"));
 }
 
 DevPakUpdater::~DevPakUpdater()
@@ -67,8 +67,8 @@ bool DevPakUpdater::ConfigurationValid()
                 wxMessageBox(_("Invalid compiler!?!"), _("Error"), wxICON_ERROR);
                 return true;
             }
-            compiler->AddIncludeDir(g_MasterPath + wxFILE_SEP_PATH + _T("include"));
-            compiler->AddLibDir(g_MasterPath + wxFILE_SEP_PATH + _T("lib"));
+            compiler->AddIncludeDir(g_MasterPath + wxFILE_SEP_PATH + wxT_2("include"));
+            compiler->AddLibDir(g_MasterPath + wxFILE_SEP_PATH + wxT_2("lib"));
         }
     }
     return true;
@@ -77,7 +77,7 @@ bool DevPakUpdater::ConfigurationValid()
 int DevPakUpdater::Configure()
 {
     if (g_MasterPath.IsEmpty())
-        g_MasterPath = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + _T("DevPaks");
+        g_MasterPath = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("DevPaks");
 	wxString dir = wxDirSelector(_("Please select the path where DevPaks will be downloaded and installed:"),
                                 g_MasterPath);
     if (!dir.IsEmpty())
@@ -88,7 +88,7 @@ int DevPakUpdater::Configure()
             g_MasterPath.Clear();
             return -1;
         }
-        Manager::Get()->GetConfigManager(_T("devpak_plugin"))->Write(_T("/master_path"), g_MasterPath);
+        Manager::Get()->GetConfigManager(wxT_2("devpak_plugin"))->Write(wxT_2("/master_path"), g_MasterPath);
         return 0;
     }
     return -1;

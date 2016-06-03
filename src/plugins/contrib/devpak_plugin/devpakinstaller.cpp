@@ -21,7 +21,7 @@ DevPakInstaller::~DevPakInstaller()
 void DevPakInstaller::CreateProgressDialog(int max)
 {
     EndProgressDialog();
-    m_pDlg = new wxProgressDialog(_("Progress"), _T(""), max, 0, wxPD_APP_MODAL);
+    m_pDlg = new wxProgressDialog(_("Progress"), wxT_2(""), max, 0, wxPD_APP_MODAL);
     m_pDlg->SetSize(480, m_pDlg->GetSize().y);
     m_pDlg->Centre();
 }
@@ -51,7 +51,7 @@ bool DevPakInstaller::Install(const wxString& name, const wxString& filename, co
     UpdateProgress(0, _("Decompressing ") + filename);
     wxYield();
     wxString m_Status;
-    wxString tmpfile = wxFileName::CreateTempFileName(_T("cb"));
+    wxString tmpfile = wxFileName::CreateTempFileName(wxT_2("cb"));
     if (!Decompress(filename, tmpfile))
     {
         m_Status += _(" [Decompression failed]");
@@ -64,7 +64,7 @@ bool DevPakInstaller::Install(const wxString& name, const wxString& filename, co
     UpdateProgress(1, _("Unpacking control-file"));
     wxYield();
     TAR* t = new TAR(tmpfile.c_str());
-    TAR::Record* r = t->FindFile(_T("*.DevPackage"));
+    TAR::Record* r = t->FindFile(wxT_2("*.DevPackage"));
     wxString controlFile = r->name;
     wxString status2;
     if (!r || !t->ExtractFile(r, dir, status2))
@@ -85,7 +85,7 @@ bool DevPakInstaller::Install(const wxString& name, const wxString& filename, co
         m_Status += _(" [Unpacking failed]");
         delete t;
         wxRemoveFile(tmpfile);
-        RemoveControlFile(dir + _T("/") + controlFile);
+        RemoveControlFile(dir + wxT_2("/") + controlFile);
         EndProgressDialog();
         return false;
     }
@@ -93,7 +93,7 @@ bool DevPakInstaller::Install(const wxString& name, const wxString& filename, co
     UpdateProgress(3, _("Done"));
     delete t;
     wxRemoveFile(tmpfile);
-    RemoveControlFile(dir + _T("/") + controlFile);
+    RemoveControlFile(dir + wxT_2("/") + controlFile);
     EndProgressDialog();
     return true;
 }
@@ -104,10 +104,10 @@ bool DevPakInstaller::Uninstall(const wxString& entry)
     IniParser* p = new IniParser;
     p->ParseFile(entry);
 
-    int idx = p->FindGroupByName(_T("Files"), false);
+    int idx = p->FindGroupByName(wxT_2("Files"), false);
     if (idx == -1)
     {
-        m_Status << _("No [Files] section in ") << entry << _T('\n');
+        m_Status << _("No [Files] section in ") << entry << wxT_2('\n');
         return false;
     }
     wxArrayString pathlist;
@@ -117,11 +117,11 @@ bool DevPakInstaller::Uninstall(const wxString& entry)
         wxString file = p->GetKeyName(idx, i);
         UpdateProgress(i, _("Removing: ") + file);
         if (!wxRemoveFile(file))
-            m_Status << _("Can't remove ") << file << _T('\n');
+            m_Status << _("Can't remove ") << file << wxT_2('\n');
         else
         {
             wxString path = wxPathOnly(file);
-            while (path.Last() == _T('/') || path.Last() == _T('\\'))
+            while (path.Last() == wxT_2('/') || path.Last() == wxT_2('\\'))
                 path.RemoveLast();
             if (pathlist.Index(path) == wxNOT_FOUND)
                 pathlist.Add(path);
@@ -133,19 +133,19 @@ bool DevPakInstaller::Uninstall(const wxString& entry)
     for (unsigned int i = 0; i < pathlist.GetCount(); ++i)
     {
         wxString path = pathlist[i];
-        int pos = path.Find(_T('/'), true);
+        int pos = path.Find(wxT_2('/'), true);
         while (pos != wxNOT_FOUND)
         {
             wxRmdir(path);
             path.Remove(pos, path.Length() - pos);
             UpdateProgress(i, _("Removing directory: ") + path);
-            pos = path.Find(_T('/'), true);
+            pos = path.Find(wxT_2('/'), true);
         }
     }
     EndProgressDialog();
     delete p;
     if (!wxRemoveFile(entry))
-        m_Status << _("Can't remove ") << entry << _T('\n');
+        m_Status << _("Can't remove ") << entry << wxT_2('\n');
 
     return true; //m_Status.IsEmpty();
 }
@@ -219,8 +219,8 @@ bool DevPakInstaller::Untar(const wxString& controlFile, const wxString& filenam
     if (!controlFile.IsEmpty())
     {
         IniParser ini;
-        ini.ParseFile(dirname + _T("/") + controlFile);
-        int grp = ini.FindGroupByName(_T("Files"));
+        ini.ParseFile(dirname + wxT_2("/") + controlFile);
+        int grp = ini.FindGroupByName(wxT_2("Files"));
         for (int i = 0; grp != -1 && i < ini.GetKeysCount(grp); ++i)
         {
             t.AddReplacer(ini.GetKeyName(grp, i), ini.GetKeyValue(grp, i));
@@ -235,22 +235,22 @@ bool DevPakInstaller::Untar(const wxString& controlFile, const wxString& filenam
         {
             wxString replacer = controlFile.SubString(0, pos);
             tmpControlFile = controlFile;
-            tmpControlFile.Replace(replacer, _T(""));
-            t.AddReplacer(replacer, _T(""));
+            tmpControlFile.Replace(replacer, wxT_2(""));
+            t.AddReplacer(replacer, wxT_2(""));
         }
 
         // add replacers (with user's permission) for DLLs
         #ifdef __WXMSW__
-        TAR::Record* r = t.FindFile(_T("*.dll"));
+        TAR::Record* r = t.FindFile(wxT_2("*.dll"));
         if (!r)
-            r = t.FindFile(_T("*.DLL"));
+            r = t.FindFile(wxT_2("*.DLL"));
         if (r)
         {
             if (wxMessageBox(_("This package contains some DLLs.\nDo you want to install them system-wide (YES recommended)?"), _("Confirmation"), wxICON_QUESTION | wxYES_NO) == wxYES)
             {
-                wxFileName fname(wxGetOSDirectory() + _T("/system32/"));
+                wxFileName fname(wxGetOSDirectory() + wxT_2("/system32/"));
                 fname.MakeRelativeTo(dirname);
-                t.AddReplacer(_T("dll/"), fname.GetFullPath());
+                t.AddReplacer(wxT_2("dll/"), fname.GetFullPath());
             }
             wxYield();
         }
@@ -259,6 +259,6 @@ bool DevPakInstaller::Untar(const wxString& controlFile, const wxString& filenam
 
     bool ret = t.ExtractAll(dirname.c_str(), m_Status, files);
     if (!tmpControlFile.IsEmpty())
-        RemoveControlFile(dirname + _T("/") + tmpControlFile);
+        RemoveControlFile(dirname + wxT_2("/") + tmpControlFile);
     return ret;
 }

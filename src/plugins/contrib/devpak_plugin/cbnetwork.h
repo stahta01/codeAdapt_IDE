@@ -38,7 +38,7 @@ class cbNetwork : public wxEvtHandler
         /** Constructor
           * @param serverUrl The remote server's top-level URL.
           */
-        cbNetwork(wxEvtHandler* parent, int id, const wxString& serverUrl = _T(""));
+        cbNetwork(wxEvtHandler* parent, int id, const wxString& serverUrl = wxT_2(""));
         ~cbNetwork();
         
         /** Set the server to connect to.
