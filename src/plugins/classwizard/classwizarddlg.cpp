@@ -84,14 +84,14 @@ END_EVENT_TABLE()
 
 ClassWizardDlg::ClassWizardDlg(wxWindow* parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgNewClass"));
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgNewClass"));
 
     ProjectManager* prjMan = Manager::Get()->GetProjectManager();
     cbProject* prj = prjMan->GetActiveProject();
     if (prj)
     {
-        XRCCTRL(*this, "txtIncludeDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath() + _T("include"));
-        XRCCTRL(*this, "txtImplDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath() + _T("src"));
+        XRCCTRL(*this, "txtIncludeDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath() + wxT_2("include"));
+        XRCCTRL(*this, "txtImplDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath() + wxT_2("src"));
         XRCCTRL(*this, "txtCommonDir", wxTextCtrl)->SetValue(prj->GetCommonTopLevelPath());
     }
     else
@@ -100,26 +100,26 @@ ClassWizardDlg::ClassWizardDlg(wxWindow* parent)
         XRCCTRL(*this, "txtImplDir", wxTextCtrl)->SetValue(::wxGetCwd());
         XRCCTRL(*this, "txtCommonDir", wxTextCtrl)->SetValue(::wxGetCwd());
     }
-    XRCCTRL(*this, "txtInheritanceFilename", wxTextCtrl)->SetValue(_T("<>"));
+    XRCCTRL(*this, "txtInheritanceFilename", wxTextCtrl)->SetValue(wxT_2("<>"));
     XRCCTRL(*this, "cmbInheritanceScope", wxComboBox)->SetSelection(0);
-    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(_T("\"\""));
+    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(wxT_2("\"\""));
 
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("classwizard"));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("classwizard"));
     if (cfg)
     {
-        XRCCTRL(*this, "chkCommonDir", wxCheckBox)->SetValue(cfg->ReadBool(_T("common_dir")));
-        XRCCTRL(*this, "chkLowerCase", wxCheckBox)->SetValue(cfg->ReadBool(_T("lower_case")));
+        XRCCTRL(*this, "chkCommonDir", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("common_dir")));
+        XRCCTRL(*this, "chkLowerCase", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("lower_case")));
     }
 }
 
 ClassWizardDlg::~ClassWizardDlg()
 {
     // NOTE (Morten#3#): Not nice to have it here (should be in OnApply of the plugin)
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("classwizard"));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("classwizard"));
     if (cfg)
     {
-        cfg->Write(_T("common_dir"), (bool) XRCCTRL(*this, "chkCommonDir", wxCheckBox)->GetValue());
-        cfg->Write(_T("lower_case"), (bool) XRCCTRL(*this, "chkLowerCase", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("common_dir"), (bool) XRCCTRL(*this, "chkCommonDir", wxCheckBox)->GetValue());
+        cfg->Write(wxT_2("lower_case"), (bool) XRCCTRL(*this, "chkLowerCase", wxCheckBox)->GetValue());
     }
 }
 
@@ -128,11 +128,11 @@ void ClassWizardDlg::DoGuardBlock()
     m_Header = XRCCTRL(*this, "txtHeader", wxTextCtrl)->GetValue();
     wxString GuardWord = m_Header;
     GuardWord.MakeUpper();
-    while (GuardWord.Replace(_T("."), _T("_")))
+    while (GuardWord.Replace(wxT_2("."), wxT_2("_")))
         ;
-    while (GuardWord.Replace(_T("/"), _T("_")))
+    while (GuardWord.Replace(wxT_2("/"), wxT_2("_")))
         ;
-    while (GuardWord.Replace(_T("\\"), _T("_")))
+    while (GuardWord.Replace(wxT_2("\\"), wxT_2("_")))
         ;
     XRCCTRL(*this, "txtGuardBlock", wxTextCtrl)->SetValue(GuardWord);
 }
@@ -143,12 +143,12 @@ void ClassWizardDlg::DoFileNames()
     if (XRCCTRL(*this, "chkLowerCase", wxCheckBox)->GetValue())
         name.MakeLower();
 
-    while (name.Replace(_T("::"), _T("/")))
+    while (name.Replace(wxT_2("::"), wxT_2("/")))
         ;
 
-    XRCCTRL(*this, "txtHeader", wxTextCtrl)->SetValue(name + _T(".h"));
-    XRCCTRL(*this, "txtImplementation", wxTextCtrl)->SetValue(name + _T(".cpp"));
-    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(_T("\"") + name + _T(".h\""));
+    XRCCTRL(*this, "txtHeader", wxTextCtrl)->SetValue(name + wxT_2(".h"));
+    XRCCTRL(*this, "txtImplementation", wxTextCtrl)->SetValue(name + wxT_2(".cpp"));
+    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(wxT_2("\"") + name + wxT_2(".h\""));
 }
 
 // events
@@ -189,20 +189,20 @@ void ClassWizardDlg::OnAncestorChange(wxCommandEvent& WXUNUSED(event))
 {
     wxString name = XRCCTRL(*this, "txtInheritance", wxTextCtrl)->GetValue();
 
-    while (name.Replace(_T("::"), _T("/")))
+    while (name.Replace(wxT_2("::"), wxT_2("/")))
         ;
 
     wxString old = XRCCTRL(*this, "txtInheritanceFilename", wxTextCtrl)->GetValue();
     wxChar first = old.GetChar(0);
     wxChar last = old.Last();
-    XRCCTRL(*this, "txtInheritanceFilename", wxTextCtrl)->SetValue(first + name + _T(".h") + last);
+    XRCCTRL(*this, "txtInheritanceFilename", wxTextCtrl)->SetValue(first + name + wxT_2(".h") + last);
     DoGuardBlock();
 }
 
 void ClassWizardDlg::OnCommonDirClick(wxCommandEvent& WXUNUSED(event))
 {
     wxString path = XRCCTRL(*this, "txtCommonDir", wxTextCtrl)->GetValue();
-    wxDirDialog dlg (this, _T("Choose a directory"), path);
+    wxDirDialog dlg (this, wxT_2("Choose a directory"), path);
     if (dlg.ShowModal()==wxID_OK)
     {
         path = dlg.GetPath();
@@ -218,7 +218,7 @@ void ClassWizardDlg::OnLowerCaseClick(wxCommandEvent& WXUNUSED(event))
 void ClassWizardDlg::OnIncludeDirClick(wxCommandEvent& WXUNUSED(event))
 {
     wxString path = XRCCTRL(*this, "txtIncludeDir", wxTextCtrl)->GetValue();
-    wxDirDialog dlg (this, _T("Choose a directory"), path);
+    wxDirDialog dlg (this, wxT_2("Choose a directory"), path);
     if (dlg.ShowModal()==wxID_OK)
     {
         path = dlg.GetPath();
@@ -229,7 +229,7 @@ void ClassWizardDlg::OnIncludeDirClick(wxCommandEvent& WXUNUSED(event))
 void ClassWizardDlg::OnImplDirClick(wxCommandEvent& WXUNUSED(event))
 {
     wxString path = XRCCTRL(*this, "txtImplDir", wxTextCtrl)->GetValue();
-    wxDirDialog dlg (this, _T("Choose a directory"), path);
+    wxDirDialog dlg (this, wxT_2("Choose a directory"), path);
     if (dlg.ShowModal()==wxID_OK)
     {
         path = dlg.GetPath();
@@ -240,7 +240,7 @@ void ClassWizardDlg::OnImplDirClick(wxCommandEvent& WXUNUSED(event))
 void ClassWizardDlg::OnHeaderChange(wxCommandEvent& WXUNUSED(event))
 {
     wxString name = XRCCTRL(*this, "txtHeader", wxTextCtrl)->GetValue();
-    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(_T("\"") + name + _T("\""));
+    XRCCTRL(*this, "txtHeaderInclude", wxTextCtrl)->SetValue(wxT_2("\"") + name + wxT_2("\""));
 }
 
 void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
@@ -249,12 +249,12 @@ void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
     wxString Name = XRCCTRL(*this, "txtName", wxTextCtrl)->GetValue();
     if (Name.IsEmpty())
     {
-        cbMessageBox(_T("Please specify a class name to continue."),
-                     _T("Error"), wxOK | wxICON_ERROR);
+        cbMessageBox(wxT_2("Please specify a class name to continue."),
+                     wxT_2("Error"), wxOK | wxICON_ERROR);
         return;
     }
     wxArrayString NameSpaces;
-    wxStringTokenizer tkz(Name, _T("::"));
+    wxStringTokenizer tkz(Name, wxT_2("::"));
     Name = wxEmptyString;
     while ( tkz.HasMoreTokens() )
     {
@@ -308,97 +308,97 @@ void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
     headerFname.MakeAbsolute(includeDir);
     implementationFname.MakeAbsolute(implDir);
 
-    bool usestabs = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_tab"), false);
-    int tabsize = Manager::Get()->GetConfigManager(_T("editor"))->ReadInt(_T("/tab_size"), 4);
-    int eolmode = Manager::Get()->GetConfigManager(_T("editor"))->ReadInt(_T("/eol/eolmode"), 0);
+    bool usestabs = Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadBool(wxT_2("/use_tab"), false);
+    int tabsize = Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadInt(wxT_2("/tab_size"), 4);
+    int eolmode = Manager::Get()->GetConfigManager(wxT_2("editor"))->ReadInt(wxT_2("/eol/eolmode"), 0);
 
     ForceDirectory(headerFname);
     cbEditor* new_ed = Manager::Get()->GetEditorManager()->New(headerFname.GetFullPath());
     if (!new_ed)
     {
-        cbMessageBox(_T("Class wizard can't continue. Possibly the Header file name is invalid.\n"
+        cbMessageBox(wxT_2("Class wizard can't continue. Possibly the Header file name is invalid.\n"
                         "Please check the entered file name."),
-                     _T("Error"), wxICON_ERROR);
+                     wxT_2("Error"), wxICON_ERROR);
         return;
     }
     wxString buffer = new_ed->GetControl()->GetText();
     Manager::Get()->GetMacrosManager()->ReplaceMacros(buffer);
 
-    wxString tabstr = usestabs ? wxString(_T("\t")) : wxString(_T(' '),tabsize);
+    wxString tabstr = usestabs ? wxString(wxT_2("\t")) : wxString(wxT_2(' '),tabsize);
     wxString eolstr;
     if (eolmode == 2)
     {
-        eolstr = _T("\n");
+        eolstr = wxT_2("\n");
     }
     else if (eolmode == 1)
     {
-        eolstr = _T("\r");
+        eolstr = wxT_2("\r");
     }
     else
     {
-        eolstr = _T("\r\n");
+        eolstr = wxT_2("\r\n");
     }
 
     // actual creation starts here
     // let's start with the header file
     if (GuardBlock)
     {
-        buffer << _T("#ifndef ") << GuardWord << eolstr;
-        buffer << _T("#define ") << GuardWord << eolstr;
+        buffer << wxT_2("#ifndef ") << GuardWord << eolstr;
+        buffer << wxT_2("#define ") << GuardWord << eolstr;
         buffer << eolstr;
     }
 
-    if (!AncestorFilename.IsEmpty() && !AncestorFilename.IsSameAs(_T("<>")))
+    if (!AncestorFilename.IsEmpty() && !AncestorFilename.IsSameAs(wxT_2("<>")))
     {
-        buffer << _T("#include ") << AncestorFilename << eolstr;
+        buffer << wxT_2("#include ") << AncestorFilename << eolstr;
         buffer << eolstr;
     }
 
     for (unsigned int i=0; i<NameSpaces.GetCount(); ++i)
     {
-        buffer << _T("namespace ") << NameSpaces[i] << _T(" {") << eolstr;
+        buffer << wxT_2("namespace ") << NameSpaces[i] << wxT_2(" {") << eolstr;
     }
     buffer << eolstr;
 
 
-    buffer << _T("class ") << Name;
+    buffer << wxT_2("class ") << Name;
     if (Inherits)
     {
-        buffer << _T(" : ") << AncestorScope << _T(" ") << Ancestor;
+        buffer << wxT_2(" : ") << AncestorScope << wxT_2(" ") << Ancestor;
     }
     buffer << eolstr;
-    buffer << _T("{") << eolstr;
-    buffer << tabstr << _T("public:") << eolstr;
-    buffer << tabstr << tabstr << Name << _T("(") << Constructor << _T(")");
-    buffer << (!GenerateImplementation ? _T(" {}") : _T(";")) << eolstr;
+    buffer << wxT_2("{") << eolstr;
+    buffer << tabstr << wxT_2("public:") << eolstr;
+    buffer << tabstr << tabstr << Name << wxT_2("(") << Constructor << wxT_2(")");
+    buffer << (!GenerateImplementation ? wxT_2(" {}") : wxT_2(";")) << eolstr;
 
     if (HasDestructor)
     {
         buffer << tabstr << tabstr;
         if (VirtualDestructor)
         {
-            buffer << _T("virtual ");
+            buffer << wxT_2("virtual ");
         }
-        buffer << _T('~') << Name << _T("()");
-        buffer << (!GenerateImplementation ? _T(" {}") : _T(";")) << eolstr;
+        buffer << wxT_2('~') << Name << wxT_2("()");
+        buffer << (!GenerateImplementation ? wxT_2(" {}") : wxT_2(";")) << eolstr;
     }
-    buffer << tabstr << _T("protected:") << eolstr;
-    buffer << tabstr << _T("private:") << eolstr;
-    buffer << _T("};") << eolstr;
+    buffer << tabstr << wxT_2("protected:") << eolstr;
+    buffer << tabstr << wxT_2("private:") << eolstr;
+    buffer << wxT_2("};") << eolstr;
 
     if (NameSpaces.GetCount())
     {
         buffer << eolstr;
         for (int i=NameSpaces.GetCount(); i>0; --i)
         {
-            buffer << _T("} // namespace ") << NameSpaces[i-1] << eolstr;
+            buffer << wxT_2("} // namespace ") << NameSpaces[i-1] << eolstr;
         }
     }
 
     if (GuardBlock)
     {
         buffer << eolstr;
-        buffer << _T("#endif // ") << GuardWord << eolstr;
+        buffer << wxT_2("#endif // ") << GuardWord << eolstr;
     }
 
     new_ed->GetControl()->SetText(buffer);
@@ -423,38 +423,38 @@ void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
     new_ed = Manager::Get()->GetEditorManager()->New(implementationFname.GetFullPath());
     if (!new_ed)
     {
-        cbMessageBox(_T("Class wizard can't continue. Possibly the Implementation file name is invalid.\n"
+        cbMessageBox(wxT_2("Class wizard can't continue. Possibly the Implementation file name is invalid.\n"
                         "Please check the entered file name."),
-                     _T("Error"), wxICON_ERROR);
+                     wxT_2("Error"), wxICON_ERROR);
         return;
     }
     buffer = new_ed->GetControl()->GetText();
     Manager::Get()->GetMacrosManager()->ReplaceMacros(buffer);
 
-    buffer << _T("#include ") << headerInclude << eolstr;
+    buffer << wxT_2("#include ") << headerInclude << eolstr;
 
     if (NameSpaces.GetCount())
     {
         buffer << eolstr;
         for (unsigned int i=0; i<NameSpaces.GetCount(); ++i)
         {
-            buffer << _T("namespace ") << NameSpaces[i] << _T(" {") << eolstr;
+            buffer << wxT_2("namespace ") << NameSpaces[i] << wxT_2(" {") << eolstr;
         }
     }
 
     buffer << eolstr;
-    buffer << Name << _T("::") << Name << _T("(") << Constructor << _T(")") << eolstr;
-    buffer << _T("{") << eolstr;
-    buffer << tabstr << _T("//ctor") << eolstr;
-    buffer << _T("}") << eolstr;
+    buffer << Name << wxT_2("::") << Name << wxT_2("(") << Constructor << wxT_2(")") << eolstr;
+    buffer << wxT_2("{") << eolstr;
+    buffer << tabstr << wxT_2("//ctor") << eolstr;
+    buffer << wxT_2("}") << eolstr;
 
     if (HasDestructor)
     {
         buffer << eolstr;
-        buffer << Name << _T("::~") << Name << _T("()") << eolstr;
-        buffer << _T("{") << eolstr;
-        buffer << tabstr << _T("//dtor") << eolstr;
-        buffer << _T("}") << eolstr;
+        buffer << Name << wxT_2("::~") << Name << wxT_2("()") << eolstr;
+        buffer << wxT_2("{") << eolstr;
+        buffer << tabstr << wxT_2("//dtor") << eolstr;
+        buffer << wxT_2("}") << eolstr;
     }
 
     if (NameSpaces.GetCount())
@@ -462,7 +462,7 @@ void ClassWizardDlg::OnOKClick(wxCommandEvent& WXUNUSED(event))
         buffer << eolstr;
         for (int i=NameSpaces.GetCount(); i>0; --i)
         {
-            buffer << _T("} // namespace ") << NameSpaces[i-1] << eolstr;
+            buffer << wxT_2("} // namespace ") << NameSpaces[i-1] << eolstr;
         }
     }
 

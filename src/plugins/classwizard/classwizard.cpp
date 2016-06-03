@@ -44,14 +44,14 @@
 // this auto-registers the plugin
 namespace
 {
-    PluginRegistrant<ClassWizard> reg(_T("ClassWizard"));
+    PluginRegistrant<ClassWizard> reg(wxT_2("ClassWizard"));
 }
 
 ClassWizard::ClassWizard()
 {
-    if(!Manager::LoadResource(_T("classwizard.zip")))
+    if(!Manager::LoadResource(wxT_2("classwizard.zip")))
     {
-        NotifyMissingFile(_T("classwizard.zip"));
+        NotifyMissingFile(wxT_2("classwizard.zip"));
     }
 }
 
@@ -91,7 +91,7 @@ int ClassWizard::Execute()
         {
             wxArrayInt targets;
             prjMan->AddFileToProject(dlg.GetHeaderFilename(), prj, targets);
-            if ((targets.GetCount() != 0) && (dlg.GetImplementationFilename() != _T("")) )
+            if ((targets.GetCount() != 0) && (dlg.GetImplementationFilename() != wxT_2("")) )
                 prjMan->AddFileToProject(dlg.GetImplementationFilename(), prj, targets);
             prjMan->RebuildTree();
         }
