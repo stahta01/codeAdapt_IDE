@@ -42,7 +42,7 @@
 
 namespace
 {
-    PluginRegistrant<WindowsXPLookNFeel> reg(_T("WindowsXPLookNFeel"));
+    PluginRegistrant<WindowsXPLookNFeel> reg(wxT_2("WindowsXPLookNFeel"));
 }
 
 WindowsXPLookNFeel::WindowsXPLookNFeel()
@@ -95,7 +95,7 @@ int WindowsXPLookNFeel::Execute()
 		{
 			if (tgt->GetTargetType() != ttExecutable)
 			{
-				Manager::Get()->GetLogManager()->DebugLog(F(_T("WindowsXPLookNFeel: Ignoring target '%s'"), tgt->GetTitle().c_str()));
+				Manager::Get()->GetLogManager()->DebugLog(F(wxT("WindowsXPLookNFeel: Ignoring target '%s'"), tgt->GetTitle().c_str()));
 				continue;
 			}
 			targetNames.Add(tgt->GetTitle());
@@ -106,7 +106,7 @@ int WindowsXPLookNFeel::Execute()
 	if (!target)
 	{
 		// not even one executable target...
-		Manager::Get()->GetLogManager()->DebugLog(_T("WindowsXPLookNFeel: No executable targets in project"));
+		Manager::Get()->GetLogManager()->DebugLog(wxT_2("WindowsXPLookNFeel: No executable targets in project"));
 		return -1;
 	}
 	else if (targetNames.GetCount() > 1)
@@ -126,38 +126,38 @@ int WindowsXPLookNFeel::Execute()
 						wxYES_NO | wxICON_QUESTION) == wxID_NO)
 			return -2;
 		wxString filename = target->GetOutputFilename();
-		filename << _T(".Manifest");
+		filename << wxT_2(".Manifest");
 		wxFileName fname(filename);
 		fname.Normalize(wxPATH_NORM_ALL & ~wxPATH_NORM_CASE, project->GetBasePath());
 		filename = fname.GetFullPath();
-		Manager::Get()->GetLogManager()->DebugLog(F(_T("WindowsXPLookNFeel: Creating Manifest '%s'"), filename.c_str()));
+		Manager::Get()->GetLogManager()->DebugLog(F(wxT("WindowsXPLookNFeel: Creating Manifest '%s'"), filename.c_str()));
 
 		wxString buffer;
-		buffer << _T("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>") << _T('\n');
-		buffer << _T("<assembly") << _T('\n');
-		buffer << _T("  xmlns=\"urn:schemas-microsoft-com:asm.v1\"") << _T('\n');
-		buffer << _T("  manifestVersion=\"1.0\">") << _T('\n');
-		buffer << _T("<assemblyIdentity") << _T('\n');
-		buffer << _T("    name=\"");
-		buffer << project->GetTitle() << _T(".") << target->GetTitle() << _T(".App");
-		buffer << _T("\"") << _T('\n');
-		buffer << _T("    processorArchitecture=\"x86\"") << _T('\n');
-		buffer << _T("    version=\"1.0.0.0\"") << _T('\n');
-		buffer << _T("    type=\"win32\"/>") << _T('\n');
-		buffer << _T("<description>Executable</description>") << _T('\n');
-		buffer << _T("<dependency>") << _T('\n');
-		buffer << _T("    <dependentAssembly>") << _T('\n');
-		buffer << _T("        <assemblyIdentity") << _T('\n');
-		buffer << _T("            type=\"win32\"") << _T('\n');
-		buffer << _T("            name=\"Microsoft.Windows.Common-Controls\"") << _T('\n');
-		buffer << _T("            version=\"6.0.0.0\"") << _T('\n');
-		buffer << _T("            processorArchitecture=\"x86\"") << _T('\n');
-		buffer << _T("            publicKeyToken=\"6595b64144ccf1df\"") << _T('\n');
-		buffer << _T("            language=\"*\"") << _T('\n');
-		buffer << _T("        />") << _T('\n');
-		buffer << _T("    </dependentAssembly>") << _T('\n');
-		buffer << _T("</dependency>") << _T('\n');
-		buffer << _T("</assembly>") << _T('\n');
+		buffer << wxT_2("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>") << wxT_2('\n');
+		buffer << wxT_2("<assembly") << wxT_2('\n');
+		buffer << wxT_2("  xmlns=\"urn:schemas-microsoft-com:asm.v1\"") << wxT_2('\n');
+		buffer << wxT_2("  manifestVersion=\"1.0\">") << wxT_2('\n');
+		buffer << wxT_2("<assemblyIdentity") << wxT_2('\n');
+		buffer << wxT_2("    name=\"");
+		buffer << project->GetTitle() << wxT_2(".") << target->GetTitle() << wxT_2(".App");
+		buffer << wxT_2("\"") << wxT_2('\n');
+		buffer << wxT_2("    processorArchitecture=\"x86\"") << wxT_2('\n');
+		buffer << wxT_2("    version=\"1.0.0.0\"") << wxT_2('\n');
+		buffer << wxT_2("    type=\"win32\"/>") << wxT_2('\n');
+		buffer << wxT_2("<description>Executable</description>") << wxT_2('\n');
+		buffer << wxT_2("<dependency>") << wxT_2('\n');
+		buffer << wxT_2("    <dependentAssembly>") << wxT_2('\n');
+		buffer << wxT_2("        <assemblyIdentity") << wxT_2('\n');
+		buffer << wxT_2("            type=\"win32\"") << wxT_2('\n');
+		buffer << wxT_2("            name=\"Microsoft.Windows.Common-Controls\"") << wxT_2('\n');
+		buffer << wxT_2("            version=\"6.0.0.0\"") << wxT_2('\n');
+		buffer << wxT_2("            processorArchitecture=\"x86\"") << wxT_2('\n');
+		buffer << wxT_2("            publicKeyToken=\"6595b64144ccf1df\"") << wxT_2('\n');
+		buffer << wxT_2("            language=\"*\"") << wxT_2('\n');
+		buffer << wxT_2("        />") << wxT_2('\n');
+		buffer << wxT_2("    </dependentAssembly>") << wxT_2('\n');
+		buffer << wxT_2("</dependency>") << wxT_2('\n');
+		buffer << wxT_2("</assembly>") << wxT_2('\n');
 
 		wxFile file(filename, wxFile::write);
 		cbWrite(file,buffer);
