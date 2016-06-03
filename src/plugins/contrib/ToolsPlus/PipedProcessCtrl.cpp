@@ -23,8 +23,8 @@ PipedTextCtrl::PipedTextCtrl(wxWindow *parent, PipedProcessCtrl *pp) : wxScintil
 
     wxFont font(10, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 
-    ConfigManager* mgr = Manager::Get()->GetConfigManager(_T("editor"));
-    wxString fontstring = mgr->Read(_T("/font"), wxEmptyString);
+    ConfigManager* mgr = Manager::Get()->GetConfigManager(wxT_2("editor"));
+    wxString fontstring = mgr->Read(wxT_2("/font"), wxEmptyString);
     if (!fontstring.IsEmpty())
     {
         wxNativeFontInfo nfi;
@@ -147,7 +147,7 @@ void PipedProcessCtrl::KillProcess()
 }
 
 wxString PipedProcessCtrl::LinkRegexDefault=
-_T("[\"']?((?:\\w\\:)?[^'\",\\s:;*?]+?)[\"']?[\\s]*(\\:|\\(|\\[|\\,?\\s*[Ll]ine)?\\s*(\\d*)");
+wxT_2("[\"']?((?:\\w\\:)?[^'\",\\s:;*?]+?)[\"']?[\\s]*(\\:|\\(|\\[|\\,?\\s*[Ll]ine)?\\s*(\\d*)");
 //           a:         \path\to\file              line 300
 void PipedProcessCtrl::SyncOutput(int maxchars)
 {

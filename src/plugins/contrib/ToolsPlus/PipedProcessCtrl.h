@@ -18,7 +18,7 @@ class PipedProcessCtrl;
 
 namespace
 {
-ShellCtrlRegistrant<PipedProcessCtrl> reg(_T("Piped Process Control"));
+ShellCtrlRegistrant<PipedProcessCtrl> reg(wxT_2("Piped Process Control"));
 }
 
 class PipedTextCtrl: public wxScintilla

@@ -5,7 +5,7 @@
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
 {
-    PluginRegistrant<ToolsPlus> reg(_T("ToolsPlus"));
+    PluginRegistrant<ToolsPlus> reg(wxT_2("ToolsPlus"));
 }
 
 int ID_UpdateUI=wxNewId();
@@ -163,8 +163,8 @@ void ToolsPlus::OnConfigure(wxCommandEvent& /*event*/)
     {
         dlg->OnApply();
         m_ReUseToolsPage = dlg->ReUseToolsPage();
-        ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("ShellExtensions"));
-        cfg->Write(_T("ReuseToolsPage"), m_ReUseToolsPage);
+        ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("ShellExtensions"));
+        cfg->Write(wxT_2("ReuseToolsPage"), m_ReUseToolsPage);
     }
     dlg->Destroy();
 }
@@ -200,7 +200,7 @@ void ToolsPlus::OnSubMenuSelect(wxUpdateUIEvent& /*event*/)
 //        if (num==1)
 //        {
 //            wxString a;
-//            a<<_T("Sub menu")<<m_interpnum<<_T(" opened");
+//            a<<wxT_2("Sub menu")<<m_interpnum<<wxT_2(" opened");
 //            cbMessageBox(a);
 //        }
 //    }
@@ -209,51 +209,51 @@ void ToolsPlus::OnSubMenuSelect(wxUpdateUIEvent& /*event*/)
 void ToolsPlus::OnSetTarget(wxCommandEvent& /*event*/)
 {
     wxString wild(m_wildcard);
-    if (wild==_T(""))
+    if (wild==wxT_2(""))
 #ifdef __WXMSW__
-        wild=_T("*.*");
+        wild=wxT_2("*.*");
 #else
-        wild=_T("*");
+        wild=wxT_2("*");
 #endif
-    wxFileDialog *fd=new wxFileDialog(NULL,_("Choose the Command Target"),_T(""),_T(""),wild,wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    wxFileDialog *fd=new wxFileDialog(NULL,_("Choose the Command Target"),wxT_2(""),wxT_2(""),wild,wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     if (fd->ShowModal()==wxID_OK)
         m_RunTarget=fd->GetPath();
     else
-        m_RunTarget=_T("");
+        m_RunTarget=wxT_2("");
     delete fd;
 }
 
 void ToolsPlus::OnSetMultiTarget(wxCommandEvent& /*event*/)
 {
     wxString wild(m_wildcard);
-    if (wild==_T(""))
+    if (wild==wxT_2(""))
 #ifdef __WXMSW__
-        wild=_T("*.*");
+        wild=wxT_2("*.*");
 #else
-        wild=_T("*");
+        wild=wxT_2("*");
 #endif
-    wxFileDialog *fd=new wxFileDialog(NULL,_("Choose the Command Targets"),_T(""),_T(""),wild,wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE);
+    wxFileDialog *fd=new wxFileDialog(NULL,_("Choose the Command Targets"),wxT_2(""),wxT_2(""),wild,wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE);
     if (fd->ShowModal()==wxID_OK)
     {
         wxArrayString paths;
         fd->GetPaths(paths);
         m_RunTarget=paths[0];
         for (size_t i=1;i<paths.GetCount();i++)
-            m_RunTarget+=_T(" ")+paths[i];
+            m_RunTarget+=wxT_2(" ")+paths[i];
     }
     else
-        m_RunTarget=_T("");
+        m_RunTarget=wxT_2("");
     delete fd;
 }
 
 
 void ToolsPlus::OnSetDirTarget(wxCommandEvent& /*event*/)
 {
-    wxDirDialog *dd=new wxDirDialog(NULL,_("Choose the Target Directory"),_T(""));
+    wxDirDialog *dd=new wxDirDialog(NULL,_("Choose the Target Directory"),wxT_2(""));
     if (dd->ShowModal()==wxID_OK)
         m_RunTarget=dd->GetPath();
     else
-        m_RunTarget=_T("");
+        m_RunTarget=wxT_2("");
     delete dd;
 }
 
@@ -312,13 +312,13 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
                 LogMessage(_("Tools Plus plugin: ")+m_RunTarget+_(" not found"));
                 return;
             }
-            if (m_RunTarget==_T(""))
+            if (m_RunTarget==wxT_2(""))
                 return;
         }
         if (m_ic.interps[m_interpnum].command.Find(_("$mpaths"))>0)
         {
             OnSetMultiTarget(event);
-            if (m_RunTarget==_T(""))
+            if (m_RunTarget==wxT_2(""))
                 return;
         }
     }
@@ -328,7 +328,7 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
         return;
     }
 
-    m_RunTarget.Replace(_T("*"),_T(" "));
+    m_RunTarget.Replace(wxT_2("*"),wxT_2(" "));
 
     bool setdir=true;
     commandstr.Replace(_("$file"),wxFileName(m_RunTarget).GetShortPath());
@@ -355,7 +355,7 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
         }
         else
             promptend++;
-        wxTextEntryDialog ted(NULL,commandstr.Mid(promptind+10,promptend-1),consolename,_T(""),wxOK|wxCANCEL);
+        wxTextEntryDialog ted(NULL,commandstr.Mid(promptind+10,promptend-1),consolename,wxT_2(""),wxOK|wxCANCEL);
         if (ted.ShowModal()==wxID_OK)
             substitution=ted.GetValue();
         else
@@ -380,7 +380,7 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
         Manager::Get()->GetMacrosManager()->ReplaceMacros(workingdir);
     }
     wxString olddir=wxGetCwd();
-    if (setdir && workingdir!=_T(""))
+    if (setdir && workingdir!=wxT_2(""))
     {
         if (!wxSetWorkingDirectory(workingdir))
         {
@@ -405,16 +405,16 @@ void ToolsPlus::OnRunTarget(wxCommandEvent& event)
         wxString cmdline;
 #ifndef __WXMSW__
         // for non-win platforms, use m_ConsoleTerm to run the console app
-        wxString term = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/console_terminal"), DEFAULT_CONSOLE_TERM);
-        term.Replace(_T("$TITLE"), _T("'") + consolename + _T("'"));
-        cmdline<< term << _T(" ");
+        wxString term = Manager::Get()->GetConfigManager(wxT_2("app"))->Read(wxT_2("/console_terminal"), DEFAULT_CONSOLE_TERM);
+        term.Replace(wxT_2("$TITLE"), wxT_2("'") + consolename + wxT_2("'"));
+        cmdline<< term << wxT_2(" ");
         #define CONSOLE_RUNNER "cb_console_runner"
 #else
         #define CONSOLE_RUNNER "cb_console_runner.exe"
 #endif
         wxString baseDir = ConfigManager::GetExecutableFolder();
-        if (wxFileExists(baseDir + wxT("/" CONSOLE_RUNNER)))
-            cmdline << baseDir << wxT("/" CONSOLE_RUNNER " ");
+        if (wxFileExists(baseDir + wxT_2("/" CONSOLE_RUNNER)))
+            cmdline << baseDir << wxT_2("/" CONSOLE_RUNNER " ");
         cmdline<<commandstr;
 
         if (!wxExecute(cmdline))
@@ -435,16 +435,16 @@ ToolsPlus::ToolsPlus()
     // Make sure our resources are available.
     // In the generated boilerplate code we have no resources but when
     // we add some, it will be nice that this code is in place already ;)
-    if (!Manager::LoadResource(_T("ToolsPlus.zip")))
-        NotifyMissingFile(_T("ToolsPlus.zip"));
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("ShellExtensions"));
-    m_ReUseToolsPage = cfg->ReadBool(_T("ReuseToolsPage"), false);
+    if (!Manager::LoadResource(wxT_2("ToolsPlus.zip")))
+        NotifyMissingFile(wxT_2("ToolsPlus.zip"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("ShellExtensions"));
+    m_ReUseToolsPage = cfg->ReadBool(wxT_2("ReuseToolsPage"), false);
 }
 
 cbConfigurationPanel* ToolsPlus::GetConfigurationPanel(wxWindow* /*parent*/)
 {
 //    MyDialog* dlg = new MyDialog(this, *m_pKeyProfArr, parent,
-//        wxT("Keybindings"), mode);
+//        wxT_2("Keybindings"), mode);
 
 //    return new CmdConfigDialog(parent, this);
     return NULL;
@@ -473,7 +473,7 @@ void ToolsPlus::OnAttach()
     m_shellmgr = new ShellManager(Manager::Get()->GetAppWindow());
 
     CodeBlocksDockEvent evt(cbEVT_ADD_DOCK_WINDOW);
-    evt.name = _T("Tools");
+    evt.name = wxT_2("Tools");
     evt.title = _("Tool Output");
     evt.pWindow = m_shellmgr;
     evt.dockSide = CodeBlocksDockEvent::dsFloating;
@@ -518,9 +518,9 @@ void ToolsPlus::CreateMenu()
             m_ic.interps[i].command.Find(_("$fname"))>0||
             m_ic.interps[i].command.Find(_("$fext"))>0||
             m_ic.interps[i].command.Find(_("$mpaths"))>0)
-            tail=_T("...");
+            tail=wxT_2("...");
         wxString menuloc=m_ic.interps[i].menu;
-        if (menuloc.StartsWith(_T(".")))
+        if (menuloc.StartsWith(wxT_2(".")))
             continue;
         wxString newmenutext=menuloc.BeforeFirst('/');
         wxMenu *menu=m_ToolMenu;
@@ -544,18 +544,18 @@ void ToolsPlus::CreateMenu()
         else
             menu->Append(ID_SubMenu_0+i,menuloc);
     }
-    //m_ToolMenu->Append(ID_LaunchPythonProcess,_T("Launch Python Interpreter"),_T(""));
+    //m_ToolMenu->Append(ID_LaunchPythonProcess,wxT_2("Launch Python Interpreter"),wxT_2(""));
     if (i>0)
         m_ToolMenu->AppendSeparator();
-    m_ToolMenu->Append(ID_ToolMenu_ShowConsole,_("&Toggle Tool Output Window"),_T(""),wxITEM_CHECK);
-    m_ToolMenu->Append(ID_ToolMenu_RemoveTerminated,_("Close &Inactive Tool Pages"),_T(""));
-    m_ToolMenu->Append(ID_ToolMenu_Configure,_("&Configure Tools..."),_T(""));
+    m_ToolMenu->Append(ID_ToolMenu_ShowConsole,_("&Toggle Tool Output Window"),wxT_2(""),wxITEM_CHECK);
+    m_ToolMenu->Append(ID_ToolMenu_RemoveTerminated,_("Close &Inactive Tool Pages"),wxT_2(""));
+    m_ToolMenu->Append(ID_ToolMenu_Configure,_("&Configure Tools..."),wxT_2(""));
 }
 
 void ToolsPlus::AddModuleMenuEntry(wxMenu *modmenu,int entrynum, int idref)
 {
     wxString menuloc=m_ic.interps[entrynum].cmenu;
-    if (menuloc==_T("."))
+    if (menuloc==wxT_2("."))
         return;
     wxString newmenutext=menuloc.BeforeFirst('/');
     wxMenu *menu=modmenu;
@@ -591,8 +591,8 @@ void ToolsPlus::UpdateMenu(bool replace_old_tools)
         m_ToolMenu->Destroy(m_ToolMenu->FindItemByPosition(0));
     CreateMenu();
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("ShellExtensions"));
-    cfg->Write(_T("HideToolsMenu"),replace_old_tools);
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("ShellExtensions"));
+    cfg->Write(wxT_2("HideToolsMenu"),replace_old_tools);
     if (replace_old_tools && m_OldToolMenu==NULL)
     {
         int pos = m_MenuBar->FindMenu(_("T&ools+"));
@@ -628,8 +628,8 @@ void ToolsPlus::BuildMenu(wxMenuBar* menuBar)
 	m_MenuBar=menuBar;
 	m_ToolMenu=new wxMenu;
 	CreateMenu();
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("ShellExtensions"));
-    bool replace_old_tools=cfg->ReadBool(_T("HideToolsMenu"),false);
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("ShellExtensions"));
+    bool replace_old_tools=cfg->ReadBool(wxT_2("HideToolsMenu"),false);
     if (replace_old_tools)
     {
         int pos = menuBar->FindMenu(_("&Tools"));
@@ -669,7 +669,7 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
             {
                 cbProject* prj = data->GetProject();
                 wxString filename=wxFileName(prj->GetFilename()).GetPath();
-                wxString name=_T("");
+                wxString name=wxT_2("");
                 size_t sep_pos=menu->GetMenuItemCount();
                 size_t added=0;
                 for (unsigned int i=0;i<m_ic.interps.size();i++)
@@ -823,12 +823,12 @@ void ToolsPlus::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileT
                     bool match=true; // all selected items must have names that match the wildcard for this grouping
                     wxString pathlist=paths;
                     wxString ipath=paths.BeforeFirst('*'); // '*' separated list
-                    if (m_ic.interps[i].wildcards!=_T(""))
+                    if (m_ic.interps[i].wildcards!=wxT_2(""))
                     {
-                        while (match && pathlist!=_T(""))
+                        while (match && pathlist!=wxT_2(""))
                         {
                             wxString name=wxFileName(ipath).GetFullName();
-                            if (ipath!=_T("") && !WildCardListMatch(m_ic.interps[i].wildcards,ipath))
+                            if (ipath!=wxT_2("") && !WildCardListMatch(m_ic.interps[i].wildcards,ipath))
                                 match=false;
                             pathlist=pathlist.AfterFirst('*');
                             ipath=pathlist.BeforeFirst('*');

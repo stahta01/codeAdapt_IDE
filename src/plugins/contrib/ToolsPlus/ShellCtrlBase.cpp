@@ -87,7 +87,7 @@ END_EVENT_TABLE()
 void ShellManager::OnPageClosing(wxAuiNotebookEvent& event)
 {
     ShellCtrlBase* sh = GetPage(event.GetSelection());
-    //    LOGSTREAM << wxString::Format(_T("OnPageClosing(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : _T(""));
+    //    LOGSTREAM << wxString::Format(wxT_2("OnPageClosing(): ed=%p, title=%s\n"), eb, eb ? eb->GetTitle().c_str() : wxT_2(""));
     if (!QueryClose(sh))
         event.Veto();
 //    event.Skip(); // allow others to process it too

@@ -66,10 +66,10 @@ CmdConfigDialog::CmdConfigDialog( wxWindow* parent, ToolsPlus* plugin) : wxDialo
     m_replace_tools = new wxCheckBox(settings_panel, wxID_ANY, _("Replace Tools menu with Tools Plus"));
     m_ReuseToolsPage = new wxCheckBox(settings_panel, wxID_ANY, _("Reuse existing Tools page"));
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("ShellExtensions"));
-    m_replace_tools->SetValue(cfg->ReadBool(_T("HideToolsMenu"), false));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("ShellExtensions"));
+    m_replace_tools->SetValue(cfg->ReadBool(wxT_2("HideToolsMenu"), false));
     settings_sizer->Add(m_replace_tools);
-    m_ReUseToolsPageValue = cfg->ReadBool(_T("ReuseToolsPage"), false);
+    m_ReUseToolsPageValue = cfg->ReadBool(wxT_2("ReuseToolsPage"), false);
     m_ReuseToolsPage->SetValue(m_ReUseToolsPageValue);
     settings_sizer->Add(m_ReuseToolsPage);
 
@@ -304,22 +304,22 @@ void CmdConfigDialog::SetDialogItems()
         m_menulocpriority->SetValue(interp.menupriority);
         m_cmenuloc->SetValue(interp.cmenu);
         m_cmenulocpriority->SetValue(interp.cmenupriority);
-        if(interp.mode==_T("W"))
+        if(interp.mode==wxT_2("W"))
             m_mode->SetSelection(0);
-        else if(interp.mode==_T("C"))
+        else if(interp.mode==wxT_2("C"))
             m_mode->SetSelection(1);
         else
             m_mode->SetSelection(2);
         m_envvars->SetSelection(m_envvars->FindString(interp.envvarset));
     } else
     {
-        m_commandname->SetValue(_T(""));
-        m_command->SetValue(_T(""));
-        m_wildcards->SetValue(_T(""));
-        m_workdir->SetValue(_T(""));
-        m_menuloc->SetValue(_T(""));
+        m_commandname->SetValue(wxT_2(""));
+        m_command->SetValue(wxT_2(""));
+        m_wildcards->SetValue(wxT_2(""));
+        m_workdir->SetValue(wxT_2(""));
+        m_menuloc->SetValue(wxT_2(""));
         m_menulocpriority->SetValue(0);
-        m_cmenuloc->SetValue(_T(""));
+        m_cmenuloc->SetValue(wxT_2(""));
         m_cmenulocpriority->SetValue(0);
         m_mode->SetSelection(0);
         m_envvars->SetSelection(0);
@@ -354,13 +354,13 @@ void CmdConfigDialog::GetDialogItems()
     switch(m_mode->GetSelection())
     {
         case 0:
-            interp.mode=_T("W");
+            interp.mode=wxT_2("W");
             break;
         case 1:
-            interp.mode=_T("C");
+            interp.mode=wxT_2("C");
             break;
         case 2:
-            interp.mode=_T("");
+            interp.mode=wxT_2("");
             break;
         default:
             break;
@@ -449,9 +449,9 @@ void CmdConfigDialog::OnDown(wxCommandEvent &/*event*/)
 void CmdConfigDialog::OnImport(wxCommandEvent &/*event*/)
 {
     #ifdef __WXMSW__
-    wxFileDialog fd(NULL, _("Import: Select File"),_T(""),_T(""),_T("*.*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    wxFileDialog fd(NULL, _("Import: Select File"),wxT_2(""),wxT_2(""),wxT_2("*.*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     #else
-    wxFileDialog fd(NULL, _("Import: Select File"),_T(""),_T(""),_T("*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    wxFileDialog fd(NULL, _("Import: Select File"),wxT_2(""),wxT_2(""),wxT_2("*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     #endif
     const int prevlistsize = m_ic.interps.GetCount();
     if(fd.ShowModal()!=wxID_OK)
@@ -467,9 +467,9 @@ void CmdConfigDialog::OnImport(wxCommandEvent &/*event*/)
 void CmdConfigDialog::OnExport(wxCommandEvent &/*event*/)
 {
     #ifdef __WXMSW__
-    wxFileDialog fd(NULL, _("Export: Choose a Filename"),_T(""),_T(""),_T("*.*"),wxFD_SAVE);
+    wxFileDialog fd(NULL, _("Export: Choose a Filename"),wxT_2(""),wxT_2(""),wxT_2("*.*"),wxFD_SAVE);
     #else
-    wxFileDialog fd(NULL, _("Export: Choose a Filename"),_T(""),_T(""),_T("*"),wxFD_SAVE);
+    wxFileDialog fd(NULL, _("Export: Choose a Filename"),wxT_2(""),wxT_2(""),wxT_2("*"),wxFD_SAVE);
     #endif
     if(fd.ShowModal()!=wxID_OK)
         return;
