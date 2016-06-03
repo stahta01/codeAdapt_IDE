@@ -40,7 +40,7 @@ class CodeStatConfigDlg : public cbConfigurationPanel
       void ReInitDialog();
 
       virtual wxString GetTitle() const { return _("Code statistics settings"); }
-      virtual wxString GetBitmapBaseName() const { return _T("codestats"); }
+      virtual wxString GetBitmapBaseName() const { return wxT_2("codestats"); }
       virtual void OnApply(){SaveSettings();};
       virtual void OnCancel(){}
 

@@ -34,7 +34,7 @@ int CodeStatExecDlg::Execute(LanguageDef languages[NB_FILETYPES_MAX], int nb_lan
 {
    cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
    long nb_files = project->GetFilesCount();
-   //wxMessageBox(wxString::Format(_T("Nb files: %ld"), nb_files), _("Error"), wxOK);
+   //wxMessageBox(wxString::Format(wxT_2("Nb files: %ld"), nb_files), _("Error"), wxOK);
 
    // Check if all files have been saved
    bool all_files_saved = true;
@@ -44,7 +44,7 @@ int CodeStatExecDlg::Execute(LanguageDef languages[NB_FILETYPES_MAX], int nb_lan
    // If not, ask user if we can save them
    if (!all_files_saved)
    {
-       if (cbMessageBox(_T("Some files are not saved.\nDo you want to save them before running the plugin?"), _("Warning"), wxICON_EXCLAMATION | wxYES_NO, Manager::Get()->GetAppWindow()) == wxID_YES)
+       if (cbMessageBox(wxT_2("Some files are not saved.\nDo you want to save them before running the plugin?"), _("Warning"), wxICON_EXCLAMATION | wxYES_NO, Manager::Get()->GetAppWindow()) == wxID_YES)
        {
            for (int i=0; i<nb_files; ++i)
            {
@@ -71,7 +71,7 @@ int CodeStatExecDlg::Execute(LanguageDef languages[NB_FILETYPES_MAX], int nb_lan
 		if (!filename.FileExists())
 		{
 			++nb_files_not_found;
-			//Manager::Get()->GetLogManager()->DebugLog(_T("Code Statistics: Ignoring file '%s' (file not found)"), filename.GetName());
+			//Manager::Get()->GetLogManager()->DebugLog(wxT_2("Code Statistics: Ignoring file '%s' (file not found)"), filename.GetName());
 		}
 		else
 		{
@@ -97,7 +97,7 @@ int CodeStatExecDlg::Execute(LanguageDef languages[NB_FILETYPES_MAX], int nb_lan
    progress.Update(100);
 
    // Setting-up the statistics dialog box
-   wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgCodeStatExec"));
+   wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgCodeStatExec"));
 
    wxStaticText* txt_num_files = XRCCTRL(*this, "txt_num_files", wxStaticText);
    txt_num_files->SetLabel(wxString::Format(_("%ld"), nb_files));

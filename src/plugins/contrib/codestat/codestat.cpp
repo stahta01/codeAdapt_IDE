@@ -26,14 +26,14 @@
 // Register the plugin
 namespace
 {
-    PluginRegistrant<CodeStat> reg(_T("CodeStat"));
+    PluginRegistrant<CodeStat> reg(wxT_2("CodeStat"));
 };
 
 CodeStat::CodeStat()
 {
-    if(!Manager::LoadResource(_T("codestat.zip")))
+    if(!Manager::LoadResource(wxT_2("codestat.zip")))
     {
-        NotifyMissingFile(_T("codestat.zip"));
+        NotifyMissingFile(wxT_2("codestat.zip"));
     }
 }
 
