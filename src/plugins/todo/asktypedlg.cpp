@@ -10,7 +10,7 @@
 
 AskTypeDlg::AskTypeDlg(wxWindow* parent)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgAskType"));
+    wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgAskType"));
 }
 
 AskTypeDlg::~AskTypeDlg()

@@ -38,7 +38,7 @@ WX_DEFINE_OBJARRAY(ToDoItems);
 
 namespace
 {
-    PluginRegistrant<ToDoList> reg(_T("ToDoList"));
+    PluginRegistrant<ToDoList> reg(wxT_2("ToDoList"));
 }
 
 const int idViewTodo = wxNewId();
@@ -57,9 +57,9 @@ m_ParsePending(false),
 m_StandAlone(true)
 {
     //ctor
-    if(!Manager::LoadResource(_T("todo.zip")))
+    if(!Manager::LoadResource(wxT_2("todo.zip")))
     {
-        NotifyMissingFile(_T("todo.zip"));
+        NotifyMissingFile(wxT_2("todo.zip"));
     }
 }
 
@@ -88,7 +88,7 @@ void ToDoList::OnAttach()
 
     m_pListLog = new ToDoListView(titles, widths, m_Types);
 
-    bool standalone = Manager::Get()->GetConfigManager(_T("todo_list"))->ReadBool(_T("stand_alone"), true);
+    bool standalone = Manager::Get()->GetConfigManager(wxT_2("todo_list"))->ReadBool(wxT_2("stand_alone"), true);
     m_StandAlone = standalone;
 
     if(!standalone)
@@ -107,7 +107,7 @@ void ToDoList::OnAttach()
         m_pListLog->GetWindow()->SetInitialSize(wxSize(352,94));
 
         CodeBlocksDockEvent evt(cbEVT_ADD_DOCK_WINDOW);
-        evt.name = _T("TodoListPanev2.0.0");
+        evt.name = wxT_2("TodoListPanev2.0.0");
         evt.title = _("To-Do list");
         evt.pWindow = m_pListLog->GetWindow();
         evt.dockSide = CodeBlocksDockEvent::dsFloating;
@@ -117,7 +117,7 @@ void ToDoList::OnAttach()
         Manager::Get()->ProcessEvent(evt);
     }
 
-    m_AutoRefresh = Manager::Get()->GetConfigManager(_T("todo_list"))->ReadBool(_T("auto_refresh"), true);
+    m_AutoRefresh = Manager::Get()->GetConfigManager(wxT_2("todo_list"))->ReadBool(wxT_2("auto_refresh"), true);
     LoadTypes();
 
     // register event sink
@@ -199,7 +199,7 @@ int ToDoList::Configure()
 //    ToDoSettingsDlg dlg;
 //    PlaceWindow(&dlg);
 //    if (dlg.ShowModal() == wxID_OK)
-//        m_AutoRefresh = Manager::Get()->GetConfigManager(_T("todo_list"))->ReadBool(_T("auto_refresh"), true);
+//        m_AutoRefresh = Manager::Get()->GetConfigManager(wxT_2("todo_list"))->ReadBool(wxT_2("auto_refresh"), true);
 //    return 0;
 }
 
@@ -207,24 +207,24 @@ void ToDoList::LoadTypes()
 {
     m_Types.Clear();
 
-    Manager::Get()->GetConfigManager(_T("todo_list"))->Read(_T("types"), &m_Types);
+    Manager::Get()->GetConfigManager(wxT_2("todo_list"))->Read(wxT_2("types"), &m_Types);
 
     if(m_Types.GetCount() == 0)
     {
-        m_Types.Add(_T("TODO"));
-        m_Types.Add(_T("@todo"));
-        m_Types.Add(_T("\\todo"));
-        m_Types.Add(_T("FIXME"));
-        m_Types.Add(_T("NOTE"));
-        m_Types.Add(_T("@note"));
-        m_Types.Add(_T("\\note"));
+        m_Types.Add(wxT_2("TODO"));
+        m_Types.Add(wxT_2("@todo"));
+        m_Types.Add(wxT_2("\\todo"));
+        m_Types.Add(wxT_2("FIXME"));
+        m_Types.Add(wxT_2("NOTE"));
+        m_Types.Add(wxT_2("@note"));
+        m_Types.Add(wxT_2("\\note"));
     }
     SaveTypes();
 }
 
 void ToDoList::SaveTypes()
 {
-    Manager::Get()->GetConfigManager(_T("todo_list"))->Write(_T("types"), m_Types);
+    Manager::Get()->GetConfigManager(wxT_2("todo_list"))->Write(wxT_2("types"), m_Types);
 }
 
 // events
@@ -343,48 +343,48 @@ void ToDoList::OnAddItem(wxCommandEvent& event)
     switch(CmtType)
     {
         case tdctCpp:
-            buffer << _T("// ");
+            buffer << wxT_2("// ");
             break;
         case tdctDoxygen:
-            buffer << _T("/// ");
+            buffer << wxT_2("/// ");
             break;
         case tdctWarning:
-            buffer << _T("#warning ");
+            buffer << wxT_2("#warning ");
             break;
         case tdctError:
-            buffer << _T("#error ");
+            buffer << wxT_2("#error ");
             break;
         default:
-            buffer << _T("/* ");
+            buffer << wxT_2("/* ");
             break;
     } // end switch
 
     // continue with the type
-    buffer << dlg.GetType() << _T(" ");
-    wxString priority = wxString::Format(_T("%d"), dlg.GetPriority()); // do it like this (wx bug with int and streams)
+    buffer << dlg.GetType() << wxT_2(" ");
+    wxString priority = wxString::Format(wxT_2("%d"), dlg.GetPriority()); // do it like this (wx bug with int and streams)
 
     // now do the () part
-    buffer << _T("(") << dlg.GetUser() << _T("#") << priority << _T("#): ");
+    buffer << wxT_2("(") << dlg.GetUser() << wxT_2("#") << priority << wxT_2("#): ");
 
     wxString text = dlg.GetText();
     if (CmtType != tdctC)
     {
         // make sure that multi-line notes, don't break the to-do
-        if (text.Replace(_T("\r\n"), _T("\\\r\n")) == 0)
-            text.Replace(_T("\n"), _T("\\\n"));
+        if (text.Replace(wxT_2("\r\n"), wxT_2("\\\r\n")) == 0)
+            text.Replace(wxT_2("\n"), wxT_2("\\\n"));
         // now see if there were already a backslash before newline
-        if (text.Replace(_T("\\\\\r\n"), _T("\\\r\n")) == 0)
-            text.Replace(_T("\\\\\n"), _T("\\\n"));
+        if (text.Replace(wxT_2("\\\\\r\n"), wxT_2("\\\r\n")) == 0)
+            text.Replace(wxT_2("\\\\\n"), wxT_2("\\\n"));
     }
 
     // add the actual text
     buffer << text;
 
     if (CmtType == tdctWarning || CmtType == tdctError)
-        buffer << _T("");
+        buffer << wxT_2("");
 
     else if (CmtType == tdctC)
-        buffer << _T(" */");
+        buffer << wxT_2(" */");
 
     // add newline char(s), only if dlg.GetPosition() != tdpCurrent
     if (dlg.GetPosition() != tdpCurrent)
@@ -392,9 +392,9 @@ void ToDoList::OnAddItem(wxCommandEvent& event)
         switch (control->GetEOLMode())
         {
             // NOTE: maybe this switch, should make it in the SDK (maybe as cbStyledTextCtrl::GetEOLString())???
-            case wxSCI_EOL_CR: buffer << _T("\n"); break;
-            case wxSCI_EOL_CRLF: buffer << _T("\r\n"); break;
-            case wxSCI_EOL_LF: buffer << _T("\r"); break;
+            case wxSCI_EOL_CR: buffer << wxT_2("\n"); break;
+            case wxSCI_EOL_CRLF: buffer << wxT_2("\r\n"); break;
+            case wxSCI_EOL_LF: buffer << wxT_2("\r"); break;
         }
     }
 
