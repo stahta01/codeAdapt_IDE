@@ -23,7 +23,7 @@ namespace compatibility
 namespace
 {
     // this auto-registers the plugin
-    PluginRegistrant<OpenFilesListPlugin> reg(_T("OpenFilesList"));
+    PluginRegistrant<OpenFilesListPlugin> reg(wxT_2("OpenFilesList"));
 
     const int idOpenFilesTree = wxNewId();
     const int idViewOpenFilesTree = wxNewId();
@@ -68,29 +68,29 @@ void OpenFilesListPlugin::OnAttach()
     // load bitmaps
     wxBitmap bmp;
     m_pImages = new wxImageList(16, 16);
-    wxString prefix = ConfigManager::GetDataFolder() + _T("/images/");
+    wxString prefix = ConfigManager::GetDataFolder() + wxT_2("/images/");
 
-    bmp = cbLoadBitmap(prefix + _T("folder_open.png"), wxBITMAP_TYPE_PNG); // folder
+    bmp = cbLoadBitmap(prefix + wxT_2("folder_open.png"), wxBITMAP_TYPE_PNG); // folder
     m_pImages->Add(bmp);
 
-    bmp = cbLoadBitmap(prefix + _T("ascii.png"), wxBITMAP_TYPE_PNG); // file
+    bmp = cbLoadBitmap(prefix + wxT_2("ascii.png"), wxBITMAP_TYPE_PNG); // file
     m_pImages->Add(bmp);
 
-    bmp = cbLoadBitmap(prefix + _T("modified_file.png"), wxBITMAP_TYPE_PNG); // modified file
+    bmp = cbLoadBitmap(prefix + wxT_2("modified_file.png"), wxBITMAP_TYPE_PNG); // modified file
     m_pImages->Add(bmp);
 
-    bmp = cbLoadBitmap(prefix + _T("file-readonly.png"), wxBITMAP_TYPE_PNG); // read only file
+    bmp = cbLoadBitmap(prefix + wxT_2("file-readonly.png"), wxBITMAP_TYPE_PNG); // read only file
     m_pImages->Add(bmp);
 
     m_pTree->SetImageList(m_pImages);
-    m_pTree->AddRoot(_T("Opened Files"), 0, 0);
+    m_pTree->AddRoot(wxT_2("Opened Files"), 0, 0);
 
     // first build of the tree
     RebuildOpenFilesTree();
 
     // add the tree to the docking system
     CodeBlocksDockEvent evt(cbEVT_ADD_DOCK_WINDOW);
-    evt.name = _T("OpenFilesPane");
+    evt.name = wxT_2("OpenFilesPane");
     evt.title = _("Open files list");
     evt.pWindow = m_pTree;
     evt.minimumSize.Set(50, 50);
@@ -299,25 +299,25 @@ void OpenFilesListPlugin::OnUpdateUI(wxUpdateUIEvent& event)
 
 void OpenFilesListPlugin::OnEditorActivated(CodeBlocksEvent& event)
 {
-//  Manager::Get()->GetLogManager()->Log(_T("OnEditorActivated: ") + event.GetEditor()->GetFilename());
+//  Manager::Get()->GetLogManager()->Log(wxT_2("OnEditorActivated: ") + event.GetEditor()->GetFilename());
     RefreshOpenFilesTree(event.GetEditor());
 }
 
 void OpenFilesListPlugin::OnEditorClosed(CodeBlocksEvent& event)
 {
-//  Manager::Get()->GetLogManager()->Log(_T("OnEditorClosed: ") + event.GetEditor()->GetFilename());
+//  Manager::Get()->GetLogManager()->Log(wxT_2("OnEditorClosed: ") + event.GetEditor()->GetFilename());
     RefreshOpenFilesTree(event.GetEditor(), true);
 }
 
 void OpenFilesListPlugin::OnEditorDeactivated(CodeBlocksEvent& event)
 {
-//  Manager::Get()->GetLogManager()->Log(_T("OnEditorDeactivated: ") + event.GetEditor()->GetFilename());
+//  Manager::Get()->GetLogManager()->Log(wxT_2("OnEditorDeactivated: ") + event.GetEditor()->GetFilename());
     RefreshOpenFilesTree(event.GetEditor());
 }
 
 void OpenFilesListPlugin::OnEditorModified(CodeBlocksEvent& event)
 {
-//  Manager::Get()->GetLogManager()->Log(_T("OnEditorModified: ") + event.GetEditor()->GetFilename());
+//  Manager::Get()->GetLogManager()->Log(wxT_2("OnEditorModified: ") + event.GetEditor()->GetFilename());
     RefreshOpenFilesTree(event.GetEditor());
 }
 
@@ -336,7 +336,7 @@ void OpenFilesListPlugin::OnEditorOpened(CodeBlocksEvent& event)
 
 void OpenFilesListPlugin::OnEditorSaved(CodeBlocksEvent& event)
 {
-//  Manager::Get()->GetLogManager()->Log(_T("OnEditorSaved: ") + event.GetEditor()->GetFilename());
+//  Manager::Get()->GetLogManager()->Log(wxT_2("OnEditorSaved: ") + event.GetEditor()->GetFilename());
     RefreshOpenFilesTree(event.GetEditor());
 }
 
