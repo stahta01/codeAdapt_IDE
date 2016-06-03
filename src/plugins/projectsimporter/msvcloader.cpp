@@ -58,14 +58,14 @@ MSVCLoader::~MSVCLoader()
 bool MSVCLoader::Open(const wxString& filename)
 {
     /* NOTE (mandrav#1#): not necessary to ask for switches conversion... */
-    m_ConvertSwitches = m_pProject->GetCompilerID().IsSameAs(_T("gcc"));
+    m_ConvertSwitches = m_pProject->GetCompilerID().IsSameAs(wxT_2("gcc"));
 
     m_Filename = filename;
     if (!ReadConfigurations())
         return false;
 
     // the file is read, now process it
-    Manager::Get()->GetLogManager()->DebugLog(_T("Importing MSVC project: ") + filename);
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Importing MSVC project: ") + filename);
 
     // delete all targets of the project (we 'll create new ones from the imported configurations)
     while (m_pProject->GetBuildTargetsCount())
@@ -85,7 +85,7 @@ bool MSVCLoader::Open(const wxString& filename)
         PlaceWindow(&dlg);
         if (dlg.ShowModal() == wxID_CANCEL)
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Canceled..."));
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Canceled..."));
             return false;
         }
         selected_indices = dlg.GetSelectedIndices();
@@ -129,7 +129,7 @@ bool MSVCLoader::ReadConfigurations()
         line.Trim(true);
         line.Trim(false);
         int size = -1;
-        if (line.StartsWith(_T("# TARGTYPE")))
+        if (line.StartsWith(wxT_2("# TARGTYPE")))
         {
             // # TARGTYPE "Win32 (x86) Application" 0x0103
             int idx = line.Find(' ', true);
@@ -138,34 +138,34 @@ bool MSVCLoader::ReadConfigurations()
                 TargetType type;
                 wxString targtype = line.Mid(12, idx-1-12);
                 wxString projcode = line.Mid(idx+3, 4);
-                if      (projcode.Matches(_T("0101"))) type = ttExecutable;
-                else if (projcode.Matches(_T("0102"))) type = ttDynamicLib;
-                else if (projcode.Matches(_T("0103"))) type = ttConsoleOnly;
-                else if (projcode.Matches(_T("0104"))) type = ttStaticLib;
-                else if (projcode.Matches(_T("010a"))) type = ttCommandsOnly;
+                if      (projcode.Matches(wxT_2("0101"))) type = ttExecutable;
+                else if (projcode.Matches(wxT_2("0102"))) type = ttDynamicLib;
+                else if (projcode.Matches(wxT_2("0103"))) type = ttConsoleOnly;
+                else if (projcode.Matches(wxT_2("0104"))) type = ttStaticLib;
+                else if (projcode.Matches(wxT_2("010a"))) type = ttCommandsOnly;
                 else
                 {
                     type = ttCommandsOnly;
-                    Manager::Get()->GetLogManager()->DebugLog(_T("unrecognized target type"));
+                    Manager::Get()->GetLogManager()->DebugLog(wxT_2("unrecognized target type"));
                 }
 
-                //Manager::Get()->GetLogManager()->DebugLog(_T("TargType '%s' is %d"), targtype.c_str(), type);
+                //Manager::Get()->GetLogManager()->DebugLog(wxT_2("TargType '%s' is %d"), targtype.c_str(), type);
                 m_TargType[targtype] = type;
             }
             continue;
         }
-        else if (line.StartsWith(_T("!MESSAGE \"")))
+        else if (line.StartsWith(wxT_2("!MESSAGE \"")))
         {
             //  !MESSAGE "anothertest - Win32 Release" (based on "Win32 (x86) Application")
             int pos;
             pos = line.Find('\"');
             line = line.Mid(pos + 1);
             pos = line.Find('\"');
-            wxArrayString projectTarget = GetArrayFromString(line.Left(pos), _T("-"));
+            wxArrayString projectTarget = GetArrayFromString(line.Left(pos), wxT_2("-"));
             wxString target = projectTarget[1];
             if (projectTarget.GetCount() != 2)
             {
-                Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: bad target format"));
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: bad target format"));
                 return false;
             }
             line = line.Mid(pos + 1);
@@ -179,17 +179,17 @@ bool MSVCLoader::ReadConfigurations()
                 type = it->second;
             else
             {
-                Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: target type not found"));
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: target type not found"));
                 return false;
             }
             m_TargetBasedOn[target] = type;
-            //Manager::Get()->GetLogManager()->DebugLog(_T("Target '%s' type %d"), target.c_str(), type);
+            //Manager::Get()->GetLogManager()->DebugLog(wxT_2("Target '%s' type %d"), target.c_str(), type);
         }
-        else if (line.StartsWith(_T("!IF  \"$(CFG)\" ==")))
+        else if (line.StartsWith(wxT_2("!IF  \"$(CFG)\" ==")))
             size = 16;
-        else if (line.StartsWith(_T("!ELSEIF  \"$(CFG)\" ==")))
+        else if (line.StartsWith(wxT_2("!ELSEIF  \"$(CFG)\" ==")))
             size = 20;
-        else if (line == _T("# Begin Target"))
+        else if (line == wxT_2("# Begin Target"))
         {
             // done
             m_BeginTargetLine = currentLine;
@@ -213,7 +213,7 @@ bool MSVCLoader::ReadConfigurations()
             {
                 m_Configurations.Add(tmp);
                 m_ConfigurationsLineIndex.Add(currentLine);
-                Manager::Get()->GetLogManager()->DebugLog(F(_T("Detected configuration '%s' at line %d"), tmp.c_str(), currentLine));
+                Manager::Get()->GetLogManager()->DebugLog(F(wxT("Detected configuration '%s' at line %d"), tmp.c_str(), currentLine));
             }
         }
     }
@@ -234,7 +234,7 @@ bool MSVCLoader::ParseConfiguration(int index)
     m_Type = ttCommandsOnly;
     HashTargetType::iterator it = m_TargetBasedOn.find(m_Configurations[index]);
     if (it != m_TargetBasedOn.end()) m_Type = it->second;
-    else Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: could not find the target type of ") + m_Configurations[index]);
+    else Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: could not find the target type of ") + m_Configurations[index]);
     bt->SetTargetType(m_Type);
     bt->SetOutputFilename(bt->SuggestOutputFilename());
 
@@ -263,7 +263,7 @@ bool MSVCLoader::ParseConfiguration(int index)
             continue;
 
 //        if (line.StartsWith("# PROP BASE Output_Dir "))
-        if (line.StartsWith(_T("# PROP Output_Dir ")))
+        if (line.StartsWith(wxT_2("# PROP Output_Dir ")))
         {
             line = line.Mid(18);
             line.Trim(true);
@@ -279,7 +279,7 @@ bool MSVCLoader::ParseConfiguration(int index)
             }
         }
 //        else if (line.StartsWith("# PROP BASE Intermediate_Dir "))
-        else if (line.StartsWith(_T("# PROP Intermediate_Dir ")))
+        else if (line.StartsWith(wxT_2("# PROP Intermediate_Dir ")))
         {
             line = line.Mid(24);
             line.Trim(true);
@@ -290,42 +290,42 @@ bool MSVCLoader::ParseConfiguration(int index)
                 bt->SetObjectOutput(tmp);
             }
         }
-        else if (line.StartsWith(_T("# ADD BASE CPP ")))
+        else if (line.StartsWith(wxT_2("# ADD BASE CPP ")))
         {
             line = line.Mid(15);
             line.Trim(true);
             line.Trim(false);
             ProcessCompilerOptions(bt, line);
         }
-        else if (line.StartsWith(_T("# ADD CPP ")))
+        else if (line.StartsWith(wxT_2("# ADD CPP ")))
         {
             line = line.Mid(10);
             line.Trim(true);
             line.Trim(false);
             ProcessCompilerOptions(bt, line);
         }
-        else if (line.StartsWith(_T("# ADD BASE LINK32 ")))
+        else if (line.StartsWith(wxT_2("# ADD BASE LINK32 ")))
         {
             line = line.Mid(18);
             line.Trim(true);
             line.Trim(false);
             ProcessLinkerOptions(bt, line);
         }
-        else if (line.StartsWith(_T("# ADD LINK32 ")))
+        else if (line.StartsWith(wxT_2("# ADD LINK32 ")))
         {
             line = line.Mid(13);
             line.Trim(true);
             line.Trim(false);
             ProcessLinkerOptions(bt, line);
         }
-        else if (line.StartsWith(_T("# ADD BASE RSC "))) // To import resource compiler options
+        else if (line.StartsWith(wxT_2("# ADD BASE RSC "))) // To import resource compiler options
         {
             line = line.Mid(16);
             line.Trim(true);
             line.Trim(false);
             ProcessResourceCompilerOptions(bt, line);
         }
-        else if (line.StartsWith(_T("# ADD RSC ")))
+        else if (line.StartsWith(wxT_2("# ADD RSC ")))
         {
             line = line.Mid(11);
             line.Trim(true);
@@ -362,7 +362,7 @@ bool MSVCLoader::ParseSourceFiles()
         line.Trim(true);
         line.Trim(false);
 
-        if (line.StartsWith(_T("SOURCE=")))
+        if (line.StartsWith(wxT_2("SOURCE=")))
         {
             line = line.Mid(7);
             line.Trim(true);
@@ -370,13 +370,13 @@ bool MSVCLoader::ParseSourceFiles()
 
             wxString fname (RemoveQuotes(line));
 
-            if ((!fname.IsEmpty()) && (fname != _T(".\\")))
+            if ((!fname.IsEmpty()) && (fname != wxT_2(".\\")))
             {
-                if (fname.StartsWith(_T(".\\")))
+                if (fname.StartsWith(wxT_2(".\\")))
                     fname.erase(0, 2);
 
                 if (!platform::windows)
-                    fname.Replace(_T("\\"), _T("/"), true);
+                    fname.Replace(wxT_2("\\"), wxT_2("/"), true);
 
                 ProjectFile* pf = m_pProject->AddFile(0, fname);
                 if (pf)
@@ -388,12 +388,12 @@ bool MSVCLoader::ParseSourceFiles()
                 }
             }
         }
-        else if (line.StartsWith(_T("!")))
+        else if (line.StartsWith(wxT_2("!")))
         {
             FoundIf = true;
-            if (line.StartsWith(_T("!IF  \"$(CFG)\" ==")))
+            if (line.StartsWith(wxT_2("!IF  \"$(CFG)\" ==")))
                 size = 16;
-            else if (line.StartsWith(_T("!ELSEIF  \"$(CFG)\" ==")))
+            else if (line.StartsWith(wxT_2("!ELSEIF  \"$(CFG)\" ==")))
                 size = 20;
             else
             {
@@ -404,21 +404,21 @@ bool MSVCLoader::ParseSourceFiles()
             {
                 CurCFG = line.Mid(size);
                 CurCFG = RemoveQuotes(CurCFG.Trim(false).Trim(true));
-                CurCFG = CurCFG.Mid(CurCFG.Find(_T("-")) + 1).Trim(true).Trim(false);
+                CurCFG = CurCFG.Mid(CurCFG.Find(wxT_2("-")) + 1).Trim(true).Trim(false);
             }
-            if (line.StartsWith(_T("!ENDIF")))
+            if (line.StartsWith(wxT_2("!ENDIF")))
             {
                 FoundIf = false;
                 CurCFG = wxEmptyString;
                 LastProcessedFile = wxEmptyString;
             }
         }
-        else if (line.StartsWith(_T("#")))
+        else if (line.StartsWith(wxT_2("#")))
         {
-            if (FoundIf && line.StartsWith(_T("# PROP Exclude_From_Build ")))
+            if (FoundIf && line.StartsWith(wxT_2("# PROP Exclude_From_Build ")))
             {
                 line.Trim(true);
-                if (line.Right(1).IsSameAs(_T("1")))
+                if (line.Right(1).IsSameAs(wxT_2("1")))
                 {
                     ProjectFile* pf = m_pProject->GetFileByFilename(LastProcessedFile);
                     if (pf)
@@ -428,7 +428,7 @@ bool MSVCLoader::ParseSourceFiles()
                             if (m_pProject->GetBuildTarget(j)->GetTitle().IsSameAs(CurCFG))
                             {
                                 pf->RemoveBuildTarget(CurCFG);
-                                Manager::Get()->GetLogManager()->DebugLog(wxString::Format(_T("Buid target %s has been excluded from %s"),
+                                Manager::Get()->GetLogManager()->DebugLog(wxString::Format(wxT_2("Buid target %s has been excluded from %s"),
 																		CurCFG.c_str(), LastProcessedFile.c_str()));
                             }
                         }
@@ -452,59 +452,59 @@ void MSVCLoader::ProcessCompilerOptions(ProjectBuildTarget* target, const wxStri
 
         if (m_ConvertSwitches)
         {
-            if (opt.Matches(_T("/D")))
-                target->AddCompilerOption(_T("-D") + RemoveQuotes(array[++i]));
-            else if (opt.Matches(_T("/U")))
-                target->AddCompilerOption(_T("-U") + RemoveQuotes(array[++i]));
-            else if (opt.Matches(_T("/Zi")) || opt.Matches(_T("/ZI")))
-                target->AddCompilerOption(_T("-g"));
-            else if (opt.Matches(_T("/I")))
+            if (opt.Matches(wxT_2("/D")))
+                target->AddCompilerOption(wxT_2("-D") + RemoveQuotes(array[++i]));
+            else if (opt.Matches(wxT_2("/U")))
+                target->AddCompilerOption(wxT_2("-U") + RemoveQuotes(array[++i]));
+            else if (opt.Matches(wxT_2("/Zi")) || opt.Matches(wxT_2("/ZI")))
+                target->AddCompilerOption(wxT_2("-g"));
+            else if (opt.Matches(wxT_2("/I")))
                 target->AddIncludeDir(RemoveQuotes(array[++i]));
-            else if (opt.Matches(_T("/W0")))
-                target->AddCompilerOption(_T("-w"));
-            else if (opt.Matches(_T("/O1")) ||
-                     opt.Matches(_T("/O2")) ||
-                     opt.Matches(_T("/O3")))
-                target->AddCompilerOption(_T("-O2"));
-            else if (opt.Matches(_T("/W1")) ||
-                     opt.Matches(_T("/W2")) ||
-                     opt.Matches(_T("/W3")))
-                target->AddCompilerOption(_T("-W"));
-            else if (opt.Matches(_T("/W4")))
-                target->AddCompilerOption(_T("-Wall"));
-            else if (opt.Matches(_T("/WX")))
-                target->AddCompilerOption(_T("-Werror"));
-            else if (opt.Matches(_T("/GX")))
-                target->AddCompilerOption(_T("-fexceptions"));
-            else if (opt.Matches(_T("/Ob0")))
-                target->AddCompilerOption(_T("-fno-inline"));
-            else if (opt.Matches(_T("/Ob2")))
-                target->AddCompilerOption(_T("-finline-functions"));
-            else if (opt.Matches(_T("/Oy")))
-                target->AddCompilerOption(_T("-fomit-frame-pointer"));
-            else if (opt.Matches(_T("/GB")))
-                target->AddCompilerOption(_T("-mcpu=pentiumpro -D_M_IX86=500"));
-            else if (opt.Matches(_T("/G6")))
-                target->AddCompilerOption(_T("-mcpu=pentiumpro -D_M_IX86=600"));
-            else if (opt.Matches(_T("/G5")))
-                target->AddCompilerOption(_T("-mcpu=pentium -D_M_IX86=500"));
-            else if (opt.Matches(_T("/G4")))
-                target->AddCompilerOption(_T("-mcpu=i486 -D_M_IX86=400"));
-            else if (opt.Matches(_T("/G3")))
-                target->AddCompilerOption(_T("-mcpu=i386 -D_M_IX86=300"));
-            else if (opt.Matches(_T("/Za")))
-                target->AddCompilerOption(_T("-ansi"));
-            else if (opt.Matches(_T("/Zp1")))
-                target->AddCompilerOption(_T("-fpack-struct"));
-            else if (opt.Matches(_T("/nologo")))
+            else if (opt.Matches(wxT_2("/W0")))
+                target->AddCompilerOption(wxT_2("-w"));
+            else if (opt.Matches(wxT_2("/O1")) ||
+                     opt.Matches(wxT_2("/O2")) ||
+                     opt.Matches(wxT_2("/O3")))
+                target->AddCompilerOption(wxT_2("-O2"));
+            else if (opt.Matches(wxT_2("/W1")) ||
+                     opt.Matches(wxT_2("/W2")) ||
+                     opt.Matches(wxT_2("/W3")))
+                target->AddCompilerOption(wxT_2("-W"));
+            else if (opt.Matches(wxT_2("/W4")))
+                target->AddCompilerOption(wxT_2("-Wall"));
+            else if (opt.Matches(wxT_2("/WX")))
+                target->AddCompilerOption(wxT_2("-Werror"));
+            else if (opt.Matches(wxT_2("/GX")))
+                target->AddCompilerOption(wxT_2("-fexceptions"));
+            else if (opt.Matches(wxT_2("/Ob0")))
+                target->AddCompilerOption(wxT_2("-fno-inline"));
+            else if (opt.Matches(wxT_2("/Ob2")))
+                target->AddCompilerOption(wxT_2("-finline-functions"));
+            else if (opt.Matches(wxT_2("/Oy")))
+                target->AddCompilerOption(wxT_2("-fomit-frame-pointer"));
+            else if (opt.Matches(wxT_2("/GB")))
+                target->AddCompilerOption(wxT_2("-mcpu=pentiumpro -D_M_IX86=500"));
+            else if (opt.Matches(wxT_2("/G6")))
+                target->AddCompilerOption(wxT_2("-mcpu=pentiumpro -D_M_IX86=600"));
+            else if (opt.Matches(wxT_2("/G5")))
+                target->AddCompilerOption(wxT_2("-mcpu=pentium -D_M_IX86=500"));
+            else if (opt.Matches(wxT_2("/G4")))
+                target->AddCompilerOption(wxT_2("-mcpu=i486 -D_M_IX86=400"));
+            else if (opt.Matches(wxT_2("/G3")))
+                target->AddCompilerOption(wxT_2("-mcpu=i386 -D_M_IX86=300"));
+            else if (opt.Matches(wxT_2("/Za")))
+                target->AddCompilerOption(wxT_2("-ansi"));
+            else if (opt.Matches(wxT_2("/Zp1")))
+                target->AddCompilerOption(wxT_2("-fpack-struct"));
+            else if (opt.Matches(wxT_2("/nologo")))
             {
                 // do nothing (ignore silently)
             }
-            else if (opt.Matches(_T("/c")))
+            else if (opt.Matches(wxT_2("/c")))
             {
                 // do nothing (ignore silently)
             }
-            else if (opt.StartsWith(_T("@")))
+            else if (opt.StartsWith(wxT_2("@")))
             {
                 wxArrayString options;
                 if (ParseResponseFile(m_pProject->GetBasePath() + opt.Mid(1), options))
@@ -514,8 +514,8 @@ void MSVCLoader::ProcessCompilerOptions(ProjectBuildTarget* target, const wxStri
                 }
                 else
                 { // Fallback: Remember GCC will process Pre-processor macros only
-                    Manager::Get()->GetLogManager()->DebugLog(_T("Can't open ") + m_pProject->GetBasePath() + opt.Mid(1) + _T(" for parsing"));
-                    target->AddCompilerOption(_T("-imacros ") + opt.Mid(1));
+                    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Can't open ") + m_pProject->GetBasePath() + opt.Mid(1) + wxT_2(" for parsing"));
+                    target->AddCompilerOption(wxT_2("-imacros ") + opt.Mid(1));
                 }
             }
             //else Manager::Get()->GetLogManager()->DebugLog("Unhandled compiler option: " + opt);
@@ -523,15 +523,15 @@ void MSVCLoader::ProcessCompilerOptions(ProjectBuildTarget* target, const wxStri
         else // !m_ConvertSwitches
         {
             // only differentiate includes and definitions
-            if (opt.Matches(_T("/I")))
+            if (opt.Matches(wxT_2("/I")))
                 target->AddIncludeDir(RemoveQuotes(array[++i]));
-            else if (opt.Matches(_T("/D")))
-                target->AddCompilerOption(_T("/D") + RemoveQuotes(array[++i]));
-            else if (opt.Matches(_T("/U")))
-                target->AddCompilerOption(_T("/U") + RemoveQuotes(array[++i]));
-            else if (opt.StartsWith(_T("/Yu")))
-                Manager::Get()->GetLogManager()->DebugLog(_T("Ignoring precompiled headers option (/Yu)"));
-            else if (opt.Matches(_T("/c")) || opt.Matches(_T("/nologo")))
+            else if (opt.Matches(wxT_2("/D")))
+                target->AddCompilerOption(wxT_2("/D") + RemoveQuotes(array[++i]));
+            else if (opt.Matches(wxT_2("/U")))
+                target->AddCompilerOption(wxT_2("/U") + RemoveQuotes(array[++i]));
+            else if (opt.StartsWith(wxT_2("/Yu")))
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("Ignoring precompiled headers option (/Yu)"));
+            else if (opt.Matches(wxT_2("/c")) || opt.Matches(wxT_2("/nologo")))
             {
                 // do nothing (ignore silently)
             }
@@ -553,35 +553,35 @@ void MSVCLoader::ProcessLinkerOptions(ProjectBuildTarget* target, const wxString
 
         if (m_ConvertSwitches)
         {
-            if (opt.StartsWith(_T("/libpath:")))
+            if (opt.StartsWith(wxT_2("/libpath:")))
             {
                 opt = opt.Mid(9);
                 target->AddLibDir(RemoveQuotes(opt));
             }
-            else if (opt.StartsWith(_T("/base:")))
+            else if (opt.StartsWith(wxT_2("/base:")))
             {
                 opt = opt.Mid(6);
-                target->AddLinkerOption(_T("--image-base ") + RemoveQuotes(opt));
+                target->AddLinkerOption(wxT_2("--image-base ") + RemoveQuotes(opt));
             }
-            else if (opt.StartsWith(_T("/implib:")))
+            else if (opt.StartsWith(wxT_2("/implib:")))
             {
                 opt = opt.Mid(8);
-                target->AddLinkerOption(_T("--implib ") + RemoveQuotes(opt));
+                target->AddLinkerOption(wxT_2("--implib ") + RemoveQuotes(opt));
             }
-            else if (opt.StartsWith(_T("/map:")))
+            else if (opt.StartsWith(wxT_2("/map:")))
             {
                 opt = opt.Mid(5);
-                target->AddLinkerOption(_T("-Map ") + RemoveQuotes(opt) + _T(".map"));
+                target->AddLinkerOption(wxT_2("-Map ") + RemoveQuotes(opt) + wxT_2(".map"));
             }
-            else if (opt.Matches(_T("/nologo")))
+            else if (opt.Matches(wxT_2("/nologo")))
             {
                 // do nothing (ignore silently)
             }
-            else if (opt.StartsWith(_T("/out:")))
+            else if (opt.StartsWith(wxT_2("/out:")))
             {
                 // do nothing; it is handled below, in common options
             }
-            else if (opt.StartsWith(_T("@")))
+            else if (opt.StartsWith(wxT_2("@")))
             {
                 wxArrayString options;
                 if (ParseResponseFile(m_pProject->GetBasePath() + opt.Mid(1), options))
@@ -590,40 +590,40 @@ void MSVCLoader::ProcessLinkerOptions(ProjectBuildTarget* target, const wxString
                         ProcessLinkerOptions(target, options[i]);
                 } // else ignore
             }
-            else if (opt.Find(_T(".lib")) == -1) // don't add linking lib (added below, in common options)
-                Manager::Get()->GetLogManager()->DebugLog(_T("Unknown linker option: " + opt));
+            else if (opt.Find(wxT_2(".lib")) == -1) // don't add linking lib (added below, in common options)
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("Unknown linker option: " + opt));
         }
         else // !m_ConvertSwitches
         {
-            if (opt.StartsWith(_T("/libpath:")))
+            if (opt.StartsWith(wxT_2("/libpath:")))
             {
                 opt = opt.Mid(9);
                 target->AddLibDir(RemoveQuotes(opt));
             }
-            else if (opt.Matches(_T("/nologo"))) {} // ignore silently
-            else if (opt.StartsWith(_T("@")))
+            else if (opt.Matches(wxT_2("/nologo"))) {} // ignore silently
+            else if (opt.StartsWith(wxT_2("@")))
                 target->AddLinkerOption(opt);
             else
             {
                 // don't add linking lib (added below, in common options)
-                int idx = opt.Find(_T(".lib"));
+                int idx = opt.Find(wxT_2(".lib"));
                 if (idx == -1)
                     target->AddLinkerOption(opt);
             }
         }
 
         // common options
-        if (!opt.StartsWith(_T("/")))
+        if (!opt.StartsWith(wxT_2("/")))
         {
             // probably linking lib
-            int idx = opt.Find(_T(".lib"));
+            int idx = opt.Find(wxT_2(".lib"));
             if (idx != -1)
             {
                 opt.Truncate(idx);
                 target->AddLinkLib(opt);
             }
         }
-        else if (opt.StartsWith(_T("/out:")))
+        else if (opt.StartsWith(wxT_2("/out:")))
         {
             opt = opt.Mid(5);
             opt = RemoveQuotes(opt);
@@ -660,9 +660,9 @@ void MSVCLoader::ProcessResourceCompilerOptions(ProjectBuildTarget* target, cons
         wxString opt = array[i];
         opt.Trim();
 
-        if (opt.StartsWith(_T("/")))
+        if (opt.StartsWith(wxT_2("/")))
         {
-            if (opt.StartsWith(_T("/i"))) // Only include dir is imported
+            if (opt.StartsWith(wxT_2("/i"))) // Only include dir is imported
                 target->AddResourceIncludeDir(RemoveQuotes(array[++i]));
         }
     }
@@ -690,10 +690,10 @@ wxArrayString MSVCLoader::OptStringTokeniser(const wxString& opts)
         wxString current_char = search.GetChar(pos);
 
         // for e.g. /libpath:"C:\My Folder"
-        if (current_char.CompareTo(_T("\""))==0) // equality
+        if (current_char.CompareTo(wxT("\""))==0) // equality
             inside_quot = !inside_quot;
 
-        if ((current_char.CompareTo(_T(" "))==0) && (!inside_quot))
+        if ((current_char.CompareTo(wxT(" "))==0) && (!inside_quot))
         {
             if (!token.IsEmpty())
             {
@@ -718,12 +718,12 @@ wxArrayString MSVCLoader::OptStringTokeniser(const wxString& opts)
 wxString MSVCLoader::RemoveQuotes(const wxString& src)
 {
     wxString res = src;
-    if (res.StartsWith(_T("\"")))
+    if (res.StartsWith(wxT_2("\"")))
     {
         res = res.Mid(1);
         res.Truncate(res.Length() - 1);
     }
-//    Manager::Get()->GetLogManager()->DebugLog(_T("Removing quotes: %s --> %s"), src.c_str(), res.c_str());
+//    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Removing quotes: %s --> %s"), src.c_str(), res.c_str());
     return res;
 }
 

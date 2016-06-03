@@ -89,23 +89,23 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
         wxString line = input.ReadLine();
         if (line.IsEmpty())
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Unsupported format."));
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Unsupported format."));
             return false;
         }
-        comps = GetArrayFromString(line, _T(","));
+        comps = GetArrayFromString(line, wxT_2(","));
         line = comps[0];
         line.Trim(true);
         line.Trim(false);
-        if (line != _T("Microsoft Developer Studio Workspace File"))
+        if (line != wxT_2("Microsoft Developer Studio Workspace File"))
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Unsupported format."));
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Unsupported format."));
             return false;
         }
         line = comps.GetCount() > 1 ? comps[1] : wxString(wxEmptyString);
         line.Trim(true);
         line.Trim(false);
-        if (line != _T("Format Version 6.00"))
-            Manager::Get()->GetLogManager()->DebugLog(_T("Format not recognized. Will try to parse though..."));
+        if (line != wxT_2("Format Version 6.00"))
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Format not recognized. Will try to parse though..."));
     }
 
     ImportersGlobals::UseDefaultCompiler = !askForCompiler;
@@ -120,7 +120,7 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
     cbProject* firstproject = 0;
     wxFileName wfname = filename;
     wfname.Normalize();
-    Manager::Get()->GetLogManager()->DebugLog(_T("Workspace dir: ") + wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Workspace dir: ") + wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
     while (!file.Eof())
     {
         wxString line = input.ReadLine();
@@ -130,14 +130,14 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
 
         // example wanted line:
         //Project: "Demo_BSP"=.\Samples\BSP\scripts\Demo_BSP.dsp - Package Owner=<4>
-        if (line.StartsWith(_T("Project:")))
+        if (line.StartsWith(wxT_2("Project:")))
         {
             line.Remove(0, 8); // remove "Project:"
             // now we need to find the equal sign (=) that separates the
             // project title from the filename, and the minus sign (-)
             // that separates the filename from junk info - at least to this importer ;)
-            int equal = line.Find(_T('='));
-            int minus = line.Find(_T('-'), true); // search from end
+            int equal = line.Find(wxT_2('='));
+            int minus = line.Find(wxT_2('-'), true); // search from end
 
             if (equal == -1 || minus == -1)
                 continue;
@@ -148,7 +148,7 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
             prjTitle.Trim(false);
             if (prjTitle.IsEmpty())
                 continue;
-            if (prjTitle.GetChar(0) == _T('\"'))
+            if (prjTitle.GetChar(0) == wxT_2('\"'))
             {
                 prjTitle.Truncate(prjTitle.Length() - 1);
                 prjTitle.Remove(0, 1);
@@ -161,7 +161,7 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
             prjFile.Trim(false);
             if (prjFile.IsEmpty())
                 continue;
-            if (prjFile.GetChar(0) == _T('\"'))
+            if (prjFile.GetChar(0) == wxT_2('\"'))
             {
                 prjFile.Truncate(prjFile.Length() - 1);
                 prjFile.Remove(0, 1);
@@ -170,7 +170,7 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
             ++count;
             wxFileName fname(UnixFilename(prjFile));
             fname.Normalize(wxPATH_NORM_ALL, wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR), wxPATH_NATIVE);
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Found project '%s' in '%s'"), prjTitle.c_str(), fname.GetFullPath().c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(wxT("Found project '%s' in '%s'"), prjTitle.c_str(), fname.GetFullPath().c_str()));
 
             int percentage = ((int)file.TellI())*100 / (int)(file.GetLength());
             if (!progress.Update(percentage, _("Importing project: ") + prjTitle))
@@ -186,7 +186,7 @@ bool MSVCWorkspaceLoader::Open(const wxString& filename, wxString& Title)
          * and add the dependency/link of the VstSDK project to the current project
          * be carefull, the dependent projects could not have already been read, so we have to remember them
          */
-        else if (line.StartsWith(_T("Project_Dep_Name")))
+        else if (line.StartsWith(wxT_2("Project_Dep_Name")))
         {
             line.Remove(0, 16);
             line.Trim(false);

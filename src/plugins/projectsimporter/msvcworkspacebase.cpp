@@ -44,7 +44,7 @@ void MSVCWorkspaceBase::addDependency(const wxString& projectID, const wxString&
             it->second._dependencyList.Add(dependencyID.Lower());
     }
     else {
-        Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: project id not found: ") + projectID);
+        Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: project id not found: ") + projectID);
     }
 }
 
@@ -53,12 +53,12 @@ void MSVCWorkspaceBase::addWorkspaceConfiguration(const wxString& config) {
 }
 
 void MSVCWorkspaceBase::addConfigurationMatching(const wxString& projectID, const wxString& workspConfig, const wxString& projConfig) {
-    //Manager::Get()->GetLogManager()->DebugLog(_T("adding conf match: '%s' - '%s'"), workspConfig.c_str(), projConfig.c_str());
+    //Manager::Get()->GetLogManager()->DebugLog(wxT_2("adding conf match: '%s' - '%s'"), workspConfig.c_str(), projConfig.c_str());
     HashProjects::iterator it = _projects.find(projectID);
     if (it != _projects.end()) {
         it->second._configurations[workspConfig] = projConfig;
     }
-    else Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: project id not found: ") + projectID);
+    else Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: project id not found: ") + projectID);
 }
 
 void MSVCWorkspaceBase::updateProjects() {
@@ -72,7 +72,7 @@ void MSVCWorkspaceBase::updateProjects() {
     unsigned int j;
     int k;
 
-    Manager::Get()->GetLogManager()->DebugLog(_T("Update projects"));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Update projects"));
 
     // no per-workspace config for msvc6, so build a fake one ;)
     if (_workspaceConfigurations.IsEmpty()) {
@@ -83,7 +83,7 @@ void MSVCWorkspaceBase::updateProjects() {
                 wxString s = proj._project->GetBuildTarget(k)->GetTitle();
                 if (_workspaceConfigurations.Index(s) == wxNOT_FOUND) {
                     _workspaceConfigurations.Add(s);
-                    Manager::Get()->GetLogManager()->DebugLog(F(_T("workspace config: '%s'"), s.c_str()));
+                    Manager::Get()->GetLogManager()->DebugLog(F(wxT("workspace config: '%s'"), s.c_str()));
                 }
             }
         }
@@ -91,7 +91,7 @@ void MSVCWorkspaceBase::updateProjects() {
 
     for (projIt = _projects.begin(); projIt != _projects.end(); ++projIt) {
         proj = projIt->second;
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Project %s, %d dependencies"), proj._project->GetTitle().c_str(), proj._dependencyList.GetCount()));
+        Manager::Get()->GetLogManager()->DebugLog(F(wxT("Project %s, %d dependencies"), proj._project->GetTitle().c_str(), proj._dependencyList.GetCount()));
         for (i=0; i<proj._dependencyList.GetCount(); ++i) {
             depIt = _projects.find(proj._dependencyList[i]);
             if ( depIt != _projects.end()) { // dependency found
@@ -114,7 +114,7 @@ void MSVCWorkspaceBase::updateProjects() {
                             // look for a project config which is a substring of the workspace config
                             for (int k=0; k<proj._project->GetBuildTargetsCount(); ++k) {
                                 pconfig = proj._project->GetBuildTarget(k)->GetTitle();
-                                //Manager::Get()->GetLogManager()->DebugLog(_T("Test: %s <-> %s"), wconfig.c_str(), pconfig.c_str());
+                                //Manager::Get()->GetLogManager()->DebugLog(wxT_2("Test: %s <-> %s"), wconfig.c_str(), pconfig.c_str());
                                 if (wconfig.StartsWith(pconfig) || pconfig.StartsWith(wconfig))
                                     targetProj = proj._project->GetBuildTarget(k);
                             }
@@ -134,7 +134,7 @@ void MSVCWorkspaceBase::updateProjects() {
                             // look for a project config which is a substring of the workspace config
                             for (int k=0; k<dep._project->GetBuildTargetsCount(); ++k) {
                                 pconfig = dep._project->GetBuildTarget(k)->GetTitle();
-                                //Manager::Get()->GetLogManager()->DebugLog(_T("Test: %s <-> %s"), wconfig.c_str(), pconfig.c_str());
+                                //Manager::Get()->GetLogManager()->DebugLog(wxT_2("Test: %s <-> %s"), wconfig.c_str(), pconfig.c_str());
                                 if (wconfig.StartsWith(pconfig) || pconfig.StartsWith(wconfig))
                                     targetDep = dep._project->GetBuildTarget(k);
                             }
@@ -148,11 +148,11 @@ void MSVCWorkspaceBase::updateProjects() {
                     }
 
                     if ((targetDep==0) || (targetProj==0)) {
-                        Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: could not find targets"));
+                        Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: could not find targets"));
                         continue;
                     }
 
-                    Manager::Get()->GetLogManager()->DebugLog(F(_T("Match '%s' to '%s'"), targetProj->GetFullTitle().c_str(), targetDep->GetFullTitle().c_str()));
+                    Manager::Get()->GetLogManager()->DebugLog(F(wxT("Match '%s' to '%s'"), targetProj->GetFullTitle().c_str(), targetDep->GetFullTitle().c_str()));
 
                     // now, update dependencies
                     TargetType type = targetDep->GetTargetType();
@@ -171,13 +171,13 @@ void MSVCWorkspaceBase::updateProjects() {
                     targetProj->AddTargetDep(targetDep);
                     // TO REMOVE
                     wxString deps = targetProj->GetExternalDeps();
-                    deps <<fname.GetFullPath() << _T(';');
+                    deps <<fname.GetFullPath() << wxT_2(';');
                     targetProj->SetExternalDeps(deps);
                     // ---------
                }
             }
             else {
-                Manager::Get()->GetLogManager()->DebugLog(_T("ERROR: dependency not found ") + proj._dependencyList[i]);
+                Manager::Get()->GetLogManager()->DebugLog(wxT_2("ERROR: dependency not found ") + proj._dependencyList[i]);
             }
         }
     }

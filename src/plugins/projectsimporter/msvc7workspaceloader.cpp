@@ -104,21 +104,21 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
         {
             line = input.ReadLine();
         }
-        comps = GetArrayFromString(line, _T(","));
+        comps = GetArrayFromString(line, wxT_2(","));
         line = comps[0];
         line.Trim(true);
         line.Trim(false);
-        if (line != _T("Microsoft Visual Studio Solution File"))
+        if (line != wxT_2("Microsoft Visual Studio Solution File"))
         {
-            Manager::Get()->GetLogManager()->DebugLog(_T("Unsupported format."));
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Unsupported format."));
             return false;
         }
         line = comps.GetCount() > 1 ? comps[1] : wxString(wxEmptyString);
         line.Trim(true);
         line.Trim(false);
         wxString _version = line.AfterLast(' '); // want the version number
-        if ((_version != _T("7.00")) && (_version != _T("8.00")))
-            Manager::Get()->GetLogManager()->DebugLog(_T("Version not recognized. Will try to parse though..."));
+        if ((_version != wxT_2("7.00")) && (_version != wxT_2("8.00")))
+            Manager::Get()->GetLogManager()->DebugLog(wxT_2("Version not recognized. Will try to parse though..."));
     }
 
     ImportersGlobals::UseDefaultCompiler = !askForCompiler;
@@ -139,24 +139,24 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
     bool global = false;  // global section or project section?
     wxFileName wfname = filename;
     wfname.Normalize();
-    Manager::Get()->GetLogManager()->DebugLog(_T("Workspace dir: ") + wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("Workspace dir: ") + wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
     while (!file.Eof())
     {
         wxString line = input.ReadLine();
         line.Trim(true);
         line.Trim(false);
 
-        if (line.StartsWith(_T("Project(")))
+        if (line.StartsWith(wxT_2("Project(")))
         {
             // example wanted line:
             //Project("{UUID of the solution}") = "project name to display", "project filename", "project UUID".
             // UUID type 4 for projects (i.e. random based), UUID type 1 for solutions (i.e. time+host based)
-            keyvalue = GetArrayFromString(line, _T("="));
+            keyvalue = GetArrayFromString(line, wxT_2("="));
             if (keyvalue.GetCount() != 2) continue;
             // ignore keyvalue[0], i.e. solution UUID/GUID
 
             // the second part contains the project title and filename
-            comps = GetArrayFromString(keyvalue[1], _T(","));
+            comps = GetArrayFromString(keyvalue[1], wxT_2(","));
             if (comps.GetCount() < 3) continue;
 
             // read project title and trim quotes
@@ -164,7 +164,7 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
             prjTitle.Trim(true);
             prjTitle.Trim(false);
             if (prjTitle.IsEmpty()) continue;
-            if (prjTitle.GetChar(0) == _T('\"'))
+            if (prjTitle.GetChar(0) == wxT_2('\"'))
             {
                 prjTitle.Truncate(prjTitle.Length() - 1);
                 prjTitle.Remove(0, 1);
@@ -175,7 +175,7 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
             prjFile.Trim(true);
             prjFile.Trim(false);
             if (prjFile.IsEmpty()) continue;
-            if (prjFile.GetChar(0) == _T('\"'))
+            if (prjFile.GetChar(0) == wxT_2('\"'))
             {
                 prjFile.Truncate(prjFile.Length() - 1);
                 prjFile.Remove(0, 1);
@@ -183,12 +183,12 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
 
             // read project UUID, i.e. "{35AFBABB-DF05-43DE-91A7-BB828A874015}"
             uuid = comps[2];
-            uuid.Replace(_T("\""), _T("")); // remove quotes
+            uuid.Replace(wxT_2("\""), wxT_2("")); // remove quotes
 
             ++count;
             wxFileName fname(UnixFilename(prjFile));
             fname.Normalize(wxPATH_NORM_ALL, wfname.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR), wxPATH_NATIVE);
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Found project '%s' in '%s'"), prjTitle.c_str(), fname.GetFullPath().c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(wxT("Found project '%s' in '%s'"), prjTitle.c_str(), fname.GetFullPath().c_str()));
 
             int percentage = ((int)file.TellI())*100 / (int)(file.GetLength());
             if (!progress.Update(percentage, _("Importing project: ") + prjTitle))
@@ -198,25 +198,25 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
             if (!firstproject) firstproject = project;
             if (project) registerProject(uuid, project);
         }
-        else if (line.StartsWith(_T("GlobalSection(ProjectDependencies)")))
+        else if (line.StartsWith(wxT_2("GlobalSection(ProjectDependencies)")))
         {
             depSection = true;
             global = true;
         }
-        else if (line.StartsWith(_T("ProjectSection(ProjectDependencies)")))
+        else if (line.StartsWith(wxT_2("ProjectSection(ProjectDependencies)")))
         {
             depSection = true;
             global = false;
         }
-        else if (line.StartsWith(_T("GlobalSection(ProjectConfiguration)")))
+        else if (line.StartsWith(wxT_2("GlobalSection(ProjectConfiguration)")))
         {
             projConfSection = true;
         }
-        else if (line.StartsWith(_T("GlobalSection(SolutionConfiguration)")))
+        else if (line.StartsWith(wxT_2("GlobalSection(SolutionConfiguration)")))
         {
             slnConfSection = true;
         }
-        else if (line.StartsWith(_T("EndGlobalSection")) || line.StartsWith(_T("EndProjectSection")))
+        else if (line.StartsWith(wxT_2("EndGlobalSection")) || line.StartsWith(wxT_2("EndProjectSection")))
         {
             depSection = false;
             projConfSection = false;
@@ -225,12 +225,12 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
         else if (depSection)
         {
             // start reading a dependency
-            keyvalue = GetArrayFromString(line, _T("="));
+            keyvalue = GetArrayFromString(line, wxT_2("="));
             if (keyvalue.GetCount() != 2) continue;
             if (global) {
                 // {31635C8-67BF-4808-A918-0FBF822771BD}.0 = {658BFA12-8417-49E5-872A-33F0973544DC}
                 // i.e. project on the left of '=' depend on the project on the right
-                keyvalue[0]= keyvalue[0].BeforeFirst(_T('.'));
+                keyvalue[0]= keyvalue[0].BeforeFirst(wxT_2('.'));
                 addDependency(keyvalue[0], keyvalue[1]);
             }
             else
@@ -249,14 +249,14 @@ bool MSVC7WorkspaceLoader::Open(const wxString& filename, wxString& Title)
             line.Trim(false);
             addWorkspaceConfiguration(line);
         }
-        else if (projConfSection && line.StartsWith(_T("{")))
+        else if (projConfSection && line.StartsWith(wxT_2("{")))
         {
             // {X}.Debug TA.ActiveCfg = Debug TA|Win32     ---> match solution configuration to project configuration or just say what is the active config?
             // {X}.Debug TA.Build.0 = Debug TA|Win32       ---> we have to build (others are not build)
-            keyvalue = GetArrayFromString(line, _T("="));
-            wxArrayString key = GetArrayFromString(keyvalue[0], _T("."));
-            wxArrayString value = GetArrayFromString(keyvalue[1], _T("|"));
-            if (key[2] == _T("Build")) addConfigurationMatching(key[0], key[1], value[0]);
+            keyvalue = GetArrayFromString(line, wxT_2("="));
+            wxArrayString key = GetArrayFromString(keyvalue[0], wxT_2("."));
+            wxArrayString value = GetArrayFromString(keyvalue[1], wxT_2("|"));
+            if (key[2] == wxT_2("Build")) addConfigurationMatching(key[0], key[1], value[0]);
         }
     }
 

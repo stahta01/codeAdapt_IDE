@@ -39,15 +39,15 @@
 // this auto-registers the plugin
 namespace
 {
-PluginRegistrant<ProjectsImporter> reg(_T("ProjectsImporter"));
+PluginRegistrant<ProjectsImporter> reg(wxT_2("ProjectsImporter"));
 }
 
 ProjectsImporter::ProjectsImporter()
 {
     //ctor
-    if (!Manager::LoadResource(_T("projectsimporter.zip")))
+    if (!Manager::LoadResource(wxT_2("projectsimporter.zip")))
     {
-        NotifyMissingFile(_T("projectsimporter.zip"));
+        NotifyMissingFile(wxT_2("projectsimporter.zip"));
     }
 }
 
@@ -82,7 +82,7 @@ void ProjectsImporter::BuildMenu(wxMenuBar* menuBar)
         return;
     }
 
-    m_Menu = Manager::Get()->LoadMenu(_T("project_import_menu"), false);
+    m_Menu = Manager::Get()->LoadMenu(wxT_2("project_import_menu"), false);
 
     if (!m_Menu)
     {
@@ -93,7 +93,7 @@ void ProjectsImporter::BuildMenu(wxMenuBar* menuBar)
     if (fileMenu)
     {
         // The position is hard-coded. Please adjust it if necessary
-        fileMenu->Insert(7, wxNewId(), _T("&Import project"), m_Menu);
+        fileMenu->Insert(7, wxNewId(), wxT_2("&Import project"), m_Menu);
         fileMenu->InsertSeparator(8);
     }
 }
