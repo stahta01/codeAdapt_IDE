@@ -37,7 +37,7 @@ EnvVarsProjectOptionsDlg::EnvVarsProjectOptionsDlg(wxWindow* parent, EnvVars* pl
   m_pPlugin(plugin),
   m_pProject(project)
 {
-  wxXmlResource::Get()->LoadPanel(this, parent, _T("pnlProjectEnvVarsOptions"));
+  wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("pnlProjectEnvVarsOptions"));
 
   wxChoice* choice_control = XRCCTRL(*this, "choEnvvarSets", wxChoice);
   if (!choice_control) return;
@@ -77,7 +77,7 @@ EnvVarsProjectOptionsDlg::~EnvVarsProjectOptionsDlg()
 void EnvVarsProjectOptionsDlg::OnUpdateUI(wxUpdateUIEvent& event)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnUpdateUI")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnUpdateUI")));
 #endif
 
   wxCheckBox* checkbox_control = XRCCTRL(*this, "chkEnvvarSet", wxCheckBox);
@@ -95,7 +95,7 @@ void EnvVarsProjectOptionsDlg::OnUpdateUI(wxUpdateUIEvent& event)
 void EnvVarsProjectOptionsDlg::OnApply()
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnApply")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnApply")));
 #endif
 
   wxCheckBox* checkbox_control = XRCCTRL(*this, "chkEnvvarSet", wxCheckBox);

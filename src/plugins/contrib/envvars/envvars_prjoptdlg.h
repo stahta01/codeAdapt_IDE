@@ -26,7 +26,7 @@ public:
 
   /// returns the title of the plugin's bitmap to use for settings
   virtual wxString GetBitmapBaseName() const
-  { return _T("generic-plugin"); }
+  { return wxT_2("generic-plugin"); }
 
 protected:
   /// Fires if the UI is being updated (wx event)

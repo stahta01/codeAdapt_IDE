@@ -23,11 +23,11 @@ public:
 
   /// returns the title of the plugin configuration panel
   virtual wxString GetTitle() const
-  { return _T("Environment variables"); }
+  { return wxT_2("Environment variables"); }
 
   /// returns the title of the plugin's bitmap to use for configuration dialog
   virtual wxString GetBitmapBaseName() const
-  { return _T("envvars"); }
+  { return wxT_2("envvars"); }
 
 protected:
   /// Fires if the UI is being updated (wx event)

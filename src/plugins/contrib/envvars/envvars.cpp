@@ -39,7 +39,7 @@
 // Register the plugin
 namespace
 {
-  PluginRegistrant<EnvVars> reg(_T("EnvVars"));
+  PluginRegistrant<EnvVars> reg(wxT_2("EnvVars"));
 };
 
 BEGIN_EVENT_TABLE(EnvVars, cbPlugin)
@@ -68,16 +68,16 @@ EnvVars::~EnvVars()
 void EnvVars::SetProjectEnvvarSet(cbProject* project, const wxString& envvar_set)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("SetProjectEnvvarSet")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("SetProjectEnvvarSet")));
 #endif
 
   m_ProjectSets[project] = envvar_set;
-  EV_DBGLOG(_T("EnvVars: Discarding envvars set '")+nsEnvVars::GetActiveSetName()+_T("'."));
+  EV_DBGLOG(wxT_2("EnvVars: Discarding envvars set '")+nsEnvVars::GetActiveSetName()+wxT_2("'."));
   nsEnvVars::EnvvarSetDiscard(); // remove currently active envvars
   if (envvar_set.IsEmpty())
-    EV_DBGLOG(_T("EnvVars: Setting up default envvars set."));
+    EV_DBGLOG(wxT("EnvVars: Setting up default envvars set."));
   else
-    EV_DBGLOG(_T("EnvVars: Setting up envvars set '")+envvar_set+_T("' for activated project."));
+    EV_DBGLOG(wxT("EnvVars: Setting up envvars set '")+envvar_set+wxT_2("' for activated project."));
   nsEnvVars::EnvvarSetApply(envvar_set); // apply currently active envvar set for wxEmptyString
 }// SetProjectEnvvarSet
 
@@ -87,7 +87,7 @@ void EnvVars::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem,
                                    bool loading)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnProjectLoadingHook")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnProjectLoadingHook")));
 #endif
 
   if (loading)
@@ -126,7 +126,7 @@ void EnvVars::OnProjectLoadingHook(cbProject* project, TiXmlElement* elem,
 void EnvVars::OnProjectActivated(CodeBlocksEvent& event)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnProjectActivated")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnProjectActivated")));
 #endif
 
   if (IsAttached())
@@ -139,14 +139,14 @@ void EnvVars::OnProjectActivated(CodeBlocksEvent& event)
     {
       if (nsEnvVars::EnvvarSetExists(prj_envvar_set))
       {
-        EV_DBGLOG(_T("EnvVars: Discarding envvars set '")
-                 +nsEnvVars::GetActiveSetName()+_T("'."));
+        EV_DBGLOG(wxT_2("EnvVars: Discarding envvars set '")
+                 +nsEnvVars::GetActiveSetName()+wxT_2("'."));
         nsEnvVars::EnvvarSetDiscard(); // Remove currently active envvars
         if (prj_envvar_set.IsEmpty())
-          EV_DBGLOG(_T("EnvVars: Setting up default envvars set."));
+          EV_DBGLOG(wxT("EnvVars: Setting up default envvars set."));
         else
-          EV_DBGLOG(_T("EnvVars: Setting up envvars set '")+prj_envvar_set
-                   +_T("' for activated project."));
+          EV_DBGLOG(wxT_2("EnvVars: Setting up envvars set '")+prj_envvar_set
+                   +wxT_2("' for activated project."));
         // Apply envvar set always (as the old one has been discarded above)
         nsEnvVars::EnvvarSetApply(prj_envvar_set);
       }
@@ -163,7 +163,7 @@ void EnvVars::OnProjectActivated(CodeBlocksEvent& event)
 void EnvVars::OnProjectClosed(CodeBlocksEvent& event)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnProjectClosed")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnProjectClosed")));
 #endif
 
   wxString prj_envvar_set = wxEmptyString;
@@ -192,16 +192,16 @@ void EnvVars::OnProjectClosed(CodeBlocksEvent& event)
 void EnvVars::OnAttach()
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnAttach")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnAttach")));
 #endif
 
-  if(!Manager::LoadResource(_T("envvars.zip")))
+  if(!Manager::LoadResource(wxT_2("envvars.zip")))
   {
-    NotifyMissingFile(_T("envvars.zip"));
+    NotifyMissingFile(wxT_2("envvars.zip"));
   }
 
   // load and apply configuration (to application only)
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
@@ -224,7 +224,7 @@ void EnvVars::OnRelease(bool appShutDown)
 int EnvVars::Configure()
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("Configure")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("Configure")));
 #endif
 
   // Nothing to do (so far...) -> just return success
@@ -257,7 +257,7 @@ cbConfigurationPanel* EnvVars::GetProjectConfigurationPanel(wxWindow* parent,
 void EnvVars::EnvvarSetWarning(const wxString& envvar_set)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("EnvvarSetWarning")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("EnvvarSetWarning")));
 #endif
 
   wxString warning_msg;

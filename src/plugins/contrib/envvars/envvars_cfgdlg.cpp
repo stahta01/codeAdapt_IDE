@@ -64,7 +64,7 @@ END_EVENT_TABLE()
 EnvVarsConfigDlg::EnvVarsConfigDlg(wxWindow* parent, EnvVars* plugin):
   m_pPlugin(plugin)
 {
-  wxXmlResource::Get()->LoadPanel(this, parent, _T("dlgEnvVars"));
+  wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("dlgEnvVars"));
   LoadSettings();
 }// EnvVarsConfigDlg
 
@@ -73,7 +73,7 @@ EnvVarsConfigDlg::EnvVarsConfigDlg(wxWindow* parent, EnvVars* plugin):
 void EnvVarsConfigDlg::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnUpdateUI")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnUpdateUI")));
 #endif
 
   bool en;
@@ -106,7 +106,7 @@ void EnvVarsConfigDlg::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::LoadSettings()
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("LoadSettings")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("LoadSettings")));
 #endif
 
   wxChoice* choSet = XRCCTRL(*this, "choSet", wxChoice);
@@ -122,13 +122,13 @@ void EnvVarsConfigDlg::LoadSettings()
     return;
 
   // load and apply configuration (to application and GUI)
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
   choSet->Clear();
   lstEnvVars->Clear();
-  chkDebugLog->SetValue(cfg->ReadBool(_T("/debug_log")));
+  chkDebugLog->SetValue(cfg->ReadBool(wxT_2("/debug_log")));
 
   // Read the currently active envvar set
   wxString active_set     = nsEnvVars::GetActiveSetName();
@@ -137,7 +137,7 @@ void EnvVarsConfigDlg::LoadSettings()
   // Read all envvar sets available
   wxArrayString set_names = nsEnvVars::GetEnvvarSetNames();
   unsigned int  num_sets  = set_names.GetCount();
-  EV_DBGLOG(_T("EnvVars: Found %d envvar sets in config."), num_sets);
+  EV_DBGLOG(wxT("EnvVars: Found %d envvar sets in config."), num_sets);
   unsigned int num_sets_applied = 0;
   for (unsigned int i=0; i<num_sets; ++i)
   {
@@ -146,13 +146,13 @@ void EnvVarsConfigDlg::LoadSettings()
       active_set_idx = i;
     num_sets_applied++;
   }
-  EV_DBGLOG(_T("EnvVars: Setup %d/%d envvar sets from config."), num_sets_applied, num_sets);
+  EV_DBGLOG(wxT("EnvVars: Setup %d/%d envvar sets from config."), num_sets_applied, num_sets);
   if ((int)choSet->GetCount()>active_set_idx) // Select the last active set (from config)
     choSet->SetSelection(active_set_idx);
 
   // Show currently activated set in debug log (for reference)
   wxString active_set_path = nsEnvVars::GetSetPathByName(active_set);
-  EV_DBGLOG(_T("EnvVars: Active envvar set is '%s' at index %d, config path '%s'."),
+  EV_DBGLOG(wxT("EnvVars: Active envvar set is '%s' at index %d, config path '%s'."),
     active_set.c_str(), active_set_idx, active_set_path.c_str());
 
   // Read and show all envvars from currently active set in listbox
@@ -166,12 +166,12 @@ void EnvVarsConfigDlg::LoadSettings()
     if (nsEnvVars::EnvvarArrayApply(var_array, lstEnvVars))
       envvars_applied++;
     else
-      EV_DBGLOG(_T("EnvVars: Invalid envvar in '%s' at position #%d."),
+      EV_DBGLOG(wxT("EnvVars: Invalid envvar in '%s' at position #%d."),
         active_set_path.c_str(), i);
   }// for
 
   if (envvars_total>0)
-    EV_DBGLOG(_T("EnvVars: %d/%d envvars applied within C::B focus."),
+    EV_DBGLOG(wxT("EnvVars: %d/%d envvars applied within C::B focus."),
       envvars_applied, envvars_total);
 }// LoadSettings
 
@@ -181,7 +181,7 @@ void EnvVarsConfigDlg::SaveSettings()
 {
 #if TRACE_ENVVARS
   if (Manager::Get() && Manager::Get()->GetLogManager());
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("SaveSettings")));
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("SaveSettings")));
 #endif
 
   wxChoice* choSet = XRCCTRL(*this, "choSet", wxChoice);
@@ -196,7 +196,7 @@ void EnvVarsConfigDlg::SaveSettings()
   if (!chkDebugLog)
     return;
 
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
@@ -207,30 +207,30 @@ void EnvVarsConfigDlg::SaveSettings()
   SaveSettingsActiveSet(active_set);
 
   wxString active_set_path = nsEnvVars::GetSetPathByName(active_set, false);
-  EV_DBGLOG(_T("EnvVars: Removing (old) envvar set '%s' at path '%s' from config."),
+  EV_DBGLOG(wxT("EnvVars: Removing (old) envvar set '%s' at path '%s' from config."),
     active_set.c_str(), active_set_path.c_str());
   cfg->DeleteSubPath(active_set_path);
 
-  EV_DBGLOG(_T("EnvVars: Saving (new) envvar set '%s'."), active_set.c_str());
+  EV_DBGLOG(wxT("EnvVars: Saving (new) envvar set '%s'."), active_set.c_str());
   cfg->SetPath(active_set_path);
 
   for (int i=0; i<(int)lstEnvVars->GetCount(); ++i)
   {
     // Format: [checked?]|[key]|[value]
-    wxString check = (lstEnvVars->IsChecked(i))?_T("1"):_T("0");
-    wxString key   = lstEnvVars->GetString(i).BeforeFirst(_T('=')).Trim(true).Trim(false);
-    wxString value = lstEnvVars->GetString(i).AfterFirst(_T('=')).Trim(true).Trim(false);
+    wxString check = (lstEnvVars->IsChecked(i))?wxT_2("1"):wxT_2("0");
+    wxString key   = lstEnvVars->GetString(i).BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
+    wxString value = lstEnvVars->GetString(i).AfterFirst(wxT_2('=')).Trim(true).Trim(false);
 
     wxString txt;
     txt << check << nsEnvVars::EnvVarsSep << key
                  << nsEnvVars::EnvVarsSep << value;
 
     wxString cfg_key;
-    cfg_key.Printf(_T("EnvVar%d"), i);
+    cfg_key.Printf(wxT_2("EnvVar%d"), i);
     cfg->Write(cfg_key, txt);
   }// for
 
-  cfg->Write(_T("/debug_log"), chkDebugLog->GetValue());
+  cfg->Write(wxT_2("/debug_log"), chkDebugLog->GetValue());
 }// SaveSettings
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -238,18 +238,18 @@ void EnvVarsConfigDlg::SaveSettings()
 void EnvVarsConfigDlg::SaveSettingsActiveSet(wxString active_set)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("SaveSettingsActiveSet")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("SaveSettingsActiveSet")));
 #endif
 
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
   if (active_set.IsEmpty())
     active_set = nsEnvVars::EnvVarsDefault;
 
-  EV_DBGLOG(_T("EnvVars: Saving '%s' as active envvar set to config."), active_set.c_str());
-  cfg->Write(_T("/active_set"), active_set);
+  EV_DBGLOG(wxT("EnvVars: Saving '%s' as active envvar set to config."), active_set.c_str());
+  cfg->Write(wxT_2("/active_set"), active_set);
 }// SaveSettingsActiveSet
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -257,7 +257,7 @@ void EnvVarsConfigDlg::SaveSettingsActiveSet(wxString active_set)
 void EnvVarsConfigDlg::OnSetClick(wxCommandEvent& event)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnSetClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnSetClick")));
 #endif
 
   SaveSettingsActiveSet(event.GetString());
@@ -269,7 +269,7 @@ void EnvVarsConfigDlg::OnSetClick(wxCommandEvent& event)
 void EnvVarsConfigDlg::OnCreateSetClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnCreateSetClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnCreateSetClick")));
 #endif
 
   wxChoice* choSet = XRCCTRL(*this, "choSet", wxChoice);
@@ -285,7 +285,7 @@ void EnvVarsConfigDlg::OnCreateSetClick(wxCommandEvent& WXUNUSED(event))
   if (!lstEnvVars)
     return;
 
-  EV_DBGLOG(_T("EnvVars: Unsetting variables of envvar set '%s'."),
+  EV_DBGLOG(wxT("EnvVars: Unsetting variables of envvar set '%s'."),
     choSet->GetString(choSet->GetCurrentSelection()).c_str());
   nsEnvVars::EnvvarsClear(lstEnvVars); // Don't care about return value
   lstEnvVars->Clear();
@@ -302,14 +302,14 @@ void EnvVarsConfigDlg::OnCreateSetClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnCloneSetClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnCloneSetClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnCloneSetClick")));
 #endif
 
   wxChoice* choSet = XRCCTRL(*this, "choSet", wxChoice);
   if (!choSet)
     return;
 
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
@@ -331,7 +331,7 @@ void EnvVarsConfigDlg::OnCloneSetClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnRemoveSetClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnRemoveSetClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnRemoveSetClick")));
 #endif
 
   wxChoice* choSet = XRCCTRL(*this, "choSet", wxChoice);
@@ -349,7 +349,7 @@ void EnvVarsConfigDlg::OnRemoveSetClick(wxCommandEvent& WXUNUSED(event))
   if (!lstEnvVars)
     return;
 
-  ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("envvars"));
+  ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("envvars"));
   if (!cfg)
     return;
 
@@ -362,12 +362,12 @@ void EnvVarsConfigDlg::OnRemoveSetClick(wxCommandEvent& WXUNUSED(event))
     wxString active_set     = choSet->GetString(active_set_idx);
 
     // Remove envvars from C::B focus (and listbox)
-    EV_DBGLOG(_T("EnvVars: Unsetting variables of envvar set '%s'."), active_set.c_str());
+    EV_DBGLOG(wxT("EnvVars: Unsetting variables of envvar set '%s'."), active_set.c_str());
     nsEnvVars::EnvvarsClear(lstEnvVars); // Don't care about return value
 
     // Remove envvars set from config
     wxString active_set_path = nsEnvVars::GetSetPathByName(active_set, false);
-    EV_DBGLOG(_T("EnvVars: Removing envvar set '%s' at path '%s' from config."),
+    EV_DBGLOG(wxT("EnvVars: Removing envvar set '%s' at path '%s' from config."),
       active_set.c_str(), active_set_path.c_str());
     cfg->DeleteSubPath(active_set_path);
 
@@ -389,7 +389,7 @@ void EnvVarsConfigDlg::OnRemoveSetClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnToggleEnvVarClick(wxCommandEvent& event)
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnToggleEnvVarClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnToggleEnvVarClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -402,14 +402,14 @@ void EnvVarsConfigDlg::OnToggleEnvVarClick(wxCommandEvent& event)
 
   bool bCheck = lstEnvVars->IsChecked(sel);
 
-  wxString key = lstEnvVars->GetString(sel).BeforeFirst(_T('=')).Trim(true).Trim(false);
+  wxString key = lstEnvVars->GetString(sel).BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
   if (key.IsEmpty())
     return;
 
   if (bCheck)
   {
     // Is has been toggled ON -> set envvar now
-    wxString value = lstEnvVars->GetString(sel).AfterFirst(_T('=')).Trim(true).Trim(false);
+    wxString value = lstEnvVars->GetString(sel).AfterFirst(wxT_2('=')).Trim(true).Trim(false);
     nsEnvVars::EnvvarApply(key, value, lstEnvVars, sel); // Don't care about return value
   }
   else
@@ -424,7 +424,7 @@ void EnvVarsConfigDlg::OnToggleEnvVarClick(wxCommandEvent& event)
 void EnvVarsConfigDlg::OnAddEnvVarClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnAddEnvVarClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnAddEnvVarClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -444,7 +444,7 @@ void EnvVarsConfigDlg::OnAddEnvVarClick(wxCommandEvent& WXUNUSED(event))
     if (nsEnvVars::EnvvarVeto(key))
       return;
 
-    int sel = lstEnvVars->Append(key + _T(" = ") + value);
+    int sel = lstEnvVars->Append(key + wxT_2(" = ") + value);
     if (nsEnvVars::EnvvarApply(key, value, lstEnvVars, sel))
       lstEnvVars->Check(sel, true);
   }
@@ -455,7 +455,7 @@ void EnvVarsConfigDlg::OnAddEnvVarClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnEditEnvVarClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnEditEnvVarClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnEditEnvVarClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -466,11 +466,11 @@ void EnvVarsConfigDlg::OnEditEnvVarClick(wxCommandEvent& WXUNUSED(event))
   if (sel == -1)
     return;
 
-  wxString key = lstEnvVars->GetStringSelection().BeforeFirst(_T('=')).Trim(true).Trim(false);
+  wxString key = lstEnvVars->GetStringSelection().BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
   if (key.IsEmpty())
     return;
 
-  wxString value     = lstEnvVars->GetStringSelection().AfterFirst(_T('=')).Trim(true).Trim(false);
+  wxString value     = lstEnvVars->GetStringSelection().AfterFirst(wxT_2('=')).Trim(true).Trim(false);
   wxString old_key   = key;
   wxString old_value = value;
 
@@ -509,7 +509,7 @@ void EnvVarsConfigDlg::OnEditEnvVarClick(wxCommandEvent& WXUNUSED(event))
   }
 
   // update the GUI to the (new/updated/same) key/value pair anyway
-  lstEnvVars->SetString(sel, key + _T(" = ") + value);
+  lstEnvVars->SetString(sel, key + wxT_2(" = ") + value);
 }// OnEditEnvVarClick
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -517,7 +517,7 @@ void EnvVarsConfigDlg::OnEditEnvVarClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnDeleteEnvVarClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnDeleteEnvVarClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnDeleteEnvVarClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -528,7 +528,7 @@ void EnvVarsConfigDlg::OnDeleteEnvVarClick(wxCommandEvent& WXUNUSED(event))
   if (sel == -1)
     return;
 
-  wxString key = lstEnvVars->GetStringSelection().BeforeFirst(_T('=')).Trim(true).Trim(false);
+  wxString key = lstEnvVars->GetStringSelection().BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
   if (key.IsEmpty())
     return;
 
@@ -546,7 +546,7 @@ void EnvVarsConfigDlg::OnDeleteEnvVarClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnClearEnvVarsClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnClearEnvVarsClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnClearEnvVarsClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -568,7 +568,7 @@ void EnvVarsConfigDlg::OnClearEnvVarsClick(wxCommandEvent& WXUNUSED(event))
 void EnvVarsConfigDlg::OnSetEnvVarsClick(wxCommandEvent& WXUNUSED(event))
 {
 #if TRACE_ENVVARS
-  Manager::Get()->GetLogManager()->DebugLog(F(_T("OnSetEnvVarsClick")));
+  Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("OnSetEnvVarsClick")));
 #endif
 
   wxCheckListBox* lstEnvVars = XRCCTRL(*this, "lstEnvVars", wxCheckListBox);
@@ -589,8 +589,8 @@ void EnvVarsConfigDlg::OnSetEnvVarsClick(wxCommandEvent& WXUNUSED(event))
   {
     if (lstEnvVars->IsChecked(i))
     {
-      wxString key   = lstEnvVars->GetString(i).BeforeFirst(_T('=')).Trim(true).Trim(false);
-      wxString value = lstEnvVars->GetString(i).AfterFirst(_T('=')).Trim(true).Trim(false);
+      wxString key   = lstEnvVars->GetString(i).BeforeFirst(wxT_2('=')).Trim(true).Trim(false);
+      wxString value = lstEnvVars->GetString(i).AfterFirst(wxT_2('=')).Trim(true).Trim(false);
       if (!key.IsEmpty())
       {
         if (!nsEnvVars::EnvvarApply(key, value))
@@ -599,7 +599,7 @@ void EnvVarsConfigDlg::OnSetEnvVarsClick(wxCommandEvent& WXUNUSED(event))
           if (envsNotSet.IsEmpty())
             envsNotSet << key;
           else
-            envsNotSet << _T(", ") << key;
+            envsNotSet << wxT_2(", ") << key;
         }
       }
     }
