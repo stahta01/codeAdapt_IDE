@@ -55,7 +55,7 @@ END_EVENT_TABLE()
 
 namespace
 {
-    PluginRegistrant<AutoVersioning> reg(_T("AutoVersioning"));
+    PluginRegistrant<AutoVersioning> reg(wxT_2("AutoVersioning"));
 }
 
 //{Constructor and Destructor
@@ -302,7 +302,7 @@ void AutoVersioning::OnCompilerStarted(CodeBlocksEvent& event)
 			const bool askToIncrement = GetConfig().Settings.AskToIncrement;
 			if (doAutoIncrement && askToIncrement)
 			{
-				if (wxMessageBox(_("Do you want to increment the version?"),_T(""),wxYES_NO) == wxYES)
+				if (wxMessageBox(_("Do you want to increment the version?"),wxT_2(""),wxYES_NO) == wxYES)
 				{
 					CommitChanges();
 				}
@@ -528,89 +528,89 @@ void AutoVersioning::UpdateVersionHeader()
 {
     m_timerStatus->Stop();
 
-    wxString headerOutput = _T("");
-    headerOutput << _T("#ifndef VERSION_H") << _T("\n");
-    headerOutput << _T("#define VERSION_H") << _T("\n");
-    headerOutput << _T("\n");
+    wxString headerOutput = wxT_2("");
+    headerOutput << wxT_2("#ifndef VERSION_H") << wxT_2("\n");
+    headerOutput << wxT_2("#define VERSION_H") << wxT_2("\n");
+    headerOutput << wxT_2("\n");
 
-    if(cbC2U(GetConfig().Settings.Language.c_str()) == _T("C++"))
+    if(cbC2U(GetConfig().Settings.Language.c_str()) == wxT_2("C++"))
     {
-        headerOutput << _T("namespace AutoVersion{") << _T("\n");
-        headerOutput << _T("\t") << _T("\n");
+        headerOutput << wxT_2("namespace AutoVersion{") << wxT_2("\n");
+        headerOutput << wxT_2("\t") << wxT_2("\n");
     }
 
     if(GetConfig().Settings.DateDeclarations)
     {
         wxDateTime actualDate = wxDateTime::Now();
-        headerOutput << _T("\t") << _T("//Date Version Types") << _T("\n");
-        headerOutput << _T("\t") << _T("static const char DATE[] = ") << actualDate.Format(_T("\"%d\"")) << _T(";\n");
-        headerOutput << _T("\t") << _T("static const char MONTH[] = ") << actualDate.Format(_T("\"%m\"")) << _T(";\n");
-        headerOutput << _T("\t") << _T("static const char YEAR[] = ") << actualDate.Format(_T("\"%Y\"")) << _T(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("//Date Version Types") << wxT_2("\n");
+        headerOutput << wxT_2("\t") << wxT_2("static const char DATE[] = ") << actualDate.Format(wxT_2("\"%d\"")) << wxT_2(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("static const char MONTH[] = ") << actualDate.Format(wxT_2("\"%m\"")) << wxT_2(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("static const char YEAR[] = ") << actualDate.Format(wxT_2("\"%Y\"")) << wxT_2(";\n");
         long ubuntuYearNumber = 0;
-        actualDate.Format(_T("%y")).ToLong(&ubuntuYearNumber);
+        actualDate.Format(wxT_2("%y")).ToLong(&ubuntuYearNumber);
         wxString ubuntuYear;
-        ubuntuYear.Printf(_T("%d"),ubuntuYearNumber);
-        headerOutput << _T("\t") << _T("static const double UBUNTU_VERSION_STYLE = ") << ubuntuYear << actualDate.Format(_T(".%m")) << _T(";\n");
-        headerOutput << _T("\t") << _T("\n");
+        ubuntuYear.Printf(wxT_2("%d"),ubuntuYearNumber);
+        headerOutput << wxT_2("\t") << wxT_2("static const double UBUNTU_VERSION_STYLE = ") << ubuntuYear << actualDate.Format(wxT_2(".%m")) << wxT_2(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("\n");
     }
 
-    headerOutput << _T("\t") << _T("//Software Status") << _T("\n");
-    headerOutput << _T("\t") << _T("static const char STATUS[] = \"") << cbC2U(GetVersionState().Status.SoftwareStatus.c_str()) << _T("\";\n");
-    headerOutput << _T("\t") << _T("static const char STATUS_SHORT[] = \"") << cbC2U(GetVersionState().Status.Abbreviation.c_str()) << _T("\";\n");
-    headerOutput << _T("\t") << _T("\n");
+    headerOutput << wxT_2("\t") << wxT_2("//Software Status") << wxT_2("\n");
+    headerOutput << wxT_2("\t") << wxT_2("static const char STATUS[] = \"") << cbC2U(GetVersionState().Status.SoftwareStatus.c_str()) << wxT_2("\";\n");
+    headerOutput << wxT_2("\t") << wxT_2("static const char STATUS_SHORT[] = \"") << cbC2U(GetVersionState().Status.Abbreviation.c_str()) << wxT_2("\";\n");
+    headerOutput << wxT_2("\t") << wxT_2("\n");
 
     wxString myPrintf;
-    headerOutput << _T("\t") << _T("//Standard Version Type") << _T("\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().Values.Major);
-    headerOutput << _T("\t") << _T("static const long MAJOR = ") << myPrintf << _T(";\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().Values.Minor);
-    headerOutput << _T("\t") << _T("static const long MINOR = ") << myPrintf << _T(";\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().Values.Build);
-    headerOutput << _T("\t") << _T("static const long BUILD = ") << myPrintf << _T(";\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().Values.Revision);
-    headerOutput << _T("\t") << _T("static const long REVISION = ") << myPrintf << _T(";\n");
-    headerOutput << _T("\t") << _T("\n");
+    headerOutput << wxT_2("\t") << wxT_2("//Standard Version Type") << wxT_2("\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().Values.Major);
+    headerOutput << wxT_2("\t") << wxT_2("static const long MAJOR = ") << myPrintf << wxT_2(";\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().Values.Minor);
+    headerOutput << wxT_2("\t") << wxT_2("static const long MINOR = ") << myPrintf << wxT_2(";\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().Values.Build);
+    headerOutput << wxT_2("\t") << wxT_2("static const long BUILD = ") << myPrintf << wxT_2(";\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().Values.Revision);
+    headerOutput << wxT_2("\t") << wxT_2("static const long REVISION = ") << myPrintf << wxT_2(";\n");
+    headerOutput << wxT_2("\t") << wxT_2("\n");
 
-    headerOutput << _T("\t") << _T("//Miscellaneous Version Types") << _T("\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().Values.BuildCount);
-    headerOutput << _T("\t") << _T("static const long BUILDS_COUNT = ") << myPrintf << _T(";\n");
+    headerOutput << wxT_2("\t") << wxT_2("//Miscellaneous Version Types") << wxT_2("\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().Values.BuildCount);
+    headerOutput << wxT_2("\t") << wxT_2("static const long BUILDS_COUNT = ") << myPrintf << wxT_2(";\n");
 
-    myPrintf.Printf(_T("%d,%d,%d,%d"), GetVersionState().Values.Major, GetVersionState().Values.Minor,
+    myPrintf.Printf(wxT_2("%d,%d,%d,%d"), GetVersionState().Values.Major, GetVersionState().Values.Minor,
             GetVersionState().Values.Build, GetVersionState().Values.Revision);
-    headerOutput << _T("\t") << _T("#define RC_FILEVERSION ") << myPrintf << _T("\n");
+    headerOutput << wxT_2("\t") << wxT_2("#define RC_FILEVERSION ") << myPrintf << wxT_2("\n");
 
-    myPrintf.Printf(_T("\"%d, %d, %d, %d\\0\""), GetVersionState().Values.Major, GetVersionState().Values.Minor,
+    myPrintf.Printf(wxT_2("\"%d, %d, %d, %d\\0\""), GetVersionState().Values.Major, GetVersionState().Values.Minor,
             GetVersionState().Values.Build, GetVersionState().Values.Revision);
-    headerOutput << _T("\t") << _T("#define RC_FILEVERSION_STRING ") << myPrintf << _T("\n");
+    headerOutput << wxT_2("\t") << wxT_2("#define RC_FILEVERSION_STRING ") << myPrintf << wxT_2("\n");
 
-    myPrintf.Printf(_T("\"%d.%d.%d.%d\""), GetVersionState().Values.Major, GetVersionState().Values.Minor,
+    myPrintf.Printf(wxT_2("\"%d.%d.%d.%d\""), GetVersionState().Values.Major, GetVersionState().Values.Minor,
             GetVersionState().Values.Build, GetVersionState().Values.Revision);
-    headerOutput << _T("\t") << _T("static const char FULLVERSION_STRING[] = ") << myPrintf << _T(";\n");
+    headerOutput << wxT_2("\t") << wxT_2("static const char FULLVERSION_STRING[] = ") << myPrintf << wxT_2(";\n");
 
     if(GetConfig().Settings.Svn)
     {
         wxString revision,date;
         if (!QuerySvn(cbC2U(GetConfig().Settings.SvnDirectory.c_str()), revision, date))
             wxMessageBox(_("Svn configuration files not found.\nVerify the Autoversioning svn directory."),_("Error"),wxICON_ERROR);
-        headerOutput << _T("\t") << _T("\n");
-        headerOutput << _T("\t") << _T("//SVN Version") << _T("\n");
-        headerOutput << _T("\t") << _T("static const char SVN_REVISION[] = ") << _T("\"") + revision + _T("\"")<< _T(";\n");
-        headerOutput << _T("\t") << _T("static const char SVN_DATE[] = ") << _T("\"") + date + _T("\"")<< _T(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("\n");
+        headerOutput << wxT_2("\t") << wxT_2("//SVN Version") << wxT_2("\n");
+        headerOutput << wxT_2("\t") << wxT_2("static const char SVN_REVISION[] = ") << wxT_2("\"") + revision + wxT_2("\"")<< wxT_2(";\n");
+        headerOutput << wxT_2("\t") << wxT_2("static const char SVN_DATE[] = ") << wxT_2("\"") + date + wxT_2("\"")<< wxT_2(";\n");
     }
 
-    headerOutput << _T("\t") << _T("\n");
-    headerOutput << _T("\t") << _T("//These values are to keep track of your versioning state, don't modify them.") << _T("\n");
-    myPrintf.Printf(_T("%d"), GetVersionState().BuildHistory);
-    headerOutput << _T("\t") << _T("static const long BUILD_HISTORY = ") << myPrintf << _T(";\n");
+    headerOutput << wxT_2("\t") << wxT_2("\n");
+    headerOutput << wxT_2("\t") << wxT_2("//These values are to keep track of your versioning state, don't modify them.") << wxT_2("\n");
+    myPrintf.Printf(wxT_2("%d"), GetVersionState().BuildHistory);
+    headerOutput << wxT_2("\t") << wxT_2("static const long BUILD_HISTORY = ") << myPrintf << wxT_2(";\n");
 
-    headerOutput << _T("\t") << _T("\n\n");
+    headerOutput << wxT_2("\t") << wxT_2("\n\n");
 
-    if(cbC2U(GetConfig().Settings.Language.c_str()) == _T("C++"))
+    if(cbC2U(GetConfig().Settings.Language.c_str()) == wxT_2("C++"))
     {
-        headerOutput << _T("}") << _T("\n");
+        headerOutput << wxT_2("}") << wxT_2("\n");
     }
 
-    headerOutput << _T("#endif //VERSION_h\n");
+    headerOutput << wxT_2("#endif //VERSION_h\n");
 
     m_versionHeaderPath = FileNormalize(cbC2U(GetConfig().Settings.HeaderPath.c_str()),m_Project->GetBasePath());;
     wxFile versionHeaderFile(m_versionHeaderPath, wxFile::write);
@@ -675,42 +675,42 @@ void AutoVersioning::CommitChanges()
 void AutoVersioning::GenerateChanges()
 {
     avChangesDlg changesDlg((wxWindow*) Manager::Get()->GetAppWindow(),0L);
-    changesDlg.SetTemporaryChangesFile(m_Project->GetBasePath() + _T("changes.tmp"));
+    changesDlg.SetTemporaryChangesFile(m_Project->GetBasePath() + wxT_2("changes.tmp"));
     changesDlg.ShowModal();
 
     wxString changes = changesDlg.Changes();
 
     if (!changes.IsEmpty())
     {
-        changes.Prepend(_T("        -"));
-        changes.Replace(_T("\n"), _T("\n        -"));
+        changes.Prepend(wxT_2("        -"));
+        changes.Replace(wxT_2("\n"), wxT_2("\n        -"));
 
         wxDateTime actualDate = wxDateTime::Now();
         wxString changesTitle = cbC2U(GetConfig().ChangesLog.AppTitle.c_str());
 
-        changesTitle.Replace(_T("%d"), actualDate.Format(_T("%d")));
-        changesTitle.Replace(_T("%o"), actualDate.Format(_T("%m")));
-        changesTitle.Replace(_T("%y"), actualDate.Format(_T("%Y")));
+        changesTitle.Replace(wxT_2("%d"), actualDate.Format(wxT_2("%d")));
+        changesTitle.Replace(wxT_2("%o"), actualDate.Format(wxT_2("%m")));
+        changesTitle.Replace(wxT_2("%y"), actualDate.Format(wxT_2("%Y")));
 
         wxString value;
-        value.Printf(_T("%d"), GetVersionState().Values.Major);
-        changesTitle.Replace(_T("%M"), value);
+        value.Printf(wxT_2("%d"), GetVersionState().Values.Major);
+        changesTitle.Replace(wxT_2("%M"), value);
 
-        value.Printf(_T("%d"), GetVersionState().Values.Minor);
-        changesTitle.Replace(_T("%m"), value);
+        value.Printf(wxT_2("%d"), GetVersionState().Values.Minor);
+        changesTitle.Replace(wxT_2("%m"), value);
 
-        value.Printf(_T("%d"), GetVersionState().Values.Build);
-        changesTitle.Replace(_T("%b"), value);
+        value.Printf(wxT_2("%d"), GetVersionState().Values.Build);
+        changesTitle.Replace(wxT_2("%b"), value);
 
-        value.Printf(_T("%d"), GetVersionState().Values.Revision);
-        changesTitle.Replace(_T("%r"), value);
+        value.Printf(wxT_2("%d"), GetVersionState().Values.Revision);
+        changesTitle.Replace(wxT_2("%r"), value);
 
-        value.Printf(_T("%d"), GetConfig().Settings.Svn?1:0);
-        changesTitle.Replace(_T("%s"),value);
+        value.Printf(wxT_2("%d"), GetConfig().Settings.Svn?1:0);
+        changesTitle.Replace(wxT_2("%s"),value);
 
-        changesTitle.Replace(_T("%T"), cbC2U(GetVersionState().Status.SoftwareStatus.c_str()));
-        changesTitle.Replace(_T("%t"), cbC2U(GetVersionState().Status.Abbreviation.c_str()));
-        changesTitle.Replace(_T("%p"), m_Project->GetTitle());
+        changesTitle.Replace(wxT_2("%T"), cbC2U(GetVersionState().Status.SoftwareStatus.c_str()));
+        changesTitle.Replace(wxT_2("%t"), cbC2U(GetVersionState().Status.Abbreviation.c_str()));
+        changesTitle.Replace(wxT_2("%p"), m_Project->GetTitle());
 
         wxString changesFile = FileNormalize(cbC2U(GetConfig().ChangesLog.ChangesLogPath.c_str()), m_Project->GetBasePath());
         wxString changesCurrentContent;
@@ -723,12 +723,12 @@ void AutoVersioning::GenerateChanges()
             file.Close();
         }
 
-        wxString changesOutput = _T("");
+        wxString changesOutput = wxT_2("");
 
-        changesOutput << actualDate.Format(_T("%d %B %Y\n"));
-        changesOutput << _T("   ") << changesTitle << _T("\n");
-        changesOutput << _T("\n     Change log:\n");
-        changesOutput << changes << _T("\n\n");
+        changesOutput << actualDate.Format(wxT_2("%d %B %Y\n"));
+        changesOutput << wxT_2("   ") << changesTitle << wxT_2("\n");
+        changesOutput << wxT_2("\n     Change log:\n");
+        changesOutput << changes << wxT_2("\n\n");
         changesOutput << changesCurrentContent;
 
         wxFile file;

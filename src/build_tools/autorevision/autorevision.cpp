@@ -183,8 +183,8 @@ bool WriteOutput(const string& outputFile, string& revision, string& date)
 
     if(do_translate)
     {
-        revision = "_T(\"" + revision + "\")";
-        date = "_T(\"" + date + "\")";
+        revision = "wxT_2(\"" + revision + "\")";
+        date = "wxT_2(\"" + date + "\")";
     }
     else
     {

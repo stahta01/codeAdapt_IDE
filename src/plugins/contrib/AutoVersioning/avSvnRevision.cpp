@@ -8,16 +8,16 @@
 
 bool QuerySvn(const wxString& workingDir, wxString& revision, wxString& date)
 {
-    revision = _T("0");
-    date = _T("unknown date");
-    wxString svncmd = _T("svn info --xml --non-interactive ");
-    svncmd.Append(_T("\"") + workingDir + _T("\""));
+    revision = wxT_2("0");
+    date = wxT_2("unknown date");
+    wxString svncmd = wxT_2("svn info --xml --non-interactive ");
+    svncmd.Append(wxT_2("\"") + workingDir + wxT_2("\""));
     wxArrayString xmlOutput;
 
     if (wxExecute(svncmd, xmlOutput) != -1)
     {
 
-        wxString buf = _T("");
+        wxString buf = wxT_2("");
 
         for(unsigned int i=0; i<xmlOutput.GetCount(); ++i){
             buf << xmlOutput[i];
@@ -33,7 +33,7 @@ bool QuerySvn(const wxString& workingDir, wxString& revision, wxString& date)
         hCommit = hCommit.FirstChildElement("info").FirstChildElement("entry").FirstChildElement("commit");
 		if(const TiXmlElement* e = hCommit.ToElement())
         {
-            revision = e->Attribute("revision") ? cbC2U(e->Attribute("revision")) : _T("");
+            revision = e->Attribute("revision") ? cbC2U(e->Attribute("revision")) : wxT_2("");
             const TiXmlElement* d = e->FirstChildElement("date");
             if(d && d->GetText())
                 date = cbC2U(d->GetText());

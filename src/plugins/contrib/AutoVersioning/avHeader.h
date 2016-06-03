@@ -23,7 +23,7 @@ private:
 
 public:
     /**Initialize the m_text to an empty string.*/
-    avHeader():m_text(_T("")){}
+    avHeader():m_text(wxT_2("")){}
 
     /**Optional constructor.
     *Initialize the m_text to a predefined value.

@@ -13,9 +13,9 @@
 //Choices to initialize the l_TypesArray
 const wxString strTypes[] =
 {
-    _T("Added"), _T("Applied"), _T("Cleaned"),
-    _T("Fixed"), _T("New"), _T("Removed"),
-    _T("Typo"), _T("Updated")
+    wxT_2("Added"), wxT_2("Applied"), wxT_2("Cleaned"),
+    wxT_2("Fixed"), wxT_2("New"), wxT_2("Removed"),
+    wxT_2("Typo"), wxT_2("Updated")
 };
 
 //List of choices available for the data grid column [Type]
@@ -42,33 +42,33 @@ avChangesDlg::avChangesDlg(wxWindow* parent,wxWindowID id)
     wxBoxSizer* sizerButtons;
     wxBoxSizer* sizerConfirmation;
 
-    Create(parent, wxID_ANY, _("AutoVersioning :: Changes Log"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, _("AutoVersioning :: Changes Log"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER, wxT_2("wxID_ANY"));
     SetClientSize(wxSize(700,300));
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     sizerButtons = new wxBoxSizer(wxHORIZONTAL);
-    btnAdd = new wxButton(this, ID_ADD_BUTTON, _("Add"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ADD_BUTTON"));
+    btnAdd = new wxButton(this, ID_ADD_BUTTON, _("Add"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_ADD_BUTTON"));
     btnAdd->SetToolTip(_("Adds another row to the data grid"));
     sizerButtons->Add(btnAdd, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    btnEdit = new wxButton(this, ID_EDIT_BUTTON, _("Edit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_EDIT_BUTTON"));
+    btnEdit = new wxButton(this, ID_EDIT_BUTTON, _("Edit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_EDIT_BUTTON"));
     btnEdit->SetToolTip(_("Enters edit mode"));
     sizerButtons->Add(btnEdit, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    btnDelete = new wxButton(this, ID_DELETE_BUTTON, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_DELETE_BUTTON"));
+    btnDelete = new wxButton(this, ID_DELETE_BUTTON, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_DELETE_BUTTON"));
     btnDelete->SetToolTip(_("Deletes the selected row"));
     sizerButtons->Add(btnDelete, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1->Add(sizerButtons, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    grdChanges = new wxGrid(this, ID_CHANGES_GRID, wxDefaultPosition, wxDefaultSize, 0, _T("ID_CHANGES_GRID"));
+    grdChanges = new wxGrid(this, ID_CHANGES_GRID, wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_CHANGES_GRID"));
     grdChanges->SetMinSize(wxSize(600,300));
     grdChanges->SetToolTip(_("List of changes"));
     BoxSizer1->Add(grdChanges, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     sizerConfirmation = new wxBoxSizer(wxHORIZONTAL);
-    btnSave = new wxButton(this, ID_SAVE_BUTTON, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_SAVE_BUTTON"));
+    btnSave = new wxButton(this, ID_SAVE_BUTTON, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_SAVE_BUTTON"));
     btnSave->SetDefault();
     btnSave->SetToolTip(_("Save the changes for later use"));
     sizerConfirmation->Add(btnSave, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    btnWrite = new wxButton(this, ID_WRITE_BUTTON, _("Write"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_WRITE_BUTTON"));
+    btnWrite = new wxButton(this, ID_WRITE_BUTTON, _("Write"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_WRITE_BUTTON"));
     btnWrite->SetToolTip(_("Write the changes to the changeslog and clean the data grid"));
     sizerConfirmation->Add(btnWrite, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    btnCancel = new wxButton(this, ID_CANCEL_BUTTON, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CANCEL_BUTTON"));
+    btnCancel = new wxButton(this, ID_CANCEL_BUTTON, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_CANCEL_BUTTON"));
     btnCancel->SetToolTip(_("Discards any change made"));
     sizerConfirmation->Add(btnCancel, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1->Add(sizerConfirmation, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -84,8 +84,8 @@ avChangesDlg::avChangesDlg(wxWindow* parent,wxWindowID id)
     //*)
 
     grdChanges->CreateGrid(0,2);
-    grdChanges->SetColLabelValue(0,_T("Type"));
-    grdChanges->SetColLabelValue(1,_T("Description"));
+    grdChanges->SetColLabelValue(0,wxT_2("Type"));
+    grdChanges->SetColLabelValue(1,wxT_2("Description"));
     grdChanges->AutoSize();
 }
 
@@ -126,17 +126,17 @@ void avChangesDlg::OnBtnSaveClick(wxCommandEvent& event)
     if (grdChanges->GetNumberRows() > 0)
     {
         wxFFile saveTempChangesFile;
-        saveTempChangesFile.Open(m_tempChangesFile, _T("w"));
+        saveTempChangesFile.Open(m_tempChangesFile, wxT_2("w"));
 
         wxString tempChanges;
 
         for (int i=0; i<grdChanges->GetNumberRows(); ++i)
         {
             tempChanges += grdChanges->GetCellValue(i,0);
-            tempChanges += _T("\t");
+            tempChanges += wxT_2("\t");
 
             tempChanges += grdChanges->GetCellValue(i,1);
-            tempChanges += _T("\n");
+            tempChanges += wxT_2("\n");
         }
 
         saveTempChangesFile.Write(tempChanges);
@@ -154,16 +154,16 @@ void avChangesDlg::OnBtnWriteClick(wxCommandEvent& event)
     {
         for (int i=0; i<grdChanges->GetNumberRows(); ++i)
         {
-            if (grdChanges->GetCellValue(i,0) != _T(""))
+            if (grdChanges->GetCellValue(i,0) != wxT_2(""))
             {
-                m_changes += grdChanges->GetCellValue(i,0) + _T(": ");
+                m_changes += grdChanges->GetCellValue(i,0) + wxT_2(": ");
             }
 
             m_changes += grdChanges->GetCellValue(i,1);
 
             if(i != grdChanges->GetNumberRows()-1)
             {
-                m_changes += _T("\n");
+                m_changes += wxT_2("\n");
             }
         }
 
@@ -190,7 +190,7 @@ void avChangesDlg::SetTemporaryChangesFile(const wxString& fileName)
     wxFFile tempChangesFile;
     if (tempChangesFile.Open(m_tempChangesFile))
     {
-        wxString fileContent(_T("")), type(_T("")), description(_T(""));
+        wxString fileContent(wxT_2("")), type(wxT_2("")), description(wxT_2(""));
 
         tempChangesFile.ReadAll(&fileContent);
 
@@ -222,8 +222,8 @@ void avChangesDlg::SetTemporaryChangesFile(const wxString& fileName)
                     grdChanges->SetCellValue(grdChanges->GetNumberRows()-1, 0, type);
                     grdChanges->SetCellEditor(grdChanges->GetNumberRows()-1, 0, new wxGridCellChoiceEditor(g_TypesArray,true));
                     grdChanges->SetCellValue(grdChanges->GetNumberRows()-1, 1, description);
-                    type = _T("");
-                    description = _T("");
+                    type = wxT_2("");
+                    description = wxT_2("");
                     isType = true;
                 }
             }
