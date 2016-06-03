@@ -66,21 +66,21 @@ byoGameBase::~byoGameBase()
 
 void byoGameBase::ReloadFromConfig()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("byogames"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("byogames"));
 
-    colours[0] = cfg->ReadColour(_T("/col01"),wxColour(0xFF,0,0));
-    colours[1] = cfg->ReadColour(_T("/col02"),wxColour(0,0xFF,0));
-    colours[2] = cfg->ReadColour(_T("/col03"),wxColour(0,0,0xFF));
-    colours[3] = cfg->ReadColour(_T("/col04"),wxColour(0xFF,0xFF,0));
-    colours[4] = cfg->ReadColour(_T("/col05"),wxColour(0xFF,0,0xFF));
-    colours[5] = cfg->ReadColour(_T("/col06"),wxColour(0,0xFF,0xFF));
+    colours[0] = cfg->ReadColour(wxT_2("/col01"),wxColour(0xFF,0,0));
+    colours[1] = cfg->ReadColour(wxT_2("/col02"),wxColour(0,0xFF,0));
+    colours[2] = cfg->ReadColour(wxT_2("/col03"),wxColour(0,0,0xFF));
+    colours[3] = cfg->ReadColour(wxT_2("/col04"),wxColour(0xFF,0xFF,0));
+    colours[4] = cfg->ReadColour(wxT_2("/col05"),wxColour(0xFF,0,0xFF));
+    colours[5] = cfg->ReadColour(wxT_2("/col06"),wxColour(0,0xFF,0xFF));
 
-    IsMaxPlayTime = cfg->ReadBool(_T("/ismaxplaytime"),true);
-    MaxPlayTime = cfg->ReadInt(_T("/maxplaytime"),60*10);
-    IsMinWorkTime = cfg->ReadBool(_T("/isminworktime"),true);
-    MinWorkTime = cfg->ReadInt(_T("/minworktime"),60*60);
-    IsMaxWorkTime = cfg->ReadBool(_T("/isoverworktime"),false);
-    MaxWorkTime = cfg->ReadInt(_T("/overworktime"),3*60*60);
+    IsMaxPlayTime = cfg->ReadBool(wxT_2("/ismaxplaytime"),true);
+    MaxPlayTime = cfg->ReadInt(wxT_2("/maxplaytime"),60*10);
+    IsMinWorkTime = cfg->ReadBool(wxT_2("/isminworktime"),true);
+    MinWorkTime = cfg->ReadInt(wxT_2("/minworktime"),60*60);
+    IsMaxWorkTime = cfg->ReadBool(wxT_2("/isoverworktime"),false);
+    MaxWorkTime = cfg->ReadInt(wxT_2("/overworktime"),3*60*60);
 }
 
 void byoGameBase::BackToWorkTimer()
@@ -179,7 +179,7 @@ void byoGameBase::RecalculateSizeHints(int minStepsHoriz,int minStepsVert)
     m_MinCellsHoriz = minStepsHoriz;
     m_MinCellsVert  = minStepsVert;
 
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("msh: %d, msv: %d, ch: %d, cv: %d, cs: %d, x: %d, y: %d"),
+    Manager::Get()->GetLogManager()->DebugLog(F(wxT("msh: %d, msv: %d, ch: %d, cv: %d, cs: %d, x: %d, y: %d"),
         minStepsHoriz,
         minStepsVert,
         cellSizeH,

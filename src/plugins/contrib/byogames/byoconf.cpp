@@ -52,29 +52,29 @@ END_EVENT_TABLE()
 byoConf::byoConf(wxWindow* parent,wxWindowID id)
 {
 	//(*Initialize(byoConf)
-	Create(parent,id,wxDefaultPosition,wxDefaultSize,wxTAB_TRAVERSAL,_T("wxPanel"));
+	Create(parent,id,wxDefaultPosition,wxDefaultSize,wxTAB_TRAVERSAL,wxT_2("wxPanel"));
 	FlexGridSizer1 = new wxFlexGridSizer(0,1,0,0);
 	FlexGridSizer1->AddGrowableCol(0);
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL,this,_("Back-To-Work settings"));
 	FlexGridSizer2 = new wxFlexGridSizer(0,2,0,0);
 	FlexGridSizer2->AddGrowableCol(1);
-	m_MaxPlaytimeChk = new wxCheckBox(this,ID_CHECKBOX1,_("Maximum play time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,_T("ID_CHECKBOX1"));
+	m_MaxPlaytimeChk = new wxCheckBox(this,ID_CHECKBOX1,_("Maximum play time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,wxT_2("ID_CHECKBOX1"));
 	m_MaxPlaytimeChk->SetValue(true);
 	FlexGridSizer2->Add(m_MaxPlaytimeChk,0,wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL,4);
-	m_MaxPlaytimeSpn = new wxSpinCtrl(this,ID_SPINCTRL1,_T("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,_T("ID_SPINCTRL1"));
-	m_MaxPlaytimeSpn->SetValue(_T("1"));
+	m_MaxPlaytimeSpn = new wxSpinCtrl(this,ID_SPINCTRL1,wxT_2("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,wxT_2("ID_SPINCTRL1"));
+	m_MaxPlaytimeSpn->SetValue(wxT_2("1"));
 	FlexGridSizer2->Add(m_MaxPlaytimeSpn,1,wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	m_MinWorkChk = new wxCheckBox(this,ID_CHECKBOX2,_("Minimum work time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,_T("ID_CHECKBOX2"));
+	m_MinWorkChk = new wxCheckBox(this,ID_CHECKBOX2,_("Minimum work time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,wxT_2("ID_CHECKBOX2"));
 	m_MinWorkChk->SetValue(true);
 	FlexGridSizer2->Add(m_MinWorkChk,0,wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL,4);
-	m_MinWorkSpn = new wxSpinCtrl(this,ID_SPINCTRL2,_T("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,_T("ID_SPINCTRL2"));
-	m_MinWorkSpn->SetValue(_T("1"));
+	m_MinWorkSpn = new wxSpinCtrl(this,ID_SPINCTRL2,wxT_2("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,wxT_2("ID_SPINCTRL2"));
+	m_MinWorkSpn->SetValue(wxT_2("1"));
 	FlexGridSizer2->Add(m_MinWorkSpn,1,wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	m_OverworkChk = new wxCheckBox(this,ID_CHECKBOX3,_("Overwork time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,_T("ID_CHECKBOX3"));
+	m_OverworkChk = new wxCheckBox(this,ID_CHECKBOX3,_("Overwork time (sec)"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,wxT_2("ID_CHECKBOX3"));
 	m_OverworkChk->SetValue(true);
 	FlexGridSizer2->Add(m_OverworkChk,0,wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL,4);
-	m_OverworkSpn = new wxSpinCtrl(this,ID_SPINCTRL3,_T("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,_T("ID_SPINCTRL3"));
-	m_OverworkSpn->SetValue(_T("1"));
+	m_OverworkSpn = new wxSpinCtrl(this,ID_SPINCTRL3,wxT_2("1"),wxDefaultPosition,wxDefaultSize,0,1,1000000,1,wxT_2("ID_SPINCTRL3"));
+	m_OverworkSpn->SetValue(wxT_2("1"));
 	FlexGridSizer2->Add(m_OverworkSpn,1,wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	StaticBoxSizer1->Add(FlexGridSizer2,1,wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer1->Add(StaticBoxSizer1,1,wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
@@ -85,33 +85,33 @@ byoConf::byoConf(wxWindow* parent,wxWindowID id)
 	FlexGridSizer3->AddGrowableCol(7);
 	FlexGridSizer3->AddGrowableRow(0);
 	FlexGridSizer3->AddGrowableRow(1);
-	StaticText1 = new wxStaticText(this,ID_STATICTEXT1,_("1"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this,ID_STATICTEXT1,_("1"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT1"));
 	FlexGridSizer3->Add(StaticText1,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col1 = new wxButton(this,ID_BUTTON1,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON1"));
+	m_Col1 = new wxButton(this,ID_BUTTON1,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON1"));
 	FlexGridSizer3->Add(m_Col1,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer3->Add(-1,-1,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	StaticText2 = new wxStaticText(this,ID_STATICTEXT2,_("3"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT2"));
+	StaticText2 = new wxStaticText(this,ID_STATICTEXT2,_("3"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT2"));
 	FlexGridSizer3->Add(StaticText2,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col3 = new wxButton(this,ID_BUTTON2,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON2"));
+	m_Col3 = new wxButton(this,ID_BUTTON2,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON2"));
 	FlexGridSizer3->Add(m_Col3,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer3->Add(-1,-1,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	StaticText3 = new wxStaticText(this,ID_STATICTEXT3,_("5"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT3"));
+	StaticText3 = new wxStaticText(this,ID_STATICTEXT3,_("5"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT3"));
 	FlexGridSizer3->Add(StaticText3,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col5 = new wxButton(this,ID_BUTTON3,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON3"));
+	m_Col5 = new wxButton(this,ID_BUTTON3,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON3"));
 	FlexGridSizer3->Add(m_Col5,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	StaticText4 = new wxStaticText(this,ID_STATICTEXT4,_("2"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT4"));
+	StaticText4 = new wxStaticText(this,ID_STATICTEXT4,_("2"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT4"));
 	FlexGridSizer3->Add(StaticText4,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col2 = new wxButton(this,ID_BUTTON4,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON4"));
+	m_Col2 = new wxButton(this,ID_BUTTON4,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON4"));
 	FlexGridSizer3->Add(m_Col2,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer3->Add(-1,-1,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	StaticText5 = new wxStaticText(this,ID_STATICTEXT5,_("4"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT5"));
+	StaticText5 = new wxStaticText(this,ID_STATICTEXT5,_("4"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT5"));
 	FlexGridSizer3->Add(StaticText5,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col4 = new wxButton(this,ID_BUTTON5,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON5"));
+	m_Col4 = new wxButton(this,ID_BUTTON5,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON5"));
 	FlexGridSizer3->Add(m_Col4,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer3->Add(-1,-1,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
-	StaticText6 = new wxStaticText(this,ID_STATICTEXT6,_("6"),wxDefaultPosition,wxDefaultSize,0,_T("ID_STATICTEXT6"));
+	StaticText6 = new wxStaticText(this,ID_STATICTEXT6,_("6"),wxDefaultPosition,wxDefaultSize,0,wxT_2("ID_STATICTEXT6"));
 	FlexGridSizer3->Add(StaticText6,1,wxTOP|wxBOTTOM|wxLEFT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL,4);
-	m_Col6 = new wxButton(this,ID_BUTTON6,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,_T("ID_BUTTON6"));
+	m_Col6 = new wxButton(this,ID_BUTTON6,wxEmptyString,wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT,wxDefaultValidator,wxT_2("ID_BUTTON6"));
 	FlexGridSizer3->Add(m_Col6,1,wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	StaticBoxSizer2->Add(FlexGridSizer3,1,wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
 	FlexGridSizer1->Add(StaticBoxSizer2,1,wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL,4);
@@ -129,20 +129,20 @@ byoConf::byoConf(wxWindow* parent,wxWindowID id)
 	Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&byoConf::ColChangeClick);
 	//*)
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("byogames"));
-    m_MaxPlaytimeChk->SetValue(cfg->ReadBool(_T("/ismaxplaytime"),true));
-    m_MaxPlaytimeSpn->SetValue(cfg->ReadInt(_T("/maxplaytime"),60*10));
-    m_MinWorkChk->SetValue(cfg->ReadBool(_T("/isminworktime"),true));
-    m_MinWorkSpn->SetValue(cfg->ReadInt(_T("/minworktime"),60*60));
-    m_OverworkChk->SetValue(cfg->ReadBool(_T("/isoverworktime"),false));
-    m_OverworkSpn->SetValue(cfg->ReadInt(_T("/overworktime"),3*60*60));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("byogames"));
+    m_MaxPlaytimeChk->SetValue(cfg->ReadBool(wxT_2("/ismaxplaytime"),true));
+    m_MaxPlaytimeSpn->SetValue(cfg->ReadInt(wxT_2("/maxplaytime"),60*10));
+    m_MinWorkChk->SetValue(cfg->ReadBool(wxT_2("/isminworktime"),true));
+    m_MinWorkSpn->SetValue(cfg->ReadInt(wxT_2("/minworktime"),60*60));
+    m_OverworkChk->SetValue(cfg->ReadBool(wxT_2("/isoverworktime"),false));
+    m_OverworkSpn->SetValue(cfg->ReadInt(wxT_2("/overworktime"),3*60*60));
 
-    m_Col1->SetBackgroundColour(cfg->ReadColour(_T("/col01"),wxColour(0xFF,0,0)));
-    m_Col2->SetBackgroundColour(cfg->ReadColour(_T("/col02"),wxColour(0,0xFF,0)));
-    m_Col3->SetBackgroundColour(cfg->ReadColour(_T("/col03"),wxColour(0,0,0xFF)));
-    m_Col4->SetBackgroundColour(cfg->ReadColour(_T("/col04"),wxColour(0xFF,0xFF,0)));
-    m_Col5->SetBackgroundColour(cfg->ReadColour(_T("/col05"),wxColour(0xFF,0,0xFF)));
-    m_Col6->SetBackgroundColour(cfg->ReadColour(_T("/col06"),wxColour(0,0xFF,0xFF)));
+    m_Col1->SetBackgroundColour(cfg->ReadColour(wxT_2("/col01"),wxColour(0xFF,0,0)));
+    m_Col2->SetBackgroundColour(cfg->ReadColour(wxT_2("/col02"),wxColour(0,0xFF,0)));
+    m_Col3->SetBackgroundColour(cfg->ReadColour(wxT_2("/col03"),wxColour(0,0,0xFF)));
+    m_Col4->SetBackgroundColour(cfg->ReadColour(wxT_2("/col04"),wxColour(0xFF,0xFF,0)));
+    m_Col5->SetBackgroundColour(cfg->ReadColour(wxT_2("/col05"),wxColour(0xFF,0,0xFF)));
+    m_Col6->SetBackgroundColour(cfg->ReadColour(wxT_2("/col06"),wxColour(0,0xFF,0xFF)));
 
     SetSize(500,500);
 }
@@ -153,19 +153,19 @@ byoConf::~byoConf()
 
 void byoConf::OnApply()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("byogames"));
-    cfg->Write(_T("/ismaxplaytime"),(bool)m_MaxPlaytimeChk->GetValue());
-    cfg->Write(_T("/maxplaytime"),(int)m_MaxPlaytimeSpn->GetValue());
-    cfg->Write(_T("/isminworktime"),(bool)m_MinWorkChk->GetValue());
-    cfg->Write(_T("/minworktime"),(int)m_MinWorkSpn->GetValue());
-    cfg->Write(_T("/isoverworktime"),(bool)m_OverworkChk->GetValue());
-    cfg->Write(_T("/overworktime"),(int)m_OverworkSpn->GetValue());
-    cfg->Write(_T("/col01"),m_Col1->GetBackgroundColour());
-    cfg->Write(_T("/col02"),m_Col2->GetBackgroundColour());
-    cfg->Write(_T("/col03"),m_Col3->GetBackgroundColour());
-    cfg->Write(_T("/col04"),m_Col4->GetBackgroundColour());
-    cfg->Write(_T("/col05"),m_Col5->GetBackgroundColour());
-    cfg->Write(_T("/col06"),m_Col6->GetBackgroundColour());
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("byogames"));
+    cfg->Write(wxT_2("/ismaxplaytime"),(bool)m_MaxPlaytimeChk->GetValue());
+    cfg->Write(wxT_2("/maxplaytime"),(int)m_MaxPlaytimeSpn->GetValue());
+    cfg->Write(wxT_2("/isminworktime"),(bool)m_MinWorkChk->GetValue());
+    cfg->Write(wxT_2("/minworktime"),(int)m_MinWorkSpn->GetValue());
+    cfg->Write(wxT_2("/isoverworktime"),(bool)m_OverworkChk->GetValue());
+    cfg->Write(wxT_2("/overworktime"),(int)m_OverworkSpn->GetValue());
+    cfg->Write(wxT_2("/col01"),m_Col1->GetBackgroundColour());
+    cfg->Write(wxT_2("/col02"),m_Col2->GetBackgroundColour());
+    cfg->Write(wxT_2("/col03"),m_Col3->GetBackgroundColour());
+    cfg->Write(wxT_2("/col04"),m_Col4->GetBackgroundColour());
+    cfg->Write(wxT_2("/col05"),m_Col5->GetBackgroundColour());
+    cfg->Write(wxT_2("/col06"),m_Col6->GetBackgroundColour());
 
     byoGameBase::ReloadFromConfig();
 }
