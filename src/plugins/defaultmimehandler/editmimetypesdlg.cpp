@@ -35,7 +35,7 @@ EditMimeTypesDlg::EditMimeTypesDlg(wxWindow* parent, MimeTypesArray& array)
     m_LastSelection(-1)
 {
     //ctor
-    wxXmlResource::Get()->LoadPanel(this, parent, _T("dlgEditFilesHandling"));
+    wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("dlgEditFilesHandling"));
     FillList();
     UpdateDisplay();
 }
@@ -134,7 +134,7 @@ void EditMimeTypesDlg::OnNew(wxCommandEvent& event)
     mt->wildcard = wild;
     mt->useEditor = true;
     mt->useAssoc = false;
-    mt->program = _T("");
+    mt->program = wxT_2("");
     mt->programIsModal = false;
     m_Array.Add(mt);
 

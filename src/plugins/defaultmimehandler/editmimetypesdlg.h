@@ -21,7 +21,7 @@ class EditMimeTypesDlg : public cbConfigurationPanel
         virtual ~EditMimeTypesDlg();
 
         virtual wxString GetTitle() const { return _("Files extension handling"); }
-        virtual wxString GetBitmapBaseName() const { return _T("extensions"); }
+        virtual wxString GetBitmapBaseName() const { return wxT_2("extensions"); }
         virtual void OnApply();
         virtual void OnCancel(){}
     private:
