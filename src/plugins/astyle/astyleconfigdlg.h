@@ -25,7 +25,7 @@ class AstyleConfigDlg : public cbConfigurationPanel
         void OnPreview(wxCommandEvent& event);
 
         virtual wxString GetTitle() const { return _("Source formatter"); }
-        virtual wxString GetBitmapBaseName() const { return _T("astyle-plugin"); }
+        virtual wxString GetBitmapBaseName() const { return wxT_2("astyle-plugin"); }
         virtual void OnApply(){ SaveSettings(); }
         virtual void OnCancel(){}
 

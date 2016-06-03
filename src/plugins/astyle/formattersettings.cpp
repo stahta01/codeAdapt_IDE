@@ -14,9 +14,9 @@ FormatterSettings::~FormatterSettings()
 
 void FormatterSettings::ApplyTo(astyle::ASFormatter& formatter)
 {
-  ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("astyle"));
+  ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("astyle"));
 
-  int style = cfg->ReadInt(_T("/style"), 0);
+  int style = cfg->ReadInt(wxT_2("/style"), 0);
 
   switch (style)
   {
@@ -124,10 +124,10 @@ void FormatterSettings::ApplyTo(astyle::ASFormatter& formatter)
 
     default: // Custom
     {
-      bool value = cfg->ReadBool(_T("/force_tabs"));
-      int spaceNum = cfg->ReadInt(_T("/indentation"), 4);
+      bool value = cfg->ReadBool(wxT_2("/force_tabs"));
+      int spaceNum = cfg->ReadInt(wxT_2("/indentation"), 4);
 
-      if (cfg->ReadBool(_T("/use_tabs")))
+      if (cfg->ReadBool(wxT_2("/use_tabs")))
       {
         formatter.setTabIndentation(spaceNum, value);
       }
@@ -136,26 +136,26 @@ void FormatterSettings::ApplyTo(astyle::ASFormatter& formatter)
         formatter.setSpaceIndentation(spaceNum);
       }
 
-      formatter.setClassIndent(cfg->ReadBool(_T("/indent_classes")));
-      formatter.setSwitchIndent(cfg->ReadBool(_T("/indent_switches")));
-      formatter.setCaseIndent(cfg->ReadBool(_T("/indent_case")));
-      formatter.setBracketIndent(cfg->ReadBool(_T("/indent_brackets")));
-      formatter.setBlockIndent(cfg->ReadBool(_T("/indent_blocks")));
-      formatter.setNamespaceIndent(cfg->ReadBool(_T("/indent_namespaces")));
-      formatter.setLabelIndent(cfg->ReadBool(_T("/indent_labels")));
-      formatter.setPreprocessorIndent(cfg->ReadBool(_T("/indent_preprocessor")));
+      formatter.setClassIndent(cfg->ReadBool(wxT_2("/indent_classes")));
+      formatter.setSwitchIndent(cfg->ReadBool(wxT_2("/indent_switches")));
+      formatter.setCaseIndent(cfg->ReadBool(wxT_2("/indent_case")));
+      formatter.setBracketIndent(cfg->ReadBool(wxT_2("/indent_brackets")));
+      formatter.setBlockIndent(cfg->ReadBool(wxT_2("/indent_blocks")));
+      formatter.setNamespaceIndent(cfg->ReadBool(wxT_2("/indent_namespaces")));
+      formatter.setLabelIndent(cfg->ReadBool(wxT_2("/indent_labels")));
+      formatter.setPreprocessorIndent(cfg->ReadBool(wxT_2("/indent_preprocessor")));
 
-      wxString breakType = cfg->Read(_T("/break_type"));
+      wxString breakType = cfg->Read(wxT_2("/break_type"));
 
-      if (breakType == _T("Break"))
+      if (breakType == wxT_2("Break"))
       {
         formatter.setBracketFormatMode(astyle::BREAK_MODE);
       }
-      else if (breakType == _T("Attach"))
+      else if (breakType == wxT_2("Attach"))
       {
         formatter.setBracketFormatMode(astyle::ATTACH_MODE);
       }
-      else if (breakType == _T("Linux"))
+      else if (breakType == wxT_2("Linux"))
       {
         formatter.setBracketFormatMode(astyle::BDAC_MODE);
       }
@@ -164,17 +164,17 @@ void FormatterSettings::ApplyTo(astyle::ASFormatter& formatter)
         formatter.setBracketFormatMode(astyle::NONE_MODE);
       }
 
-      formatter.setBreakClosingHeaderBracketsMode(cfg->ReadBool(_T("/break_closing")));
-      formatter.setBreakBlocksMode(cfg->ReadBool(_T("/break_blocks")));
-      formatter.setBreakElseIfsMode(cfg->ReadBool(_T("/break_elseifs")));
-      formatter.setOperatorPaddingMode(cfg->ReadBool(_T("/pad_operators")));
-      formatter.setParensOutsidePaddingMode(cfg->ReadBool(_T("/pad_parentheses_out")));
-      formatter.setParensInsidePaddingMode(cfg->ReadBool(_T("/pad_parentheses_in")));
-      formatter.setParensUnPaddingMode(cfg->ReadBool(_T("/unpad_parentheses")));
-      formatter.setSingleStatementsMode(!cfg->ReadBool(_T("/keep_complex")));
-      formatter.setBreakOneLineBlocksMode(!cfg->ReadBool(_T("/keep_blocks")));
-      formatter.setTabSpaceConversionMode(cfg->ReadBool(_T("/convert_tabs")));
-      formatter.setEmptyLineFill(cfg->ReadBool(_T("/fill_empty_lines")));
+      formatter.setBreakClosingHeaderBracketsMode(cfg->ReadBool(wxT_2("/break_closing")));
+      formatter.setBreakBlocksMode(cfg->ReadBool(wxT_2("/break_blocks")));
+      formatter.setBreakElseIfsMode(cfg->ReadBool(wxT_2("/break_elseifs")));
+      formatter.setOperatorPaddingMode(cfg->ReadBool(wxT_2("/pad_operators")));
+      formatter.setParensOutsidePaddingMode(cfg->ReadBool(wxT_2("/pad_parentheses_out")));
+      formatter.setParensInsidePaddingMode(cfg->ReadBool(wxT_2("/pad_parentheses_in")));
+      formatter.setParensUnPaddingMode(cfg->ReadBool(wxT_2("/unpad_parentheses")));
+      formatter.setSingleStatementsMode(!cfg->ReadBool(wxT_2("/keep_complex")));
+      formatter.setBreakOneLineBlocksMode(!cfg->ReadBool(wxT_2("/keep_blocks")));
+      formatter.setTabSpaceConversionMode(cfg->ReadBool(wxT_2("/convert_tabs")));
+      formatter.setEmptyLineFill(cfg->ReadBool(wxT_2("/fill_empty_lines")));
       break;
     }
   }

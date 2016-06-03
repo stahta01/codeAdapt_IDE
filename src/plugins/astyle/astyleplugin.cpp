@@ -34,16 +34,16 @@ using std::string;
 
 namespace
 {
-    PluginRegistrant<AStylePlugin> reg(_T("AStylePlugin"));
+    PluginRegistrant<AStylePlugin> reg(wxT_2("AStylePlugin"));
 }
 
 AStylePlugin::AStylePlugin()
 {
     //ctor
 
-    if (!Manager::LoadResource(_T("astyle.zip")))
+    if (!Manager::LoadResource(wxT_2("astyle.zip")))
     {
-        NotifyMissingFile(_T("astyle.zip"));
+        NotifyMissingFile(wxT_2("astyle.zip"));
     }
 }
 
@@ -114,19 +114,19 @@ int AStylePlugin::Execute()
     {
 
         case wxSCI_EOL_CRLF:
-            eolChars = _T("\r\n");
+            eolChars = wxT_2("\r\n");
             break;
 
         case wxSCI_EOL_CR:
-            eolChars = _T("\r");
+            eolChars = wxT_2("\r");
             break;
 
         case wxSCI_EOL_LF:
-            eolChars = _T("\n");
+            eolChars = wxT_2("\n");
             break;
     }
 
-    if (edText.size() && edText.Last() != _T('\r') && edText.Last() != _T('\n'))
+    if (edText.size() && edText.Last() != wxT_2('\r') && edText.Last() != wxT_2('\n'))
     {
         edText += eolChars;
     }

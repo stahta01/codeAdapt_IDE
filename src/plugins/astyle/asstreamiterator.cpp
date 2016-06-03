@@ -19,7 +19,7 @@ bool ASStreamIterator::hasMoreLines() const
 
 inline bool ASStreamIterator::IsEOL(wxChar ch)
 {
-  if (ch == _T('\r') || ch == _T('\n'))
+  if (ch == wxT_2('\r') || ch == wxT_2('\n'))
   {
       return true;
   }

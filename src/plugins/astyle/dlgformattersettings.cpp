@@ -162,15 +162,15 @@ void dlgFormatterSettings::ApplyTo(astyle::ASFormatter& formatter)
 
       wxString breakType = XRCCTRL(*m_dlg, "cmbBreakType", wxComboBox)->GetValue();
 
-      if (breakType == _T("Break"))
+      if (breakType == wxT_2("Break"))
       {
         formatter.setBracketFormatMode(astyle::BREAK_MODE);
       }
-      else if (breakType == _T("Attach"))
+      else if (breakType == wxT_2("Attach"))
       {
         formatter.setBracketFormatMode(astyle::ATTACH_MODE);
       }
-      else if (breakType == _T("Linux"))
+      else if (breakType == wxT_2("Linux"))
       {
         formatter.setBracketFormatMode(astyle::BDAC_MODE);
       }
