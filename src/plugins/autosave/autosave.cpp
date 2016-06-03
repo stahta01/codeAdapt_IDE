@@ -37,7 +37,7 @@
 // this auto-registers the plugin
 namespace
 {
-    PluginRegistrant<Autosave> reg(_T("Autosave"));
+    PluginRegistrant<Autosave> reg(wxT_2("Autosave"));
 }
 
 BEGIN_EVENT_TABLE(Autosave, cbPlugin)
@@ -55,9 +55,9 @@ Autosave::~Autosave()
 
 void Autosave::OnAttach()
 {
-    if(!Manager::LoadResource(_T("autosave.zip")))
+    if(!Manager::LoadResource(wxT_2("autosave.zip")))
     {
-        NotifyMissingFile(_T("autosave.zip"));
+        NotifyMissingFile(wxT_2("autosave.zip"));
     }
 
     timer1 = new wxTimer(this, 10000);
@@ -68,14 +68,14 @@ void Autosave::OnAttach()
 
 void Autosave::Start()
 {
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("autosave"));
-    if(cfg->ReadBool(_T("do_project")))
-        timer1->Start(60 * 1000 * cfg->ReadInt(_T("project_mins")));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("autosave"));
+    if(cfg->ReadBool(wxT_2("do_project")))
+        timer1->Start(60 * 1000 * cfg->ReadInt(wxT_2("project_mins")));
     else
         timer1->Stop();
 
-    if(cfg->ReadBool(_T("do_sources")))
-        timer2->Start(60 * 1000 * cfg->ReadInt(_T("source_mins")));
+    if(cfg->ReadBool(wxT_2("do_sources")))
+        timer2->Start(60 * 1000 * cfg->ReadInt(wxT_2("source_mins")));
     else
         timer2->Stop();
 }
@@ -93,7 +93,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
     if(e.GetId() == 10000)
     {
         PluginManager *plm = Manager::Get()->GetPluginManager();
-        int method = Manager::Get()->GetConfigManager(_T("autosave"))->ReadInt(_T("method"));
+        int method = Manager::Get()->GetConfigManager(wxT_2("autosave"))->ReadInt(wxT_2("method"));
         ProjectManager *pm = Manager::Get()->GetProjectManager();
         if(pm && pm->GetActiveProject())
         {
@@ -105,7 +105,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
                     {
                         if(p->GetModified())
                         {
-                            if(::wxRenameFile(p->GetFilename(), p->GetFilename() + _T(".bak")))
+                            if(::wxRenameFile(p->GetFilename(), p->GetFilename() + wxT_2(".bak")))
                                 if(p->Save())
                                 {
                                     CodeBlocksEvent e(cbEVT_PROJECT_SAVE);
@@ -113,9 +113,9 @@ void Autosave::OnTimer(wxTimerEvent& e)
                                 }
                         }
                         wxFileName file = p->GetFilename();
-                        file.SetExt(_T("layout"));
+                        file.SetExt(wxT_2("layout"));
                         wxString filename = file.GetFullPath();
-                        if(::wxRenameFile(filename, filename + _T(".bak")))
+                        if(::wxRenameFile(filename, filename + wxT_2(".bak")))
                             p->SaveLayout();
                         break;
                     }
@@ -136,7 +136,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
                         if(p->GetModified())
                         {
                             ProjectLoader loader(p);
-                            if(loader.Save(p->GetFilename() + _T(".save")))
+                            if(loader.Save(p->GetFilename() + wxT_2(".save")))
                             {
                                 CodeBlocksEvent e(cbEVT_PROJECT_SAVE);
                                 plm->NotifyPlugins(e);
@@ -144,10 +144,10 @@ void Autosave::OnTimer(wxTimerEvent& e)
                             p->SetModified(); // the actual project file is still not updated!
                         }
                         wxFileName file = wxFileName(p->GetFilename());
-                        file.SetExt(_T("layout"));
+                        file.SetExt(wxT_2("layout"));
                         wxString filename = file.GetFullPath();
-                        wxString temp = filename + _T(".temp");
-                        wxString save = filename + _T(".save");
+                        wxString temp = filename + wxT_2(".temp");
+                        wxString save = filename + wxT_2(".save");
                         if(::wxFileExists(filename) && ::wxCopyFile(filename, temp))
                         {
                             p->SaveLayout();
@@ -162,7 +162,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
     }
     else if(e.GetId() == 20000)
     {
-        int method = Manager::Get()->GetConfigManager(_T("autosave"))->ReadInt(_T("method"));
+        int method = Manager::Get()->GetConfigManager(wxT_2("autosave"))->ReadInt(wxT_2("method"));
         EditorManager* em = Manager::Get()->GetEditorManager();
 
         if(em)
@@ -177,7 +177,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
                     {
                         case 0:
                         {
-                            if(::wxRenameFile(fn.GetFullPath(), fn.GetFullPath() + _T(".bak")))
+                            if(::wxRenameFile(fn.GetFullPath(), fn.GetFullPath() + wxT_2(".bak")))
                                 cbSaveToFile(fn.GetFullPath(), ed->GetControl()->GetText(), ed->GetEncoding(), ed->GetUseBom());
                             break;
                         }
@@ -188,7 +188,7 @@ void Autosave::OnTimer(wxTimerEvent& e)
                         }
                         case 2:
                         {
-                            cbSaveToFile(fn.GetFullPath() + _T(".save"), ed->GetControl()->GetText(), ed->GetEncoding(), ed->GetUseBom());
+                            cbSaveToFile(fn.GetFullPath() + wxT_2(".save"), ed->GetControl()->GetText(), ed->GetEncoding(), ed->GetUseBom());
                             ed->SetModified(); // the "real" file has not been saved!
                             break;
                         }
@@ -219,39 +219,39 @@ int Autosave::Configure()
 
 AutosaveConfigDlg::AutosaveConfigDlg(wxWindow* parent, Autosave* plug) : plugin(plug)
 {
-    wxXmlResource::Get()->LoadPanel(this, parent, _T("dlgAutosave"));
+    wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("dlgAutosave"));
 
     LoadSettings();
 }
 
 void AutosaveConfigDlg::LoadSettings()
 {
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("autosave"));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("autosave"));
 
-    XRCCTRL(*this, "do_project", wxCheckBox)->SetValue(cfg->ReadBool(_T("do_project")));
-    XRCCTRL(*this, "do_sources", wxCheckBox)->SetValue(cfg->ReadBool(_T("do_sources")));
-    XRCCTRL(*this, "project_mins", wxTextCtrl)->SetValue(wxString::Format(_T("%d"), cfg->ReadInt(_T("project_mins"))));
-    XRCCTRL(*this, "source_mins", wxTextCtrl)->SetValue(wxString::Format(_T("%d"), cfg->ReadInt(_T("source_mins"))));
+    XRCCTRL(*this, "do_project", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("do_project")));
+    XRCCTRL(*this, "do_sources", wxCheckBox)->SetValue(cfg->ReadBool(wxT_2("do_sources")));
+    XRCCTRL(*this, "project_mins", wxTextCtrl)->SetValue(wxString::Format(wxT_2("%d"), cfg->ReadInt(wxT_2("project_mins"))));
+    XRCCTRL(*this, "source_mins", wxTextCtrl)->SetValue(wxString::Format(wxT_2("%d"), cfg->ReadInt(wxT_2("source_mins"))));
 
-    XRCCTRL(*this, "method", wxChoice)->SetSelection(cfg->ReadInt(_T("method"), 2));
+    XRCCTRL(*this, "method", wxChoice)->SetSelection(cfg->ReadInt(wxT_2("method"), 2));
 }
 
 void AutosaveConfigDlg::SaveSettings()
 {
-    ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("autosave"));
+    ConfigManager *cfg = Manager::Get()->GetConfigManager(wxT_2("autosave"));
 
-    cfg->Write(_T("do_project"), (bool) XRCCTRL(*this, "do_project", wxCheckBox)->GetValue());
-    cfg->Write(_T("do_sources"), (bool) XRCCTRL(*this, "do_sources", wxCheckBox)->GetValue());
+    cfg->Write(wxT_2("do_project"), (bool) XRCCTRL(*this, "do_project", wxCheckBox)->GetValue());
+    cfg->Write(wxT_2("do_sources"), (bool) XRCCTRL(*this, "do_sources", wxCheckBox)->GetValue());
 
     long pm, sm;
 
     XRCCTRL(*this, "project_mins", wxTextCtrl)->GetValue().ToLong(&pm);
     XRCCTRL(*this, "source_mins", wxTextCtrl)->GetValue().ToLong(&sm);
 
-    cfg->Write(_T("project_mins"), (int) pm);
-    cfg->Write(_T("source_mins"), (int) sm);
+    cfg->Write(wxT_2("project_mins"), (int) pm);
+    cfg->Write(wxT_2("source_mins"), (int) sm);
 
-    cfg->Write(_T("method"), XRCCTRL(*this, "method", wxChoice)->GetSelection());
+    cfg->Write(wxT_2("method"), XRCCTRL(*this, "method", wxChoice)->GetSelection());
 
     plugin->Start();
 }

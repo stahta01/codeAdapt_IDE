@@ -53,8 +53,8 @@ class AutosaveConfigDlg : public cbConfigurationPanel
 		AutosaveConfigDlg(wxWindow* parent, Autosave* plug);
 		virtual ~AutosaveConfigDlg(){};
 
-        virtual wxString GetTitle() const { return _T("Autosave"); }
-        virtual wxString GetBitmapBaseName() const { return _T("autosave"); }
+        virtual wxString GetTitle() const { return wxT_2("Autosave"); }
+        virtual wxString GetBitmapBaseName() const { return wxT_2("autosave"); }
         virtual void OnApply(){ SaveSettings(); }
         virtual void OnCancel(){}
 	private:
