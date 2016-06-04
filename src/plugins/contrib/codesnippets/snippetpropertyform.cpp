@@ -49,10 +49,10 @@ SnippetPropertyForm::SnippetPropertyForm( wxWindow* parent, int id, wxString tit
 	wxBoxSizer* bSizer;
 	bSizer = new wxBoxSizer( wxHORIZONTAL );
     // Label
-	m_ItemLabelStaticText = new wxStaticText( this, ID_DEFAULT, wxT("Label"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_ItemLabelStaticText = new wxStaticText( this, ID_DEFAULT, wxT_2("Label"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer->Add( m_ItemLabelStaticText, 0, wxALL, 5 );
     // Label Text Area
-	m_ItemLabelTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT(""), wxDefaultPosition, wxDefaultSize, 0 );
+	m_ItemLabelTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT_2(""), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer->Add( m_ItemLabelTextCtrl, 1, wxALL, 5 );
 
 	sbSizer->Add( bSizer, 0, wxEXPAND, 5 );
@@ -60,7 +60,7 @@ SnippetPropertyForm::SnippetPropertyForm( wxWindow* parent, int id, wxString tit
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
     // Snippet Label
-	m_SnippetStaticText = new wxStaticText( this, ID_DEFAULT, wxT("Snippet | File Link"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SnippetStaticText = new wxStaticText( this, ID_DEFAULT, wxT_2("Snippet | File Link"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer1->Add( m_SnippetStaticText, 0, wxALL, 5 );
 
     // create wxscintilla edit control
@@ -76,10 +76,10 @@ SnippetPropertyForm::SnippetPropertyForm( wxWindow* parent, int id, wxString tit
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_SnippetButton = new wxButton( this, ID_SNIPPETBUTTON, wxT("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SnippetButton = new wxButton( this, ID_SNIPPETBUTTON, wxT_2("Edit"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer5->Add( m_SnippetButton, 0, wxALL, 5 );
 
-	m_FileSelectButton = new wxButton( this, ID_FILESELECTBUTTON, wxT("Link target"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_FileSelectButton = new wxButton( this, ID_FILESELECTBUTTON, wxT_2("Link target"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer5->Add( m_FileSelectButton, 0, wxALL, 5 );
 
 	fgSizer->Add( bSizer5, 1, wxEXPAND, 5 );

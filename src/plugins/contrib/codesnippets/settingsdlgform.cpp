@@ -29,7 +29,7 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText = new wxStaticText( this, ID_DEFAULT, wxT("User Settings"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+	m_staticText = new wxStaticText( this, ID_DEFAULT, wxT_2("User Settings"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
 	bSizer1->Add( m_staticText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 5 );
 
 	bSizer->Add( bSizer1, 0, wxEXPAND, 5 );
@@ -40,13 +40,13 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	fgSizer->SetFlexibleDirection( wxHORIZONTAL );
 	fgSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	m_staticText1 = new wxStaticText( this, ID_DEFAULT, wxT("External Editor"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
+	m_staticText1 = new wxStaticText( this, ID_DEFAULT, wxT_2("External Editor"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
 	fgSizer->Add( m_staticText1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_ExtEditorTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer->Add( m_ExtEditorTextCtrl, 1, wxALL|wxEXPAND, 5 );
 
-	m_ExtEditorButton = new wxButton( this, ID_EXTEDITORBUTTON, wxT(",,,"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
+	m_ExtEditorButton = new wxButton( this, ID_EXTEDITORBUTTON, wxT_2(",,,"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
 	fgSizer->Add( m_ExtEditorButton, 0, wxALIGN_RIGHT|wxALL|wxSHAPED, 5 );
 
 	bSizer->Add( fgSizer, 0, wxEXPAND, 5 );
@@ -57,13 +57,13 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	fgSizer1->SetFlexibleDirection( wxHORIZONTAL );
 	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	m_staticText2 = new wxStaticText( this, ID_DEFAULT, wxT("Snippet Folder"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
+	m_staticText2 = new wxStaticText( this, ID_DEFAULT, wxT_2("Snippet Folder"), wxDefaultPosition, wxDefaultSize, wxALIGN_LEFT );
 	fgSizer1->Add( m_staticText2, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_SnippetFileTextCtrl = new wxTextCtrl( this, ID_SNIPPETFILE, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer1->Add( m_SnippetFileTextCtrl, 1, wxALL|wxEXPAND, 5 );
 
-	m_SnippetFileButton = new wxButton( this, ID_SNIPPETFILEBUTTON, wxT("..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
+	m_SnippetFileButton = new wxButton( this, ID_SNIPPETFILEBUTTON, wxT_2("..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
 	fgSizer1->Add( m_SnippetFileButton, 0, wxALIGN_RIGHT|wxALL|wxSHAPED, 5 );
 
 	bSizer->Add( fgSizer1, 0, wxEXPAND, 5 );
@@ -71,16 +71,16 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	wxBoxSizer* bSizer10;
 	bSizer10 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT("Window Type"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT_2("Window Type"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer10->Add( m_staticText7, 0, wxALL, 5 );
 
-	m_RadioFloatBtn = new wxRadioButton( this, wxID_ANY, wxT("Floating"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_RadioFloatBtn = new wxRadioButton( this, wxID_ANY, wxT_2("Floating"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
 	bSizer10->Add( m_RadioFloatBtn, 4, wxALL, 5 );
 
-	m_RadioDockBtn = new wxRadioButton( this, wxID_ANY, wxT("Docked"), wxDefaultPosition, wxDefaultSize, 0);
+	m_RadioDockBtn = new wxRadioButton( this, wxID_ANY, wxT_2("Docked"), wxDefaultPosition, wxDefaultSize, 0);
 	bSizer10->Add( m_RadioDockBtn, 4, wxALL, 5 );
 
-	m_RadioExternalBtn = new wxRadioButton( this, wxID_ANY, wxT("External"), wxDefaultPosition, wxDefaultSize, 0);
+	m_RadioExternalBtn = new wxRadioButton( this, wxID_ANY, wxT_2("External"), wxDefaultPosition, wxDefaultSize, 0);
 	bSizer10->Add( m_RadioExternalBtn, 4, wxALL, 5 );
 
 	bSizer10->Add( 0, 0, 1, wxEXPAND, 0 );
@@ -98,7 +98,7 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("Adaptive Mouse Speed Sensitivity"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT_2("Adaptive Mouse Speed Sensitivity"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_staticText4, 0, wxALIGN_CENTER|wxALL, 5 );
 
 	wxBoxSizer* bSizer7;
@@ -118,7 +118,7 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("Mouse_Movement_to_Scroll_Ratio"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT_2("Mouse_Movement_to_Scroll_Ratio"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer3->Add( m_staticText5, 0, wxALIGN_CENTER|wxALL, 5 );
 
 	wxBoxSizer* bSizer13;
@@ -138,7 +138,7 @@ SettingsDlgForm::SettingsDlgForm( wxWindow* parent, int id, wxString title, wxPo
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT("Context Menu Delay (millisec)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT_2("Context Menu Delay (millisec)"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer4->Add( m_staticText6, 0, wxALIGN_CENTER|wxALL, 5 );
 
 	wxBoxSizer* bSizer14;

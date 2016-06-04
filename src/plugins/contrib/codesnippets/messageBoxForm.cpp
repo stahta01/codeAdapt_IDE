@@ -38,13 +38,13 @@ messageBoxForm::messageBoxForm( wxWindow* parent, int id, wxString title,
                     : wxDialog( parent, id, title, pos, size, dlgStyle )
 {
 	wxStaticBoxSizer* sbSizer;
-	sbSizer = new wxStaticBoxSizer( new wxStaticBox( this, -1, wxT("") ), wxVERTICAL );
+	sbSizer = new wxStaticBoxSizer( new wxStaticBox( this, -1, wxT_2("") ), wxVERTICAL );
 
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer( wxHORIZONTAL );
 
-	//m_messageBoxTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT("messageBox Text Ctrl"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_MULTILINE|wxTE_READONLY|wxNO_BORDER );
-	m_messageBoxTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT("messageBox Text Ctrl"), wxDefaultPosition, wxDefaultSize, txtStyle );
+	//m_messageBoxTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT_2("messageBox Text Ctrl"), wxDefaultPosition, wxDefaultSize, wxTE_CENTRE|wxTE_MULTILINE|wxTE_READONLY|wxNO_BORDER );
+	m_messageBoxTextCtrl = new wxTextCtrl( this, ID_DEFAULT, wxT_2("messageBox Text Ctrl"), wxDefaultPosition, wxDefaultSize, txtStyle );
 	bSizer1->Add( m_messageBoxTextCtrl, 1, wxALIGN_CENTER|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 
 	//m_staticline = new wxStaticLine( this, ID_DEFAULT, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );

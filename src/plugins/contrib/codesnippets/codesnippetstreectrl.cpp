@@ -72,7 +72,7 @@ CodeSnippetsTreeCtrl::CodeSnippetsTreeCtrl(wxWindow *parent, const wxWindowID id
                                 const wxPoint& pos, const wxSize& size, long style)
 // ----------------------------------------------------------------------------
 	//-: wxTreeCtrl(parent, id, pos, size, style)
-	: wxTreeCtrl(parent, id, pos, size, style, wxDefaultValidator, wxT("csTreeCtrl"))
+	: wxTreeCtrl(parent, id, pos, size, style, wxDefaultValidator, wxT_2("csTreeCtrl"))
 {
     m_fileChanged = false;
     m_bMouseLeftWindow = false;
@@ -107,7 +107,7 @@ bool CodeSnippetsTreeCtrl::IsFileSnippet (wxTreeItemId treeItemId  )
     // substitute $macros with actual text
     #if defined(BUILDING_PLUGIN)
         Manager::Get()->GetMacrosManager()->ReplaceMacros(fileName);
-        //-LOGIT( _T("$macros name[%s]"),fileName.c_str() );
+        //-LOGIT( wxT_2("$macros name[%s]"),fileName.c_str() );
     #endif
     if ( not ::wxFileExists( fileName) ) return false;
     return true;
@@ -125,7 +125,7 @@ bool CodeSnippetsTreeCtrl::IsFileLinkSnippet (wxTreeItemId treeItemId  )
     // substitute $macros with actual text
     #if defined(BUILDING_PLUGIN)
         Manager::Get()->GetMacrosManager()->ReplaceMacros(fileName);
-        //-LOGIT( _T("$macros name[%s]"),fileName.c_str() );
+        //-LOGIT( wxT_2("$macros name[%s]"),fileName.c_str() );
     #endif
     if (fileName.Length() > 128)
     {   // if text is > 128 characters, not a filelink.
@@ -139,19 +139,19 @@ bool CodeSnippetsTreeCtrl::IsFileLinkSnippet (wxTreeItemId treeItemId  )
 wxString CodeSnippetsTreeCtrl::GetFileLinkExt (wxTreeItemId treeItemId  )
 // ----------------------------------------------------------------------------
 {
-    if ( not IsFileLinkSnippet(treeItemId) ) return wxT("");
+    if ( not IsFileLinkSnippet(treeItemId) ) return wxT_2("");
     wxTreeItemId itemId = treeItemId;
     if ( itemId == (void*)0) itemId = GetSelection();
-    if (not itemId.IsOk()) return wxT("");
-    if (not IsSnippet(itemId) ) return wxT("");
+    if (not itemId.IsOk()) return wxT_2("");
+    if (not IsSnippet(itemId) ) return wxT_2("");
     wxString fileName = GetSnippet(itemId).BeforeFirst('\r');
     fileName = fileName.BeforeFirst('\n');
     // substitute $macros with actual text
     #if defined(BUILDING_PLUGIN)
         Manager::Get()->GetMacrosManager()->ReplaceMacros(fileName);
-        //-LOGIT( _T("$macros name[%s]"),fileName.c_str() );
+        //-LOGIT( wxT_2("$macros name[%s]"),fileName.c_str() );
     #endif
-    if ( not ::wxFileExists( fileName) ) return wxT("");
+    if ( not ::wxFileExists( fileName) ) return wxT_2("");
     wxFileName filename(fileName);
     return filename.GetExt();
 }
@@ -460,7 +460,7 @@ void CodeSnippetsTreeCtrl::LoadItemsFromXmlNode(const TiXmlElement* node, const 
 		const wxString itemType(csC2U(node->Attribute("type")));
 
 		// Check the item type
-		if (itemType == _T("category"))
+		if (itemType == wxT_2("category"))
 		{
 			// Add new category
 			wxTreeItemId newCategoryId = AddCategory(parentID, itemName, false);
@@ -471,7 +471,7 @@ void CodeSnippetsTreeCtrl::LoadItemsFromXmlNode(const TiXmlElement* node, const 
 				LoadItemsFromXmlNode(node->FirstChildElement(), newCategoryId);
 			}
 		}
-		else if (itemType == _T("snippet"))
+		else if (itemType == wxT_2("snippet"))
 		{
 			// Get the snippet
 			if (const TiXmlElement* snippetElement = node->FirstChildElement("snippet"))
@@ -491,12 +491,12 @@ void CodeSnippetsTreeCtrl::LoadItemsFromXmlNode(const TiXmlElement* node, const 
 			}
 			else
 			{
-				messageBox(_T("CodeSnippets: Error loading XML file; element \"snippet\" cannot be found."));
+				messageBox(wxT_2("CodeSnippets: Error loading XML file; element \"snippet\" cannot be found."));
 			}
 		}
 		else
 		{
-		    messageBox(_T("CodeSnippets: Error loading XML file; attribute \"type\" is \"") + itemType + _T("\" which is invalid item type."));
+		    messageBox(wxT_2("CodeSnippets: Error loading XML file; attribute \"type\" is \"") + itemType + wxT_2("\" which is invalid item type."));
 			return;
 		}
 	} // end for
@@ -526,7 +526,7 @@ void CodeSnippetsTreeCtrl::SaveItemsToFile(const wxString& fileName)
 	SaveFileModificationTime();
 
     #ifdef LOGGING
-     LOGIT( _T("File saved:[%s]"),fileName.c_str() );
+     LOGIT( wxT_2("File saved:[%s]"),fileName.c_str() );
     #endif //LOGGING
 }
 
@@ -563,18 +563,18 @@ bool CodeSnippetsTreeCtrl::LoadItemsFromFile(const wxString& fileName, bool bApp
 		    retcode = false;
 			// Create a backup copy of the offending file
 			wxString backupFile = fileName;
-			backupFile.Append(_T(".bak"));
+			backupFile.Append(wxT_2(".bak"));
 
 			// Overwrite it
 			wxCopyFile(fileName, backupFile, true);
            #if defined(BUILDING_PLUGIN)
-			Manager::Get()->GetLogManager()->DebugLog(_T("CodeSnippets: Cannot load file \"") + fileName + _T("\": ") + csC2U(doc.ErrorDesc()));
-			Manager::Get()->GetLogManager()->DebugLog(_T("CodeSnippets: Backup of the failed file has been created."));
+			Manager::Get()->GetLogManager()->DebugLog(wxT_2("CodeSnippets: Cannot load file \"") + fileName + wxT_2("\": ") + csC2U(doc.ErrorDesc()));
+			Manager::Get()->GetLogManager()->DebugLog(wxT_2("CodeSnippets: Backup of the failed file has been created."));
 		   #else
-            //-wxMessageBox(_T("CodeSnippets: Cannot load file \"") + fileName + _T("\": ") + csC2U(doc.ErrorDesc()));
-            messageBox(_T("CodeSnippets: Cannot load file \"") + fileName + _T("\": ") + csC2U(doc.ErrorDesc()));
-   			//-wxMessageBox(_T("CodeSnippets: Backup of the failed file has been created."));
-   			messageBox(_T("CodeSnippets: Backup of the failed file has been created."));
+            //-wxMessageBox(wxT_2("CodeSnippets: Cannot load file \"") + fileName + wxT_2("\": ") + csC2U(doc.ErrorDesc()));
+            messageBox(wxT_2("CodeSnippets: Cannot load file \"") + fileName + wxT_2("\": ") + csC2U(doc.ErrorDesc()));
+   			//-wxMessageBox(wxT_2("CodeSnippets: Backup of the failed file has been created."));
+   			messageBox(wxT_2("CodeSnippets: Backup of the failed file has been created."));
 		   #endif
 		}
 	}
@@ -661,7 +661,7 @@ bool CodeSnippetsTreeCtrl::RemoveItem(const wxTreeItemId RemoveItemId)
 
     // delete unused items directly (don't ".trash" them)
     bool canceledItem = false;
-    if ( itemText.IsSameAs(wxT("New category")) || itemText.IsSameAs(wxT("New snippet")) )
+    if ( itemText.IsSameAs(wxT_2("New category")) || itemText.IsSameAs(wxT_2("New snippet")) )
     {
         canceledItem = true;
         shiftKeyIsDown = true;
@@ -672,9 +672,9 @@ bool CodeSnippetsTreeCtrl::RemoveItem(const wxTreeItemId RemoveItemId)
     if (not shiftKeyIsDown)
     {
         // put deleted items in .trash category
-        wxTreeItemId trashId = FindItemByLabel(wxT(".trash"), GetRootItem(), CodeSnippetsConfig::SCOPE_CATEGORIES);
+        wxTreeItemId trashId = FindItemByLabel(wxT_2(".trash"), GetRootItem(), CodeSnippetsConfig::SCOPE_CATEGORIES);
         if ( trashId==(void*)0 )
-            trashId = AddCategory(GetRootItem(), wxT(".trash"), false);
+            trashId = AddCategory(GetRootItem(), wxT_2(".trash"), false);
 
         // if item is NOT already in the trash, copy item to .trash category
         if (not ( FindItemById( itemId, trashId, pItemData->GetType()) ))
@@ -700,8 +700,8 @@ bool CodeSnippetsTreeCtrl::RemoveItem(const wxTreeItemId RemoveItemId)
 
         // if this was a FileLink, ask if user wants to delete file
         if ( not filename.IsEmpty() ) {
-            int answer = messageBox( wxT("Delete physical file?\n\n")+filename,
-                                                    wxT("Delete"),wxYES_NO );
+            int answer = messageBox( wxT_2("Delete physical file?\n\n")+filename,
+                                                    wxT_2("Delete"),wxYES_NO );
             if ( answer == wxYES)
                 /*int done =*/ ::wxRemoveFile(filename);
         }
@@ -751,11 +751,11 @@ void CodeSnippetsTreeCtrl::OnBeginTreeItemDrag(wxTreeEvent& event)
     CodeSnippetsTreeCtrl* pTree = (CodeSnippetsTreeCtrl*)event.GetEventObject();
 
     //#ifdef LOGGING
-    //	 LOGIT( wxT("ScrapList::OnTreeCtrlEvent %p"), pTree );
+    //	 LOGIT( wxT_2("ScrapList::OnTreeCtrlEvent %p"), pTree );
     //#endif //LOGGING
 
     #ifdef LOGGING
-     LOGIT( _T("TREE_CTRL_BEGIN_DRAG %p"), pTree );
+     LOGIT( wxT_2("TREE_CTRL_BEGIN_DRAG %p"), pTree );
     #endif //LOGGING
     // On MSW the current selection may not be the same as the current itemId
     // If the user just clicks and drags, the two are different
@@ -771,7 +771,7 @@ void CodeSnippetsTreeCtrl::OnBeginTreeItemDrag(wxTreeEvent& event)
         m_TreeText = GetSnippetLabel(m_TreeItemId);
     if (m_TreeText.IsEmpty())
         m_pEvtTreeCtrlBeginDrag = 0;
-     //LOGIT( _T("TREE_CTRL_BEGIN_DRAG TreeText[%s]"), m_TreeText.GetData() );
+     //LOGIT( wxT_2("TREE_CTRL_BEGIN_DRAG TreeText[%s]"), m_TreeText.GetData() );
     event.Allow();
 
     // -----------------------------------------
@@ -792,7 +792,7 @@ void CodeSnippetsTreeCtrl::OnEndTreeItemDrag(wxTreeEvent& event)
 
     #ifdef LOGGING
      wxTreeCtrl* pTree = (wxTreeCtrl*)event.GetEventObject();
-     LOGIT( _T("TREE_CTRL_END_DRAG %p"), pTree );
+     LOGIT( wxT_2("TREE_CTRL_END_DRAG %p"), pTree );
     #endif //LOGGING
 
     wxTreeItemId targetItem = (wxTreeItemId)event.GetItem();
@@ -887,7 +887,7 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
     // in the destination window.
 
     #ifdef LOGGING
-     //LOGIT( _T("MOUSE EVT_LEAVE_WINDOW") );
+     //LOGIT( wxT_2("MOUSE EVT_LEAVE_WINDOW") );
     #endif //LOGGING
 
     // Left mouse key must be down (dragging)
@@ -897,7 +897,7 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
     if (not m_pEvtTreeCtrlBeginDrag) {event.Skip(); return;}
 
     #ifdef LOGGING
-     LOGIT( _T("LEAVE_WINDOW %p"), event.GetEventObject() );
+     LOGIT( wxT_2("LEAVE_WINDOW %p"), event.GetEventObject() );
     #endif //LOGGING
 
     // when user drags an item out of the window, this routine is called
@@ -912,7 +912,7 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
     #if defined(BUILDING_PLUGIN)
         // substitute any $(macro) text
         Manager::Get()->GetMacrosManager()->ReplaceMacros(textStr);
-        //-LOGIT( _T("SnippetsTreeCtrl OnLeaveWindow $macros text[%s]"),textStr.c_str() );
+        //-LOGIT( wxT_2("SnippetsTreeCtrl OnLeaveWindow $macros text[%s]"),textStr.c_str() );
     #endif
     wxDropSource textSource( *textData, (wxWindow*)event.GetEventObject() );
     textData->SetText( textStr );
@@ -929,7 +929,7 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
     wxDropSource source( *data, (wxWindow*)event.GetEventObject()  );
 
     #ifdef LOGGING
-     LOGIT( _T("DropSource Text[%s],File[%s]"),
+     LOGIT( wxT_2("DropSource Text[%s],File[%s]"),
                 textData->GetText().GetData(),
                 fileData->GetFilenames().Item(0).GetData() );
     #endif //LOGGING
@@ -943,14 +943,14 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
         wxString pc;
         switch ( result )
         {
-            case wxDragError:   pc = _T("Error!");    break;
-            case wxDragNone:    pc = _T("Nothing");   break;
-            case wxDragCopy:    pc = _T("Copied");    break;
-            case wxDragMove:    pc = _T("Moved");     break;
-            case wxDragCancel:  pc = _T("Cancelled"); break;
-            default:            pc = _T("Huh?");      break;
+            case wxDragError:   pc = wxT_2("Error!");    break;
+            case wxDragNone:    pc = wxT_2("Nothing");   break;
+            case wxDragCopy:    pc = wxT_2("Copied");    break;
+            case wxDragMove:    pc = wxT_2("Moved");     break;
+            case wxDragCancel:  pc = wxT_2("Cancelled"); break;
+            default:            pc = wxT_2("Huh?");      break;
         }
-        LOGIT( wxT("ScrapList::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
+        LOGIT( wxT_2("ScrapList::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
     #else
         wxUnusedVar(result);
     #endif
@@ -968,7 +968,7 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
     {
         //send Mouse LeftKeyUp to Tree Control window
         #ifdef LOGGING
-         //LOGIT( _T("Sending Mouse LeftKeyUp") );
+         //LOGIT( wxT_2("Sending Mouse LeftKeyUp") );
         #endif //LOGGING
 
         // move mouse into the Tree control
@@ -997,8 +997,8 @@ void CodeSnippetsTreeCtrl::OnLeaveWindow(wxMouseEvent& event)
         GdkDisplay* display = gdk_display_get_default ();
         int xx=0,yy=0;
         GdkWindow* pGdkWindow = gdk_display_get_window_at_pointer( display, &xx, &yy);
-        // LOGIT(wxT("Tree[%p][%d %d]"), m_pEvtTreeCtrlBeginDrag,m_TreeMousePosn.x, m_TreeMousePosn.y);
-        // LOGIT(wxT("gdk [%p][%d %d]"), pWindow, xx, yy);
+        // LOGIT(wxT_2("Tree[%p][%d %d]"), m_pEvtTreeCtrlBeginDrag,m_TreeMousePosn.x, m_TreeMousePosn.y);
+        // LOGIT(wxT_2("gdk [%p][%d %d]"), pWindow, xx, yy);
         GdkEventButton evb;
         memset(&evb, 0, sizeof(evb));
         evb.type = GDK_BUTTON_RELEASE;
@@ -1037,7 +1037,7 @@ void CodeSnippetsTreeCtrl::OnMouseEvent(wxMouseEvent& event)
     // memorize position of the mouse ctrl key as copy/delete flag
     m_MouseCtrlKeyDown = event.ControlDown();
     #ifdef LOGGING
-     //LOGIT(wxT("MouseCtrlKeyDown[%s]"), m_MouseCtrlKeyDown?wxT("Down"):wxT("UP") );
+     //LOGIT(wxT_2("MouseCtrlKeyDown[%s]"), m_MouseCtrlKeyDown?wxT_2("Down"):wxT_2("UP") );
     #endif
     event.Skip();
 
@@ -1178,7 +1178,7 @@ void CodeSnippetsTreeCtrl::CopySnippetsToXmlDoc(TiXmlNode* Node, const wxTreeIte
             snippetElement.InsertEndChild(snippetElementText);
 			element.InsertEndChild(snippetElement);
 			//#ifdef LOGGING
-			// LOGIT( _T("Snippet[%s]"), data->GetSnippet().GetData() );
+			// LOGIT( wxT_2("Snippet[%s]"), data->GetSnippet().GetData() );
 			//#endif //LOGGING
 		}
 
@@ -1222,7 +1222,7 @@ void CodeSnippetsTreeCtrl::EditSnippetAsFileLink()
     // Else just open a temp file with the snippet text as data.
 
     #if defined(LOGGING)
-    LOGIT( _T("EditSnippetAsFileLink[%s]"),wxT("") );
+    LOGIT( wxT_2("EditSnippetAsFileLink[%s]"),wxT_2("") );
     #endif
 
     if (not IsSnippet() ) return;
@@ -1231,7 +1231,7 @@ void CodeSnippetsTreeCtrl::EditSnippetAsFileLink()
 	wxTreeItemId itemId = GetAssociatedItemID();
 	SnippetItemData* pSnippetItemData = (SnippetItemData*)GetItemData(GetAssociatedItemID());
 	wxString FileName = GetSnippetFileLink( itemId );
-    LOGIT( _T("EditSnippetsAsFileLlink()FileName[%s]"),FileName.c_str() );
+    LOGIT( wxT_2("EditSnippetsAsFileLlink()FileName[%s]"),FileName.c_str() );
 
     if (FileName.Length() > 128)
     {   // if text is > 128 characters, open a temp file with snippet text as data.
@@ -1251,7 +1251,7 @@ void CodeSnippetsTreeCtrl::EditSnippetAsFileLink()
     // we have an actual file link, not just text.
     // use user specified editor, else hard coded pgms.
     wxString pgmName = GetConfig()->SettingsExternalEditor;
-    LOGIT( _T("PgmName[%s]"),pgmName.c_str() );
+    LOGIT( wxT_2("PgmName[%s]"),pgmName.c_str() );
 
     // Do: if external pgm name is blank, or file link doesn't exists
     // must be text only
@@ -1264,9 +1264,9 @@ void CodeSnippetsTreeCtrl::EditSnippetAsFileLink()
     // edit file link with user settings external program.
     // file name must be surrounded with quotes when using wxExecute
     if ( ::wxFileExists(pgmName) )
-    {   wxString execString = pgmName + wxT(" \"") + FileName + wxT("\"");
+    {   wxString execString = pgmName + wxT_2(" \"") + FileName + wxT_2("\"");
         #ifdef LOGGING
-        LOGIT( _T("OpenAsFileLink[%s]"), execString.GetData() );
+        LOGIT( wxT_2("OpenAsFileLink[%s]"), execString.GetData() );
         #endif //LOGGING
         ::wxExecute( execString);
     }
@@ -1284,7 +1284,7 @@ void CodeSnippetsTreeCtrl::OpenSnippetAsFileLink()
 	// If snippet is file, open it
 	wxTreeItemId itemId = GetAssociatedItemID();
 	wxString FileName = GetSnippetFileLink( itemId );
-    LOGIT( _T("OpenSnippetsAsFileLlink()FileName[%s]"),FileName.c_str() );
+    LOGIT( wxT_2("OpenSnippetsAsFileLlink()FileName[%s]"),FileName.c_str() );
 
     if (FileName.Length() > 128)
     {   // if text is > 128 characters, open a temp file with snippet text as data.
@@ -1303,7 +1303,7 @@ void CodeSnippetsTreeCtrl::EditSnippetAsText()
 {
 
     #if defined(LOGGING)
-    LOGIT( _T("EditSnippetAsText[%s]"),wxT("") );
+    LOGIT( wxT_2("EditSnippetAsText[%s]"),wxT_2("") );
     #endif
 	SnippetItemData* pSnippetItemData = (SnippetItemData*)GetItemData(GetAssociatedItemID());
 
@@ -1318,14 +1318,14 @@ void CodeSnippetsTreeCtrl::EditSnippetAsText()
     if ( editorName.IsEmpty() || (not ::wxFileExists(editorName)) )
     {
         #if defined(__WXMSW__)
-                editorName = wxT("notepad");
+                editorName = wxT_2("notepad");
         #elif defined(__UNIX__)
-                editorName = wxT("vi");
+                editorName = wxT_2("vi");
         #endif
-        wxString msg(wxT("Using default editor: ")+editorName+wxT("\n"));
-        if (GetConfig()->IsApplication() ) msg = msg + wxT("Use Menu->");
-        else msg = msg + wxT("Right click Root item. Use ");
-        msg = msg + wxT("Settings to set a better editor.\n");
+        wxString msg(wxT_2("Using default editor: ")+editorName+wxT_2("\n"));
+        if (GetConfig()->IsApplication() ) msg = msg + wxT_2("Use Menu->");
+        else msg = msg + wxT_2("Right click Root item. Use ");
+        msg = msg + wxT_2("Settings to set a better editor.\n");
         messageBox( msg );
     }
 
@@ -1339,7 +1339,7 @@ void CodeSnippetsTreeCtrl::EditSnippetAsText()
     wxFile tmpFile( tmpFileName.GetFullPath(), wxFile::write);
     if (not tmpFile.IsOpened() )
     {
-        messageBox(wxT("Open failed for:")+tmpFileName.GetFullPath());
+        messageBox(wxT_2("Open failed for:")+tmpFileName.GetFullPath());
         return ;
     }
     wxString snippetData( GetSnippet() );
@@ -1347,10 +1347,10 @@ void CodeSnippetsTreeCtrl::EditSnippetAsText()
     tmpFile.Close();
         // Invoke the external editor on the temporary file
         // file name must be surrounded with quotes when using wxExecute
-    wxString execString = editorName + wxT(" \"") + tmpFileName.GetFullPath() + wxT("\"");
+    wxString execString = editorName + wxT_2(" \"") + tmpFileName.GetFullPath() + wxT_2("\"");
 
     #ifdef LOGGING
-     LOGIT( _T("Properties wxExecute[%s]"), execString.GetData() );
+     LOGIT( wxT_2("Properties wxExecute[%s]"), execString.GetData() );
     #endif //LOGGING
 
         // Invoke the external editor and wait for its termination
@@ -1358,32 +1358,32 @@ void CodeSnippetsTreeCtrl::EditSnippetAsText()
         // Read the edited data back into the snippet text
     tmpFile.Open(tmpFileName.GetFullPath(), wxFile::read);
     if (not tmpFile.IsOpened() )
-    {   messageBox(wxT("Abort.Error reading temp data file."));
+    {   messageBox(wxT_2("Abort.Error reading temp data file."));
         return;
     }
     unsigned long fileSize = tmpFile.Length();
 
     #ifdef LOGGING
-     LOGIT( _T("New file size[%d]"),fileSize );
+     LOGIT( wxT_2("New file size[%d]"),fileSize );
     #endif //LOGGING
 
     // check the data for validity
     char pBuf[fileSize+1];
     size_t nResult = tmpFile.Read( pBuf, fileSize );
     if ( wxInvalidOffset == (int)nResult )
-        messageBox(wxT("Error reading temp file"));
+        messageBox(wxT_2("Error reading temp file"));
     pBuf[fileSize] = 0;
     tmpFile.Close();
 
     #ifdef LOGGING
-      //LOGIT( _T("pBuf[%s]"), pBuf );
+      //LOGIT( wxT_2("pBuf[%s]"), pBuf );
     #endif //LOGGING
 
         // convert data back to internal format
     snippetData = csC2U( pBuf );
 
      #ifdef LOGGING
-      //LOGIT( _T("snippetData[%s]"), snippetData.GetData() );
+      //LOGIT( wxT_2("snippetData[%s]"), snippetData.GetData() );
      #endif //LOGGING
 
         // delete the temporary file
@@ -1416,14 +1416,14 @@ void CodeSnippetsTreeCtrl::SaveSnippetAsFileLink()
     if ( ::wxFileExists( fileName ) )
     {   // item snippet is already a filename
         answer = messageBox(
-            wxT("Item is already a file link named:\n")+fileName
-                + wxT(" \n\nAre you sure you want to rewrite the file?\n"),
-            wxT("Warning"),wxYES|wxNO); //, GetMainFrame(), mousePosn.x, mousePosn.y);
+            wxT_2("Item is already a file link named:\n")+fileName
+                + wxT_2(" \n\nAre you sure you want to rewrite the file?\n"),
+            wxT_2("Warning"),wxYES|wxNO); //, GetMainFrame(), mousePosn.x, mousePosn.y);
         if ( wxYES == answer)
         {   // read data from old file
             wxFile oldFile( fileName, wxFile::read);
             if (not oldFile.IsOpened() )
-            {   messageBox(wxT("Abort.Error reading data file."));
+            {   messageBox(wxT_2("Abort.Error reading data file."));
                 return;
             }
             unsigned long fileSize = oldFile.Length();
@@ -1438,20 +1438,20 @@ void CodeSnippetsTreeCtrl::SaveSnippetAsFileLink()
     if ( wxNO == answer ) return;
 
     // filter filename, removing all illegal filename characters
-    wxString newFileName = snippetLabel+wxT(".txt");
+    wxString newFileName = snippetLabel+wxT_2(".txt");
     wxFileName snippetFileName( newFileName) ;
     #if defined(BUILDING_PLUGIN)
         // substitute any $(macro) text
         Manager::Get()->GetMacrosManager()->ReplaceMacros(newFileName);
-        //-LOGIT( _T("$macros substitute[%s]"),newFileName.c_str() );
+        //-LOGIT( wxT_2("$macros substitute[%s]"),newFileName.c_str() );
     #endif
 
     //newFileName = snippetFileName.GetFullName();
     wxString forbidden = snippetFileName.GetForbiddenChars();
     for (size_t i=0; i < forbidden.Length(); ++i)
-        newFileName.Replace( wxString(forbidden[i]), wxT(""),true);
+        newFileName.Replace( wxString(forbidden[i]), wxT_2(""),true);
         //#ifdef LOGGING
-        // LOGIT( _T("forbidden[%s],filename[%s]"), forbidden.GetData(),newFileName.GetData());
+        // LOGIT( wxT_2("forbidden[%s],filename[%s]"), forbidden.GetData(),newFileName.GetData());
         //#endif //LOGGING
 
     // Ask user for filename
@@ -1459,7 +1459,7 @@ void CodeSnippetsTreeCtrl::SaveSnippetAsFileLink()
                  _("Save as text file"),                //message
                  GetConfig()->SettingsSnippetsFolder,   //default directory
                  newFileName,                           //default file
-                 wxT("*.*"),                            //wildcards
+                 wxT_2("*.*"),                            //wildcards
                  wxFD_SAVE | wxFD_OVERWRITE_PROMPT);          //style
     // move dialog into the parents frame space
     wxPoint mousePosn = ::wxGetMousePosition();
@@ -1469,7 +1469,7 @@ void CodeSnippetsTreeCtrl::SaveSnippetAsFileLink()
     newFileName = dlg.GetPath();
 
     #ifdef LOGGING
-     LOGIT( _T("New filename[%s]"), newFileName.GetData() );
+     LOGIT( wxT_2("New filename[%s]"), newFileName.GetData() );
     #endif //LOGGING;
 
     if ( newFileName.IsEmpty() ) return;
@@ -1477,7 +1477,7 @@ void CodeSnippetsTreeCtrl::SaveSnippetAsFileLink()
     wxFile newFile( newFileName, wxFile::write);
     if (not newFile.IsOpened() )
     {
-        messageBox(wxT("Open failed for:")+newFileName);
+        messageBox(wxT_2("Open failed for:")+newFileName);
         return ;
     }
     newFile.Write( csU2C(snippetData), snippetData.Length());
@@ -1572,18 +1572,18 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
     wxString snippetLabel = GetSnippetLabel();
     wxString snippetData = GetSnippet();
     wxString fileName = GetSnippetFileLink();
-    LOGIT( _T("EditSnippetWithMime[%s]"), fileName.c_str() );
+    LOGIT( wxT_2("EditSnippetWithMime[%s]"), fileName.c_str() );
     if ( fileName.IsEmpty() ) return;
 
     wxFileName file(fileName);
     wxString fileExt = file.GetExt();
 
     // MIME search fails on a url. Do it brute force
-    if (   ( fileName.StartsWith(wxT("http://")) )
-        || ( fileName.StartsWith(wxT("file://")) )
-        || ( fileName.StartsWith(wxT("ftp://")) )
-        || ( fileExt == wxT("html") )
-        || ( fileExt == wxT("htm") )
+    if (   ( fileName.StartsWith(wxT_2("http://")) )
+        || ( fileName.StartsWith(wxT_2("file://")) )
+        || ( fileName.StartsWith(wxT_2("ftp://")) )
+        || ( fileExt == wxT_2("html") )
+        || ( fileExt == wxT_2("htm") )
        )
     {   wxLaunchDefaultBrowser( fileName);
         return;
@@ -1595,7 +1595,7 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
     ::wxSplitPath( fileName, /*path*/0, /*name*/0, &fileNameExt);
     if ( fileNameExt.IsEmpty() ) return;
 
-    wxString s_defaultExt = _T("xyz");
+    wxString s_defaultExt = wxT_2("xyz");
     wxString msg;
 
     if ( !!fileNameExt )
@@ -1611,16 +1611,16 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
 
             ////static const wxFileTypeInfo fallbacks[] =
             ////{
-            ////    wxFileTypeInfo(_T("application/xyz"),
-            ////                   _T("XyZ %s"),
-            ////                   _T("XyZ -p %s"),
-            ////                   _T("The one and only XYZ format file"),
-            ////                   _T("xyz"), _T("123"), NULL),
-            ////    wxFileTypeInfo(_T("text/html"),
-            ////                   _T("lynx %s"),
-            ////                   _T("lynx -dump %s | lpr"),
-            ////                   _T("HTML document (from fallback)"),
-            ////                   _T("htm"), _T("html"), NULL),
+            ////    wxFileTypeInfo(wxT_2("application/xyz"),
+            ////                   wxT_2("XyZ %s"),
+            ////                   wxT_2("XyZ -p %s"),
+            ////                   wxT_2("The one and only XYZ format file"),
+            ////                   wxT_2("xyz"), wxT_2("123"), NULL),
+            ////    wxFileTypeInfo(wxT_2("text/html"),
+            ////                   wxT_2("lynx %s"),
+            ////                   wxT_2("lynx -dump %s | lpr"),
+            ////                   wxT_2("HTML document (from fallback)"),
+            ////                   wxT_2("htm"), wxT_2("html"), NULL),
             ////
             ////    // must terminate the table with this!
             ////    wxFileTypeInfo()
@@ -1632,7 +1632,7 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
         wxFileType *filetype = m_mimeDatabase->GetFileTypeFromExtension(fileNameExt);
         if ( !filetype )
         {
-            msg << _T("Unknown extension '") << fileNameExt << _T("'\n");
+            msg << wxT_2("Unknown extension '") << fileNameExt << wxT_2("'\n");
         }
         else
         {
@@ -1640,20 +1640,20 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
             filetype->GetMimeType(&type);
             filetype->GetDescription(&desc);
 
-            //wxString filename = _T("filename");
+            //wxString filename = wxT_2("filename");
             wxString filename = fileName;
-            //filename << _T(".") << fileNameExt;
+            //filename << wxT_2(".") << fileNameExt;
             wxFileType::MessageParameters params(filename, type);
             filetype->GetOpenCommand(&open, params);
 
            #if LOGGING
-            msg << _T("MIME information about extension '") << fileNameExt << _T('\n')
-                     << _T("\tMIME type: ") << ( !type ? wxT("unknown")
-                                                   : type.c_str() ) << _T('\n')
-                     << _T("\tDescription: ") << ( !desc ? wxEmptyString : desc.c_str() )
-                        << _T('\n')
-                     << _T("\tCommand to open: ") << ( !open ? wxT("no") : open.c_str() )
-                        << _T('\n');
+            msg << wxT_2("MIME information about extension '") << fileNameExt << wxT_2('\n')
+                     << wxT_2("\tMIME type: ") << ( !type ? wxT_2("unknown")
+                                                   : type.c_str() ) << wxT_2('\n')
+                     << wxT_2("\tDescription: ") << ( !desc ? wxEmptyString : desc.c_str() )
+                        << wxT_2('\n')
+                     << wxT_2("\tCommand to open: ") << ( !open ? wxT_2("no") : open.c_str() )
+                        << wxT_2('\n');
            #endif
 
             delete filetype;
@@ -1662,7 +1662,7 @@ void CodeSnippetsTreeCtrl::EditSnippetWithMIME()
         }
     }
     #ifdef LOGGING
-        LOGIT( _T("EditSnippetWithMIME()[%s]"),msg.c_str() );
+        LOGIT( wxT_2("EditSnippetWithMIME()[%s]"),msg.c_str() );
     #endif //LOGGING
 
     // Do not use these when using global wxTheMimeTypesManager pointer

@@ -154,11 +154,11 @@ Edit::Edit (wxWindow *parent, wxWindowID id,
 
     m_SysWinBkgdColour = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW); //(pecan 2007/3/27)
 
-    m_filename = _T("");
+    m_filename = wxT_2("");
     m_language = NULL;
 
     m_LineNrID = 0;
-    m_LineNrMargin = TextWidth (wxSCI_STYLE_LINENUMBER, _T("_999999"));
+    m_LineNrMargin = TextWidth (wxSCI_STYLE_LINENUMBER, wxT_2("_999999"));
     m_FoldingID = 1;
     m_FoldingMargin = 16;
     m_DividerID = 2;
@@ -183,17 +183,17 @@ Edit::Edit (wxWindow *parent, wxWindowID id,
     wxFont font(8, wxMODERN, wxNORMAL, wxBOLD);
     StyleSetFont (wxSCI_STYLE_DEFAULT, font);
 
-    StyleSetForeground (wxSCI_STYLE_DEFAULT, wxColour (_T("BLACK")));
+    StyleSetForeground (wxSCI_STYLE_DEFAULT, wxColour (wxT_2("BLACK")));
 
-    //-StyleSetBackground (wxSCI_STYLE_DEFAULT, wxColour (_T("WHITE")));
+    //-StyleSetBackground (wxSCI_STYLE_DEFAULT, wxColour (wxT_2("WHITE")));
     StyleSetBackground (wxSCI_STYLE_DEFAULT, m_SysWinBkgdColour); //(pecan 2007/3/27)
 
-    StyleSetForeground (wxSCI_STYLE_LINENUMBER, wxColour (_T("DARK GREY")));
+    StyleSetForeground (wxSCI_STYLE_LINENUMBER, wxColour (wxT_2("DARK GREY")));
 
-    //-StyleSetBackground (wxSCI_STYLE_LINENUMBER, wxColour (_T("WHITE")));
+    //-StyleSetBackground (wxSCI_STYLE_LINENUMBER, wxColour (wxT_2("WHITE")));
     StyleSetBackground (wxSCI_STYLE_DEFAULT, m_SysWinBkgdColour); //(pecan 2007/3/27)
 
-    StyleSetForeground(wxSCI_STYLE_INDENTGUIDE, wxColour (_T("DARK GREY")));
+    StyleSetForeground(wxSCI_STYLE_INDENTGUIDE, wxColour (wxT_2("DARK GREY")));
     InitializePrefs (DEFAULT_LANGUAGE);
 
     // set visibility
@@ -203,11 +203,11 @@ Edit::Edit (wxWindow *parent, wxWindowID id,
 
     // markers
     MarkerDefine (wxSCI_MARKNUM_FOLDER, wxSCI_MARK_BOXPLUS);
-    MarkerSetBackground (wxSCI_MARKNUM_FOLDER, wxColour (_T("BLACK")));
-    MarkerSetForeground (wxSCI_MARKNUM_FOLDER, wxColour (_T("WHITE")));
+    MarkerSetBackground (wxSCI_MARKNUM_FOLDER, wxColour (wxT_2("BLACK")));
+    MarkerSetForeground (wxSCI_MARKNUM_FOLDER, wxColour (wxT_2("WHITE")));
     MarkerDefine (wxSCI_MARKNUM_FOLDEROPEN, wxSCI_MARK_BOXMINUS);
-    MarkerSetBackground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (_T("BLACK")));
-    MarkerSetForeground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (_T("WHITE")));
+    MarkerSetBackground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (wxT_2("BLACK")));
+    MarkerSetForeground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (wxT_2("WHITE")));
     MarkerDefine (wxSCI_MARKNUM_FOLDERSUB, wxSCI_MARK_EMPTY);
     MarkerDefine (wxSCI_MARKNUM_FOLDEREND, wxSCI_MARK_SHORTARROW);
     MarkerDefine (wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_ARROWDOWN);
@@ -326,14 +326,14 @@ int Edit::GetLongestLinePixelWidth(int top_line, int bottom_line)  //(pecan 2007
                 }
             }
 
-            //wxPrintf(wxT("line %d len %d pos %d\n"), n, len, len+tabs); fflush(stdout);
+            //wxPrintf(wxT_2("line %d len %d pos %d\n"), n, len, len+tabs); fflush(stdout);
         }
         len += tabs + 3; // add a little extra if showing line endings
         if (longest_len < len) longest_len = len;
     }
     // FIXME:
-    //return pEdit->TextWidth(wxSTC_STYLE_DEFAULT, wxString(longest_len, wxT('D')));
-    return TextWidth(0, wxString(longest_len, wxT('D')));
+    //return pEdit->TextWidth(wxSTC_STYLE_DEFAULT, wxString(longest_len, wxT_2('D')));
+    return TextWidth(0, wxString(longest_len, wxT_2('D')));
 }
 
 //----------------------------------------------------------------------------
@@ -402,7 +402,7 @@ void Edit::OnFind (wxCommandEvent& event)
 void Edit::OnFindUI (wxUpdateUIEvent &event)
 // ----------------------------------------------------------------------------
 {
-     //LOGIT( _T("OnFindUI[%d]"),GetLength() );
+     //LOGIT( wxT_2("OnFindUI[%d]"),GetLength() );
     event.Enable (GetLength() > 0);
 }
 
@@ -440,7 +440,7 @@ void Edit::OnFindNext (wxCommandEvent &WXUNUSED(event))
 void Edit::OnFindNextUI (wxUpdateUIEvent &event)
 // ----------------------------------------------------------------------------
 {
-    //LOGIT( _T("Edit::OnFindNextUI[%d]"), event.GetId() );
+    //LOGIT( wxT_2("Edit::OnFindNextUI[%d]"), event.GetId() );
     event.Enable (GetLength() > 0);
 }
 // ----------------------------------------------------------------------------
@@ -660,7 +660,7 @@ void Edit::OnGoto (wxCommandEvent& event)
         GotoLine (line - 1);
         line = GetCurrentLine() - (GetFirstVisibleLine()+2);
         if (line > 0) LineScroll (0, line);
-        g_statustext = _("Went to line: ") + wxString::Format (_T("%d"), line);
+        g_statustext = _("Went to line: ") + wxString::Format (wxT_2("%d"), line);
     }else{
         GotoLine (0);
         g_statustext = _("Went to first line");
@@ -836,8 +836,8 @@ wxString Edit::DeterminePrefs (const wxString &filename) {
         while (!filepattern.IsEmpty()) {
             wxString cur = filepattern.BeforeFirst (';');
             if ((cur == filename) ||
-                (cur == (filename.BeforeLast ('.') + _T(".*"))) ||
-                (cur == (_T("*.") + filename.AfterLast ('.')))) {
+                (cur == (filename.BeforeLast ('.') + wxT_2(".*"))) ||
+                (cur == (wxT_2("*.") + filename.AfterLast ('.')))) {
                 return curInfo->name;
             }
             filepattern = filepattern.AfterFirst (';');
@@ -871,15 +871,15 @@ bool Edit::InitializePrefs (const wxString &name) {
 
     // set margin for line numbers
     SetMarginType (m_LineNrID, wxSCI_MARGIN_NUMBER);
-    StyleSetForeground (wxSCI_STYLE_LINENUMBER, wxColour (_T("DARK GREY")));
-    //-StyleSetBackground (wxSCI_STYLE_LINENUMBER, wxColour (_T("WHITE")));
+    StyleSetForeground (wxSCI_STYLE_LINENUMBER, wxColour (wxT_2("DARK GREY")));
+    //-StyleSetBackground (wxSCI_STYLE_LINENUMBER, wxColour (wxT_2("WHITE")));
     StyleSetBackground (wxSCI_STYLE_DEFAULT, m_SysWinBkgdColour); //(pecan 2007/3/27)
     SetMarginWidth (m_LineNrID,
                     g_CommonPrefs.lineNumberEnable? m_LineNrMargin: 0);
 
     // set common styles
-    StyleSetForeground (wxSCI_STYLE_DEFAULT, wxColour (_T("DARK GREY")));
-    StyleSetForeground (wxSCI_STYLE_INDENTGUIDE, wxColour (_T("DARK GREY")));
+    StyleSetForeground (wxSCI_STYLE_DEFAULT, wxColour (wxT_2("DARK GREY")));
+    StyleSetForeground (wxSCI_STYLE_INDENTGUIDE, wxColour (wxT_2("DARK GREY")));
 
     // initialize settings
     if (g_CommonPrefs.syntaxEnable) {
@@ -922,27 +922,27 @@ bool Edit::InitializePrefs (const wxString &name) {
     // folding
     SetMarginType (m_FoldingID, wxSCI_MARGIN_SYMBOL);
     SetMarginMask (m_FoldingID, wxSCI_MASK_FOLDERS);
-    StyleSetBackground (m_FoldingID, wxColour (_T("WHITE")));
+    StyleSetBackground (m_FoldingID, wxColour (wxT_2("WHITE")));
     SetMarginWidth (m_FoldingID, 0);
     SetMarginSensitive (m_FoldingID, false);
     if (g_CommonPrefs.foldEnable) {
         SetMarginWidth (m_FoldingID, curInfo->folds != 0? m_FoldingMargin: 0);
         SetMarginSensitive (m_FoldingID, curInfo->folds != 0);
-        SetProperty (_T("fold"), curInfo->folds != 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.comment"),
-                     (curInfo->folds & FOLD_TYPE_COMMENT) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.compact"),
-                     (curInfo->folds & FOLD_TYPE_COMPACT) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.preprocessor"),
-                     (curInfo->folds & FOLD_TYPE_PREPROC) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.html"),
-                     (curInfo->folds & FOLD_TYPE_HTML) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.html.preprocessor"),
-                     (curInfo->folds & FOLD_TYPE_HTMLPREP) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.comment.python"),
-                     (curInfo->folds & FOLD_TYPE_COMMENTPY) > 0? _T("1"): _T("0"));
-        SetProperty (_T("fold.quotes.python"),
-                     (curInfo->folds & FOLD_TYPE_QUOTESPY) > 0? _T("1"): _T("0"));
+        SetProperty (wxT_2("fold"), curInfo->folds != 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.comment"),
+                     (curInfo->folds & FOLD_TYPE_COMMENT) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.compact"),
+                     (curInfo->folds & FOLD_TYPE_COMPACT) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.preprocessor"),
+                     (curInfo->folds & FOLD_TYPE_PREPROC) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.html"),
+                     (curInfo->folds & FOLD_TYPE_HTML) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.html.preprocessor"),
+                     (curInfo->folds & FOLD_TYPE_HTMLPREP) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.comment.python"),
+                     (curInfo->folds & FOLD_TYPE_COMMENTPY) > 0? wxT_2("1"): wxT_2("0"));
+        SetProperty (wxT_2("fold.quotes.python"),
+                     (curInfo->folds & FOLD_TYPE_QUOTESPY) > 0? wxT_2("1"): wxT_2("0"));
     }
     SetFoldFlags (wxSCI_FOLDFLAG_LINEBEFORE_CONTRACTED |
                   wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED);
@@ -973,8 +973,8 @@ bool Edit::LoadFile () {
 
     // get filname
     if (!m_filename) {
-        wxFileDialog dlg (this, _T("Open file"), _T(""), _T(""),
-                          _T("Any file (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
+        wxFileDialog dlg (this, wxT_2("Open file"), wxT_2(""), wxT_2(""),
+                          wxT_2("Any file (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
         if (dlg.ShowModal() != wxID_OK) return false;
         m_filename = dlg.GetPath();
     }
@@ -1000,8 +1000,8 @@ bool Edit::LoadFile (const wxString &filename)
     // calculate the smallest line number width to save space
     int line_count = GetLineCount();
     line_count = wxMax(line_count, 1)*10;
-    //-wxString lineStr((int)log10((double)line_count), wxT('5'));
-    wxString lineStr(wxString::Format(wxT("%d"), line_count));
+    //-wxString lineStr((int)log10((double)line_count), wxT_2('5'));
+    wxString lineStr(wxString::Format(wxT_2("%d"), line_count));
     int line_margin_width = TextWidth(wxSCI_STYLE_LINENUMBER, lineStr);
     SetMarginWidth( m_LineNrID, line_margin_width);
     //(pecan 2007/4/05)
@@ -1019,7 +1019,7 @@ bool Edit::SaveFile ()
 
     // get filname
     if (!m_filename) {
-        wxFileDialog dlg (this, _T("Save file"), _T(""), _T(""), _T("Any file (*)|*"),
+        wxFileDialog dlg (this, wxT_2("Save file"), wxT_2(""), wxT_2(""), wxT_2("Any file (*)|*"),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
         if (dlg.ShowModal() != wxID_OK) return false;
         m_filename = dlg.GetPath();
@@ -1041,8 +1041,8 @@ bool Edit::SaveFile (const wxString &filename)
     // calculate the smallest line number width to save space
     int line_count = GetLineCount();
     line_count = wxMax(line_count, 1)*10;
-    //-wxString lineStr((int)log10((double)line_count), wxT('5'));
-    wxString lineStr(wxString::Format(wxT("%d"), line_count));
+    //-wxString lineStr((int)log10((double)line_count), wxT_2('5'));
+    wxString lineStr(wxString::Format(wxT_2("%d"), line_count));
     int line_margin_width = TextWidth(wxSCI_STYLE_LINENUMBER, lineStr);
     SetMarginWidth( m_LineNrID, line_margin_width);
     //(pecan 2007/4/05)
@@ -1093,14 +1093,14 @@ EditProperties::EditProperties (Edit *edit,
     textinfo->Add (new wxStaticText (this, -1, _("Lexer-ID: "),
                                      wxDefaultPosition, wxSize(80, -1)),
                    0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
-    text = wxString::Format (_T("%d"), edit->GetLexer());
+    text = wxString::Format (wxT_2("%d"), edit->GetLexer());
     textinfo->Add (new wxStaticText (this, -1, text),
                    0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 4);
-    wxString EOLtype = _T("");
+    wxString EOLtype = wxT_2("");
     switch (edit->GetEOLMode()) {
-        case wxSCI_EOL_CR: {EOLtype = _T("CR (Unix)"); break; }
-        case wxSCI_EOL_CRLF: {EOLtype = _T("CRLF (Windows)"); break; }
-        case wxSCI_EOL_LF: {EOLtype = _T("CR (Macintosh)"); break; }
+        case wxSCI_EOL_CR: {EOLtype = wxT_2("CR (Unix)"); break; }
+        case wxSCI_EOL_CRLF: {EOLtype = wxT_2("CRLF (Windows)"); break; }
+        case wxSCI_EOL_LF: {EOLtype = wxT_2("CR (Macintosh)"); break; }
     }
     textinfo->Add (new wxStaticText (this, -1, _("Line endings"),
                                      wxDefaultPosition, wxSize(80, -1)),
@@ -1120,25 +1120,25 @@ EditProperties::EditProperties (Edit *edit,
     statistic->Add (new wxStaticText (this, -1, _("Total lines"),
                                      wxDefaultPosition, wxSize(80, -1)),
                     0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
-    text = wxString::Format (_T("%d"), edit->GetLineCount());
+    text = wxString::Format (wxT_2("%d"), edit->GetLineCount());
     statistic->Add (new wxStaticText (this, -1, text),
                     0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 4);
     statistic->Add (new wxStaticText (this, -1, _("Total chars"),
                                      wxDefaultPosition, wxSize(80, -1)),
                     0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
-    text = wxString::Format (_T("%d"), edit->GetTextLength());
+    text = wxString::Format (wxT_2("%d"), edit->GetTextLength());
     statistic->Add (new wxStaticText (this, -1, text),
                     0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 4);
     statistic->Add (new wxStaticText (this, -1, _("Current line"),
                                      wxDefaultPosition, wxSize(80, -1)),
                     0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
-    text = wxString::Format (_T("%d"), edit->GetCurrentLine());
+    text = wxString::Format (wxT_2("%d"), edit->GetCurrentLine());
     statistic->Add (new wxStaticText (this, -1, text),
                     0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 4);
     statistic->Add (new wxStaticText (this, -1, _("Current pos"),
                                      wxDefaultPosition, wxSize(80, -1)),
                     0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT, 4);
-    text = wxString::Format (_T("%d"), edit->GetCurrentPos());
+    text = wxString::Format (wxT_2("%d"), edit->GetCurrentPos());
     statistic->Add (new wxStaticText (this, -1, text),
                     0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxRIGHT, 4);
 
@@ -1313,9 +1313,9 @@ void Edit::OnEnterWindow(wxMouseEvent& event)
 //    // its frame.when the mouse enters the window.
 //    // *Hack* *Hack* *Hack* *Hack*
 //    // Enable this Edit window and its frame
-//    LOGIT( _T("EVT_ENTER_WINDOW") );
+//    LOGIT( wxT_2("EVT_ENTER_WINDOW") );
 //    wxWindow* pw = GetParent();
-//    LOGIT( _T("parent[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//    LOGIT( wxT_2("parent[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    pw->Enable();
 //    pw->SetFocus();
 //    Enable();
@@ -1332,27 +1332,27 @@ void Edit::OnLeaveWindow(wxMouseEvent& event)
 //    // so user can't shut it down and leave us orphaned.
 //    // *Hack* *Hack* *Hack* *Hack*
 //
-//    //LOGIT( _T("EVT_LEAVE_WINDOW") );
+//    //LOGIT( wxT_2("EVT_LEAVE_WINDOW") );
 //    wxWindow* pw = GetParent();
-//    //LOGIT( _T("parent1[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//    //LOGIT( wxT_2("parent1[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    if (pw && pw->GetParent()) //Edit frame
 //    {   pw = pw->GetParent();
 //        //pw->Disable();
-//        //LOGIT( _T("parent2[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//        //LOGIT( wxT_2("parent2[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    }
 //    if (pw && pw->GetParent())  // a panel
 //    {   pw = pw->GetParent();
 //        pw->Disable();          // This disables Snippet frame Whoop!
-//        //LOGIT( _T("parent3[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//        //LOGIT( wxT_2("parent3[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    }
 //    if (pw && pw->GetParent())  //Snippet tree frame
 //    {   pw = pw->GetParent();
 //        //pw->Disable(); This disables CodeBlocks
-//        //LOGIT( _T("parent4[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//        //LOGIT( wxT_2("parent4[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    }
 //    if (pw && pw->GetParent())  //CodeBlocks
 //    {   pw = pw->GetParent();
-//        //LOGIT( _T("parent5[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
+//        //LOGIT( wxT_2("parent5[%s]Title[%s]"),pw->GetName().c_str(),pw->GetTitle().c_str() );
 //    }
 //
 //     event.Skip();
@@ -1447,7 +1447,7 @@ DragScrollEvents::DragScrollEvents(wxWindow *window)
     MouseContextDelay       = 192;
 
 //    wxString CfgFilenameStr = GetConfig()->SettingsSnippetsCfgFullPath;
-//    LOGIT(_T("DragScroll Config Filename:[%s]"), CfgFilenameStr.c_str());
+//    LOGIT(wxT_2("DragScroll Config Filename:[%s]"), CfgFilenameStr.c_str());
 //    // read configuaton file
 //    wxFileConfig cfgFile(wxEmptyString,     // appname
 //                        wxEmptyString,      // vendor
@@ -1455,30 +1455,30 @@ DragScrollEvents::DragScrollEvents(wxWindow *window)
 //                        wxEmptyString,      // global file
 //                        wxCONFIG_USE_LOCAL_FILE);
 //
-//    cfgFile.Read(_T("MouseDragScrollEnabled"),  &MouseDragScrollEnabled ) ;
-//	cfgFile.Read(_T("MouseEditorFocusEnabled"), &MouseEditorFocusEnabled ) ;
-//	cfgFile.Read(_T("MouseFocusEnabled"),       &MouseFocusEnabled ) ;
-//	cfgFile.Read(_T("MouseDragDirection"),      &MouseDragDirection ) ;
-//	cfgFile.Read(_T("MouseDragKey"),            &MouseDragKey ) ;
-//	cfgFile.Read(_T("MouseDragSensitivity"),    &MouseDragSensitivity ) ;
-//	cfgFile.Read(_T("MouseToLineRatio"),        &MouseToLineRatio ) ;
-//	cfgFile.Read(_T("MouseContextDelay"),       &MouseContextDelay ) ;
-//	//cfgFile.Read(_T("MouseRightKeyCtrl"),       &MouseRightKeyCtrl) ;
+//    cfgFile.Read(wxT_2("MouseDragScrollEnabled"),  &MouseDragScrollEnabled ) ;
+//	cfgFile.Read(wxT_2("MouseEditorFocusEnabled"), &MouseEditorFocusEnabled ) ;
+//	cfgFile.Read(wxT_2("MouseFocusEnabled"),       &MouseFocusEnabled ) ;
+//	cfgFile.Read(wxT_2("MouseDragDirection"),      &MouseDragDirection ) ;
+//	cfgFile.Read(wxT_2("MouseDragKey"),            &MouseDragKey ) ;
+//	cfgFile.Read(wxT_2("MouseDragSensitivity"),    &MouseDragSensitivity ) ;
+//	cfgFile.Read(wxT_2("MouseToLineRatio"),        &MouseToLineRatio ) ;
+//	cfgFile.Read(wxT_2("MouseContextDelay"),       &MouseContextDelay ) ;
+//	//cfgFile.Read(wxT_2("MouseRightKeyCtrl"),       &MouseRightKeyCtrl) ;
 
 	MouseDragSensitivity = GetConfig()->MouseDragSensitivity ;
 	MouseToLineRatio     = GetConfig()->MouseToLineRatio;
 	MouseContextDelay    = GetConfig()->MouseContextDelay;
 
     #ifdef LOGGING
-        LOGIT(_T("MouseDragScrollEnabled:%d"),  MouseDragScrollEnabled ) ;
-        LOGIT(_T("MouseEditorFocusEnabled:%d"), MouseEditorFocusEnabled ) ;
-        LOGIT(_T("MouseFocusEnabled:%d"),       MouseFocusEnabled ) ;
-        LOGIT(_T("MouseDragDirection:%d"),      MouseDragDirection ) ;
-        LOGIT(_T("MouseDragKey:%d"),            MouseDragKey ) ;
-        LOGIT(_T("MouseDragSensitivity:%d"),    MouseDragSensitivity ) ;
-        LOGIT(_T("MouseToLineRatio:%d"),        MouseToLineRatio ) ;
-        LOGIT(_T("MouseContextDelay:%d"),       MouseContextDelay ) ;
-        //LOGIT(_T("MouseRightKeyCtrl:%d"),       MouseRightKeyCtrl ) ;
+        LOGIT(wxT_2("MouseDragScrollEnabled:%d"),  MouseDragScrollEnabled ) ;
+        LOGIT(wxT_2("MouseEditorFocusEnabled:%d"), MouseEditorFocusEnabled ) ;
+        LOGIT(wxT_2("MouseFocusEnabled:%d"),       MouseFocusEnabled ) ;
+        LOGIT(wxT_2("MouseDragDirection:%d"),      MouseDragDirection ) ;
+        LOGIT(wxT_2("MouseDragKey:%d"),            MouseDragKey ) ;
+        LOGIT(wxT_2("MouseDragSensitivity:%d"),    MouseDragSensitivity ) ;
+        LOGIT(wxT_2("MouseToLineRatio:%d"),        MouseToLineRatio ) ;
+        LOGIT(wxT_2("MouseContextDelay:%d"),       MouseContextDelay ) ;
+        //LOGIT(wxT_2("MouseRightKeyCtrl:%d"),       MouseRightKeyCtrl ) ;
     #endif //LOGGING
 
 
@@ -1508,7 +1508,7 @@ DragScrollEvents::DragScrollEvents(wxWindow *window)
                      NULL, this);
 
     #if LOGGING
-     LOGIT(_T("Edit:Attach Window[%p] named[%s] "), m_Window, m_Window->GetName().c_str());
+     LOGIT(wxT_2("Edit:Attach Window[%p] named[%s] "), m_Window, m_Window->GetName().c_str());
     #endif
 
 }
@@ -1518,10 +1518,10 @@ DragScrollEvents::~DragScrollEvents()
 // ----------------------------------------------------------------------------
 {
     #if LOGGING
-     LOGIT(_T("DragScrollEvents dtor"));
+     LOGIT(wxT_2("DragScrollEvents dtor"));
     #endif
     #if LOGGING
-    LOGIT(_T("Edit:Disconnecting DragScroller"));
+    LOGIT(wxT_2("Edit:Disconnecting DragScroller"));
     #endif
     if (m_Window)
     {
@@ -1568,7 +1568,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
     DragScrollEvents* pDS = this;
 
     // Why is an event getting in here when this OS window doesnt have the focus
-//     LOGIT( _T("ActiveWinow[%p][%s] m_Window[%p][%s]"),
+//     LOGIT( wxT_2("ActiveWinow[%p][%s] m_Window[%p][%s]"),
 //            ::wxGetActiveWindow(), ::wxGetActiveWindow()->GetName().c_str(),
 //            m_Window, m_Window->GetName().c_str() );
     if (::wxGetActiveWindow() != pDS->m_pMS_Window)
@@ -1582,12 +1582,12 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
 //    if (m_pEvtObject)
 //        pClassName = m_pEvtObject->GetClassInfo()->GetClassName();
 //    #ifdef LOGGING
-//     LOGIT( _T("ClassName[%s]"), pClassName );
+//     LOGIT( wxT_2("ClassName[%s]"), pClassName );
 //    #endif //LOGGING
 
     // differentialte window types
     Edit* p_cbStyledTextCtrl = 0;
-    if ( ((wxWindow*)m_pEvtObject)->GetName().MakeLower() == wxT("sciwindow"))
+    if ( ((wxWindow*)m_pEvtObject)->GetName().MakeLower() == wxT_2("sciwindow"))
         p_cbStyledTextCtrl = (Edit*)m_pEvtObject;
 
     // if "focus follows mouse" enabled, set focus to window
@@ -1598,18 +1598,18 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
 //    // set focus to editor window if mouse is in it
 //    if (event.GetEventType() ==  wxEVT_ENTER_WINDOW)
 //    {
-//         //LOGIT( _T("EVT_ENTER_WINDOW:%p Styled:%p LeftSplit:%p RightSplit:%p"), m_pEvtObject, p_cbStyledTextCtrl, pLeftSplitWin, pRightSplitWin );
+//         //LOGIT( wxT_2("EVT_ENTER_WINDOW:%p Styled:%p LeftSplit:%p RightSplit:%p"), m_pEvtObject, p_cbStyledTextCtrl, pLeftSplitWin, pRightSplitWin );
 //        if (pDS->GetMouseEditorFocusEnabled() )
 //        {  if (p_cbStyledTextCtrl && (m_pEvtObject ==  pLeftSplitWin))
 //           {    pLeftSplitWin->SetFocus();
 //                #ifdef LOGGING
-//                 //LOGIT( _T("OnMouseEvent:SetFocus %p"), pLeftSplitWin );
+//                 //LOGIT( wxT_2("OnMouseEvent:SetFocus %p"), pLeftSplitWin );
 //                #endif //LOGGING
 //           }
 //           if (pRightSplitWin && (m_pEvtObject ==  pRightSplitWin))
 //           {    pRightSplitWin->SetFocus();
 //                #ifdef LOGGING
-//                 //LOGIT( _T("OnMouseEvent:SetFocus %p"), pRightSplitWin );
+//                 //LOGIT( wxT_2("OnMouseEvent:SetFocus %p"), pRightSplitWin );
 //                #endif //LOGGING
 //           }
 //        }
@@ -1619,7 +1619,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
     int scrolly;
 
     #if LOGGING
-    //LOGIT(_T("OnMouseEvent"));
+    //LOGIT(wxT_2("OnMouseEvent"));
     #endif
 
     if (KeyDown(event))
@@ -1627,7 +1627,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
             m_Direction = pDS->GetMouseDragDirection() ? 1 : -1 ; //v0.14
             m_MouseMoveToLineMoveRatio = pDS->GetMouseToLineRatio()/100.0;
             #ifdef LOGGING
-             //LOGIT( _T("m_MouseMoveToLineMoveRatio %f"),m_MouseMoveToLineMoveRatio );
+             //LOGIT( wxT_2("m_MouseMoveToLineMoveRatio %f"),m_MouseMoveToLineMoveRatio );
             #endif //LOGGING
             // We tentatively start dragging, but wait for
             // mouse movement before dragging properly.
@@ -1641,7 +1641,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
             m_DragMode = DRAG_START;
             m_DragStartPos = event.GetPosition();
             #if LOGGING
-             //LOGIT(_T("Down X:%d Y:%d"), m_InitY, m_InitX);
+             //LOGIT(wxT_2("Down X:%d Y:%d"), m_InitY, m_InitX);
             #endif
 //            // If hiding Right mouse keydown from ListCtrls, return v0.22
 //            // RightMouseDown is causing an immediate selection in the control
@@ -1658,7 +1658,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
         m_DragMode = DRAG_NONE;
         // if our trapped drag, hide event from others, ie. don't event.skip()
         #if LOGGING
-         //LOGIT(_T("Up"));
+         //LOGIT(wxT_2("Up"));
         #endif
         if (lastmode ==  DRAG_DRAGGING) return;
         // allow context menu processing
@@ -1685,7 +1685,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
          {
             // Start the drag. This will stop the context popup
             #if LOGGING
-            //LOGIT(_T("Drag_Start"));
+            //LOGIT(wxT_2("Drag_Start"));
             #endif
             m_DragMode = DRAG_DRAGGING;
          }
@@ -1718,8 +1718,8 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //MSW
             scrollx = 0; scrolly = int(dY * m_RatioY);
        }
         #if LOGGING
-       //  LOGIT(_T("RatioX:%f RatioY:%f"), m_RatioX, m_RatioY);
-       //  LOGIT(_T("Drag: dX:%d dY:%d scrollx:%d scrolly:%d"), dX, dY, scrollx, scrolly);
+       //  LOGIT(wxT_2("RatioX:%f RatioY:%f"), m_RatioX, m_RatioY);
+       //  LOGIT(wxT_2("Drag: dX:%d dY:%d scrollx:%d scrolly:%d"), dX, dY, scrollx, scrolly);
         #endif
 
         // Scroll horizontally and vertically.
@@ -1767,12 +1767,12 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
         { event.Skip(); return; }
 
     #ifdef LOGGING
-     //LOGIT( _T("m_MouseMoveToLineMoveRatio %f"),m_MouseMoveToLineMoveRatio );
+     //LOGIT( wxT_2("m_MouseMoveToLineMoveRatio %f"),m_MouseMoveToLineMoveRatio );
     #endif //LOGGING
 
     // differentialte window types
     Edit* p_cbStyledTextCtrl = 0;
-    if ( ((wxWindow*)m_pEvtObject)->GetName().MakeLower() == wxT("sciwindow"))
+    if ( ((wxWindow*)m_pEvtObject)->GetName().MakeLower() == wxT_2("sciwindow"))
         p_cbStyledTextCtrl = (Edit*)m_pEvtObject;
 
     // if "focus follows mouse" endabled, set focus to window
@@ -1790,7 +1790,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
     int scrolly;
 
     #if LOGGING
-     //LOGIT(_T("OnMouseEvent"));
+     //LOGIT(wxT_2("OnMouseEvent"));
     #endif
 
     //--------- Key Down ------------------------------------------------------
@@ -1811,11 +1811,11 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
         m_DragMode = DRAG_NONE;
         m_DragStartPos = event.GetPosition();
         #if LOGGING
-         LOGIT(_T("Down at  X:%d Y:%d"), m_InitX, m_InitY);
+         LOGIT(wxT_2("Down at  X:%d Y:%d"), m_InitX, m_InitY);
         #endif
 
         wxPoint mouseXY = ((wxWindow*)m_pEvtObject)->ScreenToClient(wxGetMousePosition());
-        LOGIT(_T("Down MoveTo X:%d Y:%d"), mouseXY.x, mouseXY.y);
+        LOGIT(wxT_2("Down MoveTo X:%d Y:%d"), mouseXY.x, mouseXY.y);
 
         // wait for possible mouse moves before poping context menu
         for (int i = 0; i < pDS->GetMouseContextDelay();)
@@ -1836,7 +1836,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
         else // wait for movement if right mouse key; might be context menu request
         {
             #if LOGGING
-             LOGIT(_T("Down delta x:%d y:%d"), scrollx, scrolly );
+             LOGIT(wxT_2("Down delta x:%d y:%d"), scrollx, scrolly );
             #endif
             if (p_cbStyledTextCtrl && (m_pEvtObject == p_cbStyledTextCtrl) //v0.21
                 && ( ( scrolly > 1) || (scrollx > 1) ))
@@ -1881,7 +1881,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
         int lastmode = m_DragMode;
         m_DragMode = DRAG_NONE;
         #if LOGGING
-         LOGIT( _T("Up") ) ;
+         LOGIT( wxT_2("Up") ) ;
         #endif
         if (lastmode ==  DRAG_DRAGGING) return;
         // allow non-drag processing
@@ -1892,7 +1892,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
     else if ( (m_DragMode!=DRAG_NONE) && event.Dragging() ) //v0.12
     {
 
-        //-LOGIT( _T("Dragging") ) ;
+        //-LOGIT( wxT_2("Dragging") ) ;
         //make sure user didnt leave client area and lift mouse key
         if ( not KeyIsDown(event))
          {  m_DragMode = DRAG_NONE;
@@ -1910,7 +1910,7 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
          {
             // Start the drag. This will stop the context popup
             #if LOGGING
-            LOGIT(_T("Drag_Start"));
+            LOGIT(wxT_2("Drag_Start"));
             #endif
             m_DragMode = DRAG_DRAGGING;
          }
@@ -1943,8 +1943,8 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
             scrollx = 0; scrolly = int(dY * m_RatioY);
        }
         #if LOGGING
-       //  LOGIT(_T("RatioX:%f RatioY:%f"), m_RatioX, m_RatioY);
-       //  LOGIT(_T("Drag: dX:%d dY:%d scrollx:%d scrolly:%d"), dX, dY, scrollx, scrolly);
+       //  LOGIT(wxT_2("RatioX:%f RatioY:%f"), m_RatioX, m_RatioY);
+       //  LOGIT(wxT_2("Drag: dX:%d dY:%d scrollx:%d scrolly:%d"), dX, dY, scrollx, scrolly);
         #endif
 
         // Scroll horizontally and vertically.
@@ -1966,19 +1966,19 @@ void DragScrollEvents::OnMouseEvent(wxMouseEvent& event)    //GTK
 //            if (m_pEvtObject)
 //            {   pClassName = m_pEvtObject->GetClassInfo()->GetClassName();
 //                classname = wxString(pClassName,10);
-//                LOGIT( _T("ClassName[%s]"), classname.c_str() );
+//                LOGIT( wxT_2("ClassName[%s]"), classname.c_str() );
 //            }
             // ---------------------------------
             //The following works in the BuildLog, but now the SearchResults
             // ---------------------------------
             //use wxTextCtrl scroll for y scrolling
-            if ( scrolly )//&& (classname == wxT("wxTextCtrl")) )
-            {   //LOGIT(wxT("ScrollText x:%d y:%d"),scrollx, scrolly );
+            if ( scrolly )//&& (classname == wxT_2("wxTextCtrl")) )
+            {   //LOGIT(wxT_2("ScrollText x:%d y:%d"),scrollx, scrolly );
                 ((wxWindow*)m_pEvtObject)->ScrollLines(scrolly);
             }
             // Following does not work. GTK does not scroll wxListCtrl
             //else  // use listCtrl for x scrolling
-            //{    LOGIT(wxT("ScrollList x:%d y:%d"),scrollx, scrolly );
+            //{    LOGIT(wxT_2("ScrollList x:%d y:%d"),scrollx, scrolly );
             //    ((wxListCtrl*)m_pEvtObject)->ScrollList(scrollx,scrolly);
             //}
         }//esle

@@ -77,7 +77,7 @@ bool SnippetDropTarget::OnDropText(wxCoord x, wxCoord y, const wxString& data)
 {
     // Put dragged text into SnippetTextCtrl
     #ifdef LOGGING
-     LOGIT( _T("Dragged Data[%s]"), data.GetData() );
+     LOGIT( wxT_2("Dragged Data[%s]"), data.GetData() );
     #endif //LOGGING
     //m_Window->m_SnippetEditCtrl->WriteText(data);
     m_Window->m_SnippetEditCtrl->AddText(data);
@@ -91,7 +91,7 @@ bool SnippetDropTarget::OnDropText(wxCoord x, wxCoord y, const wxString& data)
 // ----------------------------------------------------------------------------
 SnippetProperty::SnippetProperty(wxTreeCtrl* pTree, wxTreeItemId itemId, wxSemaphore* pWaitSem)
 // ----------------------------------------------------------------------------
-    :SnippetPropertyForm(pTree->GetParent(),-1,wxT("Snippet Properties"))
+    :SnippetPropertyForm(pTree->GetParent(),-1,wxT_2("Snippet Properties"))
 {
     // ctor
 
@@ -111,7 +111,7 @@ SnippetProperty::SnippetProperty(wxTreeCtrl* pTree, wxTreeItemId itemId, wxSemap
 
     // Initialize the properties fields
     m_ItemLabelTextCtrl->   SetValue( pTree->GetItemText(itemId) );
-    m_SnippetEditCtrl->     SetText( wxT("Enter text or Filename") );
+    m_SnippetEditCtrl->     SetText( wxT_2("Enter text or Filename") );
     m_SnippetEditCtrl->SetFocus();
 
 
@@ -134,9 +134,9 @@ SnippetProperty::SnippetProperty(wxTreeCtrl* pTree, wxTreeItemId itemId, wxSemap
             // SetText() marked the file as modified
             // Unmarked it by saving to a dummy file
             #if defined(__WXMSW__)
-                m_SnippetEditCtrl->SaveFile(wxT("nul"));
+                m_SnippetEditCtrl->SaveFile(wxT_2("nul"));
             #else
-                m_SnippetEditCtrl->SaveFile(wxT("/dev/null"));
+                m_SnippetEditCtrl->SaveFile(wxT_2("/dev/null"));
             #endif
             // reset the undo history to avoid undoing to a blank page
             m_SnippetEditCtrl->EmptyUndoBuffer();
@@ -207,7 +207,7 @@ void SnippetProperty::OnKeyDownEvent (wxKeyEvent& event)
 void SnippetProperty::OnEditEvent (wxCommandEvent &event)
 // ----------------------------------------------------------------------------
 {
-     LOGIT( _T("SnippetProperty::OnEditEvent") );
+     LOGIT( wxT_2("SnippetProperty::OnEditEvent") );
     if (m_SnippetEditCtrl) m_SnippetEditCtrl->ProcessEvent (event);
 }
 // ----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void SnippetProperty::OnEditEvent (wxCommandEvent &event)
 void SnippetProperty::OnOk(wxCommandEvent& event)
 // ----------------------------------------------------------------------------
 {
-     LOGIT( _T("SnippetProperty::OnOK") );
+     LOGIT( wxT_2("SnippetProperty::OnOK") );
     // set data to edited snippet
     m_pSnippetDataItem->SetSnippet( m_SnippetEditCtrl->GetText() );
     // label may have been edited
@@ -228,7 +228,7 @@ void SnippetProperty::OnOk(wxCommandEvent& event)
 void SnippetProperty::OnCancel(wxCommandEvent& event)
 // ----------------------------------------------------------------------------
 {
-     LOGIT( _T("SnippetProperty::OnCancel") );
+     LOGIT( wxT_2("SnippetProperty::OnCancel") );
     if (m_pWaitingSemaphore) m_pWaitingSemaphore->Post();
     this->EndModal(wxID_CANCEL);
 }
@@ -240,7 +240,7 @@ void SnippetProperty::OnSnippetButton(wxCommandEvent& event)
 
     if ( GetActiveMenuId() == idMnuConvertToFileLink )
     {       // let user choose a file to hold snippet
-        wxString ChosenFileName = wxFileSelector(wxT("Choose a Link target"));
+        wxString ChosenFileName = wxFileSelector(wxT_2("Choose a Link target"));
         if (not ChosenFileName.IsEmpty())
             m_SnippetEditCtrl-> SetText( ChosenFileName );
         return;
@@ -255,7 +255,7 @@ void SnippetProperty::OnSnippetButton(wxCommandEvent& event)
         )
     {
         if ( GetConfig()->SettingsExternalEditor.IsEmpty())
-        {   messageBox(wxT("Use Menu/Settings/Options to specify an external editor.") );
+        {   messageBox(wxT_2("Use Menu/Settings/Options to specify an external editor.") );
             return;
         }
             // let user edit the snippet text
@@ -276,7 +276,7 @@ void SnippetProperty::OnFileSelectButton(wxCommandEvent& event)
     // Properties File Select button clicked
 
     // let choose a file name to insert into snippet property
-    wxString ChosenFileName = wxFileSelector(wxT("Choose a file"));
+    wxString ChosenFileName = wxFileSelector(wxT_2("Choose a file"));
     if (not ChosenFileName.IsEmpty())
         m_SnippetEditCtrl-> SetText( ChosenFileName );
     return;
@@ -290,14 +290,14 @@ void SnippetProperty::InvokeEditOnSnippetText()
 
         wxFileName tmpFileName = wxFileName::CreateTempFileName(wxEmptyString);
         #ifdef LOGGING
-         LOGIT( _T("fakename:[%s]"),tmpFileName.GetFullPath().GetData() );
+         LOGIT( wxT_2("fakename:[%s]"),tmpFileName.GetFullPath().GetData() );
         #endif //LOGGING
 
         wxFile tmpFile( tmpFileName.GetFullPath(), wxFile::write);
         if (not tmpFile.IsOpened() )
         {
-            //wxMessageBox(wxT("Open failed for:")+tmpFileName.GetFullPath());
-            messageBox(wxT("Open failed for:")+tmpFileName.GetFullPath());
+            //wxMessageBox(wxT_2("Open failed for:")+tmpFileName.GetFullPath());
+            messageBox(wxT_2("Open failed for:")+tmpFileName.GetFullPath());
             return ;
         }
         wxString snippetData( GetSnippet() );
@@ -305,10 +305,10 @@ void SnippetProperty::InvokeEditOnSnippetText()
         tmpFile.Close();
             // Invoke the external editor on the temporary file
             // file name must be surrounded with quotes when using wxExecute
-        wxString execString = GetConfig()->SettingsExternalEditor + wxT(" \"") + tmpFileName.GetFullPath() + wxT("\"");
+        wxString execString = GetConfig()->SettingsExternalEditor + wxT_2(" \"") + tmpFileName.GetFullPath() + wxT_2("\"");
 
         #ifdef LOGGING
-         LOGIT( _T("Properties wxExecute[%s]"), execString.GetData() );
+         LOGIT( wxT_2("Properties wxExecute[%s]"), execString.GetData() );
         #endif //LOGGING
 
             // Invoke the external editor and wait for its termination
@@ -316,32 +316,32 @@ void SnippetProperty::InvokeEditOnSnippetText()
             // Read the edited data back into the snippet text
         tmpFile.Open(tmpFileName.GetFullPath(), wxFile::read);
         if (not tmpFile.IsOpened() )
-        {   messageBox(wxT("Abort.Error reading temp data file."));
+        {   messageBox(wxT_2("Abort.Error reading temp data file."));
             return;
         }
         unsigned long fileSize = tmpFile.Length();
 
         #ifdef LOGGING
-         LOGIT( _T("New file length[%d]"),fileSize );
+         LOGIT( wxT_2("New file length[%d]"),fileSize );
         #endif //LOGGING
 
             // check the data for validity
         char pBuf[fileSize+1];
         size_t nResult = tmpFile.Read( pBuf, fileSize );
         if ( wxInvalidOffset == (int)nResult )
-            messageBox(wxT("InvokeEditOnSnippetText()\nError reading temp file"));
+            messageBox(wxT_2("InvokeEditOnSnippetText()\nError reading temp file"));
         pBuf[fileSize] = 0;
         tmpFile.Close();
 
         #ifdef LOGGING
-          //LOGIT( _T("pBuf[%s]"), pBuf );
+          //LOGIT( wxT_2("pBuf[%s]"), pBuf );
         #endif //LOGGING
 
             // convert data back to internal format
         snippetData = csC2U( pBuf );
 
          #ifdef LOGGING
-          //LOGIT( _T("snippetData[%s]"), snippetData.GetData() );
+          //LOGIT( wxT_2("snippetData[%s]"), snippetData.GetData() );
          #endif //LOGGING
 
             // delete the temporary file
@@ -366,16 +366,16 @@ void SnippetProperty::InvokeEditOnSnippetFile()
     if ( pgmName.IsEmpty() )
     {
         #if defined(__WXMSW__)
-                pgmName = wxT("notepad");
+                pgmName = wxT_2("notepad");
         #elif defined(__UNIX__)
-                pgmName = wxT("gedit");
+                pgmName = wxT_2("gedit");
         #endif
     }
 
     // file name must be surrounded with quotes when using wxExecute
-	wxString execString = pgmName + wxT(" \"") + FileName + wxT("\"");
+	wxString execString = pgmName + wxT_2(" \"") + FileName + wxT_2("\"");
     #ifdef LOGGING
-     LOGIT( _T("InvokeEditOnSnippetFile[%s]"), execString.GetData() );
+     LOGIT( wxT_2("InvokeEditOnSnippetFile[%s]"), execString.GetData() );
     #endif //LOGGING
     ::wxExecute( execString);
     return;
@@ -391,7 +391,7 @@ void SnippetProperty::OnLeaveWindow(wxMouseEvent& event)
     // -----------------------
 
     #ifdef LOGGING
-     //LOGIT( _T("SnippetProperty:MOUSE EVT_LEAVE_WINDOW") );
+     //LOGIT( wxT_2("SnippetProperty:MOUSE EVT_LEAVE_WINDOW") );
     #endif //LOGGING
 
     // Left mouse key must be down (dragging)
@@ -417,7 +417,7 @@ void SnippetProperty::OnLeaveWindow(wxMouseEvent& event)
     wxDropSource source( *data, (wxWindow*)event.GetEventObject()  );
 
     #ifdef LOGGING
-     LOGIT( _T("DropSource Text[%s],File[%s]"),
+     LOGIT( wxT_2("DropSource Text[%s],File[%s]"),
                 textData->GetText().GetData(),
                 fileData->GetFilenames().Item(0).GetData() );
     #endif //LOGGING
@@ -431,14 +431,14 @@ void SnippetProperty::OnLeaveWindow(wxMouseEvent& event)
         wxString pc;
         switch ( result )
         {
-            case wxDragError:   pc = _T("Error!");    break;
-            case wxDragNone:    pc = _T("Nothing");   break;
-            case wxDragCopy:    pc = _T("Copied");    break;
-            case wxDragMove:    pc = _T("Moved");     break;
-            case wxDragCancel:  pc = _T("Cancelled"); break;
-            default:            pc = _T("Huh?");      break;
+            case wxDragError:   pc = wxT_2("Error!");    break;
+            case wxDragNone:    pc = wxT_2("Nothing");   break;
+            case wxDragCopy:    pc = wxT_2("Copied");    break;
+            case wxDragMove:    pc = wxT_2("Moved");     break;
+            case wxDragCancel:  pc = wxT_2("Cancelled"); break;
+            default:            pc = wxT_2("Huh?");      break;
         }
-        LOGIT( wxT("SnippetProperty::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
+        LOGIT( wxT_2("SnippetProperty::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
     #else
         wxUnusedVar(result);
     #endif // wxUSE_STATUSBAR

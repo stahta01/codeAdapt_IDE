@@ -123,7 +123,7 @@ bool EditFrameDropTarget::OnDropText(wxCoord x, wxCoord y, const wxString& data)
 {
     // Put dragged text into SnippetTextCtrl
     #ifdef LOGGING
-     LOGIT( _T("Dragged Data[%s]"), data.GetData() );
+     LOGIT( wxT_2("Dragged Data[%s]"), data.GetData() );
     #endif //LOGGING
     //m_Window->m_pEdit->WriteText(data);
     m_Window->m_pEdit->AddText(data);
@@ -134,7 +134,7 @@ bool EditFrameDropTarget::OnDropText(wxCoord x, wxCoord y, const wxString& data)
 // ----------------------------------------------------------------------------
 EditSnippetFrame::EditSnippetFrame(const wxTreeItemId  TreeItemId, int* pRetcode )
 // ----------------------------------------------------------------------------
-	: wxFrame( GetConfig()->GetSnippetsWindow(), wxID_ANY, _T("Edit snippet"),
+	: wxFrame( GetConfig()->GetSnippetsWindow(), wxID_ANY, wxT_2("Edit snippet"),
 		wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxFRAME_FLOAT_ON_PARENT)
 {
     //ctor
@@ -167,7 +167,7 @@ EditSnippetFrame::EditSnippetFrame(const wxTreeItemId  TreeItemId, int* pRetcode
         SetTitle(m_EditSnippetLabel);
     //SetIcon (wxICON (mondrian));
     SetIcon(GetConfig()->GetSnipImages()->GetSnipListIcon(TREE_IMAGE_ALL_SNIPPETS));
-    //-SetBackgroundColour (_T("WHITE"));
+    //-SetBackgroundColour (wxT_2("WHITE"));
     m_SysWinBkgdColour = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW); //(pecan 2007/3/27)
     SetBackgroundColour( m_SysWinBkgdColour); //(pecan 2007/3/27)
 
@@ -184,9 +184,9 @@ EditSnippetFrame::EditSnippetFrame(const wxTreeItemId  TreeItemId, int* pRetcode
         // SetText() marked the file as modified
         // Unmarked it by saving to a dummy file
         #if defined(__WXMSW__)
-            m_pEdit->SaveFile(wxT("nul"));
+            m_pEdit->SaveFile(wxT_2("nul"));
         #else
-            m_pEdit->SaveFile(wxT("/dev/null"));
+            m_pEdit->SaveFile(wxT_2("/dev/null"));
         #endif
         // reset the undo history to avoid undoing to a blank page
         m_pEdit->EmptyUndoBuffer();
@@ -201,13 +201,13 @@ EditSnippetFrame::EditSnippetFrame(const wxTreeItemId  TreeItemId, int* pRetcode
 
     wxFileConfig& cfgFile = *(GetConfig()->GetCfgFile());
 
-    cfgFile.Read( wxT("EditDlgXpos"),       &GetConfig()->nEditDlgXpos,20);
-    cfgFile.Read( wxT("EditDlgYpos"),       &GetConfig()->nEditDlgYpos,20);
-	cfgFile.Read( wxT("EditDlgWidth"),      &GetConfig()->nEditDlgWidth, 500 ) ;
-	cfgFile.Read( wxT("EditDlgHeight"),     &GetConfig()->nEditDlgHeight, 400 ) ;
-	cfgFile.Read( wxT("EditDlgMaximized"),  &GetConfig()->bEditDlgMaximized, false );
+    cfgFile.Read( wxT_2("EditDlgXpos"),       &GetConfig()->nEditDlgXpos,20);
+    cfgFile.Read( wxT_2("EditDlgYpos"),       &GetConfig()->nEditDlgYpos,20);
+	cfgFile.Read( wxT_2("EditDlgWidth"),      &GetConfig()->nEditDlgWidth, 500 ) ;
+	cfgFile.Read( wxT_2("EditDlgHeight"),     &GetConfig()->nEditDlgHeight, 400 ) ;
+	cfgFile.Read( wxT_2("EditDlgMaximized"),  &GetConfig()->bEditDlgMaximized, false );
 	//SetSize(GetConfig()->nEditDlgWidth, GetConfig()->nEditDlgHeight);
-    LOGIT( _T("EditDlgPosition IN X[%d]Y[%d]Width[%d]Height[%d]"),
+    LOGIT( wxT_2("EditDlgPosition IN X[%d]Y[%d]Width[%d]Height[%d]"),
         GetConfig()->nEditDlgXpos,GetConfig()->nEditDlgYpos,
         GetConfig()->nEditDlgWidth, GetConfig()->nEditDlgHeight );
     SetSize(GetConfig()->nEditDlgXpos, GetConfig()->nEditDlgYpos, GetConfig()->nEditDlgWidth, GetConfig()->nEditDlgHeight);
@@ -254,7 +254,7 @@ void EditSnippetFrame::End_SnippetFrame(int wxID_OKorCANCEL)
     // Called from OnOk/OnCancel routines or OnClose
 
 	// Save the window's size
-	//ConfigManager* cfgMan = Manager::Get()->GetConfigManager(_T("codesnippets"));
+	//ConfigManager* cfgMan = Manager::Get()->GetConfigManager(wxT_2("codesnippets"));
 //    wxFileConfig cfgFile(wxEmptyString,     // appname
 //                        wxEmptyString,      // vendor
 //                        GetConfig()->SettingsSnippetsCfgFullPath,      // local filename
@@ -265,14 +265,14 @@ void EditSnippetFrame::End_SnippetFrame(int wxID_OKorCANCEL)
 
     int x,y,w,h;
     GetPosition(&x,&y); GetSize(&w,&h);
-    cfgFile.Write( wxT("EditDlgXpos"),  x );
-    cfgFile.Write( wxT("EditDlgYpos"),  y );
-    cfgFile.Write( wxT("EditDlgWidth"),  w );
-    cfgFile.Write( wxT("EditDlgHeight"), h );
+    cfgFile.Write( wxT_2("EditDlgXpos"),  x );
+    cfgFile.Write( wxT_2("EditDlgYpos"),  y );
+    cfgFile.Write( wxT_2("EditDlgWidth"),  w );
+    cfgFile.Write( wxT_2("EditDlgHeight"), h );
     #if defined(LOGGING)
-     LOGIT( _T("EditDlgPositin OUT X[%d]Y[%d]Width[%d]Height[%d]"),x,y,w,h );
+     LOGIT( wxT_2("EditDlgPositin OUT X[%d]Y[%d]Width[%d]Height[%d]"),x,y,w,h );
     #endif
-    cfgFile.Write( wxT("EditDlgMaximized"),  false );
+    cfgFile.Write( wxT_2("EditDlgMaximized"),  false );
     cfgFile.Flush();
 
     // If this was an external file, it's already been saved by FileClose()
@@ -322,7 +322,7 @@ void EditSnippetFrame::OnHelp(wxCommandEvent& event)
 // ----------------------------------------------------------------------------
 {
 	// Link to the Wiki which contains information about the available macros
-	wxLaunchDefaultBrowser(_T("http://wiki.codeblocks.org/index.php?title=Builtin_variables"));
+	wxLaunchDefaultBrowser(wxT_2("http://wiki.codeblocks.org/index.php?title=Builtin_variables"));
 }
 
 // ----------------------------------------------------------------------------
@@ -390,7 +390,7 @@ void EditSnippetFrame::OnFileOpen (wxCommandEvent &WXUNUSED(event))
 {
     if (!m_pEdit) return;
     wxString fname;
-    wxFileDialog dlg (this, _T("Open file"), _T(""), _T(""), _T("Any file (*)|*"),
+    wxFileDialog dlg (this, wxT_2("Open file"), wxT_2(""), wxT_2(""), wxT_2("Any file (*)|*"),
                       wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     fname = dlg.GetPath ();
@@ -418,9 +418,9 @@ void EditSnippetFrame::OnFileSave (wxCommandEvent &WXUNUSED(event))
         m_nReturnCode = wxID_OK;
         // Unmarked "modified"  by saving to a dummy file
         #if defined(__WXMSW__)
-            m_pEdit->SaveFile(wxT("nul"));
+            m_pEdit->SaveFile(wxT_2("nul"));
         #else
-            m_pEdit->SaveFile(wxT("/dev/null"));
+            m_pEdit->SaveFile(wxT_2("/dev/null"));
         #endif
 
     }
@@ -432,7 +432,7 @@ void EditSnippetFrame::OnFileSaveAs (wxCommandEvent &WXUNUSED(event))
 {
     if (!m_pEdit) return;
     wxString filename = wxEmptyString;
-    wxFileDialog dlg (this, _T("Save file"), _T(""), _T(""), _T("Any file (*)|*"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    wxFileDialog dlg (this, wxT_2("Save file"), wxT_2(""), wxT_2(""), wxT_2("Any file (*)|*"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (dlg.ShowModal() != wxID_OK) return;
     filename = dlg.GetPath();
     m_pEdit->SaveFile (filename);
@@ -582,7 +582,7 @@ void EditSnippetFrame::OnEditEvent (wxCommandEvent &event)
 void EditSnippetFrame::OnEditEventUI (wxUpdateUIEvent &event)
 // ----------------------------------------------------------------------------
 {
-     //LOGIT( _T("EditSnippetFrame::OnEditEventUI") );
+     //LOGIT( wxT_2("EditSnippetFrame::OnEditEventUI") );
     if (m_pEdit )
     {
         m_pEdit->ProcessEvent (event);

@@ -45,7 +45,7 @@
 // ----------------------------------------------------------------------------
 SettingsDlg::SettingsDlg(wxWindow* parent)
 // ----------------------------------------------------------------------------
-    :SettingsDlgForm(parent ,-1,wxT("User Settings"))
+    :SettingsDlgForm(parent ,-1,wxT_2("User Settings"))
 {
     // move dialog into the parents frame space
     //wxPoint mousePosn = ::wxGetMousePosition();
@@ -53,8 +53,8 @@ SettingsDlg::SettingsDlg(wxWindow* parent)
     GetConfig()->CenterChildOnParent(this);
 
     // Initialize the properties fields
-    m_ExtEditorTextCtrl-> SetValue( wxT("Enter filename of external editor") );
-    m_SnippetFileTextCtrl->SetValue(wxT("Enter Snippets storage Folder") );
+    m_ExtEditorTextCtrl-> SetValue( wxT_2("Enter filename of external editor") );
+    m_SnippetFileTextCtrl->SetValue(wxT_2("Enter Snippets storage Folder") );
 
 	// Put the old external editor filename into the textCtrl
     if ( not GetConfig()->SettingsExternalEditor.IsEmpty() )
@@ -73,9 +73,9 @@ SettingsDlg::SettingsDlg(wxWindow* parent)
     m_MouseDelaylider->SetValue( GetConfig()->MouseContextDelay );
 
     wxString windowState = GetConfig()->GetSettingsWindowState();
-    if ( windowState.Contains(wxT("Floating")) ) {m_RadioFloatBtn->SetValue(true);}
-    if ( windowState.Contains(wxT("Docked")) ) {  m_RadioDockBtn->SetValue(true);}
-    if ( windowState.Contains(wxT("External")) ) {m_RadioExternalBtn->SetValue(true);}
+    if ( windowState.Contains(wxT_2("Floating")) ) {m_RadioFloatBtn->SetValue(true);}
+    if ( windowState.Contains(wxT_2("Docked")) ) {  m_RadioDockBtn->SetValue(true);}
+    if ( windowState.Contains(wxT_2("External")) ) {m_RadioExternalBtn->SetValue(true);}
 
 }
 // ----------------------------------------------------------------------------
@@ -107,14 +107,14 @@ void SettingsDlg::OnOk(wxCommandEvent& event)
     // "Context Menu Delay (millisec)"
     GetConfig()->MouseContextDelay = m_MouseDelaylider->GetValue();
 
-    wxString windowState = wxT("Floating");
-    if (m_RadioFloatBtn->GetValue() )   windowState = wxT("Floating");
-    if (m_RadioDockBtn->GetValue() )    windowState = wxT("Docked");
-    if (m_RadioExternalBtn->GetValue()) windowState = wxT("External");
+    wxString windowState = wxT_2("Floating");
+    if (m_RadioFloatBtn->GetValue() )   windowState = wxT_2("Floating");
+    if (m_RadioDockBtn->GetValue() )    windowState = wxT_2("Docked");
+    if (m_RadioExternalBtn->GetValue()) windowState = wxT_2("External");
     GetConfig()->SettingsWindowState = windowState;
 
     this->EndModal(wxID_OK);
-    LOGIT( _T("OnOK Saving Settings"));
+    LOGIT( wxT_2("OnOK Saving Settings"));
     GetConfig()->SettingsSave();
 }
 // ----------------------------------------------------------------------------
@@ -147,10 +147,10 @@ void SettingsDlg::GetFileName(wxString& newFileName)
 
     // Ask user for filename
     wxFileDialog dlg(this,                      //parent  window
-                 _T("Select file "),             //message
+                 wxT_2("Select file "),             //message
                  wxEmptyString,                 //default directory
                  wxEmptyString,                 //default file
-                 wxT("*.*"),                    //wildcards
+                 wxT_2("*.*"),                    //wildcards
                  wxFD_OPEN | wxFD_FILE_MUST_EXIST );  //style
 
    // move dialog into the parents frame space
@@ -161,7 +161,7 @@ void SettingsDlg::GetFileName(wxString& newFileName)
     newFileName = dlg.GetPath();
 
     #ifdef LOGGING
-     LOGIT( _T("New filename[%s]"), newFileName.GetData() );
+     LOGIT( wxT_2("New filename[%s]"), newFileName.GetData() );
     #endif //LOGGING;
 
 }
@@ -173,7 +173,7 @@ wxString SettingsDlg::AskForPathName()       //(pecan 2006/10/06)
 
     // Ask user for filename
     wxDirDialog dlg(::wxGetTopLevelParent(0),   //parent  window
-                 _T("Select path "),             //message
+                 wxT_2("Select path "),             //message
                  ::wxGetCwd(),                  //default directory
                  wxDD_DEFAULT_STYLE );          //style
 

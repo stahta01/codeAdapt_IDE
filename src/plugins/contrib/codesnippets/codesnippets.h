@@ -229,7 +229,7 @@ class DropTargets: public wxDropTarget
         //Called when the user drops a data object on the target.
         //Return false to veto the operation.
         #ifdef LOGGING
-         LOGIT( wxT("DropTargets:OnDrop") );
+         LOGIT( wxT_2("DropTargets:OnDrop") );
         #endif //LOGGING
         return true;
     }
@@ -257,7 +257,7 @@ class DropTargetsComposite: public wxDataObjectComposite
     bool SetData (const wxDataFormat& format, size_t len, const void *buf)
     {
         m_dataObjectLast = GetObject (format);
-        wxCHECK_MSG ( m_dataObjectLast, FALSE, wxT("unsupported format in wxDataObjectComposite"));
+        wxCHECK_MSG ( m_dataObjectLast, FALSE, wxT_2("unsupported format in wxDataObjectComposite"));
         return m_dataObjectLast->SetData (len, buf);
     }
 
@@ -283,12 +283,12 @@ class DropTargetsComposite: public wxDataObjectComposite
 ////    // constructor
 ////    DropSource (wxDataObject& data, wxWindow* win = NULL)
 ////        :wxDropSource(data, win)
-////        {  //LOGIT( _T("DropSource ctor") );
+////        {  //LOGIT( wxT_2("DropSource ctor") );
 ////        }
 ////
 ////    virtual bool GiveFeedback(wxDragResult WXUNUSED(effect))
 ////        {
-////            LOGIT( _T("DropSource GiveFeedBack"));
+////            LOGIT( wxT_2("DropSource GiveFeedBack"));
 ////            //asm("int3");
 ////            return true;
 ////            //return false;

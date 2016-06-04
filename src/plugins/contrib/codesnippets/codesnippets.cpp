@@ -64,7 +64,7 @@
 namespace
 {
     // Register the plugin
-    PluginRegistrant<CodeSnippets> reg(_T("CodeSnippets"));
+    PluginRegistrant<CodeSnippets> reg(wxT_2("CodeSnippets"));
 
     // Duplicated from OpenFilesList plugin in order to drag out
     // full filenames from CB tree items to CodeSnippets tree
@@ -112,7 +112,7 @@ void CodeSnippets::OnAttach()
 
     // Do not allow a secondary plugin enable
     if (g_pConfig){
-        wxMessageBox(wxT("CodeSnippets will enable on CodeBlocks restart."));
+        wxMessageBox(wxT_2("CodeSnippets will enable on CodeBlocks restart."));
         return;
     }
 
@@ -124,7 +124,7 @@ void CodeSnippets::OnAttach()
 
     // initialize version and logging
     m_pAppWin = Manager::Get()->GetAppWindow();
-    GetConfig()->AppName = wxT("codesnippets");
+    GetConfig()->AppName = wxT_2("codesnippets");
     GetConfig()->pMainFrame  = Manager::Get()->GetAppWindow() ;
     GetConfig()->m_pMenuBar = Manager::Get()->GetAppFrame()->GetMenuBar();
 
@@ -132,11 +132,11 @@ void CodeSnippets::OnAttach()
 
     #if LOGGING
      wxLog::EnableLogging(true);
-     m_pLog = new wxLogWindow( m_pAppWin, _T(" CodeSnippets Plugin"),true,false);
+     m_pLog = new wxLogWindow( m_pAppWin, wxT_2(" CodeSnippets Plugin"),true,false);
      wxLog::SetActiveTarget( m_pLog);
      m_pLog->Flush();
      m_pLog->GetFrame()->SetSize(20,30,600,300);
-     LOGIT( _T("CodeSnippets Plugin Logging Started[%s]"),pgmVersion.GetVersion().c_str());
+     LOGIT( wxT_2("CodeSnippets Plugin Logging Started[%s]"),pgmVersion.GetVersion().c_str());
     #endif
 
     // Set current plugin version
@@ -150,32 +150,32 @@ void CodeSnippets::OnAttach()
     //memorize the key file name as {%HOME%}\codesnippets.ini
     GetConfig()->m_ConfigFolder = stdPaths.GetUserDataDir();
     //-wxString m_ExecuteFolder = stdPaths.GetDataDir();
-     LOGIT( _T("Argv[0][%s] Cwd[%s]"), wxTheApp->argv[0], ::wxGetCwd().GetData() );
+     LOGIT( wxT_2("Argv[0][%s] Cwd[%s]"), wxTheApp->argv[0], ::wxGetCwd().GetData() );
     GetConfig()->m_ExecuteFolder = FindAppPath(wxTheApp->argv[0], ::wxGetCwd(), wxEmptyString);
 
     //GTK GetConfigFolder is returning double "//?, eg, "/home/pecan//.codeblocks"
     // remove the double //s from filename //+v0.4.11
-    GetConfig()->m_ConfigFolder.Replace(_T("//"),_T("/"));
-    GetConfig()->m_ExecuteFolder.Replace(_T("//"),_T("/"));
-    LOGIT(wxT("CfgFolder[%s]"),GetConfig()->m_ConfigFolder.c_str());
-    LOGIT(wxT("ExecFolder[%s]"),GetConfig()->m_ExecuteFolder.c_str());
+    GetConfig()->m_ConfigFolder.Replace(wxT_2("//"),wxT_2("/"));
+    GetConfig()->m_ExecuteFolder.Replace(wxT_2("//"),wxT_2("/"));
+    LOGIT(wxT_2("CfgFolder[%s]"),GetConfig()->m_ConfigFolder.c_str());
+    LOGIT(wxT_2("ExecFolder[%s]"),GetConfig()->m_ExecuteFolder.c_str());
 
     // get the CodeBlocks "personality" argument
     wxString m_Personality = Manager::Get()->GetPersonalityManager()->GetPersonality();
-    if (m_Personality == wxT("default")) m_Personality = wxEmptyString;
-     LOGIT( _T("Personality is[%s]"), m_Personality.GetData() );
+    if (m_Personality == wxT_2("default")) m_Personality = wxEmptyString;
+     LOGIT( wxT_2("Personality is[%s]"), m_Personality.GetData() );
 
     // if codesnippets.ini is in the executable folder, use it
     // else use the default config folder
     wxString m_CfgFilenameStr = GetConfig()->m_ExecuteFolder + wxFILE_SEP_PATH;
-    if (not m_Personality.IsEmpty()) m_CfgFilenameStr << m_Personality + wxT(".") ;
-    m_CfgFilenameStr << GetConfig()->AppName + _T(".ini");
+    if (not m_Personality.IsEmpty()) m_CfgFilenameStr << m_Personality + wxT_2(".") ;
+    m_CfgFilenameStr << GetConfig()->AppName + wxT_2(".ini");
 
     if (::wxFileExists(m_CfgFilenameStr)) {;/*OK Use exe path*/}
     else // use the default.conf folder
     {   m_CfgFilenameStr = GetConfig()->m_ConfigFolder + wxFILE_SEP_PATH;
-        if (not m_Personality.IsEmpty()) m_CfgFilenameStr <<  m_Personality + wxT(".") ;
-        m_CfgFilenameStr << GetConfig()->AppName + _T(".ini");
+        if (not m_Personality.IsEmpty()) m_CfgFilenameStr <<  m_Personality + wxT_2(".") ;
+        m_CfgFilenameStr << GetConfig()->AppName + wxT_2(".ini");
         // if default doesn't exist, create it
         if (not ::wxDirExists(GetConfig()->m_ConfigFolder))
             ::wxMkdir(GetConfig()->m_ConfigFolder);
@@ -184,7 +184,7 @@ void CodeSnippets::OnAttach()
     // Initialize Globals
     // ---------------------------------------
     GetConfig()->SettingsSnippetsCfgFullPath = m_CfgFilenameStr;
-     LOGIT( _T("SettingsSnippetsCfgFullPath[%s]"),GetConfig()->SettingsSnippetsCfgFullPath.c_str() );
+     LOGIT( wxT_2("SettingsSnippetsCfgFullPath[%s]"),GetConfig()->SettingsSnippetsCfgFullPath.c_str() );
     GetConfig()->SettingsLoad();
 
     // Set Drop targets so we can drag items in/out of the Project/Files Tree ctrls
@@ -228,7 +228,7 @@ void CodeSnippets::OnAttach()
     // ---------------------------------------
     CreateSnippetWindow();
 
-    LOGIT(wxT("idViewSnippets[%d]"), idViewSnippets);
+    LOGIT(wxT_2("idViewSnippets[%d]"), idViewSnippets);
     // ---------------------
 	// register event sink
     // ---------------------
@@ -253,7 +253,7 @@ void CodeSnippets::OnRelease(bool appShutDown)
     // ------------------------------------------------------------
     // watch out, CodeBlocks can enter this routine multiple times
     // ------------------------------------------------------------
-    LOGIT( _T("CodeSnippets OnRelease[%s]"), appShutDown?wxT("true"):wxT("false") );
+    LOGIT( wxT_2("CodeSnippets OnRelease[%s]"), appShutDown?wxT_2("true"):wxT_2("false") );
     if (GetConfig()->m_appIsShutdown)
         return;
 
@@ -266,9 +266,9 @@ void CodeSnippets::OnRelease(bool appShutDown)
     // Unmap and delete the temporary memory mapped communications file
     ReleaseMemoryMappedFile();
 
-    wxString myPid(wxString::Format(wxT("%lu"),::wxGetProcessId()));
+    wxString myPid(wxString::Format(wxT_2("%lu"),::wxGetProcessId()));
     wxString tempDir = GetConfig()->GetTempDir();
-    wxString mappedFileName = tempDir + wxT("/cbsnippetspid") +myPid+ wxT(".plg");
+    wxString mappedFileName = tempDir + wxT_2("/cbsnippetspid") +myPid+ wxT_2(".plg");
     bool result = ::wxRemoveFile( mappedFileName );
     wxUnusedVar(result);
 
@@ -336,7 +336,7 @@ void CodeSnippets::BuildMenu(wxMenuBar* menuBar)
 		if (not isSet)
             viewMenu->AppendCheckItem(idViewSnippets, _("Code snippets"), _("Toggle displaying the code snippets."));
 	}while(0);
-	LOGIT(wxT("Menubar[%p]idViewSnippets[%d]"),menuBar, idViewSnippets);
+	LOGIT(wxT_2("Menubar[%p]idViewSnippets[%d]"),menuBar, idViewSnippets);
 }
 // ----------------------------------------------------------------------------
 void CodeSnippets::OnDisable(bool appShutDown)
@@ -389,10 +389,10 @@ void CodeSnippets::OnAppStartupDone(CodeBlocksEvent& event)
             #if defined(__WXMSW__)
                 SetTreeCtrlHandler( m_pOpenFilesList,  wxEVT_COMMAND_TREE_BEGIN_DRAG );
             #endif
-            LOGIT( _T("OpenFilesList found @[%p]"), m_pOpenFilesList);
+            LOGIT( wxT_2("OpenFilesList found @[%p]"), m_pOpenFilesList);
         }
         else{
-            LOGIT( _T("OpenFilesList *NOT* found."));
+            LOGIT( wxT_2("OpenFilesList *NOT* found."));
         }
     }
     event.Skip();
@@ -403,7 +403,7 @@ void CodeSnippets::CreateSnippetWindow()
 {
     // Launch the executable if user specified "External" WindowState
 
-   	if ( GetConfig()->GetSettingsWindowState().Contains(wxT("External")) )
+   	if ( GetConfig()->GetSettingsWindowState().Contains(wxT_2("External")) )
     {
         /*bool result =*/ LaunchExternalSnippets();
         return;
@@ -422,7 +422,7 @@ void CodeSnippets::CreateSnippetWindow()
    }
 
 	CodeBlocksDockEvent evt(cbEVT_ADD_DOCK_WINDOW);
-	evt.name = _T("CodeSnippetsPane");
+	evt.name = wxT_2("CodeSnippetsPane");
 	evt.title = _(" CodeSnippets");
 	evt.pWindow = GetSnippetsWindow();
 	evt.desiredSize.Set(300, 400);
@@ -436,13 +436,13 @@ void CodeSnippets::CreateSnippetWindow()
         evt.stretch = true; //must be true for Floating window (GTK)
 ////    #endif
 
-	if ( GetConfig()->GetSettingsWindowState().Contains(wxT("Docked")) )
+	if ( GetConfig()->GetSettingsWindowState().Contains(wxT_2("Docked")) )
 	{
         evt.dockSide = CodeBlocksDockEvent::dsLeft;
         evt.stretch = true;
 	}
 
-     //LOGIT( _T("CreateSnippetWindow[%s]"), GetConfig()->GetSettingsWindowState().c_str() );
+     //LOGIT( wxT_2("CreateSnippetWindow[%s]"), GetConfig()->GetSettingsWindowState().c_str() );
 	Manager::Get()->ProcessEvent(evt);
 
 
@@ -464,7 +464,7 @@ void CodeSnippets::CreateSnippetWindow()
         }
     #endif
 
-    //    LOGIT( _T("[%s]X[%d]Y[%d]Width[%d]Height[%d]"),
+    //    LOGIT( wxT_2("[%s]X[%d]Y[%d]Width[%d]Height[%d]"),
     //            GetSnippetsWindow()->GetParent()->GetName().c_str(),
     //            GetConfig()->windowXpos, GetConfig()->windowYpos,
     //            GetConfig()->windowWidth, GetConfig()->windowHeight);
@@ -472,7 +472,7 @@ void CodeSnippets::CreateSnippetWindow()
     //wxWindow* p = GetSnippetsWindow()->GetParent();
     //int x,y,w,h;
     //p->GetPosition(&x,&y); p->GetSize(&w,&h);
-    //LOGIT(  _T("WinPostCreate[%s]X[%d]Y[%d]Width[%d]Height[%d]"), p->GetName().c_str(),x,y,w,h);
+    //LOGIT(  wxT_2("WinPostCreate[%s]X[%d]Y[%d]Width[%d]Height[%d]"), p->GetName().c_str(),x,y,w,h);
     //
     // Set pgm icon again, but from converted images (NB: doesn't work on wxAUI windows)
     //if (GetConfig()->IsFloatingWindow())
@@ -505,8 +505,8 @@ bool CodeSnippets::ReleaseMemoryMappedFile()
     delete m_pMappedFile;
     m_pMappedFile = 0;
     wxString tempDir = GetConfig()->GetTempDir();
-    wxString myPid(wxString::Format(wxT("%lu"),::wxGetProcessId()));
-    wxString mappedFileName = tempDir + wxT("/cbsnippetspid") +myPid+ wxT(".plg");
+    wxString myPid(wxString::Format(wxT_2("%lu"),::wxGetProcessId()));
+    wxString mappedFileName = tempDir + wxT_2("/cbsnippetspid") +myPid+ wxT_2(".plg");
     bool result = ::wxRemoveFile( mappedFileName );
     return result;
 }
@@ -524,21 +524,21 @@ void CodeSnippets::OnViewSnippets(wxCommandEvent& event)
         // ---------------------------------------
         // Check for snippet independent window
         // ---------------------------------------
-    if ( GetConfig()->GetSettingsWindowState().Contains(wxT("External")) )
+    if ( GetConfig()->GetSettingsWindowState().Contains(wxT_2("External")) )
     {
-         LOGIT( _T("OnView External m_ExternalPid[%lu] Checked[%d]"), m_ExternalPid, event.IsChecked() );
+         LOGIT( wxT_2("OnView External m_ExternalPid[%lu] Checked[%d]"), m_ExternalPid, event.IsChecked() );
         if ( (not m_ExternalPid) && event.IsChecked() )
         {
             // if open dock window, close it
             if ( GetSnippetsWindow()) CloseDockWindow();
             CreateSnippetWindow();
-            LOGIT( _T("m_ExternalPid[%lu]"), m_ExternalPid );
+            LOGIT( wxT_2("m_ExternalPid[%lu]"), m_ExternalPid );
             return;
         }
         if ( m_ExternalPid && (not event.IsChecked()) )
         {   // user closing external snippets with View/Snippets menu item
             // Signal, via mapped file, external snippets to terminate
-            // LOGIT( _T("m_ExternalPid[%lu]"), m_ExternalPid );
+            // LOGIT( wxT_2("m_ExternalPid[%lu]"), m_ExternalPid );
             TellExternalSnippetsToTerminate();
             ReleaseMemoryMappedFile();
             m_ExternalPid = 0;
@@ -560,8 +560,8 @@ void CodeSnippets::OnViewSnippets(wxCommandEvent& event)
         CreateSnippetWindow();
     }
 
-    LOGIT( _T("OnView [%s] Checked[%d] IsShown[%d]"),
-            GetConfig()->IsFloatingWindow()?wxT("float"):wxT("dock"),
+    LOGIT( wxT_2("OnView [%s] Checked[%d] IsShown[%d]"),
+            GetConfig()->IsFloatingWindow()?wxT_2("float"):wxT_2("dock"),
             event.IsChecked(),
             IsWindowReallyShown(GetSnippetsWindow())
             );
@@ -581,7 +581,7 @@ void CodeSnippets::OnViewSnippets(wxCommandEvent& event)
                 GetConfig()->m_pEvtCloseConnect = 0;
             }
 
-            LOGIT( _T("OnViewSnippets Saving Settings on HideWindow"));
+            LOGIT( wxT_2("OnViewSnippets Saving Settings on HideWindow"));
             GetConfig()->SettingsSave();
         }
     }while(0);
@@ -611,12 +611,12 @@ void CodeSnippets::OnUpdateUI(wxUpdateUIEvent& /*event*/)
 
     wxMenuBar* pbar = Manager::Get()->GetAppFrame()->GetMenuBar();
 
-    LOGIT( _T("OnUpdateUI Window[%p],Pid[%d]"), GetSnippetsWindow(), m_ExternalPid );
+    LOGIT( wxT_2("OnUpdateUI Window[%p],Pid[%d]"), GetSnippetsWindow(), m_ExternalPid );
 
     // check for externally started CodeSnippets
     if (not GetSnippetsWindow() && (not m_ExternalPid) )
     {   pbar->Check(idViewSnippets, false);
-        LOGIT( _T("OnUpdateUI Check[%s]"), wxT("to OFF") );
+        LOGIT( wxT_2("OnUpdateUI Check[%s]"), wxT_2("to OFF") );
          return;
     }
     // check if external CodeSnippets terminated without us
@@ -701,7 +701,7 @@ void CodeSnippets::OnIdle(wxIdleEvent& event)
             //-wxMenuBar* pbar = Manager::Get()->GetAppWindow()->GetMenuBar();
             //-if ( pbar->IsChecked(idViewSnippets) )
             {   CreateSnippetWindow();
-                bool bExternalRequest = GetConfig()->GetSettingsWindowState().Contains(wxT("External"));
+                bool bExternalRequest = GetConfig()->GetSettingsWindowState().Contains(wxT_2("External"));
                 if (not bExternalRequest)
                 {
                     CodeBlocksDockEvent evt( cbEVT_SHOW_DOCK_WINDOW );
@@ -755,7 +755,7 @@ void CodeSnippets::CloseDockWindow()
 
         GetSnippetsWindow()->Destroy();
         SetSnippetsWindow(0);
-        LOGIT( _T("CloseDockWindow:SnippetsWindow [%s]"), bOpen?wxT("Open"):wxT("Closed") );
+        LOGIT( wxT_2("CloseDockWindow:SnippetsWindow [%s]"), bOpen?wxT_2("Open"):wxT_2("Closed") );
     }
 
 }
@@ -764,7 +764,7 @@ void CodeSnippets::OnSwitchViewLayout(CodeBlocksLayoutEvent& event)
 // ----------------------------------------------------------------------------
 {
     //event.layout
-    LOGIT( _T("cbEVT_SWITCH_LAYOUT[%s]"),event.layout.c_str() );
+    LOGIT( wxT_2("cbEVT_SWITCH_LAYOUT[%s]"),event.layout.c_str() );
     event.Skip();
 }
 // ----------------------------------------------------------------------------
@@ -772,7 +772,7 @@ void CodeSnippets::OnSwitchedViewLayout(CodeBlocksLayoutEvent& event)
 // ----------------------------------------------------------------------------
 {
     //event.layout
-    LOGIT( _T("cbEVT_SWITCHED_LAYOUT[%s]"),event.layout.c_str() );
+    LOGIT( wxT_2("cbEVT_SWITCHED_LAYOUT[%s]"),event.layout.c_str() );
     event.Skip();
 }
 // ----------------------------------------------------------------------------
@@ -784,7 +784,7 @@ void CodeSnippets::OnDockWindowVisability(CodeBlocksDockEvent& event)
 
     //event.layout
     //BUG: the event.GetId() is alway null. It should be the window pointer.
-    LOGIT( _T("cbEVT_DOCK_WINDOW_VISIBILITY[%p]"),event.GetId() );
+    LOGIT( wxT_2("cbEVT_DOCK_WINDOW_VISIBILITY[%p]"),event.GetId() );
     wxMenuBar* pbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     if (not IsWindowReallyShown(GetSnippetsWindow()))
         pbar->Check(idViewSnippets, false);
@@ -825,19 +825,19 @@ bool CodeSnippets::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& files)
     // This is the drop routine for the Management Project/Files tree controls
     // It's used to pass files off to CB MainFrame's drop method
     #ifdef LOGGING
-     LOGIT( _T("CodeSnippets::OnDropFiles Entered") );
+     LOGIT( wxT_2("CodeSnippets::OnDropFiles Entered") );
     #endif //LOGGING
     wxDropTarget*  pMainDrpTgt = GetConfig()->GetMainFrame()->GetDropTarget();
     if (not pMainDrpTgt) {
         #ifdef LOGGING
-         LOGIT( _T("CodeSnippets::OnDropFiles Error pMainDrpTgt is %p"),pMainDrpTgt );
+         LOGIT( wxT_2("CodeSnippets::OnDropFiles Error pMainDrpTgt is %p"),pMainDrpTgt );
         #endif //LOGGING
         return false;
     }//fi
     // invoke MainFrame wxFilesDropTarget
     bool bRC = ((wxMyFileDropTarget*)pMainDrpTgt)->OnDropFiles(x, y, files);
     #ifdef LOGGING
-     LOGIT( _T("CodeSnippets::OnDropFiles MainFrame returned %s"), bRC?wxT("True"):wxT("False") );
+     LOGIT( wxT_2("CodeSnippets::OnDropFiles MainFrame returned %s"), bRC?wxT_2("True"):wxT_2("False") );
     #endif //LOGGING
     return bRC;
 }
@@ -855,7 +855,7 @@ bool CodeSnippets::GetTreeSelectionData(wxTreeCtrl* pTree, wxTreeItemId itemID, 
     else{ return false; }
 
     #ifdef LOGGING
-     LOGIT( _T("Focused Tree:%p item[%p]"),pTree, itemID.IsOk()?itemID.m_pItem:0 );
+     LOGIT( wxT_2("Focused Tree:%p item[%p]"),pTree, itemID.IsOk()?itemID.m_pItem:0 );
     #endif //LOGGING
 
     // check for a file selection in the treeCtrl
@@ -864,7 +864,7 @@ bool CodeSnippets::GetTreeSelectionData(wxTreeCtrl* pTree, wxTreeItemId itemID, 
     if ( itemID.IsOk()) sel = itemID;
     if (not sel) {return false;}
     #ifdef LOGGING
-     LOGIT( _T("Selection:%p"), sel.m_pItem);
+     LOGIT( wxT_2("Selection:%p"), sel.m_pItem);
     #endif //LOGGING
     // -------------------------
     // Opened Files Tree
@@ -945,7 +945,7 @@ wxArrayString* CodeSnippets::TextToFilenames(const wxString& str)
     // verify filenames exists
     for (size_t i=0;i<pFilenames->GetCount(); i++ ) {
         #ifdef LOGGING
-         LOGIT( wxT("CodeSnippets::OnPaste:Text converted to filename %d:[%s]"), i,pFilenames->Item(i).GetData());
+         LOGIT( wxT_2("CodeSnippets::OnPaste:Text converted to filename %d:[%s]"), i,pFilenames->Item(i).GetData());
         #endif //LOGGING
         if (not wxFileExists(pFilenames->Item(i))) {
              pFilenames->RemoveAt(i);
@@ -976,7 +976,7 @@ DropTargets::DropTargets (CodeSnippets* pcbDndExtn)
     data->Add ((wxDataObjectSimple*)m_text, true); // set as preferred
     SetDataObject (data);
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::ctor set") );
+     LOGIT( wxT_2("DropTargets::ctor set") );
     #endif //LOGGING
 
 }
@@ -994,7 +994,7 @@ wxDragResult DropTargets::OnData (wxCoord x, wxCoord y, wxDragResult def)
 
     // This is a composite drop target; handles both text and filenames
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnData") );
+     LOGIT( wxT_2("DropTargets::OnData") );
     #endif //LOGGING
     if (!GetData()) return wxDragNone;
 
@@ -1018,7 +1018,7 @@ bool DropTargets::OnDataFiles (wxCoord WXUNUSED(x), wxCoord WXUNUSED(y),
 // ----------------------------------------------------------------------------
 {
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnDataFiles") );
+     LOGIT( wxT_2("DropTargets::OnDataFiles") );
     #endif //LOGGING
     m_pcbDndExtn->OnDropFiles(1, 1, filenames);
     return TRUE;
@@ -1030,7 +1030,7 @@ bool DropTargets::OnDataText (wxCoord x, wxCoord y, const wxString& data)
 {
     // convert text string to filename array and drop on target
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnDataText") );
+     LOGIT( wxT_2("DropTargets::OnDataText") );
     #endif //LOGGING
     bool ok;
     wxArrayString* pFilenames = m_pcbDndExtn->TextToFilenames(data);
@@ -1053,7 +1053,7 @@ wxDragResult DropTargets::OnDragOver (wxCoord x, wxCoord y, wxDragResult def)
     // this calls functions return the suggested return value def.
 
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnDragOver") );
+     LOGIT( wxT_2("DropTargets::OnDragOver") );
     #endif //LOGGING
     return wxDragCopy;
 }
@@ -1068,7 +1068,7 @@ wxDragResult DropTargets::OnEnter (wxCoord x, wxCoord y, wxDragResult def)
     //Better stated: Called when the mouse is down and dragging inside the drop target.
 
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnEnter") );
+     LOGIT( wxT_2("DropTargets::OnEnter") );
     #endif //LOGGING
     return wxDragCopy;
 }
@@ -1083,7 +1083,7 @@ void DropTargets::OnLeave()
     //Actually: when the mouse leaves the window with the drop target.
 
     #ifdef LOGGING
-     LOGIT( wxT("DropTargets::OnLeave") );
+     LOGIT( wxT_2("DropTargets::OnLeave") );
     #endif //LOGGING
 }
 // ----------------------------------------------------------------------------
@@ -1108,7 +1108,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
     wxTreeItemId treeItemID = event.GetItem();
 
     #ifdef LOGGING
-    	 //LOGIT( wxT("CodeSnippets::OnTreeDragEvent %p"), pTree );
+    	 //LOGIT( wxT_2("CodeSnippets::OnTreeDragEvent %p"), pTree );
     #endif //LOGGING
 
     // -----------------------
@@ -1117,7 +1117,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
     if (event.GetEventType() == wxEVT_COMMAND_TREE_BEGIN_DRAG)
     {
         #ifdef LOGGING
-         LOGIT( _T("Plugin_TREE_BEGIN_DRAG [%p][%s] itemID[%p]"),
+         LOGIT( wxT_2("Plugin_TREE_BEGIN_DRAG [%p][%s] itemID[%p]"),
             pTree, pTree->GetName().c_str(),
             treeItemID.m_pItem  );
         #endif //LOGGING
@@ -1145,7 +1145,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
     if (event.GetEventType() == wxEVT_COMMAND_TREE_END_DRAG)
     {
         #ifdef LOGGING
-         LOGIT( _T("Plugin_TREE_END_DRAG [%p][%s]"), pTree, pTree->GetName().c_str() );
+         LOGIT( wxT_2("Plugin_TREE_END_DRAG [%p][%s]"), pTree, pTree->GetName().c_str() );
         #endif //LOGGING
 
         m_TreeText = wxEmptyString;
@@ -1160,7 +1160,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
     {
         //user has dragged mouse out of Management/File window
         #ifdef LOGGING
-         //LOGIT( _T("MOUSE EVT_LEAVE_WINDOW") );
+         //LOGIT( wxT_2("MOUSE EVT_LEAVE_WINDOW") );
         #endif //LOGGING
 
         // Left mouse key must be down (dragging)
@@ -1169,13 +1169,13 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
         if ( m_TreeText.IsEmpty()) return;
 
         #ifdef LOGGING
-         LOGIT( _T("TREE_LEAVE_WINDOW [%p][%s]"), pTree, pTree->GetName().c_str() );
+         LOGIT( wxT_2("TREE_LEAVE_WINDOW [%p][%s]"), pTree, pTree->GetName().c_str() );
         #endif //LOGGING
 
         #if defined(BUILDING_PLUGIN)
             // substitute any $(macro) text
             Manager::Get()->GetMacrosManager()->ReplaceMacros(m_TreeText);
-            LOGIT( _T("$macros substitute[%s]"),m_TreeText.c_str() );
+            LOGIT( wxT_2("$macros substitute[%s]"),m_TreeText.c_str() );
         #endif
 
         // we now have data, create both a simple text and filename drop source
@@ -1193,7 +1193,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
             // create the drop source containing both data types
         wxDropSource source( *data, (wxWindow*)event.GetEventObject()  );
         #ifdef LOGGING
-         LOGIT( _T("DropSource Text[%s],File[%s]"),
+         LOGIT( wxT_2("DropSource Text[%s],File[%s]"),
                     textData->GetText().GetData(),
                     fileData->GetFilenames().Item(0).GetData() );
         #endif //LOGGING
@@ -1208,14 +1208,14 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
             wxString pc;
             switch ( result )
             {
-                case wxDragError:   pc = _T("Error!");    break;
-                case wxDragNone:    pc = _T("Nothing");   break;
-                case wxDragCopy:    pc = _T("Copied");    break;
-                case wxDragMove:    pc = _T("Moved");     break;
-                case wxDragCancel:  pc = _T("Cancelled"); break;
-                default:            pc = _T("Huh?");      break;
+                case wxDragError:   pc = wxT_2("Error!");    break;
+                case wxDragNone:    pc = wxT_2("Nothing");   break;
+                case wxDragCopy:    pc = wxT_2("Copied");    break;
+                case wxDragMove:    pc = wxT_2("Moved");     break;
+                case wxDragCancel:  pc = wxT_2("Cancelled"); break;
+                default:            pc = wxT_2("Huh?");      break;
             }
-            LOGIT( wxT("CodeSnippets::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
+            LOGIT( wxT_2("CodeSnippets::OnLeftDown DoDragDrop returned[%s]"),pc.GetData() );
         #else
             wxUnusedVar(result);
         #endif
@@ -1233,7 +1233,7 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
         {
             //send Mouse LeftKeyUp to Tree Control window
             #ifdef LOGGING
-             LOGIT( _T("Sending Mouse LeftKeyUp[%p][%s]"), m_pMgtTreeBeginDrag, m_pMgtTreeBeginDrag->GetName().c_str() );
+             LOGIT( wxT_2("Sending Mouse LeftKeyUp[%p][%s]"), m_pMgtTreeBeginDrag, m_pMgtTreeBeginDrag->GetName().c_str() );
             #endif //LOGGING
 
             // move mouse into the Tree control
@@ -1262,8 +1262,8 @@ void CodeSnippets::OnTreeDragEvent(wxTreeEvent& event)
                 GdkDisplay* display = gdk_display_get_default ();
                 int xx=0,yy=0;
                 GdkWindow* pGdkWindow = gdk_display_get_window_at_pointer( display, &xx, &yy);
-                // LOGIT(wxT("Tree[%p][%d %d]"), m_pEvtTreeCtrlBeginDrag,m_TreeMousePosn.x, m_TreeMousePosn.y);
-                // LOGIT(wxT("gdk [%p][%d %d]"), pWindow, xx, yy);
+                // LOGIT(wxT_2("Tree[%p][%d %d]"), m_pEvtTreeCtrlBeginDrag,m_TreeMousePosn.x, m_TreeMousePosn.y);
+                // LOGIT(wxT_2("gdk [%p][%d %d]"), pWindow, xx, yy);
                 GdkEventButton evb;
                 memset(&evb, 0, sizeof(evb));
                 evb.type = GDK_BUTTON_RELEASE;
@@ -1319,7 +1319,7 @@ void CodeSnippets::SetTreeCtrlHandler(wxWindow *p, WXTYPE eventType)
 	if (!p ) return;		// sanity check
 
     #ifdef LOGGING
-	 LOGIT(wxT("CodeSnippets::SetTreeCtrlHandler[%s] %p"), p->GetName().c_str(),p);
+	 LOGIT(wxT_2("CodeSnippets::SetTreeCtrlHandler[%s] %p"), p->GetName().c_str(),p);
     #endif //LOGGING
 
     p->Connect(wxEVT_COMMAND_TREE_BEGIN_DRAG,
@@ -1339,7 +1339,7 @@ void CodeSnippets::RemoveTreeCtrlHandler(wxWindow *p, WXTYPE eventType)
 	if (!p ) return;		// already attached !!!
 
     #ifdef LOGGING
-	 LOGIT(wxT("CodeSnippets::Detach - detaching to [%s] %p"), p->GetName().c_str(),p);
+	 LOGIT(wxT_2("CodeSnippets::Detach - detaching to [%s] %p"), p->GetName().c_str(),p);
     #endif //LOGGING
 
     p->Disconnect(wxEVT_COMMAND_TREE_BEGIN_DRAG,       //eg.,wxEVT_LEAVE_WINDOW,
@@ -1381,16 +1381,16 @@ wxString CodeSnippets::FindAppPath(const wxString& argv0, const wxString& cwd, c
     wxString argv0Str = argv0;
     #if defined(__WXMSW__)
         do{
-            if (argv0Str.Contains(wxT(".exe")) ) break;
-            if (argv0Str.Contains(wxT(".bat")) ) break;
-            if (argv0Str.Contains(wxT(".cmd")) ) break;
-            argv0Str.Append(wxT(".exe"));
+            if (argv0Str.Contains(wxT_2(".exe")) ) break;
+            if (argv0Str.Contains(wxT_2(".bat")) ) break;
+            if (argv0Str.Contains(wxT_2(".cmd")) ) break;
+            argv0Str.Append(wxT_2(".exe"));
         }while(0);
     #endif
 
     if (wxIsAbsolutePath(argv0Str))
     {
-        LOGIT( _T("FindAppPath: AbsolutePath[%s]"), wxPathOnly(argv0Str).GetData() );
+        LOGIT( wxT_2("FindAppPath: AbsolutePath[%s]"), wxPathOnly(argv0Str).GetData() );
         return wxPathOnly(argv0Str);
     }
     else
@@ -1403,7 +1403,7 @@ wxString CodeSnippets::FindAppPath(const wxString& argv0, const wxString& cwd, c
         str = currentDir + argv0Str;
         if (wxFileExists(str))
         {
-            LOGIT( _T("FindAppPath: RelativePath[%s]"), wxPathOnly(str).GetData() );
+            LOGIT( wxT_2("FindAppPath: RelativePath[%s]"), wxPathOnly(str).GetData() );
             return wxPathOnly(str);
         }
     }
@@ -1412,16 +1412,16 @@ wxString CodeSnippets::FindAppPath(const wxString& argv0, const wxString& cwd, c
     // Search PATH.
 
     wxPathList pathList;
-    pathList.AddEnvList(wxT("PATH"));
+    pathList.AddEnvList(wxT_2("PATH"));
     str = pathList.FindAbsoluteValidPath(argv0Str);
     if (!str.IsEmpty())
     {
-        LOGIT( _T("FindAppPath: SearchPath[%s]"), wxPathOnly(str).GetData() );
+        LOGIT( wxT_2("FindAppPath: SearchPath[%s]"), wxPathOnly(str).GetData() );
         return wxPathOnly(str);
     }
 
     // Failed
-     LOGIT(  _T("FindAppPath: Failed, returning cwd") );
+     LOGIT(  wxT_2("FindAppPath: Failed, returning cwd") );
     return wxEmptyString;
     //return cwd;
 }
@@ -1433,25 +1433,25 @@ int CodeSnippets::LaunchProcess(const wxString& cmd, const wxString& cwd)
     #if defined(__WXMSW__)
         // Append DLL folder to MSW path
         wxString mswPath;
-        wxGetEnv(wxT("PATH"),&mswPath);
-        mswPath = mswPath + wxT(";") + GetConfig()->m_ExecuteFolder;
-        wxSetEnv(_T("PATH"), mswPath);
-        wxGetEnv(wxT("PATH"),&mswPath);
-         LOGIT( _T("Path set to[%s]"), mswPath.c_str() );
+        wxGetEnv(wxT_2("PATH"),&mswPath);
+        mswPath = mswPath + wxT_2(";") + GetConfig()->m_ExecuteFolder;
+        wxSetEnv(wxT_2("PATH"), mswPath);
+        wxGetEnv(wxT_2("PATH"),&mswPath);
+         LOGIT( wxT_2("Path set to[%s]"), mswPath.c_str() );
     #endif
 
     #ifndef __WXMSW__
         // setup dynamic linker path
         #if defined(__APPLE__) && defined(__MACH__)
-            wxSetEnv(_T("DYLD_LIBRARY_PATH"), _T(".:$DYLD_LIBRARY_PATH"));
+            wxSetEnv(wxT_2("DYLD_LIBRARY_PATH"), wxT_2(".:$DYLD_LIBRARY_PATH"));
         #else   // it's linux
-            //wxString ldLibraryPath = wxT(".:");
-            wxString ldLibraryPath = ::wxPathOnly( cmd ) + wxT("/");
-            if ( wxDirExists( ldLibraryPath + wxT("./lib")) ) ldLibraryPath << wxT("./lib");
-            if ( wxDirExists( ldLibraryPath + wxT("../lib")) ) ldLibraryPath << wxT("../lib");
-            ldLibraryPath << wxT(":$LD_LIBRARY_PATH");
-            wxSetEnv( _T("LD_LIBRARY_PATH"), ldLibraryPath );
-            wxGetEnv( _T("LD_LIBRARY_PATH"), &ldLibraryPath );
+            //wxString ldLibraryPath = wxT_2(".:");
+            wxString ldLibraryPath = ::wxPathOnly( cmd ) + wxT_2("/");
+            if ( wxDirExists( ldLibraryPath + wxT_2("./lib")) ) ldLibraryPath << wxT_2("./lib");
+            if ( wxDirExists( ldLibraryPath + wxT_2("../lib")) ) ldLibraryPath << wxT_2("../lib");
+            ldLibraryPath << wxT_2(":$LD_LIBRARY_PATH");
+            wxSetEnv( wxT_2("LD_LIBRARY_PATH"), ldLibraryPath );
+            wxGetEnv( wxT_2("LD_LIBRARY_PATH"), &ldLibraryPath );
             Manager::Get()->GetLogManager()->DebugLog(wxString::Format( _("CodeSnippets CWD: %s"), cwd.c_str()) );
             Manager::Get()->GetLogManager()->DebugLog(wxString::Format( _("CodeSnippets LD_LIBRARY_PATH is: %s"), ldLibraryPath.c_str()) );
         #endif // __APPLE__ && __MACH__
@@ -1460,7 +1460,7 @@ int CodeSnippets::LaunchProcess(const wxString& cmd, const wxString& cwd)
     // start codesnippets
     Manager::Get()->GetLogManager()->DebugLog( _("Starting program:")+cmd);
     m_ExternalPid = wxExecute(cmd, wxEXEC_ASYNC);
-     LOGIT( _T("Launch [%s] from [%s] Pid[%lu]"), cmd.c_str(), cwd.c_str(), m_ExternalPid );
+     LOGIT( wxT_2("Launch [%s] from [%s] Pid[%lu]"), cmd.c_str(), cwd.c_str(), m_ExternalPid );
 
     #if defined(__WXMAC__)
         if (m_ExternalPid == -1)
@@ -1477,17 +1477,17 @@ int CodeSnippets::LaunchProcess(const wxString& cmd, const wxString& cwd)
             wxArrayString psOutput;
             wxArrayString psErrors;
 
-            psCmd << wxT("/bin/ps -o ppid,pid,command");
+            psCmd << wxT_2("/bin/ps -o ppid,pid,command");
             //-Manager::Get()->GetMessageManager()->DebugLog(wxString::Format( _("Executing: %s"), psCmd.c_str()) );
             Manager::Get()->GetLogManager()->DebugLog(wxString::Format( _("Executing: %s"), psCmd.c_str()) );
             int result = wxExecute(psCmd, psOutput, psErrors, wxEXEC_SYNC);
 
-            mypidStr << wxT(" ");
+            mypidStr << wxT_2(" ");
 
             for (int i = 0; i < psOutput.GetCount(); ++i)
             { //  PPID   PID COMMAND
                wxString psLine = psOutput.Item(i);
-               if (psLine.StartsWith(mypidStr) && psLine.Contains(wxT("codesnippets")))
+               if (psLine.StartsWith(mypidStr) && psLine.Contains(wxT_2("codesnippets")))
                {
                    wxString pidStr = psLine.Mid(mypidStr.Length());
                    pidStr = pidStr.BeforeFirst(' ');
@@ -1530,10 +1530,10 @@ long CodeSnippets::LaunchExternalSnippets()
     ReleaseMemoryMappedFile();
 
     // make a unique mapped file name with my pid
-    wxString myPid(wxString::Format(wxT("%lu"),::wxGetProcessId()));
+    wxString myPid(wxString::Format(wxT_2("%lu"),::wxGetProcessId()));
     // To memory map a file there must exists a non-zero length file
     wxString tempDir = GetConfig()->GetTempDir();
-    wxString mappedFileName = tempDir + wxT("/cbsnippetspid") +myPid+ wxT(".plg");
+    wxString mappedFileName = tempDir + wxT_2("/cbsnippetspid") +myPid+ wxT_2(".plg");
     wxFile mappedFile;
     mappedFile.Create( mappedFileName, true);
     char buf[1024] = {0};
@@ -1546,7 +1546,7 @@ long CodeSnippets::LaunchExternalSnippets()
     if ( not m_pMappedFile ) { return -1;}
     if ( not m_pMappedFile->IsOk() )
     {
-        messageBox(wxString::Format(wxT("Error %d allocating\n%s\n\n"), m_pMappedFile->GetLastError(), mappedFileName.GetData() ));
+        messageBox(wxString::Format(wxT_2("Error %d allocating\n%s\n\n"), m_pMappedFile->GetLastError(), mappedFileName.GetData() ));
         return -1;
     }
     // Get ptr to mapped area and write my pid as a semaphore flag
@@ -1559,29 +1559,29 @@ long CodeSnippets::LaunchExternalSnippets()
     wxString execFolder = GetConfig()->m_ExecuteFolder;
     wxString PgmFullPath ;
     do {
-        PgmFullPath = execFolder + wxT("/codesnippets");
+        PgmFullPath = execFolder + wxT_2("/codesnippets");
         #if defined(__WXMSW__)
-            PgmFullPath << wxT(".exe");
+            PgmFullPath << wxT_2(".exe");
         #endif
         if ( ::wxFileExists(PgmFullPath) ) break;
-        LOGIT(wxT("codesnippets not found at[%s]"),PgmFullPath.GetData());
+        LOGIT(wxT_2("codesnippets not found at[%s]"),PgmFullPath.GetData());
 
         PgmFullPath = execFolder
-                    + wxT("/share/codeblocks/plugins/codesnippets");
+                    + wxT_2("/share/codeblocks/plugins/codesnippets");
         #if defined(__WXMSW__)
-            PgmFullPath << wxT(".exe") ;
+            PgmFullPath << wxT_2(".exe") ;
         #endif
     }while(0);
 
-    wxString pgmArgs( wxString::Format( wxT("KeepAlivePid=%lu"), ::wxGetProcessId() ) );
-    wxString command = PgmFullPath + wxT(" ") + pgmArgs;
+    wxString pgmArgs( wxString::Format( wxT_2("KeepAlivePid=%lu"), ::wxGetProcessId() ) );
+    wxString command = PgmFullPath + wxT_2(" ") + pgmArgs;
 
-     LOGIT( _T("Launching[%s]"), command.GetData());
+     LOGIT( wxT_2("Launching[%s]"), command.GetData());
 
     bool result = LaunchProcess(command, wxGetCwd());
-     LOGIT( _T("Launch Result[%d] m_ExternalPid[%lu]"),result, m_ExternalPid );
+     LOGIT( wxT_2("Launch Result[%d] m_ExternalPid[%lu]"),result, m_ExternalPid );
     if ( 0 != result )
-    {  wxString msg(wxString::Format(wxT("Error [%d] Launching\n %s\n"),result, PgmFullPath.c_str()));
+    {  wxString msg(wxString::Format(wxT_2("Error [%d] Launching\n %s\n"),result, PgmFullPath.c_str()));
        messageBox( msg );
     }
 
@@ -1593,19 +1593,19 @@ wxWindow* CodeSnippets::FindOpenFilesListWindow()
 {
     //Find "Open files list" menu item.
     wxFrame* pFrame = Manager::Get()->GetAppFrame();
-    int idMenuOpenFilesList = ::wxFindMenuItemId( pFrame, wxT("View"), wxT("Open files list"));
+    int idMenuOpenFilesList = ::wxFindMenuItemId( pFrame, wxT_2("View"), wxT_2("Open files list"));
     #if defined(__WXGTK__)
-      idMenuOpenFilesList = ::wxFindMenuItemId( pFrame, wxT("View"), wxT("_Open files list"));
+      idMenuOpenFilesList = ::wxFindMenuItemId( pFrame, wxT_2("View"), wxT_2("_Open files list"));
     #endif
     int idWindowOpenFilesList = 0;
     if (idMenuOpenFilesList != wxNOT_FOUND)
     {
-        LOGIT( _T("idMenuOpenFilesList:[%d]"), idMenuOpenFilesList );
+        LOGIT( wxT_2("idMenuOpenFilesList:[%d]"), idMenuOpenFilesList );
         idWindowOpenFilesList = idMenuOpenFilesList - 1;
         wxWindow* pOpenFilesListWin = wxWindow::FindWindowById( idWindowOpenFilesList, pFrame);
         if (pOpenFilesListWin)
         {
-            LOGIT( _T("pOpenFilesListWin[%p] name[%s] label[%s]"), pOpenFilesListWin,
+            LOGIT( wxT_2("pOpenFilesListWin[%p] name[%s] label[%s]"), pOpenFilesListWin,
                 pOpenFilesListWin->GetName().c_str(),
                 pOpenFilesListWin->GetLabel().c_str()
                 );
@@ -1620,7 +1620,7 @@ wxWindow* CodeSnippets::FindOpenFilesListWindow()
 //// ----------------------------------------------------------------------------
 //{
 //    wxWindow* pWindow = (wxWindow*)(event.GetEventObject());
-//     LOGIT( _T("OnWindowClose[%p]"), pWindow );
+//     LOGIT( wxT_2("OnWindowClose[%p]"), pWindow );
 //     event.Skip();
 //}
 
@@ -1641,7 +1641,7 @@ wxWindow* CodeSnippets::FindOpenFilesListWindow()
 //    //      ::wxGetActiveWindow always returns a ptr to CodeBlocks
 //    //      wxTheApp->GetTopWindow always return a ptr to Codeblocks
 //
-//     LOGIT( _T("-----OnActivate----------[%s]"),event.GetActive()?wxT("Active"):wxT("Deactive") );
+//     LOGIT( wxT_2("-----OnActivate----------[%s]"),event.GetActive()?wxT_2("Active"):wxT_2("Deactive") );
 //
 //    // Wait until codeblocks is fully initialized
 //    if (not GetConfig()->pSnippetsWindow) return;
@@ -1653,25 +1653,25 @@ wxWindow* CodeSnippets::FindOpenFilesListWindow()
 //     wxWindow* pwSnippet = GetConfig()->pSnippetsWindow;
 //     wxWindow* pwFocused = wxWindow::FindFocus();
 //     wxWindow* pwTreeCtrl = GetConfig()->pSnippetsWindow->GetSnippetsTreeCtrl();
-//      LOGIT( _T("MouseWin   [%p]Name[%s]"),pwMouse, pwMouse?pwMouse->GetName().c_str():wxT(""));
-//      LOGIT( _T("FocusedWin [%p]Name[%s]"),pwFocused, pwFocused?pwFocused->GetName().c_str():wxT(""));
-//      LOGIT( _T("SnippetWin [%p]Name[%s]"),pwSnippet, pwSnippet->GetName().c_str());
-//      LOGIT( _T("TreeCtrWin [%p]Name[%s]"),pwTreeCtrl, pwFocused?pwTreeCtrl->GetName().c_str():wxT(""));
+//      LOGIT( wxT_2("MouseWin   [%p]Name[%s]"),pwMouse, pwMouse?pwMouse->GetName().c_str():wxT_2(""));
+//      LOGIT( wxT_2("FocusedWin [%p]Name[%s]"),pwFocused, pwFocused?pwFocused->GetName().c_str():wxT_2(""));
+//      LOGIT( wxT_2("SnippetWin [%p]Name[%s]"),pwSnippet, pwSnippet->GetName().c_str());
+//      LOGIT( wxT_2("TreeCtrWin [%p]Name[%s]"),pwTreeCtrl, pwFocused?pwTreeCtrl->GetName().c_str():wxT_2(""));
 //      wxWindow* pwTreeParent = pwTreeCtrl->GetParent();
 //      wxWindow* pwSnipParent = pwSnippet->GetParent();
-//      LOGIT( _T("SnippetParent [%p]Name[%s]"),pwSnipParent, pwSnipParent->GetName().c_str());
-//      LOGIT( _T("TreeParent [%p]Name[%s]"),pwTreeParent, pwFocused?pwTreeParent->GetName().c_str():wxT(""));
+//      LOGIT( wxT_2("SnippetParent [%p]Name[%s]"),pwSnipParent, pwSnipParent->GetName().c_str());
+//      LOGIT( wxT_2("TreeParent [%p]Name[%s]"),pwTreeParent, pwFocused?pwTreeParent->GetName().c_str():wxT_2(""));
 //      if (pwSnipParent)
 //      {     wxWindow* pwSnipGrndParent = pwSnipParent->GetParent();
 //            if (pwSnipGrndParent)
-//             LOGIT( _T("SnippetGrndParent [%p]Name[%s]"),pwSnipGrndParent, pwSnipGrndParent->GetName().c_str());
+//             LOGIT( wxT_2("SnippetGrndParent [%p]Name[%s]"),pwSnipGrndParent, pwSnipGrndParent->GetName().c_str());
 //      }
 //      m_pLog->Flush();
 //
 //     if (wxWindow::FindFocus() != pwTreeCtrl )
 //        {event.Skip(); return;}
 //    // Deactivated window was our CodeSnippets TreeCtrl
-//    LOGIT( _T(" Activated Plugin") );
+//    LOGIT( wxT_2(" Activated Plugin") );
 //    event.Skip();
 //    return;
 //    //========================================================
@@ -1680,7 +1680,7 @@ wxWindow* CodeSnippets::FindOpenFilesListWindow()
 //    // Wait until codeblocks is fully initialized
 //    if (not GetConfig()->pSnippetsWindow) return;
 //
-//    //LOGIT( _T(" OnActivate Plugin") );
+//    //LOGIT( wxT_2(" OnActivate Plugin") );
 //
 //     if (not event.GetActive()) { event.Skip();return; }
 //     //Err: wxGetActiveWindow and wxTheApp->GetTopWindow is always the same.

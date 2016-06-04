@@ -34,7 +34,7 @@ class messageBoxCtrl : public messageBoxForm
 {
    public:
     messageBoxCtrl( wxWindow* parent, int id = -1,
-                    wxString title = wxT("Properties"),
+                    wxString title = wxT_2("Properties"),
                     wxPoint pos = wxDefaultPosition,
                     wxSize size = wxSize( 527,120 ),
                     int dialogStyle = wxCAPTION|wxDEFAULT_DIALOG_STYLE
@@ -72,8 +72,8 @@ int messageBox( const wxString& message, const wxString& title, long dialogStyle
     //  even when the debugger shows the window is already destroyed.
 
     wxString msgTitle = title;
-    if (not title.Contains(wxT("CodeSnippets")))
-        msgTitle = (wxT("CodeSnippets - ")) + title;
+    if (not title.Contains(wxT_2("CodeSnippets")))
+        msgTitle = (wxT_2("CodeSnippets - ")) + title;
 
     if (!wxTheApp->GetTopWindow()){
         return wxMessageBox(message, msgTitle, dialogStyle);
@@ -113,8 +113,8 @@ int messageBox( const wxString& message, const wxString& title, long dialogStyle
                     mainFrame->ClientToScreen(&mainCoords.x, &mainCoords.y );
                 mainSize = mainFrame->GetSize();
             }//else
-     //LOGIT( _T("messageBox mainFrame[%p]"),mainFrame );
-     //if (mainFrame) LOGIT( _T("messageBox mainFrame Name[%s]"),mainFrame->GetName().c_str() );
+     //LOGIT( wxT_2("messageBox mainFrame[%p]"),mainFrame );
+     //if (mainFrame) LOGIT( wxT_2("messageBox mainFrame Name[%s]"),mainFrame->GetName().c_str() );
 
     // move upper left dialog corner to center of parent
     ::wxDisplaySize(&displayX, &displayY);
@@ -138,7 +138,7 @@ int messageBox( const wxString& message, const wxString& title, long dialogStyle
              bigposn=i;
              longest = lth;
              //#ifdef LOGGING
-             // LOGIT( _T("longest[%s]"),message.Mid(bigposn,longest).GetData() );
+             // LOGIT( wxT_2("longest[%s]"),message.Mid(bigposn,longest).GetData() );
              //#endif //LOGGING
         }
     }
@@ -151,7 +151,7 @@ int messageBox( const wxString& message, const wxString& title, long dialogStyle
         }
     }
     #ifdef LOGGING
-     //LOGIT( _T("Longest line[%s]"),message.Mid(bigposn, longest).GetData() );
+     //LOGIT( wxT_2("Longest line[%s]"),message.Mid(bigposn, longest).GetData() );
     #endif //LOGGING
 
     // Get info to determine message width
@@ -196,7 +196,7 @@ int messageBox( const wxString& message, const wxString& title, long dialogStyle
     //if (not bresult)
     //{ bresult =  GetLastError();
     //    #ifdef LOGGING
-    //     LOGIT( _T("GetLastError[%d]"), bresult);
+    //     LOGIT( wxT_2("GetLastError[%d]"), bresult);
     //    #endif //LOGGING
     //}
     if (pBox->m_pYesButton)

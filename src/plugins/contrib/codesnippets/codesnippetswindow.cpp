@@ -75,9 +75,9 @@
 // above redefined in snipimages.h to 6
 
 //const wxString snippetsTreeImageFileNames[] = {
-//	_T("allsnippets.png"),
-//	_T("category.png"),
-//	_T("snippet.png")
+//	wxT_2("allsnippets.png"),
+//	wxT_2("category.png"),
+//	wxT_2("snippet.png")
 //};
 
 int idSearchSnippetCtrl         = wxNewId();
@@ -167,7 +167,7 @@ END_EVENT_TABLE()
 // ----------------------------------------------------------------------------
 CodeSnippetsWindow::CodeSnippetsWindow(wxWindow* parent)
 // ----------------------------------------------------------------------------
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL,wxT("csPanel"))
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL,wxT_2("csPanel"))
 {
     m_isCheckingForExternallyModifiedFiles = false;
     pTiXmlDoc = 0;
@@ -183,7 +183,7 @@ CodeSnippetsWindow::CodeSnippetsWindow(wxWindow* parent)
 	GetConfig()->SettingsLoad();
 
     wxString s(__FUNCTION__, wxConvUTF8);
-    LOGIT(s+wxT("LoadingFile:%s"),GetConfig()->SettingsSnippetsXmlFullPath.c_str());
+    LOGIT(s+wxT_2("LoadingFile:%s"),GetConfig()->SettingsSnippetsXmlFullPath.c_str());
 
 	// Load the snippets
 	GetSnippetsTreeCtrl()->LoadItemsFromFile(GetConfig()->SettingsSnippetsXmlFullPath, false);
@@ -216,7 +216,7 @@ void CodeSnippetsWindow::OnClose(wxCloseEvent& event)
 
     if ( not GetConfig()->GetSnippetsWindow() )
         {event.Skip();return;}
-     LOGIT( _T("CodeSnippetsWindow::Onclose Saving Settings"));
+     LOGIT( wxT_2("CodeSnippetsWindow::Onclose Saving Settings"));
     GetConfig()->SettingsSave();
     if (GetConfig()->IsPlugin())
     {
@@ -260,7 +260,7 @@ void CodeSnippetsWindow::InitDlg()
 	m_SearchSnippetCtrl = new wxTextCtrl(this, idSearchSnippetCtrl, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	searchCtrlSizer->Add(m_SearchSnippetCtrl, 1, wxBOTTOM|wxLEFT|wxTOP, 5);
 
-	m_SearchCfgBtn = new wxButton(this, idSearchCfgBtn, _T(">"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_SearchCfgBtn = new wxButton(this, idSearchCfgBtn, wxT_2(">"), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	searchCtrlSizer->Add(m_SearchCfgBtn, 0, wxBOTTOM|wxRIGHT|wxTOP, 5);
 
 	parentSizer->Add(searchCtrlSizer, 0, wxEXPAND, 5);
@@ -503,7 +503,7 @@ void CodeSnippetsWindow::OnItemMenu(wxTreeEvent& event)
                 {   snippetsTreeMenu->Append(idMnuEditSnippet, _("Edit File"));
                     // append file .ext to Open menu item
                     wxString fileExt(GetSnippetsTreeCtrl()->GetFileLinkExt(itemId));
-                    if ( not fileExt.IsEmpty()) fileExt = wxT(" (as ")+fileExt+wxT(")");
+                    if ( not fileExt.IsEmpty()) fileExt = wxT_2(" (as ")+fileExt+wxT_2(")");
                     snippetsTreeMenu->Append(idMnuOpenFileLink,_("Open File")+fileExt);
                 }
                 else // it's a text snippet
@@ -604,10 +604,10 @@ void CodeSnippetsWindow::OnMnuRename(wxCommandEvent& event)
     wxPoint currentMousePosn = ::wxGetMousePosition();
 
     // get new label(on ok) or empty string(on cancel)
-    wxString newLabel = ::wxGetTextFromUser(wxT("New Category Label"),wxT("Rename"),
+    wxString newLabel = ::wxGetTextFromUser(wxT_2("New Category Label"),wxT_2("Rename"),
         itemLabel, pTree,
         currentMousePosn.x, currentMousePosn.y,false);
-    LOGIT( _T("GetTextFromUser[%s] oldLabel[%s]"),newLabel.c_str(),itemLabel.c_str() );
+    LOGIT( wxT_2("GetTextFromUser[%s] oldLabel[%s]"),newLabel.c_str(),itemLabel.c_str() );
 
     // label may have been edited
     if (not newLabel.IsEmpty())
@@ -704,7 +704,7 @@ void CodeSnippetsWindow::ApplySnippet(const wxTreeItemId& itemID)
 			CheckForMacros(snippet);
 			//wxLeaner: http://forums.codeblocks.org/index.php/topic,5375.new.html#new
 			// Honor target source line indentation
-            snippet.Replace(wxT("\n"), wxT('\n') + editor->GetLineIndentString(ctrl->GetCurrentLine()));
+            snippet.Replace(wxT_2("\n"), wxT_2('\n') + editor->GetLineIndentString(ctrl->GetCurrentLine()));
             ctrl->AddText(snippet);
 		}
 	  #else //NOT defined(BUILDING_PLUGIN)
@@ -806,7 +806,7 @@ void CodeSnippetsWindow::OnMnuLoadSnippetsFromFile(wxCommandEvent& event)
 	wxFileDialog dlg(this, _("Load snippets from file"), wxEmptyString, wxEmptyString, _("XML files (*.xml)|*.xml|All files (*.*)|*.*"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
 	if (dlg.ShowModal() == wxID_OK)
 	{
-        LOGIT(wxT("LoadingFile:%s"),dlg.GetPath().c_str());
+        LOGIT(wxT_2("LoadingFile:%s"),dlg.GetPath().c_str());
 		GetSnippetsTreeCtrl()->LoadItemsFromFile(dlg.GetPath(), m_AppendItemsFromFile);
         GetConfig()->SettingsSnippetsXmlFullPath = dlg.GetPath();
         SetFileChanged(false);
@@ -826,7 +826,7 @@ void CodeSnippetsWindow::OnMnuSaveSnippets(wxCommandEvent& /*event*/)
 void CodeSnippetsWindow::OnMnuSaveSnippetsAs(wxCommandEvent& /*event*/)
 // ----------------------------------------------------------------------------
 {
-	wxFileDialog dlg(this, _("Save snippets to file"), wxEmptyString, _T("codesnippets.xml"), _("XML files (*.xml)|*.xml|All files (*.*)|*.*"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+	wxFileDialog dlg(this, _("Save snippets to file"), wxEmptyString, wxT_2("codesnippets.xml"), _("XML files (*.xml)|*.xml|All files (*.*)|*.*"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 	if (dlg.ShowModal() == wxID_OK)
 	{
 		GetSnippetsTreeCtrl()->SaveItemsToFile(dlg.GetPath());
@@ -849,13 +849,13 @@ void CodeSnippetsWindow::OnMnuFileBackup(wxCommandEvent& event)
     {
         ++i;
         bkupName = IndexFile;
-        bkupName << wxT(".")  << i;
+        bkupName << wxT_2(".")  << i;
         if ( ::wxFileExists(bkupName) ) {continue;}
         break;
     }//while
     int done = ::wxCopyFile(IndexFile, bkupName);
-    messageBox( wxString::Format( wxT("Backup %s for\n\n %s"),
-                done?wxT("succeeded"):wxT("failed"),
+    messageBox( wxString::Format( wxT_2("Backup %s for\n\n %s"),
+                done?wxT_2("succeeded"):wxT_2("failed"),
                 bkupName.c_str()) );
 
 }
@@ -946,7 +946,7 @@ void CodeSnippetsWindow::OnMnuEditSnippet(wxCommandEvent& WXUNUSED(event))
         wxTreeItemId itemId = GetAssociatedItemID();
         wxString FileName = pTree->GetSnippetFileLink( itemId );
         #if defined(LOGGING)
-         LOGIT( _T("OnMnuEditSnippet FileName[%s]"),FileName.c_str() );
+         LOGIT( wxT_2("OnMnuEditSnippet FileName[%s]"),FileName.c_str() );
         #endif
         // If snippet is text, edit it as text
         if (FileName.Length() > 128)
@@ -980,7 +980,7 @@ void CodeSnippetsWindow::OnMnuOpenFileLink(wxCommandEvent& WXUNUSED(event))
 
         wxTreeItemId itemId = GetAssociatedItemID();
         wxString FileName = pTree->GetSnippetFileLink( itemId );
-        LOGIT( _T("OnMnuOpenFileLink FileName[%s]"),FileName.c_str() );
+        LOGIT( wxT_2("OnMnuOpenFileLink FileName[%s]"),FileName.c_str() );
 
         // If snippet is text, edit it as text
         if (FileName.Length() > 128)
@@ -1000,7 +1000,7 @@ void CodeSnippetsWindow::CheckForMacros(wxString& snippet)
 	// Copied from cbEditor::Autocomplete, I admit it
 
     wxPoint currentMousePosn = ::wxGetMousePosition();
-	int macroPos = snippet.Find(_T("$("));
+	int macroPos = snippet.Find(wxT_2("$("));
 	int currPosn = macroPos;
 	while (macroPos != -1)
 	{
@@ -1008,7 +1008,7 @@ void CodeSnippetsWindow::CheckForMacros(wxString& snippet)
 		int macroPosEnd = macroPos + 2;
 		int len = (int)snippet.Length();
 
-		while (macroPosEnd < len && snippet.GetChar(macroPosEnd) != _T(')'))
+		while (macroPosEnd < len && snippet.GetChar(macroPosEnd) != wxT_2(')'))
 			++macroPosEnd;
 
 		if (macroPosEnd == len)
@@ -1024,15 +1024,15 @@ void CodeSnippetsWindow::CheckForMacros(wxString& snippet)
             _("Macro substitution"),defaultResult,0,
             currentMousePosn.x, currentMousePosn.y,false);
 		if (not macro.IsEmpty())
-            snippet.Replace(_T("$(") + macroName + _T(")"), macro);
+            snippet.Replace(wxT_2("$(") + macroName + wxT_2(")"), macro);
 
-		//-macroPos = snippet.Find(_T("$("));
+		//-macroPos = snippet.Find(wxT_2("$("));
 		currPosn = currPosn + macroPos + 1;
-		macroPos = snippet.Mid(currPosn).Find(_T("$("));
+		macroPos = snippet.Mid(currPosn).Find(wxT_2("$("));
 		if (macroPos == -1) break;
 		macroPos = macroPos + currPosn;
 		#if defined(LOGGING)
-		//LOGIT( _T("CheckForMacros:currPosn[%d],macroPos[%d],Macro[%s]"),
+		//LOGIT( wxT_2("CheckForMacros:currPosn[%d],macroPos[%d],Macro[%s]"),
         //    currPosn, macroPos, snippet.Mid(macroPos).c_str());
 		#endif
 	}
@@ -1061,12 +1061,12 @@ void CodeSnippetsWindow::OnItemGetToolTip(wxTreeEvent& event)
 			snippetToolTip = snippetToolTip.Mid(0, charsInToolTip);
 
 			// Replace all tabs with spaces; tabs break the tooltips
-			snippetToolTip.Replace(_T("\t"), _T("    "));
+			snippetToolTip.Replace(wxT_2("\t"), wxT_2("    "));
 
 			if (snippetToolTip.Len() > charsInToolTip || originalLength > charsInToolTip)
 			{
 				snippetToolTip = snippetToolTip.Mid(0, charsInToolTip - 4);
-				snippetToolTip.Append(_T(" ..."));
+				snippetToolTip.Append(wxT_2(" ..."));
 			}
 
 			event.SetToolTip(snippetToolTip);
@@ -1078,15 +1078,15 @@ bool CodeSnippetsWindow::AddTextToClipBoard(const wxString& text)
 // ----------------------------------------------------------------------------
 {
     if ( not wxTheClipboard->Open() ) {
-        wxLogError( GetConfig()->AppName + _T(":Can't open clipboard."));
+        wxLogError( GetConfig()->AppName + wxT_2(":Can't open clipboard."));
         return false;
     }
     wxTheClipboard->SetData(new wxTextDataObject(text));
     wxTheClipboard->Close();
 
     #ifdef LOGGING
-     //LOGIT( wxT("AddTextToClipBoard:Text[%s]"), text.GetData() );
-     LOGIT( wxT("AddTextToClipBoard()") );
+     //LOGIT( wxT_2("AddTextToClipBoard:Text[%s]"), text.GetData() );
+     LOGIT( wxT_2("AddTextToClipBoard()") );
     #endif //LOGGING
     return true;
 }
@@ -1134,8 +1134,8 @@ void CodeSnippetsWindow::CheckForExternallyModifiedFiles()
     if ( IsTreeBusy() ) return;
     if ( GetFileChanged() ) return;
 
-    wxString whichApp = wxT("CodeSnippets Plugin ");
-    if (GetConfig()->IsApplication()) whichApp = wxT("CodeSnippets Program ");
+    wxString whichApp = wxT_2("CodeSnippets Plugin ");
+    if (GetConfig()->IsApplication()) whichApp = wxT_2("CodeSnippets Program ");
 
     if(m_isCheckingForExternallyModifiedFiles) // for some reason, a mutex locker does not work???
         return;
@@ -1257,23 +1257,23 @@ void CodeSnippetsWindow::OnMnuAbout(wxCommandEvent& event)
     wxString wxbuild(wxVERSION_STRING);
 
     #if defined(__WXMSW__)
-        wxbuild << _T("-Windows");
+        wxbuild << wxT_2("-Windows");
     #elif defined(__UNIX__)
-        wxbuild << _T("-Linux");
+        wxbuild << wxT_2("-Linux");
     #endif
 
     #if wxUSE_UNICODE
-        wxbuild << _T("-Unicode build");
+        wxbuild << wxT_2("-Unicode build");
     #else
-        wxbuild << _T("-ANSI build");
+        wxbuild << wxT_2("-ANSI build");
     #endif // wxUSE_UNICODE
 
     wxString buildInfo = wxbuild;
     wxString
-        pgmVersionString = wxT("CodeSnippets v") + GetConfig()->GetVersion();
-    buildInfo = wxT("\t")+pgmVersionString + wxT("\n")+ wxT("\t")+buildInfo;
-    buildInfo = buildInfo + wxT("\n\n\t")+wxT("Original Code by Arto Jonsson");
-    buildInfo = buildInfo + wxT("\n\t")+wxT("Modified/Enhanced by Pecan Heber");
+        pgmVersionString = wxT_2("CodeSnippets v") + GetConfig()->GetVersion();
+    buildInfo = wxT_2("\t")+pgmVersionString + wxT_2("\n")+ wxT_2("\t")+buildInfo;
+    buildInfo = buildInfo + wxT_2("\n\n\t")+wxT_2("Original Code by Arto Jonsson");
+    buildInfo = buildInfo + wxT_2("\n\t")+wxT_2("Modified/Enhanced by Pecan Heber");
 
     ShowSnippetsAbout( buildInfo);
 }
@@ -1284,34 +1284,34 @@ void CodeSnippetsWindow::ShowSnippetsAbout(wxString buildInfo)
 
     //wxString msg = wxbuildinfo(long_f);
     wxString helpText;
-    helpText << wxT(" Each Snippet item may specify either text or a File Link.\n")
-             << wxT("\n")
-             << wxT(" Snippets may be edited from within the context menu \n")
-             << wxT("\n")
+    helpText << wxT_2(" Each Snippet item may specify either text or a File Link.\n")
+             << wxT_2("\n")
+             << wxT_2(" Snippets may be edited from within the context menu \n")
+             << wxT_2("\n")
 
-             << wxT(" File Link snippets are created by dragging text to a new snippet, \n")
-             << wxT(" then using the context menu to \"Convert to File Link\". \n")
-             << wxT(" The data will be written to the specified file and the filename \n")
-             << wxT(" will be placed in the snippets text area as a Link. \n")
-             << wxT("\n")
+             << wxT_2(" File Link snippets are created by dragging text to a new snippet, \n")
+             << wxT_2(" then using the context menu to \"Convert to File Link\". \n")
+             << wxT_2(" The data will be written to the specified file and the filename \n")
+             << wxT_2(" will be placed in the snippets text area as a Link. \n")
+             << wxT_2("\n")
 
-             << wxT(" Snippets are accessed by using the context menu \"Edit\" \n")
-             << wxT(" or via the Properties context menu entry. \n")
-             << wxT("\n")
+             << wxT_2(" Snippets are accessed by using the context menu \"Edit\" \n")
+             << wxT_2(" or via the Properties context menu entry. \n")
+             << wxT_2("\n")
 
-             << wxT(" Use the \"Settings\" menu to specify an external editor and \n")
-             << wxT(" to specify a non-default Snippets index file. \n")
-             << wxT("\n")
+             << wxT_2(" Use the \"Settings\" menu to specify an external editor and \n")
+             << wxT_2(" to specify a non-default Snippets index file. \n")
+             << wxT_2("\n")
 
-             << wxT(" Both the text and file snippets may be dragged outward\n")
-             << wxT(" or copied to the clipboard.\n")
-             << wxT("\n")
+             << wxT_2(" Both the text and file snippets may be dragged outward\n")
+             << wxT_2(" or copied to the clipboard.\n")
+             << wxT_2("\n")
 
-             << wxT(" Dragging a file snippet onto an external program window \n")
-             << wxT(" will open the file. Dragging it into the edit area will \n")
-             << wxT(" insert the text.\n");
+             << wxT_2(" Dragging a file snippet onto an external program window \n")
+             << wxT_2(" will open the file. Dragging it into the edit area will \n")
+             << wxT_2(" insert the text.\n");
 
-    messageBox(wxT("\n\n")+buildInfo+wxT("\n\n")+helpText, _("About"),wxOK, wxSIMPLE_BORDER);
+    messageBox(wxT_2("\n\n")+buildInfo+wxT_2("\n\n")+helpText, _("About"),wxOK, wxSIMPLE_BORDER);
 
 }
 

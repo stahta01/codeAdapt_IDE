@@ -80,7 +80,7 @@ const CommonInfo g_CommonPrefs = {
 // keywordlists
 // C++
 const wxChar* CppWordlist1 =
-    _T("asm auto bool break case catch char class const const_cast \
+    wxT("asm auto bool break case catch char class const const_cast \
        continue default delete do double dynamic_cast else enum explicit \
        export extern false float for friend goto if inline int long \
        mutable namespace new operator private protected public register \
@@ -89,9 +89,9 @@ const wxChar* CppWordlist1 =
        typename union unsigned using virtual void volatile wchar_t \
        while");
 const wxChar* CppWordlist2 =
-    _T("file");
+    wxT("file");
 const wxChar* CppWordlist3 =
-    _T("a addindex addtogroup anchor arg attention author b brief bug c \
+    wxT("a addindex addtogroup anchor arg attention author b brief bug c \
        class code date def defgroup deprecated dontinclude e em endcode \
        endhtmlonly endif endlatexonly endlink endverbatim enum example \
        exception f$ f[ f] file fn hideinitializer htmlinclude \
@@ -104,11 +104,11 @@ const wxChar* CppWordlist3 =
 
 // Python
 const wxChar* PythonWordlist1 =
-    _T("and assert break class continue def del elif else except exec \
+    wxT("and assert break class continue def del elif else except exec \
        finally for from global if import in is lambda None not or pass \
        print raise return try while yield");
 const wxChar* PythonWordlist2 =
-    _T("ACCELERATORS ALT AUTO3STATE AUTOCHECKBOX AUTORADIOBUTTON BEGIN \
+    wxT("ACCELERATORS ALT AUTO3STATE AUTOCHECKBOX AUTORADIOBUTTON BEGIN \
        BITMAP BLOCK BUTTON CAPTION CHARACTERISTICS CHECKBOX CLASS \
        COMBOBOX CONTROL CTEXT CURSOR DEFPUSHBUTTON DIALOG DIALOGEX \
        DISCARDABLE EDITTEXT END EXSTYLE FONT GROUPBOX ICON LANGUAGE \
@@ -121,8 +121,8 @@ const wxChar* PythonWordlist2 =
 //! languages
 const LanguageInfo g_LanguagePrefs [] = {
     // C++
-    {_T("C++"),
-     _T("*.c;*.cc;*.cpp;*.cxx;*.cs;*.h;*.hh;*.hpp;*.hxx;*.sma"),
+    {wxT_2("C++"),
+     wxT_2("*.c;*.cc;*.cpp;*.cxx;*.cs;*.h;*.hh;*.hpp;*.hxx;*.sma"),
      wxSCI_LEX_CPP,
      {{TOKEN_DEFAULT, NULL},
       {TOKEN_COMMENT, NULL},
@@ -158,8 +158,8 @@ const LanguageInfo g_LanguagePrefs [] = {
       {-1, NULL}},
      FOLD_TYPE_COMMENT | FOLD_TYPE_COMPACT | FOLD_TYPE_PREPROC},
     // Python
-    {_T("Python"),
-     _T("*.py;*.pyw"),
+    {wxT_2("Python"),
+     wxT_2("*.py;*.pyw"),
      wxSCI_LEX_PYTHON,
      {{TOKEN_DEFAULT, NULL},
       {TOKEN_COMMENT_LINE, NULL},
@@ -196,7 +196,7 @@ const LanguageInfo g_LanguagePrefs [] = {
      FOLD_TYPE_COMMENTPY | FOLD_TYPE_QUOTESPY},
     // * (any)
     {(wxChar *)DEFAULT_LANGUAGE,
-     _T("*.*"),
+     wxT("*.*"),
      wxSCI_LEX_PROPERTIES,
      {{TOKEN_DEFAULT, NULL},
       {TOKEN_DEFAULT, NULL},
@@ -239,159 +239,159 @@ const int g_LanguagePrefsSize = WXSIZEOF(g_LanguagePrefs);
 //! style types
 const StyleInfo g_StylePrefs [] = {
     // TOKEN_DEFAULT
-    {_T("Default"),
-     _T("BLACK"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Default"),
+     wxT("BLACK"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_WORD1
-    {_T("Keyword1"),
-     _T("BLUE"), _T("WHITE"),
-     _T(""), 10, TOKEN_STYLE_BOLD, 0},
+    {wxT("Keyword1"),
+     wxT("BLUE"), wxT("WHITE"),
+     wxT(""), 10, TOKEN_STYLE_BOLD, 0},
 
     // TOKEN_WORD2
-    {_T("Keyword2"),
-     _T("DARK BLUE"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Keyword2"),
+     wxT("DARK BLUE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_WORD3
-    {_T("Keyword3"),
-     _T("CORNFLOWER BLUE"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Keyword3"),
+     wxT("CORNFLOWER BLUE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_WORD4
-    {_T("Keyword4"),
-     _T("CYAN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Keyword4"),
+     wxT("CYAN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_WORD5
-    {_T("Keyword5"),
-     _T("DARK GREY"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Keyword5"),
+     wxT("DARK GREY"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_WORD6
-    {_T("Keyword6"),
-     _T("GREY"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Keyword6"),
+     wxT("GREY"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_COMMENT
-    {_T("Comment"),
-     _T("FOREST GREEN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Comment"),
+     wxT("FOREST GREEN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_COMMENT_DOC
-    {_T("Comment (Doc)"),
-     _T("FOREST GREEN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Comment (Doc)"),
+     wxT("FOREST GREEN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_COMMENT_LINE
-    {_T("Comment line"),
-     _T("FOREST GREEN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Comment line"),
+     wxT("FOREST GREEN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_COMMENT_SPECIAL
-    {_T("Special comment"),
-     _T("FOREST GREEN"), _T("WHITE"),
-     _T(""), 10, TOKEN_STYLE_ITALIC, 0},
+    {wxT("Special comment"),
+     wxT("FOREST GREEN"), wxT("WHITE"),
+     wxT(""), 10, TOKEN_STYLE_ITALIC, 0},
 
     // TOKEN_CHARACTER
-    {_T("Character"),
-     _T("KHAKI"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Character"),
+     wxT("KHAKI"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_CHARACTER_EOL
-    {_T("Character (EOL)"),
-     _T("KHAKI"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Character (EOL)"),
+     wxT("KHAKI"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_STRING
-    {_T("String"),
-     _T("BROWN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("String"),
+     wxT("BROWN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_STRING_EOL
-    {_T("String (EOL)"),
-     _T("BROWN"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("String (EOL)"),
+     wxT("BROWN"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_DELIMITER
-    {_T("Delimiter"),
-     _T("ORANGE"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Delimiter"),
+     wxT("ORANGE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_PUNCTUATION
-    {_T("Punctuation"),
-     _T("ORANGE"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Punctuation"),
+     wxT("ORANGE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_OPERATOR
-    {_T("Operator"),
-     _T("BLACK"), _T("WHITE"),
-     _T(""), 10, TOKEN_STYLE_BOLD, 0},
+    {wxT("Operator"),
+     wxT("BLACK"), wxT("WHITE"),
+     wxT(""), 10, TOKEN_STYLE_BOLD, 0},
 
     // TOKEN_BRACE
-    {_T("Label"),
-     _T("VIOLET"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Label"),
+     wxT("VIOLET"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_COMMAND
-    {_T("Command"),
-     _T("BLUE"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Command"),
+     wxT("BLUE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_IDENTIFIER
-    {_T("Identifier"),
-     _T("BLACK"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Identifier"),
+     wxT("BLACK"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_LABEL
-    {_T("Label"),
-     _T("VIOLET"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Label"),
+     wxT("VIOLET"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_NUMBER
-    {_T("Number"),
-     _T("SIENNA"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Number"),
+     wxT("SIENNA"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_PARAMETER
-    {_T("Parameter"),
-     _T("VIOLET"), _T("WHITE"),
-     _T(""), 10, TOKEN_STYLE_ITALIC, 0},
+    {wxT("Parameter"),
+     wxT("VIOLET"), wxT("WHITE"),
+     wxT(""), 10, TOKEN_STYLE_ITALIC, 0},
 
     // TOKEN_REGEX
-    {_T("Regular expression"),
-     _T("ORCHID"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Regular expression"),
+     wxT("ORCHID"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_UUID
-    {_T("UUID"),
-     _T("ORCHID"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("UUID"),
+     wxT("ORCHID"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_VALUE
-    {_T("Value"),
-     _T("ORCHID"), _T("WHITE"),
-     _T(""), 10, TOKEN_STYLE_ITALIC, 0},
+    {wxT("Value"),
+     wxT("ORCHID"), wxT("WHITE"),
+     wxT(""), 10, TOKEN_STYLE_ITALIC, 0},
 
     // TOKEN_PREPROCESSOR
-    {_T("Preprocessor"),
-     _T("GREY"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Preprocessor"),
+     wxT("GREY"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_SCRIPT
-    {_T("Script"),
-     _T("DARK GREY"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Script"),
+     wxT("DARK GREY"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_ERROR
-    {_T("Error"),
-     _T("RED"), _T("WHITE"),
-     _T(""), 10, 0, 0},
+    {wxT("Error"),
+     wxT("RED"), wxT("WHITE"),
+     wxT(""), 10, 0, 0},
 
     // TOKEN_UNDEFINED
-    {_T("Undefined"),
-     _T("ORANGE"), _T("WHITE"),
-     _T(""), 10, 0, 0}
+    {wxT("Undefined"),
+     wxT("ORANGE"), wxT("WHITE"),
+     wxT(""), 10, 0, 0}
 
     };
 

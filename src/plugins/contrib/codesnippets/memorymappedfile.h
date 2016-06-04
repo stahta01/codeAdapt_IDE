@@ -14,11 +14,11 @@
 /** \example wxMemoryMappedFile
   try<br>
     {<br>
-    wxMemoryMappedFile fileMap(_T("/home/bmadden/file.txt"), <b>true</b>);<br>
+    wxMemoryMappedFile fileMap(wxT_2("/home/bmadden/file.txt"), <b>true</b>);<br>
     const char* fileText = (const char*)fileMap.GetStream();<br><br>
     <b>//now map another file (note that fileText will not be valid after this)</b><br>
     fileMap.UnmapFile();<br>
-    fileMap.MapFile(_T("/home/bmadden/DifferentFile.txt"), <b>false</b>);<br>
+    fileMap.MapFile(wxT_2("/home/bmadden/DifferentFile.txt"), <b>false</b>);<br>
     char* writableFileText = (char*)fileMap.GetStream();<br><br>
     <b>//now write back to the file by simply writing to the pointer</b><br>
     std::strncpy(writableFileText, "Hello, world!", 13);<br>
@@ -33,12 +33,12 @@
 /** \example wxMemoryMappedFile
   try
     {
-        wxMemoryMappedFile fileMap(_T("/home/bmadden/file.txt"), true);
+        wxMemoryMappedFile fileMap(wxT_2("/home/bmadden/file.txt"), true);
         const char* fileText = (const char*)fileMap.GetStream();
 
         //now map another file (note that fileText will not be valid after this)
         fileMap.UnmapFile();
-        fileMap.MapFile(_T("/home/bmadden/DifferentFile.txt"), false);
+        fileMap.MapFile(wxT_2("/home/bmadden/DifferentFile.txt"), false);
         char* writableFileText = (char*)fileMap.GetStream();
         //now write back to the file by simply writing to the pointer
         std::strncpy(writableFileText, "Hello, world!", 13);

@@ -67,7 +67,7 @@ class SnippetPropertyForm : public wxDialog
 		wxStdDialogButtonSizer* m_sdbSizer1;
 
 	public:
-		SnippetPropertyForm( wxWindow* parent, int id = -1, wxString title = wxT("Properties"), wxPoint pos = wxDefaultPosition, wxSize size = wxSize( 527,212 ), int style = wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxRESIZE_BORDER );
+		SnippetPropertyForm( wxWindow* parent, int id = -1, wxString title = wxT_2("Properties"), wxPoint pos = wxDefaultPosition, wxSize size = wxSize( 527,212 ), int style = wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxRESIZE_BORDER );
 
 };
 

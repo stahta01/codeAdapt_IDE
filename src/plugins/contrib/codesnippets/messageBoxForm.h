@@ -50,7 +50,7 @@ class messageBoxForm : public wxDialog
 		wxStdDialogButtonSizer* m_sdbSizer;
 
 	public:
-		messageBoxForm( wxWindow* parent, int id = -1, wxString title = wxT("Properties"),
+		messageBoxForm( wxWindow* parent, int id = -1, wxString title = wxT_2("Properties"),
                     wxPoint pos = wxDefaultPosition,
                     wxSize size = wxSize( 537,228 ),
                     int dlgStyle = wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP,

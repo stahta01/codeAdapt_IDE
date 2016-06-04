@@ -61,7 +61,7 @@
 #include "defsext.h"     // Additional definitions
 #include "finddialogs.h"     // Dialogs
 
-#define g_appname wxT("Find")
+#define g_appname wxT_2("Find")
 //----------------------------------------------------------------------------
 // resources
 //----------------------------------------------------------------------------
@@ -72,10 +72,10 @@
 //============================================================================
 
 const int MAXHISTORY = 10;
-const wxString FINDREPLACEDLG = _T("FindReplaceDlg");
-const wxString DIRECTORYHISTORY = _T("History/Directory");
-const wxString FINDSTRHISTORY = _T("History/Findtext");
-const wxString REPLACESTRHISTORY = _T("History/Replacetext");
+const wxString FINDREPLACEDLG = wxT_2("FindReplaceDlg");
+const wxString DIRECTORYHISTORY = wxT_2("History/Directory");
+const wxString FINDSTRHISTORY = wxT_2("History/Findtext");
+const wxString REPLACESTRHISTORY = wxT_2("History/Replacetext");
 
 
 //============================================================================
@@ -246,7 +246,7 @@ void myFindReplaceDlg::OnCancel (wxCommandEvent &WXUNUSED(event)) {
 
 void myFindReplaceDlg::OnHelp (wxCommandEvent &WXUNUSED(event)) {
     ////(pecan 2007/4/05)
-    //-g_help->Display(_T("dialogs.html#findreplace"));
+    //-g_help->Display(wxT_2("dialogs.html#findreplace"));
 }
 
 void myFindReplaceDlg::OnOkay (wxCommandEvent &WXUNUSED(event)) {
@@ -390,12 +390,12 @@ int myFindReplaceDlg::ShowModal (long style) {
 void myFindReplaceDlg::LoadDirHistory () {
     if (!m_finddirHist.IsEmpty()) return;
     wxConfig *cfg = new wxConfig (g_appname);
-    wxString group = FINDREPLACEDLG + _T("/") + DIRECTORYHISTORY;
+    wxString group = FINDREPLACEDLG + wxT_2("/") + DIRECTORYHISTORY;
     wxString key;
     wxString value;
     int i;
     for (i = 0; i < MAXHISTORY; ++i) {
-        key = group + wxString::Format (_T("%d"), i);
+        key = group + wxString::Format (wxT_2("%d"), i);
         if (cfg->Read (key, &value)) m_finddirHist.Add (value);
     }
     delete cfg;
@@ -403,12 +403,12 @@ void myFindReplaceDlg::LoadDirHistory () {
 
 void myFindReplaceDlg::StoreDirHistory () {
     wxConfig *cfg = new wxConfig (g_appname);
-    wxString group = FINDREPLACEDLG + _T("/") + DIRECTORYHISTORY;
+    wxString group = FINDREPLACEDLG + wxT_2("/") + DIRECTORYHISTORY;
     wxString key;
     wxString value;
     int i;
     for (i = 0; i < (int)m_finddirHist.GetCount(); ++i) {
-        key = group + wxString::Format (_T("%d"), i);
+        key = group + wxString::Format (wxT_2("%d"), i);
         cfg->Write (key, m_finddirHist[i]);
     }
     delete cfg;
@@ -438,12 +438,12 @@ void myFindReplaceDlg::LoadFindHistory () {
 // FIXME: //(pecan 2007/4/05)
 //    if (!m_findstrHist.IsEmpty()) return;
 //    wxConfig *cfg = new wxConfig (g_appname);
-//    wxString group = FINDREPLACEDLG + _T("/") + FINDSTRHISTORY;
+//    wxString group = FINDREPLACEDLG + wxT_2("/") + FINDSTRHISTORY;
 //    wxString key;
 //    wxString value;
 //    int i;
 //    for (i = 0; i < MAXHISTORY; ++i) {
-//        key = group + wxString::Format (_T("%d"), i);
+//        key = group + wxString::Format (wxT_2("%d"), i);
 //        if (cfg->Read (key, &value)) m_findstrHist.Add (value);
 //    }
 //    delete cfg;
@@ -451,12 +451,12 @@ void myFindReplaceDlg::LoadFindHistory () {
 
 void myFindReplaceDlg::StoreFindHistory () {
     wxConfig *cfg = new wxConfig (g_appname);
-    wxString group = FINDREPLACEDLG + _T("/") + FINDSTRHISTORY;
+    wxString group = FINDREPLACEDLG + wxT_2("/") + FINDSTRHISTORY;
     wxString key;
     wxString value;
     int i;
     for (i = 0; i < (int)m_findstrHist.GetCount(); ++i) {
-        key = group + wxString::Format (_T("%d"), i);
+        key = group + wxString::Format (wxT_2("%d"), i);
         cfg->Write (key, m_findstrHist[i]);
     }
     delete cfg;
@@ -486,12 +486,12 @@ void myFindReplaceDlg::LoadReplaceHistory ()
 {// FIXME: //(pecan 2007/4/05)
 //    if (!m_replacestrHist.IsEmpty()) return;
 //    wxConfig *cfg = new wxConfig (g_appname);
-//    wxString group = FINDREPLACEDLG + _T("/") + REPLACESTRHISTORY;
+//    wxString group = FINDREPLACEDLG + wxT_2("/") + REPLACESTRHISTORY;
 //    wxString key;
 //    wxString value;
 //    int i;
 //    for (i = 0; i < MAXHISTORY; ++i) {
-//        key = group + wxString::Format (_T("%d"), i);
+//        key = group + wxString::Format (wxT_2("%d"), i);
 //        if (cfg->Read (key, &value)) m_replacestrHist.Add (value);
 //    }
 //    delete cfg;
@@ -500,12 +500,12 @@ void myFindReplaceDlg::LoadReplaceHistory ()
 void myFindReplaceDlg::StoreReplaceHistory ()
 {// FIXME: //(pecan 2007/4/05)
 //    wxConfig *cfg = new wxConfig (g_appname);
-//    wxString group = FINDREPLACEDLG + _T("/") + REPLACESTRHISTORY;
+//    wxString group = FINDREPLACEDLG + wxT_2("/") + REPLACESTRHISTORY;
 //    wxString key;
 //    wxString value;
 //    int i;
 //    for (i = 0; i < (int)m_replacestrHist.GetCount(); ++i) {
-//        key = group + wxString::Format (_T("%d"), i);
+//        key = group + wxString::Format (wxT_2("%d"), i);
 //        cfg->Write (key, m_replacestrHist[i]);
 //    }
 //    delete cfg;
@@ -559,7 +559,7 @@ myGotoDlg::myGotoDlg (wxWindow *parent,
                                      wxDefaultPosition, wxSize(60, -1)),
                    0, wxALIGN_TOP | wxALIGN_LEFT);
     gotopane->Add (6, 0);
-    m_position = new wxTextCtrl (this, -1, _T(""),
+    m_position = new wxTextCtrl (this, -1, wxT_2(""),
                                  wxDefaultPosition, wxSize(60, -1));
     gotopane->Add (m_position, 0, wxALIGN_TOP | wxALIGN_RIGHT);
 
@@ -586,7 +586,7 @@ myGotoDlg::myGotoDlg (wxWindow *parent,
 
 void myGotoDlg::OnHelp (wxCommandEvent &WXUNUSED(event)) {
     // //(pecan 2007/4/05)
-    //g_help->Display(_T("dialogs.html#gotoposition"));
+    //g_help->Display(wxT_2("dialogs.html#gotoposition"));
 }
 
 //----------------------------------------------------------------------------
@@ -599,7 +599,7 @@ int myGotoDlg::GetPosition () {
 }
 
 void myGotoDlg::SetPosition (int position) {
-    m_position->SetValue (wxString::Format(_T("%d"), position));
+    m_position->SetValue (wxString::Format(wxT_2("%d"), position));
 }
 
 int myGotoDlg::ShowModal (long WXUNUSED(style)) {

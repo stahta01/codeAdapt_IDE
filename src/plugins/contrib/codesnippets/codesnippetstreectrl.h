@@ -154,7 +154,7 @@ class CodeSnippetsTreeCtrl : public wxTreeCtrl
                 if (not IsSnippet(itemId) ) return false;
                 wxString fileName = GetSnippet(itemId).BeforeFirst('\r');
                 fileName = fileName.BeforeFirst('\n');
-                if ( not fileName.StartsWith(wxT("http://")) ) return false;
+                if ( not fileName.StartsWith(wxT_2("http://")) ) return false;
                 return true;
             }
         bool     IsFileLinkSnippet (wxTreeItemId treeItemId  );
