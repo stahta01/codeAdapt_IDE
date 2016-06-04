@@ -10,8 +10,8 @@
 #include <wx/hashmap.h>
 #include <wx/arrstr.h>
 
-#define g_alpha_chars         _T("_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
-#define g_alpha_numeric_chars _T("_0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+#define g_alpha_chars         wxT_2("_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+#define g_alpha_numeric_chars wxT_2("_0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
 
 /** \brief Class containing all bindings between headers and identifiers */
 class Bindings

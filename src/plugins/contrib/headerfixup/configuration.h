@@ -86,7 +86,7 @@ private:
   virtual wxString GetTitle() const
   { return _("HeaderFixup configuration"); }
   virtual wxString GetBitmapBaseName() const
-  { return _T("generic-plugin"); }
+  { return wxT_2("generic-plugin"); }
   virtual void OnApply();
   virtual void OnCancel()
   { ; }

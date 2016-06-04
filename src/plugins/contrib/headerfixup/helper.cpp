@@ -13,7 +13,7 @@
 
 bool nsHeaderFixUp::IsInsideMultilineComment(wxString& Line)
 {
-  int EndCommentPos = Line.Find(_T("*/"));
+  int EndCommentPos = Line.Find(wxT_2("*/"));
   bool OutsideMultilineComment = false;
 
   if ( EndCommentPos == wxNOT_FOUND )
@@ -31,7 +31,7 @@ bool nsHeaderFixUp::IsInsideMultilineComment(wxString& Line)
 
 bool nsHeaderFixUp::IsInsideString(wxString& Line)
 {
-  int EndStringPos = Line.Find(_T('\"'));
+  int EndStringPos = Line.Find(wxT_2('\"'));
   bool OutsideString = false;
 
   if ( EndStringPos == wxNOT_FOUND )

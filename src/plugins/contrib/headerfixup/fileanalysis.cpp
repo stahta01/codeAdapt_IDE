@@ -23,8 +23,8 @@
 #include "cbstyledtextctrl.h"
 #include "fileanalysis.h"
 
-const wxString reInclude = _T("^[ \t]*#[ \t]*include[ \t]+[\"<]([^\">]+)[\">]");
-const wxString reFwdDecl = _T("class[ \\t]*([A-Za-z]+[A-Za-z0-9_]*);");
+const wxString reInclude = wxT_2("^[ \t]*#[ \t]*include[ \t]+[\"<]([^\">]+)[\">]");
+const wxString reFwdDecl = wxT_2("class[ \\t]*([A-Za-z]+[A-Za-z0-9_]*);");
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
@@ -55,11 +55,11 @@ void FileAnalysis::ReInit(const wxString& FileName, bool verbose)
   m_Verbose  = verbose;
 
   wxFileName FileNameObj(m_FileName);
-  if ( FileNameObj.GetExt().Lower() == _T("h")   ||
-       FileNameObj.GetExt().Lower() == _T("hh")  ||
-       FileNameObj.GetExt().Lower() == _T("hpp") ||
-       FileNameObj.GetExt().Lower() == _T("h++") ||
-       FileNameObj.GetExt().Lower() == _T("hxx") )
+  if ( FileNameObj.GetExt().Lower() == wxT_2("h")   ||
+       FileNameObj.GetExt().Lower() == wxT_2("hh")  ||
+       FileNameObj.GetExt().Lower() == wxT_2("hpp") ||
+       FileNameObj.GetExt().Lower() == wxT_2("h++") ||
+       FileNameObj.GetExt().Lower() == wxT_2("hxx") )
   {
     m_IsHeaderFile = true;
   }
@@ -75,7 +75,7 @@ void FileAnalysis::LoadFile()
     m_FileContent = m_Editor->GetControl()->GetText();
   else
   {
-    wxFFile File(m_FileName,_T("rb"));
+    wxFFile File(m_FileName,wxT_2("rb"));
     if ( !File.IsOpened() )
       return;
 
@@ -83,7 +83,7 @@ void FileAnalysis::LoadFile()
   }
 
   // tokenise the file upon linefeeds
-  wxStringTokenizer Tknz(m_FileContent,_T("\n\r"));
+  wxStringTokenizer Tknz(m_FileContent,wxT_2("\n\r"));
   while (Tknz.HasMoreTokens())
     m_LinesOfFile.Add(Tknz.GetNextToken());
 }
@@ -103,21 +103,21 @@ void FileAnalysis::SaveFile(const wxString& Prepend)
     m_FileContent = Prepend + m_FileContent;
 
     wxFFile File;
-    if ( !File.Open(m_FileName,_T("wb")) )
+    if ( !File.Open(m_FileName,wxT_2("wb")) )
     {
-      Manager::Get()->GetLogManager()->DebugLog(F(_T("[HeaderFixup]: ")+m_FileName+_T("\" could not be updated (opened).")));
+      Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("[HeaderFixup]: ")+m_FileName+wxT_2("\" could not be updated (opened).")));
       return;
     }
 
     if ( !File.Write(m_FileContent,wxConvUTF8) )
     {
-      Manager::Get()->GetLogManager()->DebugLog(F(_T("[HeaderFixup]: ")+m_FileName+_T("\" could not be updated (written).")));
+      Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("[HeaderFixup]: ")+m_FileName+wxT_2("\" could not be updated (written).")));
       return;
     }
 
     if ( !File.Close() )
     {
-      Manager::Get()->GetLogManager()->DebugLog(F(_T("[HeaderFixup]: ")+m_FileName+_T("\" could not be closed.")));
+      Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("[HeaderFixup]: ")+m_FileName+wxT_2("\" could not be closed.")));
       return;
     }
   }
@@ -141,13 +141,13 @@ wxString FileAnalysis::GetNextLine()
 
 wxString FileAnalysis::GetEOL()
 {
-  wxString EOL = _T('\n');
+  wxString EOL = wxT_2('\n');
 
   // Detect end-of-line style to prevent inconsistent EOLs
   for ( size_t i=0; i<m_FileContent.Len(); i++ )
   {
-    if (   m_FileContent.GetChar(i)!=_T('\n')
-        && m_FileContent.GetChar(i)!=_T('\r') )
+    if (   m_FileContent.GetChar(i)!=wxT_2('\n')
+        && m_FileContent.GetChar(i)!=wxT_2('\r') )
     {
       continue; // no EOL
     }
@@ -155,8 +155,8 @@ wxString FileAnalysis::GetEOL()
     EOL = m_FileContent.GetChar(i);
     if ( ++i<m_FileContent.Len() )
     {
-      if (   m_FileContent.GetChar(i)==_T('\n')
-          || m_FileContent.GetChar(i)==_T('\r') )
+      if (   m_FileContent.GetChar(i)==wxT_2('\n')
+          || m_FileContent.GetChar(i)==wxT_2('\r') )
       {
         if ( m_FileContent.GetChar(i) != EOL.GetChar(0) )
           EOL << m_FileContent.GetChar(i);
@@ -173,7 +173,7 @@ wxString FileAnalysis::GetEOL()
 wxArrayString FileAnalysis::ParseForIncludes()
 {
   if (m_Verbose)
-    m_Log << _T("- Searching in \"") << m_FileName << _T("\" for included headers.\n");
+    m_Log << wxT_2("- Searching in \"") << m_FileName << wxT_2("\" for included headers.\n");
 
   m_IncludedHeaders.Clear();
 
@@ -190,7 +190,7 @@ wxArrayString FileAnalysis::ParseForIncludes()
     if (Include.IsEmpty()) continue; // nothing else to do...
 
     if (m_Verbose)
-      m_Log << _T("- Include detected via RegEx: \"") << Include << _T("\".\n");
+      m_Log << wxT_2("- Include detected via RegEx: \"") << Include << wxT_2("\".\n");
     m_IncludedHeaders.Add(Include);
 
     if (m_IsHeaderFile) continue; // nothing else to do...
@@ -201,7 +201,7 @@ wxArrayString FileAnalysis::ParseForIncludes()
     if ( !FileToParseFile.GetName().IsSameAs(IncludeFile.GetName()) ) continue;
 
     if (m_Verbose)
-      m_Log << _T("- Recursing into \"") << IncludeFile.GetFullName() << _T("\" for more included headers.\n");
+      m_Log << wxT_2("- Recursing into \"") << IncludeFile.GetFullName() << wxT_2("\" for more included headers.\n");
 
     // "Recursion" -> do another file analysis on the header file
     FileAnalysis fa(FileToParseFile.GetPath()+
@@ -229,7 +229,7 @@ wxArrayString FileAnalysis::ParseForIncludes()
 wxArrayString FileAnalysis::ParseForFwdDecls()
 {
   if (m_Verbose)
-    m_Log << _T("- Searching in \"") << m_FileName << _T("\" for forward decls.\n");
+    m_Log << wxT_2("- Searching in \"") << m_FileName << wxT_2("\" for forward decls.\n");
 
   m_ForwardDecls.Clear();
 
@@ -248,7 +248,7 @@ wxArrayString FileAnalysis::ParseForFwdDecls()
     if (!FdwDecl.IsEmpty())
     {
       if (m_Verbose)
-        m_Log << _T("- Forward decl detected via RegEx: \"") << FdwDecl << _T("\".");
+        m_Log << wxT_2("- Forward decl detected via RegEx: \"") << FdwDecl << wxT_2("\".");
       m_ForwardDecls.Add(FdwDecl);
     }
   }

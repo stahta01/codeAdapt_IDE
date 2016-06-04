@@ -23,15 +23,15 @@
 
 namespace
 {
-  PluginRegistrant<HeaderFixup> reg(_T("HeaderFixup"));
+  PluginRegistrant<HeaderFixup> reg(wxT_2("HeaderFixup"));
 }
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 HeaderFixup::HeaderFixup()
 {
-  if ( !Manager::LoadResource(_T("headerfixup.zip")) )
-    NotifyMissingFile(_T("headerfixup.zip"));
+  if ( !Manager::LoadResource(wxT_2("headerfixup.zip")) )
+    NotifyMissingFile(wxT_2("headerfixup.zip"));
 }// HeaderFixup
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -65,7 +65,7 @@ int HeaderFixup::Execute()
   if (!prj)
   {
     cbMessageBox(_("You need to open a project/workspace before using this plugin!"),
-                 _T("Header Fixup"), wxICON_ERROR | wxOK);
+                 wxT_2("Header Fixup"), wxICON_ERROR | wxOK);
     return -1;
   }
 

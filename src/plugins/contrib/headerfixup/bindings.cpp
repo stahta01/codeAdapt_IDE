@@ -29,14 +29,14 @@ Bindings::~Bindings()
 
 void Bindings::SaveBindings()
 {
-  ConfigManager* CfgMgr = Manager::Get()->GetConfigManager(_T("HeaderFixup"));
+  ConfigManager* CfgMgr = Manager::Get()->GetConfigManager(wxT_2("HeaderFixup"));
   if (!CfgMgr)
     return;
 
   CfgMgr->Clear();
 
   // TODO (Morten#1#): Implement saving to external XML file
-//  wxString BindingsFile = CfgMgr->GetConfigFolder() + wxFILE_SEP_PATH + _T("bindings.xml");
+//  wxString BindingsFile = CfgMgr->GetConfigFolder() + wxFILE_SEP_PATH + wxT_2("bindings.xml");
 
   int Cnt = 0;
   for ( GroupsT::iterator i = m_Groups.begin(); i!=m_Groups.end(); ++i )
@@ -49,9 +49,9 @@ void Bindings::SaveBindings()
       wxArrayString& Headers = j->second;
       for ( size_t k=0; k<Headers.GetCount(); k++ )
       {
-        wxString Key = wxString::Format(_T("binding%05d"),++Cnt);
-        CfgMgr->Write(_T("/groups/") + Group + _T("/") + Key + _T("/identifier"),Identifier);
-        CfgMgr->Write(_T("/groups/") + Group + _T("/") + Key + _T("/header"),    Headers[k]);
+        wxString Key = wxString::Format(wxT_2("binding%05d"),++Cnt);
+        CfgMgr->Write(wxT_2("/groups/") + Group + wxT_2("/") + Key + wxT_2("/identifier"),Identifier);
+        CfgMgr->Write(wxT_2("/groups/") + Group + wxT_2("/") + Key + wxT_2("/header"),    Headers[k]);
       }
     }
   }
@@ -96,20 +96,20 @@ wxArrayString Bindings::GetGroups()
 
 void Bindings::InitialiseBindingsFromConfig()
 {
-  ConfigManager* CfgMgr = Manager::Get()->GetConfigManager(_T("HeaderFixup"));
+  ConfigManager* CfgMgr = Manager::Get()->GetConfigManager(wxT_2("HeaderFixup"));
   if (!CfgMgr)
     return;
 
-  wxArrayString Groups = CfgMgr->EnumerateSubPaths(_T("/groups"));
+  wxArrayString Groups = CfgMgr->EnumerateSubPaths(wxT_2("/groups"));
   for ( size_t i=0; i<Groups.GetCount(); i++ )
   {
     MappingsT& Map = m_Groups[Groups[i]];
 
-    const wxArrayString TheBindings = CfgMgr->EnumerateSubPaths(_T("/groups/") + Groups[i]);
+    const wxArrayString TheBindings = CfgMgr->EnumerateSubPaths(wxT_2("/groups/") + Groups[i]);
     for ( size_t j = 0; j < TheBindings.GetCount(); ++j )
     {
-      const wxString Identifier = CfgMgr->Read(_T("/groups/") + Groups[i] + _T("/") + TheBindings[j] + _T("/identifier"));
-      const wxString Header     = CfgMgr->Read(_T("/groups/") + Groups[i] + _T("/") + TheBindings[j] + _T("/header"));
+      const wxString Identifier = CfgMgr->Read(wxT_2("/groups/") + Groups[i] + wxT_2("/") + TheBindings[j] + wxT_2("/identifier"));
+      const wxString Header     = CfgMgr->Read(wxT_2("/groups/") + Groups[i] + wxT_2("/") + TheBindings[j] + wxT_2("/header"));
       if ( Identifier.IsEmpty() || Header.IsEmpty() ) continue;
       wxArrayString& Headers = Map[Identifier];
       if ( Headers.Index(Header) == wxNOT_FOUND )
