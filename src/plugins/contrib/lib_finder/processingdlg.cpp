@@ -57,15 +57,15 @@ ProcessingDlg::ProcessingDlg(wxWindow* parent,LibraryConfigManager& Manager,Type
     m_FoundResults(FoundResults)
 {
 	//(*Initialize(ProcessingDlg)
-	Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxCAPTION, _T("id"));
+	Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxCAPTION, wxT_2("id"));
 	FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxVERTICAL, this, _("Processing"));
-	Status = new wxStaticText(this, ID_STATICTEXT1, _("Waiting"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	Status = new wxStaticText(this, ID_STATICTEXT1, _("Waiting"), wxDefaultPosition, wxDefaultSize, 0, wxT_2("ID_STATICTEXT1"));
 	StaticBoxSizer1->Add(Status, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
-	Gauge1 = new wxGauge(this, ID_GAUGE1, 100, wxDefaultPosition, wxSize(402,12), 0, wxDefaultValidator, _T("ID_GAUGE1"));
+	Gauge1 = new wxGauge(this, ID_GAUGE1, 100, wxDefaultPosition, wxSize(402,12), 0, wxDefaultValidator, wxT_2("ID_GAUGE1"));
 	StaticBoxSizer1->Add(Gauge1, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	FlexGridSizer1->Add(StaticBoxSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StopBtn = new wxButton(this, ID_BUTTON1, _("Stop"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	StopBtn = new wxButton(this, ID_BUTTON1, _("Stop"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON1"));
 	FlexGridSizer1->Add(StopBtn, 1, wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->Fit(this);
@@ -115,7 +115,7 @@ void ProcessingDlg::ReadDir(const wxString& DirName)
 
     if ( !Dir.IsOpened() ) return;
 
-    Status->SetLabel(_T("Reading dir: ") + DirName);
+    Status->SetLabel(wxT_2("Reading dir: ") + DirName);
     ::wxYield();
     if ( StopFlag ) return;
 
@@ -161,7 +161,7 @@ void ProcessingDlg::ProcessLibrary(const LibraryConfig* Config)
             _("Searching library \"%s\""),
             Config->ShortCode.c_str()));
 
-    CheckFilter(_T(""),wxStringStringMap(),wxArrayString(),Config,0);
+    CheckFilter(wxT_2(""),wxStringStringMap(),wxArrayString(),Config,0);
 }
 
 void ProcessingDlg::CheckFilter(
@@ -249,7 +249,7 @@ void ProcessingDlg::CheckFilter(
 
         case LibraryFilter::Platform:
         {
-            wxStringTokenizer Tokenizer(Filter.Value,_T("| \t"));
+            wxStringTokenizer Tokenizer(Filter.Value,wxT_2("| \t"));
             bool IsPlatform = false;
             while ( Tokenizer.HasMoreTokens() )
             {
@@ -257,7 +257,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::windows )
                 {
-                    if ( Platform==_T("win") || Platform==_T("windows") )
+                    if ( Platform==wxT_2("win") || Platform==wxT_2("windows") )
                     {
                         IsPlatform = true;
                         break;
@@ -266,7 +266,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::macosx )
                 {
-                    if ( Platform==_T("mac") || Platform==_T("macosx") )
+                    if ( Platform==wxT_2("mac") || Platform==wxT_2("macosx") )
                     {
                         IsPlatform = true;
                         break;
@@ -275,7 +275,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::linux )
                 {
-                    if ( Platform==_T("lin") || Platform==_T("linux") )
+                    if ( Platform==wxT_2("lin") || Platform==wxT_2("linux") )
                     {
                         IsPlatform = true;
                         break;
@@ -284,7 +284,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::freebsd )
                 {
-                    if ( Platform==_T("bsd") || Platform==_T("freebsd") )
+                    if ( Platform==wxT_2("bsd") || Platform==wxT_2("freebsd") )
                     {
                         IsPlatform = true;
                         break;
@@ -293,7 +293,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::netbsd )
                 {
-                    if ( Platform==_T("bsd") || Platform==_T("netbsd") )
+                    if ( Platform==wxT_2("bsd") || Platform==wxT_2("netbsd") )
                     {
                         IsPlatform = true;
                         break;
@@ -302,7 +302,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::openbsd )
                 {
-                    if ( Platform==_T("bsd") || Platform==_T("openbsd") )
+                    if ( Platform==wxT_2("bsd") || Platform==wxT_2("openbsd") )
                     {
                         IsPlatform = true;
                         break;
@@ -311,7 +311,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::darwin )
                 {
-                    if ( Platform==_T("darwin") )
+                    if ( Platform==wxT_2("darwin") )
                     {
                         IsPlatform = true;
                         break;
@@ -320,7 +320,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::solaris )
                 {
-                    if ( Platform==_T("solaris") )
+                    if ( Platform==wxT_2("solaris") )
                     {
                         IsPlatform = true;
                         break;
@@ -329,7 +329,7 @@ void ProcessingDlg::CheckFilter(
 
                 if ( platform::unix )
                 {
-                    if ( Platform==_T("unix") || Platform==_T("un*x") )
+                    if ( Platform==wxT_2("unix") || Platform==wxT_2("un*x") )
                     {
                         IsPlatform = true;
                         break;
@@ -356,10 +356,10 @@ void ProcessingDlg::CheckFilter(
             {
                 // Let's search for the name in search paths
                 wxString Path;
-                if ( wxGetEnv(_T("PATH"),&Path) )
+                if ( wxGetEnv(wxT_2("PATH"),&Path) )
                 {
-                    wxString Splitter = _T(":");
-                    if ( platform::windows ) Splitter = _T(";");
+                    wxString Splitter = wxT_2(":");
+                    if ( platform::windows ) Splitter = wxT_2(";");
                     wxStringTokenizer Tokenizer(Path,Splitter);
                     while ( Tokenizer.HasMoreTokens() )
                     {
@@ -399,14 +399,14 @@ void ProcessingDlg::CheckFilter(
             if ( OldCompilers.IsEmpty() )
             {
                 // If this is the first compiler filter, let's build new list and continue
-                CheckFilter(OldBasePath,OldVars,wxStringTokenize(Filter.Value,_T("| \t")),Config,WhichFilter+1);
+                CheckFilter(OldBasePath,OldVars,wxStringTokenize(Filter.Value,wxT_2("| \t")),Config,WhichFilter+1);
             }
             else
             {
                 // We've set compiler list before, leave only the intersection
                 // of previous and current list
                 wxArrayString Compilers;
-                wxStringTokenizer Tokenizer(Filter.Value,_T("| \t"));
+                wxStringTokenizer Tokenizer(Filter.Value,wxT_2("| \t"));
                 while ( Tokenizer.HasMoreTokens() )
                 {
                     wxString Comp = Tokenizer.GetNextToken();
@@ -434,17 +434,17 @@ void ProcessingDlg::CheckFilter(
 
 void ProcessingDlg::SplitPath(const wxString& FileName,wxArrayString& Split)
 {
-    wxStringTokenizer Tknz(FileName,_T("\\/"));
+    wxStringTokenizer Tknz(FileName,wxT_2("\\/"));
     while (Tknz.HasMoreTokens()) Split.Add(Tknz.GetNextToken());
 }
 
 bool ProcessingDlg::IsVariable(const wxString& NamePart) const
 {
     if ( NamePart.Len() < 5 ) return false;
-    if ( NamePart[0] != _T('*') ) return false;
-    if ( NamePart[1] != _T('$') ) return false;
-    if ( NamePart[2] != _T('(') ) return false;
-    if ( NamePart[NamePart.Len()-1] != _T(')') ) return false;
+    if ( NamePart[0] != wxT_2('*') ) return false;
+    if ( NamePart[1] != wxT_2('$') ) return false;
+    if ( NamePart[2] != wxT_2('(') ) return false;
+    if ( NamePart[NamePart.Len()-1] != wxT_2(')') ) return false;
     return true;
 }
 
@@ -454,7 +454,7 @@ void ProcessingDlg::FoundLibrary(const wxString& OldBasePath,const wxStringStrin
     wxString BasePath = OldBasePath;
 
     BasePath.RemoveLast();
-    Vars[_T("BASE_DIR")] = BasePath;
+    Vars[wxT_2("BASE_DIR")] = BasePath;
     LibraryResult* Result = new LibraryResult();
 
     Result->Type = rtDetected;
@@ -512,7 +512,7 @@ wxString ProcessingDlg::FixVars(wxString Original,const wxStringStringMap& Vars)
           it != Vars.end();
           ++it )
     {
-        wxString SearchString = _T("$(") + it->first + _T(")");
+        wxString SearchString = wxT_2("$(") + it->first + wxT_2(")");
         wxString ReplaceWith = it->second;
         Original.Replace(SearchString,ReplaceWith);
     }

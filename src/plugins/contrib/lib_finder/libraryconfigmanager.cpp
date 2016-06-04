@@ -108,7 +108,7 @@ void LibraryConfigManager::LoadXmlFile(const wxString& Name)
         {
             LibraryConfig* Config = new LibraryConfig(Initial);
             Config->PkgConfigVar = Initial.ShortCode;
-            Config->Description = Config->LibraryName + _T(" (pkg-config)");
+            Config->Description = Config->LibraryName + wxT_2(" (pkg-config)");
             LibraryFilter Filter;
             Filter.Type = LibraryFilter::PkgConfig;
             Filter.Value = Initial.ShortCode;
@@ -135,20 +135,20 @@ void LibraryConfigManager::LoadXml(TiXmlElement* Elem,LibraryConfig* Config,bool
         if ( Filters && Settings )
         {
             // Load subnodes
-            if ( Node == _T("filters") )
+            if ( Node == wxT_2("filters") )
             {
                 LoadXml(Data,Config,true,false);
                 continue;
             }
 
-            if ( Node == _T("settings") )
+            if ( Node == wxT_2("settings") )
             {
                 LoadXml(Data,Config,false,true);
                 continue;
             }
 
             // pkgconfig does define both filter and setting
-            if ( Node == _T("pkgconfig") )
+            if ( Node == wxT_2("pkgconfig") )
             {
                 Config->PkgConfigVar = wxString(Data->Attribute("name"),wxConvUTF8);
                 LibraryFilter Filter;
@@ -164,10 +164,10 @@ void LibraryConfigManager::LoadXml(TiXmlElement* Elem,LibraryConfig* Config,bool
             // Load filter
             LibraryFilter::FilterType Type = LibraryFilter::None;
 
-            if ( Node == _T("platform") ) Type = LibraryFilter::Platform; else
-            if ( Node == _T("file") )     Type = LibraryFilter::File;     else
-            if ( Node == _T("exec") )     Type = LibraryFilter::Exec;     else
-            if ( Node == _T("compiler") ) Type = LibraryFilter::Compiler;
+            if ( Node == wxT_2("platform") ) Type = LibraryFilter::Platform; else
+            if ( Node == wxT_2("file") )     Type = LibraryFilter::File;     else
+            if ( Node == wxT_2("exec") )     Type = LibraryFilter::Exec;     else
+            if ( Node == wxT_2("compiler") ) Type = LibraryFilter::Compiler;
 
             if ( Type != LibraryFilter::None )
             {
@@ -185,7 +185,7 @@ void LibraryConfigManager::LoadXml(TiXmlElement* Elem,LibraryConfig* Config,bool
         if ( Settings )
         {
             // Load setting
-            if ( Node==_T("path") )
+            if ( Node==wxT_2("path") )
             {
                 wxString Include = wxString(Data->Attribute("include"),wxConvUTF8);
                 wxString Lib = wxString(Data->Attribute("lib"),wxConvUTF8);
@@ -196,7 +196,7 @@ void LibraryConfigManager::LoadXml(TiXmlElement* Elem,LibraryConfig* Config,bool
                 continue;
             }
 
-            if ( Node==_T("flags") )
+            if ( Node==wxT_2("flags") )
             {
                 wxString cFlags = wxString(Data->Attribute("cflags"),wxConvUTF8);
                 wxString lFlags = wxString(Data->Attribute("lflags"),wxConvUTF8);
@@ -205,7 +205,7 @@ void LibraryConfigManager::LoadXml(TiXmlElement* Elem,LibraryConfig* Config,bool
                 continue;
             }
 
-            if ( Node==_T("add") )
+            if ( Node==wxT_2("add") )
             {
                 wxString cFlags = wxString(Data->Attribute("cflags"),wxConvUTF8);
                 wxString lFlags = wxString(Data->Attribute("lflags"),wxConvUTF8);

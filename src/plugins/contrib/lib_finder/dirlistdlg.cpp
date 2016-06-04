@@ -52,22 +52,22 @@ DirListDlg::DirListDlg(wxWindow* parent,const wxArrayString& Dirs,wxWindowID id)
 	wxButton* Button2;
 	wxStaticBoxSizer* StaticBoxSizer1;
 	
-	Create(parent, id, _("List of directories with libraries"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+	Create(parent, id, _("List of directories with libraries"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, wxT_2("id"));
 	FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, _("Scanned directories:"));
-	DirList = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxSize(292,194), wxTE_MULTILINE, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	DirList = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxSize(292,194), wxTE_MULTILINE, wxDefaultValidator, wxT_2("ID_TEXTCTRL1"));
 	StaticBoxSizer1->Add(DirList, 1, wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
-	Button1 = new wxButton(this, ID_BUTTON1, _("Add dir"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button1 = new wxButton(this, ID_BUTTON1, _("Add dir"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON1"));
 	BoxSizer1->Add(Button1, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	Button2 = new wxButton(this, ID_BUTTON2, _("Clear All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button2 = new wxButton(this, ID_BUTTON2, _("Clear All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON2"));
 	BoxSizer1->Add(Button2, 0, wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticBoxSizer1->Add(BoxSizer1, 0, wxALIGN_TOP|wxALIGN_CENTER_HORIZONTAL, 0);
 	FlexGridSizer1->Add(StaticBoxSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-	Button3 = new wxButton(this, ID_BUTTON3, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	Button3 = new wxButton(this, ID_BUTTON3, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON3"));
 	BoxSizer2->Add(Button3, 1, wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	Button4 = new wxButton(this, ID_BUTTON4, _("Next"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+	Button4 = new wxButton(this, ID_BUTTON4, _("Next"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, wxT_2("ID_BUTTON4"));
 	Button4->SetDefault();
 	BoxSizer2->Add(Button4, 1, wxBOTTOM|wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	FlexGridSizer1->Add(BoxSizer2, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
@@ -84,7 +84,7 @@ DirListDlg::DirListDlg(wxWindow* parent,const wxArrayString& Dirs,wxWindowID id)
 	wxString List;
 	for ( size_t i=0; i<Dirs.Count(); i++ )
 	{
-	    List << Dirs[i] << _T("\n");
+	    List << Dirs[i] << wxT_2("\n");
 	}
 	DirList->SetValue(List);
 }
@@ -98,7 +98,7 @@ void DirListDlg::OnButton1Click(wxCommandEvent& event)
     wxString DirName = ::wxDirSelector();
     if ( DirName.empty() ) return;
 
-    if ( !DirList->GetValue().empty() ) DirList->AppendText(_T("\n"));
+    if ( !DirList->GetValue().empty() ) DirList->AppendText(wxT_2("\n"));
     DirList->AppendText(DirName);
 }
 
@@ -114,7 +114,7 @@ void DirListDlg::OnButton3Click(wxCommandEvent& event)
 
 void DirListDlg::OnButton4Click(wxCommandEvent& event)
 {
-    wxStringTokenizer Tknz(DirList->GetValue(),_T("\n"));
+    wxStringTokenizer Tknz(DirList->GetValue(),wxT_2("\n"));
     Dirs.Clear();
     while ( Tknz.HasMoreTokens() )
     {

@@ -50,7 +50,7 @@
 namespace
 {
     // Register the plugin
-    PluginRegistrant<lib_finder> reg(_T("lib_finder"));
+    PluginRegistrant<lib_finder> reg(wxT_2("lib_finder"));
 
     // Some class required for scripting
     class LibFinder
@@ -150,9 +150,9 @@ int lib_finder::Execute()
     // Getting list of directories to process
     DirListDlg Dlg(
         Manager::Get()->GetAppWindow(),
-        Manager::Get()->GetConfigManager(_T("lib_finder"))->ReadArrayString(_T("search_dirs")));
+        Manager::Get()->GetConfigManager(wxT_2("lib_finder"))->ReadArrayString(wxT_2("search_dirs")));
     if ( Dlg.ShowModal() == wxID_CANCEL ) return 0;
-    Manager::Get()->GetConfigManager(_T("lib_finder"))->Write(_T("search_dirs"),Dlg.Dirs);
+    Manager::Get()->GetConfigManager(wxT_2("lib_finder"))->Write(wxT_2("search_dirs"),Dlg.Dirs);
 
     // Do the processing
     FileNamesMap FNMap;
@@ -181,7 +181,7 @@ int lib_finder::Execute()
                     Results[i]->Description;
 
                 Names.Add(
-                    wxString::Format(_T("%s : %s"),
+                    wxString::Format(wxT_2("%s : %s"),
                         Results[i]->ShortCode.c_str(),
                         Name.c_str()));
                 if ( PreviousVar != Results[i]->ShortCode )
@@ -269,42 +269,42 @@ bool lib_finder::LoadSearchFilters(LibraryConfigManager* CfgManager)
 {
     wxString Sep = wxFileName::GetPathSeparator();
 
-    CfgManager->LoadXmlConfig(ConfigManager::GetFolder(sdDataGlobal) + Sep + _T("lib_finder"));
-    CfgManager->LoadXmlConfig(ConfigManager::GetFolder(sdDataUser)   + Sep + _T("lib_finder"));
+    CfgManager->LoadXmlConfig(ConfigManager::GetFolder(sdDataGlobal) + Sep + wxT_2("lib_finder"));
+    CfgManager->LoadXmlConfig(ConfigManager::GetFolder(sdDataUser)   + Sep + wxT_2("lib_finder"));
 
     return CfgManager->GetLibraryCount()>0;
 }
 
 void lib_finder::SetGlobalVar(const LibraryResult* Res)
 {
-    ConfigManager * cfg = Manager::Get()->GetConfigManager(_T("gcv"));
-    wxString activeSet = cfg->Read(_T("/active"));
-    wxString curr = _T("/sets/") + activeSet + _T("/") + Res->ShortCode;
+    ConfigManager * cfg = Manager::Get()->GetConfigManager(wxT_2("gcv"));
+    wxString activeSet = cfg->Read(wxT_2("/active"));
+    wxString curr = wxT_2("/sets/") + activeSet + wxT_2("/") + Res->ShortCode;
 
-    wxString IncludePath = Res->IncludePath.IsEmpty() ? _T("") : Res->IncludePath[0];
-    wxString LibPath     = Res->LibPath.IsEmpty()     ? _T("") : Res->LibPath[0];
-    wxString ObjPath     = Res->ObjPath.IsEmpty()     ? _T("") : Res->ObjPath[0];
+    wxString IncludePath = Res->IncludePath.IsEmpty() ? wxT_2("") : Res->IncludePath[0];
+    wxString LibPath     = Res->LibPath.IsEmpty()     ? wxT_2("") : Res->LibPath[0];
+    wxString ObjPath     = Res->ObjPath.IsEmpty()     ? wxT_2("") : Res->ObjPath[0];
 
     wxString CFlags;
     if ( !Res->PkgConfigVar.IsEmpty() )
     {
-        CFlags.Append(_T(" `pkg-config "));
+        CFlags.Append(wxT_2(" `pkg-config "));
         CFlags.Append(Res->PkgConfigVar);
-        CFlags.Append(_T(" --cflags`"));
+        CFlags.Append(wxT_2(" --cflags`"));
     }
     for ( size_t i=0; i<Res->CFlags.Count(); i++ )
     {
-        CFlags.Append(_T(" "));
+        CFlags.Append(wxT_2(" "));
         CFlags.Append(Res->CFlags[i]);
     }
     for ( size_t i=1; i<Res->IncludePath.Count(); i++ )
     {
-        CFlags.Append(_T(" -I"));
+        CFlags.Append(wxT_2(" -I"));
         CFlags.Append(Res->IncludePath[i]);
     }
     for ( size_t i=0; i<Res->Defines.Count(); i++ )
     {
-        CFlags.Append(_T(" -D"));
+        CFlags.Append(wxT_2(" -D"));
         CFlags.Append(Res->Defines[i]);
     }
     CFlags.Remove(0,1);
@@ -312,28 +312,28 @@ void lib_finder::SetGlobalVar(const LibraryResult* Res)
     wxString LFlags;
     if ( !Res->PkgConfigVar.IsEmpty() )
     {
-        LFlags.Append(_T(" `pkg-config "));
+        LFlags.Append(wxT_2(" `pkg-config "));
         LFlags.Append(Res->PkgConfigVar);
-        LFlags.Append(_T(" --libs`"));
+        LFlags.Append(wxT_2(" --libs`"));
     }
     for ( size_t i=0; i<Res->LFlags.Count(); i++ )
     {
-        LFlags.Append(_T(" "));
+        LFlags.Append(wxT_2(" "));
         LFlags.Append(Res->LFlags[i]);
     }
     for ( size_t i=1; i<Res->LibPath.Count(); i++ )
     {
-        LFlags.Append(_T(" -L"));
+        LFlags.Append(wxT_2(" -L"));
         LFlags.Append(Res->LibPath[i]);
     }
     for ( size_t i=1; i<Res->ObjPath.Count(); i++ )
     {
-        LFlags.Append(_T(" -L"));
+        LFlags.Append(wxT_2(" -L"));
         LFlags.Append(Res->ObjPath[i]);
     }
     for ( size_t i=0; i<Res->Libs.Count(); i++ )
     {
-        LFlags.Append(_T(" -l"));
+        LFlags.Append(wxT_2(" -l"));
         LFlags.Append(Res->Libs[i]);
     }
     LFlags.Remove(0,1);
@@ -344,52 +344,52 @@ void lib_finder::SetGlobalVar(const LibraryResult* Res)
         // BasePath is mandatory so let's set it anyway
         if ( !Res->PkgConfigVar.IsEmpty() )
         {
-            BasePath = _T("`pkg-config ")+ Res->PkgConfigVar + _T(" --variable=prefix`");
+            BasePath = wxT_2("`pkg-config ")+ Res->PkgConfigVar + wxT_2(" --variable=prefix`");
         }
         else
         {
-            BasePath = _T("---");
+            BasePath = wxT_2("---");
         }
     }
 
-    cfg->Write(curr + _T("/base"),    BasePath);
-    cfg->Write(curr + _T("/include"), IncludePath);
-    cfg->Write(curr + _T("/lib"),     LibPath);
-    cfg->Write(curr + _T("/obj"),     ObjPath);
-    cfg->Write(curr + _T("/cflags"),  CFlags);
-    cfg->Write(curr + _T("/lflags"),  LFlags);
+    cfg->Write(curr + wxT_2("/base"),    BasePath);
+    cfg->Write(curr + wxT_2("/include"), IncludePath);
+    cfg->Write(curr + wxT_2("/lib"),     LibPath);
+    cfg->Write(curr + wxT_2("/obj"),     ObjPath);
+    cfg->Write(curr + wxT_2("/cflags"),  CFlags);
+    cfg->Write(curr + wxT_2("/lflags"),  LFlags);
 }
 
 void lib_finder::ReadDetectedResults()
 {
     m_KnownLibraries[rtDetected].Clear();
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("lib_finder"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("lib_finder"));
     if ( !cfg ) return;
 
-    wxArrayString Results = cfg->EnumerateSubPaths(_T("/stored_results"));
+    wxArrayString Results = cfg->EnumerateSubPaths(wxT_2("/stored_results"));
     for ( size_t i=0; i<Results.Count(); i++ )
     {
-        wxString Path = _T("/stored_results/") + Results[i] + _T("/");
+        wxString Path = wxT_2("/stored_results/") + Results[i] + wxT_2("/");
         LibraryResult* Result = new LibraryResult();
 
         Result->Type         = rtDetected;
 
-        Result->LibraryName  = cfg->Read(Path+_T("name"),wxEmptyString);
-        Result->ShortCode    = cfg->Read(Path+_T("short_code"),wxEmptyString);
-        Result->BasePath     = cfg->Read(Path+_T("base_path"),wxEmptyString);
-        Result->Description  = cfg->Read(Path+_T("description"),wxEmptyString);
-        Result->PkgConfigVar = cfg->Read(Path+_T("pkg_config_var"),wxEmptyString);
+        Result->LibraryName  = cfg->Read(Path+wxT_2("name"),wxEmptyString);
+        Result->ShortCode    = cfg->Read(Path+wxT_2("short_code"),wxEmptyString);
+        Result->BasePath     = cfg->Read(Path+wxT_2("base_path"),wxEmptyString);
+        Result->Description  = cfg->Read(Path+wxT_2("description"),wxEmptyString);
+        Result->PkgConfigVar = cfg->Read(Path+wxT_2("pkg_config_var"),wxEmptyString);
 
-        Result->Categories   = cfg->ReadArrayString(Path+_T("categories"));
-        Result->IncludePath  = cfg->ReadArrayString(Path+_T("include_paths"));
-        Result->LibPath      = cfg->ReadArrayString(Path+_T("lib_paths"));
-        Result->ObjPath      = cfg->ReadArrayString(Path+_T("obj_paths"));
-        Result->Libs         = cfg->ReadArrayString(Path+_T("libs"));
-        Result->Defines      = cfg->ReadArrayString(Path+_T("defines"));
-        Result->CFlags       = cfg->ReadArrayString(Path+_T("cflags"));
-        Result->LFlags       = cfg->ReadArrayString(Path+_T("lflags"));
-        Result->Compilers    = cfg->ReadArrayString(Path+_T("compilers"));
+        Result->Categories   = cfg->ReadArrayString(Path+wxT_2("categories"));
+        Result->IncludePath  = cfg->ReadArrayString(Path+wxT_2("include_paths"));
+        Result->LibPath      = cfg->ReadArrayString(Path+wxT_2("lib_paths"));
+        Result->ObjPath      = cfg->ReadArrayString(Path+wxT_2("obj_paths"));
+        Result->Libs         = cfg->ReadArrayString(Path+wxT_2("libs"));
+        Result->Defines      = cfg->ReadArrayString(Path+wxT_2("defines"));
+        Result->CFlags       = cfg->ReadArrayString(Path+wxT_2("cflags"));
+        Result->LFlags       = cfg->ReadArrayString(Path+wxT_2("lflags"));
+        Result->Compilers    = cfg->ReadArrayString(Path+wxT_2("compilers"));
 
         if ( Result->ShortCode.IsEmpty() )
         {
@@ -413,7 +413,7 @@ void lib_finder::ReadPredefinedResults()
 
     for ( size_t i=0; i<DirsCnt; i++ )
     {
-        wxString Path = ConfigManager::GetFolder(Dirs[i]) + wxFileName::GetPathSeparator() + _T("lib_finder/predefined");
+        wxString Path = ConfigManager::GetFolder(Dirs[i]) + wxFileName::GetPathSeparator() + wxT_2("lib_finder/predefined");
         wxDir Dir(Path);
         wxString Name;
         if ( !Dir.IsOpened() ) continue;
@@ -468,7 +468,7 @@ void lib_finder::LoadPredefinedResultFromFile(const wxString& FileName)
             {
                 wxString Name = wxString(Sub->Value(),wxConvUTF8).Lower();
 
-                if ( Name == _T("path") )
+                if ( Name == wxT_2("path") )
                 {
                     wxString Include = wxString(Sub->Attribute("include"),wxConvUTF8);
                     wxString Lib     = wxString(Sub->Attribute("lib"),wxConvUTF8);
@@ -490,7 +490,7 @@ void lib_finder::LoadPredefinedResultFromFile(const wxString& FileName)
                     }
                 }
 
-                if ( Name == _T("add") )
+                if ( Name == wxT_2("add") )
                 {
                     wxString Lib = wxString(Sub->Attribute("lib"),wxConvUTF8);
                     wxString Define = wxString(Sub->Attribute("define"),wxConvUTF8);
@@ -503,7 +503,7 @@ void lib_finder::LoadPredefinedResultFromFile(const wxString& FileName)
                     if ( !LFlags.IsEmpty() ) Result->LFlags.Add(LFlags);
                 }
 
-                if ( Name == _T("compiler") )
+                if ( Name == wxT_2("compiler") )
                 {
                     Result->Compilers.Add(wxString(Sub->Attribute("name"),wxConvUTF8));
                 }
@@ -523,7 +523,7 @@ void lib_finder::LoadPredefinedResultFromFile(const wxString& FileName)
 
 void lib_finder::WriteDetectedResults()
 {
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("lib_finder"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("lib_finder"));
     if ( !cfg ) return;
 
     ResultArray Results;
@@ -532,23 +532,23 @@ void lib_finder::WriteDetectedResults()
     for ( size_t i=0; i<Results.Count(); i++ )
     {
         LibraryResult* Result = Results[i];
-        wxString Path = wxString::Format(_T("/stored_results/res%06d/"),i);
+        wxString Path = wxString::Format(wxT_2("/stored_results/res%06d/"),i);
 
-        cfg->Write(Path+_T("name"),Result->LibraryName);
-        cfg->Write(Path+_T("short_code"),Result->ShortCode);
-        cfg->Write(Path+_T("base_path"),Result->BasePath);
-        cfg->Write(Path+_T("description"),Result->Description);
-        cfg->Write(Path+_T("pkg_config_var"),Result->PkgConfigVar);
+        cfg->Write(Path+wxT_2("name"),Result->LibraryName);
+        cfg->Write(Path+wxT_2("short_code"),Result->ShortCode);
+        cfg->Write(Path+wxT_2("base_path"),Result->BasePath);
+        cfg->Write(Path+wxT_2("description"),Result->Description);
+        cfg->Write(Path+wxT_2("pkg_config_var"),Result->PkgConfigVar);
 
-        cfg->Write(Path+_T("categories"),Result->Categories);
-        cfg->Write(Path+_T("include_paths"),Result->IncludePath);
-        cfg->Write(Path+_T("lib_paths"),Result->LibPath);
-        cfg->Write(Path+_T("obj_paths"),Result->ObjPath);
-        cfg->Write(Path+_T("libs"),Result->Libs);
-        cfg->Write(Path+_T("defines"),Result->Defines);
-        cfg->Write(Path+_T("cflags"),Result->CFlags);
-        cfg->Write(Path+_T("lflags"),Result->LFlags);
-        cfg->Write(Path+_T("compilers"),Result->Compilers);
+        cfg->Write(Path+wxT_2("categories"),Result->Categories);
+        cfg->Write(Path+wxT_2("include_paths"),Result->IncludePath);
+        cfg->Write(Path+wxT_2("lib_paths"),Result->LibPath);
+        cfg->Write(Path+wxT_2("obj_paths"),Result->ObjPath);
+        cfg->Write(Path+wxT_2("libs"),Result->Libs);
+        cfg->Write(Path+wxT_2("defines"),Result->Defines);
+        cfg->Write(Path+wxT_2("cflags"),Result->CFlags);
+        cfg->Write(Path+wxT_2("lflags"),Result->LFlags);
+        cfg->Write(Path+wxT_2("compilers"),Result->Compilers);
     }
 }
 
@@ -668,29 +668,29 @@ void lib_finder::SetupTarget(CompileTargetBase* Target,const wxArrayString& Libs
         wxString Message = _("Found following issues with libraries:\n");
         if ( !NotFound.IsEmpty() )
         {
-            Message += _T("\n");
+            Message += wxT_2("\n");
             Message += _("Didn't found configuration for libraries:\n");
             for ( size_t i=0; i<NotFound.Count(); i++ )
             {
-                Message += _T("  * ") + NotFound[i];
+                Message += wxT_2("  * ") + NotFound[i];
             }
         }
         if ( !NoCompiler.IsEmpty() )
         {
-            Message += _T("\n");
+            Message += wxT_2("\n");
             Message += _("These libraries were not configured for used compiler:\n");
             for ( size_t i=0; i<NoCompiler.Count(); i++ )
             {
-                Message += _T("  * ") + NoCompiler[i];
+                Message += wxT_2("  * ") + NoCompiler[i];
             }
         }
         if ( !NoVersion.IsEmpty() )
         {
-            Message += _T("\n");
+            Message += wxT_2("\n");
             Message += _("These libraries did not meet version requirements:\n");
             for ( size_t i=0; i<NoVersion.Count(); i++ )
             {
-                Message += _T("  * ") + NoVersion[i];
+                Message += wxT_2("  * ") + NoVersion[i];
             }
         }
 
@@ -711,7 +711,7 @@ bool lib_finder::TryAddLibrary(CompileTargetBase* Target,LibraryResult* Result)
 
     // Read used compiler to detect command line option for defines
     Compiler* comp = CompilerFactory::GetCompiler(Target->GetCompilerID());
-    wxString DefinePrefix = _T("-D");
+    wxString DefinePrefix = wxT_2("-D");
     if ( comp )
     {
         DefinePrefix = comp->GetSwitches().defines;

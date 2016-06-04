@@ -46,7 +46,7 @@ void PkgConfigManager::RefreshData()
 bool PkgConfigManager::DetectVersion()
 {
     wxArrayString Output;
-    if ( wxExecute(_T("pkg-config --version"),Output,wxEXEC_NODISABLE) != 0 )
+    if ( wxExecute(wxT_2("pkg-config --version"),Output,wxEXEC_NODISABLE) != 0 )
     {
         // Some error, we can not talk to pkg-config
         return false;
@@ -58,7 +58,7 @@ bool PkgConfigManager::DetectVersion()
         return false;
     }
 
-    wxStringTokenizer VerTok(Output[0],_T("."));
+    wxStringTokenizer VerTok(Output[0],wxT_2("."));
     long VersionNumbers[4] = { 0,0,0,0 };
     int CurrentVersionToken = 0;
 
@@ -91,7 +91,7 @@ bool PkgConfigManager::DetectLibraries(ResultMap& Results)
     if ( !IsPkgConfig() ) return false;
 
     wxArrayString Output;
-    if ( wxExecute(_T("pkg-config --list-all"),Output,wxEXEC_NODISABLE) != 0 )
+    if ( wxExecute(wxT_2("pkg-config --list-all"),Output,wxEXEC_NODISABLE) != 0 )
     {
         // Some error, we can not talk to pkg-config
         return false;
@@ -110,7 +110,7 @@ bool PkgConfigManager::DetectLibraries(ResultMap& Results)
         for ( j=0; j<Line.Length(); j++ )
         {
             wxChar ch = Line[j];
-            if ( ch==_T('\0') || ch==_T(' ') || ch==_T('\t') )
+            if ( ch==wxT_2('\0') || ch==wxT_2(' ') || ch==wxT_2('\t') )
             {
                 break;
             }
@@ -123,7 +123,7 @@ bool PkgConfigManager::DetectLibraries(ResultMap& Results)
         }
 
         // Eat white
-        while ( j<Line.Length() && (Line[j]==_T(' ') || Line[j]==_T('\t')) ) j++;
+        while ( j<Line.Length() && (Line[j]==wxT_2(' ') || Line[j]==wxT_2('\t')) ) j++;
         // After that, we have description
 
         LibraryResult* Result = new LibraryResult();
@@ -144,7 +144,7 @@ void PkgConfigManager::Clear()
 
 bool PkgConfigManager::UpdateTarget(const wxString& VarName,CompileTargetBase* Target,bool Force)
 {
-    Target->AddCompilerOption(_T("`pkg-config ") + VarName + _T(" --cflags`"));
-    Target->AddLinkerOption  (_T("`pkg-config ") + VarName + _T(" --libs`"  ));
+    Target->AddCompilerOption(wxT_2("`pkg-config ") + VarName + wxT_2(" --cflags`"));
+    Target->AddLinkerOption  (wxT_2("`pkg-config ") + VarName + wxT_2(" --libs`"  ));
     return true;
 }
