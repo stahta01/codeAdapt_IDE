@@ -18,7 +18,7 @@ class HelpConfigDialog : public cbConfigurationPanel
     virtual ~HelpConfigDialog();
 
     virtual wxString GetTitle() const { return _("Help files"); }
-    virtual wxString GetBitmapBaseName() const { return _T("help-plugin"); }
+    virtual wxString GetBitmapBaseName() const { return wxT_2("help-plugin"); }
     virtual void OnApply();
     virtual void OnCancel(){}
   protected:

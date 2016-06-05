@@ -44,7 +44,7 @@ HelpConfigDialog::HelpConfigDialog(wxWindow* parent, HelpPlugin* plugin)
 : m_LastSel(0),
 m_pPlugin(plugin)
 {
-  wxXmlResource::Get()->LoadPanel(this, parent, _T("HelpConfigDialog"));
+  wxXmlResource::Get()->LoadPanel(this, parent, wxT_2("HelpConfigDialog"));
   HelpCommon::LoadHelpFilesVector(m_Vector);
 
   wxListBox *lst = XRCCTRL(*this, "lstHelp", wxListBox);
@@ -110,17 +110,17 @@ void HelpConfigDialog::ChooseFile()
 {
   wxString filename = wxFileSelector
   (
-    _T("Choose a help file"),
+    wxT_2("Choose a help file"),
     wxEmptyString,
     wxEmptyString,
     wxEmptyString,
 #ifdef __WXMSW__
-    _T(
+    wxT_2(
       "Windows help files (*.chm;*.hlp)|*.hlp;*.chm|"
       "All files (*.*)|*.*"
     )
 #else
-    _T("All files (*.*)|*.*")
+    wxT_2("All files (*.*)|*.*")
 #endif
   );
 
@@ -156,7 +156,7 @@ void HelpConfigDialog::ListChange(wxCommandEvent& event)
     XRCCTRL(*this, "chkEmbeddedViewer", wxCheckBox)->SetValue(false);
     // Patch by Yorgos Pagles: Show the new attributes
     XRCCTRL(*this, "chkCase", wxChoice)->SetSelection(0);
-    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(_T(""));
+    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(wxT_2(""));
   }
 }
 
@@ -182,7 +182,7 @@ void HelpConfigDialog::Add(wxCommandEvent &event)
       return;
     }
 
-    if (text.Find(_T('/')) != -1 || text.Find(_T('\\')) != -1)
+    if (text.Find(wxT_2('/')) != -1 || text.Find(wxT_2('\\')) != -1)
     {
       cbMessageBox(_("Slashes and backslashes cannot be used to name a help file"), _("Warning"), wxICON_WARNING);
       return;
@@ -193,10 +193,10 @@ void HelpConfigDialog::Add(wxCommandEvent &event)
     XRCCTRL(*this, "chkDefault", wxCheckBox)->SetValue(false);
     XRCCTRL(*this, "chkExecute", wxCheckBox)->SetValue(false);
     XRCCTRL(*this, "chkEmbeddedViewer", wxCheckBox)->SetValue(false);
-    XRCCTRL(*this, "txtHelp", wxTextCtrl)->SetValue(_T(""));
+    XRCCTRL(*this, "txtHelp", wxTextCtrl)->SetValue(wxT_2(""));
     // Patch by Yorgos Pagles: Show the new attributes
     XRCCTRL(*this, "chkCase", wxChoice)->SetSelection(0);
-    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(_T(""));
+    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(wxT_2(""));
 
     if (cbMessageBox(_("Would you like to browse for the help file?\n(Check \"Help->Plugins->Help plugin\" for a reason you would like to choose No)"), _("Browse"), wxICON_QUESTION | wxYES_NO) == wxID_YES)
     {
@@ -225,7 +225,7 @@ void HelpConfigDialog::Rename(wxCommandEvent &event)
       return;
     }
 
-    if (text.Find(_T('/')) != -1 || text.Find(_T('\\')) != -1)
+    if (text.Find(wxT_2('/')) != -1 || text.Find(wxT_2('\\')) != -1)
     {
       cbMessageBox(_("Slashes and backslashes cannot be used to name a help file."), _("Warning"), wxICON_WARNING);
       return;
@@ -264,13 +264,13 @@ void HelpConfigDialog::Delete(wxCommandEvent &event)
   }
   else
   {
-    XRCCTRL(*this, "txtHelp", wxTextCtrl)->SetValue(_T(""));
+    XRCCTRL(*this, "txtHelp", wxTextCtrl)->SetValue(wxT_2(""));
     XRCCTRL(*this, "chkExecute", wxCheckBox)->SetValue(false);
     XRCCTRL(*this, "chkEmbeddedViewer", wxCheckBox)->SetValue(false);
     XRCCTRL(*this, "chkDefault", wxCheckBox)->SetValue(false);
     // Patch by Yorgos Pagles: Show the new attributes
     XRCCTRL(*this, "chkCase", wxChoice)->SetSelection(0);
-    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(_T(""));
+    XRCCTRL(*this, "textDefaultKeyword", wxTextCtrl)->SetValue(wxT_2(""));
   }
 
   m_LastSel = lst->GetSelection();

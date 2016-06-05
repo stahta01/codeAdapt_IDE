@@ -162,29 +162,29 @@ void MANFrame::OnLinkClicked(wxHtmlLinkEvent &event)
 {
     wxString link = event.GetLinkInfo().GetHref();
 
-    if (link.StartsWith(_T("man:"), &link))
+    if (link.StartsWith(wxT_2("man:"), &link))
     {
-        if (link.Last() == _T(')'))
+        if (link.Last() == wxT_2(')'))
         {
             link.RemoveLast();
-            wxString name = link.BeforeLast(_T('('));
+            wxString name = link.BeforeLast(wxT_2('('));
 
             if (name.IsEmpty())
             {
                 return;
             }
 
-            wxString section = link.AfterLast(_T('('));
+            wxString section = link.AfterLast(wxT_2('('));
 
             if (!section.IsEmpty())
             {
-                name += _T(".") + section;
+                name += wxT_2(".") + section;
             }
 
             SearchManPage(wxEmptyString, name);
         }
     }
-    else if (link.StartsWith(_T("fman:"), &link))
+    else if (link.StartsWith(wxT_2("fman:"), &link))
     {
         wxString man_page = GetManPage(link);
 
@@ -196,7 +196,7 @@ void MANFrame::OnLinkClicked(wxHtmlLinkEvent &event)
 
         SetPage(cbC2U(man2html_buffer(cbU2C(man_page))));
     }
-    else if (wxFileName(link).GetExt().Mid(0, 3).CmpNoCase(_T("htm")) == 0)
+    else if (wxFileName(link).GetExt().Mid(0, 3).CmpNoCase(wxT_2("htm")) == 0)
     {
     	m_htmlWindow->LoadPage(link);
     }
@@ -265,7 +265,7 @@ void MANFrame::SetDirs(const wxString &dirs)
 
         while (true)
         {
-            size_t next_semi = dirs.find(_T(';'), start_pos);
+            size_t next_semi = dirs.find(wxT_2(';'), start_pos);
 
             if ((int)next_semi == wxNOT_FOUND)
             {
@@ -295,13 +295,13 @@ void MANFrame::GetMatches(const wxString &keyword, std::vector<wxString> *files_
     {
         wxArrayString files;
 
-        if (keyword.Last() == _T('*'))
+        if (keyword.Last() == wxT_2('*'))
         {
             wxDir::GetAllFiles(*i, &files, keyword);
         }
         else
         {
-            wxDir::GetAllFiles(*i, &files, keyword + _T("*"));
+            wxDir::GetAllFiles(*i, &files, keyword + wxT_2("*"));
         }
 
         for (size_t j = 0; j < files.GetCount(); ++j)
@@ -320,7 +320,7 @@ wxString MANFrame::GetManPage(wxString filename, int depth)
         return wxString();
     }
 
-    if (filename.EndsWith(_T(".bz2")))
+    if (filename.EndsWith(wxT_2(".bz2")))
     {
         if (!m_tmpfile.IsEmpty())
         {
@@ -330,7 +330,7 @@ wxString MANFrame::GetManPage(wxString filename, int depth)
             }
         }
 
-        m_tmpfile = wxFileName::CreateTempFileName(_T("manbz2"));
+        m_tmpfile = wxFileName::CreateTempFileName(wxT_2("manbz2"));
 
         if (!Decompress(filename, m_tmpfile))
         {
@@ -341,7 +341,7 @@ wxString MANFrame::GetManPage(wxString filename, int depth)
 
         filename = m_tmpfile;
     }
-    else if (filename.EndsWith(_T(".gz")))
+    else if (filename.EndsWith(wxT_2(".gz")))
     {
         gzFile f = gzopen(filename.mb_str(), "rb");
 
@@ -389,20 +389,20 @@ wxString MANFrame::GetManPage(wxString filename, int depth)
     wxString ret = sos.GetString();
 
     // Check if we should follow the link
-    if (ret.StartsWith(_T(".so "), &ret))
+    if (ret.StartsWith(wxT_2(".so "), &ret))
     {
-        wxString path = ret.BeforeFirst(_T('\n'));
+        wxString path = ret.BeforeFirst(wxT_2('\n'));
         wxString name;
         wxString ext;
         wxString newfilename;
 
         wxFileName::SplitPath(path, 0, &name, &ext, wxPATH_UNIX); // man pages "always" use /
-        newfilename = name + _T(".") + ext;
+        newfilename = name + wxT_2(".") + ext;
         wxFileName::SplitPath(orgFilename, &path, 0, &ext);
 
-        if (ext == _T("bz2") || ext == _T("gz"))
+        if (ext == wxT_2("bz2") || ext == wxT_2("gz"))
         {
-            newfilename += _T(".") + ext;
+            newfilename += wxT_2(".") + ext;
         }
 
         return GetManPage(path + wxFileName::GetPathSeparator() + newfilename, depth + 1);
@@ -462,15 +462,15 @@ wxString MANFrame::CreateLinksPage(const std::vector<wxString> &files)
 
         wxFileName::SplitPath(filename, 0, &linkname, &ext);
 
-        if (ext != _T("bz2") && ext != _T("gz"))
+        if (ext != wxT_2("bz2") && ext != wxT_2("gz"))
         {
-            linkname += _T(".") + ext;
+            linkname += wxT_2(".") + ext;
         }
 
-        ret += _T("<a href=\"fman:") + filename + _T("\">") + linkname + _T("</a><br>");
+        ret += wxT_2("<a href=\"fman:") + filename + wxT_2("\">") + linkname + wxT_2("</a><br>");
     }
 
-    ret += _T("</body>\n"
+    ret += wxT_2("</body>\n"
         "</html>");
 
     return ret;

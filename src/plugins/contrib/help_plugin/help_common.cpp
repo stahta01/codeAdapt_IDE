@@ -15,22 +15,22 @@ void HelpCommon::LoadHelpFilesVector(HelpCommon::HelpFilesVector &vect)
 {
   vect.clear();
   HelpCommon::setNumReadFromIni(0);
-  ConfigManager* conf = Manager::Get()->GetConfigManager(_T("help_plugin"));
-  m_DefaultHelpIndex = conf->ReadInt(_T("/default"), -1);
-  wxArrayString list = conf->EnumerateSubPaths(_T("/"));
+  ConfigManager* conf = Manager::Get()->GetConfigManager(wxT_2("help_plugin"));
+  m_DefaultHelpIndex = conf->ReadInt(wxT_2("/default"), -1);
+  wxArrayString list = conf->EnumerateSubPaths(wxT_2("/"));
 
   for (unsigned int i = 0; i < list.GetCount(); ++i)
   {
       HelpFileAttrib hfa;
-      wxString name = conf->Read(list[i] + _T("/name"), wxEmptyString);
-      hfa.name = conf->Read(list[i] + _T("/file"), wxEmptyString);
-      conf->Read(list[i] + _T("/isexec"), &hfa.isExecutable);
-      conf->Read(list[i] + _T("/embeddedviewer"), &hfa.openEmbeddedViewer);
+      wxString name = conf->Read(list[i] + wxT_2("/name"), wxEmptyString);
+      hfa.name = conf->Read(list[i] + wxT_2("/file"), wxEmptyString);
+      conf->Read(list[i] + wxT_2("/isexec"), &hfa.isExecutable);
+      conf->Read(list[i] + wxT_2("/embeddedviewer"), &hfa.openEmbeddedViewer);
       // Patch by Yorgos Pagles: Read new attributes from settings
       int keyWordCase=0;
-      (conf->Read(list[i] + _T("/keywordcase"), &keyWordCase));
+      (conf->Read(list[i] + wxT_2("/keywordcase"), &keyWordCase));
       hfa.keywordCase = static_cast<HelpCommon::StringCase>(keyWordCase);
-      hfa.defaultKeyword = conf->Read(list[i] + _T("/defaultkeyword"), wxEmptyString);
+      hfa.defaultKeyword = conf->Read(list[i] + wxT_2("/defaultkeyword"), wxEmptyString);
 
       if (!name.IsEmpty() && !hfa.name.IsEmpty())
       {
@@ -39,7 +39,7 @@ void HelpCommon::LoadHelpFilesVector(HelpCommon::HelpFilesVector &vect)
   }
 
   wxString docspath = ConfigManager::GetFolder(sdBase)+_("/share/codeblocks/docs");
-  wxString iniFileName =  docspath + wxFileName::GetPathSeparator() + _T("index.ini");
+  wxString iniFileName =  docspath + wxFileName::GetPathSeparator() + wxT_2("index.ini");
 
   if ((wxFileName::DirExists(docspath)) && (wxFileName::FileExists(iniFileName)))
   {
@@ -82,8 +82,8 @@ void HelpCommon::LoadHelpFilesVector(HelpCommon::HelpFilesVector &vect)
 
 void HelpCommon::SaveHelpFilesVector(HelpCommon::HelpFilesVector &vect)
 {
-  ConfigManager* conf = Manager::Get()->GetConfigManager(_T("help_plugin"));
-  wxArrayString list = conf->EnumerateSubPaths(_T("/"));
+  ConfigManager* conf = Manager::Get()->GetConfigManager(wxT_2("help_plugin"));
+  wxArrayString list = conf->EnumerateSubPaths(wxT_2("/"));
 
   for (unsigned int i = 0; i < list.GetCount(); ++i)
   {
@@ -102,16 +102,16 @@ void HelpCommon::SaveHelpFilesVector(HelpCommon::HelpFilesVector &vect)
 
     if (!name.IsEmpty() && !hfa.name.IsEmpty() && !hfa.readFromIni)
     {
-      wxString key = wxString::Format(_T("/help%d/"), count++);
-      conf->Write(key + _T("name"), name);
-      conf->Write(key + _T("file"), hfa.name);
-      conf->Write(key + _T("isexec"), hfa.isExecutable);
-      conf->Write(key + _T("embeddedviewer"), hfa.openEmbeddedViewer);
+      wxString key = wxString::Format(wxT_2("/help%d/"), count++);
+      conf->Write(key + wxT_2("name"), name);
+      conf->Write(key + wxT_2("file"), hfa.name);
+      conf->Write(key + wxT_2("isexec"), hfa.isExecutable);
+      conf->Write(key + wxT_2("embeddedviewer"), hfa.openEmbeddedViewer);
       // Patch by Yorgos Pagles: Write new attributes in settings
-      conf->Write(key + _T("keywordcase"), static_cast<int>(hfa.keywordCase));
-      conf->Write(key + _T("defaultkeyword"), hfa.defaultKeyword);
+      conf->Write(key + wxT_2("keywordcase"), static_cast<int>(hfa.keywordCase));
+      conf->Write(key + wxT_2("defaultkeyword"), hfa.defaultKeyword);
     }
   }
 
-  conf->Write(_T("/default"), m_DefaultHelpIndex);
+  conf->Write(wxT_2("/default"), m_DefaultHelpIndex);
 }
