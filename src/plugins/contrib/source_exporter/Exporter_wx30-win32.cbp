@@ -72,7 +72,6 @@
 					<Add option="-DCA_USEPCH" />
 					<Add option="-DcbDEBUG" />
 					<Add directory="../../../include" />
-					<Add directory="../../../sdk/wxscintilla/include" />
 				</Compiler>
 				<Linker>
 					<Add library="codeadapt" />
