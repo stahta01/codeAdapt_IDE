@@ -49,7 +49,6 @@
 					<Add option="-DwxUSE_UNICODE" />
 					<Add directory="bzip2" />
 					<Add directory="zlib" />
-					<Add directory="../../../sdk/wxscintilla/include" />
 				</Compiler>
 				<Linker>
 					<Add library="bzip2/libbzip2.a" />
