@@ -72,7 +72,6 @@
 					<Add option="-DCA_USEPCH" />
 					<Add option="-DcbDEBUG" />
 					<Add directory="../../../include" />
-					<Add directory="../../../sdk/wxscintilla/include" />
 				</Compiler>
 				<Linker>
 					<Add library="codeadapt" />
@@ -91,7 +90,7 @@
 				</ExtraCommands>
 			</Target>
 			<Environment>
-				<Variable name="CA_OBJ" value="../../../.objs28" />
+				<Variable name="CA_OBJ" value="..\..\..\.objs28" />
 				<Variable name="WX_CFG" value="" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />

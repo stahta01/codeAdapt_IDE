@@ -25,7 +25,7 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="CA_OBJ" value="../../../.objs28" />
+				<Variable name="CA_OBJ" value="..\..\..\.objs28" />
 				<Variable name="WX_CFG" value="" />
 				<Variable name="WX_SUFFIX" value="u" />
 				<Variable name="WX_VERSION" value="28" />
@@ -53,7 +53,6 @@
 			<Add option="-DBUILDING_PLUGIN" />
 			<Add directory="../../../include" />
 			<Add directory="../../../include/tinyxml" />
-			<Add directory="../../../sdk/wxscintilla/include" />
 			<Add directory="$(#wx.include)" />
 			<Add directory="$(#wx.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
 		</Compiler>
