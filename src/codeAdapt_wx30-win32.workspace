@@ -9,6 +9,7 @@
 		<Project filename="plugins/contrib/envvars/envvars_wx30-win32.cbp" />
 		<Project filename="plugins/contrib/byogames/byogames_wx30-win32.cbp" />
 		<Project filename="plugins/contrib/help_plugin/help-plugin_wx30-win32.cbp" />
+		<Project filename="plugins/contrib/symtab/symtab_wx30-win32.cbp" />
 		<Project filename="plugins/contrib/ToolsPlus/ToolsPlus_wx30-win32.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
