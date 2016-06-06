@@ -166,7 +166,7 @@ size_t CBProfilerExecDlg::ParseCallGraph(wxArrayString msg, size_t begin, wxProg
     // Parsing Call Graph
     for (n = begin ; n < msg.GetCount(); ++n )
     {
-        if ((msg[n].IsEmpty())||(msg[n].Find(0x0C) != -1))
+        if ((msg[n].IsEmpty())||(msg[n].Find((unsigned char)0x0C) != -1))
             break;
         outputCallGraphArea->InsertItem(next,_T(""));
         char first_char = msg[n].GetChar(0);
@@ -210,7 +210,7 @@ size_t CBProfilerExecDlg::ParseCallGraph(wxArrayString msg, size_t begin, wxProg
     wxString output_help;
     for ( ; n < msg.GetCount(); ++n )
     {
-        if (msg[n].Find(0x0C) != -1)
+        if (msg[n].Find((unsigned char)0x0C) != -1)
             break;
         output_help << msg[n] << _T("\n");
         progress.Update((100*n)/(msg.GetCount()-1));
@@ -248,7 +248,7 @@ size_t CBProfilerExecDlg::ParseFlatProfile(wxArrayString msg, size_t begin, wxPr
     // Parsing Call Graph
     for (n = begin ; n < msg.GetCount(); ++n )
     {
-        if ((msg[n].IsEmpty())||(msg[n].Find(0x0C) != -1))
+        if ((msg[n].IsEmpty())||(msg[n].Find((unsigned char)0x0C) != -1))
             break;
         long item = outputFlatProfileArea->InsertItem(next,_T(""));
         outputFlatProfileArea->SetItemData(item, next);
@@ -313,7 +313,7 @@ size_t CBProfilerExecDlg::ParseFlatProfile(wxArrayString msg, size_t begin, wxPr
     // Printing Flat Profile Help
     for ( ; n < msg.GetCount(); ++n )
     {
-        if (msg[n].Find(0x0C) != -1)
+        if (msg[n].Find((unsigned char)0x0C) != -1)
             break;
         output_help << msg[n] << _T("\n");
         progress.Update((100*n)/(msg.GetCount()-1));
