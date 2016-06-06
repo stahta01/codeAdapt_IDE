@@ -26,7 +26,7 @@
 // Register the plugin
 namespace
 {
-  PluginRegistrant<SymTab> reg(_T("SymTab"));
+  PluginRegistrant<SymTab> reg(wxT_2("SymTab"));
 };
 
 /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
@@ -34,9 +34,9 @@ namespace
 SymTab::SymTab() : CfgDlg(0L), ExeDlg(0L)
 {
   //ctor
-  if(!Manager::LoadResource(_T("SymTab.zip")))
+  if(!Manager::LoadResource(wxT_2("SymTab.zip")))
   {
-    NotifyMissingFile(_T("SymTab.zip"));
+    NotifyMissingFile(wxT_2("SymTab.zip"));
   }
 }// SymTab
 
@@ -81,7 +81,7 @@ int SymTab::Execute()
     return -1;
 
 #ifdef TRACE_SYMTAB
-	Manager::Get()->GetLogManager()->DebugLog(F(_T("SymTab::Execute")));
+	Manager::Get()->GetLogManager()->DebugLog(F(wxT_2("SymTab::Execute")));
 #endif
 
   if (!CfgDlg)
@@ -91,32 +91,32 @@ int SymTab::Execute()
     return -1;
 
   // Load the config settings
-  ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("symtab"));
+  ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("symtab"));
 
   // Loading configuration
   struct_config config;
-  config.choWhatToDo    = cfg->ReadInt (_T("/what_to_do"),   0);
+  config.choWhatToDo    = cfg->ReadInt (wxT_2("/what_to_do"),   0);
 
-  config.txtLibraryPath = cfg->Read    (_T("/library_path"), wxEmptyString);
-  config.chkIncludeA    = cfg->ReadBool(_T("/include_a"),    true);
-  config.chkIncludeLib  = cfg->ReadBool(_T("/include_lib"),  true);
-  config.chkIncludeO    = cfg->ReadBool(_T("/include_o"),    false);
-  config.chkIncludeObj  = cfg->ReadBool(_T("/include_obj"),  false);
-  config.chkIncludeDll  = cfg->ReadBool(_T("/include_dll"),  false);
+  config.txtLibraryPath = cfg->Read    (wxT_2("/library_path"), wxEmptyString);
+  config.chkIncludeA    = cfg->ReadBool(wxT_2("/include_a"),    true);
+  config.chkIncludeLib  = cfg->ReadBool(wxT_2("/include_lib"),  true);
+  config.chkIncludeO    = cfg->ReadBool(wxT_2("/include_o"),    false);
+  config.chkIncludeObj  = cfg->ReadBool(wxT_2("/include_obj"),  false);
+  config.chkIncludeDll  = cfg->ReadBool(wxT_2("/include_dll"),  false);
 
-  config.txtLibrary     = cfg->Read    (_T("/library"),      wxEmptyString);
+  config.txtLibrary     = cfg->Read    (wxT_2("/library"),      wxEmptyString);
 
-  config.txtSymbol      = cfg->Read    (_T("/symbol"),       wxEmptyString);
+  config.txtSymbol      = cfg->Read    (wxT_2("/symbol"),       wxEmptyString);
 
-  config.txtNM          = cfg->Read    (_T("/nm"),           wxEmptyString);
+  config.txtNM          = cfg->Read    (wxT_2("/nm"),           wxEmptyString);
 
-  config.chkDebug       = cfg->ReadBool(_T("/debug"),        false);
-  config.chkDefined     = cfg->ReadBool(_T("/defined"),      false);
-  config.chkDemangle    = cfg->ReadBool(_T("/demangle"),     false);
-  config.chkExtern      = cfg->ReadBool(_T("/extern"),       false);
-  config.chkSpecial     = cfg->ReadBool(_T("/special"),      false);
-  config.chkSynthetic   = cfg->ReadBool(_T("/synthetic"),    false);
-  config.chkUndefined   = cfg->ReadBool(_T("/undefined"),    false);
+  config.chkDebug       = cfg->ReadBool(wxT_2("/debug"),        false);
+  config.chkDefined     = cfg->ReadBool(wxT_2("/defined"),      false);
+  config.chkDemangle    = cfg->ReadBool(wxT_2("/demangle"),     false);
+  config.chkExtern      = cfg->ReadBool(wxT_2("/extern"),       false);
+  config.chkSpecial     = cfg->ReadBool(wxT_2("/special"),      false);
+  config.chkSynthetic   = cfg->ReadBool(wxT_2("/synthetic"),    false);
+  config.chkUndefined   = cfg->ReadBool(wxT_2("/undefined"),    false);
 
   // If we got this far, all is left is to call nm
   if (!ExeDlg)

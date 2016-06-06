@@ -55,27 +55,27 @@ SymTabExecDlg::~SymTabExecDlg()
 int SymTabExecDlg::Execute(struct_config config)
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::Execute"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::Execute"));
 #endif
 
   // Intialise GUI (does nothing if already done)
   DoInitDialog();
 
   // nm optional parameters
-  wxString param(_T(""));
-  if (config.chkDebug)     param << _T(" --debug-syms");
-  if (config.chkDefined)   param << _T(" --defined-only");
-  if (config.chkDemangle)  param << _T(" --demangle");
-  if (config.chkExtern)    param << _T(" --extern-only");
-  if (config.chkSpecial)   param << _T(" --special-syms");
-  if (config.chkSynthetic) param << _T(" --synthetic");
-  if (config.chkUndefined) param << _T(" --undefined-only");
+  wxString param(wxT_2(""));
+  if (config.chkDebug)     param << wxT_2(" --debug-syms");
+  if (config.chkDefined)   param << wxT_2(" --defined-only");
+  if (config.chkDemangle)  param << wxT_2(" --demangle");
+  if (config.chkExtern)    param << wxT_2(" --extern-only");
+  if (config.chkSpecial)   param << wxT_2(" --special-syms");
+  if (config.chkSynthetic) param << wxT_2(" --synthetic");
+  if (config.chkUndefined) param << wxT_2(" --undefined-only");
 
   wxString cmd;
   if (config.txtNM.Trim().IsEmpty())
-    cmd << _T("nm")                         << param;
+    cmd << wxT_2("nm")                         << param;
   else
-    cmd << (config.txtNM.Trim()) << _T(" ") << param;
+    cmd << (config.txtNM.Trim()) << wxT_2(" ") << param;
 
   int retval = -1;
   // Search for a symbol given a library path
@@ -90,7 +90,7 @@ int SymTabExecDlg::Execute(struct_config config)
   }// else if
   else
   {
-    Manager::Get()->GetLogManager()->DebugLog(_T("SymTab: Invalid (unsupported) choice."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTab: Invalid (unsupported) choice."));
   }// else
 
   CleanUp(); // free memory
@@ -102,7 +102,7 @@ int SymTabExecDlg::Execute(struct_config config)
 void SymTabExecDlg::DoInitDialog()
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::DoInitDialog"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::DoInitDialog"));
 #endif
 
   // Avoid multiple load of resources
@@ -110,16 +110,16 @@ void SymTabExecDlg::DoInitDialog()
   {
     // Instantiate and initialise dialog
     SymTabExecDlgLoaded =
-      wxXmlResource::Get()->LoadDialog(this, parent, _T("dlgSymTabExec"));
+      wxXmlResource::Get()->LoadDialog(this, parent, wxT_2("dlgSymTabExec"));
 
     wxFont font(10, wxMODERN, wxNORMAL, wxNORMAL);
 
     m_ListCtrl = XRCCTRL(*this, "lstLib2Symbol",     wxListCtrl);
     // Setting colums names
-    m_ListCtrl->InsertColumn(0, _T("item"),  wxLIST_FORMAT_RIGHT);
-    m_ListCtrl->InsertColumn(1, _T("value"), wxLIST_FORMAT_LEFT);
-    m_ListCtrl->InsertColumn(2, _T("type"),  wxLIST_FORMAT_CENTRE);
-    m_ListCtrl->InsertColumn(3, _T("name"),  wxLIST_FORMAT_LEFT);
+    m_ListCtrl->InsertColumn(0, wxT_2("item"),  wxLIST_FORMAT_RIGHT);
+    m_ListCtrl->InsertColumn(1, wxT_2("value"), wxLIST_FORMAT_LEFT);
+    m_ListCtrl->InsertColumn(2, wxT_2("type"),  wxLIST_FORMAT_CENTRE);
+    m_ListCtrl->InsertColumn(3, wxT_2("name"),  wxLIST_FORMAT_LEFT);
     // Setting help and misc
     m_TextHelp = XRCCTRL(*this, "txtHelp", wxTextCtrl);
     m_TextHelp->SetFont(font);
@@ -133,7 +133,7 @@ void SymTabExecDlg::DoInitDialog()
 void SymTabExecDlg::EndModal(int retCode)
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::EndModal"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::EndModal"));
 #endif
 
   wxDialog::EndModal(retCode);
@@ -145,19 +145,19 @@ void SymTabExecDlg::EndModal(int retCode)
 void SymTabExecDlg::OnWriteToFile(wxCommandEvent& WXUNUSED(event))
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::OnWriteToFile"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::OnWriteToFile"));
 #endif
 
   wxString     es = wxEmptyString;
-  wxFileDialog fd(parent, _("Save NM output to file"), es, es, _T("*.*"), wxFD_SAVE);
+  wxFileDialog fd(parent, _("Save NM output to file"), es, es, wxT_2("*.*"), wxFD_SAVE);
 
   if (fd.ShowModal() == wxID_OK)
   {
-    wxFFile file(fd.GetPath().c_str(), _T("w"));
+    wxFFile file(fd.GetPath().c_str(), wxT_2("w"));
     for (size_t n=0; n<nm_result.GetCount(); ++n)
     {
       file.Write(nm_result[n]);
-      file.Write(_T("\n"));
+      file.Write(wxT_2("\n"));
     }
     file.Close();
   }
@@ -168,7 +168,7 @@ void SymTabExecDlg::OnWriteToFile(wxCommandEvent& WXUNUSED(event))
 void SymTabExecDlg::OnNext(wxCommandEvent& WXUNUSED(event))
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::OnNext"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::OnNext"));
 #endif
 
   wxDialog::EndModal(wxID_OK);
@@ -179,7 +179,7 @@ void SymTabExecDlg::OnNext(wxCommandEvent& WXUNUSED(event))
 void SymTabExecDlg::OnCancel(wxCommandEvent& WXUNUSED(event))
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::OnCancel"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::OnCancel"));
 #endif
 
   wxDialog::EndModal(wxID_CANCEL);
@@ -269,7 +269,7 @@ int wxCALLBACK SortFunction(long item1, long item2, long dlg)
 void SymTabExecDlg::OnColumnClick(wxListEvent& event)
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::OnColumnClick"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::OnColumnClick"));
 #endif
 
   if (event.GetColumn() != ms_iSortColumn)
@@ -299,15 +299,15 @@ int SymTabExecDlg::ExecuteMulti(struct_config &config, wxString cmd)
 
   // Note: GetAllFiles *appends* to an wxArrayString
   if (config.chkIncludeA)
-    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, _T("*.a"));
+    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, wxT_2("*.a"));
   if (config.chkIncludeLib)
-    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, _T("*.lib"));
+    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, wxT_2("*.lib"));
   if (config.chkIncludeO)
-    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, _T("*.o"));
+    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, wxT_2("*.o"));
   if (config.chkIncludeObj)
-    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, _T("*.obj"));
+    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, wxT_2("*.obj"));
   if (config.chkIncludeDll)
-    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, _T("*.dll"));
+    num_files += wxDir::GetAllFiles(config.txtLibraryPath, &files, wxT_2("*.dll"));
 
   if (!num_files)
   {
@@ -323,7 +323,7 @@ int SymTabExecDlg::ExecuteMulti(struct_config &config, wxString cmd)
     {
       // Compile nm command for this library (file)
       wxString this_cmd = cmd;
-      this_cmd << _T(" \"") << files[i] << _T("\"");
+      this_cmd << wxT_2(" \"") << files[i] << wxT_2("\"");
 
       if (!ExecuteNM(files[i], this_cmd)) // fatal.
         return -1;
@@ -369,7 +369,7 @@ int SymTabExecDlg::ExecuteSingle(struct_config &config, wxString cmd)
 {
   wxString the_library = config.txtLibrary.Trim();
   wxString the_symbol  = config.txtSymbol.Trim();
-  cmd << _T(" \"") << the_library << _T("\"");
+  cmd << wxT_2(" \"") << the_library << wxT_2("\"");
   if (!ExecuteNM(the_library, cmd))
     return -1;
 
@@ -397,10 +397,10 @@ int SymTabExecDlg::ExecuteSingle(struct_config &config, wxString cmd)
 bool SymTabExecDlg::ExecuteNM(wxString lib, wxString cmd)
 {
 #ifdef TRACE_SYMTAB_EXE
-  Manager::Get()->GetLogManager()->(_T("SymTabExecDlg::ExecuteNM"));
-  Manager::Get()->GetLogManager()->(_T("Library: ")   + lib);
+  Manager::Get()->GetLogManager()->(wxT_2("SymTabExecDlg::ExecuteNM"));
+  Manager::Get()->GetLogManager()->(wxT_2("Library: ")   + lib);
 #endif
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTab: Executing: ") + cmd);
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTab: Executing: ") + cmd);
 
   wxString p_msg;
   p_msg << _("Launching NM tool for:\n") << lib
@@ -432,7 +432,7 @@ bool SymTabExecDlg::ExecuteNM(wxString lib, wxString cmd)
 int SymTabExecDlg::ParseOutput(wxString lib, wxString filter)
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->(_T("SymTabExecDlg::ParseOutput"));
+	Manager::Get()->GetLogManager()->(wxT_2("SymTabExecDlg::ParseOutput"));
 #endif
 
   int symbols_processed = -1;
@@ -445,7 +445,7 @@ int SymTabExecDlg::ParseOutput(wxString lib, wxString filter)
     symbols_processed = ParseOutputSuccess(lib, filter);
 
 	if (symbols_processed == 0)
-    Manager::Get()->GetLogManager()->DebugLog(_T("SymTab: Parsing produced no match (no results)."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTab: Parsing produced no match (no results)."));
 
   return symbols_processed;
 }// ParseOutput
@@ -455,7 +455,7 @@ int SymTabExecDlg::ParseOutput(wxString lib, wxString filter)
 void SymTabExecDlg::ParseOutputError()
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::ParseOutputError"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::ParseOutputError"));
 #endif
 
   wxString output;
@@ -464,7 +464,7 @@ void SymTabExecDlg::ParseOutputError()
   if (count)
   {
     for (size_t n = 0; n < count; ++n )
-      output << nm_errors[n] << _T("\n");
+      output << nm_errors[n] << wxT_2("\n");
   }
   else
   {
@@ -484,19 +484,19 @@ void SymTabExecDlg::ParseOutputError()
 int SymTabExecDlg::ParseOutputSuccess(wxString lib, wxString filter)
 {
 #ifdef TRACE_SYMTAB_EXE
-	Manager::Get()->GetLogManager()->DebugLog(_T("SymTabExecDlg::ParseOutputSuccess"));
+	Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTabExecDlg::ParseOutputSuccess"));
 #endif
 
   size_t count = nm_result.GetCount();
   if (!count)
   {
 #ifdef TRACE_SYMTAB_EXE
-    Manager::Get()->GetLogManager()->DebugLog(_T("SymTab: No entries. Skipping."));
+    Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTab: No entries. Skipping."));
 #endif
     return 0;
   }
 
-	Manager::Get()->GetLogManager()->DebugLog(F(_T("SymTab: Parsing %d items..."), count));
+	Manager::Get()->GetLogManager()->DebugLog(F(wxT("SymTab: Parsing %d items..."), count));
 
   wxProgressDialog* progress = 0L;
   if (count>2000) // avoid flickering for small libs
@@ -526,20 +526,20 @@ int SymTabExecDlg::ParseOutputSuccess(wxString lib, wxString filter)
 
       if (do_show)
       {
-        long item = m_ListCtrl->InsertItem(entries, _T(""));
+        long item = m_ListCtrl->InsertItem(entries, wxT_2(""));
 
         if (item!=-1)
         {
-          s_item.Printf(_T("%6d"), item);
+          s_item.Printf(wxT_2("%6d"), item);
           m_ListCtrl->SetItem(item, 0, s_item);
 
           // Symbols can have colons in it, too        -> like Class::Method()
           // Only object files have a colon at the end -> like ABC.o:
-          if (the_line.Last() == _T(':'))
+          if (the_line.Last() == wxT_2(':'))
           {
             m_ListCtrl->SetItem(item, 3, the_line.Trim());
             m_ListCtrl->SetItemBackgroundColour(item,
-              wxTheColourDatabase->Find(_T("LIGHT GREY")));
+              wxTheColourDatabase->Find(wxT_2("LIGHT GREY")));
           }
           else
           {
@@ -553,7 +553,7 @@ int SymTabExecDlg::ParseOutputSuccess(wxString lib, wxString filter)
             m_ListCtrl->SetItem(item, 3, the_name);
             if (the_name.IsEmpty())
               m_ListCtrl->SetItemBackgroundColour(item,
-                wxTheColourDatabase->Find(_T("RED")));
+                wxTheColourDatabase->Find(wxT_2("RED")));
           }
 
           // now associate a user-data with this entry
@@ -569,7 +569,7 @@ int SymTabExecDlg::ParseOutputSuccess(wxString lib, wxString filter)
   }// for
 
 #ifdef TRACE_SYMTAB_EXE
-  Manager::Get()->GetLogManager()->DebugLog(_T("SymTab: Operated %d entries."), entries);
+  Manager::Get()->GetLogManager()->DebugLog(wxT_2("SymTab: Operated %d entries."), entries);
 #endif
 
   if (entries)
