@@ -35,15 +35,15 @@
 // Register the plugin
 namespace
 {
-    PluginRegistrant<CBProfiler> reg(_T("Profiler"));
+    PluginRegistrant<CBProfiler> reg(wxT_2("Profiler"));
 };
 
 CBProfiler::CBProfiler()
 {
     //ctor
-    if(!Manager::LoadResource(_T("Profiler.zip")))
+    if(!Manager::LoadResource(wxT_2("Profiler.zip")))
     {
-        NotifyMissingFile(_T("Profiler.zip"));
+        NotifyMissingFile(wxT_2("Profiler.zip"));
     }
 }
 CBProfiler::~CBProfiler()
@@ -159,7 +159,7 @@ int CBProfiler::Execute()
         // We locate gmon.out. First: look for gmon.out in the folder of the executable
         dataname=exename.BeforeLast(separator);
         dataname+=separator;
-        dataname+=_T("gmon.out");
+        dataname+=wxT_2("gmon.out");
         wxFileName dname(dataname);
 
         // The gmon.out file doesn't exist in the executable's directory.
@@ -174,7 +174,7 @@ int CBProfiler::Execute()
 
             dataname=workname.BeforeLast(separator);
             dataname+=separator;
-            dataname+=_T("gmon.out");
+            dataname+=wxT_2("gmon.out");
             dname = wxFileName(dataname);
 
             // The gmon.out file doesn't exist in the working directory.
@@ -189,7 +189,7 @@ int CBProfiler::Execute()
                 else
                 {
                     wxFileDialog filedialog(Manager::Get()->GetAppWindow(), _("Locate profile information"),
-                                            _T(""),_T("gmon.out"),_T("*.*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST|compatibility::wxHideReadonly);
+                                            wxT_2(""),wxT_2("gmon.out"),wxT_2("*.*"),wxFD_OPEN|wxFD_FILE_MUST_EXIST|compatibility::wxHideReadonly);
                     if (filedialog.ShowModal() == wxID_OK)
                     {
                         dataname = filedialog.GetPath();
@@ -219,20 +219,20 @@ int CBProfiler::Execute()
         }
     }
 
-    ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("cbprofiler"));
+    ConfigManager* cfg = Manager::Get()->GetConfigManager(wxT_2("cbprofiler"));
 
     // Loading configuration
     struct_config config;
-    config.chkAnnSource = cfg->ReadBool(_T("/ann_source_chk"), false);
-    config.txtAnnSource = cfg->Read(_T("/ann_source_txt"), wxEmptyString);
-    config.chkMinCount  = cfg->ReadBool(_T("/min_count_chk"), false);
-    config.spnMinCount  = cfg->ReadInt(_T("/min_count_spn"), 0);
-    config.chkBrief     = cfg->ReadBool(_T("/brief"), false);
-    config.chkFileInfo  = cfg->ReadBool(_T("/file_info"), false);
-    config.chkNoStatic  = cfg->ReadBool(_T("/no_static"), false);
-    config.chkMinCount  = cfg->ReadBool(_T("/min_count_chk"), false);
-    config.chkSum       = cfg->ReadBool(_T("/sum"), false);
-    config.txtExtra     = cfg->Read(_T("/extra_txt"), wxEmptyString);
+    config.chkAnnSource = cfg->ReadBool(wxT_2("/ann_source_chk"), false);
+    config.txtAnnSource = cfg->Read(wxT_2("/ann_source_txt"), wxEmptyString);
+    config.chkMinCount  = cfg->ReadBool(wxT_2("/min_count_chk"), false);
+    config.spnMinCount  = cfg->ReadInt(wxT_2("/min_count_spn"), 0);
+    config.chkBrief     = cfg->ReadBool(wxT_2("/brief"), false);
+    config.chkFileInfo  = cfg->ReadBool(wxT_2("/file_info"), false);
+    config.chkNoStatic  = cfg->ReadBool(wxT_2("/no_static"), false);
+    config.chkMinCount  = cfg->ReadBool(wxT_2("/min_count_chk"), false);
+    config.chkSum       = cfg->ReadBool(wxT_2("/sum"), false);
+    config.txtExtra     = cfg->Read(wxT_2("/extra_txt"), wxEmptyString);
 
     // If we got this far, all is left is to call gprof!!!
     dlg = new CBProfilerExecDlg(Manager::Get()->GetAppWindow());
