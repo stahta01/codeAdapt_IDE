@@ -3,6 +3,7 @@
 	<Workspace title="codeAdapt wx3.0.x win32">
 		<Project filename="codeAdapt_wx30-win32.cbp" />
 		<Project filename="tools/ca_share_config/ca_share_config_wx30-win32.cbp" />
+		<Project filename="plugins/loghacker/loghacker_wx30-win32.cbp" />
 		<Project filename="plugins/modpoller/ModPoller_wx30-win32.cbp" />
 		<Project filename="plugins/contrib/AutoVersioning/AutoVersioning_wx30-win32.cbp" />
 		<Project filename="plugins/contrib/codestat/codestat_wx30-win32.cbp" />
