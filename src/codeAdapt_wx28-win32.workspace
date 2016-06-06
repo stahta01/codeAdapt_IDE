@@ -13,6 +13,7 @@
 		<Project filename="plugins/contrib/help_plugin/help-plugin_wx28-win32.cbp" />
 		<Project filename="plugins/contrib/lib_finder/lib_finder_wx28-win32.cbp" />
 		<Project filename="plugins/contrib/profiler/profiler_wx28-win32.cbp" />
+		<Project filename="plugins/contrib/regex_testbed/RegExTestbed_wx28-win32.cbp" />
 		<Project filename="plugins/contrib/source_exporter/Exporter_wx28-win32.cbp" />
 		<Project filename="plugins/contrib/symtab/symtab_wx28-win32.cbp" />
 		<Project filename="plugins/contrib/ToolsPlus/ToolsPlus_wx28-win32.cbp" />
