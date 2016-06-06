@@ -29,7 +29,7 @@ using namespace std;
 // Register the plugin
 namespace
 {
-    PluginRegistrant<copystrings> reg(_T("copystrings"));
+    PluginRegistrant<copystrings> reg(wxT_2("copystrings"));
 };
 
 copystrings::copystrings()
@@ -74,33 +74,33 @@ void GetStrings(const wxString& buffer,wxString& result)
         switch(mode)
         {
             case 0: // Normal
-                if(ch==_T('\''))
+                if(ch==wxT_2('\''))
                     mode = 1;
-                else if(ch==_T('"'))
+                else if(ch==wxT_2('"'))
                 {
                     mode = 2;
                     curstr.Clear();
                     curstr << ch;
                 }
-                else if(ch==_T('\\'))
+                else if(ch==wxT_2('\\'))
                     mode = 3;
-                else if(ch==_T('/'))
+                else if(ch==wxT_2('/'))
                     mode = 6;
             break;
             case 1: // Single quotes mode
-                if(ch==_T('\''))
+                if(ch==wxT_2('\''))
                     mode = 0;
-                else if(ch==_T('\\'))
+                else if(ch==wxT_2('\\'))
                     mode = 4;
             break;
             case 2: // Double quotes mode
                 curstr << ch;
-                if(ch==_T('"'))
+                if(ch==wxT_2('"'))
                 {
                     mymap[curstr] = true;
                     mode = 0;
                 }
-                else if(ch==_T('\\'))
+                else if(ch==wxT_2('\\'))
                     mode = 5;
             break;
             case 3: // Escaped
@@ -115,25 +115,25 @@ void GetStrings(const wxString& buffer,wxString& result)
                 mode = 2;
             break;
             case 6: // Possibly opening comment
-                if(ch == _T('/'))
+                if(ch == wxT_2('/'))
                     mode = 7;
-                else if(ch == _T('*'))
+                else if(ch == wxT_2('*'))
                     mode = 8;
                 else
                     mode = 0;
             break;
             case 7: // C++ style comment
-                if(ch == _T('\n') || ch == _T('\r'))
+                if(ch == wxT_2('\n') || ch == wxT_2('\r'))
                     mode = 0;
             break;
             case 8: // C-style comment
-                if(ch == _T('*'))
+                if(ch == wxT_2('*'))
                     mode = 9;
             break;
             case 9: // Possibly closing C-style comment
-                if(ch == _T('/'))
+                if(ch == wxT_2('/'))
                     mode = 0;
-                else if(ch == _T('*'))
+                else if(ch == wxT_2('*'))
                     mode = 9;
                 else
                     mode = 8;
@@ -145,9 +145,9 @@ void GetStrings(const wxString& buffer,wxString& result)
     {
         result << it->first;
 #ifdef __WXMSW__
-         result << _T("\r\n");
+         result << wxT_2("\r\n");
 #else
-         result << _T("\n");
+         result << wxT_2("\n");
 #endif
     }
     return;
@@ -165,8 +165,8 @@ int copystrings::Execute()
         return -1;
 	if(cbStyledTextCtrl* ctrl = myeditor->GetControl())
 	{
-	    wxString result(_T(""));
-	    wxString input(_T(""));
+	    wxString result(wxT_2(""));
+	    wxString input(wxT_2(""));
 	    input = ctrl->GetText();
 	    GetStrings(input, result);
         if (wxTheClipboard->Open())
@@ -174,7 +174,7 @@ int copystrings::Execute()
             wxTheClipboard->SetData( new wxTextDataObject(result));
             wxTheClipboard->Close();
         }
-        cbMessageBox(_T("Literal strings copied to clipboard."));
+        cbMessageBox(wxT_2("Literal strings copied to clipboard."));
 	}
 	return -1;
 }
