@@ -11,7 +11,7 @@
 				<Option object_output="../../.objs30/plugins/ModPoller" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="$(#cb)/devel30/codeblocks.exe" />
+				<Option host_application="../../devel30/codeblocks.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-g" />
