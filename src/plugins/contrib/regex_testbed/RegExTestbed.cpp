@@ -11,7 +11,7 @@
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
 {
-    PluginRegistrant<RegExTestbed> reg(_T("RegExTestbed"));
+    PluginRegistrant<RegExTestbed> reg(wxT_2("RegExTestbed"));
 }
 
 // constructor
@@ -20,9 +20,9 @@ RegExTestbed::RegExTestbed()
     // Make sure our resources are available.
     // In the generated boilerplate code we have no resources but when
     // we add some, it will be nice that this code is in place already ;)
-    if(!Manager::LoadResource(_T("RegExTestbed.zip")))
+    if(!Manager::LoadResource(wxT_2("RegExTestbed.zip")))
     {
-        NotifyMissingFile(_T("RegExTestbed.zip"));
+        NotifyMissingFile(wxT_2("RegExTestbed.zip"));
     }
 }
 

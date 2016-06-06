@@ -31,7 +31,7 @@ END_EVENT_TABLE()
 RegExDlg::RegExDlg(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(regex_dialog)
-    wxXmlResource::Get()->LoadObject(this,parent,_T("regex_dialog"),_T("wxDialog"));
+    wxXmlResource::Get()->LoadObject(this,parent,wxT_2("regex_dialog"),wxT_2("wxDialog"));
     m_regex = (wxTextCtrl*)FindWindow(XRCID("ID_REGEX"));
     m_quoted = (wxTextCtrl*)FindWindow(XRCID("ID_QUOTED"));
     m_library = (wxChoice*)FindWindow(XRCID("ID_LIBRARY"));
@@ -65,7 +65,7 @@ void RegExDlg::OnUpdateUI(wxUpdateUIEvent& event)
     static wxString text;
 
     if(event.GetId() == XRCID("ID_NOCASE") || event.GetId() == XRCID("ID_NEWLINES"))
-        regex = _T("$^"); // bullshit
+        regex = wxT_2("$^"); // bullshit
 
     if(regex == m_regex->GetValue() && text == m_text->GetValue())
         return;
@@ -75,26 +75,26 @@ void RegExDlg::OnUpdateUI(wxUpdateUIEvent& event)
 
     wxString tmp(regex);
 
-    tmp.Replace(_T("\\"), _T("\\\\"));
-    tmp.Replace(_T("\""), _T("\\\""));
+    tmp.Replace(wxT_2("\\"), wxT_2("\\\\"));
+    tmp.Replace(wxT_2("\""), wxT_2("\\\""));
     m_quoted->SetValue(tmp);
 
     wxArrayString as = GetBuiltinMatches(text);
 
     if(as.IsEmpty())
         {
-        m_output->SetPage(_T("<html><center><b>no matches</b></center></html>"));
+        m_output->SetPage(wxT_2("<html><center><b>no matches</b></center></html>"));
         return;
         }
 
-    wxString s(_T("<html width='100%'><center><b>matches:</b><br><br><font size=-1><table width='100%' border='1' cellspacing='2'>"));
+    wxString s(wxT_2("<html width='100%'><center><b>matches:</b><br><br><font size=-1><table width='100%' border='1' cellspacing='2'>"));
 
     for(size_t i = 0; i < as.GetCount(); ++i)
     {
-        tmp.Printf(_T("<tr><td width=35><b>%d</b></td><td>%s</td></tr>"), i, as[i].c_str());
+        tmp.Printf(wxT_2("<tr><td width=35><b>%d</b></td><td>%s</td></tr>"), i, as[i].c_str());
         s.append(tmp);
     }
-    s.append(_T("</table></font></html>"));
+    s.append(wxT_2("</table></font></html>"));
 
     m_output->SetPage(s);
 }
