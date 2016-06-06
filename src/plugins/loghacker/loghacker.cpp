@@ -4,7 +4,7 @@
 
 namespace
 {
-    PluginRegistrant<LogHacker> reg(_T("LogHacker"));
+    PluginRegistrant<LogHacker> reg(wxT_2("LogHacker"));
 }
 
 
@@ -40,8 +40,8 @@ public:
 
     void Create(wxWindow* parent);
 
-	virtual wxString GetTitle() const { return _T("Log Hacker"); };
-	virtual wxString GetBitmapBaseName() const { return _T(""); };
+	virtual wxString GetTitle() const { return wxT_2("Log Hacker"); };
+	virtual wxString GetBitmapBaseName() const { return wxT_2(""); };
 
 	virtual void OnApply();
 	virtual void OnCancel(){};
@@ -74,7 +74,7 @@ void CfgPanel::Create(wxWindow* parent)
 
 
     wxArrayString loggerStrings = LogManager::Get()->ListAvailable();
-	loggerStrings.Insert(_T("<application default>"), 0);
+	loggerStrings.Insert(wxT_2("<application default>"), 0);
 
     wxFlexGridSizer* flex = new wxFlexGridSizer(2, 2, 0, 0);
     flex->AddGrowableRow(1);
@@ -121,7 +121,7 @@ void CfgPanel::Change()
 	wxString l = logger->GetStringSelection();
 	filename->Enable(LogManager::Get()->FilenameRequired(l));
 
-	if(l.at(0) == _T('<'))  // "<application default>"
+	if(l.at(0) == wxT_2('<'))  // "<application default>"
 		l.Empty();
 
 //  blah... do something, update the maps according to what is selected
@@ -145,6 +145,6 @@ void CfgPanel::OnApply()
 		}
 
 	// since we use ConfigManagerContainer::StringToStringMap, we could store whatever settings we have like:
-	//   ConfigManager::Get()->Write(_T("/loghacker/c2l"), c2l);
-	//   ConfigManager::Get()->Write(_T("/loghacker/c2f"), c2f);
+	//   ConfigManager::Get()->Write(wxT_2("/loghacker/c2l"), c2l);
+	//   ConfigManager::Get()->Write(wxT_2("/loghacker/c2f"), c2f);
 }
