@@ -12,9 +12,10 @@
 				<Option compiler="gcc" />
 			</Target>
 			<Environment>
+				<Variable name="CA_OBJ" value="..\..\..\.objs30" />
 				<Variable name="WX_CFG" value="" />
 				<Variable name="WX_SUFFIX" value="u" />
-				<Variable name="WX_VERSION" value="28" />
+				<Variable name="WX_VERSION" value="30" />
 			</Environment>
 		</Build>
 		<VirtualTargets>
@@ -28,9 +29,10 @@
 			<Add option="-fmessage-length=0" />
 			<Add option="-fexceptions" />
 			<Add option="-Winvalid-pch" />
+			<Add option="-std=gnu++11" />
+			<Add option="-iquote$(CA_OBJ)/include" />
 			<Add option="-DBUILDING_PLUGIN" />
-			<Add option="-DCB_PRECOMP" />
-			<Add option="-DWX_PRECOMP" />
+			<Add option="-DCA_USEPCH" />
 			<Add option="-DHAVE_W32API_H" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DWXUSINGDLL" />
@@ -38,7 +40,6 @@
 			<Add option="-DwxUSE_UNICODE" />
 			<Add directory="$(#WX30.include)" />
 			<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
-			<Add directory="$(#WX30)/contrib/include" />
 			<Add directory="../../../include" />
 		</Compiler>
 		<ResourceCompiler>
