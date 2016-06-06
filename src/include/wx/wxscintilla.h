@@ -23,7 +23,7 @@
 #include <wx/defs.h>
 
 /* C::B -> Don't forget to change version number here and in wxscintilla.cpp at the bottom */
-#define wxSCINTILLA_VERSION _T("3.53.0")
+#define wxSCINTILLA_VERSION wxT_2("3.53.0")
 
 #include <wx/control.h>
 #include <wx/dnd.h>
