@@ -1091,12 +1091,8 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/sdk.h">
-			<Option compile="1" />
 			<Option weight="0" />
-			<Option target="src" />
-		</Unit>
-		<Unit filename="include/sdk_common.h">
-			<Option target="sdk" />
+			<Option target="caSDK" />
 		</Unit>
 		<Unit filename="include/sdk_events.h">
 			<Option target="sdk" />
