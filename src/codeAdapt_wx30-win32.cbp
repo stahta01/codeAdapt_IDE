@@ -997,10 +997,6 @@
 		<Unit filename="include/sdk_events.h">
 			<Option target="sdk" />
 		</Unit>
-		<Unit filename="include/sdk_precomp.h">
-			<Option weight="0" />
-			<Option target="sdk" />
-		</Unit>
 		<Unit filename="include/searchresultslog.h">
 			<Option target="sdk" />
 		</Unit>
