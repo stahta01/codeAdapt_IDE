@@ -6,6 +6,58 @@
 		<Option default_target="src" />
 		<Option compiler="gcc" />
 		<Build>
+			<Target title="caSDK">
+				<Option output="devel/codeadapt.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="devel" />
+				<Option object_output=".objs28" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option parameters="--debug-log --no-check-associations -ns" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-iquote$(CA_OBJ)/include" />
+					<Add option="-DCA_USEPCH" />
+					<Add directory="include" />
+					<Add directory="include/wxFlatNotebook/include" />
+					<Add directory="include/scripting/include" />
+					<Add directory="include/scripting/sqplus" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
+					<Add directory="$(#WX.include)" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(#WX.include)" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="codeadapt" />
+					<Add library="libwxscintilla.a" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_html" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_aui" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+					<Add library="libshfolder.a" />
+					<Add library="libkernel32.a" />
+					<Add library="libuser32.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libcomdlg32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libwinmm.a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libodbc32.a" />
+					<Add library="libole32.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libuuid.a" />
+					<Add library="librpcrt4.a" />
+					<Add library="libadvapi32.a" />
+					<Add library="libwsock32.a" />
+					<Add directory="lib28" />
+					<Add directory="lib" />
+					<Add directory="devel" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)" />
+				</Linker>
+			</Target>
 			<Target title="tinyXML">
 				<Option output="lib/libtxml.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
@@ -626,9 +678,9 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxscintilla;wxFlatNotebook;bindings;sdk;src;AStyle;Autosave;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Projects-workspaces importer;Scripted wizard;To-do;XP look &amp; feel;" />
-			<Add alias="Core app &amp; plugins" targets="src;AStyle;Autosave;Compiler;Class wizard;Default MIME handler;Open files list;Projects-workspaces importer;Scripted wizard;XP look &amp; feel;To-do;" />
-			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxscintilla;wxFlatNotebook;Compiler depslib;" />
+			<Add alias="All" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxscintilla;wxFlatNotebook;bindings;sdk;src;AStyle;Autosave;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Projects-workspaces importer;Scripted wizard;XP look &amp; feel;To-do;" />
+			<Add alias="Core app &amp; plugins" targets="src;AStyle;Autosave;Compiler;Class wizard;Default MIME handler;Open files list;Projects-workspaces importer;To-do;XP look &amp; feel;Scripted wizard;" />
+			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxscintilla;Compiler depslib;wxFlatNotebook;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
@@ -688,6 +740,10 @@
 		</Unit>
 		<Unit filename="include/ca/filename.h">
 			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/ca/sdk.h">
+			<Option compile="1" />
+			<Option target="caSDK" />
 		</Unit>
 		<Unit filename="include/cbeditor.h">
 			<Option target="sdk" />
