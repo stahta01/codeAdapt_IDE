@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include "app.h"
 #include <wx/arrstr.h>
 #include <wx/fs_zip.h>

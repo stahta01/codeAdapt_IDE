@@ -1,5 +1,5 @@
 #if (__WXMSW__)
-#include "sdk.h"
+#include "ca/sdk.h"
 #ifndef CB_PRECOMP
     #include <wx/filefn.h>
     #include <wx/filename.h>

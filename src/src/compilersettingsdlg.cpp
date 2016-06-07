@@ -10,7 +10,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <wx/xrc/xmlres.h>
 #include <manager.h>
 #include <configmanager.h>

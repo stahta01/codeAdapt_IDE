@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "ca/sdk.h"
 #include "scriptingsettingsdlg.h"
 
 #include "manager.h"
