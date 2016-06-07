@@ -37,7 +37,7 @@
 					<Add option="-mthreads" />
 					<Add option="-fmessage-length=0" />
 					<Add option="-fexceptions" />
-					<Add option='-include &quot;sdk.h&quot;' />
+					<Add option='-include &quot;ca/sdk.h&quot;' />
 					<Add option="-std=gnu++11" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />

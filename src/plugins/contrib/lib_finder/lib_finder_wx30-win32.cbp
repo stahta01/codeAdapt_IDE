@@ -35,7 +35,7 @@
 			<Add option="-mthreads" />
 			<Add option="-std=gnu++11" />
 			<Add option="-iquote$(CA_OBJ)/include" />
-			<Add option='-include &quot;sdk.h&quot;' />
+			<Add option='-include &quot;ca/sdk.h&quot;' />
 			<Add option="-DcbDEBUG" />
 			<Add option="-DCA_USEPCH" />
 			<Add option="-DHAVE_W32API_H" />
