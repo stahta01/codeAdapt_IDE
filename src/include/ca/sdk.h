@@ -1,5 +1,5 @@
-#ifndef SDK_COMMON_H
-#define SDK_COMMON_H
+#ifndef CA_SDK_H_INCLUDED
+#define CA_SDK_H_INCLUDED
 
 //This file should be included only by sdk.h and sdk_precomp.h
 //It includes all the common and necessary header files for precompilation.
@@ -139,4 +139,4 @@
 
 #endif // CB_PRECOMP
 
-#endif // SDK_COMMON_H
+#endif // CA_SDK_H_INCLUDED
