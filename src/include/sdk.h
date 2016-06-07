@@ -6,6 +6,6 @@
 #ifndef SDK_H
 #define SDK_H
 
-#include "sdk_common.h"
+#include "ca/sdk.h"
 
 #endif // SDK_H
