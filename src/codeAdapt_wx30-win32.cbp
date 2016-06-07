@@ -620,6 +620,10 @@
 		<Unit filename="include/blockallocated.h">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="include/ca/sdk.h">
+			<Option compile="1" />
+			<Option target="src" />
+		</Unit>
 		<Unit filename="include/cbeditor.h">
 			<Option target="sdk" />
 		</Unit>
