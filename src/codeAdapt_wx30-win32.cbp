@@ -285,7 +285,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include/wxFlatNotebook/include" />
@@ -329,7 +328,6 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="plugins/astyle/astyle" />
@@ -367,7 +365,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="plugins/compilergcc/depslib/src" />
@@ -398,7 +395,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -424,7 +420,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -468,7 +463,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 					<Add directory="include/scripting/include" />
@@ -493,7 +487,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -515,7 +508,6 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -539,7 +531,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -562,7 +553,6 @@
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
