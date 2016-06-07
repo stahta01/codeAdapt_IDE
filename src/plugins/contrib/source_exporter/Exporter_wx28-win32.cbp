@@ -68,7 +68,6 @@
 				<Compiler>
 					<Add option="-iquote$(CA_OBJ)/include" />
 					<Add option='-include &quot;ca/sdk.h&quot;' />
-					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DCA_USEPCH" />
 					<Add option="-DcbDEBUG" />
 					<Add directory="../../../include" />
