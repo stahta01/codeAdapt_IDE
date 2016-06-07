@@ -7,7 +7,7 @@
  * $HeadURL: http://svn.code.sf.net/p/codeblocks/code/branches/release-16.xx/src/plugins/scriptedwizard/wiz.cpp $
  */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>

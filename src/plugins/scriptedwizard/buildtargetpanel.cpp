@@ -7,7 +7,7 @@
  * $HeadURL: http://svn.code.sf.net/p/codeblocks/code/branches/release-16.xx/src/plugins/scriptedwizard/buildtargetpanel.cpp $
  */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #ifndef CB_PRECOMP
     //(*InternalHeadersPCH(BuildTargetPanel)
     #include <wx/string.h>
