@@ -1,9 +1,15 @@
-#include <sdk_precomp.h>
-#ifndef CB_PRECOMP
+#ifdef USE_PCH
+    #ifndef WX_PCH_H_INCLUDED
+        #include "wx_pch.h"
+    #endif
+#else
+    #include <wx/defs.h> // Keep as first wx include.
+
     #include <wx/string.h>
-    #include <globals.h>
-    #include <settings.h>
-#endif
+#endif // USE_PCH
+
+#include <globals.h>
+#include <settings.h>
 
 #include <filefilters.h>
 #include "sc_base_types.h"

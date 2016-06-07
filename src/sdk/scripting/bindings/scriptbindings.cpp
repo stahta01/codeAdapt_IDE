@@ -1,17 +1,23 @@
-#include <sdk_precomp.h>
-#ifndef CB_PRECOMP
-    #include <settings.h>
-    #include <manager.h>
-    #include <logmanager.h>
-    #include <configmanager.h>
-    #include <editormanager.h>
-    #include <projectmanager.h>
-    #include <macrosmanager.h>
-    #include <compilerfactory.h>
-    #include <cbproject.h>
-    #include <cbeditor.h>
-    #include <globals.h>
-#endif
+#ifdef USE_PCH
+    #ifndef WX_PCH_H_INCLUDED
+        #include "wx_pch.h"
+    #endif
+#else
+    #include <wx/defs.h> // Keep as first wx include.
+#endif // USE_PCH
+
+#include <settings.h>
+#include <manager.h>
+#include <logmanager.h>
+#include <configmanager.h>
+#include <editormanager.h>
+#include <projectmanager.h>
+#include <macrosmanager.h>
+#include <compilerfactory.h>
+#include <cbproject.h>
+#include <cbeditor.h>
+#include <globals.h>
+
 #include "cbstyledtextctrl.h"
 
 #include "scriptbindings.h"

@@ -1,4 +1,11 @@
-#include <sdk_precomp.h>
+#ifdef USE_PCH
+    #ifndef WX_PCH_H_INCLUDED
+        #include "wx_pch.h"
+    #endif
+#else
+    #include <wx/defs.h> // Keep as first wx include.
+#endif // USE_PCH
+
 #ifndef CB_PRECOMP
     #include <wx/string.h>
     #include <globals.h>

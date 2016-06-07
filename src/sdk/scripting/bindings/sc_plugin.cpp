@@ -1,4 +1,11 @@
-#include <sdk_precomp.h>
+#ifdef USE_PCH
+    #ifndef WX_PCH_H_INCLUDED
+        #include "wx_pch.h"
+    #endif
+#else
+    #include <wx/defs.h> // Keep as first wx include.
+#endif // USE_PCH
+
 #include "sc_plugin.h"
 #include <manager.h>
 #include <scriptingmanager.h>
