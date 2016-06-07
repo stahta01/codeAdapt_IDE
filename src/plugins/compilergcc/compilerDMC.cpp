@@ -1,7 +1,7 @@
 #ifdef __WXMSW__
 // this compiler is valid only in windows
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include "compilerDMC.h"
 #include <wx/intl.h>
 #include <wx/regex.h>

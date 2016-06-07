@@ -1,7 +1,7 @@
 #if defined(_WIN32) || defined(__linux__)
 // this compiler is valid only in windows and linux
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #include <wx/intl.h>
 #include <wx/regex.h>

@@ -2,7 +2,7 @@
  * $Id: compilerMINGW.cpp 1429 2005-12-02 23:25:50Z mandrav $
  */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #ifndef CB_PRECOMP
     #include <wx/intl.h>

@@ -4,7 +4,7 @@
     description:    Support of Intel's ICC compiler for CodeBlocks IDE
 ********************************************************************/
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #include "compilerICC.h"
 #include <wx/intl.h>

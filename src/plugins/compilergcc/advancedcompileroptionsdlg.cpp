@@ -1,4 +1,4 @@
-#include "sdk.h"
+#include "ca/sdk.h"
 #ifndef CB_PRECOMP
 #include <wx/checkbox.h>
 #include <wx/choice.h>

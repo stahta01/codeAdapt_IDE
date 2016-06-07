@@ -24,7 +24,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #include <wx/frame.h> // GetMenuBar
 #include <wx/gauge.h>     // Needs to be before compilergcc.h if NOPCH on wxMSW

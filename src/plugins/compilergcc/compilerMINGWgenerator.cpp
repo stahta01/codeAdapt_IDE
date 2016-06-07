@@ -1,4 +1,4 @@
-#include <sdk.h>
+#include "ca/sdk.h"
 #include "compilerMINGWgenerator.h"
 #include <wx/intl.h>
 #include "cbexception.h"

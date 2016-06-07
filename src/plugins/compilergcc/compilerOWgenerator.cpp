@@ -1,6 +1,6 @@
 #ifdef __WXMSW__ // For Windows Only
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #ifndef CB_PRECOMP
 #   include "compiler.h"
 #   include "cbproject.h"

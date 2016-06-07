@@ -10,7 +10,7 @@
 * $HeadURL: svn+ssh://killerbot@svn.berlios.de/svnroot/repos/codeblocks/trunk/src/plugins/compilergcc/compilerTcc.cpp $
 */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #ifndef CB_PRECOMP
     #include <wx/intl.h>

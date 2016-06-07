@@ -10,7 +10,7 @@
 * $HeadURL$
 */
 
-#include <sdk.h>
+#include "ca/sdk.h"
 #include <prep.h>
 #include "compilerGDC.h"
 #include <wx/intl.h>
