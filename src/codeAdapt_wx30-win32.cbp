@@ -6,6 +6,36 @@
 		<Option default_target="src" />
 		<Option compiler="gcc" />
 		<Build>
+			<Target title="caSDK">
+				<Option output="devel30/libcodeadapt.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output=".objs30" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option parameters="--debug-log --no-check-associations -ns" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectResourceIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-mthreads" />
+					<Add option="-std=gnu++11" />
+					<Add option="-DCA_USEPCH" />
+					<Add option="-DcbDEBUG" />
+					<Add option="-DHAVE_W32API_H" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="include" />
+					<Add directory="include/wxFlatNotebook/include" />
+					<Add directory="include/scripting/include" />
+					<Add directory="include/scripting/sqplus" />
+					<Add directory="$(#WX30.include)" />
+					<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
+				</Compiler>
+			</Target>
 			<Target title="tinyXML">
 				<Option output="lib/libtxml.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
@@ -417,8 +447,7 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-include sdk.h" />
-					<Add option="-DBUILDING_PLUGIN" />
+					<Add option='-include &quot;ca/sdk.h&quot;' />
 					<Add option="-DCA_USEPCH" />
 					<Add directory="include" />
 				</Compiler>
@@ -554,9 +583,9 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxFlatNotebook;bindings;sdk;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
-			<Add alias="Core app &amp; plugins" targets="src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
-			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxFlatNotebook;Compiler depslib;" />
+			<Add alias="All" targets="caSDK;tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxFlatNotebook;bindings;sdk;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="Core app &amp; plugins" targets="caSDK;src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;Compiler depslib;wxFlatNotebook;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
@@ -570,8 +599,8 @@
 			<Add option="-DHAVE_W32API_H" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DWXUSINGDLL" />
-			<Add option="-DcbDEBUG" />
 			<Add option="-DwxUSE_UNICODE" />
+			<Add option="-DcbDEBUG" />
 			<Add directory="$(#WX30.include)" />
 			<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
 			<Add directory="include/tinyxml" />
@@ -622,7 +651,7 @@
 		</Unit>
 		<Unit filename="include/ca/sdk.h">
 			<Option compile="1" />
-			<Option target="src" />
+			<Option target="caSDK" />
 		</Unit>
 		<Unit filename="include/cbeditor.h">
 			<Option target="sdk" />
@@ -991,12 +1020,8 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/sdk.h">
-			<Option compile="1" />
 			<Option weight="0" />
 			<Option target="src" />
-		</Unit>
-		<Unit filename="include/sdk_common.h">
-			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/sdk_events.h">
 			<Option target="sdk" />
