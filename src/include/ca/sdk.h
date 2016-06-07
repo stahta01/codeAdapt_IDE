@@ -17,6 +17,10 @@
     #endif
 #endif // __GNUC__ && !__APPLE__
 
+#if ( defined(CA_USEPCH) && !defined(BUILDING_PLUGIN) )
+    #define BUILDING_PLUGIN
+#endif // CA_USEPCH
+
 #if ( defined(CA_USEPCH) && !defined(CB_PRECOMP) )
     #define CB_PRECOMP
 #endif // CA_USEPCH
