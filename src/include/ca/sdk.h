@@ -17,6 +17,14 @@
     #endif
 #endif // __GNUC__ && !__APPLE__
 
+#if ( defined(CA_USEPCH) && !defined(cbDEBUG) )
+    #define cbDEBUG
+#endif // CA_USEPCH
+
+#if ( defined(CA_USEPCH) && !defined(caDEBUG) )
+    #define caDEBUG
+#endif // CA_USEPCH
+
 #if ( defined(CA_USEPCH) && !defined(BUILDING_PLUGIN) )
     #define BUILDING_PLUGIN
 #endif // CA_USEPCH
