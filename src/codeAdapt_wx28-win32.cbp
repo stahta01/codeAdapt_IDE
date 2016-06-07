@@ -217,6 +217,7 @@
 					<Add option="-Winvalid-pch" />
 					<Add option="-fpermissive" />
 					<Add option="-iquote$(CA_OBJ)/include" />
+					<Add option='-include &quot;wx_pch.h&quot;' />
 					<Add option="-DEXPORT_LIB" />
 					<Add option="-DEXPORT_EVENTS" />
 					<Add option="-DUSE_PCH" />
