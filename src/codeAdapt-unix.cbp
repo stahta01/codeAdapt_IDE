@@ -125,6 +125,7 @@
 					<Add directory="sdk/wxscintilla/src/scintilla/include" />
 					<Add directory="sdk/wxscintilla/src/scintilla/src" />
 					<Add directory="sdk/wxscintilla/src/scintilla/lexlib" />
+					<Add directory="include" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="include/wxscintilla/include" />
