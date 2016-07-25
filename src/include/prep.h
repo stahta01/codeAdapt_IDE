@@ -5,7 +5,7 @@
 #include <wx/version.h>
 #endif
 
-
+#define CA_UNUSED __attribute__((unused))
 
 #if 0
 /* -----------------------------------------------
