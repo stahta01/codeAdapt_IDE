@@ -7,11 +7,13 @@
 
 
 
+#if 0
 /* -----------------------------------------------
    remove this once the compiler supports C++0x*/
    struct null_pointer_t { template<typename T> operator T*() const { return (T*) 0; }; };
    extern null_pointer_t nullptr;
 /* ----------------------------------------------- */
+#endif
 
 
 
