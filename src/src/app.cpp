@@ -25,6 +25,7 @@
 */
 
 #include <sdk.h>
+#include "xtra_res.h"
 #include "app.h"
 #include <wx/arrstr.h>
 #include <wx/fs_zip.h>

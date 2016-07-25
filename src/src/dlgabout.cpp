@@ -34,9 +34,10 @@
 #include <wx/string.h>
 #include <wx/textctrl.h>
 #include <wx/xrc/xmlres.h>
-#include "licenses.h"
 #include "configmanager.h"
 #endif
+#include "licenses.h"
+
 #include <wx/bitmap.h>
 #include <wx/dcmemory.h>	// wxMemoryDC
 #include <wx/statbmp.h>
