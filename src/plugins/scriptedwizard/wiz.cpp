@@ -32,12 +32,14 @@
     #include <configmanager.h>
     #include <filefilters.h>
     #include <globals.h>
-    #include <infowindow.h>
     #include <manager.h>
     #include <projectbuildtarget.h>
     #include <projectmanager.h>
     #include <scriptingmanager.h>
 #endif // CB_PRECOMP
+
+#include <infowindow.h>
+
 #include <scripting/bindings/sc_base_types.h>
 
 #include "wiz.h"
