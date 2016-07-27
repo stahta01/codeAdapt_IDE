@@ -8,9 +8,10 @@
     #include <wx/statbmp.h>
     #include <wx/panel.h>
     #include <wx/frame.h>
-    #include "infowindow.h"
     #include "manager.h"
 #endif
+
+#include "infowindow.h"
 
 BEGIN_EVENT_TABLE(InfoWindow, wxInfoWindowBase)
 EVT_TIMER(-1, InfoWindow::OnTimer)

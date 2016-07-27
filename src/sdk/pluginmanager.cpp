@@ -36,7 +36,6 @@
     #include "pluginmanager.h"
     #include "cbexception.h"
     #include "cbplugin.h"
-    #include "infowindow.h"
     #include "logmanager.h"
     #include "macrosmanager.h"
     #include "manager.h"
@@ -47,6 +46,8 @@
     #include "globals.h"
     #include "sdk_events.h"
 #endif
+
+#include "infowindow.h"
 
 #include <wx/dynlib.h>
 #include <wx/filesys.h>

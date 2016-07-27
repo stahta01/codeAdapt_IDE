@@ -47,9 +47,10 @@
     #include "uservarmanager.h"
     #include "filemanager.h"
     #include "globals.h"
-    #include "xtra_res.h" // our new ToolBarAddOn handler
 #endif
 #include <wx/frame.h>
+
+#include "xtra_res.h" // our new ToolBarAddOn handler
 
 #include <wx/app.h>	// wxTheApp
 #include <wx/toolbar.h>
