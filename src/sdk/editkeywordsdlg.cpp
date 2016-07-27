@@ -17,9 +17,9 @@
     #include <wx/xrc/xmlres.h>
     #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
-    #include <wx/wxscintilla.h>
-    #include "editorcolourset.h"
 #endif
+#include "wx/wxscintilla.h"
+#include "editorcolourset.h"
 
 #include "editkeywordsdlg.h"
 
