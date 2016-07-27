@@ -37,7 +37,6 @@
     #include "cbproject.h"
     #include "projectfile.h"
     #include "projectbuildtarget.h"
-    #include "editorcolourset.h"
     #include "manager.h"
     #include "configmanager.h"
     #include "projectmanager.h"
@@ -48,6 +47,7 @@
     #include "cbplugin.h"
 #endif
 #include "cbstyledtextctrl.h"
+#include "editorcolourset.h"
 
 #include <wx/fontutil.h>
 #include <wx/splitter.h>
