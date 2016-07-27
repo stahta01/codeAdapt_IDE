@@ -5,9 +5,10 @@
     #include "safedelete.h"
     #include "cbeditor.h"
     #include "editormanager.h"
-    #include "infowindow.h"
 #endif
+
 #include "cbstyledtextctrl.h"
+#include "infowindow.h"
 
 #include <wx/url.h>
 

@@ -22,7 +22,6 @@
     #include "macrosmanager.h"
     #include "manager.h"
     #include "cbexception.h"
-    #include "infowindow.h"
 
     #include <wx/button.h>
     #include <wx/dialog.h>
@@ -30,6 +29,8 @@
     #include <wx/xrc/xmlres.h>
     #include <wx/textctrl.h>
 #endif
+
+#include "infowindow.h"
 
 #include "annoyingdialog.h"
 #include <wx/choice.h>

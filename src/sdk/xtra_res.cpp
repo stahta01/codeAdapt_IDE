@@ -6,9 +6,8 @@
     #include <wx/frame.h>
     #include <wx/log.h>
     #include <wx/image.h>
-
-    #include "xtra_res.h"
 #endif
+#include "xtra_res.h"
 
 
 /////////////////////////////////////////////////////////////////////////////

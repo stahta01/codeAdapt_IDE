@@ -53,10 +53,11 @@
     #include "compilerfactory.h"
     #include "projectbuildtarget.h"
     #include "projectfile.h"
-    #include "infowindow.h"
 #endif
 
 #include <map>
+#include "infowindow.h"
+
 #include "projectoptionsdlg.h"
 #include "projectloader.h"
 #include "projectlayoutloader.h"
