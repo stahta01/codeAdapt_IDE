@@ -128,12 +128,6 @@
     #include "uservarmanager.h"
     #include "filemanager.h"
 
-    // other base files
-    #include "xtra_res.h"
-    #include "safedelete.h"
-    #include "infowindow.h"
-    #include "licenses.h"
-
 #endif // CB_PRECOMP
 
 #endif // SDK_COMMON_H
