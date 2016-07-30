@@ -106,7 +106,7 @@ void ShellManager::OnPageContextMenu(wxAuiNotebookEvent& event)
     delete pop;
 }
 
-void ShellManager::OnRemoveTerminated(cb_unused wxCommandEvent &event)
+void ShellManager::OnRemoveTerminated(CA_UNUSED wxCommandEvent &event)
 {
     RemoveDeadPages();
 }
