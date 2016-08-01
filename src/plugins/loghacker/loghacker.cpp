@@ -1,5 +1,8 @@
 #include <sdk.h> // Code::Blocks SDK
 #include <configurationpanel.h>
+#include <configmanager.h>
+#include <logmanager.h>
+
 #include "loghacker.h"
 
 namespace
