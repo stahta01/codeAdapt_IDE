@@ -1,0 +1,20 @@
+Design Implementation Decisions
+
+	Use Monolithic wxWidgets library for version wx2.8.
+
+	Use Multilib wxWidgets libraries for version wx3.0 and later.
+	
+	Use Global varible "CA" inside contrib folders.
+	
+	Need to decide what wxWidgets GUI tool will be used? 
+	(wxSmith, wxFormBuilder, or wxCrafterCB)
+
+Features to be removed
+	Auto adding of PCH include search path
+	
+	Auto detection of Compilers
+
+Planned Modules to be changed.
+	Change TinyXML to TinyXML2
+	Change from wxWidgets 2.8.12 to newest 3.0 library.
+	Change custom wxScintilla to wx3.0 STC library.
