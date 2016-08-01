@@ -4,6 +4,7 @@
 #include <wx/dynarray.h>
 #include <wx/textfile.h>
 
+#include <algorithm>
 
 using std::find;
 using std::make_pair;
