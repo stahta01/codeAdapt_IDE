@@ -13,6 +13,7 @@
 #include <ctime>
 #include <cctype>
 #include <cstdio>
+#include <cstdlib>
 #include <string.h>
 
 #define kDebug(x) DummyOutput()
