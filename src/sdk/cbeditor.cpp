@@ -2255,6 +2255,7 @@ void cbEditor::OnAfterBuildContextMenu(ModuleType type)
     // we don't care
 }
 
+#if wxUSE_PRINTING_ARCHITECTURE
 void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
 {
     // print line numbers?
@@ -2314,6 +2315,7 @@ void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
         m_pControl->SetMarginWidth(0, 0);
     m_pControl->SetEdgeMode(mgr->ReadInt(_T("/gutter/mode"), 0));
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
 // events
 

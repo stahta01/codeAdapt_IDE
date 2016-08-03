@@ -106,7 +106,9 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         int ShowFindDialog(bool replace,  bool explicitly_find_in_files = false);
         int FindNext(bool goingDown, cbStyledTextCtrl* control = 0, cbFindReplaceData* data = 0);
 
+#if wxUSE_PRINTING_ARCHITECTURE
         void Print(PrintScope ps, PrintColourMode pcm, bool line_numbers);
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
         /** Hides the editor notebook for layout purposes */
         void HideNotebook();

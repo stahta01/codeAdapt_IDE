@@ -585,7 +585,9 @@ namespace ScriptBindings
                 func(&cbEditor::GetLineIndentString, "GetLineIndentString").
                 func(&cbEditor::Touch, "Touch").
                 func(&cbEditor::Reload, "Reload").
+#if wxUSE_PRINTING_ARCHITECTURE
                 func(&cbEditor::Print, "Print").
+#endif // wxUSE_PRINTING_ARCHITECTURE
                 func(&cbEditor::AutoComplete, "AutoComplete").
                 func(&cbEditor::AddBreakpoint, "AddBreakpoint").
                 func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").

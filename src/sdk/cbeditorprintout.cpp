@@ -23,6 +23,8 @@
 #include "printing_types.h"
 #include <wx/paper.h>
 
+#if wxUSE_PRINTING_ARCHITECTURE
+
 cbEditorPrintout::cbEditorPrintout(const wxString& title, cbStyledTextCtrl* control, bool selectionOnly)
         : wxPrintout(title),
         m_TextControl(control)
@@ -205,3 +207,4 @@ bool cbEditorPrintout::ScaleDC(wxDC *dc)
     dc->SetUserScale (scale_x, scale_y);
     return true;
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE
