@@ -105,8 +105,10 @@ class MainFrame : public wxFrame
         void OnFileCloseAll(wxCommandEvent& event);
         void OnFileCloseProject(wxCommandEvent& event);
         void OnFileCloseAllProjects(wxCommandEvent& event);
+#if wxUSE_PRINTING_ARCHITECTURE
         void OnFilePrintSetup(wxCommandEvent& event);
         void OnFilePrint(wxCommandEvent& event);
+#endif // wxUSE_PRINTING_ARCHITECTURE
         void OnFileQuit(wxCommandEvent& event);
         void OnFileNext(wxCommandEvent& event);
         void OnFilePrev(wxCommandEvent& event);
