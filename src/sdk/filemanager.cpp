@@ -69,6 +69,7 @@ void FileLoader::operator()()
 
 void URLLoader::operator()()
 {
+#if wxUSE_URL
     wxURL url(fileName);
     url.SetProxy(ConfigManager::GetProxy());
 
@@ -95,6 +96,7 @@ void URLLoader::operator()()
     data = buffer.Data();
     len = buffer.Length();
 	buffer.Append("\0\0\0\0", 4);
+#endif // #if wxUSE_URL
     Ready();
 }
 
