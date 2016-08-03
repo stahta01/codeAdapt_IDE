@@ -194,12 +194,14 @@ class DLLIMPORT cbEditor : public EditorBase
         /** Reloads the file from disk. @return True on success, False on failure. */
         bool Reload(bool detectEncoding = true);
 
+#if wxUSE_PRINTING_ARCHITECTURE
         /** Print the file.
           * @param selectionOnly Should the selected text be printed only?
           * @param pcm The colour mode to use when printing
           * @param line_numbers Print the line numbers of file, too.
           */
         void Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers);
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
         /** Try to auto-complete the current word.
           *

@@ -25,6 +25,7 @@
 
 #include "printdlg.h"
 
+#if wxUSE_PRINTING_ARCHITECTURE
 PrintDialog::PrintDialog(wxWindow* parent)
 {
 	//ctor
@@ -75,3 +76,4 @@ void PrintDialog::EndModal(int retCode)
     }
     return wxDialog::EndModal(retCode);
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE

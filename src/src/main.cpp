@@ -367,7 +367,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idFileCloseAll,  MainFrame::OnFileCloseAll)
     EVT_MENU(idFileCloseProject,  MainFrame::OnFileCloseProject)
     EVT_MENU(idFileCloseAllProjects,  MainFrame::OnFileCloseAllProjects)
+#if wxUSE_PRINTING_ARCHITECTURE
     EVT_MENU(idFilePrint,  MainFrame::OnFilePrint)
+#endif // wxUSE_PRINTING_ARCHITECTURE
     EVT_MENU(idFileExit,  MainFrame::OnFileQuit)
     EVT_MENU(idFileNext,  MainFrame::OnFileNext)
     EVT_MENU(idFilePrev,  MainFrame::OnFilePrev)
@@ -590,7 +592,9 @@ MainFrame::~MainFrame()
     this->SetAcceleratorTable(wxNullAcceleratorTable);
     delete m_pAccel;
 
+#if wxUSE_PRINTING_ARCHITECTURE
     DeInitPrinting();
+#endif // wxUSE_PRINTING_ARCHITECTURE
     //Manager::Get()->Free();
 }
 
@@ -2602,6 +2606,7 @@ void MainFrame::OnFilePrev(wxCommandEvent& event)
     DoUpdateStatusBar();
 }
 
+#if wxUSE_PRINTING_ARCHITECTURE
 void MainFrame::OnFilePrint(wxCommandEvent& event)
 {
 #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
@@ -2611,6 +2616,7 @@ void MainFrame::OnFilePrint(wxCommandEvent& event)
         Manager::Get()->GetEditorManager()->Print(dlg.GetPrintScope(), dlg.GetPrintColourMode(), dlg.GetPrintLineNumbers());
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
 void MainFrame::OnFileQuit(wxCommandEvent& WXUNUSED(event))
 {

@@ -2403,6 +2403,7 @@ void cbEditor::OnAfterBuildContextMenu(ModuleType type)
     // we don't care
 }
 
+#if wxUSE_PRINTING_ARCHITECTURE
 void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
 {
 #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
@@ -2464,6 +2465,7 @@ void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
     m_pControl->SetEdgeMode(mgr->ReadInt(_T("/gutter/mode"), 0));
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
 // events
 

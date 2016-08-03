@@ -852,6 +852,7 @@ bool EditorManager::SaveAll()
     return true;
 }
 
+#if wxUSE_PRINTING_ARCHITECTURE
 void EditorManager::Print(PrintScope ps, PrintColourMode pcm, bool line_numbers)
 {
     switch (ps)
@@ -875,6 +876,7 @@ void EditorManager::Print(PrintScope ps, PrintColourMode pcm, bool line_numbers)
         }
     }
 }
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
 void EditorManager::CheckForExternallyModifiedFiles()
 {

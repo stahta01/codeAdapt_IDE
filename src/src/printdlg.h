@@ -4,6 +4,7 @@
 #include <wx/dialog.h>
 #include "printing_types.h"
 
+#if wxUSE_PRINTING_ARCHITECTURE
 class PrintDialog : public wxDialog
 {
 	public:
@@ -16,5 +17,7 @@ class PrintDialog : public wxDialog
 		PrintColourMode GetPrintColourMode() const;
 		bool GetPrintLineNumbers() const;
 };
+
+#endif // wxUSE_PRINTING_ARCHITECTURE
 
 #endif // PRINTDLG_H
