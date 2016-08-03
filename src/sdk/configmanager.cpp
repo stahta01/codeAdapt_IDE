@@ -278,6 +278,7 @@ void CfgMgrBldr::SwitchToR(const wxString& absFileName)
 
     cfg = absFileName;
 
+#if wxUSE_URL
     wxURL url(absFileName);
     url.SetProxy(ConfigManager::GetProxy());
     if (url.GetError() == wxURL_NOERR)
@@ -314,6 +315,8 @@ void CfgMgrBldr::SwitchToR(const wxString& absFileName)
         }
         delete is;
     }
+#endif // #if wxUSE_URL
+
     cfg.Empty();
     SwitchTo(wxEmptyString); // fall back
 }
