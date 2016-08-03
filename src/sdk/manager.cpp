@@ -49,6 +49,7 @@
     #include "globals.h"
     #include "xtra_res.h" // our new ToolBarAddOn handler
 #endif
+#include <wx/frame.h>
 
 #include <wx/app.h>	// wxTheApp
 #include <wx/toolbar.h>
