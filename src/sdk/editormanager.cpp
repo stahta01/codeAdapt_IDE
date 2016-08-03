@@ -26,6 +26,7 @@
 
 #include "sdk_precomp.h"
 
+#include <wx/defs.h>
 #ifndef CB_PRECOMP
     #include <wx/notebook.h>
     #include <wx/menu.h>
