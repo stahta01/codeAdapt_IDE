@@ -21,6 +21,7 @@
     #include <wx/popupwin.h>
     typedef wxPopupWindow wxInfoWindowBase;
 #else
+    #include <wx/dialog.h>
     typedef wxDialog wxInfoWindowBase;
 #endif
 
