@@ -134,12 +134,6 @@ enum CompilerLoggingType
     clogNone
 };
 
-enum AutoDetectResult
-{
-    adrDetected,
-    adrGuessed
-};
-
 /// Struct to keep programs
 struct CompilerPrograms
 {

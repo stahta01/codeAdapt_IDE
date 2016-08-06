@@ -13,7 +13,6 @@ class CompilerOW : public Compiler
 		virtual ~CompilerOW();
         virtual void Reset();
 		virtual void LoadDefaultRegExArray();
-        virtual AutoDetectResult AutoDetectInstallationDir();
 
         virtual void LoadSettings(const wxString& baseKey);
 		virtual void SetMasterPath(const wxString& path);

@@ -344,35 +344,6 @@ void CompilerOW::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Compiler warning"), cltWarning, wxT("(") + FilePathWithSpaces + _T(")\\(([0-9]+)\\): Warning! (.+)"), 3, 1, 2));
 }
 
-AutoDetectResult CompilerOW::AutoDetectInstallationDir()
-{
-    /* Following code is Not necessary as OpenWatcom does not write to
-       Registry anymore */
-    /*wxRegKey key; // defaults to HKCR
-    key.SetName(wxT("HKEY_LOCAL_MACHINE\\Software\\Open Watcom\\c_1.0"));
-    if (key.Open())
-        // found; read it
-        key.QueryValue(wxT("Install Location"), m_MasterPath);*/
-
-    if (m_MasterPath.IsEmpty())
-        // just a guess; the default installation dir
-        m_MasterPath = wxT("C:\\watcom");
-
-    if (!m_MasterPath.IsEmpty())
-    {
-        AddIncludeDir(m_MasterPath + wxFILE_SEP_PATH + wxT("h"));
-        AddIncludeDir(m_MasterPath + wxFILE_SEP_PATH + wxT("h") + wxFILE_SEP_PATH + wxT("nt"));
-        AddLibDir(m_MasterPath + wxFILE_SEP_PATH + wxT("lib386"));
-        AddLibDir(m_MasterPath + wxFILE_SEP_PATH + wxT("lib386") + wxFILE_SEP_PATH + wxT("nt"));
-        AddResourceIncludeDir(m_MasterPath + wxFILE_SEP_PATH + wxT("h"));
-        AddResourceIncludeDir(m_MasterPath + wxFILE_SEP_PATH + wxT("h") + wxFILE_SEP_PATH + wxT("nt"));
-        m_ExtraPaths.Add(m_MasterPath + wxFILE_SEP_PATH + wxT("binnt"));
-        m_ExtraPaths.Add(m_MasterPath + wxFILE_SEP_PATH + wxT("binw"));
-    }
-    wxSetEnv(wxT("WATCOM"), m_MasterPath);
-
-    return wxFileExists(m_MasterPath + wxFILE_SEP_PATH + wxT("binnt") + wxFILE_SEP_PATH + m_Programs.C) ? adrDetected : adrGuessed;
-}
 
 void CompilerOW::LoadSettings(const wxString& baseKey)
 {

@@ -164,34 +164,3 @@ void CompilerSDCC::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Linker warning"), cltWarning, _T("(ASlink-Warning-.*)"), 1));
 }
 
-AutoDetectResult CompilerSDCC::AutoDetectInstallationDir()
-{
-    if (platform::windows)
-    {
-#ifdef __WXMSW__ // for wxRegKey
-        wxRegKey key;   // defaults to HKCR
-        key.SetName(wxT("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\SDCC"));
-        if (key.Exists() && key.Open(wxRegKey::Read)) // found; read it
-            key.QueryValue(wxT("UninstallString"), m_MasterPath);
-#endif
-
-        if (m_MasterPath.IsEmpty())
-            // just a guess; the default installation dir
-            m_MasterPath = wxT("C:\\sdcc");
-        else {
-            wxFileName fn(m_MasterPath);
-            m_MasterPath = fn.GetPath();
-        }
-
-        if (!m_MasterPath.IsEmpty())
-        {
-            AddIncludeDir(m_MasterPath + wxFILE_SEP_PATH + wxT("include"));
-            AddLibDir(m_MasterPath + wxFILE_SEP_PATH + wxT("lib"));
-            m_ExtraPaths.Add(m_MasterPath + wxFILE_SEP_PATH + wxT("bin"));
-        }
-    }
-    else
-        m_MasterPath=_T("/usr/local/bin"); // default
-
-    return wxFileExists(m_MasterPath + wxFILE_SEP_PATH + wxT("bin") + wxFILE_SEP_PATH + m_Programs.C) ? adrDetected : adrGuessed;
-}

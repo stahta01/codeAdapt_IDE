@@ -136,20 +136,3 @@ void CompilerTcc::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("General warning"), cltWarning, _T("([Ww]arning:[ \t].*)"), 1));
 }
 
-AutoDetectResult CompilerTcc::AutoDetectInstallationDir()
-{
-    wxString sep = wxFileName::GetPathSeparator();
-    if (platform::windows)
-        m_MasterPath = _T("C:\\tcc");
-    else
-        m_MasterPath = _T("/usr");
-    wxString BinPath = m_MasterPath + sep + wxT("tcc");
-    AutoDetectResult ret = wxFileExists(BinPath + sep + m_Programs.C) ? adrDetected : adrGuessed;
-    if (ret == adrDetected)
-    {
-        AddIncludeDir(m_MasterPath + sep + _T("include"));
-        AddLibDir(m_MasterPath + sep + _T("lib"));
-        m_ExtraPaths.Add(BinPath);
-    }
-    return ret;
-} // end of AutoDetectInstallationDir
