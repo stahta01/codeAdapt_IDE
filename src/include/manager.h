@@ -30,7 +30,9 @@ class ProjectManager;
 class EditorManager;
 class LogManager;
 class PluginManager;
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
 class ToolsManager;
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
 class MacrosManager;
 class PersonalityManager;
 class wxMenu;
@@ -108,7 +110,9 @@ public:
     EditorManager* GetEditorManager() const;
     LogManager* GetLogManager() const;
     PluginManager* GetPluginManager() const;
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
     ToolsManager* GetToolsManager() const;
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
     MacrosManager* GetMacrosManager() const;
     PersonalityManager* GetPersonalityManager() const;
     UserVariableManager* GetUserVariableManager() const;

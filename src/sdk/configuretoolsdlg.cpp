@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -169,3 +171,5 @@ void ConfigureToolsDlg::OnDown(wxCommandEvent& /*event*/)
 	DoFillList();
 	list->SetSelection(sel + 1);
 }// end of OnDown
+
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
