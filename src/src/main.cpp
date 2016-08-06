@@ -936,7 +936,9 @@ void MainFrame::CreateMenubar()
         }
     }
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
     Manager::Get()->GetToolsManager()->BuildToolsMenu(m_ToolsMenu);
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
 
     SetMenuBar(mbar);
     InitializeRecentFilesHistory();

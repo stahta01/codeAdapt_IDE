@@ -164,7 +164,9 @@ void Manager::Shutdown()
 {
     appShuttingDown = true;
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
     ToolsManager::Free();
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
 	TemplateManager::Free();
 	PluginManager::Free();
 	ScriptingManager::Free();
@@ -346,10 +348,12 @@ PluginManager* Manager::GetPluginManager() const
     return PluginManager::Get();
 }
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
 ToolsManager* Manager::GetToolsManager() const
 {
     return ToolsManager::Get();
 }
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
 
 MacrosManager* Manager::GetMacrosManager() const
 {
