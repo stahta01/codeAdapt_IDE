@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -417,3 +419,5 @@ void ToolsManager::OnToolTerminated(CodeBlocksEvent& event)
 
     Manager::Get()->GetLogManager()->Log(F(_T("Tool execution terminated with status %d"), event.GetInt()));
 }
+
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
