@@ -173,22 +173,4 @@ void CompilerDMC::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Fatal error"), cltError, _T("Fatal error:[ \t](.*)"), 1));
 }
 
-AutoDetectResult CompilerDMC::AutoDetectInstallationDir()
-{
-    // just a guess; the default installation dir
-	m_MasterPath = _T("C:\\dm");
-    wxString sep = wxFileName::GetPathSeparator();
-
-    // NOTE (hd#1#): dmc uses sc.ini for compiler's master directories
-    // NOTE (mandrav#1#): which doesn't seem to exist if you don't have the CD version ;)
-    if (!m_MasterPath.IsEmpty())
-    {
-        AddIncludeDir(m_MasterPath + sep + _T("stlport") + sep + _T("stlport"));
-        AddIncludeDir(m_MasterPath + sep + _T("include"));
-        AddLibDir(m_MasterPath + sep + _T("lib"));
-    }
-
-    return wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;
-}
-
 #endif // __WXMSW__

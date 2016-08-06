@@ -151,7 +151,6 @@ BEGIN_EVENT_TABLE(CompilerOptionsDlg, wxPanel)
     EVT_BUTTON(                XRCID("btnDeleteVar"),         CompilerOptionsDlg::OnRemoveVarClick)
     EVT_BUTTON(                XRCID("btnClearVar"),          CompilerOptionsDlg::OnClearVarClick)
     EVT_BUTTON(                XRCID("btnMasterPath"),        CompilerOptionsDlg::OnMasterPathClick)
-    EVT_BUTTON(                XRCID("btnAutoDetect"),        CompilerOptionsDlg::OnAutoDetectClick)
     EVT_BUTTON(                XRCID("btnCcompiler"),         CompilerOptionsDlg::OnSelectProgramClick)
     EVT_BUTTON(                XRCID("btnCPPcompiler"),       CompilerOptionsDlg::OnSelectProgramClick)
     EVT_BUTTON(                XRCID("btnLinker"),            CompilerOptionsDlg::OnSelectProgramClick)
@@ -1231,45 +1230,6 @@ void CompilerOptionsDlg::UpdateCompilerForTargets(int compilerIdx)
     }
 } // UpdateCompilerForTargets
 
-void CompilerOptionsDlg::AutoDetectCompiler()
-{
-    Compiler* compiler = CompilerFactory::GetCompiler(m_CurrentCompilerIdx);
-    wxString backup = XRCCTRL(*this, "txtMasterPath", wxTextCtrl)->GetValue();
-    wxArrayString ExtraPathsBackup = compiler->GetExtraPaths();
-
-    wxArrayString empty;
-    compiler->SetExtraPaths(empty);
-
-    switch (compiler->AutoDetectInstallationDir())
-    {
-        case adrDetected:
-        {
-            wxString msg;
-            msg.Printf(_("Auto-detected installation path of \"%s\"\nin \"%s\""), compiler->GetName().c_str(), compiler->GetMasterPath().c_str());
-            cbMessageBox(msg);
-        }
-        break;
-
-        case adrGuessed:
-        {
-            wxString msg;
-            msg.Printf(_("Could not auto-detect installation path of \"%s\"...\n"
-                        "Do you want to use this compiler's default installation directory?"),
-                        compiler->GetName().c_str());
-            if (cbMessageBox(msg, _("Confirmation"), wxICON_QUESTION | wxYES_NO) == wxID_NO)
-            {
-                compiler->SetMasterPath(backup);
-                compiler->SetExtraPaths(ExtraPathsBackup);
-            }
-        }
-        break;
-    }
-    XRCCTRL(*this, "txtMasterPath", wxTextCtrl)->SetValue(compiler->GetMasterPath());
-    XRCCTRL(*this, "lstExtraPaths", wxListBox)->Clear();
-    const wxArrayString& extraPaths = CompilerFactory::GetCompiler(m_CurrentCompilerIdx)->GetExtraPaths();
-       ArrayString2ListBox(extraPaths, XRCCTRL(*this, "lstExtraPaths", wxListBox));
-    m_bDirty = true;
-} // AutoDetectCompiler
 
 wxListBox* CompilerOptionsDlg::GetDirsListBox()
 {
@@ -1644,8 +1604,6 @@ void CompilerOptionsDlg::OnResetCompilerClick(wxCommandEvent& /*event*/)
                     wxOK | wxCANCEL | wxICON_QUESTION | wxNO_DEFAULT) == wxID_OK)
     {
         CompilerFactory::GetCompiler(m_CurrentCompilerIdx)->Reset();
-        // run auto-detection
-        AutoDetectCompiler();
         CompilerFactory::SaveSettings();
         // refresh settings in dialog
         DoFillCompilerDependentSettings();
@@ -1907,10 +1865,6 @@ void CompilerOptionsDlg::OnMasterPathClick(wxCommandEvent& /*event*/)
     }
 } // OnMasterPathClick
 
-void CompilerOptionsDlg::OnAutoDetectClick(wxCommandEvent& /*event*/)
-{
-    AutoDetectCompiler();
-} // OnAutoDetectClick
 
 void CompilerOptionsDlg::OnSelectProgramClick(wxCommandEvent& event)
 {

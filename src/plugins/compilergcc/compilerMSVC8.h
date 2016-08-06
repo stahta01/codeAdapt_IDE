@@ -14,7 +14,6 @@ class CompilerMSVC8 : public Compiler
 		virtual ~CompilerMSVC8();
         virtual void Reset();
 		virtual void LoadDefaultRegExArray();
-        virtual AutoDetectResult AutoDetectInstallationDir();
 	protected:
         Compiler * CreateCopy();
 	private:

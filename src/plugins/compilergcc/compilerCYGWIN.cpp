@@ -39,25 +39,4 @@ void CompilerCYGWIN::Reset()
 	m_Options.AddOption(_("Do not use cygwin specific functionality"), _T("-mno-cygwin"), _("General"));
 }
 
-AutoDetectResult CompilerCYGWIN::AutoDetectInstallationDir()
-{
-    m_MasterPath = _T("C:\\Cygwin"); // just a guess
-
-    // look in registry for Cygwin
-
-    wxRegKey key; // defaults to HKCR
-    key.SetName(_T("HKEY_LOCAL_MACHINE\\Software\\Cygnus Solutions\\Cygwin\\mounts v2\\/"));
-    if (key.Exists() && key.Open(wxRegKey::Read))
-    {
-        // found; read it
-        key.QueryValue(_T("native"), m_MasterPath);
-    }
-    AutoDetectResult ret = wxFileExists(m_MasterPath + wxFILE_SEP_PATH +
-                                        _T("bin") + wxFILE_SEP_PATH +
-                                        m_Programs.C)
-                            ? adrDetected
-                            : adrGuessed;
-    return ret;
-}
-
 #endif // __WXMSW__

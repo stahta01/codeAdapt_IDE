@@ -223,30 +223,3 @@ void CompilerGNUTRICORE::LoadDefaultRegExArray()
     m_RegExes.Add(RegExStruct(_("Auto-import info"), cltInfo, _T("([Ii]nfo:[ \t].*)\\(auto-import\\)"), 1));
 }
 
-AutoDetectResult CompilerGNUTRICORE::AutoDetectInstallationDir()
-{
-    wxString sep = wxFileName::GetPathSeparator();
-#ifdef __WXMSW__
-    m_MasterPath = _T("C:\\HighTec\\TriCore"); // just a guess
-
-    //    wxLogNull ln;
-    wxRegKey key; // defaults to HKCR
-    key.SetName(_T("HKEY_LOCAL_MACHINE\\Software\\HighTec EDV-Systeme\\TriCore\\"));
-    if (key.Exists() && key.Open(wxRegKey::Read))
-    {
-     // found; read it
-    	if (key.HasValue(_T("InstallPath")))
-	{
-		key.QueryValue(_T("InstallPath"), m_MasterPath);
-        }
-     }
-#else
-        m_MasterPath = _T("/usr/local/tricore");
-#endif // __WXMSW__
-    AutoDetectResult ret = wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;
-    if (ret == adrDetected)
-    {
-          AddIncludeDir(m_MasterPath + sep + _T("tricore") + sep + _T("include"));
-    }
-    return ret;
-}

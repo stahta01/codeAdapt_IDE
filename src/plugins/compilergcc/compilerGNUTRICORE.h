@@ -8,7 +8,6 @@ class CompilerGNUTRICORE : public Compiler
 		virtual ~CompilerGNUTRICORE();
 		virtual void Reset();
 		virtual void LoadDefaultRegExArray();
-		virtual AutoDetectResult AutoDetectInstallationDir();
 	protected:
 		virtual Compiler* CreateCopy();
 };

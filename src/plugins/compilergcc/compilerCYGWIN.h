@@ -12,7 +12,6 @@ class CompilerCYGWIN : public CompilerMINGW
 		CompilerCYGWIN();
 		~CompilerCYGWIN();
         virtual void Reset();
-        virtual AutoDetectResult AutoDetectInstallationDir();
 	protected:
         virtual Compiler* CreateCopy();
 	private:
