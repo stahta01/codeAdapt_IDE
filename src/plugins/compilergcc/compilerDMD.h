@@ -13,7 +13,6 @@ class CompilerDMD : public Compiler
         virtual ~CompilerDMD();
         virtual void Reset();
         virtual void LoadDefaultRegExArray();
-        virtual AutoDetectResult AutoDetectInstallationDir();
     protected:
         Compiler * CreateCopy();
     private:

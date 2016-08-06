@@ -13,7 +13,6 @@ class CompilerMINGW : public Compiler
         virtual ~CompilerMINGW();
         virtual void Reset();
         virtual void LoadDefaultRegExArray();
-        virtual AutoDetectResult AutoDetectInstallationDir();
         virtual CompilerCommandGenerator* GetCommandGenerator();
     protected:
         virtual Compiler* CreateCopy();
