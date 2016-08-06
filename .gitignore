@@ -27,3 +27,7 @@ codeblocks.pc.in
 /src/sdk/wxscintilla/website
 /src/sdk/wxscintilla/samples
 /src/sdk/wxscintilla/src/scintilla_generator
+/src/build_noGUI
+/src/build_noImage
+/src/build_noXRC
+/src/build_reducedGUI
