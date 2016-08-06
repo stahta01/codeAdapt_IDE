@@ -1,7 +1,7 @@
 #ifndef XTRA_RES_H
 #define XTRA_RES_H
 
-#if wxUSE_XRC
+#ifndef CA_BUILD_WITHOUT_TOOLBARS
 
 #include <wx/xrc/xmlres.h>
 #include <wx/toolbar.h>
@@ -24,6 +24,6 @@ class wxToolBarAddOnXmlHandler : public wxXmlResourceHandler
             wxSize size = wxDefaultSize);
 };
 
-#endif // wxUSE_XRC
+#endif // CA_BUILD_WITHOUT_TOOLBARS
 
 #endif

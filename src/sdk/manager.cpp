@@ -255,7 +255,9 @@ void Manager::Initxrc(bool force)
     if(!xrcok || force)
     {
         wxFileSystem::AddHandler(new wxZipFSHandler);
+#ifndef CA_BUILD_WITHOUT_TOOLBARS
         wxXmlResource::Get()->InsertHandler(new wxToolBarAddOnXmlHandler);
+#endif // CA_BUILD_WITHOUT_TOOLBARS
         wxXmlResource::Get()->InitAllHandlers();
 
         xrcok=true;

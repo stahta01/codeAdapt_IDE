@@ -1,3 +1,5 @@
+#ifndef CA_BUILD_WITHOUT_TOOLBARS
+
 #include "sdk_precomp.h"
 
 #include <wx/xml/xml.h>
@@ -244,3 +246,5 @@ bool wxToolBarAddOnXmlHandler::CanHandle(wxXmlNode *node)
             (m_isInside && istool) ||
             (m_isInside && issep));
 }
+
+#endif // CA_BUILD_WITHOUT_TOOLBARS
