@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Library finder wx3.0.x win32" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="../../../devel30/share/codeadapt/plugins/lib_finder.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="../../../.objs30/plugins/contrib/lib_finder" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option host_application="../../../devel30/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Option projectResourceIncludeDirsRelation="0" />
+			</Target>
+			<Environment>
+				<Variable name="CA_OBJ" value="..\..\..\.objs30" />
+				<Variable name="WX_CFG" value="" />
+				<Variable name="WX_SUFFIX" value="u" />
+				<Variable name="WX_VERSION" value="30" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-g" />
+			<Add option="-pipe" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="-Winvalid-pch" />
+			<Add option="-mthreads" />
+			<Add option="-std=gnu++11" />
+			<Add option="-iquote$(CA_OBJ)/include" />
+			<Add option='-include &quot;ca/sdk.h&quot;' />
+			<Add option="-DcbDEBUG" />
+			<Add option="-DCA_USEPCH" />
+			<Add option="-DHAVE_W32API_H" />
+			<Add option="-D__WXMSW__" />
+			<Add option="-DWXUSINGDLL" />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add directory="$(#WX30.include)" />
+			<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
+			<Add directory="../../../include" />
+			<Add directory="../../../include/tinyxml" />
+			<Add directory="../../../include/scripting/include" />
+			<Add directory="../../../include/scripting/sqplus" />
+			<Add directory="../../../include/scripting/squirrel" />
+			<Add directory="../../../include/scripting/bindings" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="$(#WX30.include)" />
+		</ResourceCompiler>
+		<Linker>
+			<Add library="txml" />
+			<Add library="codeadapt" />
+			<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
+			<Add library="wxbase$(WX_VERSION)$(WX_SUFFIX)" />
+			<Add directory="$(#WX30.lib)/gcc_dll$(WX_CFG)" />
+			<Add directory="../../../devel30" />
+			<Add directory="../../../lib" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="CMD /C REM update.bat" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="dirlistdlg.cpp" />
+		<Unit filename="dirlistdlg.h" />
+		<Unit filename="lib_finder.cpp" />
+		<Unit filename="lib_finder.h" />
+		<Unit filename="lib_finder/codeblocks_sdk.xml" />
+		<Unit filename="lib_finder/glfw.xml" />
+		<Unit filename="lib_finder/wxwidgets.xml" />
+		<Unit filename="libraryconfig.h" />
+		<Unit filename="libraryconfigmanager.cpp" />
+		<Unit filename="libraryconfigmanager.h" />
+		<Unit filename="libraryresult.h" />
+		<Unit filename="libselectdlg.cpp" />
+		<Unit filename="libselectdlg.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="pkgconfigmanager.cpp" />
+		<Unit filename="pkgconfigmanager.h" />
+		<Unit filename="processingdlg.cpp" />
+		<Unit filename="processingdlg.h" />
+		<Unit filename="projectconfiguration.cpp" />
+		<Unit filename="projectconfiguration.h" />
+		<Unit filename="projectconfigurationpanel.cpp" />
+		<Unit filename="projectconfigurationpanel.h" />
+		<Unit filename="resultmap.cpp" />
+		<Unit filename="resultmap.h" />
+		<Unit filename="wxsmith/LibSelectDlg.wxs" />
+		<Extensions>
+			<code_completion />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxDialog wxs="wxsmith/DirListDlg.wxs" src="dirlistdlg.cpp" hdr="dirlistdlg.h" name="DirListDlg" language="CPP" />
+					<wxDialog wxs="wxsmith/ProcessingDlg.wxs" src="processingdlg.cpp" hdr="processingdlg.h" name="ProcessingDlg" language="CPP" />
+					<wxPanel wxs="wxsmith/ProjectConfigurationPanel.wxs" src="projectconfigurationpanel.cpp" hdr="projectconfigurationpanel.h" fwddecl="1" name="ProjectConfigurationPanel" language="CPP" />
+					<wxDialog wxs="wxsmith/LibSelectDlg.wxs" src="libselectdlg.cpp" hdr="libselectdlg.h" fwddecl="1" name="LibSelectDlg" language="CPP" />
+				</resources>
+			</wxsmith>
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
