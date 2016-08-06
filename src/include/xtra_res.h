@@ -1,16 +1,11 @@
 #ifndef XTRA_RES_H
 #define XTRA_RES_H
 
-#include <wx/wxprec.h>
+#if wxUSE_XRC
+
 #include <wx/xrc/xmlres.h>
 #include <wx/toolbar.h>
 
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
-
-class wxXmlResourceHandler;
 
 class wxToolBarAddOnXmlHandler : public wxXmlResourceHandler
 {
@@ -28,5 +23,7 @@ class wxToolBarAddOnXmlHandler : public wxXmlResourceHandler
             const wxArtClient& defaultArtClient = wxART_OTHER,
             wxSize size = wxDefaultSize);
 };
+
+#endif // wxUSE_XRC
 
 #endif
