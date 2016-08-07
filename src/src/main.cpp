@@ -111,6 +111,7 @@ int wxID_FILE17 = wxNewId();
 int wxID_FILE18 = wxNewId();
 int wxID_FILE19 = wxNewId();
 
+#ifndef CA_BUILD_WITHOUT_GUI
 int idToolNew = XRCID("idToolNew");
 int idFileNew = XRCID("idFileNew");
 int idFileNewEmpty = XRCID("idFileNewEmpty");
@@ -251,6 +252,7 @@ int idHelpPlugins = XRCID("idHelpPlugins");
 int idLeftSash = XRCID("idLeftSash");
 int idBottomSash = XRCID("idBottomSash");
 int idCloseFullScreen = XRCID("idCloseFullScreen");
+#endif // CA_BUILD_WITHOUT_GUI
 int idShiftTab = wxNewId();
 int idStartHerePageLink = wxNewId();
 int idStartHerePageVarSubst = wxNewId();
@@ -260,6 +262,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_SIZE(MainFrame::OnSize)
     EVT_CLOSE(MainFrame::OnApplicationClose)
 
+#ifndef CA_BUILD_WITHOUT_GUI
     EVT_UPDATE_UI(idFileOpenRecentFileClearHistory, MainFrame::OnFileMenuUpdateUI)
     EVT_UPDATE_UI(idFileOpenRecentProjectClearHistory, MainFrame::OnFileMenuUpdateUI)
     EVT_UPDATE_UI(idFileSave, MainFrame::OnFileMenuUpdateUI)
@@ -449,17 +452,22 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSettingsCompilerDebugger, MainFrame::OnSettingsCompilerDebugger)
     EVT_MENU(idPluginsManagePlugins, MainFrame::OnSettingsPlugins)
     EVT_MENU(idSettingsScripting, MainFrame::OnSettingsScripting)
+#endif // CA_BUILD_WITHOUT_GUI
 
     EVT_MENU(wxID_ABOUT, MainFrame::OnHelpAbout)
+#ifndef CA_BUILD_WITHOUT_GUI
     EVT_MENU(idHelpTips, MainFrame::OnHelpTips)
 
     EVT_MENU(idStartHerePageLink, MainFrame::OnStartHereLink)
     EVT_MENU(idStartHerePageVarSubst, MainFrame::OnStartHereVarSubst)
+#endif // CA_BUILD_WITHOUT_GUI
 
     EVT_NOTEBOOK_PAGE_CHANGED(ID_NBEditorManager, MainFrame::OnPageChanged)
 
+#ifndef CA_BUILD_WITHOUT_GUI
     /// CloseFullScreen event handling
     EVT_BUTTON( idCloseFullScreen, MainFrame::OnToggleFullScreen )
+#endif // CA_BUILD_WITHOUT_GUI
 
     /// Shift-Tab bug workaround
     EVT_MENU(idShiftTab,MainFrame::OnShiftTab)
@@ -472,7 +480,9 @@ MainFrame::MainFrame(wxWindow* parent)
        m_pAccel(0L),
        m_pFilesHistory(0),
        m_pProjectsHistory(0),
+#ifndef CA_BUILD_WITHOUT_GUI
        m_pCloseFullScreenBtn(0L),
+#endif // CA_BUILD_WITHOUT_GUI
        m_pEdMan(0L),
        m_pPrjMan(0L),
        m_pMsgMan(0L),
@@ -503,6 +513,7 @@ MainFrame::MainFrame(wxWindow* parent)
     SetDropTarget(new wxMyFileDropTarget(this));
 #endif // wxUSE_DRAG_AND_DROP
 
+#ifndef CA_BUILD_WITHOUT_GUI
     // Accelerator table
     wxAcceleratorEntry entries[7];
 
@@ -516,6 +527,7 @@ MainFrame::MainFrame(wxWindow* parent)
     m_pAccel = new wxAcceleratorTable(7, entries);
 
     this->SetAcceleratorTable(*m_pAccel);
+#endif // CA_BUILD_WITHOUT_GUI
 
     // add file filters for supported projects/workspaces
     FileFilters::AddDefaultFileFilters();
@@ -650,9 +662,11 @@ void MainFrame::CreateIDE()
     SetSize(800,600);
     wxSize clientsize = GetClientSize();
 
+#ifndef CA_BUILD_WITHOUT_GUI
     // Create CloseFullScreen Button, and hide it initially
     m_pCloseFullScreenBtn = new wxButton(this, idCloseFullScreen, _( "Close Fullscreen" ), wxDefaultPosition );
     m_pCloseFullScreenBtn->Show( false );
+#endif // CA_BUILD_WITHOUT_GUI
 
     // project manager
     Manager::Get(this);
@@ -800,6 +814,7 @@ void MainFrame::PluginsUpdated(cbPlugin* plugin, int status)
         if (!info)
             continue;
 
+#ifndef CA_BUILD_WITHOUT_GUI
         if (m_PluginsTools[plug]) // if plugin has a toolbar
         {
             // toolbar exists; add the menu item
@@ -818,6 +833,7 @@ void MainFrame::PluginsUpdated(cbPlugin* plugin, int status)
                 }
             }
         }
+#endif // CA_BUILD_WITHOUT_GUI
     }
 
     Thaw();
@@ -844,6 +860,7 @@ void MainFrame::RecreateMenuBar()
 
 void MainFrame::CreateMenubar()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     CodeBlocksEvent event(cbEVT_MENUBAR_CREATE_BEGIN);
     Manager::Get()->ProcessEvent(event);
 
@@ -945,10 +962,12 @@ void MainFrame::CreateMenubar()
 
     CodeBlocksEvent event2(cbEVT_MENUBAR_CREATE_END);
     Manager::Get()->ProcessEvent(event2);
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::CreateToolbars()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxXmlResource *myres = wxXmlResource::Get();
     if (m_pToolbar)
     {
@@ -991,6 +1010,7 @@ void MainFrame::CreateToolbars()
     }
 
     Manager::ProcessPendingEvents();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::AddToolbarItem(int id, const wxString& title, const wxString& shortHelp, const wxString& longHelp, const wxString& image)
@@ -1232,6 +1252,7 @@ void MainFrame::SaveViewLayout(const wxString& name, const wxString& layout, boo
 {
     if (name.IsEmpty())
         return;
+#ifndef CA_BUILD_WITHOUT_GUI
     m_LayoutViews[name] = layout;
     wxMenu* viewLayouts = 0;
     GetMenuBar()->FindItem(idViewLayoutSave, &viewLayouts);
@@ -1248,6 +1269,7 @@ void MainFrame::SaveViewLayout(const wxString& name, const wxString& layout, boo
         DoSelectLayout(name);
         m_LastLayoutName = name;
     }
+#endif // CA_BUILD_WITHOUT_GUI
 } // end of SaveViewLayout
 
 bool MainFrame::LayoutDifferent(const wxString& layout1,const wxString& layout2,const wxString& delimiter)
@@ -1326,6 +1348,7 @@ void MainFrame::DoFixToolbarsLayout()
 
 void MainFrame::DoSelectLayout(const wxString& name)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxMenu* viewLayouts = 0;
     GetMenuBar()->FindItem(idViewLayoutSave, &viewLayouts);
     if (viewLayouts)
@@ -1341,10 +1364,12 @@ void MainFrame::DoSelectLayout(const wxString& name)
         if (!m_LastLayoutIsTemp)
 			Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), name);
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxSize size = m_SmallToolBar ? wxSize(16, 16) : (platform::macosx ? wxSize(32, 32) : wxSize(22, 22));
     wxToolBar* tb = new wxToolBar(this, -1, wxDefaultPosition, size, wxTB_FLAT | wxTB_NODIVIDER);
     tb->SetToolBitmapSize(size);
@@ -1412,6 +1437,7 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
     }
     else
         delete tb;
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::DoAddPlugin(cbPlugin* plugin)
@@ -1772,9 +1798,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 
     if(m_InitiatedShutdown)
     {
+#ifndef CA_BUILD_WITHOUT_GUI
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             sh->Destroy();
+#endif // CA_BUILD_WITHOUT_GUI
         return;
     }
 
@@ -1782,11 +1810,13 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
                 Manager::Get()->GetProjectManager()->GetProjects()->GetCount() == 0 &&
                 Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/start_here_page"), true);
 
+#ifndef CA_BUILD_WITHOUT_GUI
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show && !sh)
         sh = new StartHerePage(this, Manager::Get()->GetEditorManager()->GetNotebook());
     else if (!show && sh)
         sh->Destroy();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::ShowHideScriptConsole()
@@ -1808,6 +1838,7 @@ void MainFrame::ShowHideScriptConsole()
 
 void MainFrame::OnStartHereLink(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxCommandEvent evt;
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
@@ -1835,10 +1866,12 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
             }
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (cbMessageBox(_("Can't open file.\nDo you want to remove it from the recent files list?"),
                     _("Question"),
                     wxYES_NO | wxICON_QUESTION) == wxID_YES)
@@ -1849,10 +1882,12 @@ void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
         if (sh)
             ((StartHerePage*)sh)->Reload();
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (!sh)
         return;
@@ -1898,10 +1933,12 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     // update page
     buf.Replace(_T("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
     ((StartHerePage*)sh)->SetPageContent(buf);
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::InitializeRecentFilesHistory()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     TerminateRecentFilesHistory();
 
     wxMenuBar* mbar = GetMenuBar();
@@ -1953,6 +1990,7 @@ void MainFrame::InitializeRecentFilesHistory()
             recentProjects->Append(clear);
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
@@ -1991,6 +2029,7 @@ void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
     if (!menu)
         return;
     wxMenu* recentFiles = 0;
+#ifndef CA_BUILD_WITHOUT_GUI
     wxMenuItem* clear = menu->FindItem(idFileOpenRecentFileClearHistory, &recentFiles);
     if (clear && recentFiles)
     {
@@ -2013,6 +2052,7 @@ void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
@@ -2051,6 +2091,7 @@ void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
     if (!menu)
         return;
     wxMenu* recentProjects = 0;
+#ifndef CA_BUILD_WITHOUT_GUI
     wxMenuItem* clear = menu->FindItem(idFileOpenRecentProjectClearHistory, &recentProjects);
     if (clear && recentProjects)
     {
@@ -2069,14 +2110,17 @@ void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
         recentProjects->Append(clear);
     }
 
+
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::TerminateRecentFilesHistory()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (m_pFilesHistory)
     {
         wxArrayString files;
@@ -2130,6 +2174,7 @@ void MainFrame::TerminateRecentFilesHistory()
         delete m_pProjectsHistory;
         m_pProjectsHistory = 0;
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2156,6 +2201,7 @@ void MainFrame::OnPluginSettingsMenu(wxCommandEvent& event)
 
 void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxString pluginName = m_PluginIDsMap[event.GetId()];
     if (!pluginName.IsEmpty())
     {
@@ -2171,10 +2217,12 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
     }
     else
         Manager::Get()->GetLogManager()->DebugLog(F(_T("No plugin found for ID %d"), event.GetId()));
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     int id = event.GetId();
     if (id != idFileNewEmpty)
     {
@@ -2251,6 +2299,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     // verify that the open files are still in sync
     // the new file might have overwritten an existing one)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 bool MainFrame::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& files)
@@ -2292,7 +2341,9 @@ void MainFrame::OnFileNew(wxCommandEvent& event)
     if (!bar)
         return;
 
+#ifndef CA_BUILD_WITHOUT_GUI
     bar->FindItem(idFileNewProject, &popup);
+#endif // CA_BUILD_WITHOUT_GUI
     if (popup)
         PopupMenu(popup); // this will lead us in OnFileNewWhat() - the meat is there ;)
 }
@@ -2376,6 +2427,7 @@ void MainFrame::OnFileReopenProject(wxCommandEvent& event)
 
 void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     while (m_pProjectsHistory->GetCount())
     {
         m_pProjectsHistory->RemoveFileFromHistory(0);
@@ -2386,6 +2438,7 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnFileReopen(wxCommandEvent& event)
@@ -2400,6 +2453,7 @@ void MainFrame::OnFileReopen(wxCommandEvent& event)
 
 void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     while (m_pFilesHistory->GetCount())
     {
         m_pFilesHistory->RemoveFileFromHistory(0);
@@ -2410,6 +2464,7 @@ void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnFileSave(wxCommandEvent& event)
@@ -2476,7 +2531,9 @@ void MainFrame::OnFileSaveAll(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveProjectTemplate(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     TemplateManager::Get()->SaveUserTemplate(Manager::Get()->GetProjectManager()->GetActiveProject());
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnFileCloseProject(wxCommandEvent& event)
@@ -3418,6 +3475,7 @@ void MainFrame::OnEditAutoComplete(wxCommandEvent& event)
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3439,6 +3497,7 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
             ed->SetLanguage(lang);
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnEditFoldAll(wxCommandEvent& event)
@@ -3485,6 +3544,7 @@ void MainFrame::OnEditToggleFoldBlock(wxCommandEvent& event)
 
 void MainFrame::OnEditEOLMode(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3505,10 +3565,12 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
             ed->GetControl()->EndUndoAction();
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnEditEncoding(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3545,6 +3607,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
         encoding = wxFONTENCODING_UTF32LE;
 
     ed->SetEncoding(encoding);
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
@@ -3589,7 +3652,9 @@ void MainFrame::OnViewLayoutDelete(wxCommandEvent& event)
 
         // now delete the menu item too
         wxMenu* viewLayouts = 0;
+#ifndef CA_BUILD_WITHOUT_GUI
         GetMenuBar()->FindItem(idViewLayoutSave, &viewLayouts);
+#endif // CA_BUILD_WITHOUT_GUI
         if (viewLayouts)
         {
             int id = viewLayouts->FindItem(m_LastLayoutName);
@@ -3619,28 +3684,34 @@ void MainFrame::OnViewScriptConsole(wxCommandEvent& event)
 
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     bool bDoMultipleFiles = (event.GetId() == idSearchFindInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(false, bDoMultipleFiles);
+#endif // CA_BUILD_WITHOUT_GUI
 }// end of OnSearchFind
 
 void MainFrame::OnSearchFindNext(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     bool bNext = !(event.GetId() == idSearchFindPrevious);
     Manager::Get()->GetEditorManager()->FindNext(bNext);
+#endif // CA_BUILD_WITHOUT_GUI
 } // end of OnSearchFindNext
 
 void MainFrame::OnSearchReplace(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     bool bDoMultipleFiles = (event.GetId() == idSearchReplaceInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(true, bDoMultipleFiles);
+#endif // CA_BUILD_WITHOUT_GUI
 } // end of OnSearchReplace
 
 void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
@@ -3673,10 +3744,12 @@ void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     dlgAbout* dlg = new dlgAbout(this);
     PlaceWindow(dlg, pdlHead);
     dlg->ShowModal();
     dlg->Destroy();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnHelpTips(wxCommandEvent& event)
@@ -3691,6 +3764,7 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         event.Skip();
         return;
     }
+#ifndef CA_BUILD_WITHOUT_GUI
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0;
     cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
@@ -3727,6 +3801,7 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         m_pToolbar->EnableTool(idFileSaveAll, canSaveAll);
         m_pToolbar->EnableTool(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
     }
+#endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
 }
@@ -3739,6 +3814,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#ifndef CA_BUILD_WITHOUT_GUI
     cbEditor* ed = NULL;
     EditorBase* eb = NULL;
     bool hasSel = false;
@@ -3830,6 +3906,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         m_pToolbar->EnableTool(idEditCopy, hasSel);
         m_pToolbar->EnableTool(idEditPaste, canPaste);
     }
+#endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
 }
@@ -3841,6 +3918,7 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
         event.Skip();
         return;
     }
+#ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
@@ -3870,6 +3948,7 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
             }
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
 }
@@ -3881,6 +3960,7 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
         event.Skip();
         return;
     }
+#ifndef CA_BUILD_WITHOUT_GUI
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
     wxMenuBar* mbar = GetMenuBar();
 
@@ -3894,12 +3974,14 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
 //        m_pToolbar->EnableTool(idSearchFind, ed);
 //        m_pToolbar->EnableTool(idSearchReplace, ed);
 //    }
+#endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
 }
 
 void MainFrame::OnProjectMenuUpdateUI(wxUpdateUIEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if(Manager::isappShuttingDown())
     {
         event.Skip();
@@ -3915,6 +3997,7 @@ void MainFrame::OnProjectMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idFileSaveProjectAs, prj && canCloseProject);
     mbar->Enable(idFileSaveProjectAllProjects, prj && canCloseProject);
     mbar->Enable(idFileSaveProjectTemplate, prj && canCloseProject);
+#endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
 }
@@ -3935,6 +4018,7 @@ void MainFrame::OnEditorUpdateUI(CodeBlocksEvent& event)
 
 void MainFrame::OnToggleBar(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxWindow* win = 0;
     if (event.GetId() == idViewManager)
         win = Manager::Get()->GetProjectManager()->GetNotebook();
@@ -3958,6 +4042,7 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
         m_LayoutManager.GetPane(win).Show(event.IsChecked());
         DoUpdateLayout();
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnToggleStatusBar(wxCommandEvent& event)
@@ -4054,6 +4139,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
 
 void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     bool tbarsmall = m_SmallToolBar;
     bool needRestart = false;
 
@@ -4071,11 +4157,14 @@ void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
     }
     if (needRestart)
         cbMessageBox(_("Code::Blocks needs to be restarted for the changes to take effect."), _("Information"), wxICON_INFORMATION);
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnGlobalUserVars(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     Manager::Get()->GetUserVariableManager()->Configure();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnSettingsEditor(wxCommandEvent& event)
@@ -4085,21 +4174,27 @@ void MainFrame::OnSettingsEditor(wxCommandEvent& event)
 
 void MainFrame::OnSettingsCompilerDebugger(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     CompilerSettingsDlg dlg(this);
     PlaceWindow(&dlg);
     dlg.ShowModal();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnSettingsPlugins(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     Manager::Get()->GetPluginManager()->Configure();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnSettingsScripting(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     ScriptingSettingsDlg dlg(this);
     if (dlg.ShowModal() == wxID_OK)
         RunStartupScripts();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::OnProjectActivated(CodeBlocksEvent& event)
