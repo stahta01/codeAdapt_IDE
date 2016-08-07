@@ -288,6 +288,7 @@ bool CodeBlocksApp::LoadConfig()
 
 void CodeBlocksApp::InitAssociations()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
 #ifdef __WXMSW__
     ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
     if (!m_NoAssocs && cfg->ReadBool(_T("/environment/check_associations"), true))
@@ -315,6 +316,7 @@ void CodeBlocksApp::InitAssociations()
         }
     }
 #endif
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void CodeBlocksApp::InitDebugConsole()
@@ -342,11 +344,13 @@ void CodeBlocksApp::InitExceptionHandler()
 
 bool CodeBlocksApp::InitXRCStuff()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (!Manager::LoadResource(_T("resources.zip")))
 	{
 		ComplainBadInstall();
 		return false;
 	}
+#endif // CA_BUILD_WITHOUT_GUI
     return true;
 }
 
@@ -462,7 +466,9 @@ bool CodeBlocksApp::OnInit()
     wxXmlResource::Get()->InsertHandler(new wxToolBarAddOnXmlHandler);
 #endif // CA_BUILD_WITHOUT_TOOLBARS
     wxInitAllImageHandlers();
+#if wxUSE_XRC
     wxXmlResource::Get()->InitAllHandlers();
+#endif // wxUSE_XRC
 
     try
     {
