@@ -113,7 +113,9 @@ class DLLIMPORT PluginManager : public Mgr<PluginManager>, public wxEvtHandler
         cbMimePlugin* GetMIMEHandlerForFile(const wxString& filename);
         void GetConfigurationPanels(int group, wxWindow* parent, ConfigurationPanelsArray& arrayToFill);
         void GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill);
+#ifndef CA_BUILD_WITHOUT_GUI
         int Configure();
+#endif // CA_BUILD_WITHOUT_GUI
         void SetupLocaleDomain(const wxString& DomainName);
 
         void NotifyPlugins(CodeBlocksEvent& event);

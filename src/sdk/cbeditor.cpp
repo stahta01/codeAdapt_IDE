@@ -2385,10 +2385,12 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
             m_pProjectFile->ShowOptions(this);
         else
         {
+#ifndef CA_BUILD_WITHOUT_GUI
             // active editor not-in-project
             ProjectFileOptionsDlg dlg(this, GetFilename());
             PlaceWindow(&dlg);
             dlg.ShowModal();
+#endif // CA_BUILD_WITHOUT_GUI
         }
     }
     else if (id == idBreakpointAdd)

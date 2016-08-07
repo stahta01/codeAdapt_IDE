@@ -118,7 +118,9 @@ Manager* Manager::Get(wxFrame *appWindow)
         else
         {
             Get()->m_pAppWindow = appWindow;
+#ifndef CA_BUILD_WITHOUT_GUI
             LoadResource(_T("manager_resources.zip"));
+#endif // CA_BUILD_WITHOUT_GUI
             Get()->GetLogManager()->Log(_("Manager initialized"));
         }
     }
@@ -167,7 +169,9 @@ void Manager::Shutdown()
 #ifndef CA_DISABLE_PLUGIN_API_TOOLS
     ToolsManager::Free();
 #endif // CA_DISABLE_PLUGIN_API_TOOLS
+#ifndef CA_BUILD_WITHOUT_GUI
 	TemplateManager::Free();
+#endif // CA_BUILD_WITHOUT_GUI
 	PluginManager::Free();
 	ScriptingManager::Free();
 	ProjectManager::Free();

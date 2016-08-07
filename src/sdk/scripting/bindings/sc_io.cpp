@@ -29,6 +29,7 @@ namespace ScriptBindings
             if (Manager::Get()->GetConfigManager(_T("security"))->ReadBool(operation, false))
                 return true;
 
+#ifndef CA_BUILD_WITHOUT_GUI
             ScriptSecurityWarningDlg dlg(Manager::Get()->GetAppWindow(), operation, descr);
             if (dlg.ShowModal() != wxID_OK)
                 return false;
@@ -51,6 +52,7 @@ namespace ScriptBindings
                 default:
                     return false;
             }
+#endif // CA_BUILD_WITHOUT_GUI
             return false;
         }
 

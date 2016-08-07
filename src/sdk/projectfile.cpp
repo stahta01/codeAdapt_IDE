@@ -125,9 +125,13 @@ void ProjectFile::RemoveBuildTarget(const wxString& targetName)
 
 bool ProjectFile::ShowOptions(wxWindow* parent)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     ProjectFileOptionsDlg dlg(parent, this);
     PlaceWindow(&dlg);
     return dlg.ShowModal() == wxID_OK;
+#else
+    return false;
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 wxString ProjectFile::GetBaseName() const
