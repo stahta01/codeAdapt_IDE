@@ -121,7 +121,9 @@
     #include "menuitemsmanager.h"
     #include "scriptingmanager.h"
     #include "toolsmanager.h"
+#ifndef CA_BUILD_WITHOUT_GUI
     #include "templatemanager.h"
+#endif // CA_BUILD_WITHOUT_GUI
     #include "macrosmanager.h"
     #include "pluginmanager.h"
     #include "personalitymanager.h"
