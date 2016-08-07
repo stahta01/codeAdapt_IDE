@@ -1448,12 +1448,14 @@ cbMimePlugin* PluginManager::GetMIMEHandlerForFile(const wxString& filename)
     return 0;
 }
 
+#ifndef CA_BUILD_WITHOUT_GUI
 int PluginManager::Configure()
 {
     PluginsConfigurationDlg dlg(Manager::Get()->GetAppWindow());
     PlaceWindow(&dlg);
     return dlg.ShowModal();
 }
+#endif // CA_BUILD_WITHOUT_GUI
 
 void PluginManager::SetupLocaleDomain(const wxString& DomainName)
 {

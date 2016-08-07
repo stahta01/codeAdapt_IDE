@@ -27,7 +27,9 @@ class DLLIMPORT UserVariableManager : public Mgr<UserVariableManager>
         void Arrogate();
         bool Exists(const wxString& variable) const;
 
+#ifndef CA_BUILD_WITHOUT_GUI
         void Configure();
+#endif // CA_BUILD_WITHOUT_GUI
         void Migrate();
 };
 

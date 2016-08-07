@@ -129,6 +129,7 @@ public:
     friend class UserVariableManager;
 };
 
+#ifndef CA_BUILD_WITHOUT_GUI
 void UserVariableManager::Configure()
 {
     UsrGlblMgrEditDialog d;
@@ -136,6 +137,7 @@ void UserVariableManager::Configure()
     d.ShowModal();
     activeSet = Manager::Get()->GetConfigManager(_T("gcv"))->Read(_T("/active"));
 }
+#endif // CA_BUILD_WITHOUT_GUI
 
 
 wxString UserVariableManager::Replace(const wxString& variable)
@@ -162,10 +164,12 @@ wxString UserVariableManager::Replace(const wxString& variable)
             wxString msg;
             msg.Printf(_("In the currently active Set, Code::Blocks does not know\nthe global compiler variable \"%s\".\n\nPlease define it."), package.c_str());
             InfoWindow::Display(_("Global Compiler Variables"), msg , 8000, 1000);
+#ifndef CA_BUILD_WITHOUT_GUI
             UsrGlblMgrEditDialog d;
             d.AddVar(package);
             PlaceWindow(&d);
             d.ShowModal();
+#endif // CA_BUILD_WITHOUT_GUI
         }
     }
 
@@ -211,6 +215,7 @@ bool UserVariableManager::Exists(const wxString& variable) const
 
 void UserVariableManager::Arrogate()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if(preempted.GetCount() == 0)
         return;
 
@@ -236,6 +241,7 @@ void UserVariableManager::Arrogate()
     InfoWindow::Display(_("Global Compiler Variables"), msg , 8000 + 800*preempted.GetCount(), 100);
 
     d.ShowModal();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 
@@ -284,6 +290,7 @@ void UserVariableManager::Migrate()
 
 
 
+#ifndef CA_BUILD_WITHOUT_GUI
 BEGIN_EVENT_TABLE(UsrGlblMgrEditDialog, wxDialog)
 EVT_BUTTON(XRCID("cloneVar"), UsrGlblMgrEditDialog::CloneVar)
 EVT_BUTTON(XRCID("newVar"), UsrGlblMgrEditDialog::NewVar)
@@ -302,10 +309,12 @@ EVT_BUTTON(XRCID("fs4"), UsrGlblMgrEditDialog::OnFS)
 EVT_CHOICE(XRCID("selSet"), UsrGlblMgrEditDialog::SelectSet)
 EVT_CHOICE(XRCID("selVar"), UsrGlblMgrEditDialog::SelectVar)
 END_EVENT_TABLE()
+#endif // CA_BUILD_WITHOUT_GUI
 
 
 
 
+#ifndef CA_BUILD_WITHOUT_GUI
 UsrGlblMgrEditDialog::UsrGlblMgrEditDialog(const wxString& var) : currentSet(Manager::Get()->GetConfigManager(_T("gcv"))->Read(_T("/active"))), currentVar(var)
 {
     wxXmlResource::Get()->LoadDialog(this, Manager::Get()->GetAppWindow(), _T("dlgGloabalUservars"));
@@ -350,6 +359,7 @@ UsrGlblMgrEditDialog::UsrGlblMgrEditDialog(const wxString& var) : currentSet(Man
     Load();
     PlaceWindow(this);
 }
+#endif // CA_BUILD_WITHOUT_GUI
 
 void UsrGlblMgrEditDialog::DoClose()
 {
@@ -618,6 +628,7 @@ void UsrGlblMgrEditDialog::UpdateChoices()
 }
 
 
+#ifndef CA_BUILD_WITHOUT_GUI
 void UsrGlblMgrEditDialog::OnFS(wxCommandEvent& event)
 {
     wxTextCtrl* c = 0;
@@ -638,6 +649,7 @@ void UsrGlblMgrEditDialog::OnFS(wxCommandEvent& event)
     if (!path.IsEmpty())
         c->SetValue(path);
 }
+#endif // CA_BUILD_WITHOUT_GUI
 
 void UsrGlblMgrEditDialog::Help(wxCommandEvent& event)
 {

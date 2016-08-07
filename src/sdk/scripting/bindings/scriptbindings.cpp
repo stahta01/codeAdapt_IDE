@@ -322,9 +322,13 @@ namespace ScriptBindings
         Register_Constants();
         Register_Globals();
         Register_IO(); // IO is enabled, but just for harmless functions
+#ifndef CA_BUILD_WITHOUT_GUI
         Register_Dialog();
+#endif // CA_BUILD_WITHOUT_GUI
         Register_ProgressDialog();
+#ifndef CA_BUILD_WITHOUT_GUI
         Register_UtilDialogs();
+#endif // CA_BUILD_WITHOUT_GUI
 
         SqPlus::SQClassDef<ConfigManager>("ConfigManager").
                 staticFuncVarArgs(&ConfigManager_Read, "Read", "*").

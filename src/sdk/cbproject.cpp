@@ -1512,6 +1512,7 @@ bool cbProject::SaveAllFiles()
 
 bool cbProject::ShowOptions()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     ProjectOptionsDlg dlg(Manager::Get()->GetAppWindow(), this);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -1526,6 +1527,7 @@ bool cbProject::ShowOptions()
         }
         return true;
     }
+#endif // CA_BUILD_WITHOUT_GUI
     return false;
 }
 
@@ -1534,10 +1536,12 @@ int cbProject::SelectTarget(int initial, bool evenIfOne)
     if (!evenIfOne && GetBuildTargetsCount() == 1)
         return 0;
 
+#ifndef CA_BUILD_WITHOUT_GUI
     SelectTargetDlg dlg(0L, this, initial);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
         return dlg.GetSelection();
+#endif // CA_BUILD_WITHOUT_GUI
     return -1;
 }
 
@@ -2047,6 +2051,7 @@ bool cbProject::GetShowNotesOnLoad() const
 
 void cbProject::ShowNotes(bool nonEmptyOnly, bool editable)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (!editable && nonEmptyOnly && m_Notes.IsEmpty())
         return;
 
@@ -2060,6 +2065,7 @@ void cbProject::ShowNotes(bool nonEmptyOnly, bool editable)
         if (editable)
             SetNotes(dlg.GetNotes());
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void cbProject::SetTitle(const wxString& title)

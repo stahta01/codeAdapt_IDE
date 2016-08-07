@@ -1415,6 +1415,7 @@ int ProjectManager::AskForBuildTargetIndex(cbProject* project)
 wxArrayInt ProjectManager::AskForMultiBuildTargetIndex(cbProject* project)
 {
     wxArrayInt indices;
+#ifndef CA_BUILD_WITHOUT_GUI
     cbProject* prj = project;
     if (!prj)
         prj = GetActiveProject();
@@ -1432,6 +1433,7 @@ wxArrayInt ProjectManager::AskForMultiBuildTargetIndex(cbProject* project)
     if (dlg.ShowModal() == wxID_OK)
         indices = dlg.GetSelectedIndices();
 
+#endif // CA_BUILD_WITHOUT_GUI
     return indices;
 }
 
@@ -1652,9 +1654,11 @@ const ProjectsArray* ProjectManager::GetDependenciesForProject(cbProject* base)
 
 void ProjectManager::ConfigureProjectDependencies(cbProject* base)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     ProjectDepsDlg dlg(Manager::Get()->GetAppWindow(), base);
     PlaceWindow(&dlg);
     dlg.ShowModal();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 // events
@@ -1893,6 +1897,7 @@ void ProjectManager::OnSetActiveProject(wxCommandEvent& event)
 
 void ProjectManager::OnAddFilesToProjectRecursively(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     cbProject* prj = 0;
     wxString basePath;
 
@@ -1971,6 +1976,7 @@ void ProjectManager::OnAddFilesToProjectRecursively(wxCommandEvent& event)
     // finally add the files
     AddMultipleFilesToProject(array, prj, targets);
     RebuildTree();
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
@@ -2027,6 +2033,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
 
 void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     wxTreeItemId sel = m_pTree->GetSelection();
     FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
@@ -2129,6 +2136,7 @@ void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
             prj->VirtualFolderDeleted(m_pTree, sel);
         RebuildTree();
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void ProjectManager::OnCloseProject(wxCommandEvent& event)
@@ -2216,6 +2224,7 @@ void ProjectManager::OnNotes(wxCommandEvent& event)
 
 void ProjectManager::OnProperties(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (event.GetId() == idMenuProjectProperties)
     {
         wxString backupTitle = m_pActiveProject ? m_pActiveProject->GetTitle() : _T("");
@@ -2275,10 +2284,12 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
             }
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void ProjectManager::OnGotoFile(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (!m_pActiveProject)
     {
         Manager::Get()->GetLogManager()->DebugLog(_T("No active project!"));
@@ -2299,6 +2310,7 @@ void ProjectManager::OnGotoFile(wxCommandEvent& event)
             DoOpenFile(pf, pf->file.GetFullPath());
         }
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void ProjectManager::OnViewCategorize(wxCommandEvent& event)
@@ -2319,6 +2331,7 @@ void ProjectManager::OnViewUseFolders(wxCommandEvent& event)
 
 void ProjectManager::OnViewFileMasks(wxCommandEvent& event)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     ProjectsFileMasksDlg dlg(Manager::Get()->GetAppWindow(), m_pFileGroups);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -2326,6 +2339,7 @@ void ProjectManager::OnViewFileMasks(wxCommandEvent& event)
         m_pFileGroups->Save();
         RebuildTree();
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 wxTreeItemId ProjectManager::FindItem( wxTreeItemId Node, const wxString& Search) const
@@ -2523,6 +2537,7 @@ void ProjectManager::WorkspaceChanged()
 
 void ProjectManager::CheckForExternallyModifiedProjects()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if(m_isCheckingForExternallyModifiedProjects) // for some reason, a mutex locker does not work???
         return;
     m_isCheckingForExternallyModifiedProjects = true;
@@ -2578,6 +2593,7 @@ void ProjectManager::CheckForExternallyModifiedProjects()
         } // end for : idx : idxProject
     }
     m_isCheckingForExternallyModifiedProjects = false;
+#endif // CA_BUILD_WITHOUT_GUI
 } // end of CheckForExternallyModifiedProjects
 
 
