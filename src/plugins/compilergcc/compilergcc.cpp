@@ -713,7 +713,7 @@ void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fil
 
 bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_TOOLBAR
     if (!IsAttached() || !toolBar)
         return false;
     m_pTbar = toolBar;
@@ -726,7 +726,7 @@ bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
     return true;
 #else
     return false;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TOOLBAR
 }
 
 void CompilerGCC::Dispatcher(wxCommandEvent& event)
@@ -3237,7 +3237,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         mbar->Enable(idMenuProjectProperties, !running && prj);
     }
 
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_TOOLBAR
     // enable/disable compiler toolbar buttons
     wxToolBar* tbar = m_pTbar;//Manager::Get()->GetAppWindow()->GetToolBar();
     if (tbar)
@@ -3252,7 +3252,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         if (m_ToolTarget)
             m_ToolTarget->Enable(!running && prj);
     }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TOOLBAR
 
     // allow other UpdateUI handlers to process this event
     // *very* important! don't forget it...
