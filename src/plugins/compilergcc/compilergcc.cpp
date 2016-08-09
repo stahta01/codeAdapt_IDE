@@ -197,12 +197,17 @@ namespace
     static const wxString strQUOTE(platform::windows ? _T("\"") : _T("'"));
 }
 
+#ifndef CA_BUILD_WITHOUT_GUI
 // menu IDS
 // just because we don't know other plugins' used identifiers,
 // we use wxNewId() to generate a guaranteed unique ID ;), instead of enum
 // (don't forget that, especially in a plugin)
 int idTimerPollCompiler = XRCID("idTimerPollCompiler");
 int idMenuCompile = XRCID("idCompilerMenuCompile");
+#else
+int idTimerPollCompiler = wxID_NONE;
+int idMenuCompile = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 int idMenuCompileTarget = wxNewId();
 int idMenuCompileFromProjectManager = wxNewId();
 int idMenuProjectCompilerOptions = wxNewId();
@@ -210,22 +215,45 @@ int idMenuProjectCompilerOptionsFromProjectManager = wxNewId();
 int idMenuProjectProperties = wxNewId();
 int idMenuTargetCompilerOptions = wxNewId();
 int idMenuTargetCompilerOptionsSub = wxNewId();
+#ifndef CA_BUILD_WITHOUT_GUI
 int idMenuCompileFile = XRCID("idCompilerMenuCompileFile");
+#else
+int idMenuCompileFile = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 int idMenuCompileFileFromProjectManager = wxNewId();
+#ifndef CA_BUILD_WITHOUT_GUI
 int idMenuRebuild = XRCID("idCompilerMenuRebuild");
+#else
+int idMenuRebuild = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 int idMenuRebuildTarget = wxNewId();
 int idMenuRebuildFromProjectManager = wxNewId();
+#ifndef CA_BUILD_WITHOUT_GUI
 int idMenuCompileAll = XRCID("idCompilerMenuCompileAll");
 int idMenuRebuildAll = XRCID("idCompilerMenuRebuildAll");
 int idMenuClean = XRCID("idCompilerMenuClean");
 int idMenuCleanAll = XRCID("idCompilerMenuCleanAll");
+#else
+int idMenuCompileAll = wxID_NONE;
+int idMenuRebuildAll = wxID_NONE;
+int idMenuClean = wxID_NONE;
+int idMenuCleanAll = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 int idMenuCleanTarget = wxNewId();
 int idMenuCleanFromProjectManager = wxNewId();
+#ifndef CA_BUILD_WITHOUT_GUI
 int idMenuCompileAndRun = XRCID("idCompilerMenuCompileAndRun");
 int idMenuRun = XRCID("idCompilerMenuRun");
 int idMenuKillProcess = XRCID("idCompilerMenuKillProcess");
 int idMenuSelectTarget = XRCID("idCompilerMenuSelectTarget");
+#else
+int idMenuCompileAndRun = wxID_NONE;
+int idMenuRun = wxID_NONE;
+int idMenuKillProcess = wxID_NONE;
+int idMenuSelectTarget = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 int idMenuSelectTargetOther[MAX_TARGETS]; // initialized in ctor
+#ifndef CA_BUILD_WITHOUT_GUI
 int idMenuNextError = XRCID("idCompilerMenuNextError");
 int idMenuPreviousError = XRCID("idCompilerMenuPreviousError");
 int idMenuClearErrors = XRCID("idCompilerMenuClearErrors");
@@ -234,6 +262,16 @@ int idMenuSettings = XRCID("idCompilerMenuSettings");
 
 int idToolTarget = XRCID("idToolTarget");
 int idToolTargetLabel = XRCID("idToolTargetLabel");
+#else
+int idMenuNextError = wxID_NONE;
+int idMenuPreviousError = wxID_NONE;
+int idMenuClearErrors = wxID_NONE;
+int idMenuExportMakefile = wxID_NONE;
+int idMenuSettings = wxID_NONE;
+
+int idToolTarget = wxID_NONE;
+int idToolTargetLabel = wxID_NONE;
+#endif // CA_BUILD_WITHOUT_GUI
 
 int idGCCProcess1 = wxNewId();
 int idGCCProcess2 = wxNewId();
@@ -349,10 +387,12 @@ CompilerGCC::CompilerGCC()
     m_IsWorkspaceOperation(false),
     m_LogBuildProgressPercentage(false)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if(!Manager::LoadResource(_T("compiler.zip")))
     {
         NotifyMissingFile(_T("compiler.zip"));
     }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 CompilerGCC::~CompilerGCC()
@@ -540,6 +580,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
 
 int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Project build options"));
     cbConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
     dlg.AttachConfigurationPanel(panel);
@@ -556,15 +597,18 @@ int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
         else
             m_Log->RemoveBuildProgressBar();
     }
+#endif // CA_BUILD_WITHOUT_GUI
 //    delete panel;
     return 0;
 }
 
+#ifndef CA_BUILD_WITHOUT_GUI
 cbConfigurationPanel* CompilerGCC::GetConfigurationPanel(wxWindow* parent)
 {
     CompilerOptionsDlg* dlg = new CompilerOptionsDlg(parent, this, 0, 0);
     return dlg;
 }
+#endif // CA_BUILD_WITHOUT_GUI
 
 void CompilerGCC::OnConfig(wxCommandEvent& event)
 {
@@ -573,6 +617,7 @@ void CompilerGCC::OnConfig(wxCommandEvent& event)
 
 void CompilerGCC::BuildMenu(wxMenuBar* menuBar)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (!IsAttached())
         return;
 
@@ -622,6 +667,7 @@ void CompilerGCC::BuildMenu(wxMenuBar* menuBar)
 //        wxMenu* settingsmenu = menuBar->GetMenu(settingsMenuPos);
 //        settingsmenu->Insert(2,idMenuSettings,_("&Compiler"),_("Global Compiler Options"));
 //    }
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeData* data)
@@ -665,6 +711,7 @@ void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fil
 
 bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if (!IsAttached() || !toolBar)
         return false;
     m_pTbar = toolBar;
@@ -675,6 +722,9 @@ bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
     toolBar->SetInitialSize();
     DoRecreateTargetMenu(); // make sure the tool target combo is up-to-date
     return true;
+#else
+    return false;
+#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void CompilerGCC::Dispatcher(wxCommandEvent& event)
@@ -3189,6 +3239,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         mbar->Enable(idMenuProjectProperties, !running && prj);
     }
 
+#ifndef CA_BUILD_WITHOUT_GUI
     // enable/disable compiler toolbar buttons
     wxToolBar* tbar = m_pTbar;//Manager::Get()->GetAppWindow()->GetToolBar();
     if (tbar)
@@ -3203,6 +3254,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         if (m_ToolTarget)
             m_ToolTarget->Enable(!running && prj);
     }
+#endif // CA_BUILD_WITHOUT_GUI
 
     // allow other UpdateUI handlers to process this event
     // *very* important! don't forget it...
