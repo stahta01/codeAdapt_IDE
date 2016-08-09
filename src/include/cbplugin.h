@@ -97,11 +97,13 @@ class PLUGIN_EXPORT cbPlugin : public wxEvtHandler
           */
         virtual int GetConfigurationGroup() const { return cgUnknown; }
 
+#ifndef CA_BUILD_WITHOUT_GUI
 		/** Return plugin's configuration panel.
 		  * @param parent The parent window.
 		  * @return A pointer to the plugin's cbConfigurationPanel. It is deleted by the caller.
 		  */
         virtual cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent){ return 0; }
+#endif // CA_BUILD_WITHOUT_GUI
 
 		/** Return plugin's configuration panel for projects.
 		  * The panel returned from this function will be added in the project's
