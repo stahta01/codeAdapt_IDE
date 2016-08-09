@@ -102,7 +102,9 @@ class CompilerGCC : public cbCompilerPlugin
 
         int GetConfigurationPriority() const { return 0; }
         int GetConfigurationGroup() const { return cgCompiler; }
+#ifndef CA_BUILD_WITHOUT_GUI
         cbConfigurationPanel* GetConfigurationPanel(wxWindow* parent);
+#endif // CA_BUILD_WITHOUT_GUI
 
         void SwitchCompiler(const wxString& id);
         const wxString& GetCurrentCompilerID();
