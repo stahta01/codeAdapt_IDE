@@ -462,9 +462,9 @@ bool CodeBlocksApp::OnInit()
     // we'll do this once and for all at startup
     wxFileSystem::AddHandler(new wxZipFSHandler);
     wxFileSystem::AddHandler(new wxMemoryFSHandler);
-#ifndef CA_BUILD_WITHOUT_TOOLBARS
+#if wxUSE_TOOLBAR
     wxXmlResource::Get()->InsertHandler(new wxToolBarAddOnXmlHandler);
-#endif // CA_BUILD_WITHOUT_TOOLBARS
+#endif // wxUSE_TOOLBAR
     wxInitAllImageHandlers();
 #if wxUSE_XRC
     wxXmlResource::Get()->InitAllHandlers();

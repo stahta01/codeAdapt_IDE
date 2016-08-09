@@ -223,7 +223,9 @@ int idEditAutoComplete = XRCID("idEditAutoComplete");
 int idViewLayoutDelete = XRCID("idViewLayoutDelete");
 int idViewLayoutSave = XRCID("idViewLayoutSave");
 int idViewToolbars = XRCID("idViewToolbars");
+#if wxUSE_TOOLBAR
 int idViewToolMain = XRCID("idViewToolMain");
+#endif // wxUSE_TOOLBAR
 int idViewManager = XRCID("idViewManager");
 int idViewLogManager = XRCID("idViewLogManager");
 int idViewStatusbar = XRCID("idViewStatusbar");
@@ -320,7 +322,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_UPDATE_UI(idSearchReplaceInFiles, MainFrame::OnSearchMenuUpdateUI)
     EVT_UPDATE_UI(idSearchGotoLine, MainFrame::OnSearchMenuUpdateUI)
 
+#if wxUSE_TOOLBAR
     EVT_UPDATE_UI(idViewToolMain, MainFrame::OnViewMenuUpdateUI)
+#endif // wxUSE_TOOLBAR
     EVT_UPDATE_UI(idViewLogManager, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewManager, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewStatusbar, MainFrame::OnViewMenuUpdateUI)
@@ -438,7 +442,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(idViewLayoutSave, MainFrame::OnViewLayoutSave)
     EVT_MENU(idViewLayoutDelete, MainFrame::OnViewLayoutDelete)
+#if wxUSE_TOOLBAR
     EVT_MENU(idViewToolMain, MainFrame::OnToggleBar)
+#endif // wxUSE_TOOLBAR
     EVT_MENU(idViewLogManager, MainFrame::OnToggleBar)
     EVT_MENU(idViewManager, MainFrame::OnToggleBar)
     EVT_MENU(idViewStatusbar, MainFrame::OnToggleStatusBar)
@@ -487,7 +493,9 @@ MainFrame::MainFrame(wxWindow* parent)
        m_pPrjMan(0L),
        m_pMsgMan(0L),
        infoPane(0),
+#if wxUSE_TOOLBAR
        m_pToolbar(0L),
+#endif // wxUSE_TOOLBAR
        m_ToolsMenu(0L),
        m_HelpPluginsMenu(0L),
        m_StartupDone(false), // one-time flag
@@ -684,8 +692,10 @@ void MainFrame::CreateIDE()
     m_pPrjMan = Manager::Get()->GetProjectManager();
     m_pMsgMan = Manager::Get()->GetLogManager();
 
+#if wxUSE_TOOLBAR
     CreateToolbars();
     SetToolBar(0);
+#endif // wxUSE_TOOLBAR
 
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
@@ -814,7 +824,7 @@ void MainFrame::PluginsUpdated(cbPlugin* plugin, int status)
         if (!info)
             continue;
 
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_TOOLBAR
         if (m_PluginsTools[plug]) // if plugin has a toolbar
         {
             // toolbar exists; add the menu item
@@ -833,7 +843,7 @@ void MainFrame::PluginsUpdated(cbPlugin* plugin, int status)
                 }
             }
         }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TOOLBAR
     }
 
     Thaw();
@@ -967,7 +977,7 @@ void MainFrame::CreateMenubar()
 
 void MainFrame::CreateToolbars()
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_TOOLBAR
     wxXmlResource *myres = wxXmlResource::Get();
     if (m_pToolbar)
     {
@@ -1010,14 +1020,16 @@ void MainFrame::CreateToolbars()
     }
 
     Manager::ProcessPendingEvents();
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TOOLBAR
 }
 
 void MainFrame::AddToolbarItem(int id, const wxString& title, const wxString& shortHelp, const wxString& longHelp, const wxString& image)
 {
+#if wxUSE_TOOLBAR
     m_pToolbar->AddTool(id, title, cbLoadBitmap(image, wxBITMAP_TYPE_PNG));
     m_pToolbar->SetToolShortHelp(id, shortHelp);
     m_pToolbar->SetToolLongHelp(id, longHelp);
+#endif // wxUSE_TOOLBAR
 }
 
 void MainFrame::ScanForPlugins()
@@ -1369,7 +1381,7 @@ void MainFrame::DoSelectLayout(const wxString& name)
 
 void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_TOOLBAR
     wxSize size = m_SmallToolBar ? wxSize(16, 16) : (platform::macosx ? wxSize(32, 32) : wxSize(22, 22));
     wxToolBar* tb = new wxToolBar(this, -1, wxDefaultPosition, size, wxTB_FLAT | wxTB_NODIVIDER);
     tb->SetToolBitmapSize(size);
@@ -1437,7 +1449,7 @@ void MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
     }
     else
         delete tb;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TOOLBAR
 }
 
 void MainFrame::DoAddPlugin(cbPlugin* plugin)
@@ -3795,12 +3807,14 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idFileSaveAll, canSaveAll);
     mbar->Enable(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
 
+#if wxUSE_TOOLBAR
     if (m_pToolbar)
     {
         m_pToolbar->EnableTool(idFileSave, ed && ed->GetModified());
         m_pToolbar->EnableTool(idFileSaveAll, canSaveAll);
         m_pToolbar->EnableTool(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
     }
+#endif // wxUSE_TOOLBAR
 #endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
@@ -3898,6 +3912,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
             mbar->Check(hl->FindItem(ed->GetColourSet()->GetLanguageName(ed->GetLanguage())), true);
     }
 
+#if wxUSE_TOOLBAR
     if (m_pToolbar)
     {
         m_pToolbar->EnableTool(idEditUndo, canUndo);
@@ -3906,6 +3921,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         m_pToolbar->EnableTool(idEditCopy, hasSel);
         m_pToolbar->EnableTool(idEditPaste, canPaste);
     }
+#endif // wxUSE_TOOLBAR
 #endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
@@ -3930,6 +3946,7 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Check(idViewFullScreen, IsFullScreen());
     mbar->Enable(idViewFocusEditor, ed);
 
+#if wxUSE_TOOLBAR
     // toolbars
     mbar->Check(idViewToolMain, m_LayoutManager.GetPane(m_pToolbar).IsShown());
     wxMenu* viewToolbars = 0;
@@ -3948,6 +3965,7 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
             }
         }
     }
+#endif // wxUSE_TOOLBAR
 #endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
@@ -4024,16 +4042,20 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
         win = Manager::Get()->GetProjectManager()->GetNotebook();
     else if (event.GetId() == idViewLogManager)
         win = infoPane;
+#if wxUSE_TOOLBAR
     else if (event.GetId() == idViewToolMain)
         win = m_pToolbar;
+#endif // wxUSE_TOOLBAR
     else
     {
         wxString pluginName = m_PluginIDsMap[event.GetId()];
         if (!pluginName.IsEmpty())
         {
             cbPlugin* plugin = Manager::Get()->GetPluginManager()->FindPluginByName(pluginName);
+#if wxUSE_TOOLBAR
             if (plugin)
                 win = m_PluginsTools[plugin];
+#endif // wxUSE_TOOLBAR
         }
     }
 
@@ -4125,6 +4147,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
 
     cbPlugin* plugin = event.GetPlugin();
 
+#if wxUSE_TOOLBAR
     // remove toolbar, if any
     if (m_PluginsTools[plugin])
     {
@@ -4133,6 +4156,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
         m_PluginsTools.erase(plugin);
         DoUpdateLayout();
     }
+#endif // wxUSE_TOOLBAR
 
     PluginsUpdated(plugin, Unloaded);
 }
