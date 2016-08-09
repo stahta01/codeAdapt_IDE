@@ -309,8 +309,10 @@ class MainFrame : public wxFrame
         LogManager* m_pMsgMan;
         InfoPane *infoPane;
 
+#if wxUSE_TOOLBAR
         wxToolBar* m_pToolbar;
         PluginToolbarsMap m_PluginsTools;
+#endif // wxUSE_TOOLBAR
 
         PluginIDsMap m_PluginIDsMap;
 #ifndef CA_DISABLE_PLUGIN_API_TOOLS
