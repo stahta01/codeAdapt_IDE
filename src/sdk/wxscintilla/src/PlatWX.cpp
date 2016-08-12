@@ -1540,6 +1540,7 @@ void ListBoxImpl::RegisterImageHelper(int type, wxBitmap& bmp)
 
 void ListBoxImpl::RegisterImage(int type, const char *xpm_data)
 {
+#if wxUSE_XPM
     wxMemoryInputStream stream(xpm_data, strlen(xpm_data)+1);
     wxImage img(stream, wxBITMAP_TYPE_XPM);
     wxBitmap bmp(img);
@@ -1548,6 +1549,7 @@ void ListBoxImpl::RegisterImage(int type, const char *xpm_data)
     if (!bmp.IsOk())
         return;
 /* C::B end */
+#endif // wxUSE_XPM
 }
 
 
