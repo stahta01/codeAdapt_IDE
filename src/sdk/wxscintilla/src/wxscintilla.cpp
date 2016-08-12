@@ -718,6 +718,7 @@ int wxScintilla::MarkerPrevious(int lineStart, int markerMask)
 // Define a marker from a bitmap
 void wxScintilla::MarkerDefineBitmap(int markerNumber, const wxBitmap& bmp)
 {
+#if wxUSE_XPM
     // convert bmp to a xpm in a string
     wxMemoryOutputStream strm;
     wxImage img = bmp.ConvertToImage();
@@ -731,6 +732,7 @@ void wxScintilla::MarkerDefineBitmap(int markerNumber, const wxBitmap& bmp)
     SendMsg(SCI_MARKERDEFINEPIXMAP, markerNumber, (uptr_t)buff);
     delete [] buff;
 
+#endif // wxUSE_XPM
 }
 
 // Add a set of markers to a line.
@@ -1371,6 +1373,7 @@ bool wxScintilla::AutoCompGetDropRestOfWord() const
 // Register an image for use in autocompletion lists.
 void wxScintilla::RegisterImage(int type, const wxBitmap& bmp)
 {
+#if wxUSE_XPM
     // convert bmp to a xpm in a string
     wxMemoryOutputStream strm;
     wxImage img = bmp.ConvertToImage();
@@ -1384,6 +1387,7 @@ void wxScintilla::RegisterImage(int type, const wxBitmap& bmp)
     SendMsg(SCI_REGISTERIMAGE, type, (uptr_t)buff);
     delete [] buff;
 
+#endif // wxUSE_XPM
 }
 
 // Clear all the registered images.
