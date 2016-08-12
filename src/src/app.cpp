@@ -465,7 +465,9 @@ bool CodeBlocksApp::OnInit()
 #if wxUSE_TOOLBAR
     wxXmlResource::Get()->InsertHandler(new wxToolBarAddOnXmlHandler);
 #endif // wxUSE_TOOLBAR
+#if wxUSE_IMAGE
     wxInitAllImageHandlers();
+#endif // wxUSE_IMAGE
 #if wxUSE_XRC
     wxXmlResource::Get()->InitAllHandlers();
 #endif // wxUSE_XRC
