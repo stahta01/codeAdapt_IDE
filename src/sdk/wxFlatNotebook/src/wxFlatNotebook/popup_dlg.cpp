@@ -100,9 +100,11 @@ void wxTabNavigatorWindow::Create(wxWindow* parent)
 	// Create the bitmap, only once
 	if( !m_bmp.Ok() )
 	{
+#if wxUSE_IMAGE
 		wxImage img(signpost_xpm);
 		img.SetAlpha(signpost_alpha, true);
 		m_bmp =  wxBitmap(img);
+#endif // wxUSE_IMAGE
 	}
 	m_listBox->SetFocus();
 }
