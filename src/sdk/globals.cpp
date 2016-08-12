@@ -709,6 +709,7 @@ bool UsesCommonControls6()
 
 wxBitmap cbLoadBitmap(const wxString& filename, int bitmapType)
 {
+#if wxUSE_IMAGE
     // cache this, can't change while we 're running :)
     static bool oldCommonControls = !UsesCommonControls6();
 
@@ -726,6 +727,9 @@ wxBitmap cbLoadBitmap(const wxString& filename, int bitmapType)
         im.ConvertAlphaToMask();
 
     return wxBitmap(im);
+#else
+    return wxBitmap();
+#endif // wxUSE_IMAGE
 }
 
 void SetSettingsIconsStyle(wxListCtrl* lc, SettingsIconsStyle style)
