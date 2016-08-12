@@ -66,17 +66,23 @@ dlgAbout::dlgAbout(wxWindow* parent)
 
 	wxStaticBitmap *bmpControl = XRCCTRL(*this, "lblTitle", wxStaticBitmap);
 
+#if wxUSE_IMAGE
     wxImage im;
     im.LoadFile(file, wxBITMAP_TYPE_PNG );
     im.ConvertAlphaToMask();
 	wxBitmap bmp(im);
+#else
+	wxBitmap bmp();
+#endif // wxUSE_IMAGE
 
     {   // copied from splashscreen.cpp
         const wxString release(wxT(RELEASE));
         const wxString revision = ConfigManager::GetRevisionString();
 
         wxMemoryDC dc;
+#if wxUSE_IMAGE
         dc.SelectObject(bmp);
+#endif // wxUSE_IMAGE
 
         wxFont largeFont(16, wxSWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
         wxFont smallFont(9,  wxSWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
@@ -95,7 +101,9 @@ dlgAbout::dlgAbout(wxWindow* parent)
         dc.DrawText(revision, 92 - c, y + b);
     }
 
+#if wxUSE_IMAGE
 	bmpControl->SetBitmap(bmp);
+#endif // wxUSE_IMAGE
 
 
 
