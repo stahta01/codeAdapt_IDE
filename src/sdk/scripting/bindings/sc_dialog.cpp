@@ -14,6 +14,8 @@
 
 #include "sc_base_types.h"
 
+#if wxUSE_XRC
+
 namespace ScriptBindings
 {
     class XrcDialog : public wxDialog
@@ -132,3 +134,5 @@ namespace ScriptBindings
         SquirrelVM::CreateFunctionGlobal(XrcId, "XRCID", "*");
     }
 } // namespace ScriptBindings
+
+#endif // wxUSE_XRC
