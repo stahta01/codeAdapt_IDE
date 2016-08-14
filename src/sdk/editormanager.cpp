@@ -216,6 +216,7 @@ void EditorManager::ReleaseMenu(wxMenuBar* menuBar)
 
 void EditorManager::Configure()
 {
+#if wxUSE_XRC
     // editor lexers loading takes some time; better reflect this with a hourglass
     wxBeginBusyCursor();
 
@@ -242,6 +243,7 @@ void EditorManager::Configure()
             }
         }
     }
+#endif // wxUSE_XRC
 } // end of Configure
 
 void EditorManager::CreateSearchLog()
@@ -1110,6 +1112,7 @@ bool EditorManager::SwapActiveHeaderSource()
 
 int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
 {
+#if wxUSE_XRC
     wxString phraseAtCursor;
     bool hasSelection = false;
     cbStyledTextCtrl* control = 0;
@@ -1226,6 +1229,9 @@ int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
         m_LastFindReplaceData->findInFiles = false;
     }
     return ReturnValue;
+#else
+    return 0;
+#endif // wxUSE_XRC
 } // end of ShowFindDialog
 
 void EditorManager::CalculateFindReplaceStartEnd(cbStyledTextCtrl* control, cbFindReplaceData* data, bool replace)
@@ -1324,6 +1330,7 @@ void EditorManager::CalculateFindReplaceStartEnd(cbStyledTextCtrl* control, cbFi
 
 int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
 {
+#if wxUSE_XRC
     if (!control || !data)
         return -1;
 
@@ -1549,10 +1556,14 @@ int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     control->SetSCIFocus(true);
 
     return pos;
+#else
+    return -1;
+#endif // wxUSE_XRC
 }
 
 int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
 {
+#if wxUSE_XRC
     if (!data) return 0;
     if (data->findText.IsEmpty()) return 0;
 
@@ -2078,10 +2089,14 @@ int EditorManager::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
             break; // done
     }
     return pos;
+#else
+    return 0;
+#endif // wxUSE_XRC
 }
 
 int EditorManager::FindInFiles(cbFindReplaceData* data)
 {
+#if wxUSE_XRC
     if (!data || data->findText.IsEmpty())
         return 0;
 
@@ -2311,10 +2326,14 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     }
 
     return count;
+#else
+    return 0;
+#endif // wxUSE_XRC
 }
 
 int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindReplaceData* data)
 {
+#if wxUSE_XRC
     if (!control)
     {
         cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
@@ -2358,6 +2377,9 @@ int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRep
 
     data->directionDown = goingDown;
     return Find(control, data);
+#else
+    return -1;
+#endif // wxUSE_XRC
 }
 
 void EditorManager::OnGenericContextMenuHandler(wxCommandEvent& event)
@@ -2508,6 +2530,7 @@ void EditorManager::OnTabPosition(wxCommandEvent& event)
 
 void EditorManager::OnProperties(wxCommandEvent& event)
 {
+#if wxUSE_XRC
     cbEditor* ed = GetBuiltinActiveEditor();
     ProjectFile* pf = 0;
     if (ed)
@@ -2520,6 +2543,7 @@ void EditorManager::OnProperties(wxCommandEvent& event)
         PlaceWindow(&dlg);
         dlg.ShowModal();
     }
+#endif // wxUSE_XRC
 }
 
 void EditorManager::OnAppDoneStartup(wxCommandEvent& event)
