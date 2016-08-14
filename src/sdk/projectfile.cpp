@@ -26,6 +26,8 @@
 #include "projectfileoptionsdlg.h"
 #include "filefilters.h"
 
+#include "compiler.h"
+
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(FilesList);
 
