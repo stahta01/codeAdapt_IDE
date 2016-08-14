@@ -36,6 +36,8 @@
 #include "configmanager.h"
 #include "tinyxml/tinywxuni.h"
 
+#include "compiler.h"
+
 ProjectLoader::ProjectLoader(cbProject* project)
     : m_pProject(project),
     m_Upgraded(false),
