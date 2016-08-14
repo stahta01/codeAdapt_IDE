@@ -37,6 +37,8 @@
 
 #include "filefilters.h"
 
+#include "compiler.h" // Compiler
+
 CompileTargetBase::CompileTargetBase()
     : m_TargetType(ttExecutable),
     m_PrefixGenerationPolicy(tgfpPlatformDefault),

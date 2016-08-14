@@ -11,9 +11,6 @@
 
 #include "printing_types.h"
 
-#ifndef CB_PRECOMP
-    #include "globals.h" // cbC2U
-#endif
 
 DLLIMPORT extern int ID_NBEditorManager;
 DLLIMPORT extern int ID_EditorManager;

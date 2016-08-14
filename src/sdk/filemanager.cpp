@@ -12,6 +12,8 @@
 
 #include <wx/url.h>
 
+#include "configmanager.h"
+
 template<> FileManager* Mgr<FileManager>::instance = 0;
 template<> bool  Mgr<FileManager>::isShutdown = false;
 
