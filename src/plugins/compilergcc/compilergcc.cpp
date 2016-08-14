@@ -197,7 +197,7 @@ namespace
     static const wxString strQUOTE(platform::windows ? _T("\"") : _T("'"));
 }
 
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 // menu IDS
 // just because we don't know other plugins' used identifiers,
 // we use wxNewId() to generate a guaranteed unique ID ;), instead of enum
@@ -207,7 +207,7 @@ int idMenuCompile = XRCID("idCompilerMenuCompile");
 #else
 int idTimerPollCompiler = wxID_NONE;
 int idMenuCompile = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 int idMenuCompileTarget = wxNewId();
 int idMenuCompileFromProjectManager = wxNewId();
 int idMenuProjectCompilerOptions = wxNewId();
@@ -215,20 +215,20 @@ int idMenuProjectCompilerOptionsFromProjectManager = wxNewId();
 int idMenuProjectProperties = wxNewId();
 int idMenuTargetCompilerOptions = wxNewId();
 int idMenuTargetCompilerOptionsSub = wxNewId();
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 int idMenuCompileFile = XRCID("idCompilerMenuCompileFile");
 #else
 int idMenuCompileFile = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 int idMenuCompileFileFromProjectManager = wxNewId();
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 int idMenuRebuild = XRCID("idCompilerMenuRebuild");
 #else
 int idMenuRebuild = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 int idMenuRebuildTarget = wxNewId();
 int idMenuRebuildFromProjectManager = wxNewId();
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 int idMenuCompileAll = XRCID("idCompilerMenuCompileAll");
 int idMenuRebuildAll = XRCID("idCompilerMenuRebuildAll");
 int idMenuClean = XRCID("idCompilerMenuClean");
@@ -238,10 +238,10 @@ int idMenuCompileAll = wxID_NONE;
 int idMenuRebuildAll = wxID_NONE;
 int idMenuClean = wxID_NONE;
 int idMenuCleanAll = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 int idMenuCleanTarget = wxNewId();
 int idMenuCleanFromProjectManager = wxNewId();
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 int idMenuCompileAndRun = XRCID("idCompilerMenuCompileAndRun");
 int idMenuRun = XRCID("idCompilerMenuRun");
 int idMenuKillProcess = XRCID("idCompilerMenuKillProcess");
@@ -251,9 +251,9 @@ int idMenuCompileAndRun = wxID_NONE;
 int idMenuRun = wxID_NONE;
 int idMenuKillProcess = wxID_NONE;
 int idMenuSelectTarget = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 int idMenuSelectTargetOther[MAX_TARGETS]; // initialized in ctor
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_XRC
 int idMenuNextError = XRCID("idCompilerMenuNextError");
 int idMenuPreviousError = XRCID("idCompilerMenuPreviousError");
 int idMenuClearErrors = XRCID("idCompilerMenuClearErrors");
@@ -271,7 +271,7 @@ int idMenuSettings = wxID_NONE;
 
 int idToolTarget = wxID_NONE;
 int idToolTargetLabel = wxID_NONE;
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_XRC
 
 int idGCCProcess1 = wxNewId();
 int idGCCProcess2 = wxNewId();
@@ -711,7 +711,7 @@ void CompilerGCC::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fil
 
 bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
 {
-#if wxUSE_TOOLBAR
+#if wxUSE_XRC && wxUSE_TOOLBAR
     if (!IsAttached() || !toolBar)
         return false;
     m_pTbar = toolBar;
@@ -724,7 +724,7 @@ bool CompilerGCC::BuildToolBar(wxToolBar* toolBar)
     return true;
 #else
     return false;
-#endif // wxUSE_TOOLBAR
+#endif // wxUSE_XRC && wxUSE_TOOLBAR
 }
 
 void CompilerGCC::Dispatcher(wxCommandEvent& event)
@@ -3239,7 +3239,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         mbar->Enable(idMenuProjectProperties, !running && prj);
     }
 
-#if wxUSE_TOOLBAR
+#if wxUSE_XRC && wxUSE_TOOLBAR
     // enable/disable compiler toolbar buttons
     wxToolBar* tbar = m_pTbar;//Manager::Get()->GetAppWindow()->GetToolBar();
     if (tbar)
@@ -3254,7 +3254,7 @@ void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
         if (m_ToolTarget)
             m_ToolTarget->Enable(!running && prj);
     }
-#endif // wxUSE_TOOLBAR
+#endif // wxUSE_XRC && wxUSE_TOOLBAR
 
     // allow other UpdateUI handlers to process this event
     // *very* important! don't forget it...
