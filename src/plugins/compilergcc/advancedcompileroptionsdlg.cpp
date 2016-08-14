@@ -20,6 +20,7 @@
 //		that the parent dialog that spawned this dialog the user can still click on cancel there,
 //		meaning also the changes here should not be applied, but as it is now : too late, applied (TO FIX)
 
+#if wxUSE_XRC
 
 wxString ControlCharsToString(const wxString& src)
 {
@@ -463,3 +464,5 @@ void AdvancedCompilerOptionsDlg::EndModal(int retCode)
     }
     wxDialog::EndModal(retCode);
 } // end of EndModal
+
+#endif // wxUSE_XRC
