@@ -33,6 +33,7 @@
     #include "projectmanager.h"
     #include "pluginmanager.h"
     #include "scriptingmanager.h"
+    #include "compiler.h"
     #include "compilerfactory.h"
     #include "globals.h"
     #include "cbproject.h"
