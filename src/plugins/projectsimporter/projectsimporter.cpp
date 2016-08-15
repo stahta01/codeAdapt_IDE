@@ -22,6 +22,7 @@
     #include "logmanager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
+    #include "compiler.h"
     #include "compilerfactory.h"
     #include "cbproject.h"
     #include "cbworkspace.h"
