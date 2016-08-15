@@ -880,6 +880,7 @@ void EditorManager::Print(PrintScope ps, PrintColourMode pcm, bool line_numbers)
 
 void EditorManager::CheckForExternallyModifiedFiles()
 {
+#ifndef CA_BUILD_WITHOUT_GUI
     if(m_isCheckingForExternallyModifiedFiles) // for some reason, a mutex locker does not work???
         return;
     m_isCheckingForExternallyModifiedFiles = true;
@@ -982,6 +983,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
     }
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_isCheckingForExternallyModifiedFiles = false;
+#endif // CA_BUILD_WITHOUT_GUI
 } // end of CheckForExternallyModifiedFiles
 
 bool EditorManager::SwapActiveHeaderSource()
