@@ -25,6 +25,7 @@
 #include <wx/statbmp.h>
 #include "annoyingdialog.h"
 
+
 BEGIN_EVENT_TABLE(AnnoyingDialog, wxDialog)
     EVT_BUTTON(-1, AnnoyingDialog::OnButton)
 END_EVENT_TABLE()
@@ -50,8 +51,10 @@ AnnoyingDialog::AnnoyingDialog(const wxString& caption, const wxString& message,
     wxBoxSizer *outerSizer = new wxBoxSizer( wxVERTICAL );
 
     wxFlexGridSizer *mainArea = new wxFlexGridSizer(2, 0, 0);
+#if wxUSE_STATBMP
     wxStaticBitmap *bitmap = new wxStaticBitmap(this, -1, wxArtProvider::GetBitmap(icon,  wxART_MESSAGE_BOX), wxDefaultPosition);
     mainArea->Add(bitmap, 0, wxALL, 5);
+#endif // wxUSE_STATBMP
 
     wxStaticText *txt = new wxStaticText(this, -1, message, wxDefaultPosition, wxDefaultSize, 0);
     mainArea->Add( txt, 0, wxALIGN_CENTER|wxALL, 5 );

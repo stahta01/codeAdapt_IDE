@@ -165,8 +165,10 @@ InfoWindow::InfoWindow(const wxString& title, const wxString& message, unsigned 
 
         if(!platform::gtk)
         {
+#if wxUSE_STATBMP
             // since we used a panel, no more bitmap :(
             new wxStaticBitmap(this, -1, wxBitmap(iBitmap), wxPoint(4, o->GetRect().GetBottom() - 9));
+#endif // wxUSE_STATBMP
         }
         wxCoord w, h;
         GetClientSize(&w, &h);
