@@ -720,6 +720,7 @@ int CodeBlocksApp::BatchJob()
         }
     }
 
+#if wxUSE_TASKBARICON
     wxTaskBarIcon* tbIcon = new wxTaskBarIcon();
     tbIcon->SetIcon(
             #ifdef __WXMSW__
@@ -728,6 +729,7 @@ int CodeBlocksApp::BatchJob()
                 wxIcon(app),
             #endif // __WXMSW__
                 _("Building ") + wxFileNameFromPath(wxString(argv[argc-1])));
+#endif // wxUSE_TASKBARICON
 
     m_pBatchBuildDialog = m_Frame->GetBatchBuildDialog();
     PlaceWindow(m_pBatchBuildDialog);
@@ -777,8 +779,10 @@ int CodeBlocksApp::BatchJob()
     if (!m_Clean && m_pBatchBuildDialog)
         m_pBatchBuildDialog->ShowModal();
 
+#if wxUSE_TASKBARICON
     tbIcon->RemoveIcon();
     delete tbIcon;
+#endif // wxUSE_TASKBARICON
     if (m_pBatchBuildDialog)
         m_pBatchBuildDialog->Destroy();
     m_pBatchBuildDialog = 0;
