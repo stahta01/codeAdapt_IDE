@@ -64,7 +64,9 @@ dlgAbout::dlgAbout(wxWindow* parent)
 	wxString file = ConfigManager::ReadDataPath() + _T("/images/splash_new.png");
 
 
+#if wxUSE_STATBMP
 	wxStaticBitmap *bmpControl = XRCCTRL(*this, "lblTitle", wxStaticBitmap);
+#endif // wxUSE_STATBMP
 
 #if wxUSE_IMAGE
     wxImage im;
@@ -101,9 +103,9 @@ dlgAbout::dlgAbout(wxWindow* parent)
         dc.DrawText(revision, 92 - c, y + b);
     }
 
-#if wxUSE_IMAGE
+#if wxUSE_STATBMP && wxUSE_IMAGE
 	bmpControl->SetBitmap(bmp);
-#endif // wxUSE_IMAGE
+#endif // wxUSE_STATBMP && wxUSE_IMAGE
 
 
 

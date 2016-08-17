@@ -650,6 +650,7 @@ void MainFrame::RegisterEvents()
 
 void MainFrame::ShowTips(bool forceShow)
 {
+#if wxUSE_STARTUP_TIPS
     bool showAtStartup = Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/show_tips"), true);
     if (forceShow || showAtStartup)
     {
@@ -661,6 +662,7 @@ void MainFrame::ShowTips(bool forceShow)
         Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/next_tip"), (int)tipProvider->GetCurrentTip());
         delete tipProvider;
     }
+#endif // wxUSE_STARTUP_TIPS
 }
 
 void MainFrame::CreateIDE()
