@@ -31,3 +31,5 @@ codeblocks.pc.in
 /src/build_noImage
 /src/build_noXRC
 /src/build_reducedGUI
+update.bat
+update
