@@ -1,0 +1,4 @@
+/build_noWXDIB/share
+/build_noWXDIB/*.dll
+/build_noWXDIB/*.exe
+/build_noWXDIB/*.rpt
