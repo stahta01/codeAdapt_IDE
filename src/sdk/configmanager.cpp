@@ -24,6 +24,7 @@
     #include <wx/dir.h>
     #include <wx/log.h> // for wxSafeShowMessage()
 #endif
+#include "branding.h"
 
 #include "crc32.h"
 
@@ -1400,14 +1401,14 @@ void ConfigManager::InitPaths()
     if (data_path_global.IsEmpty())
     {
         if(platform::windows)
-            ConfigManager::data_path_global = app_path + _T("/share/codeblocks");
+            ConfigManager::data_path_global = app_path + _T(STANDARD_DATA_PATH);
         else if(platform::macosx)
-            ConfigManager::data_path_global = res_path + _T("/share/codeblocks");
+            ConfigManager::data_path_global = res_path + _T(STANDARD_DATA_PATH);
         else
             ConfigManager::data_path_global = wxStandardPathsBase::Get().GetDataDir();
     }
 
-    ConfigManager::data_path_user = ConfigManager::relo ? data_path_global : config_folder + _T("/share/codeblocks");
+    ConfigManager::data_path_user = ConfigManager::relo ? data_path_global : config_folder + _T(STANDARD_DATA_PATH);
 
     CreateDirRecursively(ConfigManager::config_folder);
     CreateDirRecursively(ConfigManager::data_path_user   + _T("/plugins/"));
