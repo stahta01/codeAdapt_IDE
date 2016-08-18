@@ -293,6 +293,9 @@ void MacrosManager::RecalcVars(cbProject* project,EditorBase* editor,ProjectBuil
             wxString aPathStr = aFilePath.GetPathWithSep(wxPATH_NATIVE);
             aPathStr.Replace(wxT_2("\\"), wxT_2("/"));
             macros[_T("TARGET_COMPILER_DIR")] = aPathStr;
+            aPathStr = target->GetWorkingDir();
+            aPathStr.Replace(wxT_2("\\"), wxT_2("/"));
+            macros[_T("TARGET_WORKING_DIR")] = aPathStr;
         }
         macros[_T("TARGET_OBJECT_DIR")]   = target->GetObjectOutput();
     }
