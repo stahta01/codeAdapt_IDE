@@ -430,7 +430,7 @@ bool CodeBlocksApp::OnInit()
 {
     wxLog::EnableLogging(false);
 
-    SetAppName(_T("codeblocks"));
+    SetAppName(_T(APP_NAME));
     s_Loading = true;
 
     m_pBatchBuildDialog = 0;
