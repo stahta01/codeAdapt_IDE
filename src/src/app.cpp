@@ -271,7 +271,7 @@ bool CodeBlocksApp::LoadConfig()
     {
 
         wxString env;
-        wxGetEnv(_T("CODEBLOCKS_DATA_DIR"), &env);
+        wxGetEnv(_T(APP_ENV_DATA_DIR), &env);
         if (!env.IsEmpty())
             data = env;
     }
@@ -811,7 +811,7 @@ void CodeBlocksApp::ComplainBadInstall()
     msg.Printf(_T("Cannot find resources...\n"
         "%s was configured to be installed in '%s'.\n"
         "Please use the command-line switch '--prefix' or "
-        "set the CODEBLOCKS_DATA_DIR environment variable "
+        "set the " APP_ENV_DATA_DIR " environment variable "
         "to point where %s is installed,\n"
         "or try re-installing the application..."),
         appglobals::AppName.c_str(),
