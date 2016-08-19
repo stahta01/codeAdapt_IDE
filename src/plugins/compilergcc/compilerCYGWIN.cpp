@@ -35,8 +35,6 @@ void CompilerCYGWIN::Reset()
 	m_Programs.MAKE = _T("make.exe");
 
     m_Switches.forceFwdSlashes = true;
-
-	m_Options.AddOption(_("Do not use cygwin specific functionality"), _T("-mno-cygwin"), _("General"));
 }
 
 #endif // __WXMSW__
