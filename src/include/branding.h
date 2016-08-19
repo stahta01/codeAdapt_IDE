@@ -11,5 +11,6 @@
 #define APP_LOG_FILENAME   "codeblocks.log"
 #define APP_CONFIG         "CodeBlocksConfig"
 #define APP_ASSOCIATION    "CodeBlocks."
+#define APP_ENV_DATA_DIR   "CODEBLOCKS_DATA_DIR"
 
 #endif // BRANDING_H
