@@ -7,6 +7,7 @@
 #include <wx/docview.h> // for wxFileHistory
 #include <wx/notebook.h>
 #include <wx/dynarray.h>
+#include <wx/filehistory.h>
 #include <cbeditor.h>
 #include "manager.h"
 #include "cbexception.h"
