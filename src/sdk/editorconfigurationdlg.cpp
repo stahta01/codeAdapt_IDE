@@ -511,6 +511,7 @@ void EditorConfigurationDlg::UpdateSampleFont(bool askForNewFont)
 	if (!askForNewFont)
 		return;
 
+#if wxUSE_FONTDLG
 	wxFontData data;
     data.SetInitialFont(tmpFont);
 
@@ -523,6 +524,7 @@ void EditorConfigurationDlg::UpdateSampleFont(bool askForNewFont)
 		m_FontString = font.GetNativeFontInfoDesc();
 		ApplyColours();
     }
+#endif // wxUSE_FONTDLG
 }
 
 void EditorConfigurationDlg::LoadThemes()
