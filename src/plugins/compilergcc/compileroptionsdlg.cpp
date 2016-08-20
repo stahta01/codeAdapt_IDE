@@ -1357,10 +1357,14 @@ void CompilerOptionsDlg::OnCopyDirsClick(wxCommandEvent& /*event*/)
         choices.Add(bt->GetTitle());
     }
 
+#if wxUSE_CHOICEDLG
     int sel = wxGetSingleChoiceIndex(_("Please select which target to copy these directories to:"),
                                     _("Copy directories"),
                                     choices,
                                     this);
+#else
+    int sel = -1;
+#endif // wxUSE_CHOICEDLG
     // -1 means no selection
     if (sel == -1)
         return;
@@ -1697,10 +1701,14 @@ void CompilerOptionsDlg::OnCopyLibsClick(wxCommandEvent& /*event*/)
         choices.Add(bt->GetTitle());
     }
 
+#if wxUSE_CHOICEDLG
     int sel = wxGetSingleChoiceIndex(_("Please select which target to copy these libraries to:"),
                                     _("Copy libraries"),
                                     choices,
                                     this);
+#else
+    int sel = -1;
+#endif // wxUSE_CHOICEDLG
     // -1 means no selection
     if (sel == -1)
         return;
