@@ -327,6 +327,7 @@ public:
 	/// Returns an image list object associated with wxFlatNotebook
 	wxFlatNotebookImageList * GetImageList();
 
+#if wxUSE_DRAG_AND_DROP
 	/**
 	* \brief Drop event handler, to be passed as function pointer to CTextDropTarget class.
 	* \param x X coordinate where the drop take place
@@ -336,6 +337,7 @@ public:
 	* \return Drag operation identifier
 	*/
 	wxDragResult OnDropTarget(wxCoord x, wxCoord y, int nTabPage, wxWindow * wnd_oldContainer);
+#endif // wxUSE_DRAG_AND_DROP
 
 	/// Enable / Disable page
 	/**
@@ -438,7 +440,9 @@ private:
 
 	/// vector of all the windows associated with the notebook pages.
 	wxWindowPtrArray m_windows;
+#if wxUSE_DRAG_AND_DROP
 	wxFNBDropTarget<wxFlatNotebook> *m_pDropTarget;
+#endif // wxUSE_DRAG_AND_DROP
 	int m_nFrom;
 	int m_nPadding;
 	wxTabNavigatorWindow *m_popupWin;
@@ -847,6 +851,7 @@ protected:
 	/// Return the number of visible tabs
 	virtual int GetNumOfVisibleTabs();
 
+#if wxUSE_DRAG_AND_DROP
 	/**
 	* \brief Drop event handler, to be passed as function pointer to CTextDropTarget class.
 	* \param x X coordinate where the drop take place
@@ -856,6 +861,7 @@ protected:
 	* \return Drag operation identifier
 	*/
 	virtual wxDragResult OnDropTarget(wxCoord x, wxCoord y, int nTabPage, wxWindow * wnd_oldContainer);
+#endif // wxUSE_DRAG_AND_DROP
 
 	/**
 	* \brief Moves the tab page from one location to another
@@ -884,8 +890,10 @@ protected:
 	int m_iActivePage;
 	int m_nFrom;
 
+#if wxUSE_DRAG_AND_DROP
 	/// Drop target for enabling drag'n'drop of tabs
 	wxFNBDropTarget<wxPageContainer> *m_pDropTarget;
+#endif // wxUSE_DRAG_AND_DROP
 
 private:
 	/// Pointer to the parent window
