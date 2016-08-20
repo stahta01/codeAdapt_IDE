@@ -292,6 +292,7 @@ Compiler* CompilerFactory::SelectCompilerUI(const wxString& message, const wxStr
             }
         }
     }
+#if wxUSE_CHOICEDLG
     // now display a choice dialog
     wxSingleChoiceDialog dlg(0,
                         message,
@@ -302,6 +303,7 @@ Compiler* CompilerFactory::SelectCompilerUI(const wxString& message, const wxStr
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
         return Compilers[dlg.GetSelection()];
+#endif // wxUSE_CHOICEDLG
     return 0;
 }
 
