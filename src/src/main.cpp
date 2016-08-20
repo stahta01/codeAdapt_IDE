@@ -341,10 +341,12 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(idToolNew, MainFrame::OnFileNew)
     EVT_MENU(idFileOpen,  MainFrame::OnFileOpen)
+#if wxUSE_FILE_HISTORY
     EVT_MENU(idFileOpenRecentProjectClearHistory, MainFrame::OnFileOpenRecentProjectClearHistory)
     EVT_MENU(idFileOpenRecentFileClearHistory, MainFrame::OnFileOpenRecentClearHistory)
     EVT_MENU_RANGE(wxID_FILE1, wxID_FILE9, MainFrame::OnFileReopen)
     EVT_MENU_RANGE(wxID_FILE10, wxID_FILE19, MainFrame::OnFileReopenProject)
+#endif // wxUSE_FILE_HISTORY
     EVT_MENU(idFileImportProjectDevCpp,  MainFrame::OnFileImportProjectDevCpp)
     EVT_MENU(idFileImportProjectMSVC,  MainFrame::OnFileImportProjectMSVC)
     EVT_MENU(idFileImportProjectMSVCWksp,  MainFrame::OnFileImportProjectMSVCWksp)
@@ -484,8 +486,10 @@ MainFrame::MainFrame(wxWindow* parent)
        : wxFrame(parent, -1, _T("MainWin"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
        m_LayoutManager(this),
        m_pAccel(0L),
+#if wxUSE_FILE_HISTORY
        m_pFilesHistory(0),
        m_pProjectsHistory(0),
+#endif // wxUSE_FILE_HISTORY
 #ifndef CA_BUILD_WITHOUT_GUI
        m_pCloseFullScreenBtn(0L),
 #endif // CA_BUILD_WITHOUT_GUI
@@ -976,7 +980,9 @@ void MainFrame::CreateMenubar()
 #endif // CA_DISABLE_PLUGIN_API_TOOLS
 
     SetMenuBar(mbar);
+#if wxUSE_FILE_HISTORY
     InitializeRecentFilesHistory();
+#endif // wxUSE_FILE_HISTORY
 
     CodeBlocksEvent event2(cbEVT_MENUBAR_CREATE_END);
     Manager::Get()->ProcessEvent(event2);
@@ -1533,8 +1539,10 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
             {
                 wxBusyCursor wait; // loading a worspace can take some time -> showhourglass
                 bool ret = Manager::Get()->GetProjectManager()->LoadWorkspace(filename);
+#if wxUSE_FILE_HISTORY
                 if (ret && addToHistory)
                     AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetWorkspace()->GetFilename());
+#endif // wxUSE_FILE_HISTORY
                 return ret;
             }
             else
@@ -1583,7 +1591,9 @@ bool MainFrame::OpenGeneric(const wxString& filename, bool addToHistory)
             }
             if (plugin->OpenFile(filename) == 0)
             {
+#if wxUSE_FILE_HISTORY
                 AddToRecentFilesHistory(filename);
+#endif // wxUSE_FILE_HISTORY
                 return true;
             }
             return false;
@@ -1604,8 +1614,10 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
     cbProject* prj = Manager::Get()->GetProjectManager()->LoadProject(filename, true);
     if (prj)
     {
+#if wxUSE_FILE_HISTORY
         if (addToHistory)
             AddToRecentProjectsHistory(prj->GetFilename());
+#endif // wxUSE_FILE_HISTORY
         return true;
     }
     return false;
@@ -1615,8 +1627,10 @@ bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 {
     if (Manager::Get()->GetEditorManager()->Open(filename))
     {
+#if wxUSE_FILE_HISTORY
         if (addToHistory)
             AddToRecentFilesHistory(filename);
+#endif // wxUSE_FILE_HISTORY
         return true;
     }
     return false;
@@ -1872,6 +1886,7 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
 //        Manager::Get()->GetEditorManager()->Configure();
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_COMPILER")))
 //        OnSettingsCompilerDebugger(evt);
+#if wxUSE_FILE_HISTORY
     else if(link.StartsWith(_T("CB_CMD_OPEN_HISTORY_")))
     {
         wxFileHistory* hist = link.StartsWith(_T("CB_CMD_OPEN_HISTORY_PROJECT_")) ? m_pProjectsHistory : m_pFilesHistory;
@@ -1886,9 +1901,11 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
             }
         }
     }
+#endif // wxUSE_FILE_HISTORY
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -1904,6 +1921,7 @@ void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
     }
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
 void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
 {
@@ -1912,6 +1930,7 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     if (!sh)
         return;
 
+#if wxUSE_FILE_HISTORY
     // replace history vars
 
     wxString buf = event.GetString();
@@ -1953,9 +1972,11 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     // update page
     buf.Replace(_T("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
     ((StartHerePage*)sh)->SetPageContent(buf);
+#endif // wxUSE_FILE_HISTORY
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::InitializeRecentFilesHistory()
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2012,7 +2033,9 @@ void MainFrame::InitializeRecentFilesHistory()
     }
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
 {
     wxString filename = FileName;
@@ -2074,7 +2097,9 @@ void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
         ((StartHerePage*)sh)->Reload();
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
 {
     wxString filename = FileName;
@@ -2137,7 +2162,9 @@ void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
         ((StartHerePage*)sh)->Reload();
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::TerminateRecentFilesHistory()
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2196,6 +2223,7 @@ void MainFrame::TerminateRecentFilesHistory()
     }
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
 ////////////////////////////////////////////////////////////////////////////////
 // event handlers
@@ -2273,6 +2301,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
             prj->SaveAllFiles();
         }
 
+#if wxUSE_FILE_HISTORY
         if (!filename.IsEmpty())
         {
             if (prj)
@@ -2280,6 +2309,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
             else
                 AddToRecentFilesHistory(filename);
         }
+#endif // wxUSE_FILE_HISTORY
         if (prj && tot == totProject) // Created project should be parsed
         {
             CodeBlocksEvent evt(cbEVT_PROJECT_OPEN, 0, prj);
@@ -2294,10 +2324,12 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     if (project)
         wxSetWorkingDirectory(project->GetBasePath());
     cbEditor* ed = Manager::Get()->GetEditorManager()->New();
+#if wxUSE_FILE_HISTORY
     if (ed && ed->IsOK())
     {
         AddToRecentFilesHistory(ed->GetFilename());
     }
+#endif // wxUSE_FILE_HISTORY
 
     if (!ed || !project)
         return;
@@ -2435,6 +2467,7 @@ void MainFrame::OnFileOpen(wxCommandEvent& event)
     DoOnFileOpen(false); // through file menu (not sure if we are opening a project)
 } // end of OnFileOpen
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::OnFileReopenProject(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE10;
@@ -2444,7 +2477,9 @@ void MainFrame::OnFileReopenProject(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pProjectsHistory, id);
     }
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2460,7 +2495,9 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
         ((StartHerePage*)sh)->Reload();
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::OnFileReopen(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE1;
@@ -2470,7 +2507,9 @@ void MainFrame::OnFileReopen(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pFilesHistory, id);
     }
 }
+#endif // wxUSE_FILE_HISTORY
 
+#if wxUSE_FILE_HISTORY
 void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2486,6 +2525,7 @@ void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
         ((StartHerePage*)sh)->Reload();
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_FILE_HISTORY
 
 void MainFrame::OnFileSave(wxCommandEvent& event)
 {
@@ -2514,7 +2554,11 @@ void MainFrame::OnFileSaveProject(wxCommandEvent& event)
 {
     // no need to call SaveActiveProjectAs(), because this is handled in cbProject::Save()
     if (Manager::Get()->GetProjectManager()->SaveActiveProject())
+#if wxUSE_FILE_HISTORY
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename());
+#else
+        ;
+#endif // wxUSE_FILE_HISTORY
     DoUpdateStatusBar();
     DoUpdateAppTitle();
 }
@@ -2522,7 +2566,11 @@ void MainFrame::OnFileSaveProject(wxCommandEvent& event)
 void MainFrame::OnFileSaveProjectAs(wxCommandEvent& event)
 {
     if (Manager::Get()->GetProjectManager()->SaveActiveProjectAs())
+#if wxUSE_FILE_HISTORY
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename());
+#else
+        ;
+#endif // wxUSE_FILE_HISTORY
     DoUpdateStatusBar();
     DoUpdateAppTitle();
 }
@@ -2543,7 +2591,9 @@ void MainFrame::OnFileSaveAll(wxCommandEvent& event)
         && !Manager::Get()->GetProjectManager()->GetWorkspace()->IsDefault()
         && Manager::Get()->GetProjectManager()->SaveWorkspace())
     {
+#if wxUSE_FILE_HISTORY
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetWorkspace()->GetFilename());
+#endif // wxUSE_FILE_HISTORY
     }
     DoUpdateStatusBar();
     DoUpdateAppTitle();
@@ -2619,13 +2669,21 @@ void MainFrame::OnFileOpenDefWorkspace(wxCommandEvent& event)
 void MainFrame::OnFileSaveWorkspace(wxCommandEvent& event)
 {
     if (Manager::Get()->GetProjectManager()->SaveWorkspace())
+#if wxUSE_FILE_HISTORY
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetWorkspace()->GetFilename());
+#else
+        ;
+#endif // wxUSE_FILE_HISTORY
 }
 
 void MainFrame::OnFileSaveWorkspaceAs(wxCommandEvent& event)
 {
     if (Manager::Get()->GetProjectManager()->SaveWorkspaceAs(_T("")))
+#if wxUSE_FILE_HISTORY
         AddToRecentProjectsHistory(Manager::Get()->GetProjectManager()->GetWorkspace()->GetFilename());
+#else
+        ;
+#endif // wxUSE_FILE_HISTORY
 }
 
 void MainFrame::OnFileCloseWorkspace(wxCommandEvent& event)
@@ -2748,7 +2806,9 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
 
     m_LayoutManager.UnInit();
+#if wxUSE_FILE_HISTORY
     TerminateRecentFilesHistory();
+#endif // wxUSE_FILE_HISTORY
 
     // remove all other event handlers from this window
     // this stops it from crashing, when no plugins are loaded
@@ -3799,8 +3859,10 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     bool canSaveAll = (prj && prj->GetModified()) || canSaveFiles || (wksp && !wksp->IsDefault() && wksp->GetModified());
 
     mbar->Enable(idFileCloseProject,canCloseProject);
+#if wxUSE_FILE_HISTORY
     mbar->Enable(idFileOpenRecentFileClearHistory, m_pFilesHistory->GetCount());
     mbar->Enable(idFileOpenRecentProjectClearHistory, m_pProjectsHistory->GetCount());
+#endif // wxUSE_FILE_HISTORY
     mbar->Enable(idFileClose, canClose);
     mbar->Enable(idFileCloseAll, canClose);
     mbar->Enable(idFileSave, ed && ed->GetModified());
