@@ -962,6 +962,7 @@ void CodeBlocksApp::SetupPersonality(const wxString& personality)
 {
     if (personality.CmpNoCase(_T("ask")) == 0)
     {
+#if wxUSE_CHOICEDLG
         CompileTimeAssertion<wxMinimumVersion<2,5>::eval>::Assert(); // just to make sure: wxWidgets 2.4 is dead
 
         const wxArrayString items(Manager::Get()->GetPersonalityManager()->GetPersonalitiesList());
@@ -972,6 +973,7 @@ void CodeBlocksApp::SetupPersonality(const wxString& personality)
 
         if (dlg.ShowModal() == wxID_OK)
             Manager::Get()->GetPersonalityManager()->SetPersonality(dlg.GetStringSelection());
+#endif // wxUSE_CHOICEDLG
     }
     else
     {
