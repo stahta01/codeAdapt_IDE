@@ -620,7 +620,7 @@ void ScintillaWX::Paste() {
 /* C::B end */
     ClearSelection(multiPasteMode == SC_MULTIPASTE_EACH);
 
-#if wxUSE_DATAOBJ
+#if wxUSE_DATAOBJ && wxUSE_CLIPBOARD
     wxTextDataObject data;
 /* C::B begin */
     wxString textString;
@@ -684,7 +684,7 @@ void ScintillaWX::Paste() {
     }
     SetEmptySelection (newPos);
 /* C::B end */
-#endif // wxUSE_DATAOBJ
+#endif // wxUSE_DATAOBJ && wxUSE_CLIPBOARD
 
     NotifyChange();
     Redraw();
