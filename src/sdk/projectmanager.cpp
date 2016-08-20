@@ -1393,6 +1393,7 @@ int ProjectManager::AskForBuildTargetIndex(cbProject* project)
     if (!prj)
         return -1;
 
+#if wxUSE_CHOICEDLG
     // ask for target
     wxArrayString array;
     int count = prj->GetBuildTargetsCount();
@@ -1401,6 +1402,9 @@ int ProjectManager::AskForBuildTargetIndex(cbProject* project)
     int target = wxGetSingleChoiceIndex(_("Select the target:"), _("Project targets"), array);
 
     return target;
+#else
+    return -1;
+#endif // wxUSE_CHOICEDLG
 }
 
 wxArrayInt ProjectManager::AskForMultiBuildTargetIndex(cbProject* project)
