@@ -17,6 +17,7 @@ TextCtrlLogger::TextCtrlLogger(bool fixedPitchFont)
 {
 }
 
+#if wxUSE_CLIPBOARD
 void TextCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
 {
     if (control && control->GetValue().IsEmpty() == false && wxTheClipboard->Open())
@@ -25,6 +26,7 @@ void TextCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
         wxTheClipboard->Close();
     }
 }
+#endif // wxUSE_CLIPBOARD
 
 void TextCtrlLogger::UpdateSettings()
 {
@@ -141,6 +143,7 @@ ListCtrlLogger::ListCtrlLogger(const wxArrayString& titles, const wxArrayInt& wi
 };
 
 
+#if wxUSE_CLIPBOARD
 void ListCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
 {
     if (control && control->GetItemCount() > 0 && wxTheClipboard->Open())
@@ -167,6 +170,7 @@ void ListCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
         wxTheClipboard->Close();
     }
 }
+#endif // wxUSE_CLIPBOARD
 
 wxString ListCtrlLogger::GetItemAsText(long item) const
 {
