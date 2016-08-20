@@ -496,7 +496,9 @@ MainFrame::MainFrame(wxWindow* parent)
 #if wxUSE_TOOLBAR
        m_pToolbar(0L),
 #endif // wxUSE_TOOLBAR
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
        m_ToolsMenu(0L),
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
        m_HelpPluginsMenu(0L),
        m_StartupDone(false), // one-time flag
        m_InitiatedShutdown(false),
@@ -918,9 +920,11 @@ void MainFrame::CreateMenubar()
         }
     }
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
     tmpidx=mbar->FindMenu(_("&Tools"));
     if(tmpidx!=wxNOT_FOUND)
         tools = mbar->GetMenu(tmpidx);
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
 
     tmpidx=mbar->FindMenu(_("P&lugins"));
     if(tmpidx!=wxNOT_FOUND)
@@ -929,7 +933,9 @@ void MainFrame::CreateMenubar()
     if((tmpitem = mbar->FindItem(idHelpPlugins,NULL)))
         pluginsM = tmpitem->GetSubMenu();
 
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
     m_ToolsMenu = tools ? tools : new wxMenu();
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
     m_PluginsMenu = plugs ? plugs : new wxMenu();
     m_HelpPluginsMenu = pluginsM ? pluginsM : new wxMenu();
 
