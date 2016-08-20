@@ -13,6 +13,8 @@
 #include <wx/wx.h>
 #include <wx/dnd.h>
 
+#if wxUSE_DRAG_AND_DROP
+
 /**
 \brief Contains the information about dragged page (page index and container).
 */
@@ -167,4 +169,6 @@ public:
 	 */
 	virtual bool GiveFeedback(wxDragResult effect);
 };
+#endif // wxUSE_DRAG_AND_DROP
+
 #endif

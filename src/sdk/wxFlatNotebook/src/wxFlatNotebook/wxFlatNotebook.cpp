@@ -55,6 +55,7 @@ wxString WhereToString( int where )
 }
 #endif
 
+#if wxUSE_DRAG_AND_DROP
 //-------------------------------------------------------------------
 // Provide user with a nice feedback when tab is being dragged
 //-------------------------------------------------------------------
@@ -64,6 +65,7 @@ bool wxFNBDropSource::GiveFeedback(wxDragResult effect)
 	static_cast<wxPageContainer*>( m_win )->DrawDragHint();
 	return false;
 }
+#endif // wxUSE_DRAG_AND_DROP
 
 IMPLEMENT_DYNAMIC_CLASS(wxFlatNotebookEvent, wxNotifyEvent)
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_FLATNOTEBOOK_PAGE_CHANGED)
@@ -157,8 +159,10 @@ bool wxFlatNotebook::Create(wxWindow* parent, wxWindowID id, const wxPoint& pos,
 	m_mainSizer->Layout();
 
 	m_pages->m_nFrom = m_nFrom;
+#if wxUSE_DRAG_AND_DROP
 	m_pDropTarget = new wxFNBDropTarget<wxFlatNotebook>(this, &wxFlatNotebook::OnDropTarget);
 	SetDropTarget(m_pDropTarget);
+#endif // wxUSE_DRAG_AND_DROP
 	return true;
 }
 
@@ -181,10 +185,12 @@ void wxFlatNotebook::SetActiveTabTextColour(const wxColour& textColour)
 	m_pages->m_activeTextColor = textColour;
 }
 
+#if wxUSE_DRAG_AND_DROP
 wxDragResult wxFlatNotebook::OnDropTarget(wxCoord x, wxCoord y, int nTabPage, wxWindow * wnd_oldContainer)
 {
 	return m_pages->OnDropTarget(x, y, nTabPage, wnd_oldContainer);
 }
+#endif // wxUSE_DRAG_AND_DROP
 
 int wxFlatNotebook::GetPreviousSelection() const
 {
@@ -753,7 +759,9 @@ END_EVENT_TABLE()
 wxPageContainer::wxPageContainer(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 : m_ImageList(NULL)
 , m_iActivePage(-1)
+#if wxUSE_DRAG_AND_DROP
 , m_pDropTarget(NULL)
+#endif // wxUSE_DRAG_AND_DROP
 , m_nLeftClickZone(wxFNB_NOWHERE)
 , m_customizeOptions(wxFNB_CUSTOM_ALL)
 {
@@ -801,8 +809,10 @@ wxPageContainer::wxPageContainer(wxWindow* parent, wxWindowID id, const wxPoint&
 
 	wxWindow::Create(parent, id, pos, wxSize(size.x, tabHeight), style | wxNO_BORDER | wxNO_FULL_REPAINT_ON_RESIZE);
 
+#if wxUSE_DRAG_AND_DROP
 	m_pDropTarget = new wxFNBDropTarget<wxPageContainer>(this, &wxPageContainer::OnDropTarget);
 	SetDropTarget(m_pDropTarget);
+#endif // wxUSE_DRAG_AND_DROP
 }
 
 wxPageContainer::~wxPageContainer(void)
@@ -1467,6 +1477,7 @@ void wxPageContainer::OnMouseMove(wxMouseEvent& event)
 				::wxSetCursor(wxCURSOR_NO_ENTRY);
 			}
 
+#if wxUSE_DRAG_AND_DROP
 			// Support for drag and drop
 			if(event.Dragging() && !(style & wxFNB_NODRAG))
 			{
@@ -1477,6 +1488,7 @@ void wxPageContainer::OnMouseMove(wxMouseEvent& event)
 				dragSource.SetData(dataobject);
 				dragSource.DoDragDrop(wxDrag_DefaultMove);
 			}
+#endif // wxUSE_DRAG_AND_DROP
 
 /// Patch ---- Ti-R ---- Enable to show next tab selected if user click
 			if(style & wxFNB_PREVIEW_SELECT_TAB)
@@ -1653,6 +1665,7 @@ int wxPageContainer::GetPageImageIndex(size_t page)
 	return -1;
 }
 
+#if wxUSE_DRAG_AND_DROP
 wxDragResult wxPageContainer::OnDropTarget(wxCoord x, wxCoord y, int nTabPage, wxWindow * wnd_oldContainer)
 {
 	// Disable drag'n'drop for disabled tab
@@ -1728,6 +1741,7 @@ wxDragResult wxPageContainer::OnDropTarget(wxCoord x, wxCoord y, int nTabPage, w
 	}
 	return wxDragMove;
 }
+#endif // wxUSE_DRAG_AND_DROP
 
 void wxPageContainer::MoveTabPage(int nMove, int nMoveTo)
 {
