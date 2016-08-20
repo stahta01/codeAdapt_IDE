@@ -268,7 +268,9 @@ class MainFrame : public wxFrame
         void DoFixToolbarsLayout();
         bool DoCheckCurrentLayoutForChanges(bool canCancel = true);
 
+#if wxUSE_FILE_HISTORY
         void AskToRemoveFileFromHistory(wxFileHistory* hist, int id);
+#endif // wxUSE_FILE_HISTORY
 
         void AddEditorInWindowMenu(const wxString& filename, const wxString& title);
         void RemoveEditorFromWindowMenu(const wxString& filename);
@@ -298,8 +300,10 @@ class MainFrame : public wxFrame
         void AddToRecentProjectsHistory(const wxString& filename);
         void TerminateRecentFilesHistory();
 
+#if wxUSE_FILE_HISTORY
         wxFileHistory* m_pFilesHistory;
         wxFileHistory* m_pProjectsHistory;
+#endif // wxUSE_FILE_HISTORY
 
         /// "Close FullScreen" button. Only shown when in FullScreen view
         wxButton* m_pCloseFullScreenBtn;
