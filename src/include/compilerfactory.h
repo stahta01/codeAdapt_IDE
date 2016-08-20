@@ -1,7 +1,7 @@
 #ifndef COMPILERFACTORY_H
 #define COMPILERFACTORY_H
 
-// #include <wx/arrstr.h> // WX_DEFINE_ARRAY
+#include <wx/arrstr.h> // WX_DEFINE_ARRAY
 
 #include "settings.h"
 
