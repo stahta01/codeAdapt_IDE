@@ -439,6 +439,7 @@ bool CreateDir(const wxString& full_path, int perms)
     return true;
 }
 
+#if wxUSE_DIRDLG
 wxString ChooseDirectory(wxWindow* parent,
                          const wxString& message,
                          const wxString& initialPath,
@@ -468,6 +469,7 @@ wxString ChooseDirectory(wxWindow* parent,
     }
     return path.GetFullPath();
 }
+#endif // wxUSE_DIRDLG
 
 // Reads a wxString from a file. File must be open. File is closed automatically.
 bool cbRead(wxFile& file, wxString& st, wxFontEncoding encoding)
