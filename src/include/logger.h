@@ -44,7 +44,9 @@ public:
 
 
     virtual void Clear(){};
+#if wxUSE_CLIPBOARD
     virtual void CopyContentsToClipboard(bool selectionOnly = false) {};
+#endif // wxUSE_CLIPBOARD
 
     virtual void UpdateSettings() {};
 	virtual wxWindow* CreateControl(wxWindow* parent) { return 0; };
