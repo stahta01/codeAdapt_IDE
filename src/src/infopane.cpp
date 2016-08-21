@@ -114,6 +114,7 @@ void InfoPane::ShowNonLogger(wxWindow* p)
 
 void InfoPane::OnCopy(wxCommandEvent& event)
 {
+#if wxUSE_CLIPBOARD
 	int i = GetSelection();
 	if (page[i].islogger)
 	{
@@ -122,6 +123,7 @@ void InfoPane::OnCopy(wxCommandEvent& event)
 		else if (event.GetId() == idCopySelectedToClipboard)
 			page[i].logger->CopyContentsToClipboard(true);
 	}
+#endif // wxUSE_CLIPBOARD
 }
 
 void InfoPane::OnClear(wxCommandEvent& event)

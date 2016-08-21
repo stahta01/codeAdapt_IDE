@@ -446,7 +446,9 @@ bool CodeBlocksApp::OnInit()
 
     m_BatchWindowAutoClose = true;
 
+#if wxUSE_CLIPBOARD
     wxTheClipboard->Flush();
+#endif // wxUSE_CLIPBOARD
 
     // NOTE: crash handler explicitly disabled because it causes problems
     //       with plugins loading/unloading...
@@ -599,7 +601,9 @@ bool CodeBlocksApp::OnInit()
 
 int CodeBlocksApp::OnExit()
 {
+#if wxUSE_CLIPBOARD
     wxTheClipboard->Flush();
+#endif // wxUSE_CLIPBOARD
 
 #ifdef __WXMSW__
     delete g_DDEServer;
