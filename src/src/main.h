@@ -308,7 +308,9 @@ class MainFrame : public wxFrame
         PluginToolbarsMap m_PluginsTools;
 
         PluginIDsMap m_PluginIDsMap;
+#ifndef CA_DISABLE_PLUGIN_API_TOOLS
         wxMenu* m_ToolsMenu;
+#endif // CA_DISABLE_PLUGIN_API_TOOLS
         wxMenu* m_PluginsMenu;
         wxMenu* m_HelpPluginsMenu;
 
