@@ -288,7 +288,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
         resourceDir = ConfigManager::GetFolder(sdDataUser);
     }
 
+#if wxUSE_PROGRESSDLG
     wxProgressDialog pd(_("Installing: ") + basename, _T("A description wide enough for the dialog ;)"), 5);
+#endif // wxUSE_PROGRESSDLG
 
     wxString localName = basename + FileFilters::DYNAMICLIB_DOT_EXT;
     wxString resourceName = basename + _T(".zip");
@@ -304,7 +306,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin filename: ") + pluginFilename));
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin resources: ") + ConfigManager::GetDataFolder() + _T('/') + resourceName));
 
+#if wxUSE_PROGRESSDLG
     pd.Update(1, _("Extracting plugin"));
+#endif // wxUSE_PROGRESSDLG
 
     // extract plugin from bundle
     if (!ExtractFile(actualName,
@@ -313,7 +317,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
         return false;
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted plugin")));
 
+#if wxUSE_PROGRESSDLG
     pd.Update(2, _("Extracting plugin resources"));
+#endif // wxUSE_PROGRESSDLG
 
     // extract resources from bundle
     if (!ExtractFile(actualName,
@@ -322,7 +328,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
         return false;
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Extracted resources")));
 
+#if wxUSE_PROGRESSDLG
     pd.Update(3, _("Extracting plugin icons for \"Settings\" dialog"));
+#endif // wxUSE_PROGRESSDLG
 
     // extract resources from bundle
     ExtractFile(actualName,
@@ -349,7 +357,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
                     false);
     }
 
+#if wxUSE_PROGRESSDLG
     pd.Update(4, _("Loading plugin"));
+#endif // wxUSE_PROGRESSDLG
 
     // bundle extracted; now load the plugin on-the-fly
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading plugin...")));
@@ -365,7 +375,9 @@ bool PluginManager::InstallPlugin(const wxString& pluginName, bool forAllUsers, 
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Succeeded")));
 
     // inform app to update menus and toolbars
+#if wxUSE_PROGRESSDLG
     pd.Update(5, _("Updating menus and toolbars"));
+#endif // wxUSE_PROGRESSDLG
     CodeBlocksEvent evt(cbEVT_PLUGIN_INSTALLED);
     evt.SetPlugin(plugin);
     Manager::Get()->ProcessEvent(evt);
@@ -432,20 +444,26 @@ bool PluginManager::UninstallPlugin(cbPlugin* plugin, bool removeFiles)
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin filename: ") + pluginFilename));
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin resources: ") + resourceFilename));
 
+#if wxUSE_PROGRESSDLG
     wxProgressDialog pd(wxString::Format(_("Uninstalling %s"), title.c_str()),
                         _T("A description wide enough for the dialog ;)"), 3);
 
     pd.Update(1, _("Detaching plugin"));
+#endif // wxUSE_PROGRESSDLG
     DetachPlugin(plugin);
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin released")));
 
+#if wxUSE_PROGRESSDLG
     pd.Update(2, _("Updating menus and toolbars"));
+#endif // wxUSE_PROGRESSDLG
     CodeBlocksEvent event(cbEVT_PLUGIN_UNINSTALLED);
     event.SetPlugin(plugin);
     Manager::Get()->ProcessEvent(event);
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Menus updated")));
 
+#if wxUSE_PROGRESSDLG
     pd.Update(3, _("Unloading plugin"));
+#endif // wxUSE_PROGRESSDLG
     UnloadPlugin(plugin);
 //    Manager::Get()->GetLogManager()->DebugLog(F(_T("Plugin unloaded")));
 
