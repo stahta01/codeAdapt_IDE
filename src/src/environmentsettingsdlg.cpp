@@ -60,10 +60,13 @@ BEGIN_EVENT_TABLE(EnvironmentSettingsDlg, wxDialog)
     EVT_UPDATE_UI(-1, EnvironmentSettingsDlg::OnUpdateUI)
     EVT_BUTTON(XRCID("btnSetAssocs"), EnvironmentSettingsDlg::OnSetAssocs)
     EVT_BUTTON(XRCID("btnManageAssocs"), EnvironmentSettingsDlg::OnManageAssocs)
+#if wxUSE_COLOURDLG
     EVT_BUTTON(XRCID("btnFNBorder"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnFNFrom"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnFNTo"), EnvironmentSettingsDlg::OnChooseColour)
+#endif // wxUSE_COLOURDLG
     EVT_BUTTON(XRCID("btnNbDefaults"), EnvironmentSettingsDlg::OnNbDefaults)
+#if wxUSE_COLOURDLG
     EVT_BUTTON(XRCID("btnAuiCaptionColour"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnAuiCaptionTextColour"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnAuiActiveCaptionColour"), EnvironmentSettingsDlg::OnChooseColour)
@@ -72,6 +75,7 @@ BEGIN_EVENT_TABLE(EnvironmentSettingsDlg, wxDialog)
     EVT_BUTTON(XRCID("btnAuiInactiveCaptionColour"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnAuiInactiveCaptionGradientColour"), EnvironmentSettingsDlg::OnChooseColour)
     EVT_BUTTON(XRCID("btnAuiInactiveCaptionTextColour"), EnvironmentSettingsDlg::OnChooseColour)
+#endif // wxUSE_COLOURDLG
     EVT_CHECKBOX(XRCID("chkDoPlace"), EnvironmentSettingsDlg::OnPlaceCheck)
     EVT_CHECKBOX(XRCID("chkPlaceHead"), EnvironmentSettingsDlg::OnHeadCheck)
     EVT_CHECKBOX(XRCID("chkAutoHideMessages"), EnvironmentSettingsDlg::OnAutoHide)
@@ -320,6 +324,7 @@ void EnvironmentSettingsDlg::OnNbDefaults(wxCommandEvent& event)
     XRCCTRL(*this, "btnFNTo", wxButton)->SetBackgroundColour(wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE)));
 }
 
+#if wxUSE_COLOURDLG
 void EnvironmentSettingsDlg::OnChooseColour(wxCommandEvent& event)
 {
     wxColourData data;
@@ -334,6 +339,7 @@ void EnvironmentSettingsDlg::OnChooseColour(wxCommandEvent& event)
         sender->SetBackgroundColour(colour);
     }
 }
+#endif // wxUSE_COLOURDLG
 
 void EnvironmentSettingsDlg::OnAutoHide(wxCommandEvent& event)
 {
