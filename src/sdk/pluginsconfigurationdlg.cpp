@@ -306,10 +306,14 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
         return;
 
     ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("plugins_configuration"));
-    wxDirDialog dd(this, _("Select directory to export plugin"), cfg->Read(_T("/last_export_path")), wxDD_NEW_DIR_BUTTON);
+    wxString last_export_path = cfg->Read(_T("/last_export_path"));
+#if wxUSE_DIRDLG
+    wxDirDialog dd(this, _("Select directory to export plugin"), last_export_path, wxDD_NEW_DIR_BUTTON);
     if (dd.ShowModal() != wxID_OK)
         return;
     cfg->Write(_T("/last_export_path"), dd.GetPath());
+    last_export_path = dd.GetPath();
+#endif // wxUSE_DIRDLG
 
     wxBusyCursor busy;
 #if wxUSE_PROGRESSDLG
@@ -358,7 +362,7 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
         version.Replace(_T("|"), _T("_"), true);
 
         wxFileName fname;
-        fname.SetPath(dd.GetPath());
+        fname.SetPath(last_export_path);
         fname.SetName(wxFileName(elem->fileName).GetName() + _T('-') + version);
         fname.SetExt(_T("cbplugin"));
 
