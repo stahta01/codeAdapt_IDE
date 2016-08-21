@@ -80,6 +80,7 @@
 #include "uservarmanager.h"
 #include "infowindow.h"
 
+#if wxUSE_DRAG_AND_DROP
 class wxMyFileDropTarget : public wxFileDropTarget
 {
 public:
@@ -92,6 +93,7 @@ public:
 private:
     MainFrame* m_frame;
 };
+#endif // wxUSE_DRAG_AND_DROP
 
 const static wxString gDefaultLayout = _T("Code::Blocks default");
 static wxString gDefaultLayoutData; // this will keep the "hardcoded" default layout
@@ -492,8 +494,10 @@ MainFrame::MainFrame(wxWindow* parent)
     // register event sinks
     RegisterEvents();
 
+#if wxUSE_DRAG_AND_DROP
     // New: Allow drag and drop of files into the editor
     SetDropTarget(new wxMyFileDropTarget(this));
+#endif // wxUSE_DRAG_AND_DROP
 
     // Accelerator table
     wxAcceleratorEntry entries[7];
@@ -671,8 +675,10 @@ void MainFrame::CreateIDE()
     DoUpdateLayoutColours();
     DoUpdateEditorStyle();
 
+#if wxUSE_DRAG_AND_DROP
     m_pEdMan->GetNotebook()->SetDropTarget(new wxMyFileDropTarget(this));
     m_pPrjMan->GetNotebook()->SetDropTarget(new wxMyFileDropTarget(this));
+#endif // wxUSE_DRAG_AND_DROP
 }
 
 
@@ -715,7 +721,9 @@ void MainFrame::SetupGUILogging()
     }
 
     mgr->NotifyUpdate();
+#if wxUSE_DRAG_AND_DROP
     infoPane->SetDropTarget(new wxMyFileDropTarget(this));
+#endif // wxUSE_DRAG_AND_DROP
 }
 
 
