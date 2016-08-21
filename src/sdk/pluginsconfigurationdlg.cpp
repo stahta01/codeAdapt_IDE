@@ -184,11 +184,13 @@ void PluginsConfigurationDlg::OnToggle(wxCommandEvent& event)
 
     wxBusyCursor busy;
 
+#if wxUSE_PROGRESSDLG
     wxProgressDialog pd(wxString::Format(_("%s plugin(s)"), isEnable ? _("Enabling") : _("Disabling")),
                         _T("A description wide enough for the dialog ;)"),
                         list->GetSelectedItemCount(),
                         this,
                         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT);
+#endif // wxUSE_PROGRESSDLG
 
     int count = 0;
     long sel = -1;
@@ -202,9 +204,11 @@ void PluginsConfigurationDlg::OnToggle(wxCommandEvent& event)
         const PluginElement* elem = (const PluginElement*)list->GetItemData(sel);
         if (elem && elem->plugin)
         {
+#if wxUSE_PROGRESSDLG
             pd.Update(++count,
                         wxString::Format(_("%s \"%s\"..."), isEnable ? _("Enabling") : _("Disabling"), elem->info.title.c_str()),
                         &skip);
+#endif // wxUSE_PROGRESSDLG
             if (skip)
                 break;
 
@@ -308,12 +312,14 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
     cfg->Write(_T("/last_export_path"), dd.GetPath());
 
     wxBusyCursor busy;
+#if wxUSE_PROGRESSDLG
     wxProgressDialog pd(_("Exporting plugin(s)"),
                         _T("A description wide enough for the dialog ;)"),
                         list->GetSelectedItemCount(),
                         this,
                         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT |
                         wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
+#endif // wxUSE_PROGRESSDLG
 
     int count = 0;
     long sel = -1;
@@ -356,9 +362,11 @@ void PluginsConfigurationDlg::OnExport(wxCommandEvent& event)
         fname.SetName(wxFileName(elem->fileName).GetName() + _T('-') + version);
         fname.SetExt(_T("cbplugin"));
 
+#if wxUSE_PROGRESSDLG
         pd.Update(++count,
                     wxString::Format(_("Exporting \"%s\"..."), elem->info.title.c_str()),
                     &skip);
+#endif // wxUSE_PROGRESSDLG
         if (skip)
             break;
 

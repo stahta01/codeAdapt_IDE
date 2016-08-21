@@ -1667,7 +1667,9 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
     wxPoint LastDlgPosition;
     bool HaveLastDlgPosition = false;
 
+#if wxUSE_PROGRESSDLG
     wxProgressDialog* progress = 0;
+#endif // wxUSE_PROGRESSDLG
     wxString fileContents;
     wxString enc_name = Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/default_encoding"), wxLocale::GetSystemEncodingName());
     wxFontEncoding def_encoding = wxFontMapper::GetEncodingFromName(enc_name);
@@ -1681,6 +1683,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
         cbStyledTextCtrl *control = NULL;
         bool fileWasNotOpen = false;
 
+#if wxUSE_PROGRESSDLG
         if (progress)
         {
             if (!progress->Update(i))
@@ -1691,6 +1694,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
                     progress->Resume();
             }
         }
+#endif // wxUSE_PROGRESSDLG
 
         //Check if this file is already open
         EditorBase *eb = IsOpen(filesList[i]);
@@ -1819,6 +1823,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
                         replace = true;
                         confirm = false;
                         all = true;
+#if wxUSE_PROGRESSDLG
                         // let's create a progress dialog because it might take some time depending on the files count
                         progress = new wxProgressDialog(_("Replace in files"),
                                      _("Please wait while replacing in files..."),
@@ -1828,6 +1833,7 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
                         PlaceWindow(progress);
                         // now that we need no confirmation, freeze the app window
                         Manager::Get()->GetAppWindow()->Freeze();
+#endif // wxUSE_PROGRESSDLG
                         break;
                     case crCancel:
                         stop = true;
@@ -1891,11 +1897,13 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
             Close(ed, true);
     }
 
+#if wxUSE_PROGRESSDLG
     // if we showed the progress, the app window is frozen; unfreeze it
     if (progress)
         Manager::Get()->GetAppWindow()->Thaw();
 
     delete progress;
+#endif // wxUSE_PROGRESSDLG
     return pos;
 }
 
@@ -2183,6 +2191,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     cbStyledTextCtrl* control = new cbStyledTextCtrl(m_pNotebook, -1, wxDefaultPosition, wxSize(0, 0));
     control->Show(false); //hidden
 
+#if wxUSE_PROGRESSDLG
     // let's create a progress dialog because it might take some time depending on the files count
     wxProgressDialog* progress = new wxProgressDialog(_("Find in files"),
                                  _("Please wait while searching inside the files..."),
@@ -2191,6 +2200,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
                                  wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT);
 
     PlaceWindow(progress);
+#endif // wxUSE_PROGRESSDLG
 
     // keep a copy of the find struct
     cbFindReplaceData localData = *data;
@@ -2205,9 +2215,11 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     int count = 0;
     for (size_t i = 0; i < filesList.GetCount(); ++i)
     {
+#if wxUSE_PROGRESSDLG
         // update the progress bar
         if (!progress->Update(i))
             break; // user pressed "Cancel"
+#endif // wxUSE_PROGRESSDLG
 
         // re-initialize the find struct for every file searched
         *data = localData;
@@ -2259,7 +2271,9 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
         }
     }
     delete control; // done with it
+#if wxUSE_PROGRESSDLG
     delete progress; // done here too
+#endif // wxUSE_PROGRESSDLG
 
     if (count > 0)
     {
