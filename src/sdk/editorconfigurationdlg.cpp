@@ -85,10 +85,12 @@ BEGIN_EVENT_TABLE(EditorConfigurationDlg, wxDialog)
 	EVT_BUTTON(XRCID("btnKeywords"), 			EditorConfigurationDlg::OnEditKeywords)
 	EVT_BUTTON(XRCID("btnFilemasks"), 			EditorConfigurationDlg::OnEditFilemasks)
 	EVT_BUTTON(XRCID("btnColoursReset"), 		EditorConfigurationDlg::OnColoursReset)
+#if wxUSE_COLOURDLG
 	EVT_BUTTON(XRCID("btnCaretColour"), 		    EditorConfigurationDlg::OnChooseColour)
 	EVT_BUTTON(XRCID("btnGutterColour"), 		EditorConfigurationDlg::OnChooseColour)
 	EVT_BUTTON(XRCID("btnColoursFore"), 			EditorConfigurationDlg::OnChooseColour)
 	EVT_BUTTON(XRCID("btnColoursBack"), 			EditorConfigurationDlg::OnChooseColour)
+#endif // wxUSE_COLOURDLG
 	EVT_BUTTON(XRCID("btnColoursAddTheme"), 		EditorConfigurationDlg::OnAddColourTheme)
 	EVT_BUTTON(XRCID("btnColoursDeleteTheme"), 	EditorConfigurationDlg::OnDeleteColourTheme)
 	EVT_BUTTON(XRCID("btnColoursRenameTheme"), 	EditorConfigurationDlg::OnRenameColourTheme)
@@ -745,6 +747,7 @@ void EditorConfigurationDlg::OnChangeDefCodeFileType(wxCommandEvent& event)
 	}
 }
 
+#if wxUSE_COLOURDLG
 void EditorConfigurationDlg::OnChooseColour(wxCommandEvent& event)
 {
 	wxColourData data;
@@ -763,6 +766,7 @@ void EditorConfigurationDlg::OnChooseColour(wxCommandEvent& event)
 		event.GetId() == XRCID("btnColoursBack"))
 		WriteColours();
 }
+#endif // wxUSE_COLOURDLG
 
 void EditorConfigurationDlg::OnChooseFont(wxCommandEvent& event)
 {
