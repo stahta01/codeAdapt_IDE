@@ -172,6 +172,7 @@ bool StartHerePage::LinkClicked(const wxHtmlLinkInfo& link)
         return true;
     }
 
+#if wxUSE_CLIPBOARD
     if(href.IsSameAs(_T("http://www.codeblocks.org/"))
     || href.StartsWith(_T("http://developer.berlios.de/bugs/")))
     {
@@ -185,6 +186,7 @@ bool StartHerePage::LinkClicked(const wxHtmlLinkInfo& link)
         wxTheClipboard->SetData(data);
         return true;
     }
+#endif // wxUSE_CLIPBOARD
 
     return false;
 }
