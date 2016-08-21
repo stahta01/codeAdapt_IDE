@@ -90,12 +90,14 @@ namespace ScriptBindings
         }
         return sa.Return(static_cast<SQInteger>(0));
     }
+#if wxUSE_COLOURDLG
     SQInteger wx_GetColourFromUser(HSQUIRRELVM v)
     {
         StackHandler sa(v);
         const wxColour& c = sa.GetParamCount() == 2 ? *SqPlus::GetInstance<wxColour,false>(v, 2) : *wxBLACK;
         return SqPlus::ReturnCopy(v, wxGetColourFromUser(Manager::Get()->GetAppWindow(), c));
     }
+#endif // wxUSE_COLOURDLG
     long wx_GetNumberFromUser(const wxString& message, const wxString& prompt, const wxString& caption, long value)
     {
         return wxGetNumberFromUser(message, prompt, caption, value);
@@ -155,7 +157,9 @@ namespace ScriptBindings
 
         // now for some wx globals (utility) functions
         SqPlus::RegisterGlobal(wxLaunchDefaultBrowser, "wxLaunchDefaultBrowser");
+#if wxUSE_COLOURDLG
         SquirrelVM::CreateFunctionGlobal(wx_GetColourFromUser, "wxGetColourFromUser", "*");
+#endif // wxUSE_COLOURDLG
         SqPlus::RegisterGlobal(wx_GetNumberFromUser, "wxGetNumberFromUser");
         SqPlus::RegisterGlobal(wx_GetPasswordFromUser, "wxGetPasswordFromUser");
         SqPlus::RegisterGlobal(wx_GetTextFromUser, "wxGetTextFromUser");
