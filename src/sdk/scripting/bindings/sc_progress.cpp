@@ -10,6 +10,7 @@
 
 #include "sc_base_types.h"
 
+#if wxUSE_PROGRESSDLG
 class ProgressDialog : public wxProgressDialog
 {
     public:
@@ -47,3 +48,4 @@ namespace ScriptBindings
                 func(&ProgressDialog::Update, "Update");
     }
 } // namespace ScriptBindings
+#endif // wxUSE_PROGRESSDLG
