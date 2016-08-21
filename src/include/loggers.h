@@ -80,7 +80,9 @@ protected:
 public:
     TextCtrlLogger(bool fixedPitchFont = false);
 
+#if wxUSE_CLIPBOARD
     virtual void CopyContentsToClipboard(bool selectionOnly = false);
+#endif // wxUSE_CLIPBOARD
     virtual void UpdateSettings();
     virtual void Append(const wxString& msg, Logger::level lv = info);
     virtual void Clear();
@@ -115,7 +117,9 @@ public:
 
     ListCtrlLogger(const wxArrayString& titles, const wxArrayInt& widths, bool fixedPitchFont = false);
 
+#if wxUSE_CLIPBOARD
     virtual void CopyContentsToClipboard(bool selectionOnly = false);
+#endif // wxUSE_CLIPBOARD
     virtual void UpdateSettings();
     virtual void Append(const wxString& msg, Logger::level lv = info);
     virtual void Append(const wxArrayString& colValues, Logger::level lv = info);
