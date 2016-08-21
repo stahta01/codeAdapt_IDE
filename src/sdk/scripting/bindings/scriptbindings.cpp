@@ -325,7 +325,9 @@ namespace ScriptBindings
 #ifndef CA_BUILD_WITHOUT_GUI
         Register_Dialog();
 #endif // CA_BUILD_WITHOUT_GUI
+#if wxUSE_PROGRESSDLG
         Register_ProgressDialog();
+#endif // wxUSE_PROGRESSDLG
 #ifndef CA_BUILD_WITHOUT_GUI
         Register_UtilDialogs();
 #endif // CA_BUILD_WITHOUT_GUI
