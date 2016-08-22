@@ -107,6 +107,7 @@ void VirtualBuildTargetsDlg::OnUpdateUI(wxUpdateUIEvent& event)
     lstTargets->Enable(hasSel);
 }
 
+#if wxUSE_TEXTDLG
 void VirtualBuildTargetsDlg::OnAddClick(wxCommandEvent& event)
 {
     wxString targetName = wxGetTextFromUser(_("Enter the new virtual build target name:"),
@@ -135,7 +136,9 @@ void VirtualBuildTargetsDlg::OnAddClick(wxCommandEvent& event)
     lstAliases->SetSelection(lstAliases->GetCount() - 1);
     CheckTargets();
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void VirtualBuildTargetsDlg::OnEditClick(wxCommandEvent& event)
 {
     wxString targetName = wxGetTextFromUser(_("Enter the new virtual build target name:"),
@@ -166,6 +169,7 @@ void VirtualBuildTargetsDlg::OnEditClick(wxCommandEvent& event)
     lstAliases->SetString(lstAliases->GetSelection(), targetName);
     SetVirtualTarget(targetName);
 }
+#endif // wxUSE_TEXTDLG
 
 void VirtualBuildTargetsDlg::OnRemoveClick(wxCommandEvent& event)
 {

@@ -358,6 +358,7 @@ void UsrGlblMgrEditDialog::DoClose()
 }
 
 
+#if wxUSE_TEXTDLG
 void UsrGlblMgrEditDialog::CloneVar(wxCommandEvent& event)
 {
     wxTextEntryDialog d(this, _("Please specify a name for the new clone:"), _("Clone Variable"));
@@ -394,7 +395,9 @@ void UsrGlblMgrEditDialog::CloneVar(wxCommandEvent& event)
         Load();
     }
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void UsrGlblMgrEditDialog::CloneSet(wxCommandEvent& event)
 {
     wxTextEntryDialog d(this, _("Please specify a name for the new clone:"), _("Clone Set"));
@@ -437,6 +440,7 @@ void UsrGlblMgrEditDialog::CloneSet(wxCommandEvent& event)
         Load();
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void UsrGlblMgrEditDialog::DeleteVar(wxCommandEvent& event)
 {
@@ -481,6 +485,7 @@ void UsrGlblMgrEditDialog::AddVar(const wxString& name)
     Load();
 }
 
+#if wxUSE_TEXTDLG
 void UsrGlblMgrEditDialog::NewVar(wxCommandEvent& event)
 {
     wxTextEntryDialog d(this, _("Please specify a name for the new variable:"), _("New Variable"));
@@ -493,7 +498,9 @@ void UsrGlblMgrEditDialog::NewVar(wxCommandEvent& event)
         AddVar(name);
     }
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void UsrGlblMgrEditDialog::NewSet(wxCommandEvent& event)
 {
     wxTextEntryDialog d(this, _("Please specify a name for the new set:"), _("New Set"));
@@ -513,6 +520,7 @@ void UsrGlblMgrEditDialog::NewSet(wxCommandEvent& event)
         Load();
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void UsrGlblMgrEditDialog::SelectVar(wxCommandEvent& s)
 {
