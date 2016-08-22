@@ -121,8 +121,10 @@ BEGIN_EVENT_TABLE(CompilerOptionsDlg, wxPanel)
     EVT_CHOICE(                XRCID("cmbCompiler"),          CompilerOptionsDlg::OnCompilerChanged)
     EVT_LISTBOX_DCLICK(        XRCID("lstVars"),              CompilerOptionsDlg::OnEditVarClick)
     EVT_BUTTON(                XRCID("btnSetDefaultCompiler"),CompilerOptionsDlg::OnSetDefaultCompilerClick)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(                XRCID("btnAddCompiler"),       CompilerOptionsDlg::OnAddCompilerClick)
     EVT_BUTTON(                XRCID("btnRenameCompiler"),    CompilerOptionsDlg::OnEditCompilerClick)
+#endif // wxUSE_TEXTDLG
     EVT_BUTTON(                XRCID("btnDelCompiler"),       CompilerOptionsDlg::OnRemoveCompilerClick)
     EVT_BUTTON(                XRCID("btnResetCompiler"),     CompilerOptionsDlg::OnResetCompilerClick)
     EVT_BUTTON(                XRCID("btnAddDir"),            CompilerOptionsDlg::OnAddDirClick)
