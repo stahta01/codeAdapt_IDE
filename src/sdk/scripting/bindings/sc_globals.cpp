@@ -104,6 +104,7 @@ namespace ScriptBindings
         return wxGetNumberFromUser(message, prompt, caption, value);
     }
 #endif // wxUSE_NUMBERDLG
+#if wxUSE_TEXTDLG
     wxString wx_GetPasswordFromUser(const wxString& message, const wxString& caption, const wxString& default_value)
     {
         return wxGetPasswordFromUser(message, caption, default_value);
@@ -112,6 +113,7 @@ namespace ScriptBindings
     {
         return wxGetTextFromUser(message, caption, default_value);
     }
+#endif // wxUSE_TEXTDLG
 
     void Register_Globals()
     {
@@ -165,7 +167,9 @@ namespace ScriptBindings
 #if wxUSE_NUMBERDLG
         SqPlus::RegisterGlobal(wx_GetNumberFromUser, "wxGetNumberFromUser");
 #endif // wxUSE_NUMBERDLG
+#if wxUSE_TEXTDLG
         SqPlus::RegisterGlobal(wx_GetPasswordFromUser, "wxGetPasswordFromUser");
         SqPlus::RegisterGlobal(wx_GetTextFromUser, "wxGetTextFromUser");
+#endif // wxUSE_TEXTDLG
     }
 }
