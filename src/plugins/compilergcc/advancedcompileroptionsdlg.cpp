@@ -47,7 +47,9 @@ wxString StringToControlChars(const wxString& src)
 BEGIN_EVENT_TABLE(AdvancedCompilerOptionsDlg, wxDialog)
     EVT_CHOICE(XRCID("lstCommands"),   		AdvancedCompilerOptionsDlg::OnCommandsChange)
     EVT_CHOICE(XRCID("lstExt"),   			AdvancedCompilerOptionsDlg::OnExtChange)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnAddExt"),          AdvancedCompilerOptionsDlg::OnAddExt)
+#endif // wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnRemoveExt"),       AdvancedCompilerOptionsDlg::OnDelExt)
     EVT_LISTBOX(XRCID("lstRegex"),          AdvancedCompilerOptionsDlg::OnRegexChange)
     EVT_BUTTON(XRCID("btnRegexTest"),       AdvancedCompilerOptionsDlg::OnRegexTest)

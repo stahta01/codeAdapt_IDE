@@ -797,8 +797,10 @@ void CompilerGCC::Dispatcher(wxCommandEvent& event)
     if (eventId == idMenuClearErrors)
         OnClearErrors(event);
 
+#if wxUSE_TEXTDLG
     if (eventId == idMenuExportMakefile)
         OnExportMakefile(event);
+#endif // wxUSE_TEXTDLG
 
     if (eventId == idMenuSettings)
         OnConfig(event);
