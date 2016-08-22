@@ -69,7 +69,9 @@
 #include "searchresultslog.h"
 #include "projectfileoptionsdlg.h"
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 template<> EditorManager* Mgr<EditorManager>::instance = 0;
 template<> bool  Mgr<EditorManager>::isShutdown = false;
@@ -148,10 +150,12 @@ struct EditorManagerInternalData
 BEGIN_EVENT_TABLE(EditorManager, wxEvtHandler)
     EVT_APP_STARTUP_DONE(EditorManager::OnAppDoneStartup)
     EVT_APP_START_SHUTDOWN(EditorManager::OnAppStartShutdown)
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     EVT_FLATNOTEBOOK_PAGE_CHANGED(ID_NBEditorManager, EditorManager::OnPageChanged)
     EVT_FLATNOTEBOOK_PAGE_CHANGING(ID_NBEditorManager, EditorManager::OnPageChanging)
     EVT_FLATNOTEBOOK_PAGE_CLOSING(ID_NBEditorManager, EditorManager::OnPageClosing)
     EVT_FLATNOTEBOOK_CONTEXT_MENU(ID_NBEditorManager, EditorManager::OnPageContextMenu)
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     EVT_MENU(idNBTabSplitHorz, EditorManager::OnGenericContextMenuHandler)
     EVT_MENU(idNBTabSplitVert, EditorManager::OnGenericContextMenuHandler)
     EVT_MENU(idNBTabUnsplit, EditorManager::OnGenericContextMenuHandler)
@@ -168,8 +172,10 @@ BEGIN_EVENT_TABLE(EditorManager, wxEvtHandler)
 END_EVENT_TABLE()
 
 // class constructor
-EditorManager::EditorManager()
-        : m_pNotebook(0L),
+EditorManager::EditorManager() :
+#ifndef CA_DISABLE_FLAT_NOTEBOOK 
+        m_pNotebook(0L),
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
         m_LastFindReplaceData(0L),
         m_pSearchLog(0),
         m_SearchLogIndex(-1),
@@ -2398,6 +2404,7 @@ void EditorManager::OnGenericContextMenuHandler(wxCommandEvent& event)
         ed->Unsplit();
 }
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 void EditorManager::OnPageChanged(wxFlatNotebookEvent& event)
 {
     EditorBase* eb = static_cast<EditorBase*>(m_pNotebook->GetPage(event.GetSelection()));
@@ -2487,6 +2494,7 @@ void EditorManager::OnPageContextMenu(wxFlatNotebookEvent& event)
     m_pNotebook->PopupMenu(pop);
     delete pop;
 }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 void EditorManager::OnClose(wxCommandEvent& event)
 {
@@ -2503,10 +2511,12 @@ void EditorManager::OnCloseAllOthers(wxCommandEvent& event)
     Manager::Get()->GetEditorManager()->CloseAllExcept(GetActiveEditor());
 }
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 void EditorManager::OnSave(wxCommandEvent& event)
 {
     Manager::Get()->GetEditorManager()->Save(m_pNotebook->GetSelection());
 }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 void EditorManager::OnSaveAll(wxCommandEvent& event)
 {
@@ -2518,6 +2528,7 @@ void EditorManager::OnSwapHeaderSource(wxCommandEvent& event)
     Manager::Get()->GetEditorManager()->SwapActiveHeaderSource();
 }
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 void EditorManager::OnTabPosition(wxCommandEvent& event)
 {
     long style = m_pNotebook->GetWindowStyleFlag();
@@ -2529,6 +2540,7 @@ void EditorManager::OnTabPosition(wxCommandEvent& event)
     // (style & wxFNB_BOTTOM) saves info only about the the tabs position
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/environment/editor_tabs_bottom"), (bool)(style & wxFNB_BOTTOM));
 }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 void EditorManager::OnProperties(wxCommandEvent& event)
 {
