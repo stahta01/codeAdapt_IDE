@@ -144,6 +144,7 @@ void MultiSelectDlg::SelectWildCard(const wxString& wild, bool select, bool clea
 	UpdateStatus();
 } // end of SelectWildCard
 
+#if wxUSE_TEXTDLG
 void MultiSelectDlg::OnWildcard(wxCommandEvent& /*event*/)
 {
     wxString wild = wxGetTextFromUser(_("Enter a selection wildcard\n(e.g. \"dlg*.cpp\" "
@@ -158,6 +159,7 @@ void MultiSelectDlg::OnWildcard(wxCommandEvent& /*event*/)
                             wxICON_QUESTION | wxYES_NO) == wxID_YES;
     SelectWildCard(wild, true, clear);
 } // end of OnWildcard
+#endif // wxUSE_TEXTDLG
 
 void MultiSelectDlg::OnItemToggle(wxCommandEvent& /*event*/)
 {

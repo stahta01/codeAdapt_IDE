@@ -540,6 +540,7 @@ void ProjectOptionsDlg::OnTargetBuildOptionsClick(wxCommandEvent& event)
     }
 }
 
+#if wxUSE_TEXTDLG
 void ProjectOptionsDlg::OnAddBuildTargetClick(wxCommandEvent& event)
 {
     wxString targetName = wxGetTextFromUser(_("Enter the new build target name:"),
@@ -566,7 +567,9 @@ void ProjectOptionsDlg::OnAddBuildTargetClick(wxCommandEvent& event)
     e.SetProject(m_Project);
     Manager::Get()->GetPluginManager()->NotifyPlugins(e);
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void ProjectOptionsDlg::OnEditBuildTargetClick(wxCommandEvent& event)
 {
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
@@ -596,7 +599,9 @@ void ProjectOptionsDlg::OnEditBuildTargetClick(wxCommandEvent& event)
     e.SetProject(m_Project);
     Manager::Get()->GetPluginManager()->NotifyPlugins(e);
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void ProjectOptionsDlg::OnCopyBuildTargetClick(wxCommandEvent& event)
 {
     wxListBox* lstTargets = XRCCTRL(*this, "lstBuildTarget", wxListBox);
@@ -631,6 +636,7 @@ void ProjectOptionsDlg::OnCopyBuildTargetClick(wxCommandEvent& event)
     e.SetProject(m_Project);
     Manager::Get()->GetPluginManager()->NotifyPlugins(e);
 }
+#endif // wxUSE_TEXTDLG
 
 void ProjectOptionsDlg::OnRemoveBuildTargetClick(wxCommandEvent& event)
 {

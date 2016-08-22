@@ -88,6 +88,7 @@ void ProjectsFileMasksDlg::OnUpdateUI(wxUpdateUIEvent& event)
     XRCCTRL(*this, "btnDelete", wxButton)->Enable(sel >= 0);
 }
 
+#if wxUSE_TEXTDLG
 void ProjectsFileMasksDlg::OnAdd(wxCommandEvent& event)
 {
     wxString groupName = wxGetTextFromUser(_("Enter the new group name:"),
@@ -101,7 +102,9 @@ void ProjectsFileMasksDlg::OnAdd(wxCommandEvent& event)
     ListChange();
     XRCCTRL(*this, "txtFileMasks", wxTextCtrl)->SetFocus();
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void ProjectsFileMasksDlg::OnEdit(wxCommandEvent& event)
 {
     wxListBox* pList = XRCCTRL(*this, "lstCategories", wxListBox);
@@ -114,6 +117,7 @@ void ProjectsFileMasksDlg::OnEdit(wxCommandEvent& event)
         pList->SetString(pList->GetSelection(), groupName);
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void ProjectsFileMasksDlg::OnDelete(wxCommandEvent& event)
 {

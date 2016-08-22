@@ -1811,6 +1811,7 @@ void ProjectManager::OnTreeItemRightClick(wxTreeEvent& event)
     ShowMenu(event.GetItem(), event.GetPoint());
 }
 
+#if wxUSE_TEXTDLG
 void ProjectManager::OnRenameWorkspace(wxCommandEvent& event)
 {
     if (m_pWorkspace)
@@ -1823,6 +1824,7 @@ void ProjectManager::OnRenameWorkspace(wxCommandEvent& event)
         }
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void ProjectManager::OnSaveWorkspace(wxCommandEvent& event)
 {
@@ -2367,6 +2369,7 @@ wxTreeItemId ProjectManager::FindItem( wxTreeItemId Node, const wxString& Search
     return notFound;
 } // end of FindItem
 
+#if wxUSE_TEXTDLG
 void ProjectManager::OnFindFile(wxCommandEvent& event)
 {
     wxString text = wxGetTextFromUser(_("Please enter the name of the file you are searching:"), _("Find file..."));
@@ -2387,7 +2390,9 @@ void ProjectManager::OnFindFile(wxCommandEvent& event)
         }
     }
 } // end of OnFindFile
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void ProjectManager::OnAddVirtualFolder(wxCommandEvent& event)
 {
     wxString fld = wxGetTextFromUser(_("Please enter the new virtual folder path:"), _("New virtual folder"));
@@ -2405,6 +2410,7 @@ void ProjectManager::OnAddVirtualFolder(wxCommandEvent& event)
     prj->VirtualFolderAdded(m_pTree, sel, fld);
 //    RebuildTree();
 }
+#endif // wxUSE_TEXTDLG
 
 void ProjectManager::OnDeleteVirtualFolder(wxCommandEvent& event)
 {
@@ -2482,6 +2488,7 @@ void ProjectManager::OnAppDoneStartup(CodeBlocksEvent& event)
     event.Skip();
 }
 
+#if wxUSE_TEXTDLG
 void ProjectManager::OnRenameFile(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
@@ -2521,6 +2528,7 @@ void ProjectManager::OnRenameFile(wxCommandEvent& event)
         }
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void ProjectManager::WorkspaceChanged()
 {

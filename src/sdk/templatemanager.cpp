@@ -136,6 +136,7 @@ cbProject* TemplateManager::NewFromTemplate(NewFromTemplateDlg& dlg, wxString* p
     return prj;
 }
 
+#if wxUSE_TEXTDLG
 cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, wxString* pFilename)
 {
     cbProject* prj = NULL;
@@ -254,7 +255,9 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
         *pFilename = prj->GetFilename();
     return prj;
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void TemplateManager::SaveUserTemplate(cbProject* prj)
 {
     if (!prj)
@@ -343,3 +346,4 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     else
         cbMessageBox(_("Some files could not be saved with the template..."), _("Error"), wxICON_ERROR);
 }
+#endif // wxUSE_TEXTDLG
