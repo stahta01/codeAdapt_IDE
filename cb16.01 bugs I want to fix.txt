@@ -1,0 +1,1 @@
+3rd party app TinyWall is sometimes very slow to respond when Code::Blocks is building.
