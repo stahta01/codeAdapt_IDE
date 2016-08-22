@@ -297,6 +297,7 @@ void AdvancedCompilerOptionsDlg::OnExtChange(wxCommandEvent& WXUNUSED(event))
     DisplayCommand(cmd, ext);
 }
 
+#if wxUSE_TEXTDLG
 void AdvancedCompilerOptionsDlg::OnAddExt(wxCommandEvent& WXUNUSED(event))
 {
 	wxString ext = wxGetTextFromUser(_("Please enter a semi-colon separated list of extensions, without the leading dot:"), _("New extension"));
@@ -314,6 +315,7 @@ void AdvancedCompilerOptionsDlg::OnAddExt(wxCommandEvent& WXUNUSED(event))
 		DisplayCommand(nr,cmb->GetSelection());
 	}
 }
+#endif // wxUSE_TEXTDLG
 
 void AdvancedCompilerOptionsDlg::OnDelExt(wxCommandEvent& WXUNUSED(event))
 {
