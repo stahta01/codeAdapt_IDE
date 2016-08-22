@@ -2069,6 +2069,7 @@ int CompilerGCC::DistClean(ProjectBuildTarget* target)
     return 0;
 }
 
+#if wxUSE_TEXTDLG
 void CompilerGCC::OnExportMakefile(wxCommandEvent& event)
 {
     cbMessageBox(_("This functionality has been temporarily removed from Code::Blocks.\n"
@@ -2099,6 +2100,7 @@ void CompilerGCC::OnExportMakefile(wxCommandEvent& event)
     msg.Printf(_("\"%s\" has been exported in the same directory as the project file."), makefile.c_str());
     cbMessageBox(msg);
 }
+#endif // wxUSE_TEXTDLG
 
 void CompilerGCC::InitBuildState(BuildJob job, const wxString& target)
 {

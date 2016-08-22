@@ -1501,6 +1501,7 @@ void CompilerOptionsDlg::OnSetDefaultCompilerClick(wxCommandEvent& /*event*/)
     cbMessageBox(msg);
 } // OnSetDefaultCompilerClick
 
+#if wxUSE_TEXTDLG
 void CompilerOptionsDlg::OnAddCompilerClick(wxCommandEvent& /*event*/)
 {
     if(m_bDirty)
@@ -1568,7 +1569,9 @@ void CompilerOptionsDlg::OnAddCompilerClick(wxCommandEvent& /*event*/)
         CompilerChanged();
     }
 } // OnAddCompilerClick
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void CompilerOptionsDlg::OnEditCompilerClick(wxCommandEvent& /*event*/)
 {
     wxChoice* cmb = XRCCTRL(*this, "cmbCompiler", wxChoice);
@@ -1580,6 +1583,7 @@ void CompilerOptionsDlg::OnEditCompilerClick(wxCommandEvent& /*event*/)
         cmb->SetSelection(m_CurrentCompilerIdx);
     }
 } // OnEditCompilerClick
+#endif // wxUSE_TEXTDLG
 
 void CompilerOptionsDlg::OnRemoveCompilerClick(wxCommandEvent& /*event*/)
 {
