@@ -1656,6 +1656,7 @@ bool cbProject::ExportTargetAsProject(int index)
     return ExportTargetAsProject(target->GetTitle());
 }
 
+#if wxUSE_TEXTDLG
 bool cbProject::ExportTargetAsProject(const wxString& targetName)
 {
     ProjectBuildTarget* target = GetBuildTarget(targetName);
@@ -1685,6 +1686,7 @@ bool cbProject::ExportTargetAsProject(const wxString& targetName)
 
     return ret;
 }
+#endif // wxUSE_TEXTDLG
 
 bool cbProject::RemoveBuildTarget(int index)
 {

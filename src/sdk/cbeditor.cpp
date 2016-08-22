@@ -1519,6 +1519,7 @@ bool cbEditor::FixFoldState()
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of FixFoldState
 
+#if wxUSE_TEXTDLG
 void cbEditor::AutoComplete()
 {
 #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
@@ -1598,6 +1599,7 @@ void cbEditor::AutoComplete()
     }
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
+#endif // wxUSE_TEXTDLG
 
 void cbEditor::DoFoldAll(int fold)
 {

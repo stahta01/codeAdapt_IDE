@@ -67,13 +67,16 @@ void EditArrayStringDlg::EndModal(int retCode)
 
 // events
 
+#if wxUSE_TEXTDLG
 void EditArrayStringDlg::OnAdd(wxCommandEvent& event)
 {
 	wxString w = wxGetTextFromUser(_("Add item"), _("Enter the new item:"));
 	if (!w.IsEmpty())
 		XRCCTRL(*this, "lstItems", wxListBox)->Append(w);
 }
+#endif // wxUSE_TEXTDLG
 
+#if wxUSE_TEXTDLG
 void EditArrayStringDlg::OnEdit(wxCommandEvent& event)
 {
 	wxListBox* list = XRCCTRL(*this, "lstItems", wxListBox);
@@ -83,6 +86,7 @@ void EditArrayStringDlg::OnEdit(wxCommandEvent& event)
 	if (!w.IsEmpty())
 		list->SetString(list->GetSelection(), w);
 }
+#endif // wxUSE_TEXTDLG
 
 void EditArrayStringDlg::OnDelete(wxCommandEvent& event)
 {
