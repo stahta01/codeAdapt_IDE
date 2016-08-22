@@ -332,12 +332,14 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_UPDATE_UI(idViewFocusEditor, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewFullScreen, MainFrame::OnViewMenuUpdateUI)
 
+#if wxUSE_TEXTDLG
     EVT_MENU(idFileNewEmpty, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewProject, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewTarget, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewFile, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewCustom, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewUser, MainFrame::OnFileNewWhat)
+#endif // wxUSE_TEXTDLG
 
     EVT_MENU(idToolNew, MainFrame::OnFileNew)
     EVT_MENU(idFileOpen,  MainFrame::OnFileOpen)
@@ -440,9 +442,11 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchFindPrevious, MainFrame::OnSearchFindNext)
     EVT_MENU(idSearchReplace, MainFrame::OnSearchReplace)
     EVT_MENU(idSearchReplaceInFiles, MainFrame::OnSearchReplace)
+#if wxUSE_TEXTDLG
     EVT_MENU(idSearchGotoLine, MainFrame::OnSearchGotoLine)
 
     EVT_MENU(idViewLayoutSave, MainFrame::OnViewLayoutSave)
+#endif // wxUSE_TEXTDLG
     EVT_MENU(idViewLayoutDelete, MainFrame::OnViewLayoutDelete)
 #if wxUSE_TOOLBAR
     EVT_MENU(idViewToolMain, MainFrame::OnToggleBar)
@@ -1877,7 +1881,11 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
     if(link.IsSameAs(_T("CB_CMD_NEW_PROJECT")))
+#if wxUSE_TEXTDLG
         OnFileNewWhat(evt);
+#else
+        ;
+#endif // wxUSE_TEXTDLG
     else if(link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
         DoOnFileOpen(true);
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_ENVIRONMENT")))
@@ -2268,6 +2276,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
+#if wxUSE_TEXTDLG
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2353,6 +2362,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
 #endif // CA_BUILD_WITHOUT_GUI
 }
+#endif // wxUSE_TEXTDLG
 
 bool MainFrame::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& files)
 {
@@ -2601,9 +2611,11 @@ void MainFrame::OnFileSaveAll(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveProjectTemplate(wxCommandEvent& event)
 {
+#if wxUSE_TEXTDLG
 #ifndef CA_BUILD_WITHOUT_GUI
     TemplateManager::Get()->SaveUserTemplate(Manager::Get()->GetProjectManager()->GetActiveProject());
 #endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_TEXTDLG
 }
 
 void MainFrame::OnFileCloseProject(wxCommandEvent& event)
@@ -3548,9 +3560,11 @@ void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
 
 void MainFrame::OnEditAutoComplete(wxCommandEvent& event)
 {
+#if wxUSE_TEXTDLG
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->AutoComplete();
+#endif // wxUSE_TEXTDLG
 }
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
