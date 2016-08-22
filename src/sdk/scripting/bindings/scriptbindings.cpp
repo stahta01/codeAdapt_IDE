@@ -242,6 +242,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbProject::RemoveBuildTarget\"");
     }
+#if wxUSE_TEXTDLG
     SQInteger cbProject_ExportTargetAsProject(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -256,6 +257,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbProject::ExportTargetAsProject\"");
     }
+#endif // wxUSE_TEXTDLG
     SQInteger ProjectManager_AddFileToProject(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -483,7 +485,9 @@ namespace ScriptBindings
                 staticFuncVarArgs(&cbProject_RenameBuildTarget, "RenameBuildTarget", "*").
                 staticFuncVarArgs(&cbProject_DuplicateBuildTarget, "DuplicateBuildTarget", "*").
                 staticFuncVarArgs(&cbProject_RemoveBuildTarget, "RemoveBuildTarget", "*").
+#if wxUSE_TEXTDLG
                 staticFuncVarArgs(&cbProject_ExportTargetAsProject, "ExportTargetAsProject", "*").
+#endif // wxUSE_TEXTDLG
                 func(&cbProject::BuildTargetValid, "BuildTargetValid").
                 func(&cbProject::GetFirstValidBuildTargetName, "GetFirstValidBuildTargetName").
                 func(&cbProject::SetDefaultExecuteTarget, "SetDefaultExecuteTarget").
@@ -594,7 +598,9 @@ namespace ScriptBindings
 #if wxUSE_PRINTING_ARCHITECTURE
                 func(&cbEditor::Print, "Print").
 #endif // wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_TEXTDLG
                 func(&cbEditor::AutoComplete, "AutoComplete").
+#endif // wxUSE_TEXTDLG
                 func(&cbEditor::AddBreakpoint, "AddBreakpoint").
                 func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").
                 // these are not present in cbEditor; included to help scripts edit text
