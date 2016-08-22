@@ -37,7 +37,9 @@ struct CommentToken {
 extern int idStartHerePageLink;
 extern int idStartHerePageVarSubst;
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 class wxFlatNotebook;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 class InfoPane;
 class wxGauge;
 

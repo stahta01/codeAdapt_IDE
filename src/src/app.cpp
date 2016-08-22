@@ -41,7 +41,9 @@
 #include <wx/clipbrd.h>
 #include <wx/taskbar.h>
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 #include <cbexception.h>
 #include <wx/debugrpt.h>
 #include <configmanager.h>
@@ -1059,8 +1061,10 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
                     : 0;
     if (ed)
     {
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         // hack for linux: without it, the editor loses the caret every second activate o.O
         Manager::Get()->GetEditorManager()->GetNotebook()->SetFocus();
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
         ed->GetControl()->SetFocus();
     }
