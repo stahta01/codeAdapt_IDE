@@ -3651,6 +3651,7 @@ void MainFrame::OnViewLayout(wxCommandEvent& event)
     LoadViewLayout(m_PluginIDsMap[event.GetId()]);
 }
 
+#if wxUSE_TEXTDLG
 void MainFrame::OnViewLayoutSave(wxCommandEvent& event)
 {
     wxString def = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/main_frame/layout/default"));
@@ -3661,6 +3662,7 @@ void MainFrame::OnViewLayoutSave(wxCommandEvent& event)
         SaveViewLayout(name, m_LayoutManager.SavePerspective(), true);
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void MainFrame::OnViewLayoutDelete(wxCommandEvent& event)
 {
@@ -3742,6 +3744,7 @@ void MainFrame::OnSearchReplace(wxCommandEvent& event)
     Manager::Get()->GetEditorManager()->ShowFindDialog(true, bDoMultipleFiles);
 } // end of OnSearchReplace
 
+#if wxUSE_TEXTDLG
 void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
 {
 #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
@@ -3771,6 +3774,7 @@ void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
     }
 #endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
+#endif // wxUSE_TEXTDLG
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
