@@ -1439,6 +1439,7 @@ bool cbEditor::FixFoldState()
     return bRet;
 } // end of FixFoldState
 
+#if wxUSE_TEXTDLG
 void cbEditor::AutoComplete()
 {
     LogManager* msgMan = Manager::Get()->GetLogManager();
@@ -1516,6 +1517,7 @@ void cbEditor::AutoComplete()
         }
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void cbEditor::DoFoldAll(int fold)
 {

@@ -635,6 +635,7 @@ void EditorConfigurationDlg::OnColourTheme(wxCommandEvent& event)
     }
 }
 
+#if wxUSE_TEXTDLG
 void EditorConfigurationDlg::OnAddColourTheme(wxCommandEvent& event)
 {
     wxTextEntryDialog dlg(this, _("Please enter the name of the new colour theme:"), _("New theme name"));
@@ -648,6 +649,7 @@ void EditorConfigurationDlg::OnAddColourTheme(wxCommandEvent& event)
     cmbThemes->SetSelection(cmbThemes->GetCount() - 1);
     ChangeTheme();
 }
+#endif // wxUSE_TEXTDLG
 
 void EditorConfigurationDlg::OnDeleteColourTheme(wxCommandEvent& event)
 {
@@ -663,6 +665,7 @@ void EditorConfigurationDlg::OnDeleteColourTheme(wxCommandEvent& event)
     }
 }
 
+#if wxUSE_TEXTDLG
 void EditorConfigurationDlg::OnRenameColourTheme(wxCommandEvent& event)
 {
     wxTextEntryDialog dlg(this, _("Please enter the new name of the new colour theme:"), _("New theme name"), m_Theme->GetName());
@@ -683,6 +686,7 @@ void EditorConfigurationDlg::OnRenameColourTheme(wxCommandEvent& event)
     cmbThemes->SetSelection(cmbThemes->FindString(name));
     ChangeTheme();
 }
+#endif // wxUSE_TEXTDLG
 
 void EditorConfigurationDlg::OnEditKeywords(wxCommandEvent& event)
 {
@@ -696,6 +700,7 @@ void EditorConfigurationDlg::OnEditKeywords(wxCommandEvent& event)
 	}
 }
 
+#if wxUSE_TEXTDLG
 void EditorConfigurationDlg::OnEditFilemasks(wxCommandEvent& event)
 {
 	if (m_Theme && m_Lang != HL_NONE)
@@ -707,6 +712,7 @@ void EditorConfigurationDlg::OnEditFilemasks(wxCommandEvent& event)
 			m_Theme->SetFileMasks(m_Lang, masks);
 	}
 }
+#endif // wxUSE_TEXTDLG
 
 void EditorConfigurationDlg::OnColoursReset(wxCommandEvent& event)
 {
@@ -794,6 +800,7 @@ void EditorConfigurationDlg::AutoCompUpdate(int index)
     }
 }
 
+#if wxUSE_TEXTDLG
 void EditorConfigurationDlg::OnAutoCompAdd(wxCommandEvent& event)
 {
     wxString key = wxGetTextFromUser(_("Please enter the new keyword"), _("Add keyword"));
@@ -814,6 +821,7 @@ void EditorConfigurationDlg::OnAutoCompAdd(wxCommandEvent& event)
         lstKeyword->SetSelection(m_LastAutoCompKeyword);
     }
 }
+#endif // wxUSE_TEXTDLG
 
 void EditorConfigurationDlg::OnAutoCompDelete(wxCommandEvent& event)
 {
