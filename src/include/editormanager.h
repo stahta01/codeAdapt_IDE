@@ -19,8 +19,10 @@ DLLIMPORT extern int ID_EditorManagerCloseButton;
 
 // forward decls
 class EditorBase;
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 class wxFlatNotebook;
 class wxFlatNotebookEvent;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 class wxMenuBar;
 class EditorColourSet;
 class cbProject;
@@ -50,7 +52,9 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         EditorManager(const EditorManager& rhs) { cbThrow(_T("Can't call EditorManager's copy ctor!!!")); }
         virtual void operator=(const EditorManager& rhs){ cbThrow(_T("Can't assign an EditorManager* !!!")); }
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         wxFlatNotebook* GetNotebook(){ return m_pNotebook; }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
         void CreateMenu(wxMenuBar* menuBar);
         void ReleaseMenu(wxMenuBar* menuBar);
         void Configure();
@@ -118,10 +122,12 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         void CheckForExternallyModifiedFiles();
 
         void OnGenericContextMenuHandler(wxCommandEvent& event);
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         void OnPageChanged(wxFlatNotebookEvent& event);
         void OnPageChanging(wxFlatNotebookEvent& event);
         void OnPageClosing(wxFlatNotebookEvent& event);
         void OnPageContextMenu(wxFlatNotebookEvent& event);
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
         void OnClose(wxCommandEvent& event);
         void OnCloseAll(wxCommandEvent& event);
         void OnCloseAllOthers(wxCommandEvent& event);
@@ -163,7 +169,9 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
         int Replace(cbStyledTextCtrl* control, cbFindReplaceData* data);
         int ReplaceInFiles(cbFindReplaceData* data);
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         wxFlatNotebook* m_pNotebook;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
         cbFindReplaceData* m_LastFindReplaceData;
         EditorColourSet* m_Theme;
         ListCtrlLogger* m_pSearchLog;
