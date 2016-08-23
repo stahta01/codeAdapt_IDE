@@ -77,6 +77,8 @@
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
 #endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
+#if wxUSE_NOTEBOOK
+
 template<> EditorManager* Mgr<EditorManager>::instance = 0;
 template<> bool  Mgr<EditorManager>::isShutdown = false;
 
@@ -2657,3 +2659,5 @@ int EditorManager::GetZoom() const
 {
     return m_zoom;
 }
+
+#endif // wxUSE_NOTEBOOK
