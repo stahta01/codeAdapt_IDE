@@ -1771,8 +1771,10 @@ void MainFrame::DoUpdateEditorStyle()
     wxFlatNotebook* fn = Manager::Get()->GetEditorManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("editor"), wxFNB_MOUSE_MIDDLE_CLOSES_TABS | wxFNB_X_ON_TAB | wxFNB_NO_X_BUTTON);
 
+#ifndef CB_USE_AUI_NOTEBOOK
     fn = infoPane;
     DoUpdateEditorStyle(fn, _T("message"), wxFNB_NO_X_BUTTON);
+#endif // CB_USE_AUI_NOTEBOOK
 
     fn = Manager::Get()->GetProjectManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("project"), wxFNB_NO_X_BUTTON);
