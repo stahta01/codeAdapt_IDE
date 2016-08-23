@@ -118,6 +118,7 @@ class DLLIMPORT EditorBase : public wxPanel
           */
         virtual bool ThereAreOthers() const;
 
+#if wxUSE_NOTEBOOK
         /** @brief Display context menu.
           *
           * Displays the editor's context menu. This is called automatically
@@ -126,6 +127,7 @@ class DLLIMPORT EditorBase : public wxPanel
           * @param type The module's type.
           */
         virtual void DisplayContextMenu(const wxPoint& position, ModuleType type = mtUnknown);
+#endif // wxUSE_NOTEBOOK
 
         /** Should this kind of editor be visible in the open files tree?
           *
@@ -261,10 +263,12 @@ class DLLIMPORT EditorBase : public wxPanel
           */
         virtual void AddToContextMenu(wxMenu* popup, ModuleType type, bool pluginsdone) {}
 
+#if wxUSE_NOTEBOOK
         /** Creates unique filename when asking to save the file.
           * @return A unique filename suggestion.
           */
         virtual wxString CreateUniqueFilename();
+#endif // wxUSE_NOTEBOOK
 
         /** Informs the editor we 're just about to create a context menu.
           * Default implementation, just returns true.
