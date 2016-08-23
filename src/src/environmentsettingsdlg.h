@@ -6,6 +6,8 @@
 
 #include <wx/aui/aui.h>
 
+#if wxUSE_LISTBOOK
+
 class wxListbookEvent;
 class wxCheckListBox;
 
@@ -38,7 +40,6 @@ class EnvironmentSettingsDlg : public wxDialog
         DECLARE_EVENT_TABLE()
 };
 
-
+#endif // wxUSE_LISTBOOK
 
 #endif // ENVIRONMENTSETTINGSDLG_H
-

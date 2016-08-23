@@ -44,6 +44,8 @@
     #include "cbplugin.h" // cgCompiler, cgDebugger...
 #endif
 
+#if wxUSE_LISTBOOK
+
 // images by order of pages
 const wxString base_imgs[] =
 {
@@ -480,3 +482,5 @@ void EnvironmentSettingsDlg::EndModal(int retCode)
 
     wxDialog::EndModal(retCode);
 }
+
+#endif // wxUSE_LISTBOOK

@@ -4,6 +4,8 @@
 #include <wx/dialog.h>
 #include <pluginmanager.h>
 
+#if wxUSE_LISTBOOK
+
 class wxListbookEvent;
 
 class CompilerSettingsDlg : public wxDialog
@@ -21,5 +23,7 @@ class CompilerSettingsDlg : public wxDialog
         ConfigurationPanelsArray m_PluginPanels;
         DECLARE_EVENT_TABLE()
 };
+
+#endif // wxUSE_LISTBOOK
 
 #endif // COMPILERSETTINGSDLG_H
