@@ -15,6 +15,8 @@
 
 #include "scrollingdialog.h"
 
+#if wxUSE_BOOKCTRL
+
 // Allow for caption size on wxWidgets < 2.9
 #if defined(__WXGTK__) && !wxCHECK_VERSION(2,9,0)
 #define wxEXTRA_DIALOG_HEIGHT 30
@@ -487,3 +489,4 @@ int wxScrollingPropertySheetDialog::ShowModal()
 }
 #endif //#if !wxCHECK_VERSION(2,9,0)
 
+#endif // wxUSE_BOOKCTRL

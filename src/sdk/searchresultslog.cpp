@@ -80,6 +80,7 @@ void SearchResultsLog::SyncEditor(int selIndex)
     control->GetItem(li);
     long line = 0;
     li.m_text.ToLong(&line);
+#if wxUSE_BOOKCTRL
     cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
     if (!line || !ed)
         return;
@@ -91,6 +92,7 @@ void SearchResultsLog::SyncEditor(int selIndex)
     if (cbStyledTextCtrl* control = ed->GetControl()) {
         control->EnsureVisible(line);
     }
+#endif // wxUSE_BOOKCTRL
 }
 
 void SearchResultsLog::OnDoubleClick(wxCommandEvent& /*event*/)
