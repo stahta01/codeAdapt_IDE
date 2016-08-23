@@ -29,7 +29,9 @@ class ReplaceDlg : public FindReplaceBase
 		wxString GetSearchPath() const{ return wxEmptyString; }
 		wxString GetSearchMask() const{ return wxEmptyString; }
 
+#if wxUSE_NOTEBOOK
 		void OnFindChange(wxNotebookEvent& event);
+#endif // wxUSE_NOTEBOOK
 		void OnRegEx(wxCommandEvent& event);
 		void OnActivate(wxActivateEvent& event);
 
