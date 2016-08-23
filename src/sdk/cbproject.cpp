@@ -447,6 +447,7 @@ bool cbProject::SaveLayout()
     return loader.Save(fname.GetFullPath());
 }
 
+#if wxUSE_NOTEBOOK
 bool cbProject::LoadLayout()
 {
    if (m_Filename.IsEmpty())
@@ -527,6 +528,7 @@ bool cbProject::LoadLayout()
     }
     return result;
 }
+#endif // wxUSE_NOTEBOOK
 
 void cbProject::BeginAddFiles()
 {
@@ -789,6 +791,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
     return f;
 }
 
+#if wxUSE_NOTEBOOK
 bool cbProject::RemoveFile(ProjectFile* pf)
 {
     if (!pf)
@@ -835,7 +838,9 @@ bool cbProject::RemoveFile(ProjectFile* pf)
     SetModified(true);
     return true;
 }
+#endif // wxUSE_NOTEBOOK
 
+#if wxUSE_NOTEBOOK
 bool cbProject::RemoveFile(int index)
 {
     if (index < 0 || index >= (int)m_Files.GetCount())
@@ -843,6 +848,7 @@ bool cbProject::RemoveFile(int index)
     ProjectFile* f = m_Files[index];
     return RemoveFile(f);
 }
+#endif // wxUSE_NOTEBOOK
 
 int filesSort(const ProjectFile** arg1, const ProjectFile** arg2)
 {
@@ -1455,6 +1461,7 @@ ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelat
     return m_ProjectFilesMap[UnixFilename(tmp)];
 }
 
+#if wxUSE_NOTEBOOK
 bool cbProject::QueryCloseAllFiles()
 {
     FilesList::Node* node;
@@ -1472,7 +1479,9 @@ bool cbProject::QueryCloseAllFiles()
     }
     return true;
 }
+#endif // wxUSE_NOTEBOOK
 
+#if wxUSE_NOTEBOOK
 bool cbProject::CloseAllFiles(bool dontsave)
 {
     // first try to close modified editors
@@ -1495,7 +1504,9 @@ bool cbProject::CloseAllFiles(bool dontsave)
     Manager::Get()->GetEditorManager()->ShowNotebook();
     return true;
 }
+#endif // wxUSE_NOTEBOOK
 
+#if wxUSE_NOTEBOOK
 bool cbProject::SaveAllFiles()
 {
     int count = m_Files.GetCount();
@@ -1509,6 +1520,7 @@ bool cbProject::SaveAllFiles()
     }
     return count == 0;
 }
+#endif // wxUSE_NOTEBOOK
 
 bool cbProject::ShowOptions()
 {

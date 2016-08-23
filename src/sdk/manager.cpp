@@ -175,7 +175,9 @@ void Manager::Shutdown()
 	PluginManager::Free();
 	ScriptingManager::Free();
 	ProjectManager::Free();
+#if wxUSE_NOTEBOOK
 	EditorManager::Free();
+#endif // wxUSE_NOTEBOOK
 	PersonalityManager::Free();
 	MacrosManager::Free();
 	UserVariableManager::Free();
@@ -339,10 +341,12 @@ ProjectManager* Manager::GetProjectManager() const
     return ProjectManager::Get();
 }
 
+#if wxUSE_NOTEBOOK
 EditorManager* Manager::GetEditorManager() const
 {
     return EditorManager::Get();
 }
+#endif // wxUSE_NOTEBOOK
 
 LogManager* Manager::GetLogManager() const
 {

@@ -63,6 +63,8 @@
 #include "encodingdetector.h"
 #include "projectfileoptionsdlg.h"
 
+#if wxUSE_NOTEBOOK
+
 const wxString g_EditorModified = _T("*");
 
 #define ERROR_MARKER        1
@@ -2676,3 +2678,5 @@ void cbEditor::OnScintillaEvent(wxScintillaEvent& event)
         EditorHooks::CallHooks(this, event);
     }
 }
+
+#endif // wxUSE_NOTEBOOK

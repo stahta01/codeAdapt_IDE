@@ -406,7 +406,9 @@ void ScriptingManager::OnScriptMenu(wxCommandEvent& event)
     if (wxGetKeyState(WXK_SHIFT))
     {
         wxString script = ConfigManager::LocateDataFile(mbs.scriptOrFunc, sdScriptsUser | sdScriptsGlobal);
+#if wxUSE_NOTEBOOK
         Manager::Get()->GetEditorManager()->Open(script);
+#endif // wxUSE_NOTEBOOK
         return;
     }
 
