@@ -72,11 +72,13 @@ class DLLIMPORT EditorBase : public wxPanel
           */
         virtual const wxString& GetTitle();
 
+#if wxUSE_NOTEBOOK
         /** @brief Set the editor's title.
           *
           * @param newTitle The new title to set.
           */
         virtual void SetTitle(const wxString& newTitle);
+#endif // wxUSE_NOTEBOOK
 
         /** @brief Activate this editor.
           *
