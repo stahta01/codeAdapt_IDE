@@ -337,7 +337,11 @@ void MacrosManager::ReplaceMacros(wxString& buffer, ProjectBuildTarget* target, 
     cbProject* project = target
                         ? target->GetParentProject()
                         : Manager::Get()->GetProjectManager()->GetActiveProject();
+#if wxUSE_NOTEBOOK
     EditorBase* editor = Manager::Get()->GetEditorManager()->GetActiveEditor();
+#else
+    EditorBase* editor = 0;
+#endif // wxUSE_NOTEBOOK
 
     if(!target)
     {

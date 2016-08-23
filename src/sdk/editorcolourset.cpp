@@ -423,6 +423,7 @@ void EditorColourSet::DoApplyStyle(cbStyledTextCtrl* control, int value, OptionC
     control->StyleSetUnderline(value, option->underlined);
 }
 
+#if wxUSE_NOTEBOOK
 HighlightLanguage EditorColourSet::Apply(cbEditor* editor, HighlightLanguage lang)
 {
     if (!editor)
@@ -436,6 +437,7 @@ HighlightLanguage EditorColourSet::Apply(cbEditor* editor, HighlightLanguage lan
 
     return lang;
 }
+#endif // wxUSE_NOTEBOOK
 
 
 void EditorColourSet::Apply(HighlightLanguage lang, cbStyledTextCtrl* control)

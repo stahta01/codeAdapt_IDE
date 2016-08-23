@@ -66,6 +66,7 @@ const int idGoogleCode = wxNewId();
 const int idMsdn = wxNewId();
 
 BEGIN_EVENT_TABLE(EditorBase, wxPanel)
+#if wxUSE_NOTEBOOK
     EVT_MENU_RANGE(idSwitchFile1, idSwitchFileMax,EditorBase::OnContextMenuEntry)
     EVT_MENU(idCloseMe, EditorBase::OnContextMenuEntry)
     EVT_MENU(idCloseAll, EditorBase::OnContextMenuEntry)
@@ -75,6 +76,7 @@ BEGIN_EVENT_TABLE(EditorBase, wxPanel)
     EVT_MENU(idGoogle, EditorBase::OnContextMenuEntry)
     EVT_MENU(idGoogleCode, EditorBase::OnContextMenuEntry)
     EVT_MENU(idMsdn, EditorBase::OnContextMenuEntry)
+#endif // wxUSE_NOTEBOOK
 END_EVENT_TABLE()
 
 void EditorBase::InitFilename(const wxString& filename)
@@ -90,6 +92,7 @@ void EditorBase::InitFilename(const wxString& filename)
     //    Manager::Get()->GetLogManager()->DebugLog("ctor: Filename=%s\nShort=%s", m_Filename.c_str(), m_Shortname.c_str());
 }
 
+#if wxUSE_NOTEBOOK
 wxString EditorBase::CreateUniqueFilename()
 {
     const wxString prefix = _("Untitled");
@@ -108,6 +111,7 @@ wxString EditorBase::CreateUniqueFilename()
         ++iter;
     }
 }
+#endif // wxUSE_NOTEBOOK
 
 EditorBase::EditorBase(wxWindow* parent, const wxString& filename)
         : wxPanel(parent, -1),
@@ -118,15 +122,21 @@ EditorBase::EditorBase(wxWindow* parent, const wxString& filename)
 {
 	m_pData = new EditorBaseInternalData(this);
 
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->AddCustomEditor(this);
+#endif // wxUSE_NOTEBOOK
     InitFilename(filename);
+#if wxUSE_NOTEBOOK
     SetTitle(m_Shortname);
+#endif // wxUSE_NOTEBOOK
 }
 
 EditorBase::~EditorBase()
 {
+#if wxUSE_NOTEBOOK
     if (Manager::Get()->GetEditorManager()) // sanity check
         Manager::Get()->GetEditorManager()->RemoveCustomEditor(this);
+#endif // wxUSE_NOTEBOOK
 
     if (Manager::Get()->GetPluginManager())
     {
@@ -157,7 +167,9 @@ void EditorBase::SetTitle(const wxString& newTitle)
 
 void EditorBase::Activate()
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->SetActiveEditor(this);
+#endif // wxUSE_NOTEBOOK
 }
 
 bool EditorBase::Close()
@@ -174,6 +186,7 @@ bool EditorBase::IsBuiltinEditor() const
 bool EditorBase::ThereAreOthers() const
 {
     bool hasOthers = false;
+#if wxUSE_NOTEBOOK
     hasOthers = Manager::Get()->GetEditorManager()->GetEditorsCount() > 1;
     //    for(int i = 0; i < Manager::Get()->GetEditorManager()->GetEditorsCount(); ++i)
     //    {
@@ -183,6 +196,7 @@ bool EditorBase::ThereAreOthers() const
     //        hasOthers = true;
     //        break;
     //    }
+#endif // wxUSE_NOTEBOOK
     return hasOthers;
 }
 
@@ -194,6 +208,7 @@ wxMenu* EditorBase::CreateContextSubMenu(int id) // For context menus
     {
         menu = new wxMenu;
         m_SwitchTo.clear();
+#if wxUSE_NOTEBOOK
         for (int i = 0; i < EditorMaxSwitchTo && i < Manager::Get()->GetEditorManager()->GetEditorsCount(); ++i)
         {
             EditorBase* other = Manager::Get()->GetEditorManager()->GetEditor(i);
@@ -203,6 +218,7 @@ wxMenu* EditorBase::CreateContextSubMenu(int id) // For context menus
             m_SwitchTo[id] = other;
             menu->Append(id, other->GetShortName());
         }
+#endif // wxUSE_NOTEBOOK
         if(!menu->GetMenuItemCount())
         {
             delete menu;
@@ -239,6 +255,7 @@ void EditorBase::BasicAddToContextMenu(wxMenu* popup,ModuleType type)   //pecan 
     }
 }
 
+#if wxUSE_NOTEBOOK
 void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   //pecan 2006/03/22
 {
     bool noeditor = (type != mtEditorManager);                                  //pecan 2006/03/22
@@ -325,7 +342,9 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   
     if (m_pData->m_CloseMe)
 		Manager::Get()->GetEditorManager()->Close(this);
 }
+#endif // wxUSE_NOTEBOOK
 
+#if wxUSE_NOTEBOOK
 void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
 {
     // we have a single event handler for all popup menu entries
@@ -395,3 +414,4 @@ void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
         event.Skip();
     }
 }
+#endif // wxUSE_NOTEBOOK

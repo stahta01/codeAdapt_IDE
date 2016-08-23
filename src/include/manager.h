@@ -27,7 +27,9 @@
 class wxFrame;
 class wxWindow;
 class ProjectManager;
+#if wxUSE_NOTEBOOK
 class EditorManager;
+#endif // wxUSE_NOTEBOOK
 class LogManager;
 class PluginManager;
 #ifndef CA_DISABLE_PLUGIN_API_TOOLS
@@ -107,7 +109,9 @@ public:
      */
 
     ProjectManager* GetProjectManager() const;
+#if wxUSE_NOTEBOOK
     EditorManager* GetEditorManager() const;
+#endif // wxUSE_NOTEBOOK
     LogManager* GetLogManager() const;
     PluginManager* GetPluginManager() const;
 #ifndef CA_DISABLE_PLUGIN_API_TOOLS

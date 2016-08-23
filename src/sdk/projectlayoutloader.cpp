@@ -148,9 +148,11 @@ bool ProjectLayoutLoader::Save(const wxString& filename)
     tgtidx->SetAttribute("name", cbU2C(m_pProject->GetActiveBuildTarget()));
 
 	ProjectFile* active = 0L;
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 	if (ed)
 		active = ed->GetProjectFile();
+#endif // wxUSE_NOTEBOOK
 
 	int count = m_pProject->GetFilesCount();
 	for (int i = 0; i < count; ++i)
