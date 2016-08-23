@@ -149,6 +149,7 @@ namespace ScriptBindings
         return sa.ThrowError("Invalid arguments to \"EditorManager::Save\"");
     }
 #endif // wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK
     SQInteger cbProject_RemoveFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -163,6 +164,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbProject::RemoveFile\"");
     }
+#endif // wxUSE_NOTEBOOK
     SQInteger cbProject_AddFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -485,7 +487,9 @@ namespace ScriptBindings
                 func(&cbProject::GetFilesCount, "GetFilesCount").
                 func(&cbProject::GetFile, "GetFile").
                 func(&cbProject::GetFileByFilename, "GetFileByFilename").
+#if wxUSE_NOTEBOOK
                 staticFuncVarArgs(&cbProject_RemoveFile, "RemoveFile", "*").
+#endif // wxUSE_NOTEBOOK
                 staticFuncVarArgs(&cbProject_AddFile, "AddFile", "*").
                 func(&cbProject::GetBuildTargetsCount, "GetBuildTargetsCount").
                 staticFuncVarArgs(&cbProject_GetBuildTarget, "GetBuildTarget", "*").
