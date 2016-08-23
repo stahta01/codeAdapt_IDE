@@ -238,7 +238,9 @@ class MainFrame : public wxFrame
         void OnEditorClosed(CodeBlocksEvent& event);
         void OnEditorSaved(CodeBlocksEvent& event);
         void OnEditorModified(CodeBlocksEvent& event);
+#if wxUSE_NOTEBOOK
         void OnPageChanged(wxNotebookEvent& event);
+#endif // wxUSE_NOTEBOOK
         void OnShiftTab(wxCommandEvent& event);
     protected:
         void CreateIDE();
@@ -289,7 +291,9 @@ class MainFrame : public wxFrame
         void DoUpdateLayout();
         void DoUpdateLayoutColours();
         void DoUpdateEditorStyle();
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         void DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& prefix, long defaultStyle);
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
         void ShowHideStartPage(bool forceHasProject = false);
         void ShowHideScriptConsole();

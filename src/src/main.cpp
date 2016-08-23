@@ -77,7 +77,9 @@
 #include "batchbuild.h"
 #include <wx/printdlg.h>
 #include <wx/filename.h>
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 #include "uservarmanager.h"
 #include "infowindow.h"
@@ -474,7 +476,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idStartHerePageVarSubst, MainFrame::OnStartHereVarSubst)
 #endif // CA_BUILD_WITHOUT_GUI
 
+#if wxUSE_NOTEBOOK
     EVT_NOTEBOOK_PAGE_CHANGED(ID_NBEditorManager, MainFrame::OnPageChanged)
+#endif // wxUSE_NOTEBOOK
 
 #ifndef CA_BUILD_WITHOUT_GUI
     /// CloseFullScreen event handling
@@ -690,10 +694,12 @@ void MainFrame::CreateIDE()
 
     // project manager
     Manager::Get(this);
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.AddPane(Manager::Get()->GetProjectManager()->GetNotebook(), wxAuiPaneInfo().
                               Name(wxT("ManagementPane")).Caption(_("Management")).
                               BestSize(wxSize(leftW, clientsize.GetHeight())).MinSize(wxSize(100,100)).
                               Left().Layer(1));
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
     // logs manager
     SetupGUILogging();
@@ -709,9 +715,11 @@ void MainFrame::CreateIDE()
     SetToolBar(0);
 #endif // wxUSE_TOOLBAR
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
                             CentrePane());
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
@@ -1193,7 +1201,9 @@ void MainFrame::LoadWindowState()
     LoadViewLayout(deflayout);
 
     // load manager and messages selected page
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     Manager::Get()->GetProjectManager()->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_selection"), 0));
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     infoPane->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_selection"), 0));
 
 #ifndef __WXMAC__
@@ -1236,7 +1246,9 @@ void MainFrame::SaveWindowState()
     }
 
     // save manager and messages selected page
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left_block_selection"), Manager::Get()->GetProjectManager()->GetNotebook()->GetSelection());
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/bottom_block_selection"), infoPane->GetSelection());
 
     // save window size and position
@@ -1707,6 +1719,7 @@ void MainFrame::DoUpdateStatusBar()
 #endif // wxUSE_STATUSBAR
 }
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& prefix, long defaultStyle)
 {
     if (!target)
@@ -1750,7 +1763,9 @@ void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& pref
     target->SetGradientColorFrom(cfg->ReadColour(_T("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
     target->SetGradientColorTo(cfg->ReadColour(_T("/environment/gradient_to"), *wxWHITE));
 }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
 void MainFrame::DoUpdateEditorStyle()
 {
     wxFlatNotebook* fn = Manager::Get()->GetEditorManager()->GetNotebook();
@@ -1762,6 +1777,7 @@ void MainFrame::DoUpdateEditorStyle()
     fn = Manager::Get()->GetProjectManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("project"), wxFNB_NO_X_BUTTON);
 }
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
 void MainFrame::DoUpdateLayoutColours()
 {
@@ -1851,7 +1867,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 #ifndef CA_BUILD_WITHOUT_GUI
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show && !sh)
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         sh = new StartHerePage(this, Manager::Get()->GetEditorManager()->GetNotebook());
+#else
+        ;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     else if (!show && sh)
         sh->Destroy();
 #endif // CA_BUILD_WITHOUT_GUI
@@ -2813,9 +2833,13 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     if (Manager::IsBatchBuild() == false)
         SaveWindowState();
 
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.DetachPane(Manager::Get()->GetProjectManager()->GetNotebook());
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.DetachPane(infoPane);
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
     m_LayoutManager.UnInit();
 #if wxUSE_FILE_HISTORY
@@ -4025,7 +4049,11 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
 #ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
+#else
+    bool manVis = false;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
     mbar->Check(idViewManager, manVis);
     mbar->Check(idViewLogManager, m_LayoutManager.GetPane(infoPane).IsShown());
@@ -4127,7 +4155,11 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
 #ifndef CA_BUILD_WITHOUT_GUI
     wxWindow* win = 0;
     if (event.GetId() == idViewManager)
+#ifndef CA_DISABLE_FLAT_NOTEBOOK
         win = Manager::Get()->GetProjectManager()->GetNotebook();
+#else
+        ;
+#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     else if (event.GetId() == idViewLogManager)
         win = infoPane;
 #if wxUSE_TOOLBAR
@@ -4361,11 +4393,13 @@ void MainFrame::OnProjectClosed(CodeBlocksEvent& event)
     event.Skip();
 }
 
+#if wxUSE_NOTEBOOK
 void MainFrame::OnPageChanged(wxNotebookEvent& event)
 {
     DoUpdateAppTitle();
     event.Skip();
 }
+#endif // wxUSE_NOTEBOOK
 
 void MainFrame::OnShiftTab(wxCommandEvent& event)
 {
