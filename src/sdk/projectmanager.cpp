@@ -174,8 +174,10 @@ BEGIN_EVENT_TABLE(ProjectManager, wxEvtHandler)
     EVT_TREE_ITEM_RIGHT_CLICK(ID_ProjectManager, ProjectManager::OnTreeItemRightClick)
     EVT_COMMAND_RIGHT_CLICK(ID_ProjectManager, ProjectManager::OnRightClick)
 
+#if wxUSE_NOTEBOOK
     EVT_MENU_RANGE(idOpenWith[0], idOpenWith[MAX_OPEN_WITH_ITEMS - 1], ProjectManager::OnOpenWith)
     EVT_MENU(idOpenWithInternal, ProjectManager::OnOpenWith)
+#endif // wxUSE_NOTEBOOK
     EVT_MENU(idNB_TabTop, ProjectManager::OnTabPosition)
     EVT_MENU(idNB_TabBottom, ProjectManager::OnTabPosition)
     EVT_MENU(idMenuSetActiveProject, ProjectManager::OnSetActiveProject)
@@ -231,14 +233,18 @@ ProjectManager::ProjectManager()
     m_isCheckingForExternallyModifiedProjects(false),
     m_CanSendWorkspaceChanged(false)
 {
+#if wxUSE_NOTEBOOK
     m_pNotebook = new wxFlatNotebook(Manager::Get()->GetAppWindow(), idNB);
     m_pNotebook->SetWindowStyleFlag(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/environment/project_tabs_style"), wxFNB_NO_X_BUTTON));
     m_pNotebook->SetImageList(new wxFlatNotebookImageList);
+#endif // wxUSE_NOTEBOOK
 
     wxMenu* NBmenu = new wxMenu(); // deleted automatically by wxFlatNotebook
     NBmenu->Append(idNB_TabTop, _("Tabs at top"));
     NBmenu->Append(idNB_TabBottom, _("Tabs at bottom"));
+#if wxUSE_NOTEBOOK
     m_pNotebook->SetRightClickMenu(NBmenu);
+#endif // wxUSE_NOTEBOOK
 
     m_InitialDir=wxFileName::GetCwd();
     m_pActiveProject = 0L;
@@ -287,8 +293,10 @@ ProjectManager::~ProjectManager()
     delete m_pImages;m_pImages = 0;
     delete m_pFileGroups;m_pFileGroups = 0;
 
+#if wxUSE_NOTEBOOK
     delete m_pNotebook->GetImageList();
     m_pNotebook->Destroy();
+#endif // wxUSE_NOTEBOOK
 }
 
 void ProjectManager::InitPane()
@@ -298,7 +306,9 @@ void ProjectManager::InitPane()
     if(m_pTree)
         return;
     BuildTree();
+#if wxUSE_NOTEBOOK
     m_pNotebook->AddPage(m_pTree, _("Projects"));
+#endif // wxUSE_NOTEBOOK
 }
 
 int ProjectManager::WorkspaceIconIndex(bool read_only)
@@ -327,6 +337,7 @@ int ProjectManager::VirtualFolderIconIndex()
     return (int)fvsVirtualFolder;
 }
 
+#if wxUSE_NOTEBOOK
 void ProjectManager::BuildTree()
 {
     #ifndef __WXMSW__
@@ -386,6 +397,7 @@ void ProjectManager::BuildTree()
 //    // make sure tree is not "frozen"
 //    UnfreezeTree(true);
 }
+#endif // wxUSE_NOTEBOOK
 
 void ProjectManager::CreateMenu(wxMenuBar* menuBar)
 {
@@ -564,12 +576,20 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             // selected project file
             ProjectFile* pf = ftd->GetProjectFile();
             // is it already open in the editor?
+#if wxUSE_NOTEBOOK
             EditorBase* ed = Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath());
+#else
+            EditorBase* ed = 0;
+#endif // wxUSE_NOTEBOOK
 
             if (ed)
             {
+#if wxUSE_NOTEBOOK
                 // is it already active?
                 bool active = Manager::Get()->GetEditorManager()->GetActiveEditor() == ed;
+#else
+                bool active = false;
+#endif // wxUSE_NOTEBOOK
 
                 if (!active)
                 {
@@ -601,12 +621,14 @@ void ProjectManager::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             openWith->Append(idOpenWithInternal, _("Internal editor"));
             menu.Append(wxID_ANY, _("Open with"), openWith);
 
+#if wxUSE_NOTEBOOK
             if(pf->GetFileState() == fvsNormal &&  !Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath()))
             {
                 menu.AppendSeparator();
                 menu.Append(idMenuRenameFile, _("Rename file..."));
                 menu.Enable(idMenuRenameFile, PopUpMenuOption);
             }
+#endif // wxUSE_NOTEBOOK
             menu.AppendSeparator();
             menu.Append(idMenuRemoveFilePopup, _("Remove file from project"));
             menu.Enable(idMenuRemoveFilePopup, PopUpMenuOption);
@@ -836,8 +858,10 @@ bool ProjectManager::QueryCloseAllProjects()
 {
     unsigned int i;
 
+#if wxUSE_NOTEBOOK
     if (!Manager::Get()->GetEditorManager()->QueryCloseAll())
         return false;
+#endif // wxUSE_NOTEBOOK
 
     for(i=0;i<m_pProjects->GetCount();i++)
     {
@@ -923,7 +947,9 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     // the state of m_IsClosingProject.
     bool isClosingOtherProjects = m_IsClosingProject;
     m_IsClosingProject = true;
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->UpdateProjectFiles(project);
+#endif // wxUSE_NOTEBOOK
 //    project->SaveTreeState(m_pTree);
     project->SaveLayout();
 
@@ -1455,6 +1481,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
     FileType ft = FileTypeOf(filename);
     if (ft == ftHeader || ft == ftSource)
     {
+#if wxUSE_NOTEBOOK
         // C/C++ header/source files, always get opened inside Code::Blocks
         cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
         if (ed)
@@ -1463,6 +1490,7 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
             ed->Activate();
         }
         else
+#endif // wxUSE_NOTEBOOK
         {
             wxString msg;
             msg.Printf(_("Failed to open '%s'."), filename.c_str());
@@ -1473,7 +1501,11 @@ void ProjectManager::DoOpenFile(ProjectFile* pf, const wxString& filename)
     {
         // first look for custom editors
         // if that fails, try MIME handlers
+#if wxUSE_NOTEBOOK
         EditorBase* eb = Manager::Get()->GetEditorManager()->IsOpen(filename);
+#else
+        EditorBase* eb = 0;
+#endif // wxUSE_NOTEBOOK
         if (eb && !eb->IsBuiltinEditor())
         {
             // custom editors just get activated
@@ -1667,6 +1699,7 @@ void ProjectManager::ConfigureProjectDependencies(cbProject* base)
 
 void ProjectManager::OnTabPosition(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     long style = m_pNotebook->GetWindowStyleFlag();
     style &= ~wxFNB_BOTTOM;
 
@@ -1675,6 +1708,7 @@ void ProjectManager::OnTabPosition(wxCommandEvent& event)
     m_pNotebook->SetWindowStyleFlag(style);
     // (style & wxFNB_BOTTOM) saves info only about the the tabs position
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/environment/project_tabs_bottom"), (bool)(style & wxFNB_BOTTOM));
+#endif // wxUSE_NOTEBOOK
 }
 
 void ProjectManager::OnTreeBeginDrag(wxTreeEvent& event)
@@ -2012,6 +2046,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
     if (!prj)
         return;
 
+#if wxUSE_NOTEBOOK
     wxFileDialog dlg(Manager::Get()->GetAppWindow(),
                     _("Add files to project..."),
                     basePath,
@@ -2033,6 +2068,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
         AddMultipleFilesToProject(array, prj, targets);
         RebuildTree();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
@@ -2166,6 +2202,7 @@ void ProjectManager::OnCloseProject(wxCommandEvent& event)
 
 void ProjectManager::OnCloseFile(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     wxTreeItemId sel = m_pTree->GetSelection();
     FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
 
@@ -2176,6 +2213,7 @@ void ProjectManager::OnCloseFile(wxCommandEvent& event)
         if (f)
             Manager::Get()->GetEditorManager()->Close(f->file.GetFullPath());
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void ProjectManager::OnOpenFile(wxCommandEvent& event)
@@ -2183,6 +2221,7 @@ void ProjectManager::OnOpenFile(wxCommandEvent& event)
     DoOpenSelectedFile();
 }
 
+#if wxUSE_NOTEBOOK
 void ProjectManager::OnOpenWith(wxCommandEvent& event)
 {
     wxTreeItemId sel = m_pTree->GetSelection();
@@ -2218,6 +2257,7 @@ void ProjectManager::OnOpenWith(wxCommandEvent& event)
         }
     }
 }
+#endif // wxUSE_NOTEBOOK
 
 void ProjectManager::OnNotes(wxCommandEvent& event)
 {
@@ -2229,6 +2269,7 @@ void ProjectManager::OnNotes(wxCommandEvent& event)
 void ProjectManager::OnProperties(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     if (event.GetId() == idMenuProjectProperties)
     {
         wxString backupTitle = m_pActiveProject ? m_pActiveProject->GetTitle() : _T("");
@@ -2288,6 +2329,7 @@ void ProjectManager::OnProperties(wxCommandEvent& event)
             }
         }
     }
+#endif // wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 

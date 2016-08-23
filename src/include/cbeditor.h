@@ -10,6 +10,8 @@
 #include "editorbase.h"
 #include "printing_types.h"
 
+#if wxUSE_NOTEBOOK
+
 extern const wxString g_EditorModified;
 
 // forward decls
@@ -361,5 +363,7 @@ class DLLIMPORT cbEditor : public EditorBase
         friend struct cbEditorInternalData; // allow cbEditorInternalData to access cbEditor
         cbEditorInternalData* m_pData;
 };
+
+#endif // wxUSE_NOTEBOOK
 
 #endif // CBEDITOR_H
