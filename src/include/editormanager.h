@@ -11,6 +11,7 @@
 
 #include "printing_types.h"
 
+#if wxUSE_NOTEBOOK
 
 DLLIMPORT extern int ID_NBEditorManager;
 DLLIMPORT extern int ID_EditorManager;
@@ -184,6 +185,8 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
 
         DECLARE_EVENT_TABLE()
 };
+
+#endif // wxUSE_NOTEBOOK
 
 #endif // EDITORMANAGER_H
 
