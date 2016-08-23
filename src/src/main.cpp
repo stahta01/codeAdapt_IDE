@@ -702,12 +702,12 @@ void MainFrame::CreateIDE()
 
     // project manager
     Manager::Get(this);
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.AddPane(Manager::Get()->GetProjectManager()->GetNotebook(), wxAuiPaneInfo().
                               Name(wxT("ManagementPane")).Caption(_("Management")).
                               BestSize(wxSize(leftW, clientsize.GetHeight())).MinSize(wxSize(100,100)).
                               Left().Layer(1));
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_AUI
 
     // logs manager
     SetupGUILogging();
@@ -725,11 +725,11 @@ void MainFrame::CreateIDE()
     SetToolBar(0);
 #endif // wxUSE_TOOLBAR
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_AUI
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
                             CentrePane());
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_AUI
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
@@ -753,14 +753,14 @@ void MainFrame::SetupGUILogging()
 
     if(!Manager::IsBatchBuild())
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
         infoPane = new InfoPane(this);
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
                                   BestSize(wxSize(clientsize.GetWidth(), bottomH)).//MinSize(wxSize(50,50)).
                                   Bottom());
 
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
         wxWindow* log;
 
         for(size_t i = LogManager::app_log; i < LogManager::max_logs; ++i)
@@ -1290,7 +1290,9 @@ void MainFrame::LoadViewLayout(const wxString& name, bool isTemp)
     else
         DoSelectLayout(name);
 
+#if wxUSE_AUI
     m_LayoutManager.LoadPerspective(layout, false);
+#endif // wxUSE_AUI
     DoFixToolbarsLayout();
     DoUpdateLayout();
 
@@ -1362,6 +1364,7 @@ bool MainFrame::LayoutDifferent(const wxString& layout1,const wxString& layout2,
 
 bool MainFrame::DoCheckCurrentLayoutForChanges(bool canCancel)
 {
+#if wxUSE_AUI
     DoFixToolbarsLayout();
     wxString lastlayout = m_LayoutManager.SavePerspective();
     if (!m_LastLayoutName.IsEmpty() && LayoutDifferent(lastlayout, m_LastLayoutData))
@@ -1383,11 +1386,13 @@ bool MainFrame::DoCheckCurrentLayoutForChanges(bool canCancel)
                 break;
         }
     }
+#endif // wxUSE_AUI
     return true;
 }
 
 void MainFrame::DoFixToolbarsLayout()
 {
+#if wxUSE_AUI
     // because the user might change the toolbar icons size, we must cater for it...
     wxAuiPaneInfoArray& panes = m_LayoutManager.GetAllPanes();
     for (size_t i = 0; i < panes.GetCount(); ++i)
@@ -1398,6 +1403,7 @@ void MainFrame::DoFixToolbarsLayout()
             info.best_size = info.window->GetSize();
         }
     }
+#endif // wxUSE_AUI
 }
 
 void MainFrame::DoSelectLayout(const wxString& name)
@@ -1795,6 +1801,7 @@ void MainFrame::DoUpdateEditorStyle()
 
 void MainFrame::DoUpdateLayoutColours()
 {
+#if wxUSE_AUI
     ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("app"));
     wxAuiDockArt* art = m_LayoutManager.GetArtProvider();
 
@@ -1809,6 +1816,7 @@ void MainFrame::DoUpdateLayoutColours()
     art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR,   cfg->ReadColour(_T("/environment/aui/inactive_caption_gradient_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR)));
     art->SetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR,       cfg->ReadColour(_T("/environment/aui/inactive_caption_text_colour"), art->GetColour(wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR)));
 
+#endif // wxUSE_AUI
     DoUpdateLayout();
 }
 
@@ -1816,7 +1824,9 @@ void MainFrame::DoUpdateLayout()
 {
     if (!m_StartupDone)
         return;
+#if wxUSE_AUI
     m_LayoutManager.Update();
+#endif // wxUSE_AUI
 }
 
 void MainFrame::DoUpdateAppTitle()
@@ -2847,15 +2857,15 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     if (Manager::IsBatchBuild() == false)
         SaveWindowState();
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.DetachPane(Manager::Get()->GetProjectManager()->GetNotebook());
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.DetachPane(infoPane);
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_AUI
 
+#if wxUSE_AUI
     m_LayoutManager.UnInit();
+#endif // wxUSE_AUI
 #if wxUSE_FILE_HISTORY
     TerminateRecentFilesHistory();
 #endif // wxUSE_FILE_HISTORY
@@ -4063,14 +4073,16 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
 #ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_AUI
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
 #else
     bool manVis = false;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_AUI
 
     mbar->Check(idViewManager, manVis);
+#if wxUSE_AUI
     mbar->Check(idViewLogManager, m_LayoutManager.GetPane(infoPane).IsShown());
+#endif // wxUSE_AUI
     mbar->Check(idViewStatusbar, GetStatusBar() && GetStatusBar()->IsShown());
     mbar->Check(idViewScriptConsole, m_pScriptConsole != 0);
     mbar->Check(idViewFullScreen, IsFullScreen());
@@ -4195,9 +4207,9 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
 
     if (win)
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
         m_LayoutManager.GetPane(win).Show(event.IsChecked());
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
         DoUpdateLayout();
     }
 #endif // CA_BUILD_WITHOUT_GUI
@@ -4438,7 +4450,7 @@ void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
 {
     if (Manager::isappShuttingDown())
         return;
-
+#if wxUSE_AUI
     wxAuiPaneInfo info;
     wxString name = event.name;
     if (name.IsEmpty())
@@ -4469,7 +4481,6 @@ void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
     if (event.column != -1)
         info = info.Position(event.column);
     info = info.CloseButton(event.hideable ? true : false);
-#if wxUSE_AUI
     m_LayoutManager.AddPane(event.pWindow, info);
 #endif // wxUSE_AUI
     DoUpdateLayout();
