@@ -492,7 +492,9 @@ END_EVENT_TABLE()
 
 MainFrame::MainFrame(wxWindow* parent)
        : wxFrame(parent, -1, _T("MainWin"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+#if wxUSE_NOTEBOOK
        m_LayoutManager(this),
+#endif // wxUSE_NOTEBOOK
        m_pAccel(0L),
 #if wxUSE_FILE_HISTORY
        m_pFilesHistory(0),
@@ -501,10 +503,14 @@ MainFrame::MainFrame(wxWindow* parent)
 #ifndef CA_BUILD_WITHOUT_GUI
        m_pCloseFullScreenBtn(0L),
 #endif // CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
        m_pEdMan(0L),
+#endif // wxUSE_NOTEBOOK
        m_pPrjMan(0L),
        m_pMsgMan(0L),
+#if wxUSE_NOTEBOOK
        infoPane(0),
+#endif // wxUSE_NOTEBOOK
 #if wxUSE_TOOLBAR
        m_pToolbar(0L),
 #endif // wxUSE_TOOLBAR
@@ -577,7 +583,9 @@ MainFrame::MainFrame(wxWindow* parent)
     if (deflayout.IsEmpty())
         Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), gDefaultLayout);
     DoFixToolbarsLayout();
+#if wxUSE_NOTEBOOK
     gDefaultLayoutData = m_LayoutManager.SavePerspective(); // keep the "hardcoded" layout handy
+#endif // wxUSE_NOTEBOOK
     SaveViewLayout(gDefaultLayout, gDefaultLayoutData);
     LoadWindowState();
 
@@ -706,7 +714,9 @@ void MainFrame::CreateIDE()
 
     CreateMenubar();
 
+#if wxUSE_NOTEBOOK
     m_pEdMan = Manager::Get()->GetEditorManager();
+#endif // wxUSE_NOTEBOOK
     m_pPrjMan = Manager::Get()->GetProjectManager();
     m_pMsgMan = Manager::Get()->GetLogManager();
 
@@ -743,12 +753,14 @@ void MainFrame::SetupGUILogging()
 
     if(!Manager::IsBatchBuild())
     {
+#if wxUSE_NOTEBOOK
         infoPane = new InfoPane(this);
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
                                   BestSize(wxSize(clientsize.GetWidth(), bottomH)).//MinSize(wxSize(50,50)).
                                   Bottom());
 
+#endif // wxUSE_NOTEBOOK
         wxWindow* log;
 
         for(size_t i = LogManager::app_log; i < LogManager::max_logs; ++i)
@@ -4183,7 +4195,9 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
 
     if (win)
     {
+#if wxUSE_NOTEBOOK
         m_LayoutManager.GetPane(win).Show(event.IsChecked());
+#endif // wxUSE_NOTEBOOK
         DoUpdateLayout();
     }
 #endif // CA_BUILD_WITHOUT_GUI
@@ -4206,9 +4220,11 @@ void MainFrame::OnToggleStatusBar(wxCommandEvent& event)
 
 void MainFrame::OnFocusEditor(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
     if (ed)
         ed->GetControl()->SetFocus();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnToggleFullScreen(wxCommandEvent& event)
@@ -4317,7 +4333,9 @@ void MainFrame::OnGlobalUserVars(wxCommandEvent& event)
 
 void MainFrame::OnSettingsEditor(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->Configure();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnSettingsCompilerDebugger(wxCommandEvent& event)
@@ -4409,9 +4427,11 @@ void MainFrame::OnPageChanged(wxNotebookEvent& event)
 
 void MainFrame::OnShiftTab(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor(); // Must make sure it's cbEditor and not EditorBase
     if(ed)
         ed->DoUnIndent();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
@@ -4449,19 +4469,25 @@ void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
     if (event.column != -1)
         info = info.Position(event.column);
     info = info.CloseButton(event.hideable ? true : false);
+#if wxUSE_NOTEBOOK
     m_LayoutManager.AddPane(event.pWindow, info);
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 }
 
 void MainFrame::OnRequestUndockWindow(CodeBlocksDockEvent& event)
 {
+#if wxUSE_NOTEBOOK
     m_LayoutManager.DetachPane(event.pWindow);
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 }
 
 void MainFrame::OnRequestShowDockWindow(CodeBlocksDockEvent& event)
 {
+#if wxUSE_NOTEBOOK
     m_LayoutManager.GetPane(event.pWindow).Show();
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 
     CodeBlocksDockEvent evt(cbEVT_DOCK_WINDOW_VISIBILITY);
@@ -4471,7 +4497,9 @@ void MainFrame::OnRequestShowDockWindow(CodeBlocksDockEvent& event)
 
 void MainFrame::OnRequestHideDockWindow(CodeBlocksDockEvent& event)
 {
+#if wxUSE_NOTEBOOK
     m_LayoutManager.GetPane(event.pWindow).Hide();
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 
     CodeBlocksDockEvent evt(cbEVT_DOCK_WINDOW_VISIBILITY);
@@ -4500,6 +4528,7 @@ void MainFrame::OnAddLogWindow(CodeBlocksLogEvent& event)
 {
     if (Manager::IsAppShuttingDown())
         return;
+#if wxUSE_NOTEBOOK
     wxWindow* p = event.window;
     if (p)
         infoPane->AddNonLogger(p, event.title, event.icon);
@@ -4510,24 +4539,29 @@ void MainFrame::OnAddLogWindow(CodeBlocksLogEvent& event)
             infoPane->AddLogger(event.logger, p, event.title, event.icon);
     }
     Manager::Get()->GetLogManager()->NotifyUpdate();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnRemoveLogWindow(CodeBlocksLogEvent& event)
 {
     if (Manager::IsAppShuttingDown())
         return;
+#if wxUSE_NOTEBOOK
     if (event.window)
         infoPane->RemoveNonLogger(event.window);
     else
         infoPane->DeleteLogger(event.logger);
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnSwitchToLogWindow(CodeBlocksLogEvent& event)
 {
+#if wxUSE_NOTEBOOK
     if (event.window)
         infoPane->ShowNonLogger(event.window);
     else if (event.logger)
         infoPane->Show(event.logger);
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnShowLogManager(CodeBlocksLogEvent& event)
@@ -4535,7 +4569,9 @@ void MainFrame::OnShowLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs)
         return;
 
+#if wxUSE_NOTEBOOK
     m_LayoutManager.GetPane(infoPane).Show(true);
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 }
 
@@ -4544,7 +4580,9 @@ void MainFrame::OnHideLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs || m_AutoHideLockCounter > 0)
         return;
 
+#if wxUSE_NOTEBOOK
     m_LayoutManager.GetPane(infoPane).Show(false);
+#endif // wxUSE_NOTEBOOK
     DoUpdateLayout();
 }
 
@@ -4561,7 +4599,9 @@ void MainFrame::OnUnlockLogManager(CodeBlocksLogEvent& event)
         return;
     if (--m_AutoHideLockCounter == 0)
     {
+#if wxUSE_NOTEBOOK
         m_LayoutManager.GetPane(infoPane).Show(false);
+#endif // wxUSE_NOTEBOOK
         DoUpdateLayout();
     }
 }

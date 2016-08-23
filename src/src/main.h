@@ -40,13 +40,17 @@ extern int idStartHerePageVarSubst;
 #ifndef CA_DISABLE_FLAT_NOTEBOOK
 class wxFlatNotebook;
 #endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 class InfoPane;
+#endif // wxUSE_NOTEBOOK
 class wxGauge;
 
 class MainFrame : public wxFrame
 {
     private:
+#if wxUSE_AUI
         wxAuiManager m_LayoutManager;
+#endif // wxUSE_AUI
         LayoutViewsMap m_LayoutViews;
         bool LayoutDifferent(const wxString& layout1,const wxString& layout2,const wxString& delimiter=_("|"));
     public:
@@ -319,7 +323,9 @@ class MainFrame : public wxFrame
 #endif // wxUSE_NOTEBOOK
         ProjectManager* m_pPrjMan;
         LogManager* m_pMsgMan;
+#if wxUSE_NOTEBOOK
         InfoPane *infoPane;
+#endif // wxUSE_NOTEBOOK
 
 #if wxUSE_TOOLBAR
         wxToolBar* m_pToolbar;
