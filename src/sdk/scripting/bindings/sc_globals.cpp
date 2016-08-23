@@ -44,10 +44,12 @@ namespace ScriptBindings
     {
         return Manager::Get()->GetProjectManager();
     }
+#if wxUSE_NOTEBOOK
     EditorManager* getEM()
     {
         return Manager::Get()->GetEditorManager();
     }
+#endif // wxUSE_NOTEBOOK
     ConfigManager* getCM()
     {
         return Manager::Get()->GetConfigManager(_T("scripts"));
@@ -131,7 +133,9 @@ namespace ScriptBindings
         SqPlus::RegisterGlobal(gReplaceMacros, "ReplaceMacros");
 
         SqPlus::RegisterGlobal(getPM, "GetProjectManager");
+#if wxUSE_NOTEBOOK
         SqPlus::RegisterGlobal(getEM, "GetEditorManager");
+#endif // wxUSE_NOTEBOOK
         SqPlus::RegisterGlobal(getCM, "GetConfigManager");
         SqPlus::RegisterGlobal(getUVM, "GetUserVariableManager");
         SqPlus::RegisterGlobal(getSM, "GetScriptingManager");
