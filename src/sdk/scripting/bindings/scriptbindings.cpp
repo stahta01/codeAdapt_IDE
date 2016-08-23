@@ -566,7 +566,9 @@ namespace ScriptBindings
                 func(&EditorBase::GetModified, "GetModified").
                 func(&EditorBase::SetModified, "SetModified").
                 func(&EditorBase::GetTitle, "GetTitle").
+#if wxUSE_NOTEBOOK
                 func(&EditorBase::SetTitle, "SetTitle").
+#endif // wxUSE_NOTEBOOK
                 func(&EditorBase::Activate, "Activate").
                 func(&EditorBase::Close, "Close").
                 func(&EditorBase::Save, "Save").
