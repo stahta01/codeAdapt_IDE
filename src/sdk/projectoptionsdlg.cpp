@@ -185,6 +185,7 @@ void ProjectOptionsDlg::BuildScriptsTree()
     FillScripts();
 }
 
+#if wxUSE_NOTEBOOK
 void ProjectOptionsDlg::AddPluginPanels()
 {
     wxNotebook* nb = XRCCTRL(*this, "nbMain", wxNotebook);
@@ -197,6 +198,7 @@ void ProjectOptionsDlg::AddPluginPanels()
         nb->AddPage(panel, panel->GetTitle());
     }
 }
+#endif // wxUSE_NOTEBOOK
 
 void ProjectOptionsDlg::FillScripts()
 {
