@@ -4286,6 +4286,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
 void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_LISTBOOK
     bool tbarsmall = m_SmallToolBar;
     bool needRestart = false;
 
@@ -4303,6 +4304,7 @@ void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
     }
     if (needRestart)
         cbMessageBox(_("Code::Blocks needs to be restarted for the changes to take effect."), _("Information"), wxICON_INFORMATION);
+#endif // wxUSE_LISTBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -4321,9 +4323,11 @@ void MainFrame::OnSettingsEditor(wxCommandEvent& event)
 void MainFrame::OnSettingsCompilerDebugger(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_LISTBOOK
     CompilerSettingsDlg dlg(this);
     PlaceWindow(&dlg);
     dlg.ShowModal();
+#endif // wxUSE_LISTBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
