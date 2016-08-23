@@ -1053,6 +1053,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
     if (!Manager::Get())
         return;
 
+#if wxUSE_NOTEBOOK
     if (Manager::Get()->GetEditorManager() && Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/check_modified_files"), true))
     {
         // for some reason a mouse up event doen's make it into scintilla (scintilla bug)
@@ -1079,4 +1080,5 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
 
         ed->GetControl()->SetFocus();
     }
+#endif // wxUSE_NOTEBOOK
 }
