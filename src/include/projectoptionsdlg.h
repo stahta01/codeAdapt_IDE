@@ -4,6 +4,8 @@
 #include "settings.h"
 #include <wx/dialog.h>
 
+#if wxUSE_NOTEBOOK
+
 class wxTreeEvent;
 class wxSpinEvent;
 class cbProject;
@@ -65,6 +67,8 @@ class ProjectOptionsDlg : public wxDialog
         ConfigurationPanelsArray m_PluginPanels;
         DECLARE_EVENT_TABLE()
 };
+
+#endif // wxUSE_NOTEBOOK
 
 #endif // PROJECTOPTIONSDLG_H
 
