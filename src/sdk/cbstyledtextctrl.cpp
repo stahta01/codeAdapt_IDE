@@ -70,6 +70,7 @@ void cbStyledTextCtrl::OnKillFocus(wxFocusEvent& event)
 
 void cbStyledTextCtrl::OnContextMenu(wxContextMenuEvent& event)
 {
+#if wxUSE_NOTEBOOK
     if ( m_pParent )
     {
         if ( EditorBase* pParent = dynamic_cast<EditorBase*>(m_pParent) )
@@ -83,6 +84,7 @@ void cbStyledTextCtrl::OnContextMenu(wxContextMenuEvent& event)
             event.Skip();
         }
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnContextMenu
 
 void cbStyledTextCtrl::OnGPM(wxMouseEvent& event)
