@@ -492,9 +492,9 @@ END_EVENT_TABLE()
 
 MainFrame::MainFrame(wxWindow* parent)
        : wxFrame(parent, -1, _T("MainWin"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
        m_LayoutManager(this),
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
        m_pAccel(0L),
 #if wxUSE_FILE_HISTORY
        m_pFilesHistory(0),
@@ -583,9 +583,9 @@ MainFrame::MainFrame(wxWindow* parent)
     if (deflayout.IsEmpty())
         Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), gDefaultLayout);
     DoFixToolbarsLayout();
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     gDefaultLayoutData = m_LayoutManager.SavePerspective(); // keep the "hardcoded" layout handy
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     SaveViewLayout(gDefaultLayout, gDefaultLayoutData);
     LoadWindowState();
 
@@ -4469,25 +4469,25 @@ void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
     if (event.column != -1)
         info = info.Position(event.column);
     info = info.CloseButton(event.hideable ? true : false);
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.AddPane(event.pWindow, info);
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 }
 
 void MainFrame::OnRequestUndockWindow(CodeBlocksDockEvent& event)
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.DetachPane(event.pWindow);
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 }
 
 void MainFrame::OnRequestShowDockWindow(CodeBlocksDockEvent& event)
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.GetPane(event.pWindow).Show();
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 
     CodeBlocksDockEvent evt(cbEVT_DOCK_WINDOW_VISIBILITY);
@@ -4497,9 +4497,9 @@ void MainFrame::OnRequestShowDockWindow(CodeBlocksDockEvent& event)
 
 void MainFrame::OnRequestHideDockWindow(CodeBlocksDockEvent& event)
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.GetPane(event.pWindow).Hide();
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 
     CodeBlocksDockEvent evt(cbEVT_DOCK_WINDOW_VISIBILITY);
@@ -4569,9 +4569,9 @@ void MainFrame::OnShowLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs)
         return;
 
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.GetPane(infoPane).Show(true);
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 }
 
@@ -4580,9 +4580,9 @@ void MainFrame::OnHideLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs || m_AutoHideLockCounter > 0)
         return;
 
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
     m_LayoutManager.GetPane(infoPane).Show(false);
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
     DoUpdateLayout();
 }
 
@@ -4599,9 +4599,9 @@ void MainFrame::OnUnlockLogManager(CodeBlocksLogEvent& event)
         return;
     if (--m_AutoHideLockCounter == 0)
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_AUI
         m_LayoutManager.GetPane(infoPane).Show(false);
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_AUI
         DoUpdateLayout();
     }
 }
