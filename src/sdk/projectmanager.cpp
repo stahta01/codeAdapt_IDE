@@ -305,8 +305,8 @@ void ProjectManager::InitPane()
         return;
     if(m_pTree)
         return;
-    BuildTree();
 #if wxUSE_NOTEBOOK
+    BuildTree();
     m_pNotebook->AddPage(m_pTree, _("Projects"));
 #endif // wxUSE_NOTEBOOK
 }
@@ -880,6 +880,7 @@ bool ProjectManager::QueryCloseProject(cbProject *proj,bool dontsavefiles)
         return true;
     if(proj->GetCurrentlyCompilingTarget())
         return false;
+#if wxUSE_NOTEBOOK
     if(!dontsavefiles)
         if(!proj->QueryCloseAllFiles())
             return false;
@@ -894,6 +895,7 @@ bool ProjectManager::QueryCloseProject(cbProject *proj,bool dontsavefiles)
             case wxID_CANCEL:  return false;
         }
     }
+#endif // wxUSE_NOTEBOOK
     return true;
 } // end of QueryCloseProject
 
@@ -965,7 +967,9 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     event.SetProject(project);
     Manager::Get()->GetPluginManager()->NotifyPlugins(event);
 
+#if wxUSE_NOTEBOOK
     project->CloseAllFiles(true);
+#endif // wxUSE_NOTEBOOK
     if (refresh)
         m_pTree->Delete(project->GetProjectNode());
     if (wasActive && m_pProjects->GetCount())
@@ -2074,6 +2078,7 @@ void ProjectManager::OnAddFileToProject(wxCommandEvent& event)
 void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     wxTreeItemId sel = m_pTree->GetSelection();
     FileTreeData* ftd = (FileTreeData*)m_pTree->GetItemData(sel);
     if (!ftd)
@@ -2176,6 +2181,7 @@ void ProjectManager::OnRemoveFileFromProject(wxCommandEvent& event)
             prj->VirtualFolderDeleted(m_pTree, sel);
         RebuildTree();
     }
+#endif // wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -2649,6 +2655,7 @@ void ProjectManager::CheckForExternallyModifiedProjects()
 } // end of CheckForExternallyModifiedProjects
 
 
+#if wxUSE_NOTEBOOK
 void ProjectManager::RemoveFilesRecursively(wxTreeItemId& sel_id)
 {
     wxTreeItemIdValue cookie;
@@ -2695,6 +2702,7 @@ void ProjectManager::RemoveFilesRecursively(wxTreeItemId& sel_id)
             break;
     }
 }
+#endif // wxUSE_NOTEBOOK
 
 bool ProjectManager::BeginLoadingProject()
 {
@@ -2728,7 +2736,9 @@ void ProjectManager::EndLoadingProject(cbProject* project)
         if (newAddition)
         {
             m_pProjects->Add(project);
+#if wxUSE_NOTEBOOK
             project->LoadLayout();
+#endif // wxUSE_NOTEBOOK
         }
 
         if (!m_IsLoadingWorkspace)
