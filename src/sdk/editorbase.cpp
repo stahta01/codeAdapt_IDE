@@ -82,7 +82,11 @@ END_EVENT_TABLE()
 void EditorBase::InitFilename(const wxString& filename)
 {
     if (filename.IsEmpty())
+#if wxUSE_NOTEBOOK
         m_Filename = CreateUniqueFilename();
+#else
+        m_Filename = _("Untitled");
+#endif // wxUSE_NOTEBOOK
     else
         m_Filename = filename;
 
