@@ -11,6 +11,8 @@
 #include "infopane.h"
 #include <logmanager.h>
 
+#if wxUSE_NOTEBOOK
+
 namespace
 {
 	int idClear = wxNewId();
@@ -303,3 +305,4 @@ bool InfoPane::DeleteNonLogger(wxWindow* p)
    return false;
 }
 
+#endif // wxUSE_NOTEBOOK

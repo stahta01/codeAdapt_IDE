@@ -32,6 +32,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
     wxDateTime now = wxDateTime::Now();
     path << now.Format(_T("\\%Y%m%d-%H%M%S"));
 
+#if wxUSE_NOTEBOOK
     EditorManager* em = Manager::Get()->GetEditorManager();
     if(em)
     {
@@ -75,6 +76,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
             }
         }
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)
