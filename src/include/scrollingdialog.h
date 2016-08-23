@@ -16,6 +16,8 @@
 #include "wx/propdlg.h"
 #include "settings.h" // DLLIMPORT
 
+#if wxUSE_BOOKCTRL
+
 /*!
  * Base class for layout adapters - code that, for example, turns a dialog into a
  * scrolling dialog if there isn't enough screen space. You can derive further
@@ -267,6 +269,8 @@ protected:
 
     DECLARE_DYNAMIC_CLASS(wxScrollingPropertySheetDialog)
 };
+
+#endif // wxUSE_BOOKCTRL
 
 #endif
  // _WX_SCROLLINGDIALOG_H_
