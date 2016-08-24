@@ -753,7 +753,9 @@ void MainFrame::SetupGUILogging()
 
     if(!Manager::IsBatchBuild())
     {
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         infoPane = new InfoPane(this);
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 #if wxUSE_NOTEBOOK && wxUSE_AUI
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
@@ -761,6 +763,7 @@ void MainFrame::SetupGUILogging()
                                   Bottom());
 
 #endif // wxUSE_NOTEBOOK && wxUSE_AUI
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         wxWindow* log;
 
         for(size_t i = LogManager::app_log; i < LogManager::max_logs; ++i)
@@ -768,14 +771,18 @@ void MainFrame::SetupGUILogging()
             if((log = mgr->Slot(i).GetLogger()->CreateControl(infoPane)))
                 infoPane->AddLogger(mgr->Slot(i).GetLogger(), log, mgr->Slot(i).title, mgr->Slot(i).icon);
         }
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
     }
     else
     {
         m_pBatchBuildDialog = new BatchLogWindow(this, _("Batch build"));
         wxSizer* s = new wxBoxSizer(wxVERTICAL);
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         infoPane = new InfoPane(m_pBatchBuildDialog);
         s->Add(infoPane, 1, wxEXPAND);
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
         m_pBatchBuildDialog->SetSizer(s);
+
 
         // setting &g_null_log causes the app to crash on exit for some reason...
         mgr->SetLog(new NullLogger, LogManager::app_log);
@@ -1218,7 +1225,9 @@ void MainFrame::LoadWindowState()
 #if wxUSE_NOTEBOOK
     Manager::Get()->GetProjectManager()->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_selection"), 0));
 #endif // wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     infoPane->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_selection"), 0));
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 
 #ifndef __WXMAC__
     int x = 0;
@@ -1263,7 +1272,9 @@ void MainFrame::SaveWindowState()
 #if wxUSE_NOTEBOOK
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left_block_selection"), Manager::Get()->GetProjectManager()->GetNotebook()->GetSelection());
 #endif // wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/bottom_block_selection"), infoPane->GetSelection());
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 
     // save window size and position
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/maximized"), IsMaximized());
@@ -1793,10 +1804,10 @@ void MainFrame::DoUpdateEditorStyle()
     wxFlatNotebook* fn = Manager::Get()->GetEditorManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("editor"), wxFNB_MOUSE_MIDDLE_CLOSES_TABS | wxFNB_X_ON_TAB | wxFNB_NO_X_BUTTON);
 
-#ifndef CB_USE_AUI_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     fn = infoPane;
     DoUpdateEditorStyle(fn, _T("message"), wxFNB_NO_X_BUTTON);
-#endif // CB_USE_AUI_NOTEBOOK
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 
     fn = Manager::Get()->GetProjectManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("project"), wxFNB_NO_X_BUTTON);
@@ -1926,11 +1937,15 @@ void MainFrame::ShowHideScriptConsole()
     if (!m_pScriptConsole)
     {
         m_pScriptConsole = new ScriptConsole(this, -1);
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         infoPane->AddNonLogger(m_pScriptConsole, _("Script console"));
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
     }
     else
     {
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         infoPane->DeleteNonLogger(m_pScriptConsole);
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
         m_pScriptConsole = 0;
     }
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/show_script_console"), m_pScriptConsole != 0);
@@ -2926,11 +2941,13 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     // Hide the window
     Hide();
 
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     if (!Manager::IsBatchBuild())
     {
         infoPane->Destroy();
         infoPane = 0;
     }
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 
     Manager::Shutdown(); // Shutdown() is not Free(), Manager is automatically destroyed at exit
     Destroy();
@@ -3953,9 +3970,11 @@ void MainFrame::OnViewLayoutDelete(wxCommandEvent& event)
 
 void MainFrame::OnViewScriptConsole(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     ShowHideScriptConsole();
     if (m_pScriptConsole)
         infoPane->ShowNonLogger(m_pScriptConsole);
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 }
 
 void MainFrame::OnSearchFind(wxCommandEvent& event)
@@ -4359,7 +4378,11 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
         ;
 #endif // wxUSE_NOTEBOOK
     else if (event.GetId() == idViewLogManager)
+#if wxUSE_NOTEBOOK || wxUSE_AUI
         win = infoPane;
+#else
+        ;
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 #if wxUSE_TOOLBAR
     else if (event.GetId() == idViewToolMain)
         win = m_pToolbar;
