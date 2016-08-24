@@ -37,12 +37,10 @@ struct CommentToken {
 extern int idStartHerePageLink;
 extern int idStartHerePageVarSubst;
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
-class wxFlatNotebook;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 #if wxUSE_NOTEBOOK
-class InfoPane;
+class wxFlatNotebook;
 #endif // wxUSE_NOTEBOOK
+class InfoPane;
 class wxGauge;
 
 class MainFrame : public wxFrame
@@ -295,9 +293,9 @@ class MainFrame : public wxFrame
         void DoUpdateLayout();
         void DoUpdateLayoutColours();
         void DoUpdateEditorStyle();
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
         void DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& prefix, long defaultStyle);
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
         void ShowHideStartPage(bool forceHasProject = false);
         void ShowHideScriptConsole();
@@ -323,9 +321,7 @@ class MainFrame : public wxFrame
 #endif // wxUSE_NOTEBOOK
         ProjectManager* m_pPrjMan;
         LogManager* m_pMsgMan;
-#if wxUSE_NOTEBOOK
         InfoPane *infoPane;
-#endif // wxUSE_NOTEBOOK
 
 #if wxUSE_TOOLBAR
         wxToolBar* m_pToolbar;
