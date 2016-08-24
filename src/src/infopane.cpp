@@ -52,7 +52,7 @@ int InfoPane::AddPagePrivate(wxWindow* p, const wxString& title, wxBitmap* icon)
 {
 	const wxBitmap& bmp = icon ? *icon : defaultBitmap;
 
-#if wxUSE_NOTEBOOK || wxUSE_AUI
+#if !wxUSE_NOTEBOOK && wxUSE_AUI
 	AddPage(p, title, false, bmp);
 #else
     GetImageList()->push_back(bmp);
