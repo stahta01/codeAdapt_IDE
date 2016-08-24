@@ -59,7 +59,6 @@
 #include "directcommands.h"
 #include "globals.h"
 #include "cbworkspace.h"
-#include "cbstyledtextctrl.h"
 
 
 #if wxCHECK_VERSION(3, 0 ,0)
