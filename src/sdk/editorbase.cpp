@@ -26,9 +26,9 @@
 #endif
 #include "cbstyledtextctrl.h"
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 // needed for initialization of variables
 int editorbase_RegisterId(int id)
@@ -159,7 +159,7 @@ const wxString& EditorBase::GetTitle()
     return m_WinTitle;
 }
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 void EditorBase::SetTitle(const wxString& newTitle)
 {
     m_WinTitle = newTitle;
@@ -167,7 +167,7 @@ void EditorBase::SetTitle(const wxString& newTitle)
     if (mypage != -1)
         Manager::Get()->GetEditorManager()->GetNotebook()->SetPageText(mypage, newTitle);
 }
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 void EditorBase::Activate()
 {
