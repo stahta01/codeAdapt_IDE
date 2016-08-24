@@ -580,7 +580,7 @@ void CompilerGCC::OnRelease(bool appShutDown)
 
 int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbConfigurationDialog dlg(Manager::Get()->GetAppWindow(), wxID_ANY, _("Project build options"));
     cbConfigurationPanel* panel = new CompilerOptionsDlg(&dlg, this, project, target);
     dlg.AttachConfigurationPanel(panel);
@@ -597,18 +597,18 @@ int CompilerGCC::Configure(cbProject* project, ProjectBuildTarget* target)
         else
             m_Log->RemoveBuildProgressBar();
     }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 //    delete panel;
     return 0;
 }
 
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
 cbConfigurationPanel* CompilerGCC::GetConfigurationPanel(wxWindow* parent)
 {
     CompilerOptionsDlg* dlg = new CompilerOptionsDlg(parent, this, 0, 0);
     return dlg;
 }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 
 void CompilerGCC::OnConfig(wxCommandEvent& event)
 {
@@ -2050,9 +2050,11 @@ int CompilerGCC::DistClean(const wxString& target)
 
 int CompilerGCC::DistClean(ProjectBuildTarget* target)
 {
+#if wxUSE_NOTEBOOK
     // make sure all project files are saved
     if (m_Project && !m_Project->SaveAllFiles())
         Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
+#endif // wxUSE_NOTEBOOK
 
     if (!m_IsWorkspaceOperation)
         DoPrepareQueue();

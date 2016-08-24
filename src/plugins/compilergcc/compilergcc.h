@@ -135,7 +135,9 @@ class CompilerGCC : public cbCompilerPlugin
         void OnUpdateUI(wxUpdateUIEvent& event);
         void OnConfig(wxCommandEvent& event);
     private:
+#if wxUSE_NOTEBOOK
         friend class CompilerOptionsDlg;
+#endif // wxUSE_NOTEBOOK
 
         void Dispatcher(wxCommandEvent& event);
         void TextURL(wxTextUrlEvent& event);
