@@ -508,9 +508,7 @@ MainFrame::MainFrame(wxWindow* parent)
 #endif // wxUSE_NOTEBOOK
        m_pPrjMan(0L),
        m_pMsgMan(0L),
-#if wxUSE_NOTEBOOK
        infoPane(0),
-#endif // wxUSE_NOTEBOOK
 #if wxUSE_TOOLBAR
        m_pToolbar(0L),
 #endif // wxUSE_TOOLBAR
@@ -753,8 +751,8 @@ void MainFrame::SetupGUILogging()
 
     if(!Manager::IsBatchBuild())
     {
-#if wxUSE_NOTEBOOK && wxUSE_AUI
         infoPane = new InfoPane(this);
+#if wxUSE_NOTEBOOK && wxUSE_AUI
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
                                   BestSize(wxSize(clientsize.GetWidth(), bottomH)).//MinSize(wxSize(50,50)).
@@ -903,6 +901,7 @@ void MainFrame::RecreateMenuBar()
 void MainFrame::CreateMenubar()
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     CodeBlocksEvent event(cbEVT_MENUBAR_CREATE_BEGIN);
     Manager::Get()->ProcessEvent(event);
 
@@ -1010,6 +1009,7 @@ void MainFrame::CreateMenubar()
 
     CodeBlocksEvent event2(cbEVT_MENUBAR_CREATE_END);
     Manager::Get()->ProcessEvent(event2);
+#endif // wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -1213,9 +1213,9 @@ void MainFrame::LoadWindowState()
     LoadViewLayout(deflayout);
 
     // load manager and messages selected page
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetProjectManager()->GetNotebook()->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/left_block_selection"), 0));
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
     infoPane->SetSelection(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/main_frame/layout/bottom_block_selection"), 0));
 
 #ifndef __WXMAC__
@@ -1258,9 +1258,9 @@ void MainFrame::SaveWindowState()
     }
 
     // save manager and messages selected page
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/left_block_selection"), Manager::Get()->GetProjectManager()->GetNotebook()->GetSelection());
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/bottom_block_selection"), infoPane->GetSelection());
 
     // save window size and position
@@ -1704,7 +1704,7 @@ void MainFrame::DoCreateStatusBar()
 
 void MainFrame::DoUpdateStatusBar()
 {
-#if wxUSE_STATUSBAR
+#if wxUSE_STATUSBAR && wxUSE_NOTEBOOK
     if (!GetStatusBar())
         return;
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
@@ -1734,10 +1734,10 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(personality, panel++);
     }
-#endif // wxUSE_STATUSBAR
+#endif // wxUSE_STATUSBAR && wxUSE_NOTEBOOK
 }
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& prefix, long defaultStyle)
 {
     if (!target)
@@ -1781,9 +1781,9 @@ void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& pref
     target->SetGradientColorFrom(cfg->ReadColour(_T("/environment/gradient_from"), wxColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE))));
     target->SetGradientColorTo(cfg->ReadColour(_T("/environment/gradient_to"), *wxWHITE));
 }
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 void MainFrame::DoUpdateEditorStyle()
 {
     wxFlatNotebook* fn = Manager::Get()->GetEditorManager()->GetNotebook();
@@ -1797,7 +1797,7 @@ void MainFrame::DoUpdateEditorStyle()
     fn = Manager::Get()->GetProjectManager()->GetNotebook();
     DoUpdateEditorStyle(fn, _T("project"), wxFNB_NO_X_BUTTON);
 }
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 void MainFrame::DoUpdateLayoutColours()
 {
@@ -1877,9 +1877,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
     if(m_InitiatedShutdown)
     {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             sh->Destroy();
+#endif // wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
         return;
     }
@@ -1891,11 +1893,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 #ifndef CA_BUILD_WITHOUT_GUI
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show && !sh)
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
         sh = new StartHerePage(this, Manager::Get()->GetEditorManager()->GetNotebook());
 #else
         ;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
     else if (!show && sh)
         sh->Destroy();
 #endif // CA_BUILD_WITHOUT_GUI
@@ -1978,6 +1980,7 @@ void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
 void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (!sh)
         return;
@@ -2025,6 +2028,7 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     buf.Replace(_T("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
     ((StartHerePage*)sh)->SetPageContent(buf);
 #endif // wxUSE_FILE_HISTORY
+#endif // wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -4181,11 +4185,11 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
 #ifndef CA_BUILD_WITHOUT_GUI
     wxWindow* win = 0;
     if (event.GetId() == idViewManager)
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
         win = Manager::Get()->GetProjectManager()->GetNotebook();
 #else
         ;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
     else if (event.GetId() == idViewLogManager)
         win = infoPane;
 #if wxUSE_TOOLBAR
