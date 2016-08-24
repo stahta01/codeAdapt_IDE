@@ -38,9 +38,9 @@ InfoPane::InfoPane(wxWindow* parent) : InfoPaneNotebook(parent, wxID_ANY, wxDefa
         page[i] = Page();
     }
 
-#ifndef CB_USE_AUI_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
     SetImageList(new wxFlatNotebookImageList);
-#endif
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 }
 
 InfoPane::~InfoPane()
@@ -52,12 +52,12 @@ int InfoPane::AddPagePrivate(wxWindow* p, const wxString& title, wxBitmap* icon)
 {
 	const wxBitmap& bmp = icon ? *icon : defaultBitmap;
 
-#ifdef CB_USE_AUI_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
 	AddPage(p, title, false, bmp);
 #else
     GetImageList()->push_back(bmp);
 	AddPage(p, title, false, GetImageList()->size() - 1);
-#endif
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 	return GetPageCount() - 1;
 }
 
