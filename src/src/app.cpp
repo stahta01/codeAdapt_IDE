@@ -1061,10 +1061,8 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
                     : 0;
     if (ed)
     {
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
         // hack for linux: without it, the editor loses the caret every second activate o.O
         Manager::Get()->GetEditorManager()->GetNotebook()->SetFocus();
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
 
         ed->GetControl()->SetFocus();
     }
