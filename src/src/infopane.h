@@ -4,9 +4,11 @@
 
 #include <logmanager.h>
 
-#if wxUSE_NOTEBOOK
+#include <wx/defs.h>
 
-#ifdef CB_USE_AUI_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
+
+#if wxUSE_AUI && !wxUSE_NOTEBOOK
     #include <wx/aui/auibook.h>
     typedef wxAuiNotebook InfoPaneNotebook;
     typedef wxAuiNotebook PieceOfShitBaseClass;
@@ -92,6 +94,6 @@ public:
     bool DeleteNonLogger(wxWindow* p);
 };
 
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
 
 #endif

@@ -11,7 +11,7 @@
 #include "infopane.h"
 #include <logmanager.h>
 
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK || wxUSE_AUI
 
 namespace
 {
@@ -305,4 +305,4 @@ bool InfoPane::DeleteNonLogger(wxWindow* p)
    return false;
 }
 
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK || wxUSE_AUI
