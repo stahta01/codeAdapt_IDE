@@ -41,9 +41,9 @@
 #include <wx/clipbrd.h>
 #include <wx/taskbar.h>
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 #include <cbexception.h>
 #include <wx/debugrpt.h>
 #include <configmanager.h>
