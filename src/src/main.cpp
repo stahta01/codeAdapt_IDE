@@ -731,7 +731,9 @@ void MainFrame::CreateIDE()
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
+#if wxUSE_NOTEBOOK
     DoUpdateEditorStyle();
+#endif // wxUSE_NOTEBOOK
 
 #if wxUSE_DRAG_AND_DROP
     m_pEdMan->GetNotebook()->SetDropTarget(new wxMyFileDropTarget(this));
