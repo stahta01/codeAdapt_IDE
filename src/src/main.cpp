@@ -77,9 +77,9 @@
 #include "batchbuild.h"
 #include <wx/printdlg.h>
 #include <wx/filename.h>
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 #include "uservarmanager.h"
 #include "infowindow.h"
@@ -702,12 +702,12 @@ void MainFrame::CreateIDE()
 
     // project manager
     Manager::Get(this);
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     m_LayoutManager.AddPane(Manager::Get()->GetProjectManager()->GetNotebook(), wxAuiPaneInfo().
                               Name(wxT("ManagementPane")).Caption(_("Management")).
                               BestSize(wxSize(leftW, clientsize.GetHeight())).MinSize(wxSize(100,100)).
                               Left().Layer(1));
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
 
     // logs manager
     SetupGUILogging();
@@ -725,11 +725,11 @@ void MainFrame::CreateIDE()
     SetToolBar(0);
 #endif // wxUSE_TOOLBAR
 
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
                             CentrePane());
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
@@ -753,14 +753,14 @@ void MainFrame::SetupGUILogging()
 
     if(!Manager::IsBatchBuild())
     {
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
         infoPane = new InfoPane(this);
         m_LayoutManager.AddPane(infoPane, wxAuiPaneInfo().
                                   Name(wxT("MessagesPane")).Caption(_("Logs & others")).
                                   BestSize(wxSize(clientsize.GetWidth(), bottomH)).//MinSize(wxSize(50,50)).
                                   Bottom());
 
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
         wxWindow* log;
 
         for(size_t i = LogManager::app_log; i < LogManager::max_logs; ++i)
@@ -2857,11 +2857,11 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     if (Manager::IsBatchBuild() == false)
         SaveWindowState();
 
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     m_LayoutManager.DetachPane(Manager::Get()->GetProjectManager()->GetNotebook());
     m_LayoutManager.DetachPane(infoPane);
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
 
 #if wxUSE_AUI
     m_LayoutManager.UnInit();
@@ -4073,16 +4073,16 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
 #ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
 #else
     bool manVis = false;
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
 
     mbar->Check(idViewManager, manVis);
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     mbar->Check(idViewLogManager, m_LayoutManager.GetPane(infoPane).IsShown());
-#endif // wxUSE_AUI
+#endif // wxUSE_NOTEBOOK && wxUSE_AUI
     mbar->Check(idViewStatusbar, GetStatusBar() && GetStatusBar()->IsShown());
     mbar->Check(idViewScriptConsole, m_pScriptConsole != 0);
     mbar->Check(idViewFullScreen, IsFullScreen());
@@ -4580,7 +4580,7 @@ void MainFrame::OnShowLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs)
         return;
 
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     m_LayoutManager.GetPane(infoPane).Show(true);
 #endif // wxUSE_AUI
     DoUpdateLayout();
@@ -4591,7 +4591,7 @@ void MainFrame::OnHideLogManager(CodeBlocksLogEvent& event)
     if (!m_AutoHideLogs || m_AutoHideLockCounter > 0)
         return;
 
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
     m_LayoutManager.GetPane(infoPane).Show(false);
 #endif // wxUSE_AUI
     DoUpdateLayout();
@@ -4610,7 +4610,7 @@ void MainFrame::OnUnlockLogManager(CodeBlocksLogEvent& event)
         return;
     if (--m_AutoHideLockCounter == 0)
     {
-#if wxUSE_AUI
+#if wxUSE_NOTEBOOK && wxUSE_AUI
         m_LayoutManager.GetPane(infoPane).Show(false);
 #endif // wxUSE_AUI
         DoUpdateLayout();
