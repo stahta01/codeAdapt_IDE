@@ -66,7 +66,7 @@
 //          - compiler change of project/target -> all options should be removed : different compiler is different options
 //          - directory add/edit and libray add/edit : check if it already existed
 
-#if wxUSE_XRC
+#if wxUSE_XRC && wxUSE_NOTEBOOK
 
 BEGIN_EVENT_TABLE(CompilerOptionsDlg, wxPanel)
     EVT_UPDATE_UI(            XRCID("btnEditDir"),            CompilerOptionsDlg::OnUpdateUI)
@@ -2131,4 +2131,4 @@ void CompilerOptionsDlg::OnMyCharHook(wxKeyEvent& event)
     }
 } // OnMyCharHook
 
-#endif // wxUSE_XRC
+#endif // wxUSE_XRC && wxUSE_NOTEBOOK
