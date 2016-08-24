@@ -1506,9 +1506,9 @@ bool cbProject::CloseAllFiles(bool dontsave)
 }
 #endif // wxUSE_NOTEBOOK
 
-#if wxUSE_NOTEBOOK
 bool cbProject::SaveAllFiles()
 {
+#if wxUSE_NOTEBOOK
     int count = m_Files.GetCount();
     FilesList::Node* node = m_Files.GetFirst();
     while(node)
@@ -1519,8 +1519,10 @@ bool cbProject::SaveAllFiles()
         node = node->GetNext();
     }
     return count == 0;
-}
+#else
+    return 0;
 #endif // wxUSE_NOTEBOOK
+}
 
 bool cbProject::ShowOptions()
 {
