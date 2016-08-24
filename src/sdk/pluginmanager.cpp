@@ -1302,7 +1302,7 @@ int SortByConfigurationPriority(cbPlugin** first, cbPlugin** second)
 
 void PluginManager::GetConfigurationPanels(int group, wxWindow* parent, ConfigurationPanelsArray& arrayToFill)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     // build an array of Plugins* because we need to order it by configuration priority
     PluginsArray arr;
     for (unsigned int i = 0; i < m_Plugins.GetCount(); ++i)
@@ -1325,7 +1325,7 @@ void PluginManager::GetConfigurationPanels(int group, wxWindow* parent, Configur
         if (pnl)
             arrayToFill.Add(pnl);
     }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 }
 
 void PluginManager::GetProjectConfigurationPanels(wxWindow* parent, cbProject* project, ConfigurationPanelsArray& arrayToFill)
