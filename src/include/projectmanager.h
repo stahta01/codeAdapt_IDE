@@ -21,10 +21,10 @@ class wxImageList;
 class ProjectFile;
 class FilesGroupsAndMasks;
 class cbWorkspace;
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 class wxFlatNotebook;
 class wxFlatNotebookEvent;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 DLLIMPORT extern int ID_ProjectManager; /* Used by both Project and Editor Managers */
 WX_DEFINE_ARRAY(cbProject*, ProjectsArray);
@@ -51,9 +51,9 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
         ProjectManager(const ProjectManager& rhs) { cbThrow(_T("Can't call ProjectManager's copy ctor!!!")); }
         virtual void operator=(const ProjectManager& rhs){ cbThrow(_T("Can't assign an ProjectManager* !!!")); }
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
         wxFlatNotebook* GetNotebook() { return m_pNotebook; }
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
         // Can the app shutdown? (actually: is ProjectManager busy at the moment?)
         static bool CanShutdown(){ return s_CanShutdown; }
@@ -472,9 +472,9 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
         int DoAddFileToProject(const wxString& filename, cbProject* project, wxArrayInt& targets);
         void RemoveFilesRecursively(wxTreeItemId& sel_id);
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
         wxFlatNotebook* m_pNotebook;
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
         wxTreeCtrl* m_pTree;
         wxTreeItemId m_TreeRoot;
         cbProject* m_pActiveProject;
