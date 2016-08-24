@@ -57,9 +57,9 @@
 #include <wx/utils.h>
 #include <wx/textdlg.h>
 #include <wx/progdlg.h>
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 #include "incrementalselectlistdlg.h"
 #include "filegroupsandmasks.h"

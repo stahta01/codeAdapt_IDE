@@ -73,9 +73,9 @@
 #include "searchresultslog.h"
 #include "projectfileoptionsdlg.h"
 
-#ifndef CA_DISABLE_FLAT_NOTEBOOK
+#if wxUSE_NOTEBOOK
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
-#endif // #ifndef CA_DISABLE_FLAT_NOTEBOOK
+#endif // wxUSE_NOTEBOOK
 
 #if wxUSE_NOTEBOOK
 
