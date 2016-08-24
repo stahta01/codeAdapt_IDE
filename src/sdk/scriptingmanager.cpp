@@ -4,21 +4,29 @@
     #include "scriptingmanager.h"
     #include "cbexception.h"
     #include "manager.h"
+#ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include "editormanager.h"
+#endif // #ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include "logmanager.h"
     #include "configmanager.h"
+#ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include "cbeditor.h"
+#endif // #ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include <settings.h>
     #include "globals.h"
 
+#ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include <wx/msgdlg.h>
+#endif // #ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
     #include <wx/file.h>
     #include <wx/filename.h>
     #include <wx/regex.h>
 #endif
 
 #include "crc32.h"
+#ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
 #include "menuitemsmanager.h"
+#endif // #ifndef CA_DISABLE_GUI_IN_SCRIPT_MGR
 #include "scripting/sqplus/sqplus.h"
 #include "scripting/bindings/scriptbindings.h"
 #include "scripting/bindings/sc_plugin.h"
