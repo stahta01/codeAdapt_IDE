@@ -354,6 +354,8 @@
 			<Add option="-DNOPCH" />
 			<Add option="-DCA_DISABLE_PLUGIN_API_TOOLS" />
 			<Add option="-DCA_DISABLE_GUI_IN_SCRIPT_MGR" />
+			<Add option="-DCA_DISABLE_PLUGIN_API_EDITOR" />
+			<Add option="-DCA_DISABLE_EDITOR" />
 		</Compiler>
 		<Unit filename="base/tinyxml/tinystr.cpp">
 			<Option target="tinyXML" />
