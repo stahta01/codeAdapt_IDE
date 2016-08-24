@@ -1659,6 +1659,7 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
 
 bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 {
+#if wxUSE_NOTEBOOK
     if (Manager::Get()->GetEditorManager()->Open(filename))
     {
 #if wxUSE_FILE_HISTORY
@@ -1667,6 +1668,7 @@ bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 #endif // wxUSE_FILE_HISTORY
         return true;
     }
+#endif // wxUSE_NOTEBOOK
     return false;
 }
 
@@ -1831,8 +1833,13 @@ void MainFrame::DoUpdateLayout()
 
 void MainFrame::DoUpdateAppTitle()
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0L;
+#else
+    EditorBase* ed = 0;
+#endif // wxUSE_NOTEBOOK
     cbProject* prj = 0;
+#if wxUSE_NOTEBOOK
     if(ed && ed->IsBuiltinEditor())
     {
         ProjectFile* prjf = ((cbEditor*)ed)->GetProjectFile();
@@ -1840,6 +1847,7 @@ void MainFrame::DoUpdateAppTitle()
             prj = prjf->GetParentProject();
     }
     else
+#endif // wxUSE_NOTEBOOK
         prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     wxString projname;
     wxString edname;
@@ -1886,12 +1894,19 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
         return;
     }
 
+#if wxUSE_NOTEBOOK
     bool show = !forceHasProject &&
                 Manager::Get()->GetProjectManager()->GetProjects()->GetCount() == 0 &&
                 Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/start_here_page"), true);
+#else
+    bool show = false;
+#endif // wxUSE_NOTEBOOK
 
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
+#else
+    EditorBase* sh = 0;
+#endif // wxUSE_NOTEBOOK
     if (show && !sh)
 #if wxUSE_NOTEBOOK
         sh = new StartHerePage(this, Manager::Get()->GetEditorManager()->GetNotebook());
@@ -1900,7 +1915,6 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 #endif // wxUSE_NOTEBOOK
     else if (!show && sh)
         sh->Destroy();
-#endif // CA_BUILD_WITHOUT_GUI
 }
 
 void MainFrame::ShowHideScriptConsole()
@@ -2587,24 +2601,30 @@ void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
 
 void MainFrame::OnFileSave(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     if (!Manager::Get()->GetEditorManager()->SaveActive())
     {
         wxString msg;
         msg.Printf(_("File %s could not be saved..."), Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename().c_str());
         cbMessageBox(msg, _("Error saving file"), wxICON_ERROR);
     }
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileSaveAs(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->SaveActiveAs();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 } // end of OnFileSaveAs
 
 void MainFrame::OnFileSaveAllFiles(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->SaveAll();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
@@ -2642,7 +2662,9 @@ void MainFrame::OnFileSaveProjectAllProjects(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveAll(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->SaveAll();
+#endif // wxUSE_NOTEBOOK
     Manager::Get()->GetProjectManager()->SaveAllProjects();
 
     if (Manager::Get()->GetProjectManager()->GetWorkspace()->GetModified()
@@ -2670,7 +2692,11 @@ void MainFrame::OnFileCloseProject(wxCommandEvent& event)
 {
     // we 're not actually shutting down here, but we want to check if the
     // active project is still opening files (still busy)
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if wxUSE_NOTEBOOK
+        || !EditorManager::CanShutdown()
+#endif // wxUSE_NOTEBOOK
+    )
     {
         wxBell();
         return;
@@ -2681,7 +2707,11 @@ void MainFrame::OnFileCloseProject(wxCommandEvent& event)
 
 void MainFrame::OnFileCloseAllProjects(wxCommandEvent& event)
 {
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if wxUSE_NOTEBOOK
+        || !EditorManager::CanShutdown()
+#endif // wxUSE_NOTEBOOK
+    )
     {
         wxBell();
         return;
@@ -2753,26 +2783,34 @@ void MainFrame::OnFileCloseWorkspace(wxCommandEvent& event)
 
 void MainFrame::OnFileClose(wxCommandEvent& WXUNUSED(event))
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->CloseActive();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
     Refresh();
 }
 
 void MainFrame::OnFileCloseAll(wxCommandEvent& WXUNUSED(event))
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->CloseAll();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileNext(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->ActivateNext();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFilePrev(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->ActivatePrevious();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
@@ -2837,7 +2875,11 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
             return;
         }
     }
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if wxUSE_NOTEBOOK
+        || !EditorManager::CanShutdown()
+#endif // wxUSE_NOTEBOOK
+    )
     {
         event.Veto();
         wxBell();
@@ -2894,203 +2936,256 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
 
 void MainFrame::OnEditSwapHeaderSource(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     Manager::Get()->GetEditorManager()->SwapActiveHeaderSource();
+#endif // wxUSE_NOTEBOOK
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnEditGotoMatchingBrace(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GotoMatchingBrace();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditBookmarksToggle(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->ToggleBookmark();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditBookmarksNext(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->GotoNextBookmark();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditBookmarksPrevious(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->GotoPreviousBookmark();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditUndo(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Undo();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditRedo(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Redo();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditCopy(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Copy();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditCut(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Cut();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditPaste(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Paste();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditParaUp(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUp();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditParaUpExtend(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUpExtend();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditParaDown(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDown();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditParaDownExtend(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDownExtend();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditWordPartLeft(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeft();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditWordPartLeftExtend(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeftExtend();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditWordPartRight(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRight();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditWordPartRightExtend(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRightExtend();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditZoomIn(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomIn();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditZoomOut(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomOut();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditZoomReset(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SetZoom(0);
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLineCut(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCut();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLineDelete(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDelete();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLineDuplicate(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDuplicate();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLineTranspose(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineTranspose();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLineCopy(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCopy();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3107,27 +3202,34 @@ void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 
         ed->GetControl()->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditUpperCase(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->UpperCase();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditLowerCase(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LowerCase();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditSelectAll(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SelectAll();
+#endif // wxUSE_NOTEBOOK
 }
 
 CommentToken GetCommentToken(cbStyledTextCtrl* stc)
@@ -3309,6 +3411,7 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
  */
 void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3353,11 +3456,13 @@ void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnEditCommentSelected
 
 /* See above (OnEditCommentSelected) for details. */
 void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3438,10 +3543,12 @@ void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnEditUncommentSelected
 
 void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3495,10 +3602,12 @@ void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnEditToggleCommentSelected
 
 void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3539,10 +3648,12 @@ void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnStreamToggleCommentSelected
 
 void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3608,20 +3719,23 @@ void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // wxUSE_NOTEBOOK
 } // end of OnEditBoxCommentSelected
 
 void MainFrame::OnEditAutoComplete(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
 #if wxUSE_TEXTDLG
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->AutoComplete();
 #endif // wxUSE_TEXTDLG
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3643,54 +3757,66 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
             ed->SetLanguage(lang);
         }
     }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditFoldAll(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldAll();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditUnfoldAll(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldAll();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditToggleAllFolds(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleAllFolds();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditFoldBlock(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldBlockFromLine();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditUnfoldBlock(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldBlockFromLine();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditToggleFoldBlock(wxCommandEvent& event)
 {
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleFoldBlockFromLine();
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditEOLMode(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3711,12 +3837,12 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
             ed->GetControl()->EndUndoAction();
         }
     }
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnEditEncoding(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3753,7 +3879,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
         encoding = wxFONTENCODING_UTF32LE;
 
     ed->SetEncoding(encoding);
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 }
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
@@ -3832,34 +3958,34 @@ void MainFrame::OnViewScriptConsole(wxCommandEvent& event)
 
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     bool bDoMultipleFiles = (event.GetId() == idSearchFindInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(false, bDoMultipleFiles);
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 }// end of OnSearchFind
 
 void MainFrame::OnSearchFindNext(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     bool bNext = !(event.GetId() == idSearchFindPrevious);
     Manager::Get()->GetEditorManager()->FindNext(bNext);
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 } // end of OnSearchFindNext
 
 void MainFrame::OnSearchReplace(wxCommandEvent& event)
 {
-#ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     bool bDoMultipleFiles = (event.GetId() == idSearchReplaceInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(true, bDoMultipleFiles);
-#endif // CA_BUILD_WITHOUT_GUI
+#endif // wxUSE_NOTEBOOK
 } // end of OnSearchReplace
 
 #if wxUSE_TEXTDLG
@@ -3915,16 +4041,26 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0;
+#endif // wxUSE_NOTEBOOK
     cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
+#if wxUSE_NOTEBOOK
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
+#endif // wxUSE_NOTEBOOK
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
     wxMenuBar* mbar = GetMenuBar();
 
+#if wxUSE_NOTEBOOK
     bool canCloseProject = (ProjectManager::CanShutdown() && EditorManager::CanShutdown())
                             && prj && !prj->GetCurrentlyCompilingTarget();
     bool canClose = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
     bool canSaveFiles = ed && !(sh && Manager::Get()->GetEditorManager()->GetEditorsCount() == 1);
+#else
+    bool canCloseProject = true;
+    bool canClose = false;
+    bool canSaveFiles = false;
+#endif // wxUSE_NOTEBOOK
 
     bool canSaveAll = (prj && prj->GetModified()) || canSaveFiles || (wksp && !wksp->IsDefault() && wksp->GetModified());
 
@@ -3935,7 +4071,11 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
 #endif // wxUSE_FILE_HISTORY
     mbar->Enable(idFileClose, canClose);
     mbar->Enable(idFileCloseAll, canClose);
+#if wxUSE_NOTEBOOK
     mbar->Enable(idFileSave, ed && ed->GetModified());
+#else
+    mbar->Enable(idFileSave, false);
+#endif // wxUSE_NOTEBOOK
     mbar->Enable(idFileSaveAs, canSaveFiles);
     mbar->Enable(idFileSaveAllFiles, canSaveFiles);
     mbar->Enable(idFileSaveProject, prj && prj->GetModified() && canCloseProject);
@@ -3945,7 +4085,9 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idFileSaveWorkspaceAs, Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileCloseWorkspace, Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileSaveAll, canSaveAll);
+#if wxUSE_NOTEBOOK
     mbar->Enable(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
+#endif // wxUSE_NOTEBOOK
 
 #if wxUSE_TOOLBAR
     if (m_pToolbar)
@@ -3969,7 +4111,11 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     }
 
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbEditor* ed = NULL;
+#else
+    EditorBase* ed = NULL;
+#endif // wxUSE_NOTEBOOK
     EditorBase* eb = NULL;
     bool hasSel = false;
     bool canUndo = false;
@@ -3978,16 +4124,20 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     bool canCut = false;
     int eolMode = -1;
 
+#if wxUSE_NOTEBOOK
     if(Manager::Get()->GetEditorManager() && !Manager::isappShuttingDown())
     {
         ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     }
+#endif // wxUSE_NOTEBOOK
 
     wxMenuBar* mbar = GetMenuBar();
 
+#if wxUSE_NOTEBOOK
     if(ed)
         eolMode = ed->GetControl()->GetEOLMode();
+#endif // wxUSE_NOTEBOOK
     if(eb)
     {
         canUndo = eb->CanUndo();
@@ -4031,6 +4181,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         mbar->Check(idEditEOLCR, eolMode == wxSCI_EOL_CR);
         mbar->Check(idEditEOLLF, eolMode == wxSCI_EOL_LF);
 
+#if wxUSE_NOTEBOOK
         bool defenc = ed && (ed->GetEncoding() == wxFONTENCODING_SYSTEM || ed->GetEncoding() == wxLocale::GetSystemEncoding());
 
         mbar->Check(idEditEncodingDefault, defenc);
@@ -4050,6 +4201,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         mbar->FindItem(idEditHighlightModeText, &hl);
         if (hl)
             mbar->Check(hl->FindItem(ed->GetColourSet()->GetLanguageName(ed->GetLanguage())), true);
+#endif // wxUSE_NOTEBOOK
     }
 
 #if wxUSE_TOOLBAR
@@ -4076,7 +4228,11 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     }
 #ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
+#else
+    EditorBase* ed = 0;
+#endif // wxUSE_NOTEBOOK
 #if wxUSE_NOTEBOOK && wxUSE_AUI
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
 #else
@@ -4125,7 +4281,11 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
+#else
+    EditorBase* ed = 0;
+#endif // wxUSE_NOTEBOOK
     wxMenuBar* mbar = GetMenuBar();
 
     // 'Find' and 'Replace' are always enabled for (find|replace)-in-files
@@ -4154,7 +4314,11 @@ void MainFrame::OnProjectMenuUpdateUI(wxUpdateUIEvent& event)
     cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     wxMenuBar* mbar = GetMenuBar();
 
+#if wxUSE_NOTEBOOK
     bool canCloseProject = (ProjectManager::CanShutdown() && EditorManager::CanShutdown());
+#else
+    bool canCloseProject = true;
+#endif // wxUSE_NOTEBOOK
     mbar->Enable(idFileCloseProject, prj && canCloseProject);
     mbar->Enable(idFileCloseAllProjects, prj && canCloseProject);
     mbar->Enable(idFileSaveProject, prj && prj->GetModified() && canCloseProject);
@@ -4173,10 +4337,12 @@ void MainFrame::OnEditorUpdateUI(CodeBlocksEvent& event)
         event.Skip();
         return;
     }
+#if wxUSE_NOTEBOOK
     if (Manager::Get()->GetEditorManager() && event.GetEditor() == Manager::Get()->GetEditorManager()->GetActiveEditor())
     {
         DoUpdateStatusBar();
     }
+#endif // wxUSE_NOTEBOOK
     event.Skip();
 }
 
