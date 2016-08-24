@@ -1771,8 +1771,10 @@ int CompilerGCC::Run(ProjectBuildTarget* target)
 {
     if (!CheckProject())
     {
+#if wxUSE_NOTEBOOK
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return RunSingleFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
+#endif // wxUSE_NOTEBOOK
         return -1;
     }
     DoPrepareQueue();
@@ -1990,6 +1992,7 @@ int CompilerGCC::Clean(const wxString& target)
     wxArrayString clean;
     if (!m_Project)
     {
+#if wxUSE_NOTEBOOK
         if (!Manager::Get()->GetEditorManager()->GetActiveEditor())
           return -1;
 
@@ -1997,6 +2000,9 @@ int CompilerGCC::Clean(const wxString& target)
         clean = dc.GetCleanSingleFileCommand(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
         DoClean(clean);
         Manager::Get()->GetLogManager()->Log(_("Cleaned object and output files"), m_PageIndex);
+#else
+        return -1;
+#endif // wxUSE_NOTEBOOK
     }
 
     // generate build jobs
@@ -2233,7 +2239,15 @@ void CompilerGCC::BuildStateManagement()
 
     if (m_pBuildingProject != m_pLastBuildingProject || bt != m_pLastBuildingTarget)
     {
-        Manager::Get()->GetMacrosManager()->RecalcVars(m_pBuildingProject, Manager::Get()->GetEditorManager()->GetActiveEditor(), bt);
+        Manager::Get()->GetMacrosManager()->RecalcVars(
+            m_pBuildingProject,
+#if wxUSE_NOTEBOOK
+            Manager::Get()->GetEditorManager()->GetActiveEditor(),
+#else
+            0,
+#endif // wxUSE_NOTEBOOK
+            bt
+        );
         if (bt)
             SwitchCompiler(bt->GetCompilerID());
 
@@ -2574,9 +2588,11 @@ int CompilerGCC::Build(const wxString& target)
 
     if (!CheckProject())
     {
+#if wxUSE_NOTEBOOK
         // no active project
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return CompileFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
+#endif // wxUSE_NOTEBOOK
         return -1;
     }
 
@@ -2858,6 +2874,7 @@ ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(const wxString& file)
 
 int CompilerGCC::CompileFile(const wxString& file)
 {
+#if wxUSE_NOTEBOOK
     DoPrepareQueue();
     if (!CompilerValid())
         return -1;
@@ -2913,6 +2930,9 @@ int CompilerGCC::CompileFile(const wxString& file)
         AddToCommandQueue(compile);
     }
     return DoRunQueue();
+#else
+    return -1;
+#endif // wxUSE_NOTEBOOK
 }
 
 // events
@@ -2989,6 +3009,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
     }
     else
     {
+#if wxUSE_NOTEBOOK
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         if (ed)
         {
@@ -3007,6 +3028,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
                 CheckProject();
             }
         }
+#endif // wxUSE_NOTEBOOK
     }
 
     if (m_Project)
@@ -3211,7 +3233,11 @@ void CompilerGCC::OnClearErrors(wxCommandEvent& event)
 void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
 {
     cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+#if wxUSE_NOTEBOOK
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+#else
+    EditorBase* ed = 0;
+#endif // wxUSE_NOTEBOOK
     wxMenuBar* mbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     bool running = IsRunning();
     if (mbar)
@@ -3677,10 +3703,12 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 
         m_RunAfterCompile = false;
 
+#if wxUSE_NOTEBOOK
         // no matter what happened with the build, return the focus to the active editor
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if (ed)
             ed->GetControl()->SetFocus();
+#endif // wxUSE_NOTEBOOK
     }
 }
 
