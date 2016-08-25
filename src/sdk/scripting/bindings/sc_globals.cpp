@@ -44,12 +44,12 @@ namespace ScriptBindings
     {
         return Manager::Get()->GetProjectManager();
     }
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     EditorManager* getEM()
     {
         return Manager::Get()->GetEditorManager();
     }
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     ConfigManager* getCM()
     {
         return Manager::Get()->GetConfigManager(_T("scripts"));
@@ -133,9 +133,9 @@ namespace ScriptBindings
         SqPlus::RegisterGlobal(gReplaceMacros, "ReplaceMacros");
 
         SqPlus::RegisterGlobal(getPM, "GetProjectManager");
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         SqPlus::RegisterGlobal(getEM, "GetEditorManager");
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         SqPlus::RegisterGlobal(getCM, "GetConfigManager");
         SqPlus::RegisterGlobal(getUVM, "GetUserVariableManager");
         SqPlus::RegisterGlobal(getSM, "GetScriptingManager");
