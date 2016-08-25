@@ -35,7 +35,7 @@ class InfoPane : public InfoPaneNotebook
         bool islogger;
     };
 
-    static const int num_pages = ::max_logs + 8;
+    static const int num_pages = LogManager::max_logs + 8;
     wxBitmap defaultBitmap;
 
     Page page[num_pages];
