@@ -1771,10 +1771,10 @@ int CompilerGCC::Run(ProjectBuildTarget* target)
 {
     if (!CheckProject())
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return RunSingleFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         return -1;
     }
     DoPrepareQueue();
@@ -1992,7 +1992,7 @@ int CompilerGCC::Clean(const wxString& target)
     wxArrayString clean;
     if (!m_Project)
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         if (!Manager::Get()->GetEditorManager()->GetActiveEditor())
           return -1;
 
@@ -2002,7 +2002,7 @@ int CompilerGCC::Clean(const wxString& target)
         Manager::Get()->GetLogManager()->Log(_("Cleaned object and output files"), m_PageIndex);
 #else
         return -1;
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     }
 
     // generate build jobs
@@ -2050,11 +2050,11 @@ int CompilerGCC::DistClean(const wxString& target)
 
 int CompilerGCC::DistClean(ProjectBuildTarget* target)
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     // make sure all project files are saved
     if (m_Project && !m_Project->SaveAllFiles())
         Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
     if (!m_IsWorkspaceOperation)
         DoPrepareQueue();
@@ -2243,11 +2243,11 @@ void CompilerGCC::BuildStateManagement()
     {
         Manager::Get()->GetMacrosManager()->RecalcVars(
             m_pBuildingProject,
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
             Manager::Get()->GetEditorManager()->GetActiveEditor(),
 #else
             0,
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
             bt
         );
         if (bt)
@@ -2492,6 +2492,7 @@ int CompilerGCC::DoBuild()
     if (!bj.project)
         return -2;
 
+#ifndef CA_DISABLE_EDITOR
     // make sure all project files are saved
     if (bj.project &&
         bj.project != m_pBuildingProject && // avoid saving when we only switch targets
@@ -2499,6 +2500,7 @@ int CompilerGCC::DoBuild()
     {
         Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
     }
+#endif // #ifndef CA_DISABLE_EDITOR
 
     m_pBuildingProject = bj.project;
     m_BuildingTargetName = bj.targetName;
@@ -2590,11 +2592,11 @@ int CompilerGCC::Build(const wxString& target)
 
     if (!CheckProject())
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         // no active project
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return CompileFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         return -1;
     }
 
@@ -2609,9 +2611,11 @@ int CompilerGCC::Build(const wxString& target)
 
     if (UseMake())
     {
+#ifndef CA_DISABLE_EDITOR
         // make sure all project files are saved
         if (m_Project && !m_Project->SaveAllFiles())
             Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
+#endif // #ifndef CA_DISABLE_EDITOR
 
         // generate build jobs
         PreprocessJob(m_Project, realTarget);
@@ -2663,9 +2667,11 @@ int CompilerGCC::Rebuild(const wxString& target)
     if (!StopRunningDebugger())
         return -1;
 
+#ifndef CA_DISABLE_EDITOR
     // make sure all project files are saved
     if (m_Project && !m_Project->SaveAllFiles())
         Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
+#endif // #ifndef CA_DISABLE_EDITOR
 
     if (!m_IsWorkspaceOperation)
         DoPrepareQueue();
@@ -2729,6 +2735,7 @@ int CompilerGCC::BuildWorkspace(const wxString& target)
 
     InitBuildLog(true);
 
+#ifndef CA_DISABLE_EDITOR
     // save files from all projects as they might require each other...
     ProjectsArray* arr = Manager::Get()->GetProjectManager()->GetProjects();
     if (arr)
@@ -2740,6 +2747,7 @@ int CompilerGCC::BuildWorkspace(const wxString& target)
                 Manager::Get()->GetLogManager()->Log(F(_("Could not save all files of %s..."), prj->GetTitle().wx_str()), m_PageIndex);
         }
     }
+#endif // #ifndef CA_DISABLE_EDITOR
 
     // create list of jobs to run (project->realTarget pairs)
     PreprocessJob(0, realTarget);
@@ -2876,7 +2884,7 @@ ProjectBuildTarget* CompilerGCC::GetBuildTargetForFile(const wxString& file)
 
 int CompilerGCC::CompileFile(const wxString& file)
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     DoPrepareQueue();
     if (!CompilerValid())
         return -1;
@@ -2934,7 +2942,7 @@ int CompilerGCC::CompileFile(const wxString& file)
     return DoRunQueue();
 #else
     return -1;
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 }
 
 // events
@@ -3011,7 +3019,7 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
     }
     else
     {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         if (ed)
         {
@@ -3030,15 +3038,17 @@ void CompilerGCC::OnCompileFile(wxCommandEvent& event)
                 CheckProject();
             }
         }
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     }
 
     if (m_Project)
     {
+#ifndef CA_DISABLE_EDITOR
         if(!m_Project->SaveAllFiles())
         {
             Manager::Get()->GetLogManager()->Log(_("Could not save all files..."));
         }
+#endif // #ifndef CA_DISABLE_EDITOR
         file.MakeRelativeTo(m_Project->GetBasePath());
     }
 #ifdef ALWAYS_USE_MAKEFILE
@@ -3235,11 +3245,11 @@ void CompilerGCC::OnClearErrors(wxCommandEvent& event)
 void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
 {
     cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 #else
     EditorBase* ed = 0;
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     wxMenuBar* mbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     bool running = IsRunning();
     if (mbar)
@@ -3705,12 +3715,12 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 
         m_RunAfterCompile = false;
 
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
         // no matter what happened with the build, return the focus to the active editor
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if (ed)
             ed->GetControl()->SetFocus();
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     }
 }
 
