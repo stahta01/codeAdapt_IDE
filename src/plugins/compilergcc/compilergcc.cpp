@@ -852,7 +852,7 @@ void CompilerGCC::SetEnvironmentForCompiler(const wxString& id, wxString& envPat
     if (binPath.IsEmpty() || !(pathList.Index(wxPathOnly(binPath), caseSensitive) != wxNOT_FOUND))
     {
         m_EnvironmentMsg << _("Can't find compiler executable in your search path for ") << compiler->GetName() << _T('\n');
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Can't find compiler executable in your search path (%s)..."), compiler->GetName().c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(_T("Can't find compiler executable in your search path (%s)..."), compiler->GetName().wx_str()));
     }
     else
     {
@@ -1703,7 +1703,7 @@ int CompilerGCC::RunSingleFile(const wxString& filename)
     }
 
     Manager::Get()->GetMacrosManager()->ReplaceEnvVars(m_CdRun);
-    Manager::Get()->GetLogManager()->Log(F(_("Executing: %s (in %s)"), cmd.c_str(), m_CdRun.c_str()), m_PageIndex);
+    Manager::Get()->GetLogManager()->Log(F(_("Executing: %s (in %s)"), cmd.wx_str(), m_CdRun.wx_str()), m_PageIndex);
     m_CommandQueue.Add(new CompilerCommand(cmd, wxEmptyString, 0, 0, true));
     return 0;
 }
@@ -1884,7 +1884,7 @@ int CompilerGCC::Run(ProjectBuildTarget* target)
         }
     }
 
-    Manager::Get()->GetLogManager()->Log(F(_("Executing: %s (in %s)"), cmd.c_str(), m_CdRun.c_str()), m_PageIndex);
+    Manager::Get()->GetLogManager()->Log(F(_("Executing: %s (in %s)"), cmd.wx_str(), m_CdRun.wx_str()), m_PageIndex);
     m_CommandQueue.Add(new CompilerCommand(cmd, wxEmptyString, m_Project, target, true));
 
     m_Project->SetCurrentlyCompilingTarget(0);
@@ -1971,7 +1971,7 @@ int CompilerGCC::Clean(const wxString& target)
             DirectCommands dc(this, CompilerFactory::GetCompiler(bt->GetCompilerID()), bjt.project, m_PageIndex);
             clean = dc.GetCleanCommands(bt, true);
             DoClean(clean);
-            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().c_str(), bt ? wxString2_cstr(bt->GetTitle()) : wxString2_cstr(_("<all targets>"))), m_PageIndex);
+            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().wx_str(), bt ? wxString2_cstr(bt->GetTitle()) : wxString2_cstr(_("<all targets>"))), m_PageIndex);
         }
     }
 
@@ -2352,7 +2352,7 @@ void CompilerGCC::PreprocessJob(cbProject* project, const wxString& targetName)
 
         if (tlist.GetCount() == 0)
         {
-            Manager::Get()->GetLogManager()->LogWarning(F(_T("Warning: No target named '%s' in project '%s'. Project will not be built..."), targetName.c_str(), prj->GetTitle().c_str()));
+            Manager::Get()->GetLogManager()->LogWarning(F(_T("Warning: No target named '%s' in project '%s'. Project will not be built..."), targetName.wx_str(), prj->GetTitle().wx_str()));
         }
 
         // add all matching targets in the job list
@@ -2497,7 +2497,7 @@ void CompilerGCC::CalculateProjectDependencies(cbProject* prj, wxArrayInt& deps)
         }
         else
         {
-            Manager::Get()->GetLogManager()->Log(F(_("Circular dependency detected between \"%s\" and \"%s\". Skipping..."), prj->GetTitle().c_str(), thisprj->GetTitle().c_str()), m_PageIndex, Logger::warning);
+            Manager::Get()->GetLogManager()->Log(F(_("Circular dependency detected between \"%s\" and \"%s\". Skipping..."), prj->GetTitle().wx_str(), thisprj->GetTitle().wx_str()), m_PageIndex, Logger::warning);
         }
     }
 
@@ -2665,7 +2665,7 @@ int CompilerGCC::BuildWorkspace(const wxString& target)
         {
             cbProject* prj = arr->Item(i);
             if (prj && !prj->SaveAllFiles())
-                Manager::Get()->GetLogManager()->Log(F(_("Could not save all files of %s..."), prj->GetTitle().c_str()), m_PageIndex);
+                Manager::Get()->GetLogManager()->Log(F(_("Could not save all files of %s..."), prj->GetTitle().wx_str()), m_PageIndex);
         }
     }
 
@@ -3468,7 +3468,7 @@ void CompilerGCC::SaveBuildLog()
     f.Write(_T("</html>\n"));
 
     Manager::Get()->GetLogManager()->Log(_("Build log saved as: "), m_PageIndex);
-    Manager::Get()->GetLogManager()->Log(F(_T("file://%s"), m_BuildLogFilename.c_str()), m_PageIndex, Logger::warning);
+    Manager::Get()->GetLogManager()->Log(F(_T("file://%s"), m_BuildLogFilename.wx_str()), m_PageIndex, Logger::warning);
 }
 
 void CompilerGCC::OnGCCTerminated(CodeBlocksEvent& event)
