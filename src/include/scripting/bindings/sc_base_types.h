@@ -9,7 +9,9 @@
 #include <manager.h>
 #include <logmanager.h>
 #include <configmanager.h>
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #include <editormanager.h>
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #include <projectmanager.h>
 #include <macrosmanager.h>
 #include <uservarmanager.h>
@@ -27,15 +29,19 @@ DECLARE_INSTANCE_TYPE(wxArrayString);
 DECLARE_INSTANCE_TYPE(wxFileName);
 DECLARE_INSTANCE_TYPE(wxColour);
 DECLARE_INSTANCE_TYPE(ConfigManager);
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #if wxUSE_NOTEBOOK
 DECLARE_INSTANCE_TYPE(EditorManager);
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
 DECLARE_INSTANCE_TYPE(UserVariableManager);
 DECLARE_INSTANCE_TYPE(ScriptingManager);
 DECLARE_INSTANCE_TYPE(EditorBase);
+#ifndef CA_DISABLE_EDITOR
 #if wxUSE_NOTEBOOK
 DECLARE_INSTANCE_TYPE(cbEditor);
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_EDITOR
 DECLARE_INSTANCE_TYPE(CompileOptionsBase);
 DECLARE_INSTANCE_TYPE(CompileTargetBase);
 DECLARE_INSTANCE_TYPE(ProjectBuildTarget);

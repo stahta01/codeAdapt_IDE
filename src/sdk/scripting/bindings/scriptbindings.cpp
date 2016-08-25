@@ -12,7 +12,9 @@
     #include <cbeditor.h>
     #include <globals.h>
 #endif
+#ifndef CA_DISABLE_EDITOR
 #include "cbstyledtextctrl.h"
+#endif // #ifndef CA_DISABLE_EDITOR
 
 #include "scriptbindings.h"
 #include <cbexception.h>
@@ -91,6 +93,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"ConfigManager::Write\"");
     }
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #if wxUSE_NOTEBOOK
     SQInteger EditorManager_GetBuiltinEditor(HSQUIRRELVM v)
     {
@@ -147,7 +150,9 @@ namespace ScriptBindings
         return sa.ThrowError("Invalid arguments to \"EditorManager::Save\"");
     }
 #endif // wxUSE_NOTEBOOK
-#if wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
+
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     SQInteger cbProject_RemoveFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -162,7 +167,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbProject::RemoveFile\"");
     }
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     SQInteger cbProject_AddFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -278,6 +283,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"ProjectManager::AddFileToProject\"");
     }
+#ifndef CA_DISABLE_EDITOR
 #if wxUSE_NOTEBOOK
     SQInteger cbEditor_SetText(HSQUIRRELVM v)
     {
@@ -312,6 +318,7 @@ namespace ScriptBindings
         return sa.ThrowError("Invalid arguments to \"cbEditor::GetText\"");
     }
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_EDITOR
     SQInteger CompilerFactory_GetCompilerIndex(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -472,24 +479,24 @@ namespace ScriptBindings
                 func(&cbProject::SetMakefile, "SetMakefile").
                 func(&cbProject::IsMakefileCustom, "IsMakefileCustom").
                 func(&cbProject::SetMakefileCustom, "SetMakefileCustom").
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbProject::CloseAllFiles, "CloseAllFiles").
                 func(&cbProject::SaveAllFiles, "SaveAllFiles").
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbProject::Save, "Save").
 //                func(&cbProject::SaveAs, "SaveAs"). // *UNSAFE*
                 func(&cbProject::SaveLayout, "SaveLayout").
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbProject::LoadLayout, "LoadLayout").
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbProject::ShowOptions, "ShowOptions").
                 func(&cbProject::GetCommonTopLevelPath, "GetCommonTopLevelPath").
                 func(&cbProject::GetFilesCount, "GetFilesCount").
                 func(&cbProject::GetFile, "GetFile").
                 func(&cbProject::GetFileByFilename, "GetFileByFilename").
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 staticFuncVarArgs(&cbProject_RemoveFile, "RemoveFile", "*").
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 staticFuncVarArgs(&cbProject_AddFile, "AddFile", "*").
                 func(&cbProject::GetBuildTargetsCount, "GetBuildTargetsCount").
                 staticFuncVarArgs(&cbProject_GetBuildTarget, "GetBuildTarget", "*").
@@ -566,14 +573,18 @@ namespace ScriptBindings
                 func(&EditorBase::GetModified, "GetModified").
                 func(&EditorBase::SetModified, "SetModified").
                 func(&EditorBase::GetTitle, "GetTitle").
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&EditorBase::SetTitle, "SetTitle").
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
                 func(&EditorBase::Activate, "Activate").
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
                 func(&EditorBase::Close, "Close").
                 func(&EditorBase::Save, "Save").
                 func(&EditorBase::IsBuiltinEditor, "IsBuiltinEditor").
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
                 func(&EditorBase::ThereAreOthers, "ThereAreOthers").
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
                 func(&EditorBase::GotoLine, "GotoLine").
                 func(&EditorBase::ToggleBreakpoint, "ToggleBreakpoint").
                 func(&EditorBase::HasBreakpoint, "HasBreakpoint").
@@ -594,6 +605,7 @@ namespace ScriptBindings
                 func(&EditorBase::IsReadOnly, "IsReadOnly").
                 func(&EditorBase::HasSelection, "HasSelection");
 
+#ifndef CA_DISABLE_EDITOR
 #if wxUSE_NOTEBOOK
         SqPlus::SQClassDef<cbEditor>("cbEditor", "EditorBase").
                 func(&cbEditor::SetEditorTitle, "SetEditorTitle").
@@ -622,7 +634,9 @@ namespace ScriptBindings
                 staticFuncVarArgs(&cbEditor_SetText, "SetText", "*").
                 staticFuncVarArgs(&cbEditor_GetText, "GetText", "*");
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_EDITOR
 
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #if wxUSE_NOTEBOOK
         SqPlus::SQClassDef<EditorManager>("EditorManager").
                 func(&EditorManager::Configure, "Configure").
@@ -645,6 +659,7 @@ namespace ScriptBindings
                 func(&EditorManager::SaveAll, "SaveAll").
                 func(&EditorManager::ShowFindDialog, "ShowFindDialog");
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
 
         SqPlus::SQClassDef<UserVariableManager>("UserVariableManager").
                 func(&UserVariableManager::Exists, "Exists");
