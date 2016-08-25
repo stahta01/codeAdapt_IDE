@@ -25,6 +25,8 @@
 */
 
 #include <sdk.h>
+#include "loggers.h"
+
 #include "app.h"
 #include "main.h"
 #include "appglobals.h"
