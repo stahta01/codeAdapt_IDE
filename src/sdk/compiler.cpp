@@ -99,7 +99,7 @@ Compiler::Compiler(const wxString& name, const wxString& ID, const wxString& par
     m_Switches.forceFwdSlashes = false;
     m_VersionString = wxEmptyString;
 
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Added compiler \"%s\""), m_Name.c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(_T("Added compiler \"%s\""), m_Name.wx_str()));
 }
 
 Compiler::Compiler(const Compiler& other)
