@@ -21,11 +21,13 @@
 #include "editormanager.h"
 #include "manager.h"
 #endif
+#ifndef CA_DISABLE_EDITOR
 #include "cbstyledtextctrl.h"
+#endif // #ifndef CA_DISABLE_EDITOR
 
 #include "printdlg.h"
 
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
 PrintDialog::PrintDialog(wxWindow* parent)
 {
 	//ctor
@@ -76,4 +78,4 @@ void PrintDialog::EndModal(int retCode)
     }
     return wxDialog::EndModal(retCode);
 }
-#endif // wxUSE_PRINTING_ARCHITECTURE
+#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
