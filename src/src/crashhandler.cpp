@@ -9,7 +9,9 @@
     #include "editormanager.h"
     #include "globals.h"
 #endif //CB_PRECOMP
+#ifndef CA_DISABLE_EDITOR
 #include "cbstyledtextctrl.h"
+#endif // #ifndef CA_DISABLE_EDITOR
 
 #include "crashhandler.h"
 #include <shlobj.h>
@@ -30,7 +32,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
     wxDateTime now = wxDateTime::Now();
     path << now.Format(_T("\\%Y%m%d-%H%M%S"));
 
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     EditorManager* em = Manager::Get()->GetEditorManager();
     if(em)
     {
@@ -72,7 +74,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
             }
         }
     }
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 }
 
 LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)
