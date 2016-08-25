@@ -1042,7 +1042,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
     m_pCurrentlyLoadingLib = LibLoader::LoadLibrary(pluginName);
     if (!m_pCurrentlyLoadingLib->IsLoaded())
     {
-        Manager::Get()->GetLogManager()->LogError(F(_T("%s: not loaded (missing symbols?)"), pluginName.c_str()));
+        Manager::Get()->GetLogManager()->LogError(F(_T("%s: not loaded (missing symbols?)"), pluginName.wx_str()));
         LibLoader::RemoveLibrary(m_pCurrentlyLoadingLib);
         m_pCurrentlyLoadingLib = 0;
         m_CurrentlyLoadingFilename.Clear();
@@ -1080,7 +1080,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
 
         SetupLocaleDomain(pr.name);
 
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("%s: loaded"), pr.name.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(_T("%s: loaded"), pr.name.wx_str()));
     }
 
     if (m_RegisteredPlugins.empty())
@@ -1261,7 +1261,7 @@ int PluginManager::ExecutePlugin(const wxString& pluginName)
     {
         if (plug->GetType() != ptTool)
         {
-            Manager::Get()->GetLogManager()->LogError(F(_T("Plugin %s is not a tool to have Execute() method!"), elem->info.name.c_str()));
+            Manager::Get()->GetLogManager()->LogError(F(_T("Plugin %s is not a tool to have Execute() method!"), elem->info.name.wx_str()));
         }
         else
         {

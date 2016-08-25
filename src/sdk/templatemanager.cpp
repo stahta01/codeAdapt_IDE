@@ -178,7 +178,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
     templ << sep << dlg.GetSelectedUserTemplate();
     if (!wxDirExists(templ))
     {
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Cannot open user-template source path '%s'!"), templ.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(_T("Cannot open user-template source path '%s'!"), templ.wx_str()));
         return NULL;
     }
 
@@ -204,7 +204,7 @@ cbProject* TemplateManager::NewProjectFromUserTemplate(NewFromTemplateDlg& dlg, 
             ++count;
         }
         else
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.c_str(), dst.c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.wx_str(), dst.wx_str()));
     }
     if (count != total_count)
         cbMessageBox(_("Some files could not be loaded with the template..."), _("Error"), wxICON_ERROR);
@@ -308,13 +308,13 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
     {
         wxString src = prj->GetFile(i)->file.GetFullPath();
         wxString dst = templ + prj->GetFile(i)->relativeToCommonTopLevelPath;
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Copying %s to %s"), src.c_str(), dst.c_str()));
+        Manager::Get()->GetLogManager()->DebugLog(F(_T("Copying %s to %s"), src.wx_str(), dst.wx_str()));
         if (!CreateDirRecursively(dst))
             Manager::Get()->GetLogManager()->DebugLog(_T("Failed creating directory for ") + dst);
         if (wxCopyFile(src, dst, true))
             ++count;
         else
-            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.c_str(), dst.c_str()));
+            Manager::Get()->GetLogManager()->DebugLog(F(_T("Failed copying %s to %s"), src.wx_str(), dst.wx_str()));
     }
 
     // cbProject doesn't have a GetRelativeToCommonTopLevelPath() function, so we simulate it here
