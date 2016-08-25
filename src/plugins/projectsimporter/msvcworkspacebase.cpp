@@ -83,7 +83,7 @@ void MSVCWorkspaceBase::updateProjects() {
                 wxString s = proj._project->GetBuildTarget(k)->GetTitle();
                 if (_workspaceConfigurations.Index(s) == wxNOT_FOUND) {
                     _workspaceConfigurations.Add(s);
-                    Manager::Get()->GetLogManager()->DebugLog(F(_T("workspace config: '%s'"), s.c_str()));
+                    Manager::Get()->GetLogManager()->DebugLog(F(_T("workspace config: '%s'"), s.wx_str()));
                 }
             }
         }
@@ -91,7 +91,7 @@ void MSVCWorkspaceBase::updateProjects() {
 
     for (projIt = _projects.begin(); projIt != _projects.end(); ++projIt) {
         proj = projIt->second;
-        Manager::Get()->GetLogManager()->DebugLog(F(_T("Project %s, %d dependencies"), proj._project->GetTitle().c_str(), proj._dependencyList.GetCount()));
+        Manager::Get()->GetLogManager()->DebugLog(F(_T("Project %s, %d dependencies"), proj._project->GetTitle().wx_str(), proj._dependencyList.GetCount()));
         for (i=0; i<proj._dependencyList.GetCount(); ++i) {
             depIt = _projects.find(proj._dependencyList[i]);
             if ( depIt != _projects.end()) { // dependency found
@@ -152,7 +152,7 @@ void MSVCWorkspaceBase::updateProjects() {
                         continue;
                     }
 
-                    Manager::Get()->GetLogManager()->DebugLog(F(_T("Match '%s' to '%s'"), targetProj->GetFullTitle().c_str(), targetDep->GetFullTitle().c_str()));
+                    Manager::Get()->GetLogManager()->DebugLog(F(_T("Match '%s' to '%s'"), targetProj->GetFullTitle().wx_str(), targetDep->GetFullTitle().wx_str()));
 
                     // now, update dependencies
                     TargetType type = targetDep->GetTargetType();

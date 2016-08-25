@@ -84,7 +84,7 @@ bool MSVC7Loader::Open(const wxString& filename)
     m_ConvertSwitches = m_pProject->GetCompilerID().IsSameAs(_T("gcc"));
     m_ProjectName = wxFileName(filename).GetName();
 
-    pMsg->DebugLog(F(_T("Importing MSVC 7.xx project: %s"), filename.c_str()));
+    pMsg->DebugLog(F(_T("Importing MSVC 7.xx project: %s"), filename.wx_str()));
 
     TiXmlDocument doc(filename.mb_str());
     if (!doc.LoadFile())
@@ -112,7 +112,7 @@ bool MSVC7Loader::Open(const wxString& filename)
     if ((m_Version!=70) && (m_Version!=71))
     {
         // seems to work with visual 8 too ;)
-        pMsg->DebugLog(F(_T("Project version is '%s'. Although this loader was designed for version 7.xx, will try to import..."), ver.c_str()));
+        pMsg->DebugLog(F(_T("Project version is '%s'. Although this loader was designed for version 7.xx, will try to import..."), ver.wx_str()));
     }
 
     m_pProject->ClearAllProperties();
@@ -629,7 +629,7 @@ void MSVC7Loader::HandleFileConfiguration(TiXmlElement* file, ProjectFile* pf)
                 pf->RemoveBuildTarget(name);
                 Manager::Get()->GetLogManager()->DebugLog(
                     F(_("removed %s from %s"),
-                    pf->file.GetFullPath().c_str(), name.c_str()));
+                    pf->file.GetFullPath().wx_str(), name.wx_str()));
             }
         }
         fconf = fconf->NextSiblingElement("FileConfiguration");
