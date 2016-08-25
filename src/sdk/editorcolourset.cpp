@@ -121,7 +121,7 @@ void EditorColourSet::LoadAvailableSets()
     wxString path = ConfigManager::GetFolder(sdDataUser) + _T("/lexers/");
     if (dir.Open(path))
     {
-        Manager::Get()->GetLogManager()->Log(F(_("Scanning for lexers in %s..."), path.c_str()));
+        Manager::Get()->GetLogManager()->Log(F(_("Scanning for lexers in %s..."), path.wx_str()));
         bool ok = dir.GetFirst(&filename, _T("lexer_*.xml"), wxDIR_FILES);
         while(ok)
         {
@@ -137,7 +137,7 @@ void EditorColourSet::LoadAvailableSets()
     path = ConfigManager::GetFolder(sdDataGlobal) + _T("/lexers/");
     if (dir.Open(path))
     {
-        Manager::Get()->GetLogManager()->Log(F(_("Scanning for lexers in %s..."), path.c_str()));
+        Manager::Get()->GetLogManager()->Log(F(_("Scanning for lexers in %s..."), path.wx_str()));
         bool ok = dir.GetFirst(&filename, _T("lexer_*.xml"), wxDIR_FILES);
         while(ok)
         {

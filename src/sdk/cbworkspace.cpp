@@ -73,7 +73,7 @@ void cbWorkspace::Load()
     wxString fname = m_Filename.GetFullPath();
     if (fname.IsEmpty())
         return;
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading workspace \"%s\""), fname.c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(_T("Loading workspace \"%s\""), fname.wx_str()));
 
     if (!m_Filename.FileExists())
     {
@@ -115,7 +115,7 @@ bool cbWorkspace::Save(bool force)
     if (!force && !m_Modified)
         return true;
 
-    Manager::Get()->GetLogManager()->DebugLog(F(_T("Saving workspace \"%s\""), m_Filename.GetFullPath().c_str()));
+    Manager::Get()->GetLogManager()->DebugLog(F(_T("Saving workspace \"%s\""), m_Filename.GetFullPath().wx_str()));
     WorkspaceLoader wsp;
     bool ret = wsp.Save(m_Title, m_Filename.GetFullPath());
     SetModified(!ret);
