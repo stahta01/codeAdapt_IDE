@@ -336,23 +336,23 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_UPDATE_UI(idViewFocusEditor, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewFullScreen, MainFrame::OnViewMenuUpdateUI)
 
-#if wxUSE_TEXTDLG
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileNewEmpty, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewProject, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewTarget, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewFile, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewCustom, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewUser, MainFrame::OnFileNewWhat)
-#endif // wxUSE_TEXTDLG
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
 
     EVT_MENU(idToolNew, MainFrame::OnFileNew)
     EVT_MENU(idFileOpen,  MainFrame::OnFileOpen)
-#if wxUSE_FILE_HISTORY
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileOpenRecentProjectClearHistory, MainFrame::OnFileOpenRecentProjectClearHistory)
     EVT_MENU(idFileOpenRecentFileClearHistory, MainFrame::OnFileOpenRecentClearHistory)
     EVT_MENU_RANGE(wxID_FILE1, wxID_FILE9, MainFrame::OnFileReopen)
     EVT_MENU_RANGE(wxID_FILE10, wxID_FILE19, MainFrame::OnFileReopenProject)
-#endif // wxUSE_FILE_HISTORY
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileImportProjectDevCpp,  MainFrame::OnFileImportProjectDevCpp)
     EVT_MENU(idFileImportProjectMSVC,  MainFrame::OnFileImportProjectMSVC)
     EVT_MENU(idFileImportProjectMSVCWksp,  MainFrame::OnFileImportProjectMSVCWksp)
@@ -374,9 +374,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idFileCloseAll,  MainFrame::OnFileCloseAll)
     EVT_MENU(idFileCloseProject,  MainFrame::OnFileCloseProject)
     EVT_MENU(idFileCloseAllProjects,  MainFrame::OnFileCloseAllProjects)
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFilePrint,  MainFrame::OnFilePrint)
-#endif // wxUSE_PRINTING_ARCHITECTURE
+#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileExit,  MainFrame::OnFileQuit)
     EVT_MENU(idFileNext,  MainFrame::OnFileNext)
     EVT_MENU(idFilePrev,  MainFrame::OnFilePrev)
@@ -446,11 +446,11 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchFindPrevious, MainFrame::OnSearchFindNext)
     EVT_MENU(idSearchReplace, MainFrame::OnSearchReplace)
     EVT_MENU(idSearchReplaceInFiles, MainFrame::OnSearchReplace)
-#if wxUSE_TEXTDLG
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idSearchGotoLine, MainFrame::OnSearchGotoLine)
 
     EVT_MENU(idViewLayoutSave, MainFrame::OnViewLayoutSave)
-#endif // wxUSE_TEXTDLG
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idViewLayoutDelete, MainFrame::OnViewLayoutDelete)
 #if wxUSE_TOOLBAR
     EVT_MENU(idViewToolMain, MainFrame::OnToggleBar)
@@ -733,9 +733,9 @@ void MainFrame::CreateIDE()
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
     DoUpdateEditorStyle();
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
 
 #if wxUSE_DRAG_AND_DROP && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     m_pEdMan->GetNotebook()->SetDropTarget(new wxMyFileDropTarget(this));
@@ -1960,11 +1960,11 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
     if(link.IsSameAs(_T("CB_CMD_NEW_PROJECT")))
-#if wxUSE_TEXTDLG
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
         OnFileNewWhat(evt);
 #else
         ;
-#endif // wxUSE_TEXTDLG
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
     else if(link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
         DoOnFileOpen(true);
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_ENVIRONMENT")))
@@ -1973,7 +1973,7 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
 //        Manager::Get()->GetEditorManager()->Configure();
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_COMPILER")))
 //        OnSettingsCompilerDebugger(evt);
-#if wxUSE_FILE_HISTORY
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
     else if(link.StartsWith(_T("CB_CMD_OPEN_HISTORY_")))
     {
         wxFileHistory* hist = link.StartsWith(_T("CB_CMD_OPEN_HISTORY_PROJECT_")) ? m_pProjectsHistory : m_pFilesHistory;
@@ -1988,7 +1988,7 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
             }
         }
     }
-#endif // wxUSE_FILE_HISTORY
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -2561,7 +2561,7 @@ void MainFrame::OnFileOpen(wxCommandEvent& event)
     DoOnFileOpen(false); // through file menu (not sure if we are opening a project)
 } // end of OnFileOpen
 
-#if wxUSE_FILE_HISTORY
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
 void MainFrame::OnFileReopenProject(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE10;
@@ -2571,7 +2571,7 @@ void MainFrame::OnFileReopenProject(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pProjectsHistory, id);
     }
 }
-#endif // wxUSE_FILE_HISTORY
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
 
 #if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
@@ -2591,7 +2591,7 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
 }
 #endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
-#if wxUSE_FILE_HISTORY
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
 void MainFrame::OnFileReopen(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE1;
@@ -2601,7 +2601,7 @@ void MainFrame::OnFileReopen(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pFilesHistory, id);
     }
 }
-#endif // wxUSE_FILE_HISTORY
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
 
 #if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
@@ -4521,7 +4521,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
 void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
-#if wxUSE_LISTBOOK
+#if wxUSE_LISTBOOK && !defined(CA_DISABLE_EDITOR)
     bool tbarsmall = m_SmallToolBar;
     bool needRestart = false;
 
@@ -4539,7 +4539,7 @@ void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
     }
     if (needRestart)
         cbMessageBox(_("Code::Blocks needs to be restarted for the changes to take effect."), _("Information"), wxICON_INFORMATION);
-#endif // wxUSE_LISTBOOK
+#endif // wxUSE_LISTBOOK && !defined(CA_DISABLE_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
