@@ -3258,6 +3258,7 @@ void MainFrame::OnEditSelectAll(wxCommandEvent& event)
 #endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 }
 
+#ifndef CA_DISABLE_EDITOR
 CommentToken GetCommentToken(cbStyledTextCtrl* stc)
 {
     CommentToken comment;
@@ -3268,7 +3269,6 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
     comment.boxCommentMid      = _T("");
     comment.boxCommentEnd      = _T("");
 
-#ifndef CA_DISABLE_EDITOR
 
     switch(stc->GetLexer())
     {
@@ -3429,10 +3429,10 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
             comment.boxCommentMid      = _T(" * ");
             comment.boxCommentEnd      = _T(" */");
     }
-#endif // #ifndef CA_DISABLE_EDITOR
 
     return comment;
 }
+#endif // #ifndef CA_DISABLE_EDITOR
 
 
 /* This is a shameless rip-off of the original OnEditCommentSelected function,
