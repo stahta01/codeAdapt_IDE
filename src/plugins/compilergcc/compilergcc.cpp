@@ -1971,7 +1971,7 @@ int CompilerGCC::Clean(const wxString& target)
             DirectCommands dc(this, CompilerFactory::GetCompiler(bt->GetCompilerID()), bjt.project, m_PageIndex);
             clean = dc.GetCleanCommands(bt, true);
             DoClean(clean);
-            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().wx_str(), bt ? wxString2_cstr(bt->GetTitle()) : wxString2_cstr(_("<all targets>"))), m_PageIndex);
+            Manager::Get()->GetLogManager()->Log(F(_("Cleaned \"%s - %s\""), bjt.project->GetTitle().wx_str(), bt ? bt->GetTitle().wx_str() : _("<all targets>").wx_str()), m_PageIndex);
         }
     }
 
