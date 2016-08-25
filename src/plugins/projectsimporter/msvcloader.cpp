@@ -213,7 +213,7 @@ bool MSVCLoader::ReadConfigurations()
             {
                 m_Configurations.Add(tmp);
                 m_ConfigurationsLineIndex.Add(currentLine);
-                Manager::Get()->GetLogManager()->DebugLog(F(_T("Detected configuration '%s' at line %d"), tmp.c_str(), currentLine));
+                Manager::Get()->GetLogManager()->DebugLog(F(_T("Detected configuration '%s' at line %d"), tmp.wx_str(), currentLine));
             }
         }
     }
