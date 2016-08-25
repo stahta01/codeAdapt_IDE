@@ -151,7 +151,7 @@ void CompilerErrors::DoGotoError(const CompileError& error)
 {
     if (error.line <= 0)
         return;
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 	DoClearErrorMarkFromAllEditors();
 	cbEditor* ed = 0;
 	cbProject* project = error.project ? error.project : Manager::Get()->GetProjectManager()->GetActiveProject();
@@ -192,12 +192,12 @@ void CompilerErrors::DoGotoError(const CompileError& error)
         ed->GotoLine(error.line - 1);
         ed->SetErrorLine(error.line - 1);
     }
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 }
 
 void CompilerErrors::DoClearErrorMarkFromAllEditors()
 {
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 	EditorManager* edMan = Manager::Get()->GetEditorManager();
 	for (int i = 0; i < edMan->GetEditorsCount(); ++i)
 	{
@@ -205,7 +205,7 @@ void CompilerErrors::DoClearErrorMarkFromAllEditors()
         if (ed)
             ed->SetErrorLine(-1);
 	}
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 }
 
 bool CompilerErrors::HasNextError() const
