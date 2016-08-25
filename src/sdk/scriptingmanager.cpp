@@ -147,7 +147,7 @@ bool ScriptingManager::LoadBuffer(const wxString& buffer, const wxString& debugN
     wxString incName = UnixFilename(debugName);
     if (m_IncludeSet.find(incName) != m_IncludeSet.end())
     {
-        Manager::Get()->GetLogManager()->LogWarning(F(_T("Ignoring Include(\"%s\") because it would cause recursion..."), incName.c_str()));
+        Manager::Get()->GetLogManager()->LogWarning(F(_T("Ignoring Include(\"%s\") because it would cause recursion..."), incName.wx_str()));
         return true;
     }
     m_IncludeSet.insert(incName);
@@ -271,7 +271,7 @@ bool ScriptingManager::RegisterScriptMenu(const wxString& menuPath, const wxStri
         mbs.scriptOrFunc = scriptOrFunc;
         mbs.isFunc = isFunction;
         m_MenuIDToScript.insert(m_MenuIDToScript.end(), std::make_pair(id, mbs));
-        Manager::Get()->GetLogManager()->Log(F(_("Script/function '%s' registered under menu '%s'"), scriptOrFunc.c_str(), menuPath.c_str()));
+        Manager::Get()->GetLogManager()->Log(F(_("Script/function '%s' registered under menu '%s'"), scriptOrFunc.wx_str(), menuPath.wx_str()));
 
         return true;
     }
