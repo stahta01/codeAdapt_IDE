@@ -29,6 +29,7 @@
 #include <wx/frame.h> // GetMenuBar
 #include <wx/gauge.h>     // Needs to be before compilergcc.h if NOPCH on wxMSW
 #include <wx/listctrl.h>
+#include "cbstyledtextctrl.h"
 #include "compilergcc.h"
 #include <manager.h>
 #include <sdk_events.h>
