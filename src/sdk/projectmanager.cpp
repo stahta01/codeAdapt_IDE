@@ -50,6 +50,7 @@
     #include "globals.h"
     #include "cbexception.h"  // for cbassert
 #endif
+#include "editorbase.h"
 
 #include <wx/utils.h>
 #include <wx/textdlg.h>
