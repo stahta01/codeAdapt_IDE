@@ -63,6 +63,7 @@
 #include "editorconfigurationdlg.h"
 #include "finddlg.h"
 #include "replacedlg.h"
+#include "editorbase.h"
 #include "confirmreplacedlg.h"
 #include "filefilters.h"
 #include "searchresultslog.h"
