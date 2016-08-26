@@ -93,7 +93,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"ConfigManager::Write\"");
     }
-#ifndef CA_DISABLE_PLUGIN_API_EDITOR
+#if !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #if wxUSE_NOTEBOOK
     SQInteger EditorManager_GetBuiltinEditor(HSQUIRRELVM v)
     {
@@ -111,6 +111,9 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"EditorManager::GetBuiltinEditor\"");
     }
+#endif // !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
+
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
     SQInteger EditorManager_Open(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -479,16 +482,16 @@ namespace ScriptBindings
                 func(&cbProject::SetMakefile, "SetMakefile").
                 func(&cbProject::IsMakefileCustom, "IsMakefileCustom").
                 func(&cbProject::SetMakefileCustom, "SetMakefileCustom").
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
                 func(&cbProject::CloseAllFiles, "CloseAllFiles").
                 func(&cbProject::SaveAllFiles, "SaveAllFiles").
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
                 func(&cbProject::Save, "Save").
 //                func(&cbProject::SaveAs, "SaveAs"). // *UNSAFE*
                 func(&cbProject::SaveLayout, "SaveLayout").
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
                 func(&cbProject::LoadLayout, "LoadLayout").
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
                 func(&cbProject::ShowOptions, "ShowOptions").
                 func(&cbProject::GetCommonTopLevelPath, "GetCommonTopLevelPath").
                 func(&cbProject::GetFilesCount, "GetFilesCount").
@@ -625,9 +628,9 @@ namespace ScriptBindings
 #if wxUSE_PRINTING_ARCHITECTURE
                 func(&cbEditor::Print, "Print").
 #endif // wxUSE_PRINTING_ARCHITECTURE
-#if wxUSE_TEXTDLG
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbEditor::AutoComplete, "AutoComplete").
-#endif // wxUSE_TEXTDLG
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
                 func(&cbEditor::AddBreakpoint, "AddBreakpoint").
                 func(&cbEditor::RemoveBreakpoint, "RemoveBreakpoint").
                 // these are not present in cbEditor; included to help scripts edit text
@@ -640,19 +643,25 @@ namespace ScriptBindings
 #if wxUSE_NOTEBOOK
         SqPlus::SQClassDef<EditorManager>("EditorManager").
                 func(&EditorManager::Configure, "Configure").
+#ifndef CA_DISABLE_EDITOR
                 func(&EditorManager::New, "New").
                 staticFuncVarArgs(&EditorManager_Open, "Open").
                 func(&EditorManager::IsBuiltinOpen, "IsBuiltinOpen").
                 staticFuncVarArgs(&EditorManager_GetBuiltinEditor, "GetBuiltinEditor", "*").
                 func(&EditorManager::GetBuiltinActiveEditor, "GetBuiltinActiveEditor").
+#endif // #ifndef CA_DISABLE_EDITOR
                 func(&EditorManager::GetActiveEditor, "GetActiveEditor").
                 func(&EditorManager::ActivateNext, "ActivateNext").
                 func(&EditorManager::ActivatePrevious, "ActivatePrevious").
                 func(&EditorManager::SwapActiveHeaderSource, "SwapActiveHeaderSource").
                 func(&EditorManager::CloseActive, "CloseActive").
+#ifndef CA_DISABLE_EDITOR
                 staticFuncVarArgs(&EditorManager_Close, "Close", "*").
+#endif // #ifndef CA_DISABLE_EDITOR
                 func(&EditorManager::CloseAll, "CloseAll").
+#ifndef CA_DISABLE_EDITOR
                 staticFuncVarArgs(&EditorManager_Save, "Save", "*").
+#endif // #ifndef CA_DISABLE_EDITOR
                 func(&EditorManager::SaveActive, "SaveActive").
                 func(&EditorManager::SaveAs, "SaveAs").
                 func(&EditorManager::SaveActiveAs, "SaveActiveAs").
