@@ -27,7 +27,7 @@
 
 #include "printdlg.h"
 
-#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 PrintDialog::PrintDialog(wxWindow* parent)
 {
 	//ctor
@@ -78,4 +78,4 @@ void PrintDialog::EndModal(int retCode)
     }
     return wxDialog::EndModal(retCode);
 }
-#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)

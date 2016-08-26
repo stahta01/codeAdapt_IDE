@@ -316,9 +316,11 @@ class MainFrame : public wxFrame
         /// "Close FullScreen" button. Only shown when in FullScreen view
         wxButton* m_pCloseFullScreenBtn;
 
+#ifndef CA_DISABLE_PLUGIN_API_EDITOR
 #if wxUSE_NOTEBOOK
         EditorManager* m_pEdMan;
 #endif // wxUSE_NOTEBOOK
+#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
         ProjectManager* m_pPrjMan;
         LogManager* m_pMsgMan;
         InfoPane *infoPane;
