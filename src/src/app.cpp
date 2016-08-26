@@ -1055,7 +1055,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
     if (!Manager::Get())
         return;
 
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     if (Manager::Get()->GetEditorManager() && Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/check_modified_files"), true))
     {
         // for some reason a mouse up event doen's make it into scintilla (scintilla bug)
@@ -1080,5 +1080,5 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
 
         ed->GetControl()->SetFocus();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
