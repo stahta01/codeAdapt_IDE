@@ -153,7 +153,7 @@ void EnvVarsConfigDlg::LoadSettings()
   // Show currently activated set in debug log (for reference)
   wxString active_set_path = nsEnvVars::GetSetPathByName(active_set);
   EV_DBGLOG(_T("EnvVars: Active envvar set is '%s' at index %d, config path '%s'."),
-    active_set.c_str(), active_set_idx, active_set_path.c_str());
+    active_set.wx_str(), active_set_idx, active_set_path.wx_str());
 
   // Read and show all envvars from currently active set in listbox
   wxArrayString vars     = nsEnvVars::GetEnvvarsBySetPath(active_set_path);
@@ -167,7 +167,7 @@ void EnvVarsConfigDlg::LoadSettings()
       envvars_applied++;
     else
       EV_DBGLOG(_T("EnvVars: Invalid envvar in '%s' at position #%d."),
-        active_set_path.c_str(), i);
+        active_set_path.wx_str(), i);
   }// for
 
   if (envvars_total>0)
@@ -208,10 +208,10 @@ void EnvVarsConfigDlg::SaveSettings()
 
   wxString active_set_path = nsEnvVars::GetSetPathByName(active_set, false);
   EV_DBGLOG(_T("EnvVars: Removing (old) envvar set '%s' at path '%s' from config."),
-    active_set.c_str(), active_set_path.c_str());
+    active_set.wx_str(), active_set_path.wx_str());
   cfg->DeleteSubPath(active_set_path);
 
-  EV_DBGLOG(_T("EnvVars: Saving (new) envvar set '%s'."), active_set.c_str());
+  EV_DBGLOG(_T("EnvVars: Saving (new) envvar set '%s'."), active_set.wx_str());
   cfg->SetPath(active_set_path);
 
   for (int i=0; i<(int)lstEnvVars->GetCount(); ++i)
@@ -248,7 +248,7 @@ void EnvVarsConfigDlg::SaveSettingsActiveSet(wxString active_set)
   if (active_set.IsEmpty())
     active_set = nsEnvVars::EnvVarsDefault;
 
-  EV_DBGLOG(_T("EnvVars: Saving '%s' as active envvar set to config."), active_set.c_str());
+  EV_DBGLOG(_T("EnvVars: Saving '%s' as active envvar set to config."), active_set.wx_str());
   cfg->Write(_T("/active_set"), active_set);
 }// SaveSettingsActiveSet
 
@@ -286,7 +286,7 @@ void EnvVarsConfigDlg::OnCreateSetClick(wxCommandEvent& WXUNUSED(event))
     return;
 
   EV_DBGLOG(_T("EnvVars: Unsetting variables of envvar set '%s'."),
-    choSet->GetString(choSet->GetCurrentSelection()).c_str());
+    choSet->GetString(choSet->GetCurrentSelection()).wx_str());
   nsEnvVars::EnvvarsClear(lstEnvVars); // Don't care about return value
   lstEnvVars->Clear();
 
@@ -362,13 +362,13 @@ void EnvVarsConfigDlg::OnRemoveSetClick(wxCommandEvent& WXUNUSED(event))
     wxString active_set     = choSet->GetString(active_set_idx);
 
     // Remove envvars from C::B focus (and listbox)
-    EV_DBGLOG(_T("EnvVars: Unsetting variables of envvar set '%s'."), active_set.c_str());
+    EV_DBGLOG(_T("EnvVars: Unsetting variables of envvar set '%s'."), active_set.wx_str());
     nsEnvVars::EnvvarsClear(lstEnvVars); // Don't care about return value
 
     // Remove envvars set from config
     wxString active_set_path = nsEnvVars::GetSetPathByName(active_set, false);
     EV_DBGLOG(_T("EnvVars: Removing envvar set '%s' at path '%s' from config."),
-      active_set.c_str(), active_set_path.c_str());
+      active_set.wx_str(), active_set_path.wx_str());
     cfg->DeleteSubPath(active_set_path);
 
     // Remove envvars set from choicebox
