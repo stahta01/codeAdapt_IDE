@@ -336,23 +336,23 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_UPDATE_UI(idViewFocusEditor, MainFrame::OnViewMenuUpdateUI)
     EVT_UPDATE_UI(idViewFullScreen, MainFrame::OnViewMenuUpdateUI)
 
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileNewEmpty, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewProject, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewTarget, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewFile, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewCustom, MainFrame::OnFileNewWhat)
     EVT_MENU(idFileNewUser, MainFrame::OnFileNewWhat)
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
     EVT_MENU(idToolNew, MainFrame::OnFileNew)
     EVT_MENU(idFileOpen,  MainFrame::OnFileOpen)
-#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     EVT_MENU(idFileOpenRecentProjectClearHistory, MainFrame::OnFileOpenRecentProjectClearHistory)
     EVT_MENU(idFileOpenRecentFileClearHistory, MainFrame::OnFileOpenRecentClearHistory)
     EVT_MENU_RANGE(wxID_FILE1, wxID_FILE9, MainFrame::OnFileReopen)
     EVT_MENU_RANGE(wxID_FILE10, wxID_FILE19, MainFrame::OnFileReopenProject)
-#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     EVT_MENU(idFileImportProjectDevCpp,  MainFrame::OnFileImportProjectDevCpp)
     EVT_MENU(idFileImportProjectMSVC,  MainFrame::OnFileImportProjectMSVC)
     EVT_MENU(idFileImportProjectMSVCWksp,  MainFrame::OnFileImportProjectMSVCWksp)
@@ -374,9 +374,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idFileCloseAll,  MainFrame::OnFileCloseAll)
     EVT_MENU(idFileCloseProject,  MainFrame::OnFileCloseProject)
     EVT_MENU(idFileCloseAllProjects,  MainFrame::OnFileCloseAllProjects)
-#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFilePrint,  MainFrame::OnFilePrint)
-#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idFileExit,  MainFrame::OnFileQuit)
     EVT_MENU(idFileNext,  MainFrame::OnFileNext)
     EVT_MENU(idFilePrev,  MainFrame::OnFilePrev)
@@ -446,11 +446,11 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchFindPrevious, MainFrame::OnSearchFindNext)
     EVT_MENU(idSearchReplace, MainFrame::OnSearchReplace)
     EVT_MENU(idSearchReplaceInFiles, MainFrame::OnSearchReplace)
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idSearchGotoLine, MainFrame::OnSearchGotoLine)
 
     EVT_MENU(idViewLayoutSave, MainFrame::OnViewLayoutSave)
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     EVT_MENU(idViewLayoutDelete, MainFrame::OnViewLayoutDelete)
 #if wxUSE_TOOLBAR
     EVT_MENU(idViewToolMain, MainFrame::OnToggleBar)
@@ -505,9 +505,9 @@ MainFrame::MainFrame(wxWindow* parent)
 #ifndef CA_BUILD_WITHOUT_GUI
        m_pCloseFullScreenBtn(0L),
 #endif // CA_BUILD_WITHOUT_GUI
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
        m_pEdMan(0L),
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
        m_pPrjMan(0L),
        m_pMsgMan(0L),
        infoPane(0),
@@ -733,9 +733,9 @@ void MainFrame::CreateIDE()
 
     DoUpdateLayout();
     DoUpdateLayoutColours();
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     DoUpdateEditorStyle();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
 #if wxUSE_DRAG_AND_DROP && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     m_pEdMan->GetNotebook()->SetDropTarget(new wxMyFileDropTarget(this));
@@ -912,7 +912,7 @@ void MainFrame::RecreateMenuBar()
 void MainFrame::CreateMenubar()
 {
 #ifndef CA_BUILD_WITHOUT_GUI
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     CodeBlocksEvent event(cbEVT_MENUBAR_CREATE_BEGIN);
     Manager::Get()->ProcessEvent(event);
 
@@ -1020,7 +1020,7 @@ void MainFrame::CreateMenubar()
 
     CodeBlocksEvent event2(cbEVT_MENUBAR_CREATE_END);
     Manager::Get()->ProcessEvent(event2);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -1295,7 +1295,7 @@ void MainFrame::LoadViewLayout(const wxString& name, bool isTemp)
         return;
 
 	m_LastLayoutIsTemp = isTemp;
-	
+
     wxString layout = m_LayoutViews[name];
     if (layout.IsEmpty())
     {
@@ -1435,7 +1435,7 @@ void MainFrame::DoSelectLayout(const wxString& name)
                 continue;
             items[i]->Check(items[i]->GetText().IsSameAs(name));
         }
-        
+
         if (!m_LastLayoutIsTemp)
 			Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/main_frame/layout/default"), name);
     }
@@ -1674,7 +1674,7 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
 
 bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     if (Manager::Get()->GetEditorManager()->Open(filename))
     {
 #if wxUSE_FILE_HISTORY
@@ -1683,7 +1683,7 @@ bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 #endif // wxUSE_FILE_HISTORY
         return true;
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     return false;
 }
 
@@ -1721,7 +1721,7 @@ void MainFrame::DoCreateStatusBar()
 
 void MainFrame::DoUpdateStatusBar()
 {
-#if wxUSE_STATUSBAR && wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_STATUSBAR && wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     if (!GetStatusBar())
         return;
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
@@ -1751,7 +1751,7 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(personality, panel++);
     }
-#endif // wxUSE_STATUSBAR && wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_STATUSBAR && wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 #if wxUSE_NOTEBOOK
@@ -1854,7 +1854,7 @@ void MainFrame::DoUpdateAppTitle()
     EditorBase* ed = 0;
 #endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     cbProject* prj = 0;
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
     if(ed && ed->IsBuiltinEditor())
     {
         ProjectFile* prjf = ((cbEditor*)ed)->GetProjectFile();
@@ -1862,7 +1862,7 @@ void MainFrame::DoUpdateAppTitle()
             prj = prjf->GetParentProject();
     }
     else
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
         prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
     wxString projname;
     wxString edname;
@@ -1960,11 +1960,11 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
     evt.SetId(idFileNewProject);
     wxString link = event.GetString();
     if(link.IsSameAs(_T("CB_CMD_NEW_PROJECT")))
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
         OnFileNewWhat(evt);
 #else
         ;
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     else if(link.IsSameAs(_T("CB_CMD_OPEN_PROJECT")))
         DoOnFileOpen(true);
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_ENVIRONMENT")))
@@ -1973,7 +1973,7 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
 //        Manager::Get()->GetEditorManager()->Configure();
 //    else if (link.IsSameAs(_T("CB_CMD_CONF_COMPILER")))
 //        OnSettingsCompilerDebugger(evt);
-#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     else if(link.StartsWith(_T("CB_CMD_OPEN_HISTORY_")))
     {
         wxFileHistory* hist = link.StartsWith(_T("CB_CMD_OPEN_HISTORY_PROJECT_")) ? m_pProjectsHistory : m_pFilesHistory;
@@ -1988,7 +1988,7 @@ void MainFrame::OnStartHereLink(wxCommandEvent& event)
             }
         }
     }
-#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -2360,7 +2360,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
@@ -2446,7 +2446,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
 #endif // CA_BUILD_WITHOUT_GUI
 }
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
 bool MainFrame::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& files)
 {
@@ -2561,7 +2561,7 @@ void MainFrame::OnFileOpen(wxCommandEvent& event)
     DoOnFileOpen(false); // through file menu (not sure if we are opening a project)
 } // end of OnFileOpen
 
-#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileReopenProject(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE10;
@@ -2571,7 +2571,7 @@ void MainFrame::OnFileReopenProject(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pProjectsHistory, id);
     }
 }
-#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
 #if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
@@ -2591,7 +2591,7 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
 }
 #endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
-#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileReopen(wxCommandEvent& event)
 {
     size_t id = event.GetId() - wxID_FILE1;
@@ -2601,7 +2601,7 @@ void MainFrame::OnFileReopen(wxCommandEvent& event)
         AskToRemoveFileFromHistory(m_pFilesHistory, id);
     }
 }
-#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 
 #if wxUSE_FILE_HISTORY && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
@@ -2703,11 +2703,11 @@ void MainFrame::OnFileSaveAll(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveProjectTemplate(wxCommandEvent& event)
 {
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #ifndef CA_BUILD_WITHOUT_GUI
     TemplateManager::Get()->SaveUserTemplate(Manager::Get()->GetProjectManager()->GetActiveProject());
 #endif // CA_BUILD_WITHOUT_GUI
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnFileCloseProject(wxCommandEvent& event)
@@ -2836,7 +2836,7 @@ void MainFrame::OnFilePrev(wxCommandEvent& event)
     DoUpdateStatusBar();
 }
 
-#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 void MainFrame::OnFilePrint(wxCommandEvent& event)
 {
     PrintDialog dlg(this);
@@ -2844,7 +2844,7 @@ void MainFrame::OnFilePrint(wxCommandEvent& event)
     if (dlg.ShowModal() == wxID_OK)
         Manager::Get()->GetEditorManager()->Print(dlg.GetPrintScope(), dlg.GetPrintColourMode(), dlg.GetPrintLineNumbers());
 }
-#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_PRINTING_ARCHITECTURE && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
 void MainFrame::OnFileQuit(wxCommandEvent& WXUNUSED(event))
 {
@@ -2970,11 +2970,11 @@ void MainFrame::OnEditSwapHeaderSource(wxCommandEvent& event)
 
 void MainFrame::OnEditGotoMatchingBrace(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GotoMatchingBrace();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditBookmarksToggle(wxCommandEvent& event)
@@ -3051,167 +3051,167 @@ void MainFrame::OnEditPaste(wxCommandEvent& event)
 
 void MainFrame::OnEditParaUp(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUp();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditParaUpExtend(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUpExtend();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditParaDown(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDown();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditParaDownExtend(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDownExtend();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditWordPartLeft(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeft();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditWordPartLeftExtend(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeftExtend();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditWordPartRight(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRight();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditWordPartRightExtend(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRightExtend();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditZoomIn(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomIn();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditZoomOut(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomOut();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditZoomReset(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SetZoom(0);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLineCut(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCut();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLineDelete(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDelete();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLineDuplicate(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDuplicate();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLineTranspose(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineTranspose();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLineCopy(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCopy();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3228,34 +3228,34 @@ void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 
         ed->GetControl()->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditUpperCase(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->UpperCase();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditLowerCase(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LowerCase();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditSelectAll(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SelectAll();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 #ifndef CA_DISABLE_EDITOR
@@ -3441,7 +3441,7 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
  */
 void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3486,13 +3486,13 @@ void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnEditCommentSelected
 
 /* See above (OnEditCommentSelected) for details. */
 void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3573,12 +3573,12 @@ void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnEditUncommentSelected
 
 void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3632,12 +3632,12 @@ void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnEditToggleCommentSelected
 
 void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3678,12 +3678,12 @@ void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnStreamToggleCommentSelected
 
 void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3749,23 +3749,23 @@ void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnEditBoxCommentSelected
 
 void MainFrame::OnEditAutoComplete(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #if wxUSE_TEXTDLG
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->AutoComplete();
 #endif // wxUSE_TEXTDLG
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3787,66 +3787,66 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
             ed->SetLanguage(lang);
         }
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditFoldAll(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldAll();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditUnfoldAll(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldAll();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditToggleAllFolds(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleAllFolds();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditFoldBlock(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldBlockFromLine();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditUnfoldBlock(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldBlockFromLine();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditToggleFoldBlock(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleFoldBlockFromLine();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditEOLMode(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3867,12 +3867,12 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
             ed->GetControl()->EndUndoAction();
         }
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnEditEncoding(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3909,7 +3909,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
         encoding = wxFONTENCODING_UTF32LE;
 
     ed->SetEncoding(encoding);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
@@ -3990,37 +3990,37 @@ void MainFrame::OnViewScriptConsole(wxCommandEvent& event)
 
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     bool bDoMultipleFiles = (event.GetId() == idSearchFindInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(false, bDoMultipleFiles);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }// end of OnSearchFind
 
 void MainFrame::OnSearchFindNext(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     bool bNext = !(event.GetId() == idSearchFindPrevious);
     Manager::Get()->GetEditorManager()->FindNext(bNext);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnSearchFindNext
 
 void MainFrame::OnSearchReplace(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     bool bDoMultipleFiles = (event.GetId() == idSearchReplaceInFiles);
     if(!bDoMultipleFiles)
     {
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     }
     Manager::Get()->GetEditorManager()->ShowFindDialog(true, bDoMultipleFiles);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 } // end of OnSearchReplace
 
-#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
 {
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
@@ -4048,7 +4048,7 @@ void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
         ed->GotoLine(line - 1);
     }
 }
-#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_TEXTDLG && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
@@ -4103,11 +4103,11 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
 #endif // wxUSE_FILE_HISTORY
     mbar->Enable(idFileClose, canClose);
     mbar->Enable(idFileCloseAll, canClose);
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     mbar->Enable(idFileSave, ed && ed->GetModified());
 #else
     mbar->Enable(idFileSave, false);
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     mbar->Enable(idFileSaveAs, canSaveFiles);
     mbar->Enable(idFileSaveAllFiles, canSaveFiles);
     mbar->Enable(idFileSaveProject, prj && prj->GetModified() && canCloseProject);
@@ -4117,18 +4117,18 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idFileSaveWorkspaceAs, Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileCloseWorkspace, Manager::Get()->GetProjectManager() && canCloseProject);
     mbar->Enable(idFileSaveAll, canSaveAll);
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     mbar->Enable(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
-#if wxUSE_TOOLBAR && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_TOOLBAR && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     if (m_pToolbar)
     {
         m_pToolbar->EnableTool(idFileSave, ed && ed->GetModified());
         m_pToolbar->EnableTool(idFileSaveAll, canSaveAll);
         m_pToolbar->EnableTool(idFilePrint, Manager::Get()->GetEditorManager() && Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor());
     }
-#endif // wxUSE_TOOLBAR && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_TOOLBAR && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 
     event.Skip();
@@ -4143,11 +4143,11 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     }
 
 #ifndef CA_BUILD_WITHOUT_GUI
-#if wxUSE_NOTEBOOK
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = NULL;
 #else
     EditorBase* ed = NULL;
-#endif // wxUSE_NOTEBOOK
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_EDITOR)
     EditorBase* eb = NULL;
     bool hasSel = false;
     bool canUndo = false;
@@ -4156,13 +4156,13 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     bool canCut = false;
     int eolMode = -1;
 
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     if(Manager::Get()->GetEditorManager() && !Manager::isappShuttingDown())
     {
         ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     }
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 
     wxMenuBar* mbar = GetMenuBar();
 
@@ -4261,11 +4261,11 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     }
 #ifndef CA_BUILD_WITHOUT_GUI
     wxMenuBar* mbar = GetMenuBar();
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : 0;
 #else
     EditorBase* ed = 0;
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 #if wxUSE_NOTEBOOK && wxUSE_AUI
     bool manVis = m_LayoutManager.GetPane(Manager::Get()->GetProjectManager()->GetNotebook()).IsShown();
 #else
@@ -4314,11 +4314,11 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 #ifndef CA_BUILD_WITHOUT_GUI
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
 #else
     EditorBase* ed = 0;
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     wxMenuBar* mbar = GetMenuBar();
 
     // 'Find' and 'Replace' are always enabled for (find|replace)-in-files
@@ -4439,11 +4439,11 @@ void MainFrame::OnToggleStatusBar(wxCommandEvent& event)
 
 void MainFrame::OnFocusEditor(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
     if (ed)
         ed->GetControl()->SetFocus();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnToggleFullScreen(wxCommandEvent& event)
@@ -4521,7 +4521,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
 void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
 {
 #ifndef CA_BUILD_WITHOUT_GUI
-#if wxUSE_LISTBOOK && !defined(CA_DISABLE_EDITOR)
+#if wxUSE_LISTBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
     bool tbarsmall = m_SmallToolBar;
     bool needRestart = false;
 
@@ -4539,7 +4539,7 @@ void MainFrame::OnSettingsEnvironment(wxCommandEvent& event)
     }
     if (needRestart)
         cbMessageBox(_("Code::Blocks needs to be restarted for the changes to take effect."), _("Information"), wxICON_INFORMATION);
-#endif // wxUSE_LISTBOOK && !defined(CA_DISABLE_EDITOR)
+#endif // wxUSE_LISTBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 }
 
@@ -4646,11 +4646,11 @@ void MainFrame::OnPageChanged(wxNotebookEvent& event)
 
 void MainFrame::OnShiftTab(wxCommandEvent& event)
 {
-#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#if wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor(); // Must make sure it's cbEditor and not EditorBase
     if(ed)
         ed->DoUnIndent();
-#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR)
+#endif // wxUSE_NOTEBOOK && !defined(CA_DISABLE_PLUGIN_API_EDITOR) && !defined(CA_DISABLE_EDITOR)
 }
 
 void MainFrame::OnRequestDockWindow(CodeBlocksDockEvent& event)
