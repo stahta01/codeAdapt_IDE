@@ -18,6 +18,7 @@
 #include <compiletargetbase.h>
 #include <cbproject.h>
 #include <cbeditor.h>
+#include <editorbase.h>
 #include <sqplus.h>
 
 DECLARE_INSTANCE_TYPE(wxString);
