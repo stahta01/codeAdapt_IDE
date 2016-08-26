@@ -65,7 +65,7 @@ void CfgPanel::Create(wxWindow* parent)
     wxArrayString channelStrings;
 
 	int slot = 0;
-	while(slot < max_logs)
+	while(slot < LogManager::max_logs)
 	{
 		wxString t = LogManager::Get()->Slot(slot).title;
 
@@ -140,7 +140,7 @@ void CfgPanel::OnApply()
 			if(!!i->second.IsEmpty())
 			{
 				int slot = 0;
-				while(slot <= max_logs && m->Slot(slot).title != i->second)
+				while(slot <= LogManager::max_logs && m->Slot(slot).title != i->second)
 					++slot;
 
 				m->SetLog(m->New(i->second), slot);
