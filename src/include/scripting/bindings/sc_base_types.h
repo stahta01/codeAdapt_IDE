@@ -9,9 +9,9 @@
 #include <manager.h>
 #include <logmanager.h>
 #include <configmanager.h>
-#ifndef CA_DISABLE_PLUGIN_API_EDITOR
+#ifndef CA_DISABLE_EDITOR
 #include <editormanager.h>
-#endif // #ifndef CA_DISABLE_PLUGIN_API_EDITOR
+#endif // #ifndef CA_DISABLE_EDITOR
 #include <projectmanager.h>
 #include <macrosmanager.h>
 #include <uservarmanager.h>
