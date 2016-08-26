@@ -2,3 +2,11 @@
 /build_noWXDIB/*.dll
 /build_noWXDIB/*.exe
 /build_noWXDIB/*.rpt
+/build_noEditMgr/share
+/build_noEditMgr/*.dll
+/build_noEditMgr/*.exe
+/build_noEditMgr/*.rpt
+/build_noEditor/share
+/build_noEditor/*.dll
+/build_noEditor/*.exe
+/build_noEditor/*.rpt
