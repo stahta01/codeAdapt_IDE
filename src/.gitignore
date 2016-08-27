@@ -10,3 +10,7 @@
 /build_noEditor/*.dll
 /build_noEditor/*.exe
 /build_noEditor/*.rpt
+/build_noEdit/share
+/build_noEdit/*.dll
+/build_noEdit/*.exe
+/build_noEdit/*.rpt
