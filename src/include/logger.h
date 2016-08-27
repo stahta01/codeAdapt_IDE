@@ -61,7 +61,9 @@ public:
     virtual void      Append(const wxString& msg, Logger::level lv = info) = 0;
 
     virtual void      Clear() {}
+#if wxUSE_CLIPBOARD
     virtual void      CopyContentsToClipboard(/* cb_optional */ bool selectionOnly = false) {}
+#endif // #if wxUSE_CLIPBOARD
 
     virtual void      UpdateSettings() {}
     virtual wxWindow* CreateControl(/* cb_optional */ wxWindow* parent) { return nullptr; }

@@ -57,6 +57,7 @@ TextCtrlLogger::~TextCtrlLogger()
     control = nullptr; // invalidate, do NOT destroy
 }
 
+#if wxUSE_CLIPBOARD
 void TextCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
 {
     if (control && control->GetValue().IsEmpty() == false && wxTheClipboard->Open())
@@ -65,6 +66,7 @@ void TextCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
         wxTheClipboard->Close();
     }
 }
+#endif // #if wxUSE_CLIPBOARD
 
 void TextCtrlLogger::UpdateSettings()
 {
@@ -253,6 +255,7 @@ ListCtrlLogger::~ListCtrlLogger()
     control = nullptr; // invalidate, do NOT destroy
 }
 
+#if wxUSE_CLIPBOARD
 void ListCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
 {
     if (control && control->GetItemCount() > 0 && wxTheClipboard->Open())
@@ -279,6 +282,7 @@ void ListCtrlLogger::CopyContentsToClipboard(bool selectionOnly)
         wxTheClipboard->Close();
     }
 }
+#endif // #if wxUSE_CLIPBOARD
 
 wxString ListCtrlLogger::GetItemAsText(long item) const
 {
