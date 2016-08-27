@@ -3,6 +3,7 @@
 
 #include <wx/string.h>
 #include <wx/arrstr.h>
+#include <printing_types.h>
 #include <globals.h>
 #include <settings.h>
 #include <manager.h>
