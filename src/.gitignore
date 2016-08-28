@@ -14,3 +14,7 @@
 /build_noEdit/*.dll
 /build_noEdit/*.exe
 /build_noEdit/*.rpt
+/build_batch/share
+/build_batch/*.dll
+/build_batch/*.exe
+/build_batch/*.rpt
