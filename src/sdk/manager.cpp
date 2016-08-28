@@ -48,6 +48,7 @@
     #include "filemanager.h"
     #include "globals.h"
 #endif
+#include "cbcolourmanager.h"
 #include <wx/frame.h>
 
 #include "xtra_res.h" // our new ToolBarAddOn handler
@@ -378,6 +379,11 @@ ConfigManager* Manager::GetConfigManager(const wxString& name_space) const
 FileManager* Manager::GetFileManager() const
 {
     return FileManager::Get();
+}
+
+ColourManager* Manager::GetColourManager() const
+{
+    return ColourManager::Get();
 }
 
 bool Manager::LoadResource(const wxString& file)
