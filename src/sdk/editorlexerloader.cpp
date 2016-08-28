@@ -10,6 +10,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -194,3 +196,5 @@ void EditorLexerLoader::DoSampleCode(HighlightLanguage language, TiXmlElement* n
     int errorLine = sample->Attribute("error_line") ? atol(sample->Attribute("error_line")) : -1;
     m_pTarget->SetSampleCode(language, code, breakLine, debugLine, errorLine);
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

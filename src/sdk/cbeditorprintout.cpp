@@ -17,7 +17,9 @@
     #include "logmanager.h"
     #include "cbeditor.h"
 #endif
+#if !defined(CA_DISABLE_EDITOR)
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #include "cbeditorprintout.h"
 #include "printing_types.h"
