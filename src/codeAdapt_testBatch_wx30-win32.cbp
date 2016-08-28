@@ -320,6 +320,13 @@
 					<Add directory="build_batch" />
 					<Add directory="$(#WX30.lib)/gcc$(WX_COMPILER)_dll$(WX_CFG)" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="$(CMD_CP) $(TARGET_COMPILER_DIR)bin\libgcc_s_dw2-1.dll build_batch\libgcc_s_dw2-1.dll" />
+					<Add after="$(CMD_CP) $(TARGET_COMPILER_DIR)bin\libwinpthread-1.dll build_batch\libwinpthread-1.dll" />
+					<Add after='$(CMD_CP) &quot;$(TARGET_COMPILER_DIR)bin\libstdc++-6.dll&quot; &quot;build_batch\libstdc++-6.dll&quot;' />
+					<Add after="$(CMD_CP) $(TARGET_COMPILER_DIR)bin\exchndl.dll build_batch\exchndl.dll" />
+					<Mode after="always" />
+				</ExtraCommands>
 			</Target>
 			<Target title="Compiler depslib">
 				<Option output="lib_batch/libdepslib.a" prefix_auto="0" extension_auto="0" />
@@ -364,8 +371,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_CFG" value="" />
-				<Variable name="WX_COMPILER" value="471TDM" />
+				<Variable name="WX_CFG" value="wx30X" />
+				<Variable name="WX_COMPILER" value="" />
 				<Variable name="WX_SUFFIX" value="ud" />
 				<Variable name="WX_VERSION" value="30" />
 			</Environment>
