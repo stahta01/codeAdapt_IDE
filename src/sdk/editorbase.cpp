@@ -24,7 +24,9 @@
     #include "cbproject.h" // FileTreeData
     #include <wx/wfstream.h>
 #endif
+#if !defined(CA_DISABLE_EDITOR)
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #if wxUSE_NOTEBOOK
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"

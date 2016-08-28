@@ -1,6 +1,8 @@
 #ifndef CBSTYLEDTEXTCTRL_H_INCLUDED
 #define CBSTYLEDTEXTCTRL_H_INCLUDED
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "wx/wxscintilla.h"
 
 class wxContextMenuEvent;
@@ -20,5 +22,7 @@ class cbStyledTextCtrl : public wxScintilla
         wxWindow* m_pParent;
         DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #endif // CBSTYLEDTEXTCTRL_H_INCLUDED

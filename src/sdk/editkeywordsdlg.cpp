@@ -10,6 +10,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include <sdk_precomp.h>
 
 #ifndef CB_PRECOMP
@@ -52,3 +54,5 @@ void EditKeywordsDlg::OnSetChange(wxSpinEvent& event)
 	m_LastSet = spnSet->GetValue() - 1;
 	txtKeywords->SetValue(m_pTheme->GetKeywords(m_Lang, m_LastSet));
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
