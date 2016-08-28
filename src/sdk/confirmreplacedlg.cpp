@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -137,3 +139,5 @@ void ConfirmReplaceDlg::CalcPosition(cbStyledTextCtrl* ed)
 	// we should be OK now
 	SetSize(pt.x, pt.y, w, h);
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

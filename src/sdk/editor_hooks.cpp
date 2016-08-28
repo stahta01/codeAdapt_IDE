@@ -10,6 +10,8 @@
 * $HeadURL
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 #include "editor_hooks.h"
 #include "cbeditor.h"
@@ -63,3 +65,5 @@ void EditorHooks::CallHooks(cbEditor* editor, wxScintillaEvent& event)
             functor->Call(editor, event);
     }
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

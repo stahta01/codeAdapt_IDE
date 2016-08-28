@@ -1,6 +1,8 @@
 #ifndef EDITORCONFIGURATION_H
 #define EDITORCONFIGURATION_H
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include <wx/dialog.h>
 #include <wx/arrstr.h>
 #include "settings.h"
@@ -64,5 +66,7 @@ class EditorConfigurationDlg : public wxDialog
 
     	DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #endif // EDITORCONFIGURATION_H

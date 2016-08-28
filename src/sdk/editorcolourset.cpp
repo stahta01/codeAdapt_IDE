@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -811,3 +813,5 @@ void EditorColourSet::SetSampleCode(HighlightLanguage lang, const wxString& samp
     mset.m_DebugLine = debugLine;
     mset.m_ErrorLine = errorLine;
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

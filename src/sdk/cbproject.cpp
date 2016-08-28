@@ -1527,6 +1527,7 @@ bool cbProject::SaveAllFiles()
 bool cbProject::ShowOptions()
 {
 #ifndef CA_BUILD_WITHOUT_GUI
+#if wxUSE_NOTEBOOK
     ProjectOptionsDlg dlg(Manager::Get()->GetAppWindow(), this);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -1541,6 +1542,7 @@ bool cbProject::ShowOptions()
         }
         return true;
     }
+#endif // #if wxUSE_NOTEBOOK
 #endif // CA_BUILD_WITHOUT_GUI
     return false;
 }

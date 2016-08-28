@@ -24,6 +24,8 @@
 * $HeadURL: svn+ssh://killerbot@svn.berlios.de/svnroot/repos/codeblocks/trunk/src/sdk/cbeditor.cpp $
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 //#include "sdk_precomp.h"
 //#ifndef CB_PRECOMP
 //    #include "globals.h"
@@ -111,3 +113,5 @@ void cbStyledTextCtrl::OnGPM(wxMouseEvent& event)
         SetSelection(start, end);
     }
 } // end of OnGPM
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

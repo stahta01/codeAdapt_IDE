@@ -1,6 +1,8 @@
 #ifndef EDITORCOLORSET_H
 #define EDITORCOLORSET_H
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include <wx/dynarray.h>
 #include <wx/hashmap.h>
 #include <wx/intl.h>
@@ -105,6 +107,8 @@ class EditorColourSet
 		wxString m_Name;
 		OptionSetsMap m_Sets;
 };
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #endif // EDITORCOLORSET_H
 

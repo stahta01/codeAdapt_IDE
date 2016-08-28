@@ -51,8 +51,10 @@
 #include <wx/sizer.h>
 #include <wx/textdlg.h>
 
+#if !defined(CA_DISABLE_EDITOR)
 #include "cbstyledtextctrl.h"
 #include "editorcolourset.h"
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #include <wx/fontutil.h>
 #include <wx/splitter.h>
