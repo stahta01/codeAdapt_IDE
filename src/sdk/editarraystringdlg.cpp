@@ -25,9 +25,11 @@
 #include <wx/textdlg.h>
 
 BEGIN_EVENT_TABLE(EditArrayStringDlg, wxDialog)
+#if wxUSE_TEXTDLG
 	EVT_LISTBOX_DCLICK(XRCID("lstItems"), EditArrayStringDlg::OnEdit)
 	EVT_BUTTON(XRCID("btnAdd"), EditArrayStringDlg::OnAdd)
 	EVT_BUTTON(XRCID("btnEdit"), EditArrayStringDlg::OnEdit)
+#endif // #if wxUSE_TEXTDLG
 	EVT_BUTTON(XRCID("btnDelete"), EditArrayStringDlg::OnDelete)
 	EVT_UPDATE_UI(-1, EditArrayStringDlg::OnUpdateUI)
 END_EVENT_TABLE()
