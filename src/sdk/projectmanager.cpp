@@ -185,11 +185,15 @@ BEGIN_EVENT_TABLE(ProjectManager, wxEvtHandler)
     EVT_MENU(idMenuPriorProject, ProjectManager::OnSetActiveProject)
     EVT_MENU(idMenuProjectUp, ProjectManager::OnSetActiveProject)
     EVT_MENU(idMenuProjectDown, ProjectManager::OnSetActiveProject)
+#if wxUSE_TEXTDLG
     EVT_MENU(idMenuTreeRenameWorkspace, ProjectManager::OnRenameWorkspace)
+#endif // #if wxUSE_TEXTDLG
     EVT_MENU(idMenuTreeSaveWorkspace, ProjectManager::OnSaveWorkspace)
     EVT_MENU(idMenuTreeSaveAsWorkspace, ProjectManager::OnSaveAsWorkspace)
     EVT_MENU(idMenuTreeCloseWorkspace, ProjectManager::OnCloseWorkspace)
+#if wxUSE_TEXTDLG
     EVT_MENU(idMenuAddVirtualFolder, ProjectManager::OnAddVirtualFolder)
+#endif // #if wxUSE_TEXTDLG
     EVT_MENU(idMenuDeleteVirtualFolder, ProjectManager::OnDeleteVirtualFolder)
     EVT_MENU(idMenuAddFile, ProjectManager::OnAddFileToProject)
     EVT_MENU(idMenuAddFilesRecursively, ProjectManager::OnAddFilesToProjectRecursively)
@@ -198,7 +202,9 @@ BEGIN_EVENT_TABLE(ProjectManager, wxEvtHandler)
     EVT_MENU(idMenuAddFilesRecursivelyPopup, ProjectManager::OnAddFilesToProjectRecursively)
     EVT_MENU(idMenuRemoveFolderFilesPopup, ProjectManager::OnRemoveFileFromProject)
     EVT_MENU(idMenuRemoveFilePopup, ProjectManager::OnRemoveFileFromProject)
+#if wxUSE_TEXTDLG
     EVT_MENU(idMenuRenameFile, ProjectManager::OnRenameFile)
+#endif // #if wxUSE_TEXTDLG
     EVT_MENU(idMenuCloseProject, ProjectManager::OnCloseProject)
     EVT_MENU(idMenuCloseFile, ProjectManager::OnCloseFile)
     EVT_MENU(idMenuOpenFile, ProjectManager::OnOpenFile)
@@ -214,7 +220,9 @@ BEGIN_EVENT_TABLE(ProjectManager, wxEvtHandler)
     EVT_MENU(idMenuViewUseFolders, ProjectManager::OnViewUseFolders)
     EVT_MENU(idMenuViewUseFoldersPopup, ProjectManager::OnViewUseFolders)
     EVT_MENU(idMenuViewFileMasks, ProjectManager::OnViewFileMasks)
+#if wxUSE_TEXTDLG
     EVT_MENU(idMenuFindFile, ProjectManager::OnFindFile)
+#endif // #if wxUSE_TEXTDLG
     EVT_IDLE(ProjectManager::OnIdle)
 END_EVENT_TABLE()
 
@@ -2627,11 +2635,15 @@ void ProjectManager::CheckForExternallyModifiedProjects()
                     wxString msg;
                     msg.Printf(_("Project %s is modified outside the IDE...\nDo you want to reload it (you will lose any unsaved work)?"),
                                pProject->GetFilename().c_str());
+#if !defined(CA_DISABLE_EDITOR)
                     ConfirmReplaceDlg dlg(Manager::Get()->GetAppWindow(), false, msg);
                     dlg.SetTitle(_("Reload Project?"));
                     PlaceWindow(&dlg);
                     ret = dlg.ShowModal();
                     reloadAll = ret == crAll;
+#else
+                    ret = crCancel;
+#endif // #if !defined(CA_DISABLE_EDITOR)
                 }
                 if(reloadAll || ret == crYes)
                 {
