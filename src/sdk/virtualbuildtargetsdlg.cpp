@@ -1,6 +1,8 @@
 #include "sdk_precomp.h"
 #include "virtualbuildtargetsdlg.h"
 
+#if wxUSE_TEXTDLG
+
 #ifndef CB_PRECOMP
     #include "cbproject.h"
     #include "globals.h"
@@ -188,3 +190,5 @@ void VirtualBuildTargetsDlg::OnTargetsToggled(wxCommandEvent& event)
 {
     SetVirtualTarget(lstAliases->GetStringSelection());
 }
+
+#endif // #if wxUSE_TEXTDLG

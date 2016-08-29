@@ -80,10 +80,12 @@ class UsrGlblMgrEditDialog : public wxDialog
     void OnCancel(wxCommandEvent& event){DoClose();};
     void CloseHandler(wxCloseEvent& event){DoClose();};
 
+#if wxUSE_TEXTDLG
     void CloneVar(wxCommandEvent& event);
     void CloneSet(wxCommandEvent& event);
     void NewVar(wxCommandEvent& event);
     void NewSet(wxCommandEvent& event);
+#endif // #if wxUSE_TEXTDLG
     void DeleteVar(wxCommandEvent& event);
     void DeleteSet(wxCommandEvent& event);
 
@@ -292,11 +294,15 @@ void UserVariableManager::Migrate()
 
 #ifndef CA_BUILD_WITHOUT_GUI
 BEGIN_EVENT_TABLE(UsrGlblMgrEditDialog, wxDialog)
+#if wxUSE_TEXTDLG
 EVT_BUTTON(XRCID("cloneVar"), UsrGlblMgrEditDialog::CloneVar)
 EVT_BUTTON(XRCID("newVar"), UsrGlblMgrEditDialog::NewVar)
+#endif // #if wxUSE_TEXTDLG
 EVT_BUTTON(XRCID("deleteVar"), UsrGlblMgrEditDialog::DeleteVar)
+#if wxUSE_TEXTDLG
 EVT_BUTTON(XRCID("cloneSet"), UsrGlblMgrEditDialog::CloneSet)
 EVT_BUTTON(XRCID("newSet"), UsrGlblMgrEditDialog::NewSet)
+#endif // #if wxUSE_TEXTDLG
 EVT_BUTTON(XRCID("deleteSet"), UsrGlblMgrEditDialog::DeleteSet)
 EVT_BUTTON(XRCID("help"), UsrGlblMgrEditDialog::Help)
 EVT_BUTTON(wxID_OK, UsrGlblMgrEditDialog::OnOK)
