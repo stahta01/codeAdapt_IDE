@@ -262,7 +262,9 @@ void Manager::Initxrc(bool force)
     {
         wxFileSystem::AddHandler(new wxZipFSHandler);
 #ifndef CA_BUILD_WITHOUT_TOOLBARS
+#if wxUSE_TOOLBAR
         wxXmlResource::Get()->InsertHandler(new wxToolBarAddOnXmlHandler);
+#endif // #if wxUSE_TOOLBAR
 #endif // CA_BUILD_WITHOUT_TOOLBARS
         wxXmlResource::Get()->InitAllHandlers();
 
@@ -289,6 +291,7 @@ wxMenu *Manager::LoadMenu(wxString menu_id,bool createonfailure)
     return m;
 }
 
+#if wxUSE_TOOLBAR
 wxToolBar *Manager::LoadToolBar(wxFrame *parent,wxString resid,bool defaultsmall)
 {
     if(!parent)
@@ -321,6 +324,7 @@ bool Manager::isToolBar16x16(wxToolBar* toolBar)
     wxSize mysize=toolBar->GetToolBitmapSize();
     return (mysize.GetWidth()<=16 && mysize.GetHeight()<=16);
 }
+#endif // #if wxUSE_TOOLBAR
 
 wxFrame* Manager::GetAppFrame() const
 {
