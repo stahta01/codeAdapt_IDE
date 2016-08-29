@@ -1,6 +1,8 @@
 #ifndef TEMPLATEMANAGER_H
 #define TEMPLATEMANAGER_H
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "settings.h"
 #include "manager.h"
 #include <wx/event.h>
@@ -33,5 +35,7 @@ class DLLIMPORT TemplateManager : public Mgr<TemplateManager>, public wxEvtHandl
 		TemplateManager();
 		virtual ~TemplateManager();
 };
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #endif // TEMPLATEMANAGER_H
