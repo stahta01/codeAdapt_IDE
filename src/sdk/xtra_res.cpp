@@ -4,6 +4,8 @@
 
 #include <wx/xml/xml.h>
 
+#if wxUSE_XRC && wxUSE_TOOLBAR
+
 #ifndef CB_PRECOMP
     #include <wx/frame.h>
     #include <wx/log.h>
@@ -246,5 +248,7 @@ bool wxToolBarAddOnXmlHandler::CanHandle(wxXmlNode *node)
             (m_isInside && istool) ||
             (m_isInside && issep));
 }
+
+#endif // #if wxUSE_XRC && wxUSE_TOOLBAR
 
 #endif // CA_BUILD_WITHOUT_TOOLBARS
