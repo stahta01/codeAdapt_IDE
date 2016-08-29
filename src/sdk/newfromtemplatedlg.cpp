@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -525,3 +527,5 @@ void NewFromTemplateDlg::EndModal(int retCode)
     GetSelectedTemplate();
     wxDialog::EndModal(retCode);
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)

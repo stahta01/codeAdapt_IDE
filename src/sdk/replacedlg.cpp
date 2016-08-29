@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
     #include "sdk_precomp.h"
 #ifndef CB_PRECOMP
     #include "globals.h"
@@ -296,3 +298,5 @@ void ReplaceDlg::OnActivate(wxActivateEvent& event)
     if (cbp != 0) cbp->SetFocus();
     event.Skip();
 }
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
