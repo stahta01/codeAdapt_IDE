@@ -229,6 +229,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
           */
         ProjectBuildTarget* DuplicateBuildTarget(const wxString& targetName, const wxString& newName = wxEmptyString);
 
+#if wxUSE_TEXTDLG
         /** Export a target as a new project.
           * In other words, save a copy of the project containing only the specified target.
           * The user will be prompted with a dialog to select the new project name.
@@ -249,6 +250,7 @@ class DLLIMPORT cbProject : public CompileTargetBase
           * @see ExportTargetAsProject(int).
           */
         bool ExportTargetAsProject(const wxString& targetName);
+#endif // #if wxUSE_TEXTDLG
 
         /** Remove a build target.
           * @param index The index of the build target to remove.

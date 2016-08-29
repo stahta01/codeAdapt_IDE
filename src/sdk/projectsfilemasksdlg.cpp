@@ -27,8 +27,10 @@
 
 BEGIN_EVENT_TABLE(ProjectsFileMasksDlg, wxDialog)
     EVT_UPDATE_UI( -1, ProjectsFileMasksDlg::OnUpdateUI)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnAdd"), ProjectsFileMasksDlg::OnAdd)
     EVT_BUTTON(XRCID("btnEdit"), ProjectsFileMasksDlg::OnEdit)
+#endif // #if wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnDelete"), ProjectsFileMasksDlg::OnDelete)
     EVT_BUTTON(XRCID("btnSetDefault"), ProjectsFileMasksDlg::OnSetDefault)
     EVT_LISTBOX(XRCID("lstCategories"), ProjectsFileMasksDlg::OnListChanged)
