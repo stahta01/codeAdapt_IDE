@@ -79,14 +79,18 @@ BEGIN_EVENT_TABLE(ProjectOptionsDlg, wxDialog)
     EVT_BUTTON(    XRCID("btnTargetBuildOptions"),     ProjectOptionsDlg::OnTargetBuildOptionsClick)
     EVT_LISTBOX_DCLICK(XRCID("lstBuildTarget"),        ProjectOptionsDlg::OnTargetBuildOptionsClick)
     EVT_BUTTON(    XRCID("btnBuildOrder"),             ProjectOptionsDlg::OnBuildOrderClick)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(    XRCID("btnAddBuildTarget"),         ProjectOptionsDlg::OnAddBuildTargetClick)
     EVT_BUTTON(    XRCID("btnEditBuildTarget"),        ProjectOptionsDlg::OnEditBuildTargetClick)
     EVT_BUTTON(    XRCID("btnCopyBuildTarget"),        ProjectOptionsDlg::OnCopyBuildTargetClick)
+#endif // #if wxUSE_TEXTDLG
     EVT_BUTTON(    XRCID("btnDelBuildTarget"),         ProjectOptionsDlg::OnRemoveBuildTargetClick)
     EVT_BUTTON(    XRCID("btnBrowseOutputFilename"),   ProjectOptionsDlg::OnBrowseOutputFilenameClick)
     EVT_BUTTON(    XRCID("btnBrowseWorkingDir"),       ProjectOptionsDlg::OnBrowseDirClick)
     EVT_BUTTON(    XRCID("btnBrowseObjectDir"),        ProjectOptionsDlg::OnBrowseDirClick)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(    XRCID("btnVirtualBuildTargets"),    ProjectOptionsDlg::OnVirtualTargets)
+#endif // #if wxUSE_TEXTDLG
     EVT_BUTTON(    XRCID("btnExternalDeps"),           ProjectOptionsDlg::OnEditDepsClick)
     EVT_BUTTON(    XRCID("btnExportTarget"),           ProjectOptionsDlg::OnExportTargetClick)
     EVT_LISTBOX_DCLICK(XRCID("lstFiles"),              ProjectOptionsDlg::OnFileOptionsClick)
@@ -669,11 +673,13 @@ void ProjectOptionsDlg::OnRemoveBuildTargetClick(wxCommandEvent& event)
     Manager::Get()->GetPluginManager()->NotifyPlugins(e);
 }
 
+#if wxUSE_TEXTDLG
 void ProjectOptionsDlg::OnVirtualTargets(wxCommandEvent& event)
 {
     VirtualBuildTargetsDlg dlg(this, -1, m_Project);
     dlg.ShowModal();
 }
+#endif // #if wxUSE_TEXTDLG
 
 void ProjectOptionsDlg::OnEditDepsClick(wxCommandEvent& event)
 {
@@ -701,11 +707,13 @@ void ProjectOptionsDlg::OnExportTargetClick(wxCommandEvent& event)
                         wxART_QUESTION,
                         AnnoyingDialog::YES_NO,
                         wxID_YES);
+#if wxUSE_TEXTDLG
     if (dlg.ShowModal() == wxID_YES)
     {
         if (m_Project->ExportTargetAsProject(target->GetTitle()))
             cbMessageBox(_("New project created succesfully!"), _("Information"), wxICON_INFORMATION);
     }
+#endif // #if wxUSE_TEXTDLG
 }
 
 void ProjectOptionsDlg::OnBrowseDirClick(wxCommandEvent& event)

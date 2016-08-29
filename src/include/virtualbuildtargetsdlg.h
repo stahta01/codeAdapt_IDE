@@ -7,6 +7,8 @@
     #pragma hdrstop
 #endif
 
+#if wxUSE_TEXTDLG
+
 //(*Headers(VirtualBuildTargetsDlg)
 #include <wx/button.h>
 #include <wx/checklst.h>
@@ -56,5 +58,7 @@ class VirtualBuildTargetsDlg: public wxDialog
 
 		DECLARE_EVENT_TABLE()
 };
+
+#endif // #if wxUSE_TEXTDLG
 
 #endif
