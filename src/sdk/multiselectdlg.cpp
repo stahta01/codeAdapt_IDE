@@ -26,7 +26,9 @@
 
 BEGIN_EVENT_TABLE(MultiSelectDlg, wxDialog)
     EVT_CHECKLISTBOX(XRCID("lstItems"), MultiSelectDlg::OnItemToggle)
+#if wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnSelectWild"), MultiSelectDlg::OnWildcard)
+#endif // #if wxUSE_TEXTDLG
     EVT_BUTTON(XRCID("btnToggle"), MultiSelectDlg::OnToggle)
     EVT_BUTTON(XRCID("btnSelectAll"), MultiSelectDlg::OnSelectAll)
     EVT_BUTTON(XRCID("btnDeselectAll"), MultiSelectDlg::OnDeselectAll)
