@@ -24,6 +24,8 @@
 * $HeadURL$
 */
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
@@ -347,3 +349,5 @@ void TemplateManager::SaveUserTemplate(cbProject* prj)
         cbMessageBox(_("Some files could not be saved with the template..."), _("Error"), wxICON_ERROR);
 }
 #endif // wxUSE_TEXTDLG
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
