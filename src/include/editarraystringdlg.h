@@ -13,8 +13,10 @@ class DLLIMPORT EditArrayStringDlg : public wxDialog
 		EditArrayStringDlg& operator=(const EditArrayStringDlg&){ return *this; } // just to satisfy script bindings (never used)
 		virtual void EndModal(int retCode);
 	protected:
+#if wxUSE_TEXTDLG
 		void OnAdd(wxCommandEvent& event);
 		void OnEdit(wxCommandEvent& event);
+#endif // #if wxUSE_TEXTDLG
 		void OnDelete(wxCommandEvent& event);
 		void OnUpdateUI(wxUpdateUIEvent& event);
 		wxArrayString& m_Array;
