@@ -1,11 +1,15 @@
 #ifndef CONFIRMREPLACEDLG_H
 #define CONFIRMREPLACEDLG_H
 
+#if !defined(CA_DISABLE_EDITOR)
+
 #include <wx/dialog.h>
 #include <wx/intl.h>
 #include "settings.h"
 
 class cbStyledTextCtrl;
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 enum ConfirmResponse
 {
@@ -16,6 +20,8 @@ enum ConfirmResponse
 	crAll,
 	crCancel
 };
+
+#if !defined(CA_DISABLE_EDITOR)
 
 class ConfirmReplaceDlg : public wxDialog
 {
@@ -34,5 +40,7 @@ class ConfirmReplaceDlg : public wxDialog
 	private:
 		DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_DISABLE_EDITOR)
 
 #endif // CONFIRMREPLACEDLG_H

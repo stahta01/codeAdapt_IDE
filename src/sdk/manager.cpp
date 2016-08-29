@@ -170,7 +170,9 @@ void Manager::Shutdown()
     ToolsManager::Free();
 #endif // CA_DISABLE_PLUGIN_API_TOOLS
 #ifndef CA_BUILD_WITHOUT_GUI
+#if !defined(CA_DISABLE_EDITOR)
 	TemplateManager::Free();
+#endif // #if !defined(CA_DISABLE_EDITOR)
 #endif // CA_BUILD_WITHOUT_GUI
 	PluginManager::Free();
 	ScriptingManager::Free();
