@@ -155,8 +155,10 @@ ProjectOptionsDlg::ProjectOptionsDlg(wxWindow* parent, cbProject* project)
     // the following line out...
     GetSizer()->SetSizeHints(this);
 
+#if wxUSE_NOTEBOOK
     // other plugins configuration
     AddPluginPanels();
+#endif // #if wxUSE_NOTEBOOK
 
     CentreOnParent();
 }
