@@ -28,7 +28,9 @@ class MultiSelectDlg : public wxDialog
 	protected:
         void Init(const wxArrayString& items, const wxString& wildcard);
         void UpdateStatus();
+#if wxUSE_TEXTDLG
         void OnWildcard(wxCommandEvent& event);
+#endif // #if wxUSE_TEXTDLG
         void OnToggle(wxCommandEvent& event);
         void OnSelectAll(wxCommandEvent& event);
         void OnDeselectAll(wxCommandEvent& event);
