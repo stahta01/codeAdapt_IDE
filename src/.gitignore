@@ -18,3 +18,7 @@
 /build_batch/*.dll
 /build_batch/*.exe
 /build_batch/*.rpt
+/build_onlyBatch/share
+/build_onlyBatch/*.dll
+/build_onlyBatch/*.exe
+/build_onlyBatch/*.rpt
