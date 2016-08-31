@@ -914,6 +914,9 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame)
                     // batch jobs
                     m_Batch = m_HasProject || m_HasWorkSpace;
                     m_Batch = m_Batch && (m_Build || m_ReBuild || m_Clean);
+#if defined(CA_BUILD_BATCH_ONLY)
+                    m_Batch = true;
+#endif // #if defined(CA_BUILD_BATCH_ONLY)
                 }
                 else
                 {
@@ -943,6 +946,9 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame)
                     parser.Found(_T("script"), &m_Script);
                     // initial setting for batch flag (will be reset when ParseCmdLine() is called again).
                     m_Batch = m_Build || m_ReBuild || m_Clean;
+#if defined(CA_BUILD_BATCH_ONLY)
+                    m_Batch = true;
+#endif // #if defined(CA_BUILD_BATCH_ONLY)
 
 
                     if(parser.Found(_T("no-log")) == false)
