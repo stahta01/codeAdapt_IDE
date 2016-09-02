@@ -67,7 +67,9 @@
 #include "multiselectdlg.h"
 #include "annoyingdialog.h"
 #include "filefilters.h"
+#if !defined(CA_BUILD_WITHOUT_wxSMITH) 
 #include "virtualbuildtargetsdlg.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH) 
 
 BEGIN_EVENT_TABLE(ProjectOptionsDlg, wxDialog)
     EVT_UPDATE_UI( -1,                                 ProjectOptionsDlg::OnUpdateUI)
@@ -661,8 +663,10 @@ void ProjectOptionsDlg::OnRemoveBuildTargetClick(wxCommandEvent& event)
 
 void ProjectOptionsDlg::OnVirtualTargets(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
     VirtualBuildTargetsDlg dlg(this, -1, m_Project);
     dlg.ShowModal();
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 }
 
 void ProjectOptionsDlg::OnEditDepsClick(wxCommandEvent& event)
