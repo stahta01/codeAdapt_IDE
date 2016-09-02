@@ -42,7 +42,9 @@
     #include "macrosmanager.h"
     #include "configmanager.h"
     #include "scriptingmanager.h"
+#if !defined(CA_BUILD_BATCH_ONLY) 
     #include "templatemanager.h"
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
     #include "personalitymanager.h"
     #include "uservarmanager.h"
     #include "filemanager.h"
@@ -165,7 +167,9 @@ void Manager::Shutdown()
     appShuttingDown = true;
 
     ToolsManager::Free();
+#if !defined(CA_BUILD_BATCH_ONLY) 
 	TemplateManager::Free();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 	PluginManager::Free();
 	ScriptingManager::Free();
 	ProjectManager::Free();
