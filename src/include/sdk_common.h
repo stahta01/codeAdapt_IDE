@@ -121,7 +121,6 @@
     #include "menuitemsmanager.h"
     #include "scriptingmanager.h"
     #include "toolsmanager.h"
-    #include "templatemanager.h"
     #include "macrosmanager.h"
     #include "pluginmanager.h"
     #include "personalitymanager.h"
