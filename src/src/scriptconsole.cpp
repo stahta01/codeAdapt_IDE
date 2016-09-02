@@ -1,3 +1,5 @@
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
+
 #include <sdk.h>
 #include <sqplus.h>
 
@@ -164,3 +166,5 @@ void ScriptConsole::OnbtnClearClick(wxCommandEvent& event)
 {
     txtConsole->Clear();
 }
+
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
