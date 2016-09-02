@@ -1,6 +1,8 @@
 #ifndef SCRIPTCONSOLE_H
 #define SCRIPTCONSOLE_H
 
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
+
 #include <wx/wxprec.h>
 
 #ifdef __BORLANDC__
@@ -57,5 +59,7 @@ class ScriptConsole: public wxPanel
 
 		DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 
 #endif

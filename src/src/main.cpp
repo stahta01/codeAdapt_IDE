@@ -71,7 +71,9 @@
 #include "dlgaboutplugin.h"
 #include "dlgabout.h"
 #include "startherepage.h"
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 #include "scriptconsole.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 #include "scriptingsettingsdlg.h"
 #include "printdlg.h"
 #include "batchbuild.h"
@@ -1785,6 +1787,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 
 void MainFrame::ShowHideScriptConsole()
 {
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
     if (Manager::IsBatchBuild())
         return;
     if (!m_pScriptConsole)
@@ -1798,6 +1801,7 @@ void MainFrame::ShowHideScriptConsole()
         m_pScriptConsole = 0;
     }
     Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/show_script_console"), m_pScriptConsole != 0);
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 }
 
 void MainFrame::OnStartHereLink(wxCommandEvent& event)
