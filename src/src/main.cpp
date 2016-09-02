@@ -57,7 +57,9 @@
 #include <editormanager.h>
 #include <logmanager.h>
 #include <pluginmanager.h>
+#if !defined(CA_BUILD_BATCH_ONLY) 
 #include <templatemanager.h>
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 #include <toolsmanager.h>
 #include <scriptingmanager.h>
 #include <cbexception.h>
@@ -70,7 +72,9 @@
 #include "infopane.h"
 #include "dlgaboutplugin.h"
 #include "dlgabout.h"
+#if !defined(CA_BUILD_BATCH_ONLY)
 #include "startherepage.h"
+#endif // #if !defined(CA_BUILD_BATCH_ONLY)
 #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 #include "scriptconsole.h"
 #endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
@@ -1768,9 +1772,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
 
     if(m_InitiatedShutdown)
     {
+#if !defined(CA_BUILD_BATCH_ONLY) 
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             sh->Destroy();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
         return;
     }
 
@@ -1778,11 +1784,13 @@ void MainFrame::ShowHideStartPage(bool forceHasProject)
                 Manager::Get()->GetProjectManager()->GetProjects()->GetCount() == 0 &&
                 Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/start_here_page"), true);
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show && !sh)
         sh = new StartHerePage(this, Manager::Get()->GetEditorManager()->GetNotebook());
     else if (!show && sh)
         sh->Destroy();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::ShowHideScriptConsole()
@@ -1842,15 +1850,18 @@ void MainFrame::AskToRemoveFileFromHistory(wxFileHistory* hist, int id)
                     wxYES_NO | wxICON_QUESTION) == wxID_YES)
     {
         hist->RemoveFileFromHistory(id);
+#if !defined(CA_BUILD_BATCH_ONLY) 
         // update start here page
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             ((StartHerePage*)sh)->Reload();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
     }
 }
 
 void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_BATCH_ONLY) 
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (!sh)
         return;
@@ -1896,6 +1907,7 @@ void MainFrame::OnStartHereVarSubst(wxCommandEvent& event)
     // update page
     buf.Replace(_T("CB_VAR_RECENT_FILES_AND_PROJECTS"), links);
     ((StartHerePage*)sh)->SetPageContent(buf);
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::InitializeRecentFilesHistory()
@@ -2007,10 +2019,12 @@ void MainFrame::AddToRecentFilesHistory(const wxString& FileName)
         recentFiles->Append(clear);
     }
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
@@ -2067,10 +2081,12 @@ void MainFrame::AddToRecentProjectsHistory(const wxString& FileName)
         recentProjects->Append(clear);
     }
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::TerminateRecentFilesHistory()
@@ -2173,6 +2189,7 @@ void MainFrame::OnHelpPluginMenu(wxCommandEvent& event)
 
 void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_BATCH_ONLY) 
     int id = event.GetId();
     if (id != idFileNewEmpty)
     {
@@ -2249,6 +2266,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     // verify that the open files are still in sync
     // the new file might have overwritten an existing one)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 bool MainFrame::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& files)
@@ -2380,10 +2398,12 @@ void MainFrame::OnFileOpenRecentProjectClearHistory(wxCommandEvent& event)
     }
     Manager::Get()->GetConfigManager(_T("app"))->DeleteSubPath(_T("/recent_projects"));
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::OnFileReopen(wxCommandEvent& event)
@@ -2404,10 +2424,12 @@ void MainFrame::OnFileOpenRecentClearHistory(wxCommandEvent& event)
     }
     Manager::Get()->GetConfigManager(_T("app"))->DeleteSubPath(_T("/recent_files"));
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::OnFileSave(wxCommandEvent& event)
@@ -2474,7 +2496,9 @@ void MainFrame::OnFileSaveAll(wxCommandEvent& event)
 
 void MainFrame::OnFileSaveProjectTemplate(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_BATCH_ONLY) 
     TemplateManager::Get()->SaveUserTemplate(Manager::Get()->GetProjectManager()->GetActiveProject());
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 }
 
 void MainFrame::OnFileCloseProject(wxCommandEvent& event)
@@ -3689,7 +3713,11 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
     }
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : 0;
     cbProject* prj = Manager::Get()->GetProjectManager() ? Manager::Get()->GetProjectManager()->GetActiveProject() : 0L;
+#if !defined(CA_BUILD_BATCH_ONLY) 
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
+#else
+    EditorBase* sh = nullptr;
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
     wxMenuBar* mbar = GetMenuBar();
 
