@@ -1,3 +1,5 @@
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
+
 #include "sdk_precomp.h"
 #include "virtualbuildtargetsdlg.h"
 
@@ -184,3 +186,5 @@ void VirtualBuildTargetsDlg::OnTargetsToggled(wxCommandEvent& event)
 {
     SetVirtualTarget(lstAliases->GetStringSelection());
 }
+
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
