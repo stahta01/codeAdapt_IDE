@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="tinyXML">
-				<Option output="lib/libtxml.a" prefix_auto="0" extension_auto="0" />
+				<Option output="lib_msys2/libtxml.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output=".objs_msys2" />
 				<Option type="2" />
@@ -49,7 +49,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Squirrel">
-				<Option output="lib/libsquirrel.a" prefix_auto="0" extension_auto="0" />
+				<Option output="lib_msys2/libsquirrel.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output=".objs_msys2" />
 				<Option type="2" />
@@ -69,7 +69,7 @@
 				</Linker>
 			</Target>
 			<Target title="Squirrel std lib">
-				<Option output="lib/libsqstdlib.a" prefix_auto="0" extension_auto="0" />
+				<Option output="lib_msys2/libsqstdlib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output=".objs_msys2" />
 				<Option external_deps="lib/libsquirrel.a;" />
@@ -89,7 +89,7 @@
 				</Linker>
 			</Target>
 			<Target title="SqPlus">
-				<Option output="lib/libsqplus.a" prefix_auto="0" extension_auto="0" />
+				<Option output="lib_msys2/libsqplus.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output=".objs_msys2" />
 				<Option external_deps="lib/libsquirrel.a;lib/libsqstdlib.a;" />
@@ -193,7 +193,6 @@
 					<Add library="wx_msw$(WX_SUFFIX)_adv-$(WX_VERSION)" />
 					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add directory="lib_msys2" />
-					<Add directory="lib" />
 					<Add directory="devel_msys2" />
 					<Add directory="base/tinyxml" />
 				</Linker>
@@ -250,7 +249,6 @@
 					<Add library="libadvapi32.a" />
 					<Add library="libwsock32.a" />
 					<Add directory="lib_msys2" />
-					<Add directory="lib" />
 					<Add directory="devel_msys2" />
 				</Linker>
 			</Target>
@@ -348,7 +346,7 @@
 				</Linker>
 			</Target>
 			<Target title="Compiler depslib">
-				<Option output="lib/libdepslib.a" prefix_auto="0" extension_auto="0" />
+				<Option output="lib_msys2/libdepslib.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output=".objs_msys2" />
 				<Option type="2" />
@@ -390,7 +388,7 @@
 					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
 					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
 					<Add library="wx_base$(WX_SUFFIX)-$(WX_VERSION)" />
-					<Add directory="lib" />
+					<Add directory="lib_msys2" />
 					<Add directory="devel_msys2" />
 				</Linker>
 			</Target>
