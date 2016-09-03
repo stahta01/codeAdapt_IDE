@@ -1,0 +1,48 @@
+Code Modules that are part of codeAdapt.
+    wxFlatNotebook
+    TinyXML
+    Squirrel
+    sqplus
+    wxscintilla
+    games
+    headerfixup
+    AutoVersioning
+    lib_finder
+    RegExTestbed
+    mimehandler
+    caApp
+    sdk_common.h
+    sdkLog
+    sdk
+    bindings
+    envvars
+    loghacker
+    projectsimporter
+    xpmanifest
+    compiler
+    help_plugin
+
+Code Modules that are stand alone and support codeAdapt.
+    share_config
+
+Code Modules that are unknown.
+    Exporter
+    ToolsPlus
+    ThreadSearch
+    dragscroll
+    keybinder
+    BrowseTracker
+    cb_koders
+    profiler
+    modpoller
+    codesnippets
+    classwizard
+    symtab
+
+Code Modules that were part of Code::Blocks; but, are NOT part of codeAdapt.
+    wxSmith
+    wxSmithContribItems
+    codecompletion
+    debuggergdb
+    scriptedwizard
+    devpak
