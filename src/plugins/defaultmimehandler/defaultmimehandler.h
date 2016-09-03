@@ -13,7 +13,9 @@
 #include "cbplugin.h" // the base class we 're inheriting
 #include "mimetypesarray.h"
 
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 class EmbeddedHtmlPanel;
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 
 class DefaultMimeHandler : public cbMimePlugin
 {
@@ -34,7 +36,9 @@ class DefaultMimeHandler : public cbMimePlugin
         int DoOpenFile(cbMimeType* mt, const wxString& filename);
         MimeTypesArray m_MimeTypes;
 
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
         EmbeddedHtmlPanel* m_Html;
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 };
 
 #endif // DEFAULTMIMEHANDLER_H
