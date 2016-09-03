@@ -628,7 +628,6 @@
 			<Add option="-DWXUSINGDLL" />
 			<Add option="-DcbDEBUG" />
 			<Add option="-DwxUSE_UNICODE" />
-			<Add option="-DCA_DISABLE_PLUGIN_API_TOOLS" />
 			<Add option="-DCA_BUILD_WITHOUT_wxSMITH" />
 		</Compiler>
 		<Unit filename="base/tinyxml/tinystr.cpp">
@@ -665,6 +664,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/ca/filename.h">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="include/cbcolourmanager.h">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="include/cbeditor.h">
@@ -1589,6 +1591,9 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/blockallocated.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/cbcolourmanager.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/cbeditor.cpp">
