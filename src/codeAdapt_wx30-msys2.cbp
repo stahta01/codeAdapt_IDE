@@ -482,35 +482,6 @@
 					<Add directory="devel_msys2" />
 				</Linker>
 			</Target>
-			<Target title="Scripted wizard">
-				<Option output="devel_msys2/share/codeadapt/plugins/scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel_msys2/share/codeadapt/plugins" />
-				<Option object_output=".objs_msys2" />
-				<Option type="3" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-DBUILDING_PLUGIN" />
-					<Add option="-DCA_USEPCH" />
-					<Add directory="include" />
-					<Add directory="include/scripting/include" />
-					<Add directory="include/scripting/sqplus" />
-					<Add directory="include/scripting/bindings" />
-					<Add directory="sdk/wxscintilla/src/scintilla/include" />
-					<Add directory="sdk/wxscintilla/src/scintilla/src" />
-					<Add directory="$(TARGET_COMPILER_DIR)lib/wx/include/msw-unicode-$(WX_VERSION)" />
-					<Add directory="$(TARGET_COMPILER_DIR)include/wx-$(WX_VERSION)" />
-				</Compiler>
-				<Linker>
-					<Add option="-Wl,--enable-auto-image-base" />
-					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="codeadapt" />
-					<Add library="libwxscintilla.a" />
-					<Add library="wx_msw$(WX_SUFFIX)_xrc-$(WX_VERSION)" />
-					<Add library="wx_msw$(WX_SUFFIX)_adv-$(WX_VERSION)" />
-					<Add library="wx_msw$(WX_SUFFIX)_core-$(WX_VERSION)" />
-					<Add directory="devel_msys2" />
-				</Linker>
-			</Target>
 			<Target title="To-do">
 				<Option output="devel_msys2/share/codeadapt/plugins/todo.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel_msys2/share/codeadapt/plugins" />
@@ -1566,7 +1537,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1807,7 +1777,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1828,7 +1797,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1849,7 +1817,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1873,7 +1840,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1894,7 +1860,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1915,7 +1880,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1936,7 +1900,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1957,7 +1920,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1978,7 +1940,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -1999,7 +1960,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2020,7 +1980,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2041,7 +2000,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2062,7 +2020,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2086,7 +2043,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2110,7 +2066,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2131,7 +2086,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2152,7 +2106,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2173,7 +2126,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2194,7 +2146,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2215,7 +2166,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2236,7 +2186,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2257,7 +2206,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2278,7 +2226,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2299,7 +2246,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2320,7 +2266,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2341,7 +2286,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2362,7 +2306,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2383,7 +2326,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2404,7 +2346,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2425,7 +2366,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2446,7 +2386,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2467,7 +2406,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2488,7 +2426,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2509,7 +2446,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2530,7 +2466,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2551,7 +2486,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2572,7 +2506,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -2596,7 +2529,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3448,7 +3380,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3469,7 +3400,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3490,7 +3420,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3565,7 +3494,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3586,7 +3514,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3607,7 +3534,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3628,7 +3554,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
@@ -3649,7 +3574,6 @@
 			<Option target="Compiler" />
 			<Option target="Class wizard" />
 			<Option target="Default MIME handler" />
-			<Option target="Scripted wizard" />
 			<Option target="To-do" />
 			<Option target="Autosave" />
 			<Option target="XP look &amp; feel" />
