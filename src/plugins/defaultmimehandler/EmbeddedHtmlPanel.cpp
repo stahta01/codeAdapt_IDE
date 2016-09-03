@@ -1,3 +1,5 @@
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
+
 #include "sdk.h"
 #include "EmbeddedHtmlPanel.h"
 
@@ -152,3 +154,5 @@ void EmbeddedHtmlPanel::Open(const wxString& url)
 
     lblStatus->SetLabel(_("Ready"));
 }
+
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)

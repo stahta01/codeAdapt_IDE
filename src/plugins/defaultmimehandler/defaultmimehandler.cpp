@@ -21,7 +21,9 @@
 #endif
 #include <wx/choicdlg.h>
 #include <wx/filedlg.h>
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 #include "EmbeddedHtmlPanel.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 #include "defaultmimehandler.h"
 #include "editmimetypesdlg.h"
 #include "filefilters.h"
@@ -90,6 +92,7 @@ void DefaultMimeHandler::OnAttach()
             m_MimeTypes.Add(mt);
     }
 
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
     m_Html = new EmbeddedHtmlPanel(Manager::Get()->GetAppWindow());
 
 	CodeBlocksDockEvent evt(cbEVT_ADD_DOCK_WINDOW);
@@ -102,16 +105,19 @@ void DefaultMimeHandler::OnAttach()
     evt.minimumSize.Set(150, 150);
     evt.shown = false;
 	Manager::Get()->ProcessEvent(evt);
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 }
 
 
 void DefaultMimeHandler::OnRelease(bool appShutDown)
 {
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 	CodeBlocksDockEvent evt(cbEVT_REMOVE_DOCK_WINDOW);
 	evt.pWindow = m_Html;
 	Manager::Get()->ProcessEvent(evt);
 	m_Html->Destroy();
 	m_Html = 0;
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 
     // save configuration
     ConfigManager* conf = Manager::Get()->GetConfigManager(_T("mime_types"));
@@ -166,6 +172,7 @@ int DefaultMimeHandler::OpenFile(const wxString& filename)
     cbMimeType* mt = FindMimeTypeFor(filename);
     if (mt)
         return DoOpenFile(mt, filename);
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 	else if (the_file.GetExt().CmpNoCase(_T("htm")) == 0 ||
 			the_file.GetExt().CmpNoCase(_T("html")) == 0)
 	{
@@ -176,6 +183,7 @@ int DefaultMimeHandler::OpenFile(const wxString& filename)
 		Manager::Get()->ProcessEvent(evt);
 		return 0;
 	}
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
     else
     {
         // not yet supported. ask the user how to open it.

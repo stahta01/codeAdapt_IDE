@@ -1,6 +1,7 @@
 #ifndef EMBEDDEDHTMLPANEL_H
 #define EMBEDDEDHTMLPANEL_H
 
+#if !defined(CA_BUILD_WITHOUT_wxSMITH)
 
 //(*HeadersPCH(EmbeddedHtmlPanel)
 #include <wx/panel.h>
@@ -53,5 +54,7 @@ class EmbeddedHtmlPanel: public wxPanel
 
 		DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_BUILD_WITHOUT_wxSMITH)
 
 #endif
