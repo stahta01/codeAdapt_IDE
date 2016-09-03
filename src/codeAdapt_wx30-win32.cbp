@@ -462,31 +462,6 @@
 					<Add directory="$(#WX30.lib)/gcc$(WX_COMPILER)_dll$(WX_CFG)" />
 				</Linker>
 			</Target>
-			<Target title="Scripted wizard">
-				<Option output="devel30/share/codeadapt/plugins/scriptedwizard.dll" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="devel30/share/codeadapt/plugins" />
-				<Option object_output=".objs30" />
-				<Option type="3" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-DCA_USEPCH" />
-					<Add directory="include" />
-					<Add directory="include/scripting/include" />
-					<Add directory="include/scripting/sqplus" />
-					<Add directory="sdk/wxscintilla/include" />
-				</Compiler>
-				<Linker>
-					<Add option="-Wl,--enable-auto-image-base" />
-					<Add option="-Wl,--add-stdcall-alias" />
-					<Add library="codeadapt" />
-					<Add library="libwxscintilla.a" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_xrc" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_adv" />
-					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)_core" />
-					<Add directory="devel30" />
-					<Add directory="$(#WX30.lib)/gcc$(WX_COMPILER)_dll$(WX_CFG)" />
-				</Linker>
-			</Target>
 			<Target title="To-do">
 				<Option output="devel30/share/codeadapt/plugins/todo.dll" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="devel30/share/codeadapt/plugins" />
@@ -583,8 +558,8 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="caSDK;tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxFlatNotebook;bindings;sdk;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
-			<Add alias="Core app &amp; plugins" targets="caSDK;src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;Scripted wizard;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="All" targets="caSDK;tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;wxFlatNotebook;bindings;sdk;src;AStyle;Compiler depslib;Compiler;Class wizard;Default MIME handler;Open files list;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
+			<Add alias="Core app &amp; plugins" targets="caSDK;src;AStyle;Compiler;Class wizard;Default MIME handler;Open files list;To-do;Autosave;XP look &amp; feel;Projects-workspaces importer;" />
 			<Add alias="Third-party libs" targets="tinyXML;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;scintilla;wx_pch;Compiler depslib;wxFlatNotebook;" />
 		</VirtualTargets>
 		<Compiler>
@@ -1508,138 +1483,6 @@
 		</Unit>
 		<Unit filename="plugins/projectsimporter/projectsimporter.h">
 			<Option target="Projects-workspaces importer" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/buildtargetpanel.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/buildtargetpanel.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/compilerpanel.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/compilerpanel.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/filepathpanel.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/filepathpanel.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/genericselectpath.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/genericselectpath.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/genericsinglechoicelist.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/genericsinglechoicelist.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/infopanel.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/infopanel.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/projectpathpanel.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/projectpathpanel.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/c_file/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/common_functions.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/config.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/console/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/d/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/directx/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/dll/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/empty/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/empty_file/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/fltk/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/glfw/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/glut/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/gtk/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/h_file/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/irrlicht/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/manifest.xml">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/ogre/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/plugins/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/qt4/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/sdl/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/sharedlib/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/smartwin/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/staticlib/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/win32gui/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/wxwidgets/wizard.script">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/resources/wxwidgets/wizard.xrc">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/wiz.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/wiz.h">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/wizpage.cpp">
-			<Option target="Scripted wizard" />
-		</Unit>
-		<Unit filename="plugins/scriptedwizard/wizpage.h">
-			<Option target="Scripted wizard" />
 		</Unit>
 		<Unit filename="plugins/todo/addtododlg.cpp">
 			<Option target="To-do" />
