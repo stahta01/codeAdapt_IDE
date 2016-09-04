@@ -13,7 +13,6 @@
 #define WXFLATNOTEBOOK_H
 
 #include <wx/wxFlatNotebook/wxFlatNotebookSDK.h>
-#include <wx/wx.h>
 #include <wx/frame.h>
 #include <wx/dynarray.h>
 

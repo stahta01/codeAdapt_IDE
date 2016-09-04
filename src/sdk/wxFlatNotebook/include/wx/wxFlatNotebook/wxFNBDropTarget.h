@@ -10,7 +10,6 @@
 #ifndef _WX_FNB_DROP_TARGET_H 
 #define _WX_FNB_DROP_TARGET_H
 
-#include <wx/wx.h>
 #include <wx/dnd.h>
 
 #if wxUSE_DRAG_AND_DROP
