@@ -1,17 +1,11 @@
 #ifndef CODEBLOCKS_APP_H
 #define CODEBLOCKS_APP_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
 
 /**
 @remarks VC++ 6 requires the following headers to compile correctly, so I added a check for it
 */
 #if !defined(WX_PRECOMP) || defined(_MSC_VER)
-    #include <wx/wx.h>
     #include <wx/intl.h>
     #include <wx/laywin.h>
     #include <wx/image.h>
