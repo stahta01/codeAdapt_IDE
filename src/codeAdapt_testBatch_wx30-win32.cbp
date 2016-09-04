@@ -371,8 +371,8 @@
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="WX_CFG" value="wx30X" />
-				<Variable name="WX_COMPILER" value="" />
+				<Variable name="WX_CFG" value="" />
+				<Variable name="WX_COMPILER" value="471TDM" />
 				<Variable name="WX_SUFFIX" value="ud" />
 				<Variable name="WX_VERSION" value="30" />
 			</Environment>
@@ -397,6 +397,7 @@
 			<Add option="-DWXUSINGDLL" />
 			<Add option="-DwxUSE_UNICODE" />
 			<Add option="-DcbDEBUG" />
+			<Add option="-DCA_BUILD_WITHOUT_wxSMITH" />
 			<Add directory="$(#WX30.include)" />
 			<Add directory="$(#WX30.lib)/gcc$(WX_COMPILER)_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
 			<Add directory="include/tinyxml" />
