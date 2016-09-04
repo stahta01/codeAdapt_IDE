@@ -21,6 +21,9 @@ Code Modules that are part of codeAdapt.
     xpmanifest
     compiler
     help_plugin
+    ConsoleRunner
+    Squirrel_std_lib
+    scintilla
 
 Code Modules that are stand alone and support codeAdapt.
     share_config
@@ -36,8 +39,11 @@ Code Modules that are unknown.
     profiler
     modpoller
     codesnippets
-    classwizard
+    classwizard                 plugins/classwizard
     symtab
+    AStyle
+    Autosave
+    
 
 Code Modules that were part of Code::Blocks; but, are NOT part of codeAdapt.
     wxSmith
