@@ -12,7 +12,9 @@
     #include <cbeditor.h>
     #include <globals.h>
 #endif
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include "scriptbindings.h"
 #include <cbexception.h>
