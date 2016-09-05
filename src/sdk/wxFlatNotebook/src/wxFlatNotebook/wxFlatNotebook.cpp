@@ -14,6 +14,8 @@
 #include <wx/wxFlatNotebook/popup_dlg.h>
 #include <wx/wxFlatNotebook/fnb_customize_dlg.h>
 #include <algorithm>
+#include <wx/menu.h>
+#include <wx/sizer.h>
 #include <wx/tooltip.h>
 #include <wx/tipwin.h>
 #include <wx/arrimpl.cpp>

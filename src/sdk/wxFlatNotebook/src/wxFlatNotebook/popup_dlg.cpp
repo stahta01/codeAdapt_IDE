@@ -13,6 +13,7 @@
 #include <wx/wxFlatNotebook/renderer.h>
 #include <wx/listbox.h>
 #include <wx/image.h>
+#include <wx/sizer.h>
 //#include <wx/mstream.h>
 #include <wx/wxFlatNotebook/fnb_resources.h>
 

@@ -15,6 +15,7 @@
 #include <wx/wxFlatNotebook/wxFlatNotebookSDK.h>
 #include <wx/frame.h>
 #include <wx/dynarray.h>
+#include <wx/panel.h>
 
 #ifdef __WXMSW__
 #ifdef _DEBUG
@@ -48,6 +49,7 @@ class wxFNBRendererDefault;
 class wxFNBRendererVC71;
 class wxFNBRendererVC8;
 class wxTabNavigatorWindow;
+class wxBoxSizer;
 class wxMenu;
 
 // Since some compiler complains about std::min, we define our own macro
