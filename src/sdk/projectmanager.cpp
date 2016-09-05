@@ -52,6 +52,8 @@
 #endif
 #include "editorbase.h"
 
+#include <wx/choicdlg.h>
+#include <wx/filedlg.h>
 #include <wx/utils.h>
 #include <wx/textdlg.h>
 #include <wx/progdlg.h>
