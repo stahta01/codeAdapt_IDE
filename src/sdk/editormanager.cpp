@@ -53,14 +53,18 @@
     #include <wx/file.h>
     #include <wx/dir.h>
 #endif
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include <wx/bmpbuttn.h>
 #include <wx/progdlg.h>
 #include <wx/fontutil.h>
 
-#include "editorcolourset.h"
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
+#include "editorcolourset.h" 
 #include "editorconfigurationdlg.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 #include "finddlg.h"
 #include "replacedlg.h"
 #include "editorbase.h"
@@ -181,9 +185,11 @@ EditorManager::EditorManager()
     m_pNotebook = new wxFlatNotebook(Manager::Get()->GetAppWindow(), ID_NBEditorManager, wxDefaultPosition, wxDefaultSize, wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN);
     m_pNotebook->SetWindowStyleFlag(Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/environment/editor_tabs_style"), wxFNB_DEFAULT_STYLE | wxFNB_MOUSE_MIDDLE_CLOSES_TABS));
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 	Manager::Get()->GetLogManager()->DebugLog(_T("Initialize EditColourSet ....."));
     m_Theme = new EditorColourSet(Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/colour_sets/active_colour_set"), COLORSET_DEFAULT));
 	Manager::Get()->GetLogManager()->DebugLog(_T("Initialize EditColourSet: done."));
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     Manager::Get()->GetAppWindow()->PushEventHandler(this);
 
@@ -200,7 +206,9 @@ EditorManager::~EditorManager()
     CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_pSearchLog);
     Manager::Get()->ProcessEvent(evt);
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     delete m_Theme;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     delete m_LastFindReplaceData;
     delete m_pData;
     Manager::Get()->GetConfigManager(_T("editor"))->Write(_T("/zoom"), m_zoom);
@@ -216,6 +224,7 @@ void EditorManager::ReleaseMenu(wxMenuBar* menuBar)
 
 void EditorManager::Configure()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     // editor lexers loading takes some time; better reflect this with a hourglass
     wxBeginBusyCursor();
 
@@ -242,6 +251,7 @@ void EditorManager::Configure()
             }
         }
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of Configure
 
 void EditorManager::CreateSearchLog()
@@ -261,9 +271,11 @@ void EditorManager::CreateSearchLog()
     wxString prefix = ConfigManager::GetDataFolder() + _T("/images/16x16/");
     wxBitmap * bmp = new wxBitmap(cbLoadBitmap(prefix + _T("filefind.png"), wxBITMAP_TYPE_PNG));
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pSearchLog = new SearchResultsLog(titles, widths);
     CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_pSearchLog, _("Search results"), bmp);
     Manager::Get()->ProcessEvent(evt);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void EditorManager::LogSearch(const wxString& file, int line, const wxString& lineText)
@@ -398,6 +410,7 @@ cbEditor* EditorManager::GetBuiltinEditor(EditorBase* eb)
 
 EditorBase* EditorManager::IsOpen(const wxString& filename)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     wxString uFilename = UnixFilename(filename);
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
     {
@@ -410,6 +423,7 @@ EditorBase* EditorManager::IsOpen(const wxString& filename)
         if (fname.IsSameAs(uFilename, platform::windows == false) || fname.IsSameAs(g_EditorModified + uFilename, platform::windows == false))
             return eb;
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     return NULL;
 }
@@ -421,6 +435,7 @@ EditorBase* EditorManager::GetEditor(int index)
 
 void EditorManager::SetColourSet(EditorColourSet* theme)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_Theme)
         delete m_Theme;
 
@@ -433,6 +448,7 @@ void EditorManager::SetColourSet(EditorColourSet* theme)
         if (ed)
             ed->SetColourSet(m_Theme);
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 cbEditor* EditorManager::Open(const wxString& filename, int pos, ProjectFile* data)
@@ -483,11 +499,13 @@ cbEditor* EditorManager::Open(LoaderBase* fileLdr, const wxString& filename, int
 
     if(can_updateui)
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         if (ed)
         {
             SetActiveEditor(ed);
             ed->GetControl()->SetFocus();
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
 
     // check for ProjectFile
@@ -543,8 +561,10 @@ void EditorManager::SetActiveEditor(EditorBase* ed)
 {
     if (!ed)
         return;
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (ed->IsBuiltinEditor())
         static_cast<cbEditor*>(ed)->GetControl()->SetFocus();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     int page = FindPageFromEditor(ed);
     if (page != -1)
     {
@@ -575,7 +595,9 @@ cbEditor* EditorManager::New(const wxString& newFileName)
     wxString key;
     key.Printf(_T("/default_code/set%d"), (int)FileTypeOf(ed->GetFilename()));
     wxString code = Manager::Get()->GetConfigManager(_T("editor"))->Read(key, wxEmptyString);
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     ed->GetControl()->SetText(code);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     ed->SetColourSet(m_Theme);
     AddEditorBase(ed);
@@ -630,8 +652,10 @@ bool EditorManager::UpdateProjectFiles(cbProject* project)
             continue;
         if (pf->GetParentProject() != project)
             continue;
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         pf->editorTopLine = ed->GetControl()->GetFirstVisibleLine();
         pf->editorPos = ed->GetControl()->GetCurrentPos();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         pf->editorTabPos = i + 1;
         pf->editorOpen = true;
     }
@@ -858,6 +882,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
         return;
     m_isCheckingForExternallyModifiedFiles = true;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     bool reloadAll = false; // flag to stop bugging the user
     wxArrayString failedFiles; // list of files failed to reload
     for (int i = 0; i < m_pNotebook->GetPageCount(); ++i)
@@ -953,6 +978,7 @@ void EditorManager::CheckForExternallyModifiedFiles()
         msg.Printf(_("Could not reload all files:\n\n%s"), GetStringFromArray(failedFiles, _T("\n")).c_str());
         cbMessageBox(msg, _("Error"), wxICON_ERROR);
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_isCheckingForExternallyModifiedFiles = false;
 } // end of CheckForExternallyModifiedFiles
 
@@ -1115,6 +1141,7 @@ int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
     cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
     if (ed)
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         control = ed->GetControl();
 
         hasSelection = control->GetSelectionStart() != control->GetSelectionEnd();
@@ -1135,6 +1162,7 @@ int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
         // the selection of several lines is not proposed as search pattern
         if ( selstartline != selendline )
             phraseAtCursor = wxEmptyString;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     }
 
@@ -1194,8 +1222,10 @@ int EditorManager::ShowFindDialog(bool replace, bool explicitly_find_in_files)
     if(control)
     {   // if editor : store the selection start/end
         // only use this in case of !findInFiles and scope==1 (search in selection)
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         m_LastFindReplaceData->SearchInSelectionStart = control->GetSelectionStart();
         m_LastFindReplaceData->SearchInSelectionEnd = control->GetSelectionEnd();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
     dlg->Destroy();
 
@@ -1230,6 +1260,8 @@ void EditorManager::CalculateFindReplaceStartEnd(cbStyledTextCtrl* control, cbFi
 {
     if (!control || !data)
         return;
+
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     if (!data->findInFiles)   // Find in current Editor
     {
@@ -1318,6 +1350,7 @@ void EditorManager::CalculateFindReplaceStartEnd(cbStyledTextCtrl* control, cbFi
         data->start = ( replace ? 0 : control->GetCurrentPos() );
         data->end   = control->GetLength();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of CalculateFindReplaceStartEnd
 
 int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
@@ -1325,6 +1358,8 @@ int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     if (!control || !data)
         return -1;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
+ 
     bool AdvRegex=false;
     int replacecount=0;
     int foundcount=0;
@@ -1547,12 +1582,17 @@ int EditorManager::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     control->SetSCIFocus(true);
 
     return pos;
+#else
+    return -1;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
 {
     if (!data) return 0;
     if (data->findText.IsEmpty()) return 0;
+
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     // let's make a list of all the files to search in
     wxArrayString filesList;
@@ -1906,6 +1946,9 @@ int EditorManager::ReplaceInFiles(cbFindReplaceData* data)
     delete progress;
 #endif // wxUSE_PROGRESSDLG
     return pos;
+#else
+    return 0;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 int EditorManager::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
@@ -1913,6 +1956,7 @@ int EditorManager::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
     if (!control || !data)
         return -1;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     bool AdvRegex=false;
     int flags = 0;
     CalculateFindReplaceStartEnd(control, data);
@@ -2076,6 +2120,9 @@ int EditorManager::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
             break; // done
     }
     return pos;
+#else
+    return -1;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 int EditorManager::FindInFiles(cbFindReplaceData* data)
@@ -2083,6 +2130,7 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     if (!data || data->findText.IsEmpty())
         return 0;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     // clear old search results
     if ( data->delOldSearches )
     {
@@ -2297,8 +2345,10 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
             msg.Printf(_("Not found: %s"), data->findText.c_str());
             cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
             cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
             if (ed)
                 ed->GetControl()->SetSCIFocus(true);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         }
         else
         {
@@ -2309,10 +2359,14 @@ int EditorManager::FindInFiles(cbFindReplaceData* data)
     }
 
     return count;
+#else
+    return 0;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindReplaceData* data)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (!control)
     {
         cbEditor* ed = GetBuiltinEditor(GetActiveEditor());
@@ -2331,7 +2385,7 @@ int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRep
 
     if (!data)
         return ShowFindDialog(false, false);
-
+ 
     if(!data->findInFiles)
     {
         wxString phraseAtCursor = control->GetSelectedText();
@@ -2356,6 +2410,9 @@ int EditorManager::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRep
 
     data->directionDown = goingDown;
     return Find(control, data);
+#else
+    return -1;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void EditorManager::OnGenericContextMenuHandler(wxCommandEvent& event)
@@ -2562,9 +2619,11 @@ void EditorManager::OnUpdateUI(wxUpdateUIEvent& event)
      * It may crash C::B */
     if (!Manager::Get()->IsAppShuttingDown() && m_pData->m_SetFocusFlag)
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbEditor* ed = GetBuiltinActiveEditor();
         if (ed)
             ed->GetControl()->SetFocus();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         m_pData->m_SetFocusFlag = false;
     }
 

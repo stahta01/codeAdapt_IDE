@@ -454,6 +454,8 @@ bool cbProject::LoadLayout()
     int openmode = Manager::Get()->GetConfigManager(_T("project_manager"))->ReadInt(_T("/open_files"), (long int)1);
     bool result = false;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
+
     if(openmode==2)
     {
         // Do not open any files
@@ -525,6 +527,7 @@ bool cbProject::LoadLayout()
             result = false;
         Manager::Get()->GetEditorManager()->ShowNotebook();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     return result;
 }
 

@@ -1,11 +1,15 @@
 #ifndef CONFIRMREPLACEDLG_H
 #define CONFIRMREPLACEDLG_H
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
+
 #include <wx/dialog.h>
 #include <wx/intl.h>
 #include "settings.h"
 
 class cbStyledTextCtrl;
+
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 enum ConfirmResponse
 {
@@ -16,6 +20,8 @@ enum ConfirmResponse
 	crAll,
 	crCancel
 };
+
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 class ConfirmReplaceDlg : public wxDialog
 {
@@ -34,5 +40,7 @@ class ConfirmReplaceDlg : public wxDialog
 	private:
 		DECLARE_EVENT_TABLE()
 };
+
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #endif // CONFIRMREPLACEDLG_H

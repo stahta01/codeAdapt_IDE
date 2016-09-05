@@ -2556,11 +2556,13 @@ void ProjectManager::CheckForExternallyModifiedProjects()
                     wxString msg;
                     msg.Printf(_("Project %s is modified outside the IDE...\nDo you want to reload it (you will lose any unsaved work)?"),
                                pProject->GetFilename().c_str());
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
                     ConfirmReplaceDlg dlg(Manager::Get()->GetAppWindow(), false, msg);
                     dlg.SetTitle(_("Reload Project?"));
                     PlaceWindow(&dlg);
                     ret = dlg.ShowModal();
                     reloadAll = ret == crAll;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
                 }
                 if(reloadAll || ret == crYes)
                 {

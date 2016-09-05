@@ -4,7 +4,11 @@
 #include <wx/dynarray.h>
 #include <wx/hashmap.h>
 #include <wx/intl.h>
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include <wx/wxscintilla.h> // wxSCI_KEYWORDSET_MAX
+#else
+#define wxSCI_KEYWORDSET_MAX 8
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "settings.h"
 
 

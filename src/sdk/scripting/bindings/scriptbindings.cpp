@@ -278,12 +278,14 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 2)
         {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
             cbEditor* self = SqPlus::GetInstance<cbEditor,false>(v, 1);
             if (self)
             {
                 self->GetControl()->SetText(*SqPlus::GetInstance<wxString,false>(v, 2));
                 return sa.Return();
             }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
             return sa.ThrowError("'this' is NULL!?! (type of cbEditor*)");
         }
         return sa.ThrowError("Invalid arguments to \"cbEditor::SetText\"");
@@ -294,12 +296,14 @@ namespace ScriptBindings
         int paramCount = sa.GetParamCount();
         if (paramCount == 1)
         {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
             cbEditor* self = SqPlus::GetInstance<cbEditor,false>(v, 1);
             if (self)
             {
                 wxString str = self->GetControl()->GetText();
                 return SqPlus::ReturnCopy(v, str);
             }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
             return sa.ThrowError("'this' is NULL!?! (type of cbEditor*)");
         }
         return sa.ThrowError("Invalid arguments to \"cbEditor::GetText\"");

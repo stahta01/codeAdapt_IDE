@@ -7,7 +7,9 @@
     #include "editormanager.h"
 #endif
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "infowindow.h"
 
 #include <wx/url.h>

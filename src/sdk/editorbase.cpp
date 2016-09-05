@@ -24,7 +24,9 @@
     #include "cbproject.h" // FileTreeData
     #include <wx/wfstream.h>
 #endif
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include "wx/wxFlatNotebook/wxFlatNotebook.h"
 
@@ -237,6 +239,8 @@ void EditorBase::BasicAddToContextMenu(wxMenu* popup,ModuleType type)   //pecan 
 
 void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   //pecan 2006/03/22
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
+
     bool noeditor = (type != mtEditorManager);                                  //pecan 2006/03/22
     // noeditor:
     // True if context menu belongs to open files tree;
@@ -320,6 +324,7 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)   
     // because it *will* invalidate 'this'
     if (m_pData->m_CloseMe)
 		Manager::Get()->GetEditorManager()->Close(this);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
