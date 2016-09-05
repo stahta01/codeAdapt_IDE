@@ -29,7 +29,9 @@
 #include <wx/frame.h> // GetMenuBar
 #include <wx/gauge.h>     // Needs to be before compilergcc.h if NOPCH on wxMSW
 #include <wx/listctrl.h>
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "compilergcc.h"
 #include <manager.h>
 #include <sdk_events.h>
@@ -3621,10 +3623,12 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 
         m_RunAfterCompile = false;
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
         // no matter what happened with the build, return the focus to the active editor
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if (ed)
             ed->GetControl()->SetFocus();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     }
 }
 
