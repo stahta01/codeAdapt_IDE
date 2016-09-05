@@ -19,8 +19,13 @@ class ProjectFile;
 class EditorColourSet;
 class wxSplitterWindow;
 class LoaderBase;
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 class cbStyledTextCtrl;
 class wxScintillaEvent;
+#else
+class CodeBlocksEvent;
+#define wxScintillaEvent CodeBlocksEvent
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 class wxBoxSizer;
 
 
@@ -68,6 +73,7 @@ class DLLIMPORT cbEditor : public EditorBase
 
         // properties
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         /** Returns a pointer to the underlying cbStyledTextCtrl object (which
           * itself is the wxWindows implementation of Scintilla). If you want
           * to mess with the actual contents of an editor, this is the object
@@ -87,6 +93,7 @@ class DLLIMPORT cbEditor : public EditorBase
           * This function may return NULL if the editor is not split.
           */
         cbStyledTextCtrl* GetRightSplitViewControl() const { return m_pControl2; }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
         /** Returns the state of split-view for this editor. */
         SplitType GetSplitType() const { return m_SplitType; }
@@ -287,8 +294,10 @@ class DLLIMPORT cbEditor : public EditorBase
         bool GetUseBom() const;
         void SetUseBom( bool bom );
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         /// Apply the editor defaults to any (possibly foreign) cbStyledTextCtrl.
         static void ApplyStyles(cbStyledTextCtrl* control);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     private:
         // functions
         bool LineHasMarker(int marker, int line = -1) const;
@@ -302,12 +311,16 @@ class DLLIMPORT cbEditor : public EditorBase
         bool DoFoldLine(int line, int fold); // 0=unfold, 1=fold, 2=toggle
         void SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor back);
         void UnderlineFoldedLines(bool underline);
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* CreateEditor();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         void SetEditorStyle();
         void SetEditorStyleBeforeFileOpen();
         void SetEditorStyleAfterFileOpen();
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         static void InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control);
         static void InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         void DetectEncoding();
         bool Open(bool detectEncoding = true);
         void DoAskForCodeCompletion(); // relevant to code-completion plugins
@@ -340,9 +353,11 @@ class DLLIMPORT cbEditor : public EditorBase
         bool m_IsOK;
         wxSplitterWindow* m_pSplitter;
         wxBoxSizer* m_pSizer;
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* m_pControl;
         cbStyledTextCtrl* m_pControl2;
         cbStyledTextCtrl* m_foldBackup;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         SplitType m_SplitType;
         int m_ID;
         bool m_Modified;

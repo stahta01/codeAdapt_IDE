@@ -51,8 +51,10 @@
 #include <wx/sizer.h>
 #include <wx/textdlg.h>
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
 #include "editorcolourset.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include <wx/fontutil.h>
 #include <wx/splitter.h>
@@ -142,6 +144,7 @@ struct cbEditorInternalData
     wxString GetEOLString() const
     {
         wxString eolstring;
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
         switch (control->GetEOLMode())
         {
@@ -154,18 +157,26 @@ struct cbEditorInternalData
             default:
                 eolstring = _T("\r\n");
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         return eolstring;
     }
     // funcs
     /** Get the last non-whitespace character before position */
     wxChar GetLastNonWhitespaceChar(int position = -1)
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
+#else
+        EditorBase* control = nullptr;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
         if (position == -1)
             position = control->GetCurrentPos();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 
         int count = 0; // Used to count the number of blank lines
         bool foundlf = false; // For the rare case of CR's without LF's
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         while (position)
         {
             wxChar c = control->GetCharAt(--position);
@@ -189,11 +200,13 @@ struct cbEditorInternalData
             if (!inComment && c != _T(' ') && c != _T('\t') && c != _T('\n') && c != _T('\r'))
                 return c;
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         return 0;
     }
 
     int FindBlockStart(int position, wxChar blockStart, wxChar blockEnd, bool skipNested = true)
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
         int lvl = 0;
         wxChar b = control->GetCharAt(position);
@@ -210,12 +223,14 @@ struct cbEditorInternalData
             --position;
             b = control->GetCharAt(position);
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         return -1;
     }
 
     /** Strip Trailing Blanks before saving */
     void StripTrailingSpaces()
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
         // The following code was adapted from the SciTE sourcecode
 
@@ -238,30 +253,36 @@ struct cbEditorInternalData
                 control->ReplaceTarget(_T(""));
             }
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
 
     /** Add extra blank line to the file */
     void EnsureFinalLineEnd()
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
         // The following code was adapted from the SciTE sourcecode
         int maxLines = control->GetLineCount();
         int enddoc = control->PositionFromLine(maxLines);
         if(maxLines <= 1 || enddoc > control->PositionFromLine(maxLines-1))
             control->InsertText(enddoc,GetEOLString());
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
 
     /** Make sure all the lines end with the same EOL mode */
     void EnsureConsistentLineEnds()
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         cbStyledTextCtrl* control = m_pOwner->GetControl();
         // The following code was adapted from the SciTE sourcecode
         control->ConvertEOLs(control->GetEOLMode());
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
 
     /** Set line number column width */
     void SetLineNumberColWidth()
     {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("editor"));
 
         int pixelWidth = m_pOwner->m_pControl->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
@@ -291,6 +312,7 @@ struct cbEditorInternalData
             if (m_pOwner->m_pControl2)
                 m_pOwner->m_pControl2->SetMarginWidth(0, 6 + cfg->ReadInt(_T("/margin/width_chars"), 6) * pixelWidth);
         }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     }
 
     //vars
@@ -387,8 +409,10 @@ BEGIN_EVENT_TABLE(cbEditor, EditorBase)
     EVT_MENU(idSplitVert, cbEditor::OnContextMenuEntry)
     EVT_MENU(idUnsplit, cbEditor::OnContextMenuEntry)
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     EVT_SCI_ZOOM(-1, cbEditor::OnZoom)
     EVT_SCI_ZOOM(-1, cbEditor::OnZoom)
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 END_EVENT_TABLE()
 
@@ -397,9 +421,11 @@ cbEditor::cbEditor(wxWindow* parent, const wxString& filename, EditorColourSet* 
     : EditorBase(parent, filename),
     m_pSplitter(0),
     m_pSizer(0),
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl(0),
     m_pControl2(0),
     m_foldBackup(0),
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_SplitType(stNoSplit),
     m_Modified(false),
     m_Index(-1),
@@ -415,9 +441,11 @@ cbEditor::cbEditor(wxWindow* parent, LoaderBase* fileLdr, const wxString& filena
     : EditorBase(parent, filename),
     m_pSplitter(0),
     m_pSizer(0),
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl(0),
     m_pControl2(0),
     m_foldBackup(0),
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_SplitType(stNoSplit),
     m_Modified(false),
     m_Index(-1),
@@ -437,13 +465,15 @@ cbEditor::~cbEditor()
 //    NotifyPlugins(cbEVT_EDITOR_CLOSE, 0, m_Filename);
 
     UpdateProjectFile();
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pControl)
     {
         if (m_pProjectFile)
-            m_pProjectFile->editorOpen = false;
+            m_pProjectFile->editorOpen = false; 
         m_pControl->Destroy();
-        m_pControl = 0;
+        m_pControl = 0; 
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     DestroySplitView();
 
     delete m_pData;
@@ -481,8 +511,10 @@ void cbEditor::DoInitializations(const wxString& filename, LoaderBase* fileLdr)
     // initialize left control (unsplit state)
     Freeze();
     m_pSizer = new wxBoxSizer(wxVERTICAL);
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl = CreateEditor();
     m_pSizer->Add(m_pControl, 1, wxEXPAND);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     SetSizer(m_pSizer);
 
     // the following two lines make the editors behave strangely in linux:
@@ -494,8 +526,10 @@ void cbEditor::DoInitializations(const wxString& filename, LoaderBase* fileLdr)
 //    m_pSizer->SetSizeHints(this);
 
     Thaw();
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl->SetZoom(Manager::Get()->GetEditorManager()->GetZoom());
     m_pSizer->SetItemMinSize(m_pControl, 32, 32);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     SetEditorStyleBeforeFileOpen();
     m_IsOK = Open();
@@ -525,6 +559,7 @@ void cbEditor::NotifyPlugins(wxEventType type, int intArg, const wxString& strAr
 
 void cbEditor::DestroySplitView()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pControl2)
     {
         m_pControl2->Destroy();
@@ -535,10 +570,12 @@ void cbEditor::DestroySplitView()
         m_pSplitter->Destroy();
         m_pSplitter = 0;
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 cbStyledTextCtrl* cbEditor::GetControl() const
-{
+{ 
     // return the focused control (left or right)
     if (m_pControl2)
     {
@@ -546,16 +583,20 @@ cbStyledTextCtrl* cbEditor::GetControl() const
         if (focused == m_pControl2)
             return m_pControl2;
     }
-    return m_pControl;
+    return m_pControl; 
 }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 bool cbEditor::GetModified() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     return m_Modified || m_pControl->GetModify();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::SetModified(bool modified)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (modified != m_Modified)
     {
         m_Modified = modified;
@@ -569,6 +610,7 @@ void cbEditor::SetModified(bool modified)
         if (m_pProjectFile)
             m_pProjectFile->SetFileState(m_pControl->GetReadOnly() ? fvsReadOnly : (m_Modified ? fvsModified : fvsNormal));
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::SetEditorTitle(const wxString& title)
@@ -598,9 +640,11 @@ void cbEditor::SetProjectFile(ProjectFile* project_file, bool preserve_modified)
         // update our filename
         m_Filename = UnixFilename(project_file->file.GetFullPath());
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
         m_pControl->GotoPos(m_pProjectFile->editorPos);
         m_pControl->ScrollToLine(m_pProjectFile->editorTopLine);
         m_pControl->ScrollToColumn(0);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
         m_pProjectFile->editorOpen = true;
 
@@ -631,16 +675,19 @@ void cbEditor::SetProjectFile(ProjectFile* project_file, bool preserve_modified)
 
 void cbEditor::UpdateProjectFile()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pControl && m_pProjectFile)
     {
         m_pProjectFile->editorPos = m_pControl->GetCurrentPos();
         m_pProjectFile->editorTopLine = m_pControl->GetFirstVisibleLine();
         m_pProjectFile->editorOpen = true;
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor back)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl->MarkerDefine(marker, markerType);
 	m_pControl->MarkerSetForeground(marker, fore);
 	m_pControl->MarkerSetBackground(marker, back);
@@ -651,15 +698,19 @@ void cbEditor::SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor 
 		m_pControl2->MarkerSetForeground(marker, fore);
 		m_pControl2->MarkerSetBackground(marker, back);
 	}
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::UnderlineFoldedLines(bool underline)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_pControl->SetFoldFlags(underline ? 16 : 0);
     if (m_pControl2)
 		m_pControl2->SetFoldFlags(underline ? 16 : 0);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 cbStyledTextCtrl* cbEditor::CreateEditor()
 {
     m_ID = wxNewId();
@@ -742,11 +793,13 @@ cbStyledTextCtrl* cbEditor::CreateEditor()
         ++i;
     }
 
-    return control;
+    return control; 
 }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 void cbEditor::Split(cbEditor::SplitType split)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     Freeze();
 
     // unsplit first, if needed
@@ -811,10 +864,12 @@ void cbEditor::Split(cbEditor::SplitType split)
     m_pControl2->SetMarginWidth(0, m_pControl->GetMarginWidth(0));
 
     Thaw();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Unsplit()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     m_SplitType = stNoSplit;
     if (!m_pSplitter)
         return;
@@ -841,6 +896,7 @@ void cbEditor::Unsplit()
     m_pSizer->Layout();
 
     Thaw();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 // static
@@ -878,19 +934,24 @@ void cbEditor::SetEditorStyleBeforeFileOpen()
     m_pData->m_ensure_final_line_end = mgr->ReadBool(_T("/eol/ensure_final_line_end"), true);
     m_pData->m_ensure_consistent_line_ends = mgr->ReadBool(_T("/eol/ensure_consistent_line_ends"), false);
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     InternalSetEditorStyleBeforeFileOpen(m_pControl);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     SetFoldingIndicator(mgr->ReadInt(_T("/folding/indicator"), 2));
     UnderlineFoldedLines(mgr->ReadBool(_T("/folding/underline_folded_line"), true));
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pControl2)
         InternalSetEditorStyleBeforeFileOpen(m_pControl2);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
     SetLanguage( HL_AUTO );
 }
 
 void cbEditor::SetEditorStyleAfterFileOpen()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     InternalSetEditorStyleAfterFileOpen(m_pControl);
     if (m_pControl2)
         InternalSetEditorStyleAfterFileOpen(m_pControl2);
@@ -906,8 +967,10 @@ void cbEditor::SetEditorStyleAfterFileOpen()
         if (m_pControl2)
             m_pControl2->SetMarginWidth(0, 0);
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 // static
 // public version of InternalSetEditorStyleBeforeFileOpen
 void cbEditor::ApplyStyles(cbStyledTextCtrl* control)
@@ -921,9 +984,11 @@ void cbEditor::ApplyStyles(cbStyledTextCtrl* control)
 
     int pixelWidth = control->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
     if (mgr->ReadBool(_T("/show_line_numbers"), true))
-        control->SetMarginWidth(0, 5 * pixelWidth); // hardcoded width up to 99999 lines
+        control->SetMarginWidth(0, 5 * pixelWidth); // hardcoded width up to 99999 lines 
 }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 // static
 void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
 {
@@ -1045,9 +1110,11 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
         */
     }
     else
-        control->SetMarginWidth(2, 0);
+        control->SetMarginWidth(2, 0); 
 }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 // static
 void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
 {
@@ -1057,6 +1124,7 @@ void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
     // line numbering
     control->SetMarginType(0, wxSCI_MARGIN_NUMBER);
 }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 void cbEditor::SetColourSet(EditorColourSet* theme)
 {
@@ -1121,6 +1189,7 @@ void cbEditor::SetUseBom( bool bom )
 
 bool cbEditor::Reload(bool detectEncoding)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     // keep current pos
     int pos = m_pControl ? m_pControl->GetCurrentPos() : 0;
     int pos2 = m_pControl2 ? m_pControl2->GetCurrentPos() : 0;
@@ -1136,6 +1205,7 @@ bool cbEditor::Reload(bool detectEncoding)
         m_pControl2->GotoPos(pos2);
 
     return true;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Touch()
@@ -1168,6 +1238,7 @@ void cbEditor::DetectEncoding( )
 
 void cbEditor::SetLanguage( HighlightLanguage lang )
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pTheme)
     {
         m_lang = m_pTheme->Apply(this, lang);
@@ -1176,10 +1247,12 @@ void cbEditor::SetLanguage( HighlightLanguage lang )
     {
         m_lang = HL_AUTO;
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::Open(bool detectEncoding)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (m_pProjectFile)
     {
         if (!wxFileExists(m_Filename))
@@ -1244,10 +1317,12 @@ bool cbEditor::Open(bool detectEncoding)
     }
 
     return true;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::Save()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (!GetModified())
         return true;
 
@@ -1293,6 +1368,7 @@ bool cbEditor::Save()
 
     NotifyPlugins(cbEVT_EDITOR_SAVE);
     return true;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of Save
 
 bool cbEditor::SaveAs()
@@ -1372,6 +1448,7 @@ bool cbEditor::SaveAs()
 
 bool cbEditor::SaveFoldState()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     bool bRet = false;
     if((m_foldBackup = CreateEditor()))
     {
@@ -1385,10 +1462,12 @@ bool cbEditor::SaveFoldState()
         bRet = true;
     }
     return bRet;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of SaveFoldState
 
 bool cbEditor::FixFoldState()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     bool bRet = false;
     if(m_foldBackup)
     {
@@ -1437,10 +1516,12 @@ bool cbEditor::FixFoldState()
         m_foldBackup = 0;
     }
     return bRet;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 } // end of FixFoldState
 
 void cbEditor::AutoComplete()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     LogManager* msgMan = Manager::Get()->GetLogManager();
     AutoCompleteMap& map = Manager::Get()->GetEditorManager()->GetAutoCompleteMap();
     cbStyledTextCtrl* control = GetControl();
@@ -1515,10 +1596,12 @@ void cbEditor::AutoComplete()
             break;
         }
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::DoFoldAll(int fold)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbAssert(m_pControl);
     if (m_SplitType != stNoSplit)
         cbAssert(m_pControl2);
@@ -1527,10 +1610,12 @@ void cbEditor::DoFoldAll(int fold)
     int count = ctrl->GetLineCount();
     for (int i = 0; i <= count; ++i)
         DoFoldLine(i, fold);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::DoFoldBlockFromLine(int line, int fold)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbAssert(m_pControl);
     if (m_SplitType != stNoSplit)
         cbAssert(m_pControl2);
@@ -1565,10 +1650,12 @@ void cbEditor::DoFoldBlockFromLine(int line, int fold)
 
     for (i = UnfoldUpto; i <= maxLine; ++i)
         DoFoldLine(i, fold);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::DoFoldLine(int line, int fold)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbAssert(m_pControl);
     if (m_SplitType != stNoSplit)
         cbAssert(m_pControl2);
@@ -1601,6 +1688,7 @@ bool cbEditor::DoFoldLine(int line, int fold)
     	return true;
     }
     return false;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::FoldAll()
@@ -1620,6 +1708,7 @@ void cbEditor::ToggleAllFolds()
 
 void cbEditor::SetFoldingIndicator(int id)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     //Arrow
     if(id == 0)
     {
@@ -1667,31 +1756,39 @@ void cbEditor::SetFoldingIndicator(int id)
 		SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_MINUS, wxColor(0xff, 0xff, 0xff), wxColor(0x80, 0x80, 0x80));
 		SetMarkerStyle(wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_BACKGROUND, wxColor(0xff, 0xff, 0xff), wxColor(0x80, 0x80, 0x80));
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::FoldBlockFromLine(int line)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     DoFoldBlockFromLine(line, 1);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::UnfoldBlockFromLine(int line)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     DoFoldBlockFromLine(line, 0);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::ToggleFoldBlockFromLine(int line)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     DoFoldBlockFromLine(line, 2);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::GotoLine(int line, bool centerOnScreen)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbStyledTextCtrl* control = GetControl();
     if (centerOnScreen)
     {
@@ -1701,10 +1798,12 @@ void cbEditor::GotoLine(int line, bool centerOnScreen)
     }
     control->GotoLine(line);
     UnfoldBlockFromLine(line); // make sure it's visible (not folded)
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::AddBreakpoint(int line, bool notifyDebugger)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (HasBreakpoint(line))
         return false;
     if (line == -1)
@@ -1741,10 +1840,12 @@ bool cbEditor::AddBreakpoint(int line, bool notifyDebugger)
         return true;
     }
     return false;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::RemoveBreakpoint(int line, bool notifyDebugger)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (!HasBreakpoint(line))
         return false;
     if (line == -1)
@@ -1776,10 +1877,12 @@ bool cbEditor::RemoveBreakpoint(int line, bool notifyDebugger)
         return true;
     }
     return false;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     if (!notifyDebugger)
@@ -1808,13 +1911,16 @@ void cbEditor::ToggleBreakpoint(int line, bool notifyDebugger)
     }
     if(toggle)
         MarkerToggle(BREAKPOINT_MARKER, line);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::HasBreakpoint(int line) const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     return LineHasMarker(BREAKPOINT_MARKER, line);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::GotoNextBreakpoint()
@@ -1860,111 +1966,142 @@ void cbEditor::SetErrorLine(int line)
 
 void cbEditor::Undo()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbAssert(GetControl());
     GetControl()->Undo();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Redo()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
     cbAssert(GetControl());
     GetControl()->Redo();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Cut()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     GetControl()->Cut();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Copy()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     GetControl()->Copy();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::Paste()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     GetControl()->Paste();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::CanUndo() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     return !IsReadOnly() && GetControl()->CanUndo();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::CanRedo() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     return !IsReadOnly() && GetControl()->CanRedo();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::HasSelection() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     cbStyledTextCtrl* control = GetControl();
     return control->GetSelectionStart() != control->GetSelectionEnd();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::CanPaste() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     if(platform::gtk)
         return !IsReadOnly();
 
     return GetControl()->CanPaste() && !IsReadOnly();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::IsReadOnly() const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbAssert(GetControl());
     return GetControl()->GetReadOnly();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 bool cbEditor::LineHasMarker(int marker, int line) const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     return m_pControl->MarkerGet(line) & (1 << marker);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::MarkerToggle(int marker, int line)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     if (line == -1)
         line = GetControl()->GetCurrentLine();
     if (LineHasMarker(marker, line))
         GetControl()->MarkerDelete(line, marker);
     else
         GetControl()->MarkerAdd(line, marker);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::MarkerNext(int marker)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     int line = GetControl()->GetCurrentLine() + 1;
     int newLine = GetControl()->MarkerNext(line, 1 << marker);
     if (newLine != -1)
         GotoLine(newLine);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::MarkerPrevious(int marker)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     int line = GetControl()->GetCurrentLine() - 1;
     int newLine = GetControl()->MarkerPrevious(line, 1 << marker);
     if (newLine != -1)
         GotoLine(newLine);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::MarkLine(int marker, int line)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     if (line == -1)
         GetControl()->MarkerDeleteAll(marker);
     else
         GetControl()->MarkerAdd(line, marker);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::GotoMatchingBrace()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
 
     // this works only when the caret is *before* the brace
@@ -1977,10 +2114,12 @@ void cbEditor::GotoMatchingBrace()
     // now, we either found it or not
     if(matchingBrace != wxSCI_INVALID_POSITION)
         control->GotoPos(matchingBrace);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 void cbEditor::HighlightBraces()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
 
     ////// BRACES HIGHLIGHTING ///////
@@ -2003,10 +2142,12 @@ void cbEditor::HighlightBraces()
     }
     else
         control->BraceHighlight(-1, -1);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 int cbEditor::GetLineIndentInSpaces(int line) const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     int currLine = (line == -1)
                     ? control->LineFromPosition(control->GetCurrentPos())
@@ -2024,10 +2165,12 @@ int cbEditor::GetLineIndentInSpaces(int line) const
             break;
     }
     return spaceCount;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 wxString cbEditor::GetLineIndentString(int line) const
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     int currLine = (line == -1)
                     ? control->LineFromPosition(control->GetCurrentPos())
@@ -2043,11 +2186,13 @@ wxString cbEditor::GetLineIndentString(int line) const
             break;
     }
     return indent;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 // Creates a submenu for a Context Menu based on the submenu's specific Id
 wxMenu* cbEditor::CreateContextSubMenu(long id)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     wxMenu* menu = 0;
     if(id == idInsert)
@@ -2110,6 +2255,7 @@ wxMenu* cbEditor::CreateContextSubMenu(long id)
         menu = EditorBase::CreateContextSubMenu(id);
 
     return menu;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 }
 
 // Adds menu items to context menu (both before and after loading plugins' items)
@@ -2176,6 +2322,7 @@ void cbEditor::AddToContextMenu(wxMenu* popup,ModuleType type,bool pluginsdone)
 
 bool cbEditor::OnBeforeBuildContextMenu(const wxPoint& position, ModuleType type)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     bool noeditor = (type != mtEditorManager);
     if (!noeditor && position!=wxDefaultPosition)
     {
@@ -2248,6 +2395,7 @@ bool cbEditor::OnBeforeBuildContextMenu(const wxPoint& position, ModuleType type
 
     // follow default strategy
     return EditorBase::OnBeforeBuildContextMenu(position, type);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnAfterBuildContextMenu(ModuleType type)
@@ -2257,6 +2405,7 @@ void cbEditor::OnAfterBuildContextMenu(ModuleType type)
 
 void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     // print line numbers?
     m_pControl->SetMarginType(0, wxSCI_MARGIN_NUMBER);
     if (!line_numbers)
@@ -2313,12 +2462,14 @@ void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
     else
         m_pControl->SetMarginWidth(0, 0);
     m_pControl->SetEdgeMode(mgr->ReadInt(_T("/gutter/mode"), 0));
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 // events
 
 void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
 
     // we have a single event handler for all popup menu entries,
@@ -2398,10 +2549,12 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
     else
         event.Skip();
     //Manager::Get()->GetLogManager()->DebugLog(_T("Leaving OnContextMenuEntry"));
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnMarginClick(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     switch (event.GetMargin())
     {
         case 1: // bookmarks and breakpoints margin
@@ -2422,6 +2575,7 @@ void cbEditor::OnMarginClick(wxScintillaEvent& event)
         }
     }
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnEditorUpdateUI(wxScintillaEvent& event)
@@ -2436,12 +2590,15 @@ void cbEditor::OnEditorUpdateUI(wxScintillaEvent& event)
 
 void cbEditor::OnEditorChange(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     SetModified(m_pControl->GetModify());
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnEditorCharAdded(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     // if message manager is auto-hiding, this will close it if not needed open
 //    Manager::Get()->GetLogManager()->Close();
 
@@ -2531,25 +2688,31 @@ void cbEditor::OnEditorCharAdded(wxScintillaEvent& event)
     }
 
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnEditorDwellStart(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     int pos = control->PositionFromPoint(wxPoint(event.GetX(), event.GetY()));
     int style = control->GetStyleAt(pos);
     NotifyPlugins(cbEVT_EDITOR_TOOLTIP, style, wxEmptyString, event.GetX(), event.GetY());
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnEditorDwellEnd(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     NotifyPlugins(cbEVT_EDITOR_TOOLTIP_CANCEL);
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnEditorModified(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 //    wxString txt = _T("OnEditorModified(): ");
 //    int flags = event.GetModificationType();
 //    if (flags & wxSCI_MOD_CHANGEMARKER) txt << _T("wxSCI_MOD_CHANGEMARKER, ");
@@ -2600,11 +2763,14 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
     }
 
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnEditorModified
 
 void cbEditor::OnUserListSelection(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnClose(wxCloseEvent& event)
@@ -2614,27 +2780,34 @@ void cbEditor::OnClose(wxCloseEvent& event)
 
 void cbEditor::DoIndent()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     if (control)
         control->SendMsg(wxSCI_CMD_TAB);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::DoUnIndent()
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbStyledTextCtrl* control = GetControl();
     if (control)
         control->SendMsg(wxSCI_CMD_BACKTAB);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void cbEditor::OnZoom(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     Manager::Get()->GetEditorManager()->SetZoom(GetControl()->GetZoom());
     OnScintillaEvent(event);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 // generic scintilla event handler
 void cbEditor::OnScintillaEvent(wxScintillaEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 //	wxString txt;
 //    wxEventType type = event.GetEventType();
 //	if (type == wxEVT_SCI_CHANGE) txt << _T("wxEVT_SCI_CHANGE");
@@ -2669,4 +2842,5 @@ void cbEditor::OnScintillaEvent(wxScintillaEvent& event)
     {
         EditorHooks::CallHooks(this, event);
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
