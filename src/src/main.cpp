@@ -67,7 +67,9 @@
 #include <editorcolourset.h>
 #include <logmanager.h>
 #include <personalitymanager.h>
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include "infopane.h"
 #include "dlgaboutplugin.h"
@@ -872,6 +874,7 @@ void MainFrame::CreateMenubar()
         mbar->FindItem(idEditHighlightModeText, &hl);
         if (hl)
         {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
             EditorColourSet* theme = Manager::Get()->GetEditorManager()->GetColourSet();
             if (theme)
             {
@@ -888,6 +891,7 @@ void MainFrame::CreateMenubar()
                             &MainFrame::OnEditHighlightMode);
                 }
             }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
         }
     }
 
@@ -1605,7 +1609,7 @@ void MainFrame::DoCreateStatusBar()
 
 void MainFrame::DoUpdateStatusBar()
 {
-#if wxUSE_STATUSBAR
+#if wxUSE_STATUSBAR && !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     if (!GetStatusBar())
         return;
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
@@ -1635,7 +1639,7 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(personality, panel++);
     }
-#endif // wxUSE_STATUSBAR
+#endif // wxUSE_STATUSBAR && !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::DoUpdateEditorStyle(wxFlatNotebook* target, const wxString& prefix, long defaultStyle)
@@ -2600,10 +2604,12 @@ void MainFrame::OnFilePrev(wxCommandEvent& event)
 
 void MainFrame::OnFilePrint(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     PrintDialog dlg(this);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
         Manager::Get()->GetEditorManager()->Print(dlg.GetPrintScope(), dlg.GetPrintColourMode(), dlg.GetPrintLineNumbers());
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnFileQuit(wxCommandEvent& WXUNUSED(event))
@@ -2777,134 +2783,167 @@ void MainFrame::OnEditPaste(wxCommandEvent& event)
 
 void MainFrame::OnEditParaUp(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUp();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditParaUpExtend(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaUpExtend();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditParaDown(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDown();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditParaDownExtend(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->ParaDownExtend();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditWordPartLeft(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeft();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditWordPartLeftExtend(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartLeftExtend();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditWordPartRight(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRight();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditWordPartRightExtend(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         ed->GetControl()->WordPartRightExtend();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditZoomIn(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomIn();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditZoomOut(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomOut();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditZoomReset(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SetZoom(0);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLineCut(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCut();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLineDelete(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDelete();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLineDuplicate(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDuplicate();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLineTranspose(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineTranspose();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLineCopy(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCopy();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -2921,31 +2960,39 @@ void MainFrame::OnEditLinePaste(wxCommandEvent& event)
 
         ed->GetControl()->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditUpperCase(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->UpperCase();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditLowerCase(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LowerCase();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditSelectAll(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SelectAll();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 CommentToken GetCommentToken(cbStyledTextCtrl* stc)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     CommentToken comment;
     comment.lineComment        = _T("");
     comment.streamCommentStart = _T("");
@@ -3114,6 +3161,7 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
             comment.boxCommentEnd      = _T(" */");
     }
     return comment;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 
@@ -3123,6 +3171,7 @@ CommentToken GetCommentToken(cbStyledTextCtrl* stc)
  */
 void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3167,11 +3216,13 @@ void MainFrame::OnEditCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnEditCommentSelected
 
 /* See above (OnEditCommentSelected) for details. */
 void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3252,10 +3303,12 @@ void MainFrame::OnEditUncommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnEditUncommentSelected
 
 void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3309,10 +3362,12 @@ void MainFrame::OnEditToggleCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnEditToggleCommentSelected
 
 void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3353,10 +3408,12 @@ void MainFrame::OnEditStreamCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnStreamToggleCommentSelected
 
 void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3422,17 +3479,21 @@ void MainFrame::OnEditBoxCommentSelected(wxCommandEvent& event)
         }
         stc->EndUndoAction();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 } // end of OnEditBoxCommentSelected
 
 void MainFrame::OnEditAutoComplete(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->AutoComplete();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3454,52 +3515,66 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
             ed->SetLanguage(lang);
         }
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditFoldAll(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldAll();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditUnfoldAll(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldAll();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditToggleAllFolds(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleAllFolds();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditFoldBlock(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldBlockFromLine();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditUnfoldBlock(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldBlockFromLine();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditToggleFoldBlock(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleFoldBlockFromLine();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditEOLMode(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3520,10 +3595,12 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
             ed->GetControl()->EndUndoAction();
         }
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnEditEncoding(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3560,6 +3637,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
         encoding = wxFONTENCODING_UTF32LE;
 
     ed->SetEncoding(encoding);
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
@@ -3660,6 +3738,7 @@ void MainFrame::OnSearchReplace(wxCommandEvent& event)
 
 void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3684,6 +3763,7 @@ void MainFrame::OnSearchGotoLine(wxCommandEvent& event)
         ed->UnfoldBlockFromLine(line - 1);
         ed->GotoLine(line - 1);
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
@@ -3757,6 +3837,8 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         event.Skip();
         return;
     }
+
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 
     cbEditor* ed = NULL;
     EditorBase* eb = NULL;
@@ -3849,6 +3931,8 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
         m_pToolbar->EnableTool(idEditCopy, hasSel);
         m_pToolbar->EnableTool(idEditPaste, canPaste);
     }
+
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 
     event.Skip();
 }
@@ -3996,9 +4080,11 @@ void MainFrame::OnToggleStatusBar(wxCommandEvent& event)
 
 void MainFrame::OnFocusEditor(wxCommandEvent& event)
 {
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor()) : 0;
     if (ed)
         ed->GetControl()->SetFocus();
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
 
 void MainFrame::OnToggleFullScreen(wxCommandEvent& event)

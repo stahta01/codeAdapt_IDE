@@ -9,7 +9,9 @@
     #include "editormanager.h"
     #include "globals.h"
 #endif //CB_PRECOMP
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 
 #include "crashhandler.h"
 #include <shlobj.h>
@@ -51,11 +53,13 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
                     {
                         newfnpath = fnpath + wxString::Format(wxT(".%03d"),j);
                     }
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
                     if(cbSaveToFile(newfnpath,
                                     ed->GetControl()->GetText(),
                                     ed->GetEncoding(),
                                     ed->GetUseBom() ))
                         AnyFileSaved = true;
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
                 }
             }
 

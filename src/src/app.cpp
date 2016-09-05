@@ -57,7 +57,9 @@
 #include <loggers.h>
 #include "splashscreen.h"
 #include "crashhandler.h"
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "cbstyledtextctrl.h"
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
 #include "branding.h"
 
 #include <sqplus.h>
@@ -1051,6 +1053,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
 //        Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
         Manager::Get()->GetProjectManager()->CheckForExternallyModifiedProjects();
     }
+#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
     cbEditor* ed = Manager::Get()->GetEditorManager()
                     ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()
                     : 0;
@@ -1061,4 +1064,5 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
 
         ed->GetControl()->SetFocus();
     }
+#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA)
 }
