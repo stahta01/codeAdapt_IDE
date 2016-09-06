@@ -874,12 +874,8 @@ void CompilerGCC::SetEnvironmentForCompiler(const wxString& id, wxString& envPat
         envPath.Clear();
         for (unsigned int i = 0; i < extraPaths.GetCount(); ++i)
         {
-            #if wxCHECK_VERSION(2, 8, 0)
             if (!extraPaths[i].IsEmpty() &&
                 (envPathArr.Index(extraPaths[i], caseSensitive) == wxNOT_FOUND))
-            #else
-            if (!extraPaths[i].IsEmpty())
-            #endif
             {
                 envPath += extraPaths[i] + path_sep;
             }
