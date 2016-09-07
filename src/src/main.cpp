@@ -43,6 +43,9 @@
     #include <crtdbg.h>
 #endif
 
+#include <wx/button.h>
+#include <wx/filedlg.h>
+#include <wx/textdlg.h> 
 #include <wx/tipdlg.h>
 #include <wx/dnd.h>
 #include <wx/sstream.h>
