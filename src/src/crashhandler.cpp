@@ -9,13 +9,14 @@
     #include "editormanager.h"
     #include "globals.h"
 #endif //CB_PRECOMP
-#if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
+#if !defined(CA_BUILD_BATCH_ONLY) 
 #include "cbstyledtextctrl.h"
-#endif // #if !defined(CA_BUILD_WITHOUT_WXSCINTILLA) 
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 
 #include "crashhandler.h"
 #include <shlobj.h>
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
 void CrashHandlerSaveEditorFiles(wxString& buf)
 {
     wxString path;
@@ -76,6 +77,7 @@ void CrashHandlerSaveEditorFiles(wxString& buf)
         }
     }
 }
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 
 LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)
 {
@@ -89,11 +91,13 @@ LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)
     buf.Printf(_("The application encountered a crash at address %u.\n\n"),
                (unsigned int) ExceptionInfo->ContextRecord->Eip);
 
+#if !defined(CA_BUILD_BATCH_ONLY) 
     if(EditorFilesNotSaved)
     {
         CrashHandlerSaveEditorFiles(buf);
         EditorFilesNotSaved = false;
     }
+#endif // #if !defined(CA_BUILD_BATCH_ONLY) 
 
     buf << _("Now you have three options:\n"
               "1. Press 'Abort' to pass control back to the system. This will normally display the standard 'application error' message and kill the program.\n"
