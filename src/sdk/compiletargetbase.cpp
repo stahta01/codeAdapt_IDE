@@ -353,6 +353,19 @@ wxString CompileTargetBase::GetDynamicLibFilename()
     return fname.GetFullPath();
 }
 
+wxString CompileTargetBase::GetDynamicLibImportFilename()
+{
+    if (m_TargetType == ttCommandsOnly)
+        return wxEmptyString;
+
+    if (m_ImportLibraryFilename.IsEmpty())
+        m_ImportLibraryFilename = _T("$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)");
+
+    wxFileName filename(m_ImportLibraryFilename);
+
+    return filename.GetFullPath();
+} // End of method GetDynamicLibImportFilename
+
 wxString CompileTargetBase::GetDynamicLibDefFilename()
 {
     if (m_TargetType == ttCommandsOnly)

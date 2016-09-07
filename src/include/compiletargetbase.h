@@ -120,6 +120,7 @@ class DLLIMPORT CompileTargetBase : public CompileOptionsBase
         virtual wxString GetExecutableFilename() const; ///< Read the target's executable filename (produced if target type is ttExecutable)
         virtual wxString GetDynamicLibFilename(); ///< Read the target's dynamic library filename (produced if target type is ttDynamicLib)
         virtual wxString GetDynamicLibDefFilename(); ///< Read the target's dynamic library definition file filename (produced if target type is ttDynamicLib)
+        virtual wxString GetDynamicLibImportFilename(); ///< Read the target's dynamic library import filename (produced if target type is ttDynamicLib)
         virtual wxString GetStaticLibFilename(); ///< Read the target's static library filename (produced if target type is ttStaticLib)
         virtual wxString GetNativeFilename(); ///< Read the target's native filename (produced if target type is ttNative)
         virtual wxString GetBasePath() const; ///< Read the target's base path, e.g. if GetFilename() returns "/usr/local/bin/xxx", base path will return "/usr/local/bin"
@@ -140,6 +141,7 @@ class DLLIMPORT CompileTargetBase : public CompileOptionsBase
         wxString m_Filename;
         wxString m_Title;
         wxString m_OutputFilename;
+        wxString m_ImportLibraryFilename;
         wxString m_WorkingDir;
         wxString m_ObjectOutput;
         wxString m_DepsOutput;
