@@ -22,3 +22,7 @@
 /build_onlyBatch/*.dll
 /build_onlyBatch/*.exe
 /build_onlyBatch/*.rpt
+/build_codeadapt/share
+/build_codeadapt/*.dll
+/build_codeadapt/*.exe
+/build_codeadapt/*.rpt
