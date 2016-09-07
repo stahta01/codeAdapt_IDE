@@ -109,7 +109,7 @@
 				</Linker>
 			</Target>
 			<Target title="scintilla">
-				<Option output="devel_msys2/wxscintilla.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="devel_msys2\wxscintilla" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="devel_msys2" />
 				<Option object_output=".objs_msys2" />
 				<Option type="3" />
@@ -153,7 +153,7 @@
 				</Linker>
 			</Target>
 			<Target title="sdk">
-				<Option output="devel_msys2/codeadapt.dll" prefix_auto="0" extension_auto="0" />
+				<Option output="devel_msys2\codeadapt" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="devel_msys2" />
 				<Option object_output=".objs_msys2" />
 				<Option external_deps="lib_msys2/libtxml.a;lib_msys2/libwxflatnotebook.a;lib_msys2/libsquirrel.a;lib_msys2/libsqstdlib.a;lib_msys2/libsqplus.a;" />
